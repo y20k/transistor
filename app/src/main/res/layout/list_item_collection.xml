@@ -1,0 +1,51 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="center_vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingLeft="12dp"
+    android:paddingRight="2dp"
+    android:paddingTop="6dp"
+    android:paddingBottom="6dp"
+    android:descendantFocusability="blocksDescendants">
+
+    <!-- REMOVE PLACEHOLDERS -->
+
+    <ImageView
+        android:id="@+id/list_item_station_icon"
+        android:contentDescription="@string/descr_station_icon"
+        android:layout_width="?android:attr/listPreferredItemHeight"
+        android:layout_height="?android:attr/listPreferredItemHeight"
+        android:minHeight="?android:attr/listPreferredItemHeight"
+        android:src="@drawable/ic_notesymbol">
+    </ImageView>
+
+    <TextView
+        android:id="@+id/list_item_textview"
+        android:contentDescription="@string/descr_station_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:paddingLeft="24dp"
+        android:text="ByteFM"
+        android:layout_weight="1"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:textAppearance="?android:attr/textAppearanceListItem">
+    </TextView>
+
+    <ImageButton
+        android:id="@+id/list_item_more_button"
+        android:contentDescription="@string/descr_overflow_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_more_vert_black_24dp"
+        android:background="@android:color/transparent"
+        android:paddingLeft="8dp"
+        android:paddingTop="4dp"
+        android:paddingRight="4dp"
+        android:paddingBottom="4dp">
+    </ImageButton>
+
+</LinearLayout>

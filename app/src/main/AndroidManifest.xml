@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.y20k.transistor" >
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/TransistorAppTheme" >
+
+        <!-- MAIN ACTIVITY -->
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTop">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="audio/x-mpegurl" android:scheme="http"/>
+            </intent-filter>
+
+        </activity>
+
+
+        <!-- INFOSHEET ACTIVITY -->
+        <activity
+            android:name=".InfosheetActivity"
+            android:label="@string/title_activity_infosheet"
+            android:parentActivityName=".MainActivity" >
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.y20k.transistor.MainActivity" />
+
+        </activity>
+
+
+        <!-- PLAYER ACTIVITY -->
+        <activity
+            android:name=".PlayerActivity"
+            android:label="@string/title_activity_player"
+            android:parentActivityName=".MainActivity" >
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.y20k.transistor.MainActivity" />
+
+        </activity>
+
+
+        <!-- PLAYER SERVICE -->
+        <!-- <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/> -->
+        <service
+            android:name=".PlayerService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="org.y20k.transistor.action.PLAY" />
+                <action android:name="org.y20k.transistor.action.STOP" />
+            </intent-filter>
+        </service>
+
+
+    </application>
+
+</manifest>

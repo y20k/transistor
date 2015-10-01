@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false">
+
+    <!-- <item
+        android:duration="10"
+        android:drawable="@drawable/ic_playback_indicator_running_state1_24dp"/>
+
+    <item
+        android:duration="10"
+        android:drawable="@drawable/ic_playback_indicator_running_state2_24dp"/>
+
+    <item
+        android:duration="10"
+        android:drawable="@drawable/ic_playback_indicator_running_state3_24dp"/>
+
+    <item
+        android:duration="10"
+        android:drawable="@drawable/ic_playback_indicator_running_state2_24dp"/> -->
+
+</animation-list>
