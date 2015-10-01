@@ -1,2 +1,2 @@
-# transistor
-Transistot - Radio App for Android
+# Transistor
+Transistor - Radio App for Android
