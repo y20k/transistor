@@ -5,7 +5,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@android:color/background_dark"
+    android:background="@color/transistor_grey_dark"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -19,7 +19,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:divider="#ffffff"
+        android:dividerPadding="5dp">
 
         <ImageView
             android:id="@+id/player_imageview_station_icon"
@@ -52,6 +54,12 @@
 
     </LinearLayout>
 
+    <!-- <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/transistor_grey"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp" /> -->
 
     <RelativeLayout
         android:layout_width="fill_parent"

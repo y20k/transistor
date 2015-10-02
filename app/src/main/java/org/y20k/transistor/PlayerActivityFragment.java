@@ -29,6 +29,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -137,22 +139,10 @@ public class PlayerActivityFragment extends Fragment {
             mStationeImageView.setImageBitmap(mStationImage);
         }
 
-        // set playback indicator
-        if (mPlayback) {
-            mPlaybackIndicator.setBackgroundResource(R.drawable.ic_playback_indicator_started_24dp);
-        }
-        else {
-            mPlaybackIndicator.setBackgroundResource(R.drawable.ic_playback_indicator_stopped_24dp);
-        }
-
         // construct image button
         mPlaybackButton = (ImageButton) rootView.findViewById(R.id.player_playback_button);
-        if (mPlayback) {
-            mPlaybackButton.setImageResource(R.drawable.smbl_stop);
-        }
-        else {
-            mPlaybackButton.setImageResource(R.drawable.smbl_play);
-        }
+        // TODO Description
+        setVisualState();
 
         // set listener to playback button
         mPlaybackButton.setOnClickListener(new View.OnClickListener() {
@@ -162,20 +152,16 @@ public class PlayerActivityFragment extends Fragment {
                 // playback stopped - start playback
                 if (!mPlayback) {
                     mPlayback = true;
-                    // change playback button image
-                    mPlaybackButton.setImageResource(R.drawable.smbl_stop);
-                    // change playback indicator
-                    mPlaybackIndicator.setBackgroundResource(R.drawable.ic_playback_indicator_started_24dp);
+                    // rotate playback button
+                    changeVisualState();
                     // start player
                     mPlayerService.startActionPlay(getActivity(), mStreamURL, mStatiomName);
                 }
                 // playback active - stop playback
                 else {
                     mPlayback = false;
-                    // change playback button image
-                    mPlaybackButton.setImageResource(R.drawable.smbl_play);
-                    // change playback indicator
-                    mPlaybackIndicator.setBackgroundResource(R.drawable.ic_playback_indicator_stopped_24dp);
+                    // rotate playback button
+                    changeVisualState();
                     // stop player
                     mPlayerService.startActionStop(getActivity());
                 }
@@ -187,10 +173,9 @@ public class PlayerActivityFragment extends Fragment {
             @Override
             public void onReceive(Context context, Intent intent) {
                 mPlayback = false;
-                // change playback button image
-                mPlaybackButton.setImageResource(R.drawable.smbl_play);
-                // change playback indicator
-                mPlaybackIndicator.setBackgroundResource(R.drawable.ic_playback_indicator_stopped_24dp);
+                // rotate playback button
+                changeVisualState();
+
             }
         };
         IntentFilter intentFilter = new IntentFilter(ACTION_PLAYBACK_STOPPED);
@@ -205,9 +190,12 @@ public class PlayerActivityFragment extends Fragment {
 
 
     @Override
-    public void onStop(){
+    public void onStop() {
         super.onStop();
+        saveState();
+    }
 
+    private void saveState() {
         // store player state in shared preferences
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
         SharedPreferences.Editor editor = settings.edit();
@@ -216,29 +204,51 @@ public class PlayerActivityFragment extends Fragment {
     }
 
 
-//    /* Construct image for playback button */
-//    private Bitmap getPlaybackButton () {
-//        Bitmap symbol;
-//        Bitmap circularButton;
-//
-//        // playback stopped
-//        if (!mPlayback) {
-//            // start symbol
-//            symbol = BitmapFactory.decodeResource(getResources(), R.drawable.smbl_play);
-//
-//        }
-//        // playback active
-//        else {
-//            // stop symbol
-//            symbol = BitmapFactory.decodeResource(getResources(), R.drawable.smbl_stop);
-//        }
-//
-//        ImageHelper imageHelper = new ImageHelper(symbol);
-//        imageHelper.setBackgroundColor(getResources().getColor(R.color.background_transparent));
-//        circularButton = imageHelper.createCircularFramedImage(768);
-//
-//        return circularButton;
-//    }
+    private void changeVisualState() {
+
+        // get rotate animation from xml
+        Animation rotate = AnimationUtils.loadAnimation(getActivity(), R.anim.rotate);
+
+        // attach listner for animation end
+        rotate.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                // TODO Description
+                setVisualState();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+
+        // start animation of button
+        mPlaybackButton.startAnimation(rotate);
+
+    }
+
+
+    private void setVisualState() {
+        // playback running
+        if (mPlayback) {
+            // change playback button image to stop
+            mPlaybackButton.setImageResource(R.drawable.smbl_stop);
+            // change playback indicator
+            mPlaybackIndicator.setBackgroundResource(R.drawable.ic_playback_indicator_started_24dp);
+        }
+        // playback stopped
+        else {
+            // change playback button image to play
+            mPlaybackButton.setImageResource(R.drawable.smbl_play);
+            // change playback indicator
+            mPlaybackIndicator.setBackgroundResource(R.drawable.ic_playback_indicator_stopped_24dp);
+        }
+    }
+
 
 
     /**
