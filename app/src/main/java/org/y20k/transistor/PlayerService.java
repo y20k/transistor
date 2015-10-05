@@ -15,17 +15,19 @@
 package org.y20k.transistor;
 
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.session.MediaSession;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.Toast;
@@ -39,7 +41,8 @@ import java.util.Random;
 /**
  * PlayerService class
  */
-public class PlayerService extends Service implements AudioManager.OnAudioFocusChangeListener,
+public class PlayerService extends Service implements
+        AudioManager.OnAudioFocusChangeListener,
         MediaPlayer.OnPreparedListener,
         MediaPlayer.OnErrorListener {
 
@@ -61,7 +64,6 @@ public class PlayerService extends Service implements AudioManager.OnAudioFocusC
     private String mStreamURL;
     private String mStationName;
     private boolean mPlayback;
-
 
     // TODO: Remove?
     private IBinder mBinder;
@@ -91,13 +93,16 @@ public class PlayerService extends Service implements AudioManager.OnAudioFocusC
         PhoneStateReceiver phoneStateReceiver = new PhoneStateReceiver();
         registerReceiver(phoneStateReceiver, phoneStateIntentFilter);
 
-     }
+        // TODO Listen for headphone button
+        // Use MediaSession
+
+    }
 
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        // checking for null
+        // checking for empty intent
         if (intent == null) {
             Log.v(LOG_TAG, "Service stopped and restarted by the system. Stopping self now.");
             stopSelf();
@@ -118,8 +123,8 @@ public class PlayerService extends Service implements AudioManager.OnAudioFocusC
             // get URL of station from intent
             mStreamURL = intent.getStringExtra(EXTRA_STREAM_URL);
 
-            // initialize media player
-            if (mStreamURL != null) {
+            // request focus and initialize media player
+            if (mStreamURL != null && requestFocus()) {
                 initializeMediaPlayer();
             }
         }
@@ -128,15 +133,7 @@ public class PlayerService extends Service implements AudioManager.OnAudioFocusC
         else if (intent.getAction().equals(ACTION_STOP)) {
             Log.v(LOG_TAG, "Service received command: STOP");
             mPlayback = false;
-            releaseMediaPlayer();
-
-            // notify PlayerActivityFragment
-            Intent i = new Intent();
-            i.setAction(ACTION_PLAYBACK_STOPPED);
-            sendBroadcast(i);
-
-            // TODO CANCEL NOTIFICATION FROM HERE
-
+            stopPlayback();
         }
 
         // default return value for media playback
@@ -144,7 +141,7 @@ public class PlayerService extends Service implements AudioManager.OnAudioFocusC
     }
 
 
-    @Nullable
+//    @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return null;
@@ -153,10 +150,9 @@ public class PlayerService extends Service implements AudioManager.OnAudioFocusC
 
     @Override
     public void onAudioFocusChange(int focusChange) {
-
         switch (focusChange) {
+            // gain of audio focus of unknown duration
             case AudioManager.AUDIOFOCUS_GAIN:
-                // resume playback
                 if (mMediaPlayer == null) {
                     initializeMediaPlayer();
                 } else if (!mMediaPlayer.isPlaying()) {
@@ -164,21 +160,18 @@ public class PlayerService extends Service implements AudioManager.OnAudioFocusC
                 }
                 mMediaPlayer.setVolume(1.0f, 1.0f);
                 break;
+            // loss of audio focus of unknown duration
             case AudioManager.AUDIOFOCUS_LOSS:
-                // Lost focus for an unbounded amount of time: stop playback and release media player
-                releaseMediaPlayer();
+                stopPlayback();
                 break;
+            // transient loss of audio focus
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
-                // Lost focus for a short time, but we have to stop
-                // playback. We don't release the media player because playback
-                // is likely to resume
                 if (mMediaPlayer.isPlaying()) {
                     mMediaPlayer.pause();
                 }
                 break;
+            // temporary external request of audio focus
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
-                // Lost focus for a short time, but it's ok to keep playing
-                // at an attenuated level
                 if (mMediaPlayer.isPlaying()) {
                     mMediaPlayer.setVolume(0.1f, 0.1f);
                 }
@@ -203,7 +196,7 @@ public class PlayerService extends Service implements AudioManager.OnAudioFocusC
     @Override
     public void onDestroy() {
         super.onDestroy();
-        releaseMediaPlayer();
+        stopPlayback();
     }
 
 
@@ -212,6 +205,8 @@ public class PlayerService extends Service implements AudioManager.OnAudioFocusC
         mStreamURL = streamURL;
         mStationName = stationName;
         Log.v(LOG_TAG, "starting playback service: " + mStreamURL);
+
+        // start player service using intent
         Intent intent = new Intent(context, PlayerService.class);
         intent.setAction(ACTION_PLAY);
         intent.putExtra(EXTRA_STREAM_URL, mStreamURL);
@@ -227,14 +222,11 @@ public class PlayerService extends Service implements AudioManager.OnAudioFocusC
     /* Method to stop the player */
     public void startActionStop(Context context) {
         Log.v(LOG_TAG, "stopping playback service:");
+
+        // stop player service using intent
         Intent intent = new Intent(context, PlayerService.class);
         intent.setAction(ACTION_STOP);
         context.startService(intent);
-
-        // retrieve notification system service and cancel notification
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancel(PLAYER_SERVICE_NOTIFICATION_ID);
-
     }
 
 
@@ -247,7 +239,6 @@ public class PlayerService extends Service implements AudioManager.OnAudioFocusC
         mMediaPlayer.setOnBufferingUpdateListener(new MediaPlayer.OnBufferingUpdateListener() {
             @Override
             public void onBufferingUpdate(MediaPlayer mp, int percent) {
-                // bufferProgressBar.setSecondaryProgress(percent);
                 Log.v(LOG_TAG, "Buffering: " + percent);
             }
         });
@@ -277,23 +268,61 @@ public class PlayerService extends Service implements AudioManager.OnAudioFocusC
             mMediaPlayer.release();
             mMediaPlayer = null;
         }
+
+    }
+
+
+    /* Stop playback */
+    private void stopPlayback() {
+        // release player
+        releaseMediaPlayer();
+
+        // store player state in shared preferences
+        mPlayback = false;
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplication());
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean(PLAYBACK, mPlayback);
+        editor.commit();
+
+        // retrieve notification system service and cancel notification
+        NotificationManager notificationManager = (NotificationManager) getApplication().getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancel(PLAYER_SERVICE_NOTIFICATION_ID);
+
+        // notify PlayerActivityFragment
+        Intent i = new Intent();
+        i.setAction(ACTION_PLAYBACK_STOPPED);
+        sendBroadcast(i);
+
     }
 
 
     /* Request audio manager focus */
+//    private boolean requestFocus() {
+//        return AudioManager.AUDIOFOCUS_REQUEST_GRANTED ==
+//                mAudioManager.requestAudioFocus(this,
+//                        AudioManager.STREAM_MUSIC,
+//                        AudioManager.AUDIOFOCUS_GAIN);
+//    }
+
+
+    /* Request audio manager focus */
     private boolean requestFocus() {
-        return AudioManager.AUDIOFOCUS_REQUEST_GRANTED ==
-                mAudioManager.requestAudioFocus(this,
-                        AudioManager.STREAM_MUSIC,
-                        AudioManager.AUDIOFOCUS_GAIN);
+        int result = mAudioManager.requestAudioFocus(this,
+                AudioManager.STREAM_MUSIC,
+                AudioManager.AUDIOFOCUS_GAIN);
+        if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
-
-    /* Abandon audio manager focus */
-    private boolean abandonFocus() {
-        return AudioManager.AUDIOFOCUS_REQUEST_GRANTED ==
-                mAudioManager.abandonAudioFocus(this);
-    }
+//    /* Abandon audio manager focus */
+//    private boolean abandonFocus() {
+//        return AudioManager.AUDIOFOCUS_REQUEST_GRANTED ==
+//                mAudioManager.abandonAudioFocus(this);
+//    }
 
 
     /**
@@ -304,23 +333,10 @@ public class PlayerService extends Service implements AudioManager.OnAudioFocusC
         @Override
         public void onReceive(Context context, Intent intent) {
             if (mPlayback == true && AudioManager.ACTION_AUDIO_BECOMING_NOISY.equals(intent.getAction())) {
+                // stop playback
+                stopPlayback();
                 // notify user
                 Toast.makeText(getApplication(), R.string.toastalert_headphones_unplugged, Toast.LENGTH_LONG).show();
-
-                // notify PlayerActivityFragment
-                Intent i = new Intent();
-                i.setAction(ACTION_PLAYBACK_STOPPED);
-                sendBroadcast(i);
-
-                // store player state in shared preferences
-                mPlayback = false;
-                SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-                SharedPreferences.Editor editor = settings.edit();
-                editor.putBoolean(PLAYBACK, mPlayback);
-                editor.commit();
-
-                // release player
-                releaseMediaPlayer();
             }
         }
     }
@@ -337,24 +353,10 @@ public class PlayerService extends Service implements AudioManager.OnAudioFocusC
         @Override
         public void onReceive(Context context, Intent intent) {
             if (mPlayback == true && TelephonyManager.ACTION_PHONE_STATE_CHANGED.equals(intent.getAction())) {
-
+                // stop playback
+                stopPlayback();
                 // notify user
                 Toast.makeText(getApplication(), R.string.toastalert_phone_active, Toast.LENGTH_LONG).show();
-
-                // notify PlayerActivityFragment
-                Intent i = new Intent();
-                i.setAction(ACTION_PLAYBACK_STOPPED);
-                sendBroadcast(i);
-
-                // store player state in shared preferences
-                mPlayback = false;
-                SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-                SharedPreferences.Editor editor = settings.edit();
-                editor.putBoolean(PLAYBACK, mPlayback);
-                editor.commit();
-
-                // release player
-                releaseMediaPlayer();
             }
         }
     }
@@ -363,7 +365,6 @@ public class PlayerService extends Service implements AudioManager.OnAudioFocusC
      */
 
 }
-
 
 
 // Reconnect on connectivity change

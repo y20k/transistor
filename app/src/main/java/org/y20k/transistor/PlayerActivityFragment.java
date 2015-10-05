@@ -151,6 +151,7 @@ public class PlayerActivityFragment extends Fragment {
 
                 // playback stopped - start playback
                 if (!mPlayback) {
+                    // set playback true
                     mPlayback = true;
                     // rotate playback button
                     changeVisualState();
@@ -159,6 +160,7 @@ public class PlayerActivityFragment extends Fragment {
                 }
                 // playback active - stop playback
                 else {
+                    // set playback false
                     mPlayback = false;
                     // rotate playback button
                     changeVisualState();
@@ -172,10 +174,10 @@ public class PlayerActivityFragment extends Fragment {
         BroadcastReceiver playbackStoppedReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
+                // set playback false
                 mPlayback = false;
                 // rotate playback button
                 changeVisualState();
-
             }
         };
         IntentFilter intentFilter = new IntentFilter(ACTION_PLAYBACK_STOPPED);
@@ -207,9 +209,16 @@ public class PlayerActivityFragment extends Fragment {
     private void changeVisualState() {
 
         // get rotate animation from xml
-        Animation rotate = AnimationUtils.loadAnimation(getActivity(), R.anim.rotate);
+        Animation rotate;
+        if (mPlayback){
+            // if playback has been started get start animation
+            rotate = AnimationUtils.loadAnimation(getActivity(), R.anim.rotate_clockwise_slow);
+        } else {
+            // if playback has been stopped get stop animation
+            rotate = AnimationUtils.loadAnimation(getActivity(), R.anim.rotate_counterclockwise_fast);
+        }
 
-        // attach listner for animation end
+        // attach listener for animation end
         rotate.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -217,7 +226,7 @@ public class PlayerActivityFragment extends Fragment {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                // TODO Description
+                // set playback buton and indicator afterwards
                 setVisualState();
             }
 
