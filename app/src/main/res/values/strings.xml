@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Transistor</string>
+    <string name="app_name" translatable="false">Transistor</string>
     <string name="title_activity_player">Now Playing</string>
-    <string name="app_collection_folder">Collection</string>
+    <string name="app_collection_folder" translatable="false">Collection</string>
 
     <!-- menu entries -->
     <string name="menu_about">About</string>
@@ -26,8 +26,8 @@
     <string name="dialog_add_station_button">Add</string>
     <string name="dialog_add_station_input_hint">Paste a valid streaming URL</string>
     <string name="dialog_add_station_message">Add new station</string>
-    <string name="dialog_add_station_howto">You can also add a new station by tapping on streaming links (.m3u) in yout web browser</string>
-    <string name="dialog_delete_station_message">Delete Station</string>
+    <string name="dialog_add_station_howto">You can also add a new station by tapping on streaming links (.m3u) in your web browser.</string>
+    <string name="dialog_delete_station_message">Delete station</string>
     <string name="dialog_button_delete">Delete</string>
     <string name="dialog_generic_button_okay">Okay</string>
     <string name="dialog_rename_station_button">Rename</string>
@@ -53,21 +53,34 @@
     <!-- HTML strings -->
     <string name="html_about"><![CDATA[<!DOCTYPE html>
     <html>
-    <body>
-    <h1>About Transistor</h1>
-    <p>My first paragraph.</p>
-    </body>
+        <body>
+            <h1>About Transistor</h1>
+            <h2>Radio app for Android</h2>
+            <h3>Version 0.9 (&quot;Young Americans&quot;)</h3>
+            <p>Transistor is a barebones app for listening to radio programs over the internet. The App stores stations a files on your devices external memory. Look for files of type m3u within /Android/data/Transistor/Collection. </p>
+            <p>Transistor is free software. It is published under the MIT open source license. You can find download the code from GitHub. GitHub is also a code place to file bugs or even to contribute, if you are interested.</p>
+            <p><a href="https://github.com/y20k/transistor">https://github.com/y20k/transistor</a></p>
+            <p><a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a></p>
+        </body>
     </html>]]></string>
 
     <string name="html_howto"><![CDATA[<!DOCTYPE html>
     <html>
-    <body>
-    <h1>How to use Transistor</h1>
-    <p>My first paragraph.</p>
-    </body>
+        <body>
+            <h1>How to use Transistor</h1>
+            <h2>How to playback a radio station?</h2>
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt.</p>
+            <h2>How to stop playback?</h2>
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt.</p>
+            <h2>How to add a new radio station?</h2>
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt.</p>
+            <h2>How to rename or delete a station?</h2>
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt.</p>
+            <h2>Where does Transistor its files?</h2>
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt.</p>
+            <h2>Why does Transistor not have any setting?</h2>
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt.</p>
+        </body>
     </html>]]></string>
-
-    <!-- REMOVE <string name="toastalert_notification_swiped">Playback stopped from notification</string> -->
-
 
 </resources>

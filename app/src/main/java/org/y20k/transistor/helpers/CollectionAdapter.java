@@ -39,7 +39,7 @@ public class CollectionAdapter extends BaseAdapter {
     private LinkedList<Bitmap> mStationImages;
     private Collection mCollection;
     private Context mContext;
-    private CollectionChangedListener collectionChangedListener;
+    private CollectionChangedListener mCollectionChangedListener;
 
 
     /* Interface for custom listener */
@@ -54,7 +54,7 @@ public class CollectionAdapter extends BaseAdapter {
         mStationNames = stationNames;
         mStationImages = stationImage;
         mCollection = null;
-        collectionChangedListener = null;
+        mCollectionChangedListener = null;
     }
 
 
@@ -66,7 +66,7 @@ public class CollectionAdapter extends BaseAdapter {
 
     /* Setter for custom listener */
     public void setCollectionChangedListener(CollectionChangedListener mCollectionChangedListener) {
-        collectionChangedListener = mCollectionChangedListener;
+        this.mCollectionChangedListener = mCollectionChangedListener;
     }
 
 
@@ -115,8 +115,8 @@ public class CollectionAdapter extends BaseAdapter {
                     @Override
                     public void stationChanged() {
                         // notify MainActivityFragment
-                        if (collectionChangedListener != null) {
-                            collectionChangedListener.collectionChanged();
+                        if (mCollectionChangedListener != null) {
+                            mCollectionChangedListener.collectionChanged();
                         }
                     }
                 });

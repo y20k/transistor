@@ -25,8 +25,10 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.view.ViewCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -38,6 +40,8 @@ import android.widget.TextView;
 
 import org.y20k.transistor.core.Collection;
 import org.y20k.transistor.helpers.CollectionAdapter;
+import org.y20k.transistor.helpers.DialogDelete;
+import org.y20k.transistor.helpers.DialogRename;
 import org.y20k.transistor.helpers.ImageHelper;
 
 import java.io.File;
@@ -53,6 +57,9 @@ public class PlayerActivityFragment extends Fragment {
     public final String LOG_TAG = PlayerActivityFragment.class.getSimpleName();
 
     /* Keys */
+    public static final String STREAM_URL = "streamURL";
+    public static final String STATION_NAME = "stationName";
+    public static final String STATION_ID = "stationID";
     public static final String STATION_ID_CURRENT = "stationIDCurrent";
     public static final String STATION_ID_LAST = "stationIDLast";
     public static final String PLAYBACK = "playback";
@@ -62,19 +69,16 @@ public class PlayerActivityFragment extends Fragment {
     private Bitmap mStationImage;
     private String mStatiomName;
     private String mStreamURL;
-    private Collection mCollection;
-    private CollectionAdapter mCollectionAdapter;
-    private LinkedList<String> mStationNames;
-    private LinkedList<Bitmap> mStationImages;
     private TextView mStationNameView;
     private ImageView mStationeImageView;
     private ImageButton mPlaybackButton;
     private ImageView mPlaybackIndicator;
+    private int mStationID;
     private int mStationIDCurrent;
     private int mStationIDLast;
     private boolean mPlayback;
+    private Collection mCollection;
     private PlayerService mPlayerService;
-    private ProgressBar bufferProgressBar;
 
 
     /* Constructor (default) */
@@ -86,29 +90,53 @@ public class PlayerActivityFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // set up variables
-        mCollectionAdapter = null;
-        mStatiomName = null;
-        mStreamURL = null;
-        mStationIDCurrent = -1;
-        mStationIDLast = -1;
+        // get station name, URL and id from intent
+        Intent intent = getActivity().getIntent();
+        mStationID = intent.getIntExtra(STATION_ID, -1);
+        mStatiomName = intent.getStringExtra(STATION_NAME);
+        mStreamURL = intent.getStringExtra(STREAM_URL);
 
-        // create default station image
-        Bitmap stationImageSmall = BitmapFactory.decodeResource(getResources(), R.drawable.ic_notesymbol);
-        ImageHelper imageHelper = new ImageHelper(stationImageSmall, getActivity());
-        imageHelper.setBackgroundColor(R.color.transistor_grey_lighter);
-        mStationImage = imageHelper.createCircularFramedImage(192);
+        // load collection
+        File folder = new File(getActivity().getExternalFilesDir("Collection").toString());
+        mCollection = new Collection(folder);
+
+        // get URL and name for stream
+        mStreamURL = mCollection.getStations().get(mStationID).getStreamURL().toString();
+        mStatiomName = mCollection.getStations().get(mStationID).getStationName();
+
+        // fragment has options menu
+        setHasOptionsMenu(true);
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public void onResume() {
+        super.onResume();
 
         // restore player state from preferences
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
         mStationIDCurrent = settings.getInt(STATION_ID_CURRENT, -1);
         mStationIDLast = settings.getInt(STATION_ID_LAST, -1);
         mPlayback = settings.getBoolean(PLAYBACK, false);
+
+        // set up button symbol and playback indicator
+        setVisualState();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        // set image for station
+        Bitmap stationImageSmall = null;
+        ImageHelper imageHelper = null;
+        if (mCollection.getStations().get(mStationID).getStationImageFile().exists()) {
+            stationImageSmall = BitmapFactory.decodeFile(mCollection.getStations().get(mStationID).getStationImageFile().toString());
+        }
+        else {
+            stationImageSmall = BitmapFactory.decodeResource(getResources(), R.drawable.ic_notesymbol);
+        }
+        imageHelper = new ImageHelper(stationImageSmall, getActivity());
+        imageHelper.setBackgroundColor(R.color.transistor_grey_lighter);
+        mStationImage = imageHelper.createCircularFramedImage(192);
 
         // initiate playback service
         mPlayerService = new PlayerService();
@@ -121,36 +149,24 @@ public class PlayerActivityFragment extends Fragment {
         mStationeImageView = (ImageView) rootView.findViewById(R.id.player_imageview_station_icon);
         mPlaybackIndicator = (ImageView) rootView.findViewById(R.id.player_playback_indicator);
 
-        // get intent from context
-        Intent intent = getActivity().getIntent();
-
-        // TODO get URL from intent replace EXTRA_TEXT with custom key
-
-        // set station name
-        if (mStatiomName != null && intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
-            // pull station name string from intent
-            mStatiomName = intent.getStringExtra(Intent.EXTRA_TEXT);
-            // set text view to station name string
-            mStationNameView.setText(mStatiomName);
-        }
-
-        // set station image
+         // set station image
         if (mStationImage != null) {
             mStationeImageView.setImageBitmap(mStationImage);
         }
 
+        // set text view to station name
+        mStationNameView.setText(mStatiomName);
+
         // construct image button
         mPlaybackButton = (ImageButton) rootView.findViewById(R.id.player_playback_button);
-        // TODO Description
-        setVisualState();
 
         // set listener to playback button
         mPlaybackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                // playback stopped - start playback
-                if (!mPlayback) {
+                // playback stopped or new station - start playback
+                if (!mPlayback || mStationID != mStationIDCurrent) {
                     // set playback true
                     mPlayback = true;
                     // rotate playback button
@@ -167,6 +183,9 @@ public class PlayerActivityFragment extends Fragment {
                     // stop player
                     mPlayerService.startActionStop(getActivity());
                 }
+
+                // save state of playback in settings store
+                savePlaybackState ();
             }
         });
 
@@ -178,36 +197,70 @@ public class PlayerActivityFragment extends Fragment {
                 mPlayback = false;
                 // rotate playback button
                 changeVisualState();
+                // save state of playback to settings
+                savePlaybackState();
             }
         };
         IntentFilter intentFilter = new IntentFilter(ACTION_PLAYBACK_STOPPED);
         getActivity().registerReceiver(playbackStoppedReceiver, intentFilter);
-
-        // get radio stations and fill collection in background
-        GetStations getStations = new GetStations();
-        getStations.execute();
 
         return rootView;
     }
 
 
     @Override
-    public void onStop() {
-        super.onStop();
-        saveState();
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            // CASE RENAME
+            case R.id.menu_rename:
+                // construct rename dialog
+                final DialogRename dialogRename = new DialogRename(getActivity(), mCollection, mStatiomName, mStationID);
+                dialogRename.setStationRenamedListener(new DialogRename.StationRenamedListener() {
+                    @Override
+                    public void stationRenamed() {
+                        mStationNameView.setText(dialogRename.getStationName());
+                    }
+                });
+                // run dialog
+                dialogRename.show();
+                return true;
+
+            // CASE DELETE
+            case R.id.menu_delete:
+                // stop playback
+                mPlayerService.startActionStop(getActivity());
+                // construct delete dialog
+                DialogDelete dialogDelete = new DialogDelete(getActivity(), mCollection, mStationID);
+                dialogDelete.setStationDeletedListener(new DialogDelete.StationDeletedListener() {
+                    @Override
+                    public void stationDeleted() {
+                        // start main activity
+                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        startActivity(intent);
+                    }
+                });
+                // run dialog
+                dialogDelete.show();
+                return true;
+
+            // CASE DEFAULT
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
     }
 
-    private void saveState() {
-        // store player state in shared preferences
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putBoolean(PLAYBACK, mPlayback);
-        editor.commit();
-    }
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//        savePlaybackState();
+//    }
 
 
+    /* Animate button and then set visual state */
     private void changeVisualState() {
-
         // get rotate animation from xml
         Animation rotate;
         if (mPlayback){
@@ -226,7 +279,7 @@ public class PlayerActivityFragment extends Fragment {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                // set playback buton and indicator afterwards
+                // set up button symbol and playback indicator afterwards
                 setVisualState();
             }
 
@@ -241,9 +294,11 @@ public class PlayerActivityFragment extends Fragment {
     }
 
 
+    /* Set button symbol and playback indicator */
     private void setVisualState() {
-        // playback running
-        if (mPlayback) {
+
+        // this station is running
+        if (mPlayback && mStationID == mStationIDCurrent) {
             // change playback button image to stop
             mPlaybackButton.setImageResource(R.drawable.smbl_stop);
             // change playback indicator
@@ -259,72 +314,28 @@ public class PlayerActivityFragment extends Fragment {
     }
 
 
+    /* Save station name and ID and playback state to SharedPreferences */
+    private void savePlaybackState () {
+        // playback started
+        if (mPlayback) {
+            mStationIDLast = mStationIDCurrent;
+            mStationIDCurrent = mStationID;
 
-    /**
-     * Inner class: get radio stations from storage (using background thread)
-     */
-    public class GetStations extends AsyncTask<Void, Integer, Collection> {
-
-        /* Define log tag */
-        public final String LOG_TAG = GetStations.class.getSimpleName();
-
-        /* Main class variables */
-        private File folder = null;
-
-        /* Constructor (empty) */
-        public GetStations() {
+        }
+        // playback stopped
+        else {
+            mStationIDLast = mStationIDCurrent;
+            mStationIDCurrent = -1;
         }
 
-        /* Background thread: reads m3u files from storage */
-        @Override
-        public Collection doInBackground(Void... params) {
-            folder = new File(getActivity().getExternalFilesDir("Collection").toString());
-            Log.v(LOG_TAG, "Create mCollection of stations in background (folder:" + folder.toString() + ").");
-            publishProgress(folder.listFiles().length);
-
-            mCollection = new Collection(folder);
-
-            return mCollection;
-        }
-
-        /* Main thread: Report progress update of background task */
-        @Override
-        protected void onProgressUpdate(Integer... progress) {
-            Log.v(LOG_TAG, "Folder contains " + progress[0].toString() + " files.");
-        }
-
-        /* Main thread: Fills array adapter for list view */
-        @Override
-        protected void onPostExecute(Collection stations) {
-
-            // set image for station
-            if (mCollection.getStations().get(mStationIDCurrent).getStationImageFile().exists()) {
-                Bitmap stationImageSmall = null;
-                ImageHelper imageHelper = null;
-                // create image
-                stationImageSmall = BitmapFactory.decodeFile(mCollection.getStations().get(mStationIDCurrent).getStationImageFile().toString());
-                imageHelper = new ImageHelper(stationImageSmall, getActivity());
-                imageHelper.setBackgroundColor(R.color.transistor_grey_lighter);
-
-                mStationImage = imageHelper.createCircularFramedImage(192);
-                // set image
-                mStationeImageView.setImageBitmap(mStationImage);
-            }
-
-            // set name for station
-            String newStationName = mCollection.getStations().get(mStationIDCurrent).getStationName();
-            if (newStationName != mStatiomName) {
-                mStationNameView.setText(newStationName);
-            }
-
-            mStreamURL = mCollection.getStations().get(mStationIDCurrent).getStreamURL().toString();
-            mStatiomName = mCollection.getStations().get(mStationIDCurrent).getStationName();
-        }
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putInt(STATION_ID_CURRENT, mStationIDCurrent);
+        editor.putInt(STATION_ID_LAST, mStationIDLast);
+        editor.putBoolean(PLAYBACK, mPlayback);
+        editor.commit();
 
     }
-    /**
-     * End of inner class
-     */
 
 }
 

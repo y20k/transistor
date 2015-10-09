@@ -39,22 +39,4 @@ public class PlayerActivity extends AppCompatActivity {
         return true;
     }
 
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-
-            case R.id.menu_rename:
-                return true;
-
-            case R.id.menu_delete:
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-
-    }
-
 }

@@ -9,19 +9,10 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="org.y20k.transistor.InfosheetActivityFragment">
 
-<!--   <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/ic_grey_background_circular"/> -->
     <TextView
         android:id="@+id/infosheet_textview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars = "vertical" />
 
-
-<!--    <WebView
-        android:id="@+id/infosheet_webview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" /> -->
 </FrameLayout>

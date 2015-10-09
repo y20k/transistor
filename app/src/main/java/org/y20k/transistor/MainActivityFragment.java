@@ -19,7 +19,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
@@ -33,8 +32,9 @@ import android.widget.ListView;
 
 import org.y20k.transistor.core.Collection;
 import org.y20k.transistor.helpers.CollectionAdapter;
-import org.y20k.transistor.helpers.DialogAddStationFragment;
+import org.y20k.transistor.helpers.DialogAddStation;
 import org.y20k.transistor.helpers.ImageHelper;
+import org.y20k.transistor.helpers.StationHelper;
 
 import java.io.File;
 import java.util.LinkedList;
@@ -45,19 +45,27 @@ import java.util.LinkedList;
  */
 public class MainActivityFragment extends Fragment {
 
+    /* Define log tag */
+    public final String LOG_TAG = MainActivityFragment.class.getSimpleName();
+
     /* Main class variables */
     private Collection mCollection;
     private CollectionAdapter mCollectionAdapter = null;
+    private File mFolder;
     private LinkedList<String> mStationNames;
     private LinkedList<Bitmap> mStationImages;
     private ListView mListView;
     private Parcelable mListState;
+
     private int mStationIDCurrent;
     private int mStationIDLast;
     private boolean mPlayback;
 
     /* Keys */
     public static final String LIST_STATE = "ListState";
+    public static final String STREAM_URL = "streamURL";
+    public static final String STATION_NAME = "stationName";
+    public static final String STATION_ID = "stationID";
     public static final String STATION_ID_CURRENT = "stationIDCurrent";
     public static final String STATION_ID_LAST = "stationIDLast";
     public static final String PLAYBACK = "playback";
@@ -80,6 +88,7 @@ public class MainActivityFragment extends Fragment {
         mStationIDCurrent = -1;
         mStationIDLast = -1;
         mPlayback = false;
+        mFolder = new File(getActivity().getExternalFilesDir("Collection").toString());
 
         // get list state from saved instance
         if(savedInstanceState != null) {
@@ -95,6 +104,27 @@ public class MainActivityFragment extends Fragment {
         // fragment has options menu
         setHasOptionsMenu(true);
 
+        // handle incoming content
+        Intent intent = getActivity().getIntent();
+        String action = intent.getAction();
+        String type = intent.getType();
+
+        // let Transistor react to external clicks on m3u links
+        if (Intent.ACTION_VIEW.equals(action) && type.startsWith("audio/")) {
+            String newStationURL = intent.getData().toString();
+            StationHelper stationHelper = new StationHelper(getActivity());
+            stationHelper.setStationChangedListener(new StationHelper.StationChangedListener() {
+                @Override
+                public void stationChanged() {
+                    // clear and refill mCollection adapter
+                    mStationNames.clear();
+                    mStationImages.clear();
+                    fillCollectionAdapter();
+                }
+            });
+            stationHelper.add(newStationURL);
+        }
+
         // create adapter for collection
         mStationNames = new LinkedList<String>();
         mStationImages = new LinkedList<Bitmap>();
@@ -107,10 +137,71 @@ public class MainActivityFragment extends Fragment {
                 // clear and refill mCollection adapter
                 mStationNames.clear();
                 mStationImages.clear();
-                FillCollectionAdapter fillCollectionAdapter = new FillCollectionAdapter();
-                fillCollectionAdapter.execute();
+                fillCollectionAdapter();
             }
         });
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        // get list state from saved instance
+        if(savedInstanceState != null) {
+            mListState = savedInstanceState.getParcelable(MainActivityFragment.LIST_STATE);
+        }
+
+        // fetch radio stations and fill mCollection adapter
+        fillCollectionAdapter();
+
+        // inflate rootview from xml
+        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+
+        // get reference to list view from inflated rootview
+        mListView = (ListView) rootView.findViewById(R.id.listview_collection);
+
+        // attach adapter to list view
+        mListView.setAdapter(mCollectionAdapter);
+
+        // attach OnItemClickListener to mListView
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            // inner method override for OnItemClickListener
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // get station name and URL from position
+                String stationName = mCollection.getStations().get((Integer) mCollectionAdapter.getItem(position)).getStationName();
+                String streamURL = mCollection.getStations().get((Integer) mCollectionAdapter.getItem(position)).getStreamURL().toString();
+
+                // add name, url and id of station to intent
+                Intent intent = new Intent(getActivity(), PlayerActivity.class);
+                intent.putExtra(STATION_NAME, stationName);
+                intent.putExtra(STREAM_URL, streamURL);
+                intent.putExtra(STATION_ID, position);
+
+//                // save player state to preferences
+//                if (position != mStationIDCurrent && mPlayback == true) {
+//                    mStationIDLast = mStationIDCurrent;
+//                    mStationIDCurrent = position;
+//                    mPlayback = false;
+//                    System.out.println("!!! (2) Click & Current & Last: " +  position + " / " + mStationIDCurrent + " / " + mStationIDLast );
+//
+//                    SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
+//                    SharedPreferences.Editor editor = settings.edit();
+//                    editor.putInt(STATION_ID_CURRENT, mStationIDCurrent);
+//                    editor.putInt(STATION_ID_LAST, mStationIDLast);
+//                    editor.putBoolean(PLAYBACK, mPlayback);
+//                    editor.commit();
+//                }
+
+                // start activity with intent
+                startActivity(intent);
+
+            }
+        });
+
+        // return list view
+        return rootView;
     }
 
 
@@ -120,15 +211,15 @@ public class MainActivityFragment extends Fragment {
 
         // action bar - add
         if (id == R.id.menu_add) {
-            DialogAddStationFragment dialog = new DialogAddStationFragment();
+            DialogAddStation dialog = new DialogAddStation();
             dialog.show(getFragmentManager(), "addstation");
-            dialog.setCollectionChangedListener(new DialogAddStationFragment.CollectionChangedListener() {
+            dialog.setCollectionChangedListener(new DialogAddStation.CollectionChangedListener() {
                 @Override
                 public void collectionChanged() {
+                    // clear and refill mCollection adapter
                     mStationNames.clear();
                     mStationImages.clear();
-                    FillCollectionAdapter fillCollectionAdapter = new FillCollectionAdapter();
-                    fillCollectionAdapter.execute();
+                    fillCollectionAdapter();
                 }
             });
             return true;
@@ -170,70 +261,12 @@ public class MainActivityFragment extends Fragment {
             return true;
         }
 
-
         return super.onOptionsItemSelected(item);
     }
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        // get list state from saved instance
-        if(savedInstanceState != null) {
-            mListState = savedInstanceState.getParcelable(MainActivityFragment.LIST_STATE);
-        }
-
-        // fetch radio stations and fill mCollection adapter in background
-        FillCollectionAdapter fillCollectionAdapter = new FillCollectionAdapter();
-        fillCollectionAdapter.execute();
-
-        // inflate rootview from xml
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-
-        // get reference to list view from inflated rootview
-        mListView = (ListView) rootView.findViewById(R.id.listview_collection);
-
-        // attach adapter to list view
-        mListView.setAdapter(mCollectionAdapter);
-
-        // attach OnItemClickListener to mListView
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            // inner method override for OnItemClickListener
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // get station name from position
-                String stationName = mCollection.getStations().get((Integer) mCollectionAdapter.getItem(position)).getStationName();
-                // create intent for a specific component
-                Intent intent = new Intent(getActivity(), PlayerActivity.class);
-                // add extra data to intent and start it
-                intent.putExtra(Intent.EXTRA_TEXT, stationName);
-
-                // save player state to preferences
-                if (position != mStationIDCurrent) {
-                    mStationIDLast = mStationIDCurrent;
-                    mStationIDCurrent = position;
-                    mPlayback = false;
-
-                    SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
-                    SharedPreferences.Editor editor = settings.edit();
-                    editor.putInt(STATION_ID_CURRENT, mStationIDCurrent);
-                    editor.putInt(STATION_ID_LAST, mStationIDLast);
-                    editor.putBoolean(PLAYBACK, mPlayback);
-                    editor.commit();
-                }
-
-                startActivity(intent);
-            }
-        });
-
-        // return list view
-        return rootView;
-    }
-
-
-    @Override
-        public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         // save list view position
         mListState = mListView.onSaveInstanceState();
@@ -241,80 +274,45 @@ public class MainActivityFragment extends Fragment {
     }
 
 
-    /**
-     * Inner class: get radio stations from storage (using background thread)
-     */
-    public class FillCollectionAdapter extends AsyncTask<Void, Integer, Collection> {
+    private void fillCollectionAdapter() {
 
-        /* Define log tag */
-        public final String LOG_TAG = FillCollectionAdapter.class.getSimpleName();
+        Bitmap stationImage = null;
+        Bitmap stationImageSmall = null;
+        String stationName = null;
+        ImageHelper stationImageHelper = null;
 
-        /* Main class variables */
-        private File folder = null;
-        // private Context context = null;
+        // create collection
+        Log.v(LOG_TAG, "Create mCollection of stations in background (folder:" + mFolder.toString() + ").");
+        mCollection = new Collection(mFolder);
 
-        /* Constructor (empty) */
-        public FillCollectionAdapter() {
-        }
 
-        /* Background thread: reads m3u files from storage */
-        @Override
-        public Collection doInBackground(Void... params) {
-            folder = new File(getActivity().getExternalFilesDir("Collection").toString());
-            Log.v(LOG_TAG, "Create mCollection of stations in background (folder:" + folder.toString() + ").");
-            publishProgress(folder.listFiles().length);
+        // put stations into collection adapter
+        for (int i = 0; i < mCollection.getStations().size(); i++) {
+            // set name of station
+            stationName = mCollection.getStations().get(i).getStationName();
+            mStationNames.add(stationName);
 
-            mCollection = new Collection(folder);
-
-            return mCollection;
-        }
-
-        /* Main thread: Report progress update of background task */
-        @Override
-        protected void onProgressUpdate(Integer... progress) {
-            Log.v(LOG_TAG, "Folder contains " + progress[0].toString() + " files.");
-        }
-
-        /* Main thread: Fills array adapter for list view */
-        @Override
-        protected void onPostExecute(Collection stations) {
-
-            Bitmap stationImage = null;
-            Bitmap stationImageSmall = null;
-            String stationName = null;
-            ImageHelper stationImageHelper = null;
-
-            for (int i = 0; i < mCollection.getStations().size(); i++) {
-                // set name of station
-
-                stationName = mCollection.getStations().get(i).getStationName();
-                mStationNames.add(stationName);
-
-                // set image for station
-                if (mCollection.getStations().get(i).getStationImageFile().exists()) {
-                    // station image
-                    stationImageSmall = BitmapFactory.decodeFile(mCollection.getStations().get(i).getStationImageFile().toString());
-                } else {
-                    // default image
-                    stationImageSmall = BitmapFactory.decodeResource(getResources(), R.drawable.ic_notesymbol);
-                }
-
-                stationImageHelper = new ImageHelper(stationImageSmall, getActivity());
-                stationImageHelper.setBackgroundColor(R.color.transistor_grey_lighter);
-                stationImage = stationImageHelper.createCircularFramedImage(192);
-                mStationImages.add(stationImage);
+            // set image for station
+            if (mCollection.getStations().get(i).getStationImageFile().exists()) {
+                // station image
+                stationImageSmall = BitmapFactory.decodeFile(mCollection.getStations().get(i).getStationImageFile().toString());
+            } else {
+                // default image
+                stationImageSmall = BitmapFactory.decodeResource(getResources(), R.drawable.ic_notesymbol);
             }
-            mCollectionAdapter.setCollection(mCollection);
-            mCollectionAdapter.notifyDataSetChanged();
 
-            // restore scolling state
-            if (mListState != null) {
-                mListView.onRestoreInstanceState(mListState);
-            }
+            stationImageHelper = new ImageHelper(stationImageSmall, getActivity());
+            stationImageHelper.setBackgroundColor(R.color.transistor_grey_lighter);
+            stationImage = stationImageHelper.createCircularFramedImage(192);
+            mStationImages.add(stationImage);
         }
+        mCollectionAdapter.setCollection(mCollection);
+        mCollectionAdapter.notifyDataSetChanged();
+
+//        // restore scrolling state
+//        if (mListState != null) {
+//            mListView.onRestoreInstanceState(mListState);
+//        }
     }
-    /**
-     * End of inner class
-     */
 
 }

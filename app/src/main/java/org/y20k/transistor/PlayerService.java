@@ -15,17 +15,14 @@
 package org.y20k.transistor;
 
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.media.session.MediaSession;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
@@ -54,9 +51,9 @@ public class PlayerService extends Service implements
     private static final String ACTION_STOP = "org.y20k.transistor.action.STOP";
     private static final String ACTION_PLAYBACK_STOPPED = "org.y20k.transistor.action.PLAYBACK_STOPPED";
     private static final String EXTRA_STREAM_URL = "STREAM_URL";
-//    private static final String EXTRA_STATION_NAME = "STATION_NAME";
     public static final String PLAYBACK = "playback";
     private static final int PLAYER_SERVICE_NOTIFICATION_ID = 1;
+    public static final String STATION_ID_CURRENT = "stationIDCurrent";
 
     /* Main class variables */
     private AudioManager mAudioManager;
@@ -197,6 +194,12 @@ public class PlayerService extends Service implements
     public void onDestroy() {
         super.onDestroy();
         stopPlayback();
+
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplication());
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putInt(STATION_ID_CURRENT, -1);
+        editor.putBoolean(PLAYBACK, false);
+        editor.commit();
     }
 
 
@@ -297,15 +300,6 @@ public class PlayerService extends Service implements
 
 
     /* Request audio manager focus */
-//    private boolean requestFocus() {
-//        return AudioManager.AUDIOFOCUS_REQUEST_GRANTED ==
-//                mAudioManager.requestAudioFocus(this,
-//                        AudioManager.STREAM_MUSIC,
-//                        AudioManager.AUDIOFOCUS_GAIN);
-//    }
-
-
-    /* Request audio manager focus */
     private boolean requestFocus() {
         int result = mAudioManager.requestAudioFocus(this,
                 AudioManager.STREAM_MUSIC,
@@ -365,17 +359,3 @@ public class PlayerService extends Service implements
      */
 
 }
-
-
-// Reconnect on connectivity change
-// https://developer.android.com/training/monitoring-device-state/connectivity-monitoring.html
-// https://developer.android.com/reference/android/net/ConnectivityManager.html#CONNECTIVITY_ACTION
-// You can register a broadcast receiver in your manifest to listen for these changes and resume (or suspend) your background updates accordingly.
-// MANIFEST --> <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
-
-// TODO consider using an IntentService
-
-//// construct progress bar in case of stream buffering
-//bufferProgressBar = (ProgressBar) rootView.findViewById(R.id.progressbar_spinner);
-//bufferProgressBar.setMax(100);
-//bufferProgressBar.setVisibility(View.INVISIBLE);
