@@ -1,5 +1,4 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:gravity="center_vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -18,8 +17,7 @@
         android:layout_width="?android:attr/listPreferredItemHeight"
         android:layout_height="?android:attr/listPreferredItemHeight"
         android:minHeight="?android:attr/listPreferredItemHeight"
-        android:src="@drawable/ic_notesymbol">
-    </ImageView>
+        android:src="@drawable/ic_notesymbol"></ImageView>
 
     <TextView
         android:id="@+id/list_item_textview"
@@ -32,8 +30,7 @@
         android:layout_weight="1"
         android:singleLine="true"
         android:ellipsize="end"
-        android:textAppearance="?android:attr/textAppearanceListItem">
-    </TextView>
+        android:textAppearance="?android:attr/textAppearanceListItem"></TextView>
 
     <ImageButton
         android:id="@+id/list_item_more_button"
@@ -45,7 +42,6 @@
         android:paddingLeft="8dp"
         android:paddingTop="4dp"
         android:paddingRight="4dp"
-        android:paddingBottom="4dp">
-    </ImageButton>
+        android:paddingBottom="4dp"></ImageButton>
 
 </LinearLayout>

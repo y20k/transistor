@@ -2,10 +2,10 @@
  * DialogAddStation.java
  * Implements the DialogAddStation class
  * A DialogAddStation asks the user for a stream URL of a radio station
- *
+ * <p/>
  * This file is part of
  * TRANSISTOR - Radio App for Android
- *
+ * <p/>
  * Copyright (c) 2015 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
@@ -22,7 +22,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import org.y20k.transistor.R;
 import org.y20k.transistor.core.Collection;

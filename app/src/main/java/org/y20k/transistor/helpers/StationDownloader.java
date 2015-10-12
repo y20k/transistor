@@ -2,10 +2,10 @@
  * StationDownloader.java
  * Implements a downloader for radio station metadata from the internet
  * The downloader runs as AsyncTask
- *
+ * <p/>
  * This file is part of
  * TRANSISTOR - Radio App for Android
- *
+ * <p/>
  * Copyright (c) 2015 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT

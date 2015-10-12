@@ -1,11 +1,11 @@
 /**
  * Collection.java
- * Implements the Collection class 
+ * Implements the Collection class
  * A Collection holds a list of radio stations
- *
+ * <p/>
  * This file is part of
  * TRANSISTOR - Radio App for Android
- * 
+ * <p/>
  * Copyright (c) 2015 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
@@ -55,8 +55,8 @@ public class Collection {
         if (!nomedia.exists()) {
             Log.v(LOG_TAG, "Creating .nomdeia file in folder: " + mFolder.toString());
 
-            try (FileOutputStream noMediaOutStream = new FileOutputStream (nomedia)) {
-                noMediaOutStream.write ( 0 );
+            try (FileOutputStream noMediaOutStream = new FileOutputStream(nomedia)) {
+                noMediaOutStream.write(0);
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Unable to write .nomdeia file in folder: " + mFolder.toString());
             }
@@ -161,8 +161,7 @@ public class Collection {
             Collections.sort(mStations);
 
             return true;
-        }
-        else {
+        } else {
             // name of station is null or not new
             return false;
         }
@@ -186,7 +185,7 @@ public class Collection {
         String collectionToString;
         StringBuilder sb = new StringBuilder("");
 
-        for (Station station: mStations) {
+        for (Station station : mStations) {
             sb.append(station.toString());
             sb.append("\n");
         }
@@ -200,7 +199,7 @@ public class Collection {
     private boolean unique(Station newStation) {
 
         // traverse mStations
-        for (Station station: mStations) {
+        for (Station station : mStations) {
             // compare new station with existing mStations
             URL streamURL = station.getStreamURL();
             URL newStreamURL = newStation.getStreamURL();

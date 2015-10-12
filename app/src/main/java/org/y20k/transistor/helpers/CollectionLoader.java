@@ -2,10 +2,10 @@
  * CollectionLoader.java
  * Implements a loader for radio stations from storage
  * The loader runs as an AsyncTask
- *
+ * <p/>
  * This file is part of
  * TRANSISTOR - Radio App for Android
- *
+ * <p/>
  * Copyright (c) 2015 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT

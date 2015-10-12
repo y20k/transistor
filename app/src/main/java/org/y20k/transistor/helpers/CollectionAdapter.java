@@ -2,10 +2,10 @@
  * CollectionAdapter.java
  * Implements the CollectionAdapter class
  * A CollectionAdapter is a custom adapter for a listview
- *
+ * <p/>
  * This file is part of
  * TRANSISTOR - Radio App for Android
- *
+ * <p/>
  * Copyright (c) 2015 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT

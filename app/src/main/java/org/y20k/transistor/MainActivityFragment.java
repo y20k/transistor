@@ -2,10 +2,10 @@
  * MainActivityFragment.java
  * Implements the main fragment of the main activity
  * This fragment is a list view of radio stations
- *
+ * <p/>
  * This file is part of
  * TRANSISTOR - Radio App for Android
- *
+ * <p/>
  * Copyright (c) 2015 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
@@ -78,6 +78,45 @@ public class MainActivityFragment extends Fragment {
     public MainActivityFragment() {
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // let Transistor react to external clicks on m3u links
+        Intent intent = getActivity().getIntent();
+        if (Intent.ACTION_VIEW.equals(intent.getAction())) {
+            String newStationURL;
+            // mime type check
+            if (intent.getType() != null && intent.getType().startsWith("audio/")) {
+                newStationURL = intent.getDataString();
+            }
+            // no mime type
+            else {
+                newStationURL = intent.getDataString();
+            }
+            // check for null
+            if (newStationURL != null) {
+                // add new station
+                StationHelper stationHelper = new StationHelper(getActivity());
+                stationHelper.setStationChangedListener(new StationHelper.StationChangedListener() {
+                    @Override
+                    public void stationChanged() {
+                        // clear and refill mCollection adapter
+                        mStationNames.clear();
+                        mStationImages.clear();
+                        fillCollectionAdapter();
+                    }
+                });
+                stationHelper.add(newStationURL);
+            }
+            // unsuccessful - notify user
+            else {
+                System.out.println("!!! Empty Intent");
+            }
+
+        }
+
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -91,7 +130,7 @@ public class MainActivityFragment extends Fragment {
         mFolder = new File(getActivity().getExternalFilesDir("Collection").toString());
 
         // get list state from saved instance
-        if(savedInstanceState != null) {
+        if (savedInstanceState != null) {
             mListState = savedInstanceState.getParcelable(MainActivityFragment.LIST_STATE);
         }
 
@@ -104,26 +143,26 @@ public class MainActivityFragment extends Fragment {
         // fragment has options menu
         setHasOptionsMenu(true);
 
-        // handle incoming content
-        Intent intent = getActivity().getIntent();
-        String action = intent.getAction();
-        String type = intent.getType();
 
-        // let Transistor react to external clicks on m3u links
-        if (Intent.ACTION_VIEW.equals(action) && type.startsWith("audio/")) {
-            String newStationURL = intent.getData().toString();
-            StationHelper stationHelper = new StationHelper(getActivity());
-            stationHelper.setStationChangedListener(new StationHelper.StationChangedListener() {
-                @Override
-                public void stationChanged() {
-                    // clear and refill mCollection adapter
-                    mStationNames.clear();
-                    mStationImages.clear();
-                    fillCollectionAdapter();
-                }
-            });
-            stationHelper.add(newStationURL);
-        }
+//        // let Transistor react to external clicks on m3u links
+//        if (Intent.ACTION_VIEW.equals(action) && type.startsWith("audio/")) {
+//            String newStationURL = intent.getDataString();
+//            StationHelper stationHelper = new StationHelper(getActivity());
+//            stationHelper.setStationChangedListener(new StationHelper.StationChangedListener() {
+//                @Override
+//                public void stationChanged() {
+//                    // clear and refill mCollection adapter
+//                    mStationNames.clear();
+//                    mStationImages.clear();
+//                    fillCollectionAdapter();
+//                }
+//            });
+//            stationHelper.add(newStationURL);
+//        }
+
+
+
+
 
         // create adapter for collection
         mStationNames = new LinkedList<String>();
@@ -147,7 +186,7 @@ public class MainActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         // get list state from saved instance
-        if(savedInstanceState != null) {
+        if (savedInstanceState != null) {
             mListState = savedInstanceState.getParcelable(MainActivityFragment.LIST_STATE);
         }
 

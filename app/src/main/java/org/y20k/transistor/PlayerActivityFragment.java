@@ -2,10 +2,10 @@
  * PlayerActivityFragment.java
  * Implements the main fragment of the player activity
  * This fragment is a detail view with the ability to start and stop playback
- *
+ * <p/>
  * This file is part of
  * TRANSISTOR - Radio App for Android
- *
+ * <p/>
  * Copyright (c) 2015 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
@@ -22,11 +22,9 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.view.ViewCompat;
-import android.util.Log;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,17 +33,14 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.y20k.transistor.core.Collection;
-import org.y20k.transistor.helpers.CollectionAdapter;
 import org.y20k.transistor.helpers.DialogDelete;
 import org.y20k.transistor.helpers.DialogRename;
 import org.y20k.transistor.helpers.ImageHelper;
 
 import java.io.File;
-import java.util.LinkedList;
 
 
 /**
@@ -130,8 +125,7 @@ public class PlayerActivityFragment extends Fragment {
         ImageHelper imageHelper = null;
         if (mCollection.getStations().get(mStationID).getStationImageFile().exists()) {
             stationImageSmall = BitmapFactory.decodeFile(mCollection.getStations().get(mStationID).getStationImageFile().toString());
-        }
-        else {
+        } else {
             stationImageSmall = BitmapFactory.decodeResource(getResources(), R.drawable.ic_notesymbol);
         }
         imageHelper = new ImageHelper(stationImageSmall, getActivity());
@@ -149,7 +143,7 @@ public class PlayerActivityFragment extends Fragment {
         mStationeImageView = (ImageView) rootView.findViewById(R.id.player_imageview_station_icon);
         mPlaybackIndicator = (ImageView) rootView.findViewById(R.id.player_playback_indicator);
 
-         // set station image
+        // set station image
         if (mStationImage != null) {
             mStationeImageView.setImageBitmap(mStationImage);
         }
@@ -185,7 +179,7 @@ public class PlayerActivityFragment extends Fragment {
                 }
 
                 // save state of playback in settings store
-                savePlaybackState ();
+                savePlaybackState();
             }
         });
 
@@ -202,8 +196,7 @@ public class PlayerActivityFragment extends Fragment {
             }
         };
         IntentFilter intentFilter = new IntentFilter(ACTION_PLAYBACK_STOPPED);
-        getActivity().registerReceiver(playbackStoppedReceiver, intentFilter);
-
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(playbackStoppedReceiver, intentFilter);
         return rootView;
     }
 
@@ -263,7 +256,7 @@ public class PlayerActivityFragment extends Fragment {
     private void changeVisualState() {
         // get rotate animation from xml
         Animation rotate;
-        if (mPlayback){
+        if (mPlayback) {
             // if playback has been started get start animation
             rotate = AnimationUtils.loadAnimation(getActivity(), R.anim.rotate_clockwise_slow);
         } else {
@@ -315,7 +308,7 @@ public class PlayerActivityFragment extends Fragment {
 
 
     /* Save station name and ID and playback state to SharedPreferences */
-    private void savePlaybackState () {
+    private void savePlaybackState() {
         // playback started
         if (mPlayback) {
             mStationIDLast = mStationIDCurrent;

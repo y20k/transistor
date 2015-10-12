@@ -24,11 +24,36 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="audio/x-mpegurl" android:scheme="http"/>
+                <data android:mimeType="audio/x-mpegurl" />
+                <data android:mimeType="application/x-mpegurl" />
             </intent-filter>
+
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="http"/>
+                <data android:host="*" />
+                <data android:pathPattern=".*\\.m3u" />
+            </intent-filter>
+
+
+
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.VIEW" />-->
+                <!--<category android:name="android.intent.category.BROWSABLE" />-->
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
+                <!--<data android:scheme="http" />-->
+                <!--<data android:host="*" />-->
+                <!--<data android:pathPattern=".*\\.m3u" />-->
+                <!--<data android:pathPattern=".*\\.pls" />-->
+            <!--</intent-filter>-->
 
         </activity>
 
@@ -60,7 +85,6 @@
 
 
         <!-- PLAYER SERVICE -->
-        <!-- <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/> -->
         <service
             android:name=".PlayerService"
             android:exported="false">

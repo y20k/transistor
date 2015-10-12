@@ -2,10 +2,10 @@
  * PlayerService.java
  * Implements the app's playback background service
  * The player service does xyz
- *
+ * <p/>
  * This file is part of
  * TRANSISTOR - Radio App for Android
- *
+ * <p/>
  * Copyright (c) 2015 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
@@ -25,6 +25,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.support.v4.content.LocalBroadcastManager;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.Toast;
@@ -61,6 +62,10 @@ public class PlayerService extends Service implements
     private String mStreamURL;
     private String mStationName;
     private boolean mPlayback;
+    private HeadphoneUnplugReceiver mHeadphoneUnplugReceiver;
+    private PhoneStateReceiver mPhoneStateReceiver;
+
+
 
     // TODO: Remove?
     private IBinder mBinder;
@@ -82,13 +87,15 @@ public class PlayerService extends Service implements
 
         // Listen for headphone unglug
         IntentFilter headphoneUnplugIntentFilter = new IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
-        HeadphoneUnplugReceiver headphoneUnplugReceiver = new HeadphoneUnplugReceiver();
-        registerReceiver(headphoneUnplugReceiver, headphoneUnplugIntentFilter);
+        mHeadphoneUnplugReceiver = new HeadphoneUnplugReceiver();
+        registerReceiver(mHeadphoneUnplugReceiver, headphoneUnplugIntentFilter);
+
 
         // Listen for phone activity
         IntentFilter phoneStateIntentFilter = new IntentFilter(TelephonyManager.ACTION_PHONE_STATE_CHANGED);
         PhoneStateReceiver phoneStateReceiver = new PhoneStateReceiver();
         registerReceiver(phoneStateReceiver, phoneStateIntentFilter);
+
 
         // TODO Listen for headphone button
         // Use MediaSession
@@ -138,7 +145,7 @@ public class PlayerService extends Service implements
     }
 
 
-//    @Nullable
+    // @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return null;
@@ -150,12 +157,14 @@ public class PlayerService extends Service implements
         switch (focusChange) {
             // gain of audio focus of unknown duration
             case AudioManager.AUDIOFOCUS_GAIN:
-                if (mMediaPlayer == null) {
-                    initializeMediaPlayer();
-                } else if (!mMediaPlayer.isPlaying()) {
-                    mMediaPlayer.start();
+                if (mPlayback) {
+                    if (mMediaPlayer == null) {
+                        initializeMediaPlayer();
+                    } else if (!mMediaPlayer.isPlaying()) {
+                        mMediaPlayer.start();
+                    }
+                    mMediaPlayer.setVolume(1.0f, 1.0f);
                 }
-                mMediaPlayer.setVolume(1.0f, 1.0f);
                 break;
             // loss of audio focus of unknown duration
             case AudioManager.AUDIOFOCUS_LOSS:
@@ -163,13 +172,16 @@ public class PlayerService extends Service implements
                 break;
             // transient loss of audio focus
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
-                if (mMediaPlayer.isPlaying()) {
+                if (!mPlayback && mMediaPlayer != null && mMediaPlayer.isPlaying()) {
+                    stopPlayback();
+                }
+                else if (mPlayback && mMediaPlayer != null && mMediaPlayer.isPlaying()) {
                     mMediaPlayer.pause();
                 }
                 break;
             // temporary external request of audio focus
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
-                if (mMediaPlayer.isPlaying()) {
+                if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
                     mMediaPlayer.setVolume(0.1f, 0.1f);
                 }
                 break;
@@ -193,13 +205,20 @@ public class PlayerService extends Service implements
     @Override
     public void onDestroy() {
         super.onDestroy();
-        stopPlayback();
 
+        // stop playback
+        // stopPlayback();
+
+        // save state
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplication());
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt(STATION_ID_CURRENT, -1);
         editor.putBoolean(PLAYBACK, false);
         editor.commit();
+
+        // unregister receivers
+        this.unregisterReceiver(mPhoneStateReceiver);
+        this.unregisterReceiver(mHeadphoneUnplugReceiver);
     }
 
 
@@ -294,7 +313,7 @@ public class PlayerService extends Service implements
         // notify PlayerActivityFragment
         Intent i = new Intent();
         i.setAction(ACTION_PLAYBACK_STOPPED);
-        sendBroadcast(i);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(i);
 
     }
 
@@ -306,11 +325,11 @@ public class PlayerService extends Service implements
                 AudioManager.AUDIOFOCUS_GAIN);
         if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
+
 
 //    /* Abandon audio manager focus */
 //    private boolean abandonFocus() {
@@ -330,7 +349,7 @@ public class PlayerService extends Service implements
                 // stop playback
                 stopPlayback();
                 // notify user
-                Toast.makeText(getApplication(), R.string.toastalert_headphones_unplugged, Toast.LENGTH_LONG).show();
+                Toast.makeText(context, R.string.toastalert_headphones_unplugged, Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -357,5 +376,7 @@ public class PlayerService extends Service implements
     /**
      * End of inner class
      */
+
+
 
 }

@@ -7,17 +7,6 @@
         <item name="colorPrimary">@color/transistor_red</item>
         <item name="colorPrimaryDark">@color/transistor_red_dark</item>
 
-        <!-- <item name="android:actionBarStyle">@style/TransistorActionBar</item> -->
-        <!-- Support library compatibility -->
-        <!-- <item name="actionBarStyle">@style/TransistorActionBar</item> -->
-
     </style>
-
-    <!-- Custom ActionBar style -->
-    <!-- <style name="TransistorActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse"> -->
-        <!-- <item name="android:background">@drawable/actionbar_background</item> -->
-        <!-- Support library compatibility -->
-        <!-- <item name="background">@drawable/actionbar_background</item> -->
-    <!-- </style> -->
 
 </resources>

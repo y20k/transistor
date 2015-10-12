@@ -2,10 +2,10 @@
  * ImageHelper.java
  * Implements the ImageHelper class
  * An ImageHelper formats icons and symbols for use in the app ui
- *
+ * <p/>
  * This file is part of
  * TRANSISTOR - Radio App for Android
- * 
+ * <p/>
  * Copyright (c) 2015 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
@@ -15,7 +15,6 @@
 package org.y20k.transistor.helpers;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -59,23 +58,23 @@ public class ImageHelper {
     public Bitmap createCircularFramedImage(int size) {
 
         // create empty bitmap and canvas
-        mOutputImage = Bitmap.createBitmap(size, size,Bitmap.Config.ARGB_8888);
+        mOutputImage = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(mOutputImage);
 
         // construct circular background
         mBackgroundColor.setStyle(Paint.Style.FILL);
-        float cx = size/2;
-        float cy = size/2;
-        float radius = size/2;
+        float cx = size / 2;
+        float cy = size / 2;
+        float radius = size / 2;
 
         // draw circular background
         canvas.drawCircle(cx, cy, radius, mBackgroundColor);
 
         // construct station image frame
-        int left = size/4;
-        int top = size/4;
-        int right = size - (size/4);
-        int bottom = size - (size/4);
+        int left = size / 4;
+        int top = size / 4;
+        int right = size - (size / 4);
+        int bottom = size - (size / 4);
         Rect frame = new Rect(left, top, right, bottom);
 
         // overlay station image

@@ -1,11 +1,11 @@
 /**
  * Station.java
  * Implements the Station class
- * A Station handles station-related data, e.g. the name and the streaming URL 
- *
+ * A Station handles station-related data, e.g. the name and the streaming URL
+ * <p/>
  * This file is part of
  * TRANSISTOR - Radio App for Android
- * 
+ * <p/>
  * Copyright (c) 2015 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
@@ -35,55 +35,59 @@ import java.util.Scanner;
 /**
  * Station class
  */
-public class Station  implements Comparable<Station> {
+public class Station implements Comparable<Station> {
 
-	/* Define log tag */
-	public final String LOG_TAG = Collection.class.getSimpleName();
+    /* Define log tag */
+    public final String LOG_TAG = Collection.class.getSimpleName();
+
 
     /* Main class variables */
     private Bitmap mStationImage = null;
-	private File mStationImageFile = null;
-	private String mStationName = null;
-	private File mStationPlaylistFile = null;
-	private URL mStreamURL = null;
+    private File mStationImageFile = null;
+    private String mStationName = null;
+    private File mStationPlaylistFile = null;
+    private URL mStreamURL = null;
 
-	/* Constructor when given mStationPlaylistFile */
-	public Station(File file) {
-		// set mStationPlaylistFile and filename
-		mStationPlaylistFile = file;
 
-		// read mStationPlaylistFile
-		if (mStationPlaylistFile.exists()) {
-			read();
-		}
+    /* Constructor when given mStationPlaylistFile */
+    public Station(File file) {
+        // set mStationPlaylistFile and filename
+        mStationPlaylistFile = file;
 
-		// set image file object
-		File folder =  mStationPlaylistFile.getParentFile();
-		if (folder != null) {
-			setStationImageFile(folder);
-		}
-	}
+        // read mStationPlaylistFile
+        if (mStationPlaylistFile.exists()) {
+            read();
+        }
 
-	/* Constructor when given name and stream url */
-	public Station(File folder, String stationName, URL streamURL) {
-		// set name and url object for station
-		mStationName = stationName;
-		mStreamURL = streamURL;
+        // set image file object
+        File folder = mStationPlaylistFile.getParentFile();
+        if (folder != null) {
+            setStationImageFile(folder);
+        }
+    }
+
+
+    /* Constructor when given name and stream url */
+    public Station(File folder, String stationName, URL streamURL) {
+        // set name and url object for station
+        mStationName = stationName;
+        mStreamURL = streamURL;
 
         // set playlist file object - name of station required
-		setStationPlaylistFile(folder);
+        setStationPlaylistFile(folder);
 
-		// set image file object
-		setStationImageFile(folder);
-	}
+        // set image file object
+        setStationImageFile(folder);
+    }
 
-	/* Constructor when given folder and remote location for m3u file */
-	public Station(File folder, URL fileLocation) {
-		// download and parse station data from remote m3u file
-		downloadPlaylistFile(folder, fileLocation);
 
-		// set playlist file object - name of station required
-		setStationPlaylistFile(folder);
+    /* Constructor when given folder and remote location for m3u file */
+    public Station(File folder, URL fileLocation) {
+        // download and parse station data from remote m3u file
+        downloadPlaylistFile(folder, fileLocation);
+
+        // set playlist file object - name of station required
+        setStationPlaylistFile(folder);
 
         // download favicon and store bitmap object
         downloadImageFile(folder, fileLocation);
@@ -93,32 +97,35 @@ public class Station  implements Comparable<Station> {
 
     }
 
-	/* Compares two stations */
-	@Override
-	public int compareTo(Station otherStation) {
-		// return "1" if name if this station is greater than name of given station
-		return mStationName.compareToIgnoreCase(otherStation.mStationName);
-	}
 
-	/* Construct string representation of m3u mStationPlaylistFile */
-	private String createM3u() {
-		String m3uString;
+    /* Compares two stations */
+    @Override
+    public int compareTo(Station otherStation) {
+        // return "1" if name if this station is greater than name of given station
+        return mStationName.compareToIgnoreCase(otherStation.mStationName);
+    }
 
-		// construct m3uString
-		StringBuilder sb = new StringBuilder("");
-		sb.append("#EXTM3U\n\n");
-		sb.append("#EXTINF:-1,");
-		sb.append(mStationName);
-		sb.append("\n");
-		sb.append(mStreamURL.toString());
-		sb.append("\n");
-		m3uString = sb.toString();
 
-		return m3uString;
-	}
+    /* Construct string representation of m3u mStationPlaylistFile */
+    private String createM3u() {
+        String m3uString;
 
-	/* Downloads remote m3u playlist file and parses station */
-	private void downloadPlaylistFile(File folder, URL fileLocation) {
+        // construct m3uString
+        StringBuilder sb = new StringBuilder("");
+        sb.append("#EXTM3U\n\n");
+        sb.append("#EXTINF:-1,");
+        sb.append(mStationName);
+        sb.append("\n");
+        sb.append(mStreamURL.toString());
+        sb.append("\n");
+        m3uString = sb.toString();
+
+        return m3uString;
+    }
+
+
+    /* Downloads remote m3u playlist file and parses station */
+    private void downloadPlaylistFile(File folder, URL fileLocation) {
 
         Log.v(LOG_TAG, "Downloading... " + fileLocation.toString());
 
@@ -161,19 +168,19 @@ public class Station  implements Comparable<Station> {
     /* Downloads remote favicon file */
     private void downloadImageFile(File folder, URL fileLocation) {
 
-		// get second level domain - still way to hacky
-		String host = fileLocation.getHost();
-		int index = host.lastIndexOf(".", host.length()-4);
-		String domain = host.substring(index);
+        // get second level domain - still way to hacky
+        String host = fileLocation.getHost();
+        int index = host.lastIndexOf(".", host.length() - 4);
+        String domain = host.substring(index);
 
-		// get favicon location
-		StringBuilder sb = new StringBuilder("");
-		sb.append("http://www");
-		sb.append(domain);
-		sb.append("/favicon.ico");
-		String faviconLocation = sb.toString();
+        // get favicon location
+        StringBuilder sb = new StringBuilder("");
+        sb.append("http://www");
+        sb.append(domain);
+        sb.append("/favicon.ico");
+        String faviconLocation = sb.toString();
 
-		Log.v(LOG_TAG, "Downloading favicon: " + faviconLocation);
+        Log.v(LOG_TAG, "Downloading favicon: " + faviconLocation);
 
         // download favicon
         try (InputStream in = new URL(faviconLocation).openStream()) {
@@ -182,31 +189,34 @@ public class Station  implements Comparable<Station> {
             Log.e(LOG_TAG, "Error downloading: " + faviconLocation);
         }
 
-	}
+    }
 
-	/* Getter for playlist file object representing station */
-	public File getStationPlaylistFile() {
-		return mStationPlaylistFile;
-	}
 
-	/* Setter for playlist file object of station */
-	public void setStationPlaylistFile(File folder) {
-	    // construct location of m3u playlist file from station name and folder
-		String fileLocation;
-		StringBuilder sb = new StringBuilder("");
-		sb.append(folder.toString());
-		sb.append("/");
-		sb.append(mStationName);
-		sb.append(".m3u");
-		fileLocation = sb.toString();
+    /* Getter for playlist file object representing station */
+    public File getStationPlaylistFile() {
+        return mStationPlaylistFile;
+    }
 
-		mStationPlaylistFile = new File(fileLocation);
-	}
 
-	/* Getter for file object representing station image */
-	public File getStationImageFile() {
-		return mStationImageFile;
-	}
+    /* Setter for playlist file object of station */
+    public void setStationPlaylistFile(File folder) {
+        // construct location of m3u playlist file from station name and folder
+        String fileLocation;
+        StringBuilder sb = new StringBuilder("");
+        sb.append(folder.toString());
+        sb.append("/");
+        sb.append(mStationName);
+        sb.append(".m3u");
+        fileLocation = sb.toString();
+
+        mStationPlaylistFile = new File(fileLocation);
+    }
+
+    /* Getter for file object representing station image */
+    public File getStationImageFile() {
+        return mStationImageFile;
+    }
+
 
     /* Setter for image file object of station */
     public void setStationImageFile(File folder) {
@@ -222,137 +232,149 @@ public class Station  implements Comparable<Station> {
         mStationImageFile = new File(fileLocation);
     }
 
-   	/* Getter for station image */
+
+    /* Getter for station image */
     public Bitmap getStationImage() {
         return mStationImage;
     }
 
-	/* Getter for name of station */
-	public String getStationName() {
-		return mStationName;
-	}
 
-	/* Setter for name of station */
-	public void setStationName(String newStationName) {
-		mStationName = newStationName;
-	}
+    /* Getter for name of station */
+    public String getStationName() {
+        return mStationName;
+    }
 
-	/* Getter for URL of stream */
-	public URL getStreamURL() {
-		return mStreamURL;
-	}
 
-	/* Setter for URL of station */
-	public void setStreamURL(URL newStreamURL) {
-		mStreamURL = newStreamURL;
-	}
+    /* Setter for name of station */
+    public void setStationName(String newStationName) {
+        mStationName = newStationName;
+    }
 
-	/* Parses string representation of m3u mStationPlaylistFile */
-	private void parse(String m3uString) {
 
-		Scanner in = new Scanner(m3uString);
+    /* Getter for URL of stream */
+    public URL getStreamURL() {
+        return mStreamURL;
+    }
 
-		String line;
 
-		while (in.hasNextLine()) {
+    /* Setter for URL of station */
+    public void setStreamURL(URL newStreamURL) {
+        mStreamURL = newStreamURL;
+    }
 
-			line = in.nextLine();
-			// found station name
-			if (line.contains("#EXTINF:-1,")) {
-				mStationName = line.substring(11).trim();
-				// found stream URL
-			} else if (line.startsWith("http")) {
-				try {
-					mStreamURL = new URL(line.trim());
-				} catch (MalformedURLException e) {
-					Log.e(LOG_TAG, line.trim() + "is not a valid URL");
-				}
-			}
-		}
 
-		in.close();
+    /* Parses string representation of m3u mStationPlaylistFile */
+    private void parse(String m3uString) {
 
-		// construct name of station from remote mStationPlaylistFile name
-		if (mStationPlaylistFile != null && mStationName == null) {
-			mStationName = mStationPlaylistFile.getName().substring(0, mStationPlaylistFile.getName().lastIndexOf("."));
-		}
+        Scanner in = new Scanner(m3uString);
 
-		if (mStreamURL == null) {
-			Log.e(LOG_TAG, "Unable to parse: " + m3uString);
-		} else {
-			Log.v(LOG_TAG, "Name: " + mStationName);
-			Log.v(LOG_TAG, "URL: " + mStreamURL.toString());
-		}
+        String line;
 
-	}
+        while (in.hasNextLine()) {
 
-	/* Reads local mStationPlaylistFile and parses station */
-	private void read() {
+            line = in.nextLine();
+            // found station name
+            if (line.contains("#EXTINF:-1,")) {
+                mStationName = line.substring(11).trim();
+                // found stream URL
+            } else if (line.startsWith("http")) {
+                try {
+                    mStreamURL = new URL(line.trim());
+                } catch (MalformedURLException e) {
+                    Log.e(LOG_TAG, line.trim() + "is not a valid URL");
+                }
+            }
+        }
 
-		String m3uString;
+        in.close();
 
-		try (BufferedReader br = new BufferedReader(new FileReader(mStationPlaylistFile))) {
-			String line;
-			int counter = 0;
-			StringBuilder sb = new StringBuilder("");
+        // construct name of station from remote mStationPlaylistFile name
+        if (mStationPlaylistFile != null && mStationName == null) {
+            mStationName = mStationPlaylistFile.getName().substring(0, mStationPlaylistFile.getName().lastIndexOf("."));
+        }
 
-			// read until last last reached or until line five
-			while ((line = br.readLine()) != null && counter < 5) {
-				sb.append(line);
-				sb.append("\n");
-				counter++;
-			}
-			// point m3uString to StringBuilder result
-			m3uString = sb.toString();
+        if (mStreamURL == null) {
+            Log.e(LOG_TAG, "Unable to parse: " + m3uString);
+        } else {
+            Log.v(LOG_TAG, "Name: " + mStationName);
+            Log.v(LOG_TAG, "URL: " + mStreamURL.toString());
+        }
 
-			// parse result of read operation and create new station
-			parse(m3uString);
+    }
 
-		} catch (IOException e) {
-			Log.e(LOG_TAG, "Unable to read mStationPlaylistFile " + mStationPlaylistFile.toString());
-		}
 
-	}
+    /* Reads local mStationPlaylistFile and parses station */
+    private void read() {
+
+        String m3uString;
+
+        try (BufferedReader br = new BufferedReader(new FileReader(mStationPlaylistFile))) {
+            String line;
+            int counter = 0;
+            StringBuilder sb = new StringBuilder("");
+
+            // read until last last reached or until line five
+            while ((line = br.readLine()) != null && counter < 5) {
+                sb.append(line);
+                sb.append("\n");
+                counter++;
+            }
+            // point m3uString to StringBuilder result
+            m3uString = sb.toString();
+
+            // parse result of read operation and create new station
+            parse(m3uString);
+
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Unable to read mStationPlaylistFile " + mStationPlaylistFile.toString());
+        }
+
+    }
+
 
     /* Custom toString method */
     @Override
-	public String toString() {
-		return "Station [mStationName=" + mStationName + ", mStationPlaylistFile=\" + mStationPlaylistFile + \", mStreamURL=" + mStreamURL + "]";
-	}
+    public String toString() {
+        return "Station [mStationName=" + mStationName + ", mStationPlaylistFile=\" + mStationPlaylistFile + \", mStreamURL=" + mStreamURL + "]";
+    }
 
-	/* Writes station as m3u to storage */
-	public void writePlaylistFile(File folder) {
 
-		setStationPlaylistFile(folder);
+    // TODO Check for Permission (https://developer.android.com/training/permissions/requesting.html)
+    /* Writes station as m3u to storage */
+    public void writePlaylistFile(File folder) {
 
-		if (mStationPlaylistFile.exists()) {
-			Log.w(LOG_TAG, "File exists. Overwriting " + mStationPlaylistFile.getName() + " " + mStationName + " " + mStreamURL);
-		}
+        setStationPlaylistFile(folder);
 
-		Log.v(LOG_TAG, "Saving... " + mStationPlaylistFile.toString());
+        if (mStationPlaylistFile.exists()) {
+            Log.w(LOG_TAG, "File exists. Overwriting " + mStationPlaylistFile.getName() + " " + mStationName + " " + mStreamURL);
+        }
 
-		String m3uString = createM3u();
+        Log.v(LOG_TAG, "Saving... " + mStationPlaylistFile.toString());
 
-		try (BufferedWriter bw = new BufferedWriter(new FileWriter(mStationPlaylistFile))) {
-			bw.write(m3uString);
-		} catch (IOException e) {
-			Log.e(LOG_TAG, "Unable to writePlaylistFile mStationPlaylistFile " + mStationPlaylistFile.toString());
-		}
+        String m3uString = createM3u();
 
-	}
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(mStationPlaylistFile))) {
+            bw.write(m3uString);
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Unable to writePlaylistFile mStationPlaylistFile " + mStationPlaylistFile.toString());
+        }
 
-	/* Writes station image as png to storage */
-	public void writeImageFile(File folder) {
+    }
 
-		Log.v(LOG_TAG, "Saving favicon: " + mStationImageFile.toString());
 
-		// write image to storage
-		try (FileOutputStream out = new FileOutputStream(mStationImageFile)) {
+    // TODO Check for Permission (https://developer.android.com/training/permissions/requesting.html)
+    /* Writes station image as png to storage */
+    public void writeImageFile(File folder) {
+
+        Log.v(LOG_TAG, "Saving favicon: " + mStationImageFile.toString());
+
+        // write image to storage
+        try (FileOutputStream out = new FileOutputStream(mStationImageFile)) {
             mStationImage.compress(Bitmap.CompressFormat.PNG, 100, out);
         } catch (IOException e) {
-			Log.e(LOG_TAG, "Unable to save favicon: " + mStationImage.toString());
-		}
+            Log.e(LOG_TAG, "Unable to save favicon: " + mStationImage.toString());
+        }
 
-	}
+    }
 
 }

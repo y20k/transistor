@@ -2,10 +2,10 @@
  * StationHelper.java
  * Implements the StationHelper class
  * A StationHelper adds a new station to the collection
- *
+ * <p/>
  * This file is part of
  * TRANSISTOR - Radio App for Android
- *
+ * <p/>
  * Copyright (c) 2015 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
@@ -56,7 +56,7 @@ public class StationHelper {
     public void add(String stationURLString) {
         try {
             URL newStationURL = new URL(stationURLString);
-            String toastMessage  = mContext.getString(R.string.alertmessage_add_download_started);
+            String toastMessage = mContext.getString(R.string.alertmessage_add_download_started);
             Toast.makeText(mContext, toastMessage + stationURLString, Toast.LENGTH_LONG).show();
 
             mCollection = new Collection(mFolder);

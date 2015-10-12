@@ -2,10 +2,10 @@
  * DialogDelete.java
  * Implements the DialogDelete class
  * A DialogDelete deletes a station after asking the user for permission
- *
+ * <p/>
  * This file is part of
  * TRANSISTOR - Radio App for Android
- *
+ * <p/>
  * Copyright (c) 2015 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
