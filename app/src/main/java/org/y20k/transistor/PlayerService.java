@@ -90,12 +90,10 @@ public class PlayerService extends Service implements
         mHeadphoneUnplugReceiver = new HeadphoneUnplugReceiver();
         registerReceiver(mHeadphoneUnplugReceiver, headphoneUnplugIntentFilter);
 
-
         // Listen for phone activity
         IntentFilter phoneStateIntentFilter = new IntentFilter(TelephonyManager.ACTION_PHONE_STATE_CHANGED);
-        PhoneStateReceiver phoneStateReceiver = new PhoneStateReceiver();
-        registerReceiver(phoneStateReceiver, phoneStateIntentFilter);
-
+        mPhoneStateReceiver = new PhoneStateReceiver();
+        registerReceiver(mPhoneStateReceiver, phoneStateIntentFilter);
 
         // TODO Listen for headphone button
         // Use MediaSession

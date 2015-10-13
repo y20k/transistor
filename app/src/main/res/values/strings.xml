@@ -32,7 +32,7 @@
     <string name="dialog_generic_button_okay">Okay</string>
     <string name="dialog_rename_station_button">Rename</string>
     <string name="dialog_rename_station_input_hint">Enter a new name</string>
-    <string name="dialog_rename_station_message">Add new station</string>
+    <string name="dialog_rename_station_message">Station umbenennen</string>
     <string name="dialog_button_rename">Rename</string>
 
     <!-- messages -->
@@ -51,7 +51,7 @@
     <string name="title_activity_infosheet">Info Sheet</string>
 
     <!-- HTML strings -->
-    <string name="html_about"><![CDATA[<!DOCTYPE html>
+    <string name="html_about" translatable="false"><![CDATA[<!DOCTYPE html>
     <html>
         <body>
             <h1>About Transistor</h1>
@@ -71,7 +71,7 @@
         </body>
     </html>]]></string>
 
-    <string name="html_howto"><![CDATA[<!DOCTYPE html>
+    <string name="html_howto" translatable="false"><![CDATA[<!DOCTYPE html>
     <html>
         <body>
             <h1>How to use Transistor</h1>
