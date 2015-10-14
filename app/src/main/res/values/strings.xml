@@ -32,7 +32,7 @@
     <string name="dialog_generic_button_okay">Okay</string>
     <string name="dialog_rename_station_button">Rename</string>
     <string name="dialog_rename_station_input_hint">Enter a new name</string>
-    <string name="dialog_rename_station_message">Station umbenennen</string>
+    <string name="dialog_rename_station_message">Rename station</string>
     <string name="dialog_button_rename">Rename</string>
 
     <!-- messages -->

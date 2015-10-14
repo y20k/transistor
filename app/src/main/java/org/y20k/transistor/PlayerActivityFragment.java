@@ -164,7 +164,7 @@ public class PlayerActivityFragment extends Fragment {
                     // set playback true
                     mPlayback = true;
                     // rotate playback button
-                    changeVisualState();
+                    changeVisualState(getActivity());
                     // start player
                     mPlayerService.startActionPlay(getActivity(), mStreamURL, mStatiomName);
                 }
@@ -173,13 +173,13 @@ public class PlayerActivityFragment extends Fragment {
                     // set playback false
                     mPlayback = false;
                     // rotate playback button
-                    changeVisualState();
+                    changeVisualState(getActivity());
                     // stop player
                     mPlayerService.startActionStop(getActivity());
                 }
 
                 // save state of playback in settings store
-                savePlaybackState();
+                savePlaybackState(getActivity());
             }
         });
 
@@ -190,9 +190,9 @@ public class PlayerActivityFragment extends Fragment {
                 // set playback false
                 mPlayback = false;
                 // rotate playback button
-                changeVisualState();
+                changeVisualState(context);
                 // save state of playback to settings
-                savePlaybackState();
+                savePlaybackState(context);
             }
         };
         IntentFilter intentFilter = new IntentFilter(ACTION_PLAYBACK_STOPPED);
@@ -253,15 +253,15 @@ public class PlayerActivityFragment extends Fragment {
 
 
     /* Animate button and then set visual state */
-    private void changeVisualState() {
+    private void changeVisualState(Context context) {
         // get rotate animation from xml
         Animation rotate;
         if (mPlayback) {
             // if playback has been started get start animation
-            rotate = AnimationUtils.loadAnimation(getActivity(), R.anim.rotate_clockwise_slow);
+            rotate = AnimationUtils.loadAnimation(context, R.anim.rotate_clockwise_slow);
         } else {
             // if playback has been stopped get stop animation
-            rotate = AnimationUtils.loadAnimation(getActivity(), R.anim.rotate_counterclockwise_fast);
+            rotate = AnimationUtils.loadAnimation(context, R.anim.rotate_counterclockwise_fast);
         }
 
         // attach listener for animation end
@@ -308,7 +308,7 @@ public class PlayerActivityFragment extends Fragment {
 
 
     /* Save station name and ID and playback state to SharedPreferences */
-    private void savePlaybackState() {
+    private void savePlaybackState(Context context) {
         // playback started
         if (mPlayback) {
             mStationIDLast = mStationIDCurrent;
@@ -321,7 +321,7 @@ public class PlayerActivityFragment extends Fragment {
             mStationIDCurrent = -1;
         }
 
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt(STATION_ID_CURRENT, mStationIDCurrent);
         editor.putInt(STATION_ID_LAST, mStationIDLast);

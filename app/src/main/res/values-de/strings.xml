@@ -3,7 +3,7 @@
     <string name="alertmessage_add_download_started">Herunterladen: </string>
     <string name="alertmessage_add_malformed_url">Herunterladen nicht möglich: </string>
     <string name="alertmessage_delete_successful">Station erfolgreich entfernt.</string>
-    <string name="alertmessage_rename_unsuccessful">Station kann nicht umbenannt werden. Bitte wählen Sie einen anderen Namen</string>
+    <string name="alertmessage_rename_unsuccessful">Station kann nicht umbenannt werden. Bitte wählen Sie einen anderen Namen.</string>
     <string name="descr_overflow_button">Optionen für Station anzeigen</string>
     <string name="descr_playback_button">Großer Play-Knopf</string>
     <string name="descr_playback_indicator">Playback Signalanzeige</string>
@@ -11,7 +11,7 @@
     <string name="dialog_add_station_button">Hinzufügen</string>
     <string name="descr_station_icon">Logo der Radiostation</string>
     <string name="dialog_add_station_howto">Sie können eine neue Station auch hinzufügen, indem Sie auf Streaming-Links (.m3u) im Web klicken.</string>
-    <string name="dialog_add_station_input_hint">Bitte fügen Sie eine korrekte URL ein</string>
+    <string name="dialog_add_station_input_hint">Streaming-Adresse einfügen</string>
     <string name="dialog_add_station_message">Neue Station hinzufügen</string>
     <string name="dialog_button_delete">Löschen</string>
     <string name="dialog_button_rename">Umbenennen</string>
@@ -19,8 +19,8 @@
     <string name="dialog_generic_button_cancel">Abbrechen</string>
     <string name="dialog_generic_button_okay">Bestätigen</string>
     <string name="dialog_rename_station_button">Umbenennen</string>
-    <string name="dialog_rename_station_input_hint">Bitte geben Sie einen neuen Namen ein</string>
-    <string name="dialog_rename_station_message">Neue Station hinzufügen</string>
+    <string name="dialog_rename_station_input_hint">Bitte neuen Namen eingeben</string>
+    <string name="dialog_rename_station_message">Station umbenennen</string>
     <string name="header_about">Über Transistor</string>
     <string name="header_howto">Wie Transistor funktioniert</string>
     <string name="menu_rename">Umbenennen</string>

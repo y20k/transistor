@@ -217,6 +217,11 @@ public class PlayerService extends Service implements
         // unregister receivers
         this.unregisterReceiver(mPhoneStateReceiver);
         this.unregisterReceiver(mHeadphoneUnplugReceiver);
+
+        // retrieve notification system service and cancel notification
+        NotificationManager notificationManager = (NotificationManager) getApplication().getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancel(PLAYER_SERVICE_NOTIFICATION_ID);
+
     }
 
 

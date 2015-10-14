@@ -4,7 +4,7 @@ README
 Transistor - Radio app for Android
 ----------------------------------
 
-**Version 0.9 ("Young Americans")**
+**Version 0.9.x ("Young Americans")**
 
 Transistor is a bare bones app for listening to radio programs over the internet. The app stores stations as files on your device's external storage. It currently only understands streams embedded within m3u links. Support for m3u8 and pls is coming to a future release.
 

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.y20k.transistor" >
+    package="org.y20k.transistor"
+    android:versionCode="3"
+    android:versionName="0.9.2 (Young Americans)">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -12,7 +14,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/TransistorAppTheme" >
+        android:theme="@style/TransistorAppTheme">
 
         <!-- MAIN ACTIVITY -->
         <activity
@@ -20,11 +22,13 @@
             android:label="@string/app_name"
             android:launchMode="singleTop">
 
+            <!-- Launcher -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
+            <!-- MIME Type -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.BROWSABLE" />
@@ -33,7 +37,7 @@
                 <data android:mimeType="application/x-mpegurl" />
             </intent-filter>
 
-
+            <!-- File extensions -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.BROWSABLE" />
@@ -42,18 +46,6 @@
                 <data android:host="*" />
                 <data android:pathPattern=".*\\.m3u" />
             </intent-filter>
-
-
-
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.VIEW" />-->
-                <!--<category android:name="android.intent.category.BROWSABLE" />-->
-                <!--<category android:name="android.intent.category.DEFAULT" />-->
-                <!--<data android:scheme="http" />-->
-                <!--<data android:host="*" />-->
-                <!--<data android:pathPattern=".*\\.m3u" />-->
-                <!--<data android:pathPattern=".*\\.pls" />-->
-            <!--</intent-filter>-->
 
         </activity>
 
