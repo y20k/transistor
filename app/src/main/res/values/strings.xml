@@ -50,28 +50,32 @@
     <string name="stationid_current">ID of the station currently playing</string>
     <string name="title_activity_infosheet">Info Sheet</string>
 
+    <!-- misc -->
+    <string name="new_stationname">New Station</string>
+
     <!-- HTML strings -->
-    <string name="html_about" translatable="false"><![CDATA[<!DOCTYPE html>
+    <string name="html_about"><![CDATA[<!DOCTYPE html>
     <html>
         <body>
             <h1>About Transistor</h1>
             <h2>Radio app for Android</h2>
             <h3>Version 0.9 (&quot;Young Americans&quot;)</h3>
-            <p>Transistor is a bare bones app for listening to radio programs over the internet. The app stores stations as files on your device\'s external storage. Look for files of type m3u within /Android/data/Transistor/Collection. It currently only understands streams embedded within m3u links. Support for m3u8 and pls is coming to a future release.</p>
+            <p>Transistor is a bare bones app for listening to radio programs over the internet. The app stores stations as files on your device\'s external storage. Look for files of type m3u within /Android/data/org.y20k.transistor/Collection. It currently only understands streams embedded within m3u links. Support for m3u8 and pls is coming to a future release.</p>
             <p>Transistor is free software. It is published under the MIT open source license. You can find the code on GitHub. GitHub is also a good place to file bugs or even to contribute, if you are interested.</p>
             <p><a href="https://github.com/y20k/transistor">https://github.com/y20k/transistor</a></p>
             <p><a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a></p>
             <h3>Which Permissions does Transistor need?</h3>
             <p><strong>Permission INTERNET</strong><br />
             Transistor streams radio stations over the internet.</p>
-            <p><strong>Permission READ_EXTERNAL_STORAGE and WRITE_EXTERNAL_STORAGE</strong><br />
+            <p><strong>Permission READ_EXTERNAL_STORAGE and<br />
+            WRITE_EXTERNAL_STORAGE</strong><br />
             Transistor reads its list of stations from (and writes it to) external storage.</p>
             <p><strong>Permission READ_PHONE_STATE</strong><br />
             Transistor stops playback when the device receives a phone call or when the user initiates a call.</p>
         </body>
     </html>]]></string>
 
-    <string name="html_howto" translatable="false"><![CDATA[<!DOCTYPE html>
+    <string name="html_howto"><![CDATA[<!DOCTYPE html>
     <html>
         <body>
             <h1>How to use Transistor</h1>

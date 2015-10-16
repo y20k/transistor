@@ -81,16 +81,16 @@ public class Station implements Comparable<Station> {
     }
 
 
-    /* Constructor when given folder and remote location for m3u file */
+    /* Constructor when given folder and remote location for playlist file */
     public Station(File folder, URL fileLocation) {
-        // download and parse station data from remote m3u file
-        downloadPlaylistFile(folder, fileLocation);
+        // download and parse station data from remote playlist file
+        downloadPlaylistFile(fileLocation);
 
         // set playlist file object - name of station required
         setStationPlaylistFile(folder);
 
         // download favicon and store bitmap object
-        downloadImageFile(folder, fileLocation);
+        downloadImageFile(fileLocation);
 
         // set image file object
         setStationImageFile(folder);
@@ -124,12 +124,12 @@ public class Station implements Comparable<Station> {
     }
 
 
-    /* Downloads remote m3u playlist file and parses station */
-    private void downloadPlaylistFile(File folder, URL fileLocation) {
+    /* Downloads remote playlist file and parses station */
+    private void downloadPlaylistFile(URL fileLocation) {
 
         Log.v(LOG_TAG, "Downloading... " + fileLocation.toString());
 
-        String m3uString = null;
+        String fileContent = null;
 
         try (BufferedReader br = new BufferedReader(new InputStreamReader(
                 fileLocation.openStream()))) {
@@ -144,8 +144,8 @@ public class Station implements Comparable<Station> {
                 sb.append("\n");
                 counter++;
             }
-            // point m3uString to StringBuilder result
-            m3uString = sb.toString();
+            // point fileContent to StringBuilder result
+            fileContent = sb.toString();
 
             if (sb.length() == 0) {
                 Log.e(LOG_TAG, "Input stream was empty: " + fileLocation.toString());
@@ -157,7 +157,7 @@ public class Station implements Comparable<Station> {
                     fileLocation.toString().lastIndexOf('.'));
 
             // parse result of downloadPlaylistFile
-            parse(m3uString);
+            parse(fileContent);
 
         } catch (IOException e) {
             Log.e(LOG_TAG, "Unable to read remote mStationPlaylistFile " + fileLocation.toString());
@@ -166,7 +166,7 @@ public class Station implements Comparable<Station> {
 
 
     /* Downloads remote favicon file */
-    private void downloadImageFile(File folder, URL fileLocation) {
+    private void downloadImageFile(URL fileLocation) {
 
         // get second level domain - still way to hacky
         String host = fileLocation.getHost();
@@ -263,20 +263,22 @@ public class Station implements Comparable<Station> {
     }
 
 
-    /* Parses string representation of m3u mStationPlaylistFile */
-    private void parse(String m3uString) {
+    /* Parses string representation of mStationPlaylistFile */
+    private void parse(String fileContent) {
 
-        Scanner in = new Scanner(m3uString);
-
+        // prepare scanner
+        Scanner in = new Scanner(fileContent);
         String line;
 
         while (in.hasNextLine()) {
 
+            // get a line from file content
             line = in.nextLine();
-            // found station name
+
+            // M3U: found station name
             if (line.contains("#EXTINF:-1,")) {
                 mStationName = line.substring(11).trim();
-                // found stream URL
+            // M3U: found stream URL
             } else if (line.startsWith("http")) {
                 try {
                     mStreamURL = new URL(line.trim());
@@ -284,17 +286,31 @@ public class Station implements Comparable<Station> {
                     Log.e(LOG_TAG, line.trim() + "is not a valid URL");
                 }
             }
+
+            // PLS: found station name
+            else if (line.startsWith("Title1=")) {
+                mStationName = line.substring(7).trim();
+            // PLS: found stream URL
+            } else if (line.startsWith("File1=http")) {
+                try {
+                    mStreamURL = new URL(line.substring(6).trim());
+                } catch (MalformedURLException e) {
+                    Log.e(LOG_TAG, line.substring(6).trim() + "is not a valid URL");
+                }
+            }
         }
 
         in.close();
 
-        // construct name of station from remote mStationPlaylistFile name
+        // try to construct name of station from remote mStationPlaylistFile name
         if (mStationPlaylistFile != null && mStationName == null) {
             mStationName = mStationPlaylistFile.getName().substring(0, mStationPlaylistFile.getName().lastIndexOf("."));
+        } else if (mStationPlaylistFile == null && mStationName == null) {
+            mStationName = "New Station";
         }
 
         if (mStreamURL == null) {
-            Log.e(LOG_TAG, "Unable to parse: " + m3uString);
+            Log.e(LOG_TAG, "Unable to parse: " + fileContent);
         } else {
             Log.v(LOG_TAG, "Name: " + mStationName);
             Log.v(LOG_TAG, "URL: " + mStreamURL.toString());
@@ -306,7 +322,7 @@ public class Station implements Comparable<Station> {
     /* Reads local mStationPlaylistFile and parses station */
     private void read() {
 
-        String m3uString;
+        String fileContent;
 
         try (BufferedReader br = new BufferedReader(new FileReader(mStationPlaylistFile))) {
             String line;
@@ -319,11 +335,11 @@ public class Station implements Comparable<Station> {
                 sb.append("\n");
                 counter++;
             }
-            // point m3uString to StringBuilder result
-            m3uString = sb.toString();
+            // point fileContent to StringBuilder result
+            fileContent = sb.toString();
 
             // parse result of read operation and create new station
-            parse(m3uString);
+            parse(fileContent);
 
         } catch (IOException e) {
             Log.e(LOG_TAG, "Unable to read mStationPlaylistFile " + mStationPlaylistFile.toString());

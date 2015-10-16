@@ -35,4 +35,47 @@
     <string name="title_activity_player">Jetzt hören</string>
     <string name="toastalert_headphones_unplugged">Köpfhörer entfernt. Playback gestoppt.</string>
     <string name="toastalert_phone_active">Telefonaktivität. Playback gestoppt.</string>
+
+    <string name="html_about"><![CDATA[<!DOCTYPE html>
+    <html>
+        <body>
+            <h1>Über Transistor</h1>
+            <h2>Radio App für Android</h2>
+            <h3>Version 0.9 (&quot;Young Americans&quot;)</h3>
+            <p>Transistor ist eine mininalistische App um über das Internet Radio hören zu können. Die App speichert Stationen als Textdateien im externen Gerätespeicher ab - und zwar hier: /Android/data/org.y20k.transistor/Collection. Momentan spielt Transistor nur Streams ab, die in M3U-Links verpackt sind. Die Formate M3U8 und PLS werden erst in einer zukünftigen Version der App unterstützt.</p>
+            <p>Transistor ist Freie Software. Die App ist unter der MIT Open Source Lizenz veröffentlicht. Der Quellcode liegt auf GitHub. GitHub ist auch ein guter Ort, um Bugs zu melden oder um sich an der Weiterentwicklung zu beteiligen.</p>
+            <p><a href="https://github.com/y20k/transistor">https://github.com/y20k/transistor</a></p>
+            <p><a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a></p>
+            <h3>Welche App-Berechtigungen braucht Transistor?</h3>
+            <p><strong>Berechtigung INTERNET</strong><br />
+            Transistor streamt Radioprogramme über das Internet.</p>
+            <p><strong>Berechtigung READ_EXTERNAL_STORAGE und<br />
+            Berechtigung WRITE_EXTERNAL_STORAGE</strong><br />
+            Transistor nutzt fürs Auslesen und Speichern seiner Radiostationen den externen Gerätespeicher.</p>
+            <p><strong>Berechtigung READ_PHONE_STATE</strong><br />
+            Transistor stoppt die Wiedergabe einer Radiostation, wenn der Nutzer einen Anruf erhält oder selbst einen Anruf initiiert.</p>
+        </body>
+    </html>]]></string>
+
+    <string name="html_howto"><![CDATA[<!DOCTYPE html>
+    <html>
+        <body>
+            <h1>Wie Transistor funktioniert</h1>
+            <h2>Wie füge ich eine neue Radiostation hinzu?</h2>
+            <p>Die einfachste Variante eine neue Station hinzuzufügen ist: Im Web nach M3U-Streaminglinks suchen und diese dann mit Transistor öffnen. Man kann zudem auch auf das (+)-Symbol tippen und M3U-Links via Copy und Paste direkt eingeben.</p>
+            <h2>Wie schalte ich das Radio ein?</h2>
+            <p>Den großen Play-Knopf drücken ;).</p>
+            <h2>Wie schalte ich das Radio wieder aus?</h2>
+            <p>Den großen Stop-Knopf drücken oder das Kopfhörerkabel abziehen oder die "Notification" der App ausblenden.</p>
+            <h2>Wie kann ich eine Station löschen oder umbenennen?</h2>
+            <p>Optionen für Löschen und Umbenennen finden sich sowohl in der Listenansicht, als auch in der Einzelansicht für Play und Stop - dazu einfach auf das Drei-Punkte-Menü tippen. Es ist zudem möglich die Liste der Stationen direkt mit einem Datei-Browser zu bearbeiten (siehe nächste Frage).</p>
+            <h2>Wo speichert Transistor seine Radiostationen ab?</h2>
+            <p>Transistor speichert seine Stationen nicht in einer Datenbank. Stattdessen werden Stationen als M3U-Textdateien im externen Gerätespeicher abgelegt.  Diese können auch manuell mit Hilfe eines Texteditors bearbeitet werden. Die Dateien finden sich hier: /Android/data/org.y20k.transistor/Collection</p>
+            <h2>Warum hat Transistor keine Einstellungen?</h2>
+            <p>Es gibt schlicht nichts einzustellen ;). Transistor ist eine sehr einfache App. Abhängig vom eigenen Standpunkt ist "einfach" entweder großartig oder mies.</p>
+        </body>
+    </html>]]></string>
+    <string name="new_stationname">Neue Station</string>
+
+
 </resources>
