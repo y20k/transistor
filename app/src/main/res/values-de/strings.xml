@@ -49,9 +49,6 @@
             <h3>Welche App-Berechtigungen braucht Transistor?</h3>
             <p><strong>Berechtigung INTERNET</strong><br />
             Transistor streamt Radioprogramme über das Internet.</p>
-            <p><strong>Berechtigung READ_EXTERNAL_STORAGE und<br />
-            Berechtigung WRITE_EXTERNAL_STORAGE</strong><br />
-            Transistor nutzt fürs Auslesen und Speichern seiner Radiostationen den externen Gerätespeicher.</p>
             <p><strong>Berechtigung READ_PHONE_STATE</strong><br />
             Transistor stoppt die Wiedergabe einer Radiostation, wenn der Nutzer einen Anruf erhält oder selbst einen Anruf initiiert.</p>
         </body>
@@ -76,6 +73,7 @@
         </body>
     </html>]]></string>
     <string name="new_stationname">Neue Station</string>
+    <string name="snackbaralert_phonestate_access">Der Zugriff Telefoniefunktionen ist notwendig um bei eingehenden und ausgehenden Anrufen die Wiedergabe zu stoppen.</string>
 
 
 </resources>

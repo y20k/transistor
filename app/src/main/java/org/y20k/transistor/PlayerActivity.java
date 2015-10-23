@@ -14,15 +14,20 @@
 
 package org.y20k.transistor;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
+import android.widget.Toast;
 
 
 /**
  * PlayerActivity class
  */
 public class PlayerActivity extends AppCompatActivity {
+
+
+    private static final int MY_PERMISSIONS_REQUEST_READ_PHONE_STATE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

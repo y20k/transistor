@@ -13,11 +13,18 @@
 
 package org.y20k.transistor;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
+import android.widget.Toast;
 
 
 /**
@@ -25,10 +32,21 @@ import android.view.MenuInflater;
  */
 public class MainActivity extends AppCompatActivity {
 
+    /* Keys */
+    private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
+
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
     }
 
 
@@ -47,5 +65,6 @@ public class MainActivity extends AppCompatActivity {
         inflater.inflate(R.menu.menu_main_actionbar, menu);
         return super.onCreateOptionsMenu(menu);
     }
+
 
 }

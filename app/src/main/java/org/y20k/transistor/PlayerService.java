@@ -14,6 +14,7 @@
 
 package org.y20k.transistor;
 
+import android.Manifest;
 import android.app.NotificationManager;
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -21,10 +22,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -62,6 +65,7 @@ public class PlayerService extends Service implements
     private String mStreamURL;
     private String mStationName;
     private boolean mPlayback;
+    private boolean mPhonePermission;
     private HeadphoneUnplugReceiver mHeadphoneUnplugReceiver;
     private PhoneStateReceiver mPhoneStateReceiver;
 
@@ -80,6 +84,9 @@ public class PlayerService extends Service implements
     @Override
     public void onCreate() {
         super.onCreate();
+
+        // TODO descibe
+        checkPermissions();
 
         // set up variables
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
@@ -341,6 +348,33 @@ public class PlayerService extends Service implements
 //    }
 
 
+    /* Check permissions and save state of permissions */
+    private void checkPermissions() {
+        // set default value
+        mPhonePermission = true;
+
+        // check for permission to read phone state
+        if (ContextCompat.checkSelfPermission(getApplication(), Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            // not granted
+            mPhonePermission = false;
+        }
+
+        if (mPhonePermission) {
+            System.out.println("!!! Permission granted ");
+        }
+        else {
+            System.out.println("!!! Permission denied ");
+        }
+
+        // save state to settings
+        // savePermissionsState(mActivity);
+    }
+
+
+
+
+
+
     /**
      * Inner class: Receiver for headphone unplug-signal
      */
@@ -381,5 +415,9 @@ public class PlayerService extends Service implements
      */
 
 
-
 }
+
+/**
+ * TODO
+ * - try to get metadata from stream MediaPlayer.TrackInfo
+ */

@@ -35,8 +35,5 @@ Which Permissions does Transistor need?
 ### Permission "INTERNET"
 Transistor streams radio stations over the internet.
 
-### Permission "READ\_EXTERNAL\_STORAGE" and "WRITE\_EXTERNAL\_STORAGE"
-Transistor reads its list of stations from (and writes it to) external storage.
-
 ### Permission "READ\_PHONE\_STATE"
 Transistor stops playback when the device receives a phone call or when the user initiates a call.

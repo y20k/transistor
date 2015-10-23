@@ -2,11 +2,11 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.y20k.transistor"
-    android:versionCode="3"
-    android:versionName="0.9.2 (Young Americans)">
+    android:versionCode="4"
+    android:versionName="0.9.3 (Young Americans)">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-sdk android:minSdkVersion="19" android:targetSdkVersion="23" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 

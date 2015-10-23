@@ -42,6 +42,7 @@
     <string name="alertmessage_add_malformed_url">Unable to download:</string>
     <string name="toastalert_headphones_unplugged">Headphones unplugged. Playback stopped.</string>
     <string name="toastalert_phone_active">Phone active. Playback stopped.</string>
+    <string name="snackbaralert_phonestate_access">Phone state access is required to be able to stop playback when receiving a call.</string>
 
     <!-- notification -->
     <string name="notification_swip_to_stop">Swipe to stop</string>
@@ -67,9 +68,6 @@
             <h3>Which Permissions does Transistor need?</h3>
             <p><strong>Permission INTERNET</strong><br />
             Transistor streams radio stations over the internet.</p>
-            <p><strong>Permission READ_EXTERNAL_STORAGE and<br />
-            WRITE_EXTERNAL_STORAGE</strong><br />
-            Transistor reads its list of stations from (and writes it to) external storage.</p>
             <p><strong>Permission READ_PHONE_STATE</strong><br />
             Transistor stops playback when the device receives a phone call or when the user initiates a call.</p>
         </body>
@@ -93,5 +91,6 @@
             <p>There is nothing to be set ;). Transistor is a very simple app. Depending on your point of view "simple" is either great or lame.</p>
         </body>
     </html>]]></string>
+    <string name="toastalert_playback_without_phone_permission">Starting playback without phone access</string>
 
 </resources>

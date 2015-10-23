@@ -17,6 +17,7 @@
     <color name="transistor_grey_light">#FFB3B3B3</color>
     <color name="transistor_grey_lighter">#FFD8D8D8</color>
     <color name="transistor_grey_dark">#FF333333</color>
+    <color name="transistor_grey_dark_warm">#FF2C2926</color>
 
     <!-- misc -->
     <color name="transistor_white">#FFFFFFFF</color>

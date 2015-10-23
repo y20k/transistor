@@ -48,6 +48,7 @@ public class MainActivityFragment extends Fragment {
     /* Define log tag */
     public final String LOG_TAG = MainActivityFragment.class.getSimpleName();
 
+
     /* Main class variables */
     private Collection mCollection;
     private CollectionAdapter mCollectionAdapter = null;
@@ -62,6 +63,7 @@ public class MainActivityFragment extends Fragment {
     private boolean mPlayback;
 
     /* Keys */
+    private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;
     public static final String LIST_STATE = "ListState";
     public static final String STREAM_URL = "streamURL";
     public static final String STATION_NAME = "stationName";
@@ -142,7 +144,6 @@ public class MainActivityFragment extends Fragment {
 
         // fragment has options menu
         setHasOptionsMenu(true);
-
 
 //        // let Transistor react to external clicks on m3u links
 //        if (Intent.ACTION_VIEW.equals(action) && type.startsWith("audio/")) {

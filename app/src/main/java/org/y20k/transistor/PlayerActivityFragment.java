@@ -14,17 +14,24 @@
 
 package org.y20k.transistor;
 
-import android.app.Fragment;
+import android.Manifest;
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +41,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.y20k.transistor.core.Collection;
 import org.y20k.transistor.helpers.DialogDelete;
@@ -59,8 +67,11 @@ public class PlayerActivityFragment extends Fragment {
     public static final String STATION_ID_LAST = "stationIDLast";
     public static final String PLAYBACK = "playback";
     private static final String ACTION_PLAYBACK_STOPPED = "org.y20k.transistor.action.PLAYBACK_STOPPED";
+    private static final int MY_PERMISSIONS_REQUEST_READ_PHONE_STATE = 1;
 
     /* Main class variables */
+    private Activity mActivity;
+    private View mRootView;
     private Bitmap mStationImage;
     private String mStatiomName;
     private String mStreamURL;
@@ -72,6 +83,7 @@ public class PlayerActivityFragment extends Fragment {
     private int mStationIDCurrent;
     private int mStationIDLast;
     private boolean mPlayback;
+    private boolean mPhonePermission = true;
     private Collection mCollection;
     private PlayerService mPlayerService;
 
@@ -85,14 +97,21 @@ public class PlayerActivityFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // get activity
+        mActivity = getActivity();
+
         // get station name, URL and id from intent
-        Intent intent = getActivity().getIntent();
+        Intent intent = mActivity.getIntent();
         mStationID = intent.getIntExtra(STATION_ID, -1);
         mStatiomName = intent.getStringExtra(STATION_NAME);
         mStreamURL = intent.getStringExtra(STREAM_URL);
 
+        // TODO move to onresume?
+        // check needed permissions
+        checkPermissions();
+
         // load collection
-        File folder = new File(getActivity().getExternalFilesDir("Collection").toString());
+        File folder = new File(mActivity.getExternalFilesDir("Collection").toString());
         mCollection = new Collection(folder);
 
         // get URL and name for stream
@@ -108,13 +127,14 @@ public class PlayerActivityFragment extends Fragment {
         super.onResume();
 
         // restore player state from preferences
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mActivity);
         mStationIDCurrent = settings.getInt(STATION_ID_CURRENT, -1);
         mStationIDLast = settings.getInt(STATION_ID_LAST, -1);
         mPlayback = settings.getBoolean(PLAYBACK, false);
 
         // set up button symbol and playback indicator
         setVisualState();
+
     }
 
     @Override
@@ -128,7 +148,7 @@ public class PlayerActivityFragment extends Fragment {
         } else {
             stationImageSmall = BitmapFactory.decodeResource(getResources(), R.drawable.ic_notesymbol);
         }
-        imageHelper = new ImageHelper(stationImageSmall, getActivity());
+        imageHelper = new ImageHelper(stationImageSmall, mActivity);
         imageHelper.setBackgroundColor(R.color.transistor_grey_lighter);
         mStationImage = imageHelper.createCircularFramedImage(192);
 
@@ -136,12 +156,12 @@ public class PlayerActivityFragment extends Fragment {
         mPlayerService = new PlayerService();
 
         // inflate rootview from xml
-        View rootView = inflater.inflate(R.layout.fragment_player, container, false);
+        mRootView = inflater.inflate(R.layout.fragment_player, container, false);
 
         // find views for station name and image and playback indicator
-        mStationNameView = (TextView) rootView.findViewById(R.id.player_textview_stationname);
-        mStationeImageView = (ImageView) rootView.findViewById(R.id.player_imageview_station_icon);
-        mPlaybackIndicator = (ImageView) rootView.findViewById(R.id.player_playback_indicator);
+        mStationNameView = (TextView) mRootView.findViewById(R.id.player_textview_stationname);
+        mStationeImageView = (ImageView) mRootView.findViewById(R.id.player_imageview_station_icon);
+        mPlaybackIndicator = (ImageView) mRootView.findViewById(R.id.player_playback_indicator);
 
         // set station image
         if (mStationImage != null) {
@@ -152,7 +172,7 @@ public class PlayerActivityFragment extends Fragment {
         mStationNameView.setText(mStatiomName);
 
         // construct image button
-        mPlaybackButton = (ImageButton) rootView.findViewById(R.id.player_playback_button);
+        mPlaybackButton = (ImageButton) mRootView.findViewById(R.id.player_playback_button);
 
         // set listener to playback button
         mPlaybackButton.setOnClickListener(new View.OnClickListener() {
@@ -161,25 +181,36 @@ public class PlayerActivityFragment extends Fragment {
 
                 // playback stopped or new station - start playback
                 if (!mPlayback || mStationID != mStationIDCurrent) {
+
                     // set playback true
                     mPlayback = true;
                     // rotate playback button
-                    changeVisualState(getActivity());
-                    // start player
-                    mPlayerService.startActionPlay(getActivity(), mStreamURL, mStatiomName);
+                    changeVisualState(mActivity);
+
+                    if (!mPhonePermission) {
+                        // ask for read phone state permission
+                        requestPermissions();
+                    }
+                    else {
+                        // start player
+                        Log.v(LOG_TAG, "Starting player service.");
+                        mPlayerService.startActionPlay(mActivity, mStreamURL, mStatiomName);
+                    }
+
                 }
                 // playback active - stop playback
                 else {
                     // set playback false
                     mPlayback = false;
                     // rotate playback button
-                    changeVisualState(getActivity());
+                    changeVisualState(mActivity);
                     // stop player
-                    mPlayerService.startActionStop(getActivity());
+                    Log.v(LOG_TAG, "Stopping player service.");
+                    mPlayerService.startActionStop(mActivity);
                 }
 
                 // save state of playback in settings store
-                savePlaybackState(getActivity());
+                savePlaybackState(mActivity);
             }
         });
 
@@ -196,8 +227,8 @@ public class PlayerActivityFragment extends Fragment {
             }
         };
         IntentFilter intentFilter = new IntentFilter(ACTION_PLAYBACK_STOPPED);
-        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(playbackStoppedReceiver, intentFilter);
-        return rootView;
+        LocalBroadcastManager.getInstance(mActivity).registerReceiver(playbackStoppedReceiver, intentFilter);
+        return mRootView;
     }
 
 
@@ -209,7 +240,7 @@ public class PlayerActivityFragment extends Fragment {
             // CASE RENAME
             case R.id.menu_rename:
                 // construct rename dialog
-                final DialogRename dialogRename = new DialogRename(getActivity(), mCollection, mStatiomName, mStationID);
+                final DialogRename dialogRename = new DialogRename(mActivity, mCollection, mStatiomName, mStationID);
                 dialogRename.setStationRenamedListener(new DialogRename.StationRenamedListener() {
                     @Override
                     public void stationRenamed() {
@@ -223,14 +254,14 @@ public class PlayerActivityFragment extends Fragment {
             // CASE DELETE
             case R.id.menu_delete:
                 // stop playback
-                mPlayerService.startActionStop(getActivity());
+                mPlayerService.startActionStop(mActivity);
                 // construct delete dialog
-                DialogDelete dialogDelete = new DialogDelete(getActivity(), mCollection, mStationID);
+                DialogDelete dialogDelete = new DialogDelete(mActivity, mCollection, mStationID);
                 dialogDelete.setStationDeletedListener(new DialogDelete.StationDeletedListener() {
                     @Override
                     public void stationDeleted() {
                         // start main activity
-                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        Intent intent = new Intent(mActivity, MainActivity.class);
                         startActivity(intent);
                     }
                 });
@@ -245,11 +276,38 @@ public class PlayerActivityFragment extends Fragment {
 
     }
 
+
 //    @Override
 //    public void onPause() {
 //        super.onPause();
 //        savePlaybackState();
 //    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+
+        switch (requestCode) {
+
+            // CASE result of permission request for phone state
+            case MY_PERMISSIONS_REQUEST_READ_PHONE_STATE: {
+
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission granted
+                    mPhonePermission = true;
+                } else {
+                    // permission denied
+                    Toast.makeText(mActivity, R.string.toastalert_playback_without_phone_permission, Toast.LENGTH_LONG).show();
+                    mPhonePermission = false;
+                }
+
+                // start player
+                Log.v(LOG_TAG, "Starting player service after permission request.");
+                mPlayerService.startActionPlay(mActivity, mStreamURL, mStatiomName);
+
+            }
+        }
+    }
 
 
     /* Animate button and then set visual state */
@@ -330,5 +388,38 @@ public class PlayerActivityFragment extends Fragment {
 
     }
 
-}
 
+    /* Check permissions and save state of permissions */
+    private void checkPermissions() {
+        // set default value
+        mPhonePermission = true;
+
+        // check for permission to read phone state
+        if (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            // not granted
+            mPhonePermission = false;
+        }
+    }
+
+
+    /* Ask user for permission to read phone state */
+    private void requestPermissions() {
+
+        // permission has been denied before - explanation needed
+        if (ActivityCompat.shouldShowRequestPermissionRationale(mActivity, Manifest.permission.READ_PHONE_STATE)) {
+            // show explanation in snackbar
+            Snackbar.make(mRootView, R.string.snackbaralert_phonestate_access,
+                    Snackbar.LENGTH_INDEFINITE).setActionTextColor(ContextCompat.getColor(mActivity, R.color.transistor_gold)).setAction("OK", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // request permission
+                    requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, MY_PERMISSIONS_REQUEST_READ_PHONE_STATE);
+                }
+            }).show();
+        } else {
+            // request permission
+            requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, MY_PERMISSIONS_REQUEST_READ_PHONE_STATE);
+        }
+    }
+
+}
