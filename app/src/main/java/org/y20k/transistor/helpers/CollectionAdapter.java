@@ -2,10 +2,10 @@
  * CollectionAdapter.java
  * Implements the CollectionAdapter class
  * A CollectionAdapter is a custom adapter for a listview
- * <p/>
+ *
  * This file is part of
  * TRANSISTOR - Radio App for Android
- * <p/>
+ *
  * Copyright (c) 2015 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
@@ -15,7 +15,9 @@
 package org.y20k.transistor.helpers;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,12 +36,21 @@ import java.util.LinkedList;
  */
 public class CollectionAdapter extends BaseAdapter {
 
+    /* Keys */
+    public static final String STATION_ID_CURRENT = "stationIDCurrent";
+    public static final String STATION_ID_LAST = "stationIDLast";
+    public static final String PLAYBACK = "playback";
+
+
     /* Main class variables */
     private LinkedList<String> mStationNames;
     private LinkedList<Bitmap> mStationImages;
     private Collection mCollection;
     private Context mContext;
     private CollectionChangedListener mCollectionChangedListener;
+    private boolean mPlayback;
+    private int mStationIDCurrent;
+    private int mStationIDLast;
 
 
     /* Interface for custom listener */
@@ -55,6 +66,9 @@ public class CollectionAdapter extends BaseAdapter {
         mStationImages = stationImage;
         mCollection = null;
         mCollectionChangedListener = null;
+
+        System.out.println("!!! @CollectionAdapter.Constructor | LOADING");
+        loadPlaybackState(context);
     }
 
 
@@ -99,10 +113,17 @@ public class CollectionAdapter extends BaseAdapter {
         rowView = inflater.inflate(R.layout.list_item_collection, null);
         holder.stationImageView = (ImageView) rowView.findViewById(R.id.list_item_station_icon);
         holder.stationNameView = (TextView) rowView.findViewById(R.id.list_item_textview);
+        holder.playbackIndicator = (ImageView) rowView.findViewById(R.id.list_item_playback_indicator);
         holder.stationMenuView = (ImageView) rowView.findViewById(R.id.list_item_more_button);
 
         holder.stationImageView.setImageBitmap(mStationImages.get(position));
         holder.stationNameView.setText(mStationNames.get(position));
+
+        if (mPlayback && mStationIDCurrent == position) {
+            holder.playbackIndicator.setVisibility(View.VISIBLE);
+        } else {
+            holder.playbackIndicator.setVisibility(View.GONE);
+        }
 
         holder.stationMenuView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,6 +149,36 @@ public class CollectionAdapter extends BaseAdapter {
         return rowView;
     }
 
+    private void loadPlaybackState(Context context) {
+
+        // restore player state from preferences
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
+        mStationIDCurrent = settings.getInt(STATION_ID_CURRENT, -1);
+        mStationIDLast = settings.getInt(STATION_ID_LAST, -1);
+        mPlayback = settings.getBoolean(PLAYBACK, false);
+
+        System.out.println("!!! @CollectionAdapter | Current: " + mStationIDCurrent);
+        System.out.println("!!! @CollectionAdapter | Last: " + mStationIDLast);
+        System.out.println("!!! @CollectionAdapter | Playback" + mPlayback);
+    }
+
+//    Parent:
+//    MainActivityFragment
+//    + create object of type child
+//    + attach listener to object using child's setter
+//
+//    Child:
+//    DialogAddStationFragment
+//    - define interface (1)
+//            + define instance variable of type interface
+//    + set instance variable to null in constructor
+//    + create setter for instance variable
+//    - fire listener using "if (listener != null) {listener.dosomething}"
+
+
+
+
+
 
     /**
      * Inner class: cache of the children views
@@ -135,6 +186,7 @@ public class CollectionAdapter extends BaseAdapter {
     static class ViewHolder {
         ImageView stationImageView;
         TextView stationNameView;
+        ImageView playbackIndicator;
         ImageView stationMenuView;
     }
     /**

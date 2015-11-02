@@ -14,7 +14,6 @@
 
 package org.y20k.transistor;
 
-import android.Manifest;
 import android.app.NotificationManager;
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -22,14 +21,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -50,14 +46,17 @@ public class PlayerService extends Service implements
     /* Define log tag */
     public final String LOG_TAG = PlayerService.class.getSimpleName();
 
+
     /* Keys */
     private static final String ACTION_PLAY = "org.y20k.transistor.action.PLAY";
     private static final String ACTION_STOP = "org.y20k.transistor.action.STOP";
+    private static final String ACTION_PLAYBACK_STARTED = "org.y20k.transistor.action.PLAYBACK_STARTED";
     private static final String ACTION_PLAYBACK_STOPPED = "org.y20k.transistor.action.PLAYBACK_STOPPED";
     private static final String EXTRA_STREAM_URL = "STREAM_URL";
     public static final String PLAYBACK = "playback";
     private static final int PLAYER_SERVICE_NOTIFICATION_ID = 1;
-    public static final String STATION_ID_CURRENT = "stationIDCurrent";
+//    public static final String STATION_ID_CURRENT = "stationIDCurrent";
+
 
     /* Main class variables */
     private AudioManager mAudioManager;
@@ -65,15 +64,7 @@ public class PlayerService extends Service implements
     private String mStreamURL;
     private String mStationName;
     private boolean mPlayback;
-    private boolean mPhonePermission;
     private HeadphoneUnplugReceiver mHeadphoneUnplugReceiver;
-    private PhoneStateReceiver mPhoneStateReceiver;
-
-
-
-    // TODO: Remove?
-    private IBinder mBinder;
-    private Random mGenerator;
 
 
     /* Constructor (default) */
@@ -85,9 +76,6 @@ public class PlayerService extends Service implements
     public void onCreate() {
         super.onCreate();
 
-        // TODO descibe
-        checkPermissions();
-
         // set up variables
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         mMediaPlayer = null;
@@ -96,11 +84,6 @@ public class PlayerService extends Service implements
         IntentFilter headphoneUnplugIntentFilter = new IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
         mHeadphoneUnplugReceiver = new HeadphoneUnplugReceiver();
         registerReceiver(mHeadphoneUnplugReceiver, headphoneUnplugIntentFilter);
-
-        // Listen for phone activity
-        IntentFilter phoneStateIntentFilter = new IntentFilter(TelephonyManager.ACTION_PHONE_STATE_CHANGED);
-        mPhoneStateReceiver = new PhoneStateReceiver();
-        registerReceiver(mPhoneStateReceiver, phoneStateIntentFilter);
 
         // TODO Listen for headphone button
         // Use MediaSession
@@ -113,7 +96,7 @@ public class PlayerService extends Service implements
 
         // checking for empty intent
         if (intent == null) {
-            Log.v(LOG_TAG, "Service stopped and restarted by the system. Stopping self now.");
+            Log.v(LOG_TAG, "Null-Intent received. Stopping self.");
             stopSelf();
         }
 
@@ -121,27 +104,24 @@ public class PlayerService extends Service implements
         else if (intent.getAction().equals(ACTION_PLAY)) {
             Log.v(LOG_TAG, "Service received command: PLAY");
 
-            // stop running player
-            if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
-                releaseMediaPlayer();
-            }
-
             // set mPlayback true
             mPlayback = true;
 
             // get URL of station from intent
             mStreamURL = intent.getStringExtra(EXTRA_STREAM_URL);
 
-            // request focus and initialize media player
-            if (mStreamURL != null && requestFocus()) {
-                initializeMediaPlayer();
-            }
+            // start playback
+            startPlayback();
         }
 
         // ACTION STOP
         else if (intent.getAction().equals(ACTION_STOP)) {
             Log.v(LOG_TAG, "Service received command: STOP");
+
+            // set mPlayback false
             mPlayback = false;
+
+            // stop playback
             stopPlayback();
         }
 
@@ -211,18 +191,14 @@ public class PlayerService extends Service implements
     public void onDestroy() {
         super.onDestroy();
 
-        // stop playback
-        // stopPlayback();
+        // TODO REMOVE
+        System.out.println("!!! @PlayerService.onDestroy | SAVING");
 
         // save state
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplication());
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putInt(STATION_ID_CURRENT, -1);
-        editor.putBoolean(PLAYBACK, false);
-        editor.commit();
+        mPlayback = false;
+        savePlaybackState();
 
         // unregister receivers
-        this.unregisterReceiver(mPhoneStateReceiver);
         this.unregisterReceiver(mHeadphoneUnplugReceiver);
 
         // retrieve notification system service and cancel notification
@@ -259,6 +235,10 @@ public class PlayerService extends Service implements
         Intent intent = new Intent(context, PlayerService.class);
         intent.setAction(ACTION_STOP);
         context.startService(intent);
+
+        // retrieve notification system service and cancel notification
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancel(PLAYER_SERVICE_NOTIFICATION_ID);
     }
 
 
@@ -304,27 +284,48 @@ public class PlayerService extends Service implements
     }
 
 
+    /* Start playback */
+    private void startPlayback() {
+        // stop running player
+        if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
+            releaseMediaPlayer();
+        }
+
+        // request focus and initialize media player
+        if (mStreamURL != null && requestFocus()) {
+            initializeMediaPlayer();
+        }
+
+        // TODO REMOVE
+        System.out.println("!!! @PlayerService.startPlayback | SAVING");
+
+        // save state
+        mPlayback = true;
+        savePlaybackState();
+
+        // send local broadcast (needed by MainActivityFragment)
+        Intent i = new Intent();
+        i.setAction(ACTION_PLAYBACK_STARTED);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(i);
+    }
+
+
     /* Stop playback */
     private void stopPlayback() {
         // release player
         releaseMediaPlayer();
 
-        // store player state in shared preferences
+        // TODO REMOVE
+        System.out.println("!!! @PlayerService.stopPlayback | SAVING");
+
+        // save state
         mPlayback = false;
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplication());
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putBoolean(PLAYBACK, mPlayback);
-        editor.commit();
+        savePlaybackState();
 
-        // retrieve notification system service and cancel notification
-        NotificationManager notificationManager = (NotificationManager) getApplication().getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancel(PLAYER_SERVICE_NOTIFICATION_ID);
-
-        // notify PlayerActivityFragment
+        // send local broadcast (needed by PlayerActivityFragment and MainActivityFragment)
         Intent i = new Intent();
         i.setAction(ACTION_PLAYBACK_STOPPED);
         LocalBroadcastManager.getInstance(this).sendBroadcast(i);
-
     }
 
 
@@ -348,30 +349,16 @@ public class PlayerService extends Service implements
 //    }
 
 
-    /* Check permissions and save state of permissions */
-    private void checkPermissions() {
-        // set default value
-        mPhonePermission = true;
+    /* Saves state of playback */
+    private void savePlaybackState () {
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplication());
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean(PLAYBACK, mPlayback);
+        editor.commit();
 
-        // check for permission to read phone state
-        if (ContextCompat.checkSelfPermission(getApplication(), Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            // not granted
-            mPhonePermission = false;
-        }
-
-        if (mPhonePermission) {
-            System.out.println("!!! Permission granted ");
-        }
-        else {
-            System.out.println("!!! Permission denied ");
-        }
-
-        // save state to settings
-        // savePermissionsState(mActivity);
+        // TODO Remove
+        System.out.println("!!! @PlayerService | Playback" + mPlayback);
     }
-
-
-
 
 
 
@@ -382,31 +369,12 @@ public class PlayerService extends Service implements
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (mPlayback == true && AudioManager.ACTION_AUDIO_BECOMING_NOISY.equals(intent.getAction())) {
+            if (mPlayback && AudioManager.ACTION_AUDIO_BECOMING_NOISY.equals(intent.getAction())) {
+                Log.v(LOG_TAG, "Headphones unplugged. Stopping playback.");
                 // stop playback
                 stopPlayback();
                 // notify user
                 Toast.makeText(context, R.string.toastalert_headphones_unplugged, Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-    /**
-     * End of inner class
-     */
-
-
-    /**
-     * Inner class: Receiver for phone state signal
-     */
-    public class PhoneStateReceiver extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (mPlayback == true && TelephonyManager.ACTION_PHONE_STATE_CHANGED.equals(intent.getAction())) {
-                // stop playback
-                stopPlayback();
-                // notify user
-                Toast.makeText(getApplication(), R.string.toastalert_phone_active, Toast.LENGTH_LONG).show();
             }
         }
     }

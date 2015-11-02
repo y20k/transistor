@@ -37,7 +37,6 @@
             android:layout_height="wrap_content"
             android:paddingLeft="24dp"
             android:singleLine="true"
-            android:text="ByteFM"
             android:gravity="center_vertical"
             android:layout_weight="1"
             android:layout_gravity="center_vertical"

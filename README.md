@@ -6,7 +6,7 @@ Transistor - Radio app for Android
 
 **Version 0.9.x ("Young Americans")**
 
-Transistor is a bare bones app for listening to radio programs over the internet. The app stores stations as files on your device's external storage. It currently only understands streams embedded within m3u links. Support for m3u8 and pls is coming to a future release.
+Transistor is a bare bones app for listening to radio programs over the internet. The app stores stations as files on your device's external storage. It currently understands streams embedded within m3u and pls links.
 
 Transistor is free software. It is published under the [MIT open source license]("https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT). 
 
@@ -34,6 +34,3 @@ Which Permissions does Transistor need?
 ---------------------------------------
 ### Permission "INTERNET"
 Transistor streams radio stations over the internet.
-
-### Permission "READ\_PHONE\_STATE"
-Transistor stops playback when the device receives a phone call or when the user initiates a call.

@@ -15,6 +15,7 @@
     <string name="header_howto">How to use</string>
 
     <!-- descriptions -->
+    <string name="descr_arrow_actioncall">Arrow pointing towards the add station symbol</string>
     <string name="descr_overflow_button">Display options for radio station</string>
     <string name="descr_station_icon">Icon of radio station</string>
     <string name="descr_station_name">Name of radio station</string>
@@ -36,6 +37,7 @@
     <string name="dialog_button_rename">Rename</string>
 
     <!-- messages -->
+    <string name="actioncall_message_start_here">Add a new station</string>
     <string name="alertmessage_rename_unsuccessful">Unable to rename station. Please choose a different name.</string>
     <string name="alertmessage_delete_successful">Successfully removed station.</string>
     <string name="alertmessage_add_download_started">Download started:</string>
@@ -68,8 +70,6 @@
             <h3>Which Permissions does Transistor need?</h3>
             <p><strong>Permission INTERNET</strong><br />
             Transistor streams radio stations over the internet.</p>
-            <p><strong>Permission READ_PHONE_STATE</strong><br />
-            Transistor stops playback when the device receives a phone call or when the user initiates a call.</p>
         </body>
     </html>]]></string>
 
@@ -78,7 +78,7 @@
         <body>
             <h1>How to use Transistor</h1>
             <h2>How to add a new radio station?</h2>
-            <p>The easiest way to add a new station is to search for m3u streaming links and then choose Transistor as a your default handler for m3u. You can also tap the (+) symbol in the top bar and paste in m3u links directly.</p>
+            <p>The easiest way to add a new station is to search for streaming links (m3u and pls) and then choose Transistor as a your default handler for those file types. You can also tap the (+) symbol in the top bar and paste in m3u links directly.</p>
             <h2>How to play back a radio station?</h2>
             <p>Tap the big Play button ;).</p>
             <h2>How to stop playback?</h2>
@@ -91,6 +91,7 @@
             <p>There is nothing to be set ;). Transistor is a very simple app. Depending on your point of view "simple" is either great or lame.</p>
         </body>
     </html>]]></string>
-    <string name="toastalert_playback_without_phone_permission">Starting playback without phone access</string>
+
+    <string name="descr_playback_indicator_started">Indicator for running playback</string>
 
 </resources>

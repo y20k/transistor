@@ -15,13 +15,17 @@
 package org.y20k.transistor;
 
 import android.app.Fragment;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -55,6 +59,7 @@ public class MainActivityFragment extends Fragment {
     private File mFolder;
     private LinkedList<String> mStationNames;
     private LinkedList<Bitmap> mStationImages;
+    private View mRootView;
     private ListView mListView;
     private Parcelable mListState;
 
@@ -63,7 +68,8 @@ public class MainActivityFragment extends Fragment {
     private boolean mPlayback;
 
     /* Keys */
-    private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;
+    private static final String ACTION_PLAYBACK_STARTED = "org.y20k.transistor.action.PLAYBACK_STARTED";
+    private static final String ACTION_PLAYBACK_STOPPED = "org.y20k.transistor.action.PLAYBACK_STOPPED";
     public static final String LIST_STATE = "ListState";
     public static final String STREAM_URL = "streamURL";
     public static final String STATION_NAME = "stationName";
@@ -71,7 +77,6 @@ public class MainActivityFragment extends Fragment {
     public static final String STATION_ID_CURRENT = "stationIDCurrent";
     public static final String STATION_ID_LAST = "stationIDLast";
     public static final String PLAYBACK = "playback";
-
     public static final String TITLE = "title";
     public static final String CONTENT = "content";
 
@@ -81,54 +86,12 @@ public class MainActivityFragment extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-
-        // let Transistor react to external clicks on m3u links
-        Intent intent = getActivity().getIntent();
-        if (Intent.ACTION_VIEW.equals(intent.getAction())) {
-            String newStationURL;
-            // mime type check
-            if (intent.getType() != null && intent.getType().startsWith("audio/")) {
-                newStationURL = intent.getDataString();
-            }
-            // no mime type
-            else {
-                newStationURL = intent.getDataString();
-            }
-            // check for null
-            if (newStationURL != null) {
-                // add new station
-                StationHelper stationHelper = new StationHelper(getActivity());
-                stationHelper.setStationChangedListener(new StationHelper.StationChangedListener() {
-                    @Override
-                    public void stationChanged() {
-                        // clear and refill mCollection adapter
-                        mStationNames.clear();
-                        mStationImages.clear();
-                        fillCollectionAdapter();
-                    }
-                });
-                stationHelper.add(newStationURL);
-            }
-            // unsuccessful - notify user
-            else {
-                System.out.println("!!! Empty Intent");
-            }
-
-        }
-
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // set up variables
         mListState = null;
-        mStationIDCurrent = -1;
-        mStationIDLast = -1;
-        mPlayback = false;
+        // TODO: Method invocation 'getActivity().getExternalFilesDir("Collection").toString()' may produce 'java.lang.NullPointerException'
         mFolder = new File(getActivity().getExternalFilesDir("Collection").toString());
 
         // get list state from saved instance
@@ -136,50 +99,34 @@ public class MainActivityFragment extends Fragment {
             mListState = savedInstanceState.getParcelable(MainActivityFragment.LIST_STATE);
         }
 
-        // restore player state from preferences
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        mStationIDCurrent = settings.getInt(STATION_ID_CURRENT, -1);
-        mStationIDLast = settings.getInt(STATION_ID_LAST, -1);
-        mPlayback = settings.getBoolean(PLAYBACK, false);
-
         // fragment has options menu
         setHasOptionsMenu(true);
 
-//        // let Transistor react to external clicks on m3u links
-//        if (Intent.ACTION_VIEW.equals(action) && type.startsWith("audio/")) {
-//            String newStationURL = intent.getDataString();
-//            StationHelper stationHelper = new StationHelper(getActivity());
-//            stationHelper.setStationChangedListener(new StationHelper.StationChangedListener() {
-//                @Override
-//                public void stationChanged() {
-//                    // clear and refill mCollection adapter
-//                    mStationNames.clear();
-//                    mStationImages.clear();
-//                    fillCollectionAdapter();
-//                }
-//            });
-//            stationHelper.add(newStationURL);
-//        }
-
-
-
-
-
         // create adapter for collection
-        mStationNames = new LinkedList<String>();
-        mStationImages = new LinkedList<Bitmap>();
+        mStationNames = new LinkedList<>();
+        mStationImages = new LinkedList<>();
         mCollectionAdapter = new CollectionAdapter(getActivity(), mStationNames, mStationImages);
 
         // listen for data change in mCollection adapter
         mCollectionAdapter.setCollectionChangedListener(new CollectionAdapter.CollectionChangedListener() {
             @Override
             public void collectionChanged() {
-                // clear and refill mCollection adapter
-                mStationNames.clear();
-                mStationImages.clear();
-                fillCollectionAdapter();
+                refreshStationList();
             }
         });
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // handle incoming intent
+        handleNewStationIntent();
+
+        // TODO Remove
+        System.out.println("!!! @MainActivityFragment.onResume | LOADING");
+        refreshStationList();
     }
 
 
@@ -195,10 +142,10 @@ public class MainActivityFragment extends Fragment {
         fillCollectionAdapter();
 
         // inflate rootview from xml
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        mRootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        // get reference to list view from inflated rootview
-        mListView = (ListView) rootView.findViewById(R.id.listview_collection);
+        // get reference to list view from inflated root view
+        mListView = (ListView) mRootView.findViewById(R.id.main_listview_collection);
 
         // attach adapter to list view
         mListView.setAdapter(mCollectionAdapter);
@@ -209,39 +156,52 @@ public class MainActivityFragment extends Fragment {
             // inner method override for OnItemClickListener
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // get station name and URL from position
-                String stationName = mCollection.getStations().get((Integer) mCollectionAdapter.getItem(position)).getStationName();
-                String streamURL = mCollection.getStations().get((Integer) mCollectionAdapter.getItem(position)).getStreamURL().toString();
+                if (mCollection != null) {
+                    // get station name and URL from position
+                    String stationName = mCollection.getStations().get((Integer) mCollectionAdapter.getItem(position)).getStationName();
+                    String streamURL = mCollection.getStations().get((Integer) mCollectionAdapter.getItem(position)).getStreamURL().toString();
 
-                // add name, url and id of station to intent
-                Intent intent = new Intent(getActivity(), PlayerActivity.class);
-                intent.putExtra(STATION_NAME, stationName);
-                intent.putExtra(STREAM_URL, streamURL);
-                intent.putExtra(STATION_ID, position);
+                    // add name, url and id of station to intent
+                    Intent intent = new Intent(getActivity(), PlayerActivity.class);
+                    intent.putExtra(STATION_NAME, stationName);
+                    intent.putExtra(STREAM_URL, streamURL);
+                    intent.putExtra(STATION_ID, position);
 
-//                // save player state to preferences
-//                if (position != mStationIDCurrent && mPlayback == true) {
-//                    mStationIDLast = mStationIDCurrent;
-//                    mStationIDCurrent = position;
-//                    mPlayback = false;
-//                    System.out.println("!!! (2) Click & Current & Last: " +  position + " / " + mStationIDCurrent + " / " + mStationIDLast );
-//
-//                    SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
-//                    SharedPreferences.Editor editor = settings.edit();
-//                    editor.putInt(STATION_ID_CURRENT, mStationIDCurrent);
-//                    editor.putInt(STATION_ID_LAST, mStationIDLast);
-//                    editor.putBoolean(PLAYBACK, mPlayback);
-//                    editor.commit();
-//                }
-
-                // start activity with intent
-                startActivity(intent);
-
+                    // start activity with intent
+                    startActivity(intent);
+                }
             }
         });
 
+        // broadcast receiver: player service stopped playback
+        BroadcastReceiver playbackStoppedReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                // TODO Remove
+                System.out.println("!!! @MainActivityFragment.playbackStoppedReceiver | STOPPED");
+                mPlayback = false;
+                refreshStationList();
+            }
+        };
+        IntentFilter playbackStoppeddIntentFilter = new IntentFilter(ACTION_PLAYBACK_STOPPED);
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(playbackStoppedReceiver, playbackStoppeddIntentFilter);
+
+
+        // broadcast receiver: player service stopped playback
+        BroadcastReceiver playbackStartedReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                // TODO Remove
+                System.out.println("!!! @MainActivityFragment.playbackStartedReceiver | STARTED");
+                mPlayback = true;
+                refreshStationList();
+            }
+        };
+        IntentFilter playbackStartedIntentFilter = new IntentFilter(ACTION_PLAYBACK_STARTED);
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(playbackStartedReceiver, playbackStartedIntentFilter);
+
         // return list view
-        return rootView;
+        return mRootView;
     }
 
 
@@ -256,10 +216,7 @@ public class MainActivityFragment extends Fragment {
             dialog.setCollectionChangedListener(new DialogAddStation.CollectionChangedListener() {
                 @Override
                 public void collectionChanged() {
-                    // clear and refill mCollection adapter
-                    mStationNames.clear();
-                    mStationImages.clear();
-                    fillCollectionAdapter();
+                    refreshStationList();
                 }
             });
             return true;
@@ -316,15 +273,14 @@ public class MainActivityFragment extends Fragment {
 
     private void fillCollectionAdapter() {
 
-        Bitmap stationImage = null;
-        Bitmap stationImageSmall = null;
-        String stationName = null;
-        ImageHelper stationImageHelper = null;
+        Bitmap stationImage;
+        Bitmap stationImageSmall;
+        String stationName;
+        ImageHelper stationImageHelper;
 
         // create collection
-        Log.v(LOG_TAG, "Create mCollection of stations in background (folder:" + mFolder.toString() + ").");
+        Log.v(LOG_TAG, "Create collection of stations in background (folder:" + mFolder.toString() + ").");
         mCollection = new Collection(mFolder);
-
 
         // put stations into collection adapter
         for (int i = 0; i < mCollection.getStations().size(); i++) {
@@ -353,6 +309,79 @@ public class MainActivityFragment extends Fragment {
 //        if (mListState != null) {
 //            mListView.onRestoreInstanceState(mListState);
 //        }
+    }
+
+
+    /* Loads playback state from preferences */
+    private void loadPlaybackState() {
+
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        mStationIDCurrent = settings.getInt(STATION_ID_CURRENT, -1);
+        mStationIDLast = settings.getInt(STATION_ID_LAST, -1);
+        mPlayback = settings.getBoolean(PLAYBACK, false);
+
+        // TODO Remove
+        System.out.println("!!! @MainActivityFragment | Current: " + mStationIDCurrent);
+        System.out.println("!!! @MainActivityFragment | Last: " + mStationIDLast);
+        System.out.println("!!! @MainActivityFragment | Playback" + mPlayback);
+    }
+
+
+    /* Refreshes list of stations */
+    private void refreshStationList() {
+        // get current playback state
+        // TODO Remove
+        System.out.println("!!! @MainActivityFragment.refreshStationList | LOADING");
+
+        loadPlaybackState();
+        // clear and refill mCollection adapter
+        mStationNames.clear();
+        mStationImages.clear();
+        fillCollectionAdapter();
+    }
+
+
+    /* handles external taps on streaming links */
+    private void handleNewStationIntent() {
+
+        // get intent
+        Intent intent = getActivity().getIntent();
+
+        // check for intent of tyoe VIEW
+        if (Intent.ACTION_VIEW.equals(intent.getAction())) {
+
+            // set new station URL
+            String newStationURL;
+            // mime type check
+            if (intent.getType() != null && intent.getType().startsWith("audio/")) {
+                newStationURL = intent.getDataString();
+            }
+            // no mime type
+            else {
+                newStationURL = intent.getDataString();
+            }
+
+            // clear the intent
+            intent.setAction("");
+
+            // check for null
+            if (newStationURL != null) {
+                // add new station
+                StationHelper stationHelper = new StationHelper(getActivity());
+                stationHelper.setStationChangedListener(new StationHelper.StationChangedListener() {
+                    @Override
+                    public void stationChanged() {
+                        refreshStationList();
+                    }
+                });
+                stationHelper.add(newStationURL);
+            }
+            // unsuccessful - log failure
+            else {
+                Log.v(LOG_TAG, "Received an empty intent");
+            }
+
+        }
     }
 
 }

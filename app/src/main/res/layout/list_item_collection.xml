@@ -17,7 +17,7 @@
         android:layout_width="?android:attr/listPreferredItemHeight"
         android:layout_height="?android:attr/listPreferredItemHeight"
         android:minHeight="?android:attr/listPreferredItemHeight"
-        android:src="@drawable/ic_notesymbol"></ImageView>
+        android:src="@drawable/ic_notesymbol" />
 
     <TextView
         android:id="@+id/list_item_textview"
@@ -26,11 +26,19 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:paddingLeft="24dp"
-        android:text="ByteFM"
+        android:text="Example FM"
         android:layout_weight="1"
         android:singleLine="true"
         android:ellipsize="end"
-        android:textAppearance="?android:attr/textAppearanceListItem"></TextView>
+        android:textAppearance="?android:attr/textAppearanceListItem" />
+
+    <ImageView
+        android:id="@+id/list_item_playback_indicator"
+        android:contentDescription="@string/descr_playback_indicator_started"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_playback_indicator_small_started_24dp"
+        android:visibility="gone" />
 
     <ImageButton
         android:id="@+id/list_item_more_button"
@@ -42,6 +50,6 @@
         android:paddingLeft="8dp"
         android:paddingTop="4dp"
         android:paddingRight="4dp"
-        android:paddingBottom="4dp"></ImageButton>
+        android:paddingBottom="4dp" />
 
 </LinearLayout>

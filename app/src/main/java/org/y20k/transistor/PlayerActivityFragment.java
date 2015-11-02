@@ -2,10 +2,10 @@
  * PlayerActivityFragment.java
  * Implements the main fragment of the player activity
  * This fragment is a detail view with the ability to start and stop playback
- * <p/>
+ *
  * This file is part of
  * TRANSISTOR - Radio App for Android
- * <p/>
+ *
  * Copyright (c) 2015 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
@@ -67,7 +67,6 @@ public class PlayerActivityFragment extends Fragment {
     public static final String STATION_ID_LAST = "stationIDLast";
     public static final String PLAYBACK = "playback";
     private static final String ACTION_PLAYBACK_STOPPED = "org.y20k.transistor.action.PLAYBACK_STOPPED";
-    private static final int MY_PERMISSIONS_REQUEST_READ_PHONE_STATE = 1;
 
     /* Main class variables */
     private Activity mActivity;
@@ -83,7 +82,6 @@ public class PlayerActivityFragment extends Fragment {
     private int mStationIDCurrent;
     private int mStationIDLast;
     private boolean mPlayback;
-    private boolean mPhonePermission = true;
     private Collection mCollection;
     private PlayerService mPlayerService;
 
@@ -92,6 +90,21 @@ public class PlayerActivityFragment extends Fragment {
     public PlayerActivityFragment() {
     }
 
+//    onAttach(Activity) called once the fragment is associated with its activity.
+//    onCreate(Bundle) called to do initial creation of the fragment.
+//    onCreateView(LayoutInflater, ViewGroup, Bundle) creates and returns the view hierarchy associated with the fragment.
+//    onActivityCreated(Bundle) tells the fragment that its activity has completed its own Activity.onCreate().
+//    onViewStateRestored(Bundle) tells the fragment that all of the saved state of its view hierarchy has been restored.
+//    onStart() makes the fragment visible to the user (based on its containing activity being started).
+//    onResume() makes the fragment begin interacting with the user (based on its containing activity being resumed).
+//
+//    As a fragment is no longer being used, it goes through a reverse series of callbacks:
+//
+//    onPause() fragment is no longer interacting with the user either because its activity is being paused or a fragment operation is modifying it in the activity.
+//    onStop() fragment is no longer visible to the user either because its activity is being stopped or a fragment operation is modifying it in the activity.
+//    onDestroyView() allows the fragment to clean up resources associated with its View.
+//    onDestroy() called to do final cleanup of the fragment's state.
+//    onDetach() called immediately prior to the fragment no longer being associated with its activity.
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -106,11 +119,18 @@ public class PlayerActivityFragment extends Fragment {
         mStatiomName = intent.getStringExtra(STATION_NAME);
         mStreamURL = intent.getStringExtra(STREAM_URL);
 
-        // TODO move to onresume?
-        // check needed permissions
-        checkPermissions();
+        // load playback state from preferences
+        // TODO Remove
+        System.out.println("!!! @PlayerActivityFragment.onCreate | LOADING");
+        loadPlaybackState(mActivity);
+
+        if (mStationID == -1) {
+            // set station ID
+            mStationID = mStationIDCurrent;
+        }
 
         // load collection
+        // TODO: Method invocation 'getActivity().getExternalFilesDir("Collection").toString()' may produce 'java.lang.NullPointerException'
         File folder = new File(mActivity.getExternalFilesDir("Collection").toString());
         mCollection = new Collection(folder);
 
@@ -126,12 +146,6 @@ public class PlayerActivityFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        // restore player state from preferences
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mActivity);
-        mStationIDCurrent = settings.getInt(STATION_ID_CURRENT, -1);
-        mStationIDLast = settings.getInt(STATION_ID_LAST, -1);
-        mPlayback = settings.getBoolean(PLAYBACK, false);
-
         // set up button symbol and playback indicator
         setVisualState();
 
@@ -141,8 +155,8 @@ public class PlayerActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         // set image for station
-        Bitmap stationImageSmall = null;
-        ImageHelper imageHelper = null;
+        Bitmap stationImageSmall;
+        ImageHelper imageHelper;
         if (mCollection.getStations().get(mStationID).getStationImageFile().exists()) {
             stationImageSmall = BitmapFactory.decodeFile(mCollection.getStations().get(mStationID).getStationImageFile().toString());
         } else {
@@ -186,16 +200,9 @@ public class PlayerActivityFragment extends Fragment {
                     mPlayback = true;
                     // rotate playback button
                     changeVisualState(mActivity);
-
-                    if (!mPhonePermission) {
-                        // ask for read phone state permission
-                        requestPermissions();
-                    }
-                    else {
-                        // start player
-                        Log.v(LOG_TAG, "Starting player service.");
-                        mPlayerService.startActionPlay(mActivity, mStreamURL, mStatiomName);
-                    }
+                    // start player
+                    mPlayerService.startActionPlay(mActivity, mStreamURL, mStatiomName);
+                    Log.v(LOG_TAG, "Starting player service.");
 
                 }
                 // playback active - stop playback
@@ -210,6 +217,8 @@ public class PlayerActivityFragment extends Fragment {
                 }
 
                 // save state of playback in settings store
+                // TODO Remove
+                System.out.println("!!! @PlayerActivityFragment.setOnClickListener | SAVING");
                 savePlaybackState(mActivity);
             }
         });
@@ -228,6 +237,7 @@ public class PlayerActivityFragment extends Fragment {
         };
         IntentFilter intentFilter = new IntentFilter(ACTION_PLAYBACK_STOPPED);
         LocalBroadcastManager.getInstance(mActivity).registerReceiver(playbackStoppedReceiver, intentFilter);
+
         return mRootView;
     }
 
@@ -282,32 +292,6 @@ public class PlayerActivityFragment extends Fragment {
 //        super.onPause();
 //        savePlaybackState();
 //    }
-
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-
-        switch (requestCode) {
-
-            // CASE result of permission request for phone state
-            case MY_PERMISSIONS_REQUEST_READ_PHONE_STATE: {
-
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // permission granted
-                    mPhonePermission = true;
-                } else {
-                    // permission denied
-                    Toast.makeText(mActivity, R.string.toastalert_playback_without_phone_permission, Toast.LENGTH_LONG).show();
-                    mPhonePermission = false;
-                }
-
-                // start player
-                Log.v(LOG_TAG, "Starting player service after permission request.");
-                mPlayerService.startActionPlay(mActivity, mStreamURL, mStatiomName);
-
-            }
-        }
-    }
 
 
     /* Animate button and then set visual state */
@@ -376,7 +360,7 @@ public class PlayerActivityFragment extends Fragment {
         // playback stopped
         else {
             mStationIDLast = mStationIDCurrent;
-            mStationIDCurrent = -1;
+            // mStationIDCurrent = -1; <- TODO REMOVE
         }
 
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
@@ -386,40 +370,31 @@ public class PlayerActivityFragment extends Fragment {
         editor.putBoolean(PLAYBACK, mPlayback);
         editor.commit();
 
+        // TODO Remove
+        System.out.println("!!! @PlayerActivityFragment | Current: " + mStationIDCurrent);
+        System.out.println("!!! @PlayerActivityFragment | Last: " + mStationIDLast);
+        System.out.println("!!! @PlayerActivityFragment | Playback" + mPlayback);
+
     }
 
 
-    /* Check permissions and save state of permissions */
-    private void checkPermissions() {
-        // set default value
-        mPhonePermission = true;
+    /* Loads playback state from preferences */
+    private void loadPlaybackState(Context context) {
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
+        mStationIDCurrent = settings.getInt(STATION_ID_CURRENT, -1);
+        mStationIDLast = settings.getInt(STATION_ID_LAST, -1);
+        mPlayback = settings.getBoolean(PLAYBACK, false);
 
-        // check for permission to read phone state
-        if (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            // not granted
-            mPhonePermission = false;
-        }
-    }
-
-
-    /* Ask user for permission to read phone state */
-    private void requestPermissions() {
-
-        // permission has been denied before - explanation needed
-        if (ActivityCompat.shouldShowRequestPermissionRationale(mActivity, Manifest.permission.READ_PHONE_STATE)) {
-            // show explanation in snackbar
-            Snackbar.make(mRootView, R.string.snackbaralert_phonestate_access,
-                    Snackbar.LENGTH_INDEFINITE).setActionTextColor(ContextCompat.getColor(mActivity, R.color.transistor_gold)).setAction("OK", new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // request permission
-                    requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, MY_PERMISSIONS_REQUEST_READ_PHONE_STATE);
-                }
-            }).show();
-        } else {
-            // request permission
-            requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, MY_PERMISSIONS_REQUEST_READ_PHONE_STATE);
-        }
+        // TODO Remove
+        System.out.println("!!! @PlayerActivityFragment | Current: " + mStationIDCurrent);
+        System.out.println("!!! @PlayerActivityFragment | Last: " + mStationIDLast);
+        System.out.println("!!! @PlayerActivityFragment | Playback" + mPlayback);
     }
 
 }
+
+
+/**
+ * TODO
+ * - Sleep Timer
+ */
