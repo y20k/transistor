@@ -2,10 +2,10 @@
  * DialogAddStation.java
  * Implements the DialogAddStation class
  * A DialogAddStation asks the user for a stream URL of a radio station
- * <p/>
+ *
  * This file is part of
  * TRANSISTOR - Radio App for Android
- * <p/>
+ *
  * Copyright (c) 2015 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
@@ -24,10 +24,6 @@ import android.view.View;
 import android.widget.EditText;
 
 import org.y20k.transistor.R;
-import org.y20k.transistor.core.Collection;
-
-import java.io.File;
-import java.net.URL;
 
 
 /**
@@ -35,9 +31,11 @@ import java.net.URL;
  */
 public class DialogAddStation extends DialogFragment {
 
+    /* Define log tag */
+    public final String LOG_TAG = DialogAddStation.class.getSimpleName();
+
+
     /* Main class variables */
-    private Collection mCollection;
-    private URL mNewStationURL;
     private CollectionChangedListener mCollectionChangedListener;
 
 
@@ -56,11 +54,6 @@ public class DialogAddStation extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // set up variables
-        File folder = new File(getActivity().getExternalFilesDir("Collection").toString());
-        mCollection = new Collection(folder);
-        mNewStationURL = null;
     }
 
 

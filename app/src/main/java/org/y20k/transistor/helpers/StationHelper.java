@@ -2,10 +2,10 @@
  * StationHelper.java
  * Implements the StationHelper class
  * A StationHelper adds a new station to the collection
- * <p/>
+ *
  * This file is part of
  * TRANSISTOR - Radio App for Android
- * <p/>
+ *
  * Copyright (c) 2015 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
@@ -15,6 +15,7 @@
 package org.y20k.transistor.helpers;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.y20k.transistor.R;
@@ -30,6 +31,10 @@ import java.net.URL;
  * StationHelper class
  */
 public class StationHelper {
+
+    /* Define log tag */
+    public final String LOG_TAG = StationHelper.class.getSimpleName();
+
 
     /* Main class variables */
     private Context mContext;
@@ -48,7 +53,16 @@ public class StationHelper {
     public StationHelper(Context context) {
         mContext = context;
         mStationChangedListener = null;
-        mFolder = new File(context.getExternalFilesDir("Collection").toString());
+
+        try {
+            // get collection folder from external storage
+            mFolder = new File(context.getExternalFilesDir("Collection").toString());
+        } catch (Exception e) {
+            // notify user and log exception
+            Toast.makeText(context, R.string.toastalert_no_external_storage, Toast.LENGTH_LONG).show();
+            Log.e(LOG_TAG, "Unable to access external storage.");
+        }
+
     }
 
 
@@ -56,7 +70,7 @@ public class StationHelper {
     public void add(String stationURLString) {
         try {
             URL newStationURL = new URL(stationURLString);
-            String toastMessage = mContext.getString(R.string.alertmessage_add_download_started);
+            String toastMessage = mContext.getString(R.string.toastmessage_add_download_started);
             Toast.makeText(mContext, toastMessage + stationURLString, Toast.LENGTH_LONG).show();
 
             mCollection = new Collection(mFolder);

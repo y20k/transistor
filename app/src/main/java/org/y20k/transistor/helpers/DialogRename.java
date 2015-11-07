@@ -2,10 +2,10 @@
  * DialogRename.java
  * Implements the DialogRename class
  * A DialogRename renames a station after asking the user for a new name
- * <p/>
+ *
  * This file is part of
  * TRANSISTOR - Radio App for Android
- * <p/>
+ *
  * Copyright (c) 2015 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
@@ -81,7 +81,7 @@ public class DialogRename {
                 boolean success = mCollection.rename(mStationID, mStationName);
                 if (!success) {
                     // notify the user
-                    Toast.makeText(mContext, R.string.alertmessage_rename_unsuccessful, Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, R.string.toastalert_rename_unsuccessful, Toast.LENGTH_LONG).show();
                 } else {
                     // notify MainActivityFragment
                     if (mStationRenamedListener != null) {

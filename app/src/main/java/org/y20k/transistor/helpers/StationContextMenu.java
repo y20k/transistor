@@ -2,10 +2,10 @@
  * StationContextMenu.java
  * Implements the StationContextMenu class
  * The StationContextMenu allows manipulation of station objects, eg. rename or delete
- * <p/>
+ *
  * This file is part of
  * TRANSISTOR - Radio App for Android
- * <p/>
+ *
  * Copyright (c) 2015 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT

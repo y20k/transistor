@@ -67,20 +67,7 @@ public class CollectionAdapter extends BaseAdapter {
         mCollection = null;
         mCollectionChangedListener = null;
 
-        System.out.println("!!! @CollectionAdapter.Constructor | LOADING");
         loadPlaybackState(context);
-    }
-
-
-    /* Setter for collection */
-    public void setCollection(Collection collection) {
-        mCollection = collection;
-    }
-
-
-    /* Setter for custom listener */
-    public void setCollectionChangedListener(CollectionChangedListener mCollectionChangedListener) {
-        this.mCollectionChangedListener = mCollectionChangedListener;
     }
 
 
@@ -102,29 +89,44 @@ public class CollectionAdapter extends BaseAdapter {
     }
 
 
+
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-        LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        ViewHolder holder;
 
-        ViewHolder holder = new ViewHolder();
-        View rowView;
+        // create new view if no convertView available
+        if (convertView == null) {
+            LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.list_item_collection, null);
 
-        rowView = inflater.inflate(R.layout.list_item_collection, null);
-        holder.stationImageView = (ImageView) rowView.findViewById(R.id.list_item_station_icon);
-        holder.stationNameView = (TextView) rowView.findViewById(R.id.list_item_textview);
-        holder.playbackIndicator = (ImageView) rowView.findViewById(R.id.list_item_playback_indicator);
-        holder.stationMenuView = (ImageView) rowView.findViewById(R.id.list_item_more_button);
+            holder = new ViewHolder();
+            holder.stationImageView = (ImageView) convertView.findViewById(R.id.list_item_station_icon);
+            holder.stationNameView = (TextView) convertView.findViewById(R.id.list_item_textview);
+            holder.playbackIndicator = (ImageView) convertView.findViewById(R.id.list_item_playback_indicator);
+            holder.stationMenuView = (ImageView) convertView.findViewById(R.id.list_item_more_button);
 
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
+        }
+
+
+
+        // set station image
         holder.stationImageView.setImageBitmap(mStationImages.get(position));
+
+        // set station name
         holder.stationNameView.setText(mStationNames.get(position));
 
+        // set playback indicator
         if (mPlayback && mStationIDCurrent == position) {
             holder.playbackIndicator.setVisibility(View.VISIBLE);
         } else {
             holder.playbackIndicator.setVisibility(View.GONE);
         }
 
+        // attach three dots menu
         holder.stationMenuView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -146,38 +148,36 @@ public class CollectionAdapter extends BaseAdapter {
             }
         });
 
-        return rowView;
+        return convertView;
     }
 
-    private void loadPlaybackState(Context context) {
 
-        // restore player state from preferences
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+        loadPlaybackState(mContext);
+    }
+
+
+    /* Loads playback state from preferences */
+    private void loadPlaybackState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         mStationIDCurrent = settings.getInt(STATION_ID_CURRENT, -1);
         mStationIDLast = settings.getInt(STATION_ID_LAST, -1);
         mPlayback = settings.getBoolean(PLAYBACK, false);
-
-        System.out.println("!!! @CollectionAdapter | Current: " + mStationIDCurrent);
-        System.out.println("!!! @CollectionAdapter | Last: " + mStationIDLast);
-        System.out.println("!!! @CollectionAdapter | Playback" + mPlayback);
     }
 
-//    Parent:
-//    MainActivityFragment
-//    + create object of type child
-//    + attach listener to object using child's setter
-//
-//    Child:
-//    DialogAddStationFragment
-//    - define interface (1)
-//            + define instance variable of type interface
-//    + set instance variable to null in constructor
-//    + create setter for instance variable
-//    - fire listener using "if (listener != null) {listener.dosomething}"
+
+    /* Setter for collection */
+    public void setCollection(Collection collection) {
+        mCollection = collection;
+    }
 
 
-
-
+    /* Setter for custom listener */
+    public void setCollectionChangedListener(CollectionChangedListener mCollectionChangedListener) {
+        this.mCollectionChangedListener = mCollectionChangedListener;
+    }
 
 
     /**

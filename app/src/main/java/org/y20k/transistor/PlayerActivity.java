@@ -2,10 +2,10 @@
  * PlayerActivity.java
  * Implements the app's player activity
  * The player activity sets up the now playing view and inflates a menubar menu
- * <p/>
+ *
  * This file is part of
  * TRANSISTOR - Radio App for Android
- * <p/>
+ *
  * Copyright (c) 2015 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
@@ -14,11 +14,9 @@
 
 package org.y20k.transistor;
 
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
-import android.widget.Toast;
 
 
 /**
@@ -26,8 +24,6 @@ import android.widget.Toast;
  */
 public class PlayerActivity extends AppCompatActivity {
 
-
-    private static final int MY_PERMISSIONS_REQUEST_READ_PHONE_STATE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

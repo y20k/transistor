@@ -2,10 +2,10 @@
  * PlayerService.java
  * Implements the app's playback background service
  * The player service does xyz
- * <p/>
+ *
  * This file is part of
  * TRANSISTOR - Radio App for Android
- * <p/>
+ *
  * Copyright (c) 2015 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
@@ -32,7 +32,6 @@ import android.widget.Toast;
 import org.y20k.transistor.helpers.NotificationHelper;
 
 import java.io.IOException;
-import java.util.Random;
 
 
 /**
@@ -55,7 +54,6 @@ public class PlayerService extends Service implements
     private static final String EXTRA_STREAM_URL = "STREAM_URL";
     public static final String PLAYBACK = "playback";
     private static final int PLAYER_SERVICE_NOTIFICATION_ID = 1;
-//    public static final String STATION_ID_CURRENT = "stationIDCurrent";
 
 
     /* Main class variables */
@@ -191,9 +189,6 @@ public class PlayerService extends Service implements
     public void onDestroy() {
         super.onDestroy();
 
-        // TODO REMOVE
-        System.out.println("!!! @PlayerService.onDestroy | SAVING");
-
         // save state
         mPlayback = false;
         savePlaybackState();
@@ -296,9 +291,6 @@ public class PlayerService extends Service implements
             initializeMediaPlayer();
         }
 
-        // TODO REMOVE
-        System.out.println("!!! @PlayerService.startPlayback | SAVING");
-
         // save state
         mPlayback = true;
         savePlaybackState();
@@ -314,9 +306,6 @@ public class PlayerService extends Service implements
     private void stopPlayback() {
         // release player
         releaseMediaPlayer();
-
-        // TODO REMOVE
-        System.out.println("!!! @PlayerService.stopPlayback | SAVING");
 
         // save state
         mPlayback = false;
@@ -334,11 +323,7 @@ public class PlayerService extends Service implements
         int result = mAudioManager.requestAudioFocus(this,
                 AudioManager.STREAM_MUSIC,
                 AudioManager.AUDIOFOCUS_GAIN);
-        if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-            return true;
-        } else {
-            return false;
-        }
+        return result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED;
     }
 
 
@@ -355,9 +340,6 @@ public class PlayerService extends Service implements
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean(PLAYBACK, mPlayback);
         editor.commit();
-
-        // TODO Remove
-        System.out.println("!!! @PlayerService | Playback" + mPlayback);
     }
 
 

@@ -2,10 +2,10 @@
  * Station.java
  * Implements the Station class
  * A Station handles station-related data, e.g. the name and the streaming URL
- * <p/>
+ *
  * This file is part of
  * TRANSISTOR - Radio App for Android
- * <p/>
+ *
  * Copyright (c) 2015 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT

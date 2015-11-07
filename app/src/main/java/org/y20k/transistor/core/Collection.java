@@ -2,10 +2,10 @@
  * Collection.java
  * Implements the Collection class
  * A Collection holds a list of radio stations
- * <p/>
+ *
  * This file is part of
  * TRANSISTOR - Radio App for Android
- * <p/>
+ *
  * Copyright (c) 2015 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
@@ -58,7 +58,7 @@ public class Collection {
             try (FileOutputStream noMediaOutStream = new FileOutputStream(nomedia)) {
                 noMediaOutStream.write(0);
             } catch (IOException e) {
-                Log.e(LOG_TAG, "Unable to write .nomdeia file in folder: " + mFolder.toString());
+                Log.e(LOG_TAG, "Unable to write .nomedia file in folder: " + mFolder.toString());
             }
         }
 

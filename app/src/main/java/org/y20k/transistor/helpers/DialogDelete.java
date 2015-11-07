@@ -67,7 +67,7 @@ public class DialogDelete {
                 boolean success = mCollection.delete(mStationID);
                 if (success) {
                     // notity the user
-                    Toast.makeText(mContext, R.string.alertmessage_delete_successful, Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, R.string.toastalert_delete_successful, Toast.LENGTH_LONG).show();
                     // notify the collection adapter
                     if (mStationDeletedListener != null) {
                         mStationDeletedListener.stationDeleted();

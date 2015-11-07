@@ -14,22 +14,17 @@
 
 package org.y20k.transistor;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -68,6 +63,7 @@ public class PlayerActivityFragment extends Fragment {
     public static final String PLAYBACK = "playback";
     private static final String ACTION_PLAYBACK_STOPPED = "org.y20k.transistor.action.PLAYBACK_STOPPED";
 
+
     /* Main class variables */
     private Activity mActivity;
     private View mRootView;
@@ -90,21 +86,6 @@ public class PlayerActivityFragment extends Fragment {
     public PlayerActivityFragment() {
     }
 
-//    onAttach(Activity) called once the fragment is associated with its activity.
-//    onCreate(Bundle) called to do initial creation of the fragment.
-//    onCreateView(LayoutInflater, ViewGroup, Bundle) creates and returns the view hierarchy associated with the fragment.
-//    onActivityCreated(Bundle) tells the fragment that its activity has completed its own Activity.onCreate().
-//    onViewStateRestored(Bundle) tells the fragment that all of the saved state of its view hierarchy has been restored.
-//    onStart() makes the fragment visible to the user (based on its containing activity being started).
-//    onResume() makes the fragment begin interacting with the user (based on its containing activity being resumed).
-//
-//    As a fragment is no longer being used, it goes through a reverse series of callbacks:
-//
-//    onPause() fragment is no longer interacting with the user either because its activity is being paused or a fragment operation is modifying it in the activity.
-//    onStop() fragment is no longer visible to the user either because its activity is being stopped or a fragment operation is modifying it in the activity.
-//    onDestroyView() allows the fragment to clean up resources associated with its View.
-//    onDestroy() called to do final cleanup of the fragment's state.
-//    onDetach() called immediately prior to the fragment no longer being associated with its activity.
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -120,8 +101,6 @@ public class PlayerActivityFragment extends Fragment {
         mStreamURL = intent.getStringExtra(STREAM_URL);
 
         // load playback state from preferences
-        // TODO Remove
-        System.out.println("!!! @PlayerActivityFragment.onCreate | LOADING");
         loadPlaybackState(mActivity);
 
         if (mStationID == -1) {
@@ -129,10 +108,18 @@ public class PlayerActivityFragment extends Fragment {
             mStationID = mStationIDCurrent;
         }
 
-        // load collection
-        // TODO: Method invocation 'getActivity().getExternalFilesDir("Collection").toString()' may produce 'java.lang.NullPointerException'
-        File folder = new File(mActivity.getExternalFilesDir("Collection").toString());
-        mCollection = new Collection(folder);
+        try {
+            // get collection folder from external storage
+            File folder = new File(mActivity.getExternalFilesDir("Collection").toString());
+            // load collection
+            mCollection = new Collection(folder);
+        } catch (Exception e) {
+            // notify user and log exception
+            Toast.makeText(getActivity(), R.string.toastalert_no_external_storage, Toast.LENGTH_LONG).show();
+            Log.e(LOG_TAG, "Unable to access external storage.");
+            // finish activity
+            getActivity().finish();
+        }
 
         // get URL and name for stream
         mStreamURL = mCollection.getStations().get(mStationID).getStreamURL().toString();
@@ -142,14 +129,18 @@ public class PlayerActivityFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
+
     @Override
     public void onResume() {
         super.onResume();
+
+        // TODO check connectivity
 
         // set up button symbol and playback indicator
         setVisualState();
 
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -217,8 +208,6 @@ public class PlayerActivityFragment extends Fragment {
                 }
 
                 // save state of playback in settings store
-                // TODO Remove
-                System.out.println("!!! @PlayerActivityFragment.setOnClickListener | SAVING");
                 savePlaybackState(mActivity);
             }
         });
@@ -360,7 +349,6 @@ public class PlayerActivityFragment extends Fragment {
         // playback stopped
         else {
             mStationIDLast = mStationIDCurrent;
-            // mStationIDCurrent = -1; <- TODO REMOVE
         }
 
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
@@ -369,11 +357,6 @@ public class PlayerActivityFragment extends Fragment {
         editor.putInt(STATION_ID_LAST, mStationIDLast);
         editor.putBoolean(PLAYBACK, mPlayback);
         editor.commit();
-
-        // TODO Remove
-        System.out.println("!!! @PlayerActivityFragment | Current: " + mStationIDCurrent);
-        System.out.println("!!! @PlayerActivityFragment | Last: " + mStationIDLast);
-        System.out.println("!!! @PlayerActivityFragment | Playback" + mPlayback);
 
     }
 
@@ -384,11 +367,6 @@ public class PlayerActivityFragment extends Fragment {
         mStationIDCurrent = settings.getInt(STATION_ID_CURRENT, -1);
         mStationIDLast = settings.getInt(STATION_ID_LAST, -1);
         mPlayback = settings.getBoolean(PLAYBACK, false);
-
-        // TODO Remove
-        System.out.println("!!! @PlayerActivityFragment | Current: " + mStationIDCurrent);
-        System.out.println("!!! @PlayerActivityFragment | Last: " + mStationIDLast);
-        System.out.println("!!! @PlayerActivityFragment | Playback" + mPlayback);
     }
 
 }

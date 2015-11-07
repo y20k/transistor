@@ -2,10 +2,10 @@
  * NotificationHelper.java
  * Implements the NotificationHelper class
  * A NotificationHelper creates and configures a notification
- * <p/>
+ *
  * This file is part of
  * TRANSISTOR - Radio App for Android
- * <p/>
+ *
  * Copyright (c) 2015 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
@@ -26,6 +26,7 @@ import org.y20k.transistor.PlayerActivity;
 import org.y20k.transistor.PlayerService;
 import org.y20k.transistor.R;
 
+
 /**
  * NotificationHelper class
  */
@@ -33,22 +34,24 @@ public class NotificationHelper {
 
     /* Keys */
     private static final int PLAYER_SERVICE_NOTIFICATION_ID = 1;
-    //    private static final String NOTIFICATION_CANCEL_ACTION = "NOTIFICATION_CANCELLED";
-//    private static final String ACTION_NOTIFICATION_SWIPED = "org.y20k.transistor.action.NOTIFICATION_SWIPED";
     private static final String ACTION_STOP = "org.y20k.transistor.action.STOP";
+
 
     /* Main class variables */
     private Context mContext;
     private String mStationName;
+
 
     /* Constructor (default) */
     public NotificationHelper(Context context) {
         mContext = context;
     }
 
+
     public void setStationName(String stationName) {
         mStationName = stationName;
     }
+
 
     public void createNotification() {
         NotificationCompat.Builder builder;

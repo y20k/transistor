@@ -2,10 +2,10 @@
  * CollectionLoader.java
  * Implements a loader for radio stations from storage
  * The loader runs as an AsyncTask
- * <p/>
+ *
  * This file is part of
  * TRANSISTOR - Radio App for Android
- * <p/>
+ *
  * Copyright (c) 2015 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
@@ -16,7 +16,10 @@ package org.y20k.transistor.helpers;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.Toast;
 
+import org.y20k.transistor.R;
 import org.y20k.transistor.core.Collection;
 
 import java.io.File;
@@ -30,12 +33,12 @@ public class CollectionLoader extends AsyncTask<Void, Void, Collection> {
     /* Define log tag */
     public final String LOG_TAG = CollectionLoader.class.getSimpleName();
 
-    /* Keys */
 
     /* Main class variables */
     private Collection mCollection;
     private File mFolder;
     private CollectionLoadedListener mCollectionLoadedListener;
+    private boolean externalFilesDirDenied;
 
 
     /* Interface for custom listener */
@@ -46,7 +49,19 @@ public class CollectionLoader extends AsyncTask<Void, Void, Collection> {
 
     /* Constructor  */
     public CollectionLoader(Context context) {
-        mFolder = new File(context.getExternalFilesDir("Collection").toString());
+        try {
+            // get collection folder from external storage
+            mFolder = new File(context.getExternalFilesDir("Collection").toString());
+            externalFilesDirDenied = false;
+        } catch (Exception e) {
+            // notify user and log exception
+            Toast.makeText(context, R.string.toastalert_no_external_storage, Toast.LENGTH_LONG).show();
+            Log.e(LOG_TAG, "Unable to access external storage.");
+            externalFilesDirDenied = true;
+        }
+
+
+
         mCollectionLoadedListener = null;
     }
 
@@ -54,8 +69,12 @@ public class CollectionLoader extends AsyncTask<Void, Void, Collection> {
     /* Background thread: reads m3u files from storage */
     @Override
     public Collection doInBackground(Void... params) {
-        mCollection = new Collection(mFolder);
-        return mCollection;
+        if (externalFilesDirDenied) {
+            return null;
+        } else {
+            mCollection = new Collection(mFolder);
+            return mCollection;
+        }
     }
 
 
