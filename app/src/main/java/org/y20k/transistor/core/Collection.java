@@ -30,11 +30,11 @@ import java.util.LinkedList;
 public class Collection {
 
     /* Define log tag */
-    public final String LOG_TAG = Collection.class.getSimpleName();
+    private static final String LOG_TAG = Collection.class.getSimpleName();
 
     /* Main class variables */
-    private File mFolder;
-    private LinkedList<Station> mStations;
+    private final File mFolder;
+    private final LinkedList<Station> mStations;
     private Station mNowPlaying;
     private Station mLastPlayed;
 
@@ -53,7 +53,7 @@ public class Collection {
 
         // create nomedia file to prevent mediastore scanning
         if (!nomedia.exists()) {
-            Log.v(LOG_TAG, "Creating .nomdeia file in folder: " + mFolder.toString());
+            Log.v(LOG_TAG, "Creating .nomedia file in folder: " + mFolder.toString());
 
             try (FileOutputStream noMediaOutStream = new FileOutputStream(nomedia)) {
                 noMediaOutStream.write(0);
@@ -63,17 +63,17 @@ public class Collection {
         }
 
         // create new array list of mStations
-        mStations = new LinkedList<Station>();
+        mStations = new LinkedList<>();
 
         // create array of Files from mFolder
         File[] listOfFiles = mFolder.listFiles();
 
         // fill array list of mStations
-        for (int i = 0; i < listOfFiles.length; i++) {
-            if (listOfFiles[i].isFile()
-                    && listOfFiles[i].toString().endsWith(".m3u")) {
+        for (File listOfFile : listOfFiles) {
+            if (listOfFile.isFile()
+                    && listOfFile.toString().endsWith(".m3u")) {
                 // create new station from file
-                Station newStation = new Station(listOfFiles[i]);
+                Station newStation = new Station(listOfFile);
                 if (newStation.getStreamURL() != null) {
                     mStations.add(newStation);
                 }
@@ -96,7 +96,7 @@ public class Collection {
 
             if (station.getStationImage() != null) {
                 // save playlist file of station to local storage
-                station.writeImageFile(mFolder);
+                station.writeImageFile();
             }
 
             // sort mStations
@@ -112,22 +112,28 @@ public class Collection {
     /* delete station within collection */
     public boolean delete(int stationID) {
 
+        boolean success = false;
+
         // delete playlist file
         File stationPlaylistFile = mStations.get(stationID).getStationPlaylistFile();
         if (stationPlaylistFile.exists()) {
             stationPlaylistFile.delete();
+            success = true;
         }
 
         // delete station image file
         File stationImageFile = mStations.get(stationID).getStationImageFile();
         if (stationImageFile.exists()) {
             stationImageFile.delete();
+            success = true;
         }
 
         // remove station
-        mStations.remove(stationID);
+        if (success) {
+            mStations.remove(stationID);
+        }
 
-        return true;
+        return success;
     }
 
 

@@ -33,11 +33,11 @@ import java.net.URL;
 public class StationHelper {
 
     /* Define log tag */
-    public final String LOG_TAG = StationHelper.class.getSimpleName();
+    private static final String LOG_TAG = StationHelper.class.getSimpleName();
 
 
     /* Main class variables */
-    private Context mContext;
+    private final Context mContext;
     private Collection mCollection;
     private File mFolder;
     private StationChangedListener mStationChangedListener;
@@ -57,7 +57,7 @@ public class StationHelper {
         try {
             // get collection folder from external storage
             mFolder = new File(context.getExternalFilesDir("Collection").toString());
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             // notify user and log exception
             Toast.makeText(context, R.string.toastalert_no_external_storage, Toast.LENGTH_LONG).show();
             Log.e(LOG_TAG, "Unable to access external storage.");

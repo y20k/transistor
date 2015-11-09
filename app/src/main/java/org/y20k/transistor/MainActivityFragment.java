@@ -49,18 +49,18 @@ import java.util.LinkedList;
 public class MainActivityFragment extends Fragment {
 
     /* Define log tag */
-    public final String LOG_TAG = MainActivityFragment.class.getSimpleName();
+    private static final String LOG_TAG = MainActivityFragment.class.getSimpleName();
 
 
     /* Keys */
     private static final String ACTION_PLAYBACK_STARTED = "org.y20k.transistor.action.PLAYBACK_STARTED";
     private static final String ACTION_PLAYBACK_STOPPED = "org.y20k.transistor.action.PLAYBACK_STOPPED";
-    public static final String LIST_STATE = "ListState";
-    public static final String STREAM_URL = "streamURL";
-    public static final String STATION_NAME = "stationName";
-    public static final String STATION_ID = "stationID";
-    public static final String TITLE = "title";
-    public static final String CONTENT = "content";
+    private static final String LIST_STATE = "ListState";
+    private static final String STREAM_URL = "streamURL";
+    private static final String STATION_NAME = "stationName";
+    private static final String STATION_ID = "stationID";
+    private static final String TITLE = "title";
+    private static final String CONTENT = "content";
 
 
     /* Main class variables */
@@ -89,7 +89,7 @@ public class MainActivityFragment extends Fragment {
         try {
             // get collection folder from external storage
             mFolder = new File(getActivity().getExternalFilesDir("Collection").toString());
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             // notify user and log exception
             Toast.makeText(getActivity(), R.string.toastalert_no_external_storage, Toast.LENGTH_LONG).show();
             Log.e(LOG_TAG, "Unable to access external storage.");
@@ -120,8 +120,8 @@ public class MainActivityFragment extends Fragment {
                 refreshStationList(context);
             }
         };
-        IntentFilter playbackStoppeddIntentFilter = new IntentFilter(ACTION_PLAYBACK_STOPPED);
-        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(playbackStoppedReceiver, playbackStoppeddIntentFilter);
+        IntentFilter playbackStoppedIntentFilter = new IntentFilter(ACTION_PLAYBACK_STOPPED);
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(playbackStoppedReceiver, playbackStoppedIntentFilter);
 
         // broadcast receiver: player service stopped playback
         BroadcastReceiver playbackStartedReceiver = new BroadcastReceiver() {

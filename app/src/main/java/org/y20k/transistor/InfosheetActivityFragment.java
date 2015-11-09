@@ -30,7 +30,7 @@ import android.widget.TextView;
 public class InfosheetActivityFragment extends Fragment {
 
     /* Keys */
-    public static final String CONTENT = "content";
+    private static final String CONTENT = "content";
 
 
     @Override

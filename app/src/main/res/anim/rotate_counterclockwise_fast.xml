@@ -8,6 +8,6 @@
         android:toDegrees="-45"
         android:duration="50"
         android:pivotX="50%"
-        android:pivotY="50%"></rotate>
+        android:pivotY="50%" />
 
 </set>

@@ -19,6 +19,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.support.v4.content.ContextCompat;
 
 import org.y20k.transistor.R;
 
@@ -29,9 +30,9 @@ import org.y20k.transistor.R;
 public class ImageHelper {
 
     /* Main class variables */
-    private Bitmap mInputImage;
-    private Paint mBackgroundColor;
-    private Context mContext;
+    private final Bitmap mInputImage;
+    private final Paint mBackgroundColor;
+    private final Context mContext;
 
 
     /* Constructor */
@@ -40,7 +41,7 @@ public class ImageHelper {
         mContext = context;
 
         // set default background color white
-        int backgroundColor = mContext.getResources().getColor(R.color.transistor_white);
+        int backgroundColor = ContextCompat.getColor(mContext, R.color.transistor_white);
         mBackgroundColor = new Paint();
         mBackgroundColor.setColor(backgroundColor);
     }
@@ -48,7 +49,7 @@ public class ImageHelper {
 
     /* Setter for color of background */
     public void setBackgroundColor(int color) {
-        int backgroundColor = mContext.getResources().getColor(color);
+        int backgroundColor = ContextCompat.getColor(mContext, color);
         mBackgroundColor.setColor(backgroundColor);
     }
 

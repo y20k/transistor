@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">Transistor</string>
     <string name="title_activity_player">Now Playing</string>
-    <string name="app_collection_folder" translatable="false">Collection</string>
 
     <!-- menu entries -->
     <string name="menu_about">About</string>
@@ -19,8 +18,9 @@
     <string name="descr_overflow_button">Display options for radio station</string>
     <string name="descr_station_icon">Icon of radio station</string>
     <string name="descr_station_name">Name of radio station</string>
-    <string name="descr_playback_indicator">Indicator for running playback</string>
     <string name="descr_playback_button">Big playback button</string>
+    <string name="descr_playback_indicator">Indicator for running playback</string>
+    <string name="descr_playback_indicator_started">Indicator for running playback</string>
 
     <!-- dialogs -->
     <string name="dialog_generic_button_cancel">Cancel</string>
@@ -31,7 +31,6 @@
     <string name="dialog_delete_station_message">Delete station</string>
     <string name="dialog_button_delete">Delete</string>
     <string name="dialog_generic_button_okay">Okay</string>
-    <string name="dialog_rename_station_button">Rename</string>
     <string name="dialog_rename_station_input_hint">Enter a new name</string>
     <string name="dialog_rename_station_message">Rename station</string>
     <string name="dialog_button_rename">Rename</string>
@@ -43,17 +42,14 @@
     <string name="toastmessage_add_download_started">Download started:</string>
     <string name="toastalert_no_external_storage">Unable to accesss external storage.</string>
     <string name="toastalert_headphones_unplugged">Headphones unplugged. Playback stopped.</string>
-    <string name="toastalert_phone_active">Phone active. Playback stopped.</string>
 
     <!-- notification -->
-    <string name="notification_swip_to_stop">Swipe to stop</string>
+    <string name="notification_swipe_to_stop">Swipe to stop</string>
     <string name="notification_playing">Playing</string>
 
-    <string name="stationid_current">ID of the station currently playing</string>
-    <string name="title_activity_infosheet">Info Sheet</string>
 
     <!-- misc -->
-    <string name="new_stationname">New Station</string>
+    <string name="title_activity_infosheet">Info Sheet</string>
 
     <!-- HTML strings -->
     <string name="html_about"><![CDATA[<!DOCTYPE html>
@@ -91,7 +87,7 @@
         </body>
     </html>]]></string>
 
-    <string name="descr_playback_indicator_started">Indicator for running playback</string>
+
 
 
 </resources>

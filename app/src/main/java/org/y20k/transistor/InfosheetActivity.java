@@ -25,7 +25,7 @@ import android.support.v7.app.AppCompatActivity;
 public class InfosheetActivity extends AppCompatActivity {
 
     /* Keys */
-    public static final String TITLE = "title";
+    private static final String TITLE = "title";
 
 
     @Override

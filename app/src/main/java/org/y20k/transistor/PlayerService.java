@@ -40,10 +40,12 @@ import java.io.IOException;
 public class PlayerService extends Service implements
         AudioManager.OnAudioFocusChangeListener,
         MediaPlayer.OnPreparedListener,
-        MediaPlayer.OnErrorListener {
+        MediaPlayer.OnErrorListener,
+        MediaPlayer.OnInfoListener {
+
 
     /* Define log tag */
-    public final String LOG_TAG = PlayerService.class.getSimpleName();
+    private static final String LOG_TAG = PlayerService.class.getSimpleName();
 
 
     /* Keys */
@@ -52,7 +54,7 @@ public class PlayerService extends Service implements
     private static final String ACTION_PLAYBACK_STARTED = "org.y20k.transistor.action.PLAYBACK_STARTED";
     private static final String ACTION_PLAYBACK_STOPPED = "org.y20k.transistor.action.PLAYBACK_STOPPED";
     private static final String EXTRA_STREAM_URL = "STREAM_URL";
-    public static final String PLAYBACK = "playback";
+    private static final String PLAYBACK = "playback";
     private static final int PLAYER_SERVICE_NOTIFICATION_ID = 1;
 
 
@@ -60,7 +62,6 @@ public class PlayerService extends Service implements
     private AudioManager mAudioManager;
     private MediaPlayer mMediaPlayer;
     private String mStreamURL;
-    private String mStationName;
     private boolean mPlayback;
     private HeadphoneUnplugReceiver mHeadphoneUnplugReceiver;
 
@@ -78,7 +79,7 @@ public class PlayerService extends Service implements
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         mMediaPlayer = null;
 
-        // Listen for headphone unglug
+        // Listen for headphone unplug
         IntentFilter headphoneUnplugIntentFilter = new IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
         mHeadphoneUnplugReceiver = new HeadphoneUnplugReceiver();
         registerReceiver(mHeadphoneUnplugReceiver, headphoneUnplugIntentFilter);
@@ -180,7 +181,78 @@ public class PlayerService extends Service implements
 
     @Override
     public boolean onError(MediaPlayer mp, int what, int extra) {
+
+        switch (what) {
+            case MediaPlayer.MEDIA_ERROR_UNKNOWN:
+                Log.e(LOG_TAG, "Unknown media playback error");
+                break;
+            case MediaPlayer.MEDIA_ERROR_SERVER_DIED:
+                Log.e(LOG_TAG, "Connection to server lost");
+                break;
+            default:
+                Log.e(LOG_TAG, "Generic audio playback error");
+                break;
+        }
+
+        switch (extra) {
+            case MediaPlayer.MEDIA_ERROR_IO:
+                Log.e(LOG_TAG, "IO media error.");
+                break;
+            case MediaPlayer.MEDIA_ERROR_MALFORMED:
+                Log.e(LOG_TAG, "Malformed media.");
+                break;
+            case MediaPlayer.MEDIA_ERROR_UNSUPPORTED:
+                Log.e(LOG_TAG, "Unsupported content type");
+                break;
+            case MediaPlayer.MEDIA_ERROR_TIMED_OUT:
+                Log.e(LOG_TAG, "Media timeout");
+                break;
+            default:
+                Log.e(LOG_TAG, "Other case of media playback error");
+                break;
+        }
+
         mp.reset();
+
+        return true;
+    }
+
+
+
+    @Override
+    public boolean onInfo(MediaPlayer mp, int what, int extra) {
+
+        switch (what){
+            case MediaPlayer.MEDIA_INFO_UNKNOWN:
+                Log.i(LOG_TAG, "Unknown media info");
+                break;
+            case MediaPlayer.MEDIA_INFO_BUFFERING_START:
+                Log.i(LOG_TAG, "Buffering started");
+                break;
+            case MediaPlayer.MEDIA_INFO_BUFFERING_END:
+                Log.i(LOG_TAG, "Buffering finished");
+                break;
+            case MediaPlayer.MEDIA_INFO_METADATA_UPDATE:
+                Log.i(LOG_TAG, "New metadata available");
+                break;
+            default:
+                Log.i(LOG_TAG, "other case of media info");
+                break;
+        }
+//        MEDIA_INFO_UNKNOWN
+//        MEDIA_INFO_VIDEO_TRACK_LAGGING
+//        MEDIA_INFO_VIDEO_RENDERING_START
+//        MEDIA_INFO_BUFFERING_START
+//        MEDIA_INFO_BUFFERING_END
+//        MEDIA_INFO_NETWORK_BANDWIDTH (703) - bandwidth information is available (as extra kbps)
+//        MEDIA_INFO_BAD_INTERLEAVING
+//        MEDIA_INFO_NOT_SEEKABLE
+//        MEDIA_INFO_METADATA_UPDATE
+//        MEDIA_INFO_UNSUPPORTED_SUBTITLE
+//        MEDIA_INFO_SUBTITLE_TIMED_OUT
+
+
+
         return false;
     }
 
@@ -206,7 +278,6 @@ public class PlayerService extends Service implements
     /* Method to start the player */
     public void startActionPlay(Context context, String streamURL, String stationName) {
         mStreamURL = streamURL;
-        mStationName = stationName;
         Log.v(LOG_TAG, "starting playback service: " + mStreamURL);
 
         // start player service using intent
@@ -217,7 +288,7 @@ public class PlayerService extends Service implements
 
         // put up notification
         NotificationHelper notificationHelper = new NotificationHelper(context);
-        notificationHelper.setStationName(mStationName);
+        notificationHelper.setStationName(stationName);
         notificationHelper.createNotification();
     }
 
@@ -230,10 +301,6 @@ public class PlayerService extends Service implements
         Intent intent = new Intent(context, PlayerService.class);
         intent.setAction(ACTION_STOP);
         context.startService(intent);
-
-        // retrieve notification system service and cancel notification
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancel(PLAYER_SERVICE_NOTIFICATION_ID);
     }
 
 
@@ -243,6 +310,7 @@ public class PlayerService extends Service implements
         mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         mMediaPlayer.setOnPreparedListener(this);
         mMediaPlayer.setOnErrorListener(this);
+        mMediaPlayer.setOnInfoListener(this);
         mMediaPlayer.setOnBufferingUpdateListener(new MediaPlayer.OnBufferingUpdateListener() {
             @Override
             public void onBufferingUpdate(MediaPlayer mp, int percent) {
@@ -254,9 +322,7 @@ public class PlayerService extends Service implements
             mMediaPlayer.setDataSource(mStreamURL);
             mMediaPlayer.prepareAsync();
             Log.v(LOG_TAG, "setting: " + mStreamURL);
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (IllegalStateException e) {
+        } catch (IllegalArgumentException | IllegalStateException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
@@ -315,6 +381,10 @@ public class PlayerService extends Service implements
         Intent i = new Intent();
         i.setAction(ACTION_PLAYBACK_STOPPED);
         LocalBroadcastManager.getInstance(this).sendBroadcast(i);
+
+        // retrieve notification system service and cancel notification
+        NotificationManager notificationManager = (NotificationManager) getApplication().getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancel(PLAYER_SERVICE_NOTIFICATION_ID);
     }
 
 
@@ -339,7 +409,7 @@ public class PlayerService extends Service implements
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplication());
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean(PLAYBACK, mPlayback);
-        editor.commit();
+        editor.apply();
     }
 
 

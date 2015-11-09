@@ -16,6 +16,7 @@ package org.y20k.transistor.core;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -38,7 +39,7 @@ import java.util.Scanner;
 public class Station implements Comparable<Station> {
 
     /* Define log tag */
-    public final String LOG_TAG = Collection.class.getSimpleName();
+    private static final String LOG_TAG = Collection.class.getSimpleName();
 
 
     /* Main class variables */
@@ -100,7 +101,7 @@ public class Station implements Comparable<Station> {
 
     /* Compares two stations */
     @Override
-    public int compareTo(Station otherStation) {
+    public int compareTo(@NonNull Station otherStation) {
         // return "1" if name if this station is greater than name of given station
         return mStationName.compareToIgnoreCase(otherStation.mStationName);
     }
@@ -129,7 +130,7 @@ public class Station implements Comparable<Station> {
 
         Log.v(LOG_TAG, "Downloading... " + fileLocation.toString());
 
-        String fileContent = null;
+        String fileContent;
 
         try (BufferedReader br = new BufferedReader(new InputStreamReader(
                 fileLocation.openStream()))) {
@@ -168,21 +169,20 @@ public class Station implements Comparable<Station> {
     /* Downloads remote favicon file */
     private void downloadImageFile(URL fileLocation) {
 
-        // get second level domain - still way to hacky
+        // get domain
         String host = fileLocation.getHost();
-        int index = host.lastIndexOf(".", host.length() - 4);
-        String domain = host.substring(index);
+
+        // strip subdomain and add www if necessary
+        if (!host.startsWith("www")) {
+            int index = host.indexOf(".");
+            host = "www" + host.substring(index);
+        }
 
         // get favicon location
-        StringBuilder sb = new StringBuilder("");
-        sb.append("http://www");
-        sb.append(domain);
-        sb.append("/favicon.ico");
-        String faviconLocation = sb.toString();
-
-        Log.v(LOG_TAG, "Downloading favicon: " + faviconLocation);
+        String faviconLocation = "http://" + host + "/favicon.ico";
 
         // download favicon
+        Log.v(LOG_TAG, "Downloading favicon: " + faviconLocation);
         try (InputStream in = new URL(faviconLocation).openStream()) {
             mStationImage = BitmapFactory.decodeStream(in);
         } catch (IOException e) {
@@ -201,14 +201,7 @@ public class Station implements Comparable<Station> {
     /* Setter for playlist file object of station */
     public void setStationPlaylistFile(File folder) {
         // construct location of m3u playlist file from station name and folder
-        String fileLocation;
-        StringBuilder sb = new StringBuilder("");
-        sb.append(folder.toString());
-        sb.append("/");
-        sb.append(mStationName);
-        sb.append(".m3u");
-        fileLocation = sb.toString();
-
+        String fileLocation = folder.toString() + "/" + mStationName + ".m3u";
         mStationPlaylistFile = new File(fileLocation);
     }
 
@@ -221,14 +214,7 @@ public class Station implements Comparable<Station> {
     /* Setter for image file object of station */
     public void setStationImageFile(File folder) {
         // construct location of png image file from station name and folder
-        String fileLocation;
-        StringBuilder sb = new StringBuilder("");
-        sb.append(folder.toString());
-        sb.append("/");
-        sb.append(mStationName);
-        sb.append(".png");
-        fileLocation = sb.toString();
-
+        String fileLocation = folder.toString() + "/" + mStationName + ".png";
         mStationImageFile = new File(fileLocation);
     }
 
@@ -355,7 +341,6 @@ public class Station implements Comparable<Station> {
     }
 
 
-    // TODO Check for Permission (https://developer.android.com/training/permissions/requesting.html)
     /* Writes station as m3u to storage */
     public void writePlaylistFile(File folder) {
 
@@ -378,9 +363,8 @@ public class Station implements Comparable<Station> {
     }
 
 
-    // TODO Check for Permission (https://developer.android.com/training/permissions/requesting.html)
     /* Writes station image as png to storage */
-    public void writeImageFile(File folder) {
+    public void writeImageFile() {
 
         Log.v(LOG_TAG, "Saving favicon: " + mStationImageFile.toString());
 

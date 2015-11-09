@@ -52,26 +52,23 @@ import java.io.File;
 public class PlayerActivityFragment extends Fragment {
 
     /* Define log tag */
-    public final String LOG_TAG = PlayerActivityFragment.class.getSimpleName();
+    private static final String LOG_TAG = PlayerActivityFragment.class.getSimpleName();
 
     /* Keys */
-    public static final String STREAM_URL = "streamURL";
-    public static final String STATION_NAME = "stationName";
-    public static final String STATION_ID = "stationID";
-    public static final String STATION_ID_CURRENT = "stationIDCurrent";
-    public static final String STATION_ID_LAST = "stationIDLast";
-    public static final String PLAYBACK = "playback";
+    private static final String STREAM_URL = "streamURL";
+    private static final String STATION_NAME = "stationName";
+    private static final String STATION_ID = "stationID";
+    private static final String STATION_ID_CURRENT = "stationIDCurrent";
+    private static final String STATION_ID_LAST = "stationIDLast";
+    private static final String PLAYBACK = "playback";
     private static final String ACTION_PLAYBACK_STOPPED = "org.y20k.transistor.action.PLAYBACK_STOPPED";
 
 
     /* Main class variables */
     private Activity mActivity;
-    private View mRootView;
-    private Bitmap mStationImage;
-    private String mStatiomName;
+    private String mStationName;
     private String mStreamURL;
     private TextView mStationNameView;
-    private ImageView mStationeImageView;
     private ImageButton mPlaybackButton;
     private ImageView mPlaybackIndicator;
     private int mStationID;
@@ -97,7 +94,7 @@ public class PlayerActivityFragment extends Fragment {
         // get station name, URL and id from intent
         Intent intent = mActivity.getIntent();
         mStationID = intent.getIntExtra(STATION_ID, -1);
-        mStatiomName = intent.getStringExtra(STATION_NAME);
+        mStationName = intent.getStringExtra(STATION_NAME);
         mStreamURL = intent.getStringExtra(STREAM_URL);
 
         // load playback state from preferences
@@ -113,7 +110,7 @@ public class PlayerActivityFragment extends Fragment {
             File folder = new File(mActivity.getExternalFilesDir("Collection").toString());
             // load collection
             mCollection = new Collection(folder);
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             // notify user and log exception
             Toast.makeText(getActivity(), R.string.toastalert_no_external_storage, Toast.LENGTH_LONG).show();
             Log.e(LOG_TAG, "Unable to access external storage.");
@@ -123,7 +120,7 @@ public class PlayerActivityFragment extends Fragment {
 
         // get URL and name for stream
         mStreamURL = mCollection.getStations().get(mStationID).getStreamURL().toString();
-        mStatiomName = mCollection.getStations().get(mStationID).getStationName();
+        mStationName = mCollection.getStations().get(mStationID).getStationName();
 
         // fragment has options menu
         setHasOptionsMenu(true);
@@ -155,29 +152,29 @@ public class PlayerActivityFragment extends Fragment {
         }
         imageHelper = new ImageHelper(stationImageSmall, mActivity);
         imageHelper.setBackgroundColor(R.color.transistor_grey_lighter);
-        mStationImage = imageHelper.createCircularFramedImage(192);
+        Bitmap stationImage = imageHelper.createCircularFramedImage(192);
 
         // initiate playback service
         mPlayerService = new PlayerService();
 
         // inflate rootview from xml
-        mRootView = inflater.inflate(R.layout.fragment_player, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_player, container, false);
 
         // find views for station name and image and playback indicator
-        mStationNameView = (TextView) mRootView.findViewById(R.id.player_textview_stationname);
-        mStationeImageView = (ImageView) mRootView.findViewById(R.id.player_imageview_station_icon);
-        mPlaybackIndicator = (ImageView) mRootView.findViewById(R.id.player_playback_indicator);
+        mStationNameView = (TextView) rootView.findViewById(R.id.player_textview_stationname);
+        ImageView stationeImageView = (ImageView) rootView.findViewById(R.id.player_imageview_station_icon);
+        mPlaybackIndicator = (ImageView) rootView.findViewById(R.id.player_playback_indicator);
 
         // set station image
-        if (mStationImage != null) {
-            mStationeImageView.setImageBitmap(mStationImage);
+        if (stationImage != null) {
+            stationeImageView.setImageBitmap(stationImage);
         }
 
         // set text view to station name
-        mStationNameView.setText(mStatiomName);
+        mStationNameView.setText(mStationName);
 
         // construct image button
-        mPlaybackButton = (ImageButton) mRootView.findViewById(R.id.player_playback_button);
+        mPlaybackButton = (ImageButton) rootView.findViewById(R.id.player_playback_button);
 
         // set listener to playback button
         mPlaybackButton.setOnClickListener(new View.OnClickListener() {
@@ -192,7 +189,7 @@ public class PlayerActivityFragment extends Fragment {
                     // rotate playback button
                     changeVisualState(mActivity);
                     // start player
-                    mPlayerService.startActionPlay(mActivity, mStreamURL, mStatiomName);
+                    mPlayerService.startActionPlay(mActivity, mStreamURL, mStationName);
                     Log.v(LOG_TAG, "Starting player service.");
 
                 }
@@ -227,7 +224,7 @@ public class PlayerActivityFragment extends Fragment {
         IntentFilter intentFilter = new IntentFilter(ACTION_PLAYBACK_STOPPED);
         LocalBroadcastManager.getInstance(mActivity).registerReceiver(playbackStoppedReceiver, intentFilter);
 
-        return mRootView;
+        return rootView;
     }
 
 
@@ -239,7 +236,7 @@ public class PlayerActivityFragment extends Fragment {
             // CASE RENAME
             case R.id.menu_rename:
                 // construct rename dialog
-                final DialogRename dialogRename = new DialogRename(mActivity, mCollection, mStatiomName, mStationID);
+                final DialogRename dialogRename = new DialogRename(mActivity, mCollection, mStationName, mStationID);
                 dialogRename.setStationRenamedListener(new DialogRename.StationRenamedListener() {
                     @Override
                     public void stationRenamed() {
@@ -356,7 +353,7 @@ public class PlayerActivityFragment extends Fragment {
         editor.putInt(STATION_ID_CURRENT, mStationIDCurrent);
         editor.putInt(STATION_ID_LAST, mStationIDLast);
         editor.putBoolean(PLAYBACK, mPlayback);
-        editor.commit();
+        editor.apply();
 
     }
 

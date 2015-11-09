@@ -19,13 +19,13 @@ The easiest way to add a new station is to search for m3u streaming links and th
 Tap the big Play button ;).
 
 ### How to stop playback?
-Tap the big Stop button or unplug your headphones or swipe off the notification from the lockscreen.
+Tap the big Stop button or unplug your headphones or swipe off the notification from the lock screen.
 
 ### How to rename or delete a station?
 The rename and delete options can be accessed both from the list of stations and from the now playing screen. Just tap on the three dots symbol. You can manage the list of stations also from a file browser (see next question).
 
 ### Where does Transistor store its stations?
-Transistor does not save its list of stations in a database. Instead it stores stations as m3u files on your device's external storage. Feel free to tinker with those files using the texteditor of your choice. The files are stored in /Android/data/org.y20k.transistor/Collection.
+Transistor does not save its list of stations in a database. Instead it stores stations as m3u files on your device's external storage. Feel free to tinker with those files using the text editor of your choice. The files are stored in /Android/data/org.y20k.transistor/Collection.
 
 ### Why does Transistor not have any setting?
 There is nothing to be set ;). Transistor is a very simple app. Depending on your point of view "simple" is either great or lame.

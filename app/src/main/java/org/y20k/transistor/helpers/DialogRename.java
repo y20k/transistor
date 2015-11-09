@@ -33,14 +33,14 @@ public class DialogRename {
 
 
     /* Define log tag */
-    public final String LOG_TAG = DialogRename.class.getSimpleName();
+    private static final String LOG_TAG = DialogRename.class.getSimpleName();
 
     /* Keys */
 
     /* Main class variables */
-    private Context mContext;
-    private Collection mCollection;
-    private int mStationID;
+    private final Context mContext;
+    private final Collection mCollection;
+    private final int mStationID;
     private String mStationName;
     private StationRenamedListener mStationRenamedListener;
 
@@ -87,6 +87,13 @@ public class DialogRename {
                     if (mStationRenamedListener != null) {
                         mStationRenamedListener.stationRenamed();
                     }
+
+//                    // put up changed notification (if playback)
+//                    NotificationHelper notificationHelper = new NotificationHelper(context);
+//                    notificationHelper.setStationName(mStationName);
+//                    notificationHelper.createNotification();
+
+
                 }
             }
         });

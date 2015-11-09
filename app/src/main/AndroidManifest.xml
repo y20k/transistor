@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.y20k.transistor"
-    android:versionCode="4"
+    package="org.y20k.transistor">
+<!--    android:versionCode="4"
     android:versionName="0.9.3 (Young Americans)">
 
-    <uses-sdk android:minSdkVersion="19" android:targetSdkVersion="23" />
+    <uses-sdk android:minSdkVersion="19" android:targetSdkVersion="23" /> -->
 
     <uses-permission android:name="android.permission.INTERNET" />
 

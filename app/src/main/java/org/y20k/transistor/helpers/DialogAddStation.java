@@ -32,7 +32,7 @@ import org.y20k.transistor.R;
 public class DialogAddStation extends DialogFragment {
 
     /* Define log tag */
-    public final String LOG_TAG = DialogAddStation.class.getSimpleName();
+    private static final String LOG_TAG = DialogAddStation.class.getSimpleName();
 
 
     /* Main class variables */

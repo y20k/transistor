@@ -25,16 +25,16 @@ import java.net.URL;
 /**
  * StationDownloader class
  */
-public class StationDownloader extends AsyncTask<Void, Void, Station> {
+class StationDownloader extends AsyncTask<Void, Void, Station> {
 
     /* Define log tag */
-    public final String LOG_TAG = CollectionLoader.class.getSimpleName();
+    private static final String LOG_TAG = CollectionLoader.class.getSimpleName();
 
 
     /* Main class variables */
-    private File mFolder;
+    private final File mFolder;
     private Station mStation;
-    private URL mStationURL;
+    private final URL mStationURL;
     private StationDownloadListener mStationDownloadListener;
 
 

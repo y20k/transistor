@@ -29,14 +29,14 @@ import org.y20k.transistor.core.Collection;
 public class DialogDelete {
 
     /* Define log tag */
-    public final String LOG_TAG = DialogRename.class.getSimpleName();
+    private static final String LOG_TAG = DialogRename.class.getSimpleName();
 
     /* Keys */
 
     /* Main class variables */
-    private Context mContext;
-    private Collection mCollection;
-    private int mStationID;
+    private final Context mContext;
+    private final Collection mCollection;
+    private final int mStationID;
     private StationDeletedListener mStationDeletedListener;
 
 
@@ -66,7 +66,7 @@ public class DialogDelete {
             public void onClick(DialogInterface arg0, int arg1) {
                 boolean success = mCollection.delete(mStationID);
                 if (success) {
-                    // notity the user
+                    // notify the user
                     Toast.makeText(mContext, R.string.toastalert_delete_successful, Toast.LENGTH_LONG).show();
                     // notify the collection adapter
                     if (mStationDeletedListener != null) {

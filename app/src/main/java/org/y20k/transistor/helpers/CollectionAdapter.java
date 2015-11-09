@@ -37,20 +37,18 @@ import java.util.LinkedList;
 public class CollectionAdapter extends BaseAdapter {
 
     /* Keys */
-    public static final String STATION_ID_CURRENT = "stationIDCurrent";
-    public static final String STATION_ID_LAST = "stationIDLast";
-    public static final String PLAYBACK = "playback";
+    private static final String STATION_ID_CURRENT = "stationIDCurrent";
+    private static final String PLAYBACK = "playback";
 
 
     /* Main class variables */
-    private LinkedList<String> mStationNames;
-    private LinkedList<Bitmap> mStationImages;
+    private final LinkedList<String> mStationNames;
+    private final LinkedList<Bitmap> mStationImages;
     private Collection mCollection;
-    private Context mContext;
+    private final Context mContext;
     private CollectionChangedListener mCollectionChangedListener;
     private boolean mPlayback;
     private int mStationIDCurrent;
-    private int mStationIDLast;
 
 
     /* Interface for custom listener */
@@ -98,7 +96,7 @@ public class CollectionAdapter extends BaseAdapter {
         // create new view if no convertView available
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.list_item_collection, null);
+            convertView = inflater.inflate(R.layout.list_item_collection, parent, false);
 
             holder = new ViewHolder();
             holder.stationImageView = (ImageView) convertView.findViewById(R.id.list_item_station_icon);
@@ -163,7 +161,6 @@ public class CollectionAdapter extends BaseAdapter {
     private void loadPlaybackState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         mStationIDCurrent = settings.getInt(STATION_ID_CURRENT, -1);
-        mStationIDLast = settings.getInt(STATION_ID_LAST, -1);
         mPlayback = settings.getBoolean(PLAYBACK, false);
     }
 

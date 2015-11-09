@@ -28,10 +28,10 @@ import java.io.File;
 /**
  * CollectionLoader class
  */
-public class CollectionLoader extends AsyncTask<Void, Void, Collection> {
+class CollectionLoader extends AsyncTask<Void, Void, Collection> {
 
     /* Define log tag */
-    public final String LOG_TAG = CollectionLoader.class.getSimpleName();
+    private static final String LOG_TAG = CollectionLoader.class.getSimpleName();
 
 
     /* Main class variables */
@@ -53,7 +53,7 @@ public class CollectionLoader extends AsyncTask<Void, Void, Collection> {
             // get collection folder from external storage
             mFolder = new File(context.getExternalFilesDir("Collection").toString());
             externalFilesDirDenied = false;
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             // notify user and log exception
             Toast.makeText(context, R.string.toastalert_no_external_storage, Toast.LENGTH_LONG).show();
             Log.e(LOG_TAG, "Unable to access external storage.");

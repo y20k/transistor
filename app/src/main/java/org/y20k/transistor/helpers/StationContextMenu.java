@@ -18,7 +18,6 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewManager;
 import android.widget.PopupMenu;
 
 import org.y20k.transistor.R;
@@ -68,7 +67,7 @@ public class StationContextMenu extends DialogFragment {
     /* Displays context menu */
     public void show() {
         final View listItem = (View) mView.getParent();
-        final ViewManager rowView = (ViewManager) listItem.getParent();
+        // final ViewManager rowView = (ViewManager) listItem.getParent(); TODO REMOVE
 
         PopupMenu popup = new PopupMenu(mContext, mView);
         popup.inflate(R.menu.menu_main_list_item);

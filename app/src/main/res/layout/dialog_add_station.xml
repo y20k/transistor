@@ -13,7 +13,6 @@
 
     <EditText
         android:id="@+id/dialog_add_station_input"
-        android:contentDescription="@string/dialog_add_station_input_hint"
         android:inputType="textUri"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

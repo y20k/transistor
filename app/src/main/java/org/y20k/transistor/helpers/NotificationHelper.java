@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
+import android.support.v4.content.ContextCompat;
 
 import org.y20k.transistor.PlayerActivity;
 import org.y20k.transistor.PlayerService;
@@ -38,7 +39,7 @@ public class NotificationHelper {
 
 
     /* Main class variables */
-    private Context mContext;
+    private final Context mContext;
     private String mStationName;
 
 
@@ -66,9 +67,9 @@ public class NotificationHelper {
         notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 
         // create content of notification
-        notificationText = mContext.getString(R.string.notification_swip_to_stop);
+        notificationText = mContext.getString(R.string.notification_swipe_to_stop);
         notificationTitle = mContext.getString(R.string.notification_playing) + ": " + mStationName;
-        notificationColor = mContext.getResources().getColor(R.color.transistor_red);
+        notificationColor = ContextCompat.getColor(mContext, R.color.transistor_red);
         // largeIcon = BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.ic_launcher);
 
         // explicit intent for notification tap
