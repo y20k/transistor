@@ -17,6 +17,8 @@ package org.y20k.transistor.helpers;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -31,11 +33,13 @@ import org.y20k.transistor.core.Collection;
  */
 public class DialogRename {
 
-
     /* Define log tag */
     private static final String LOG_TAG = DialogRename.class.getSimpleName();
 
+
     /* Keys */
+    private static final String PLAYBACK = "playback";
+
 
     /* Main class variables */
     private final Context mContext;
@@ -88,11 +92,16 @@ public class DialogRename {
                         mStationRenamedListener.stationRenamed();
                     }
 
-//                    // put up changed notification (if playback)
-//                    NotificationHelper notificationHelper = new NotificationHelper(context);
-//                    notificationHelper.setStationName(mStationName);
-//                    notificationHelper.createNotification();
+                    // check for playback
+                    SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext);
+                    boolean playback = settings.getBoolean(PLAYBACK, false);
 
+                    if (playback) {
+                        // put up changed notification
+                        NotificationHelper notificationHelper = new NotificationHelper(mContext);
+                        notificationHelper.setStationName(mStationName);
+                        notificationHelper.createNotification();
+                    }
 
                 }
             }
