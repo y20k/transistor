@@ -83,7 +83,7 @@ public class MainActivityFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // set liststate null
+        // set list state null
         mListState = null;
 
         try {

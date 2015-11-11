@@ -64,6 +64,8 @@ public class DialogRename {
         mStationRenamedListener = null;
     }
 
+
+    /* Construct and show dialog */
     public void show() {
         // prepare dialog builder
         LayoutInflater inflater = LayoutInflater.from(mContext);
@@ -130,7 +132,6 @@ public class DialogRename {
     public String getStationName() {
         return mStationName;
     }
-
 
 }
 

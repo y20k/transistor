@@ -44,8 +44,8 @@ public class CollectionAdapter extends BaseAdapter {
     /* Main class variables */
     private final LinkedList<String> mStationNames;
     private final LinkedList<Bitmap> mStationImages;
-    private Collection mCollection;
     private final Context mContext;
+    private Collection mCollection;
     private CollectionChangedListener mCollectionChangedListener;
     private boolean mPlayback;
     private int mStationIDCurrent;
@@ -85,7 +85,6 @@ public class CollectionAdapter extends BaseAdapter {
     public long getItemId(int position) {
         return position;
     }
-
 
 
     @Override

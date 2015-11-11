@@ -59,9 +59,6 @@ class CollectionLoader extends AsyncTask<Void, Void, Collection> {
             Log.e(LOG_TAG, "Unable to access external storage.");
             externalFilesDirDenied = true;
         }
-
-
-
         mCollectionLoadedListener = null;
     }
 

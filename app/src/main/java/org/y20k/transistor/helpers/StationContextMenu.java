@@ -67,7 +67,6 @@ public class StationContextMenu extends DialogFragment {
     /* Displays context menu */
     public void show() {
         final View listItem = (View) mView.getParent();
-        // final ViewManager rowView = (ViewManager) listItem.getParent(); TODO REMOVE
 
         PopupMenu popup = new PopupMenu(mContext, mView);
         popup.inflate(R.menu.menu_main_list_item);

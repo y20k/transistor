@@ -54,6 +54,7 @@ public class PlayerActivityFragment extends Fragment {
     /* Define log tag */
     private static final String LOG_TAG = PlayerActivityFragment.class.getSimpleName();
 
+
     /* Keys */
     private static final String STREAM_URL = "streamURL";
     private static final String STATION_NAME = "stationName";
@@ -132,6 +133,7 @@ public class PlayerActivityFragment extends Fragment {
         super.onResume();
 
         // TODO check connectivity
+        // requires additional permission
 
         // set up button symbol and playback indicator
         setVisualState();
@@ -273,13 +275,6 @@ public class PlayerActivityFragment extends Fragment {
     }
 
 
-//    @Override
-//    public void onPause() {
-//        super.onPause();
-//        savePlaybackState();
-//    }
-
-
     /* Animate button and then set visual state */
     private void changeVisualState(Context context) {
         // get rotate animation from xml
@@ -367,9 +362,3 @@ public class PlayerActivityFragment extends Fragment {
     }
 
 }
-
-
-/**
- * TODO
- * - Sleep Timer
- */

@@ -94,6 +94,7 @@ public class StationHelper {
 
     }
 
+
     /* Setter for custom listener */
     public void setStationChangedListener(StationChangedListener stationChangedListener) {
         mStationChangedListener = stationChangedListener;

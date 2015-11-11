@@ -43,7 +43,6 @@ public class PlayerService extends Service implements
         MediaPlayer.OnErrorListener,
         MediaPlayer.OnInfoListener {
 
-
     /* Define log tag */
     private static final String LOG_TAG = PlayerService.class.getSimpleName();
 
@@ -86,7 +85,6 @@ public class PlayerService extends Service implements
 
         // TODO Listen for headphone button
         // Use MediaSession
-
     }
 
 
@@ -129,7 +127,6 @@ public class PlayerService extends Service implements
     }
 
 
-    // @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return null;
@@ -239,21 +236,8 @@ public class PlayerService extends Service implements
                 Log.i(LOG_TAG, "other case of media info");
                 break;
         }
-//        MEDIA_INFO_UNKNOWN
-//        MEDIA_INFO_VIDEO_TRACK_LAGGING
-//        MEDIA_INFO_VIDEO_RENDERING_START
-//        MEDIA_INFO_BUFFERING_START
-//        MEDIA_INFO_BUFFERING_END
-//        MEDIA_INFO_NETWORK_BANDWIDTH (703) - bandwidth information is available (as extra kbps)
-//        MEDIA_INFO_BAD_INTERLEAVING
-//        MEDIA_INFO_NOT_SEEKABLE
-//        MEDIA_INFO_METADATA_UPDATE
-//        MEDIA_INFO_UNSUPPORTED_SUBTITLE
-//        MEDIA_INFO_SUBTITLE_TIMED_OUT
 
-
-
-        return false;
+        return true;
     }
 
 
@@ -434,10 +418,4 @@ public class PlayerService extends Service implements
      * End of inner class
      */
 
-
 }
-
-/**
- * TODO
- * - try to get metadata from stream MediaPlayer.TrackInfo
- */

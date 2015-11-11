@@ -43,17 +43,19 @@ public class NotificationHelper {
     private String mStationName;
 
 
-    /* Constructor (default) */
+    /* Constructor */
     public NotificationHelper(Context context) {
         mContext = context;
     }
 
 
+    /* Setter for name of station */
     public void setStationName(String stationName) {
         mStationName = stationName;
     }
 
 
+    /* Construct and put up notification */
     public void createNotification() {
         NotificationCompat.Builder builder;
         Notification notification;

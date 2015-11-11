@@ -145,7 +145,7 @@ public class Station implements Comparable<Station> {
                 sb.append("\n");
                 counter++;
             }
-            // point fileContent to StringBuilder result
+            // get fileContent from StringBuilder result
             fileContent = sb.toString();
 
             if (sb.length() == 0) {

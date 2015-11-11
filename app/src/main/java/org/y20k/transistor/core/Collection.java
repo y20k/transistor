@@ -32,11 +32,10 @@ public class Collection {
     /* Define log tag */
     private static final String LOG_TAG = Collection.class.getSimpleName();
 
+
     /* Main class variables */
     private final File mFolder;
     private final LinkedList<Station> mStations;
-    private Station mNowPlaying;
-    private Station mLastPlayed;
 
 
     /* Constructor */
@@ -83,6 +82,7 @@ public class Collection {
         Collections.sort(mStations);
     }
 
+
     /* add station to collection */
     public boolean add(Station station) {
         if (station.getStationName() != null && station.getStreamURL() != null
@@ -108,6 +108,7 @@ public class Collection {
             return false;
         }
     }
+
 
     /* delete station within collection */
     public boolean delete(int stationID) {
@@ -180,10 +181,12 @@ public class Collection {
         return mFolder;
     }
 
+
     /* Getter for mStations */
     public LinkedList<Station> getStations() {
         return mStations;
     }
+
 
     /* toString method for collection of mStations */
     @Override
@@ -200,6 +203,7 @@ public class Collection {
 
         return collectionToString;
     }
+
 
     /* Check for duplicate station */
     private boolean unique(Station newStation) {
