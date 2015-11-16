@@ -45,9 +45,8 @@ public class DialogAddStation extends DialogFragment {
     }
 
 
-    /* Constructor */
+    /* Constructor (default) */
     public DialogAddStation() {
-        mCollectionChangedListener = null;
     }
 
 
@@ -59,6 +58,9 @@ public class DialogAddStation extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+        mCollectionChangedListener = null;
+
         // prepare dialog builder
         LayoutInflater inflater = getActivity().getLayoutInflater();
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

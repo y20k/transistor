@@ -18,6 +18,7 @@
     <string name="descr_overflow_button">Display options for radio station</string>
     <string name="descr_station_icon">Icon of radio station</string>
     <string name="descr_station_name">Name of radio station</string>
+    <string name="descr_station_name_example">Example FM</string>
     <string name="descr_playback_button">Big playback button</string>
     <string name="descr_playback_indicator">Indicator for running playback</string>
     <string name="descr_playback_indicator_started">Indicator for running playback</string>
@@ -81,11 +82,12 @@
             <p>The rename and delete options can be accessed both from the list of stations and from the now playing screen. Just tap on the three dots symbol. You can manage the list of stations also from a file browser (see next question).</p>
             <h2>Where does Transistor store its stations?</h2>
             <p>Transistor does not save its list of stations in a database. Instead it stores stations as m3u files on your device\'s external storage. Feel free to tinker with those files using the texteditor of your choice. The files are stored in /Android/data/org.y20k.transistor/Collection.</p>
+            <h2>How do I backup and transfer my radio stations?<h2>
+            <p>Transistor supports Android 6\'s Auto Backup feature. Radio stations are always backed up to your Google account and will be restored at reinstall. On devices running on older versions of Android you must manually save and restore the &quot;Collection&quot; folder.</p>
             <h2>Why does Transistor not have any setting?</h2>
             <p>There is nothing to be set ;). Transistor is a very simple app. Depending on your point of view "simple" is either great or lame.</p>
         </body>
     </html>]]></string>
-
 
 
 

@@ -35,7 +35,7 @@
             android:ellipsize="end"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingLeft="24dp"
+            android:paddingStart="24dp"
             android:singleLine="true"
             android:gravity="center_vertical"
             android:layout_weight="1"

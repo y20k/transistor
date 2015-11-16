@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingLeft="12dp"
-    android:paddingRight="2dp"
+    android:paddingStart="12dp"
+    android:paddingEnd="2dp"
     android:paddingTop="6dp"
     android:paddingBottom="6dp"
     android:descendantFocusability="blocksDescendants">
@@ -25,8 +25,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:paddingLeft="24dp"
-        android:text="Example FM"
+        android:paddingStart="24dp"
+        android:text="@string/descr_station_name_example"
         android:layout_weight="1"
         android:singleLine="true"
         android:ellipsize="end"
@@ -47,9 +47,9 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_more_vert_black_24dp"
         android:background="@android:color/transparent"
-        android:paddingLeft="8dp"
+        android:paddingStart="8dp"
         android:paddingTop="4dp"
-        android:paddingRight="4dp"
+        android:paddingEnd="4dp"
         android:paddingBottom="4dp" />
 
 </LinearLayout>

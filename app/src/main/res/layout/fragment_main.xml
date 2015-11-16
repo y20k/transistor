@@ -7,8 +7,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".MainActivityFragment"
-    android:gravity="right">
+    tools:context=".MainActivityFragment">
 
 
     <LinearLayout
@@ -18,7 +17,7 @@
         android:orientation="horizontal"
         android:divider="#ffffff"
         android:dividerPadding="5dp"
-        android:layout_marginRight="38dp"
+        android:layout_marginEnd="38dp"
         android:visibility="gone">
 
         <TextView
@@ -28,8 +27,8 @@
             android:text="@string/actioncall_message_start_here"
             android:layout_weight="1"
             android:layout_gravity="center_vertical|bottom"
-            android:gravity="bottom|right"
-            android:paddingRight="8dp"
+            android:gravity="bottom|end"
+            android:paddingEnd="8dp"
             style="@style/TextAppearance.AppCompat.Title" />
 
         <ImageView
@@ -39,7 +38,8 @@
             android:contentDescription="@string/descr_arrow_actioncall"
             android:minHeight="?android:attr/listPreferredItemHeight"
             android:background="@drawable/smbl_arrow_actioncall_72dp"
-            android:paddingRight="0dp"
+            android:paddingStart="0dp"
+            android:paddingEnd="0dp"
             android:layout_marginBottom="4dp" />
 
     </LinearLayout>
