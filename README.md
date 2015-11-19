@@ -8,7 +8,13 @@ Transistor - Radio app for Android
 
 Transistor is a bare bones app for listening to radio programs over the internet. The app stores stations as files on your device\'s external storage. It currently understands streams embedded within m3u and pls links.
 
-Transistor is free software. It is published under the [MIT open source license]("https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT). 
+Transistor is free software. It is published under the [MIT open source license](https://opensource.org/licenses/MIT). 
+
+Install Transistor
+------------------
+Get the latest release on [Google Play](https://play.google.com/store/apps/details?id=org.y20k.transistor).
+
+Get an APK here on [GitHub](https://github.com/y20k/transistor/releases).
 
 How to use Transistor
 ---------------------
