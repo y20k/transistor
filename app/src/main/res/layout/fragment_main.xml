@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -15,8 +16,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:divider="#ffffff"
-        android:dividerPadding="5dp"
         android:layout_marginEnd="38dp"
         android:visibility="gone">
 
@@ -29,7 +28,7 @@
             android:layout_gravity="center_vertical|bottom"
             android:gravity="bottom|end"
             android:paddingEnd="8dp"
-            style="@style/TextAppearance.AppCompat.Title" />
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Widget.ActionMode.Title" />
 
         <ImageView
             android:id="@+id/main_actioncall_image_arrow"

@@ -116,7 +116,7 @@ public class PlayerActivityFragment extends Fragment {
             Toast.makeText(getActivity(), R.string.toastalert_no_external_storage, Toast.LENGTH_LONG).show();
             Log.e(LOG_TAG, "Unable to access external storage.");
             // finish activity
-            getActivity().finish();
+            mActivity.finish();
         }
 
         // get URL and name for stream
@@ -125,6 +125,7 @@ public class PlayerActivityFragment extends Fragment {
 
         // fragment has options menu
         setHasOptionsMenu(true);
+
     }
 
 
@@ -259,8 +260,10 @@ public class PlayerActivityFragment extends Fragment {
                     @Override
                     public void stationDeleted() {
                         // start main activity
-                        Intent intent = new Intent(mActivity, MainActivity.class);
-                        startActivity(intent);
+                        Intent mainActivityStartIntent = new Intent(mActivity, MainActivity.class);
+                        startActivity(mainActivityStartIntent);
+                        // finish player activity
+                        mActivity.finish();
                     }
                 });
                 // run dialog

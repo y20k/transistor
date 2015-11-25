@@ -67,19 +67,22 @@ public class Collection {
         // create array of Files from mFolder
         File[] listOfFiles = mFolder.listFiles();
 
-        // fill array list of mStations
-        for (File listOfFile : listOfFiles) {
-            if (listOfFile.isFile()
-                    && listOfFile.toString().endsWith(".m3u")) {
-                // create new station from file
-                Station newStation = new Station(listOfFile);
-                if (newStation.getStreamURL() != null) {
-                    mStations.add(newStation);
+        if (listOfFiles != null) {
+            // fill array list of mStations
+            for (File listOfFile : listOfFiles) {
+                if (listOfFile.isFile()
+                        && listOfFile.toString().endsWith(".m3u")) {
+                    // create new station from file
+                    Station newStation = new Station(listOfFile);
+                    if (newStation.getStreamURL() != null) {
+                        mStations.add(newStation);
+                    }
                 }
             }
+            // sort mStations
+            Collections.sort(mStations);
         }
-        // sort mStations
-        Collections.sort(mStations);
+
     }
 
 

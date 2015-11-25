@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:gravity="center_vertical"
     android:layout_width="match_parent"
@@ -30,7 +31,7 @@
         android:layout_weight="1"
         android:singleLine="true"
         android:ellipsize="end"
-        android:textAppearance="?android:attr/textAppearanceListItem" />
+        android:textAppearance="@android:style/TextAppearance.Medium" />
 
     <ImageView
         android:id="@+id/list_item_playback_indicator"

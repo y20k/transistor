@@ -97,14 +97,6 @@ public class StationContextMenu extends DialogFragment {
                     case R.id.menu_delete:
                         // construct delete dialog
                         DialogDelete dialogDelete = new DialogDelete(mContext, mCollection, mStationID);
-                        dialogDelete.setStationDeletedListener(new DialogDelete.StationDeletedListener() {
-                            @Override
-                            public void stationDeleted() {
-                                if (mStationChangedListener != null) {
-                                    mStationChangedListener.stationChanged();
-                                }
-                            }
-                        });
                         // run dialog
                         dialogDelete.show();
                         return true;

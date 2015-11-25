@@ -1,7 +1,4 @@
-<!-- removed
-    android:descendantFocusability="blocksDescendants"
-    android:gravity="center_vertical" -->
-
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/transistor_grey_dark_warm"
@@ -40,7 +37,8 @@
             android:gravity="center_vertical"
             android:layout_weight="1"
             android:layout_gravity="center_vertical"
-            style="@style/Base.TextAppearance.AppCompat.Large.Inverse" />
+            android:text="@string/descr_station_name_example"
+            android:textAppearance="@android:style/TextAppearance.Large.Inverse" />
 
         <ImageView
             android:id="@+id/player_playback_indicator"
@@ -52,19 +50,11 @@
 
     </LinearLayout>
 
-    <!-- <View
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:background="@color/transistor_grey"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp" /> -->
-
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_margin="8dp">
 
-        <!-- Remove source android:src="@drawable/smbl_play" -->
         <ImageButton
             android:id="@+id/player_playback_button"
             android:adjustViewBounds="true"

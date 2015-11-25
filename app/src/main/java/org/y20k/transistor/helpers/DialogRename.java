@@ -33,10 +33,6 @@ import org.y20k.transistor.core.Collection;
  */
 public class DialogRename {
 
-    /* Define log tag */
-    private static final String LOG_TAG = DialogRename.class.getSimpleName();
-
-
     /* Keys */
     private static final String PLAYBACK = "playback";
 

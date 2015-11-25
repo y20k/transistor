@@ -37,7 +37,7 @@ import org.y20k.transistor.core.Collection;
 import org.y20k.transistor.helpers.CollectionAdapter;
 import org.y20k.transistor.helpers.DialogAddStation;
 import org.y20k.transistor.helpers.ImageHelper;
-import org.y20k.transistor.helpers.StationHelper;
+import org.y20k.transistor.helpers.StationDownloader;
 
 import java.io.File;
 import java.util.LinkedList;
@@ -53,6 +53,8 @@ public class MainActivityFragment extends Fragment {
 
 
     /* Keys */
+    private static final String ACTION_COLLECTION_CHANGED = "org.y20k.transistor.action.COLLECTION_CHANGED";
+    private static final String ACTION_DOWNLOAD_ERROR = "org.y20k.transistor.action.DOWNLOAD_ERROR";
     private static final String ACTION_PLAYBACK_STARTED = "org.y20k.transistor.action.PLAYBACK_STARTED";
     private static final String ACTION_PLAYBACK_STOPPED = "org.y20k.transistor.action.PLAYBACK_STOPPED";
     private static final String LIST_STATE = "ListState";
@@ -64,6 +66,7 @@ public class MainActivityFragment extends Fragment {
 
 
     /* Main class variables */
+    private Context mContext;
     private Collection mCollection;
     private CollectionAdapter mCollectionAdapter = null;
     private File mFolder;
@@ -82,6 +85,9 @@ public class MainActivityFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // store context
+        mContext = getActivity();
 
         // set list state null
         mListState = null;
@@ -117,7 +123,7 @@ public class MainActivityFragment extends Fragment {
         BroadcastReceiver playbackStoppedReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                refreshStationList(context);
+                refreshStationList(mContext);
             }
         };
         IntentFilter playbackStoppedIntentFilter = new IntentFilter(ACTION_PLAYBACK_STOPPED);
@@ -127,11 +133,23 @@ public class MainActivityFragment extends Fragment {
         BroadcastReceiver playbackStartedReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                refreshStationList(context);
+                refreshStationList(mContext);
             }
         };
         IntentFilter playbackStartedIntentFilter = new IntentFilter(ACTION_PLAYBACK_STARTED);
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(playbackStartedReceiver, playbackStartedIntentFilter);
+
+        // broadcast receiver: station added, deleted, or changed
+        BroadcastReceiver collectionChangedReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                System.out.println("!!! Dong (Main Activity)");
+                refreshStationList(mContext);
+            }
+        };
+        IntentFilter collectionChangedIntentFilter = new IntentFilter(ACTION_COLLECTION_CHANGED);
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(collectionChangedReceiver, collectionChangedIntentFilter);
+
     }
 
 
@@ -204,14 +222,8 @@ public class MainActivityFragment extends Fragment {
 
         // action bar - add
         if (id == R.id.menu_add) {
-            DialogAddStation dialog = new DialogAddStation();
-            dialog.show(getFragmentManager(), "addstation");
-            dialog.setCollectionChangedListener(new DialogAddStation.CollectionChangedListener() {
-                @Override
-                public void collectionChanged() {
-                    refreshStationList(getActivity());
-                }
-            });
+            DialogAddStation dialog = new DialogAddStation(getActivity());
+            dialog.show();
             return true;
         }
 
@@ -349,15 +361,17 @@ public class MainActivityFragment extends Fragment {
 
             // check for null
             if (newStationURL != null) {
-                // add new station
-                StationHelper stationHelper = new StationHelper(getActivity());
-                stationHelper.setStationChangedListener(new StationHelper.StationChangedListener() {
-                    @Override
-                    public void stationChanged() {
-                        refreshStationList(getActivity());
-                    }
-                });
-                stationHelper.add(newStationURL);
+                // download and add new station
+                StationDownloader stationDownloader = new StationDownloader(newStationURL, mContext);
+                stationDownloader.execute();
+
+                // send local broadcast
+                System.out.println("!!! Ding (Main Activity / handle intent)");
+                Intent i = new Intent();
+                i.setAction(ACTION_COLLECTION_CHANGED);
+                LocalBroadcastManager.getInstance(mContext).sendBroadcast(i);
+
+
             }
             // unsuccessful - log failure
             else {

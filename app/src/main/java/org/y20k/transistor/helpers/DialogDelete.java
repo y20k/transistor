@@ -17,6 +17,8 @@ package org.y20k.transistor.helpers;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.widget.Toast;
 
 import org.y20k.transistor.R;
@@ -28,8 +30,8 @@ import org.y20k.transistor.core.Collection;
  */
 public class DialogDelete {
 
-    /* Define log tag */
-    private static final String LOG_TAG = DialogRename.class.getSimpleName();
+    /* Keys */
+    private static final String ACTION_COLLECTION_CHANGED = "org.y20k.transistor.action.COLLECTION_CHANGED";
 
 
     /* Main class variables */
@@ -69,7 +71,14 @@ public class DialogDelete {
                 if (success) {
                     // notify the user
                     Toast.makeText(mContext, R.string.toastalert_delete_successful, Toast.LENGTH_LONG).show();
-                    // notify the collection adapter
+
+                    // send local broadcast
+                    System.out.println("!!! Ding (DIALOG DELETE)");
+                    Intent i = new Intent();
+                    i.setAction(ACTION_COLLECTION_CHANGED);
+                    LocalBroadcastManager.getInstance(mContext).sendBroadcast(i);
+
+                    // notify MainActivityFragment
                     if (mStationDeletedListener != null) {
                         mStationDeletedListener.stationDeleted();
                     }
@@ -90,10 +99,10 @@ public class DialogDelete {
         deleteDialog.show();
     }
 
-
     /* Setter for custom listener */
     public void setStationDeletedListener(StationDeletedListener stationDeletedListener) {
         mStationDeletedListener = stationDeletedListener;
     }
+
 
 }

@@ -74,5 +74,11 @@
             <p>Es gibt schlicht nichts einzustellen ;). Transistor ist eine sehr einfache App. Abhängig vom eigenen Standpunkt ist &quot;einfach&quot; entweder großartig oder mies.</p>
         </body>
     </html>]]></string>
+    <string name="dialog_error_details_button_default">Details anzeigen</string>
+    <string name="dialog_error_details_default">Keine Detailinformationen vorhanden</string>
+    <string name="dialog_error_message_default">Ein Fehler ist aufgetreten</string>
+    <string name="dialog_error_message_download">Transistor hat es versicht, kann aber mit diesem Link nichts anfangen. </string>
+    <string name="dialog_error_title_default">Fehler</string>
+    <string name="dialog_error_title_download">Download Probem</string>
 
 </resources>

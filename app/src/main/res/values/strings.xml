@@ -36,6 +36,13 @@
     <string name="dialog_rename_station_message">Rename station</string>
     <string name="dialog_button_rename">Rename</string>
 
+    <!-- error dialogs -->
+    <string name="dialog_error_message_default">An error occured</string>
+    <string name="dialog_error_details_button_default">Show details</string>
+    <string name="dialog_error_details_default">No details available</string>
+    <string name="dialog_error_title_download">Download Issue</string>
+    <string name="dialog_error_message_download">Transistor tried hard but could make sense of given link.</string>
+
     <!-- messages -->
     <string name="actioncall_message_start_here">Add a new station</string>
     <string name="toastalert_rename_unsuccessful">Unable to rename station. Please choose a different name.</string>
@@ -43,6 +50,7 @@
     <string name="toastmessage_add_download_started">Download started:</string>
     <string name="toastalert_no_external_storage">Unable to accesss external storage.</string>
     <string name="toastalert_headphones_unplugged">Headphones unplugged. Playback stopped.</string>
+    <string name="dialog_error_title_default">Error</string>
 
     <!-- notification -->
     <string name="notification_swipe_to_stop">Swipe to stop</string>
@@ -88,7 +96,5 @@
             <p>There is nothing to be set ;). Transistor is a very simple app. Depending on your point of view &quot;simple&quot; is either great or lame.</p>
         </body>
     </html>]]></string>
-
-
 
 </resources>
