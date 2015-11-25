@@ -73,7 +73,6 @@ public class DialogDelete {
                     Toast.makeText(mContext, R.string.toastalert_delete_successful, Toast.LENGTH_LONG).show();
 
                     // send local broadcast
-                    System.out.println("!!! Ding (DIALOG DELETE)");
                     Intent i = new Intent();
                     i.setAction(ACTION_COLLECTION_CHANGED);
                     LocalBroadcastManager.getInstance(mContext).sendBroadcast(i);

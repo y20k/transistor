@@ -143,7 +143,6 @@ public class MainActivityFragment extends Fragment {
         BroadcastReceiver collectionChangedReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                System.out.println("!!! Dong (Main Activity)");
                 refreshStationList(mContext);
             }
         };
@@ -366,7 +365,6 @@ public class MainActivityFragment extends Fragment {
                 stationDownloader.execute();
 
                 // send local broadcast
-                System.out.println("!!! Ding (Main Activity / handle intent)");
                 Intent i = new Intent();
                 i.setAction(ACTION_COLLECTION_CHANGED);
                 LocalBroadcastManager.getInstance(mContext).sendBroadcast(i);

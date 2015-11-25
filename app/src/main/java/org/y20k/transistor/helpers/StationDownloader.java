@@ -65,7 +65,6 @@ public class StationDownloader extends AsyncTask<Void, Void, Station> {
             // notify user
             String toastMessage = mContext.getString(R.string.toastmessage_add_download_started);
             Toast.makeText(mContext, toastMessage + mStationURLString, Toast.LENGTH_LONG).show();
-            System.out.println("!!! Downloading (Station Downloader): " + mStationURL);
         } else {
             // something is wrong with external storage or url
             mErrors = true;
@@ -116,7 +115,6 @@ public class StationDownloader extends AsyncTask<Void, Void, Station> {
             // add station to collection
             mCollection.add(station);
             // send local broadcast
-            System.out.println("!!! Ding (Station Downloader)");
             Intent i = new Intent();
             i.setAction(ACTION_COLLECTION_CHANGED);
             LocalBroadcastManager.getInstance(mContext).sendBroadcast(i);
