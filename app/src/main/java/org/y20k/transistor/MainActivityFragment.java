@@ -54,7 +54,6 @@ public class MainActivityFragment extends Fragment {
 
     /* Keys */
     private static final String ACTION_COLLECTION_CHANGED = "org.y20k.transistor.action.COLLECTION_CHANGED";
-    private static final String ACTION_DOWNLOAD_ERROR = "org.y20k.transistor.action.DOWNLOAD_ERROR";
     private static final String ACTION_PLAYBACK_STARTED = "org.y20k.transistor.action.PLAYBACK_STARTED";
     private static final String ACTION_PLAYBACK_STOPPED = "org.y20k.transistor.action.PLAYBACK_STOPPED";
     private static final String LIST_STATE = "ListState";

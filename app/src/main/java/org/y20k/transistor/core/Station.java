@@ -70,7 +70,7 @@ public class Station implements Comparable<Station> {
 
 
     /* Constructor when given name and stream url */
-    public Station(File folder, String stationName, URL streamURL) {
+    private Station(File folder, String stationName, URL streamURL) {
         // set name and url object for station
         mStationName = stationName;
         mStreamURL = streamURL;
@@ -394,7 +394,7 @@ public class Station implements Comparable<Station> {
 
 
     /* Setter for download error flag */
-    public void setDownloadError(boolean downloadError) {
+    private void setDownloadError(boolean downloadError) {
         mDownloadError = downloadError;
     }
 

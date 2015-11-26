@@ -37,6 +37,12 @@
     <string name="toastalert_no_external_storage">Zugriff auf den externen Speicher verweigert.</string>
     <string name="actioncall_message_start_here">Eine neue Station hinzufügen</string>
     <string name="descr_playback_indicator_started">Playback Signal</string>
+    <string name="dialog_error_details_button_default">Details anzeigen</string>
+    <string name="dialog_error_details_default">Keine Detailinformationen vorhanden</string>
+    <string name="dialog_error_message_default">Ein Fehler ist aufgetreten</string>
+    <string name="dialog_error_message_download">Transistor hat es versucht, kann aber mit diesem Link nichts anfangen.</string>
+    <string name="dialog_error_title_default">Fehler</string>
+    <string name="dialog_error_title_download">Download Problem</string>
 
     <string name="html_about"><![CDATA[<!DOCTYPE html>
     <html>
@@ -74,11 +80,5 @@
             <p>Es gibt schlicht nichts einzustellen ;). Transistor ist eine sehr einfache App. Abhängig vom eigenen Standpunkt ist &quot;einfach&quot; entweder großartig oder mies.</p>
         </body>
     </html>]]></string>
-    <string name="dialog_error_details_button_default">Details anzeigen</string>
-    <string name="dialog_error_details_default">Keine Detailinformationen vorhanden</string>
-    <string name="dialog_error_message_default">Ein Fehler ist aufgetreten</string>
-    <string name="dialog_error_message_download">Transistor hat es versucht, kann aber mit diesem Link nichts anfangen.</string>
-    <string name="dialog_error_title_default">Fehler</string>
-    <string name="dialog_error_title_download">Download Problem</string>
 
 </resources>

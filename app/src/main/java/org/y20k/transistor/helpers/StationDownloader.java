@@ -41,15 +41,14 @@ public class StationDownloader extends AsyncTask<Void, Void, Station> {
 
     /* Keys */
     private static final String ACTION_COLLECTION_CHANGED = "org.y20k.transistor.action.COLLECTION_CHANGED";
-    private static final String ACTION_DOWNLOAD_ERROR = "org.y20k.transistor.action.DOWNLOAD_ERROR";
 
     /* Main class variables */
-    private Context mContext;
+    private final Context mContext;
     private Collection mCollection;
     private File mFolder;
     private String mStationURLString;
     private URL mStationURL;
-    private boolean mErrors;
+    private final boolean mErrors;
 
 
     /* Constructor */
@@ -94,7 +93,7 @@ public class StationDownloader extends AsyncTask<Void, Void, Station> {
             String errorTitle = mContext.getResources().getString(R.string.dialog_error_title_download);
             String errorMessage = mContext.getResources().getString(R.string.dialog_error_message_download);
 
-            // construc details string
+            // construct details string
             StringBuilder sb = new StringBuilder("");
             sb.append("External Storage:\n");
             sb.append(mFolder);
