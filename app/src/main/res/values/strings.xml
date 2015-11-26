@@ -37,11 +37,11 @@
     <string name="dialog_button_rename">Rename</string>
 
     <!-- error dialogs -->
-    <string name="dialog_error_message_default">An error occured</string>
+    <string name="dialog_error_message_default">An error occurred</string>
     <string name="dialog_error_details_button_default">Show details</string>
     <string name="dialog_error_details_default">No details available</string>
     <string name="dialog_error_title_download">Download Issue</string>
-    <string name="dialog_error_message_download">Transistor tried hard but could make sense of given link.</string>
+    <string name="dialog_error_message_download">Transistor tried hard but could not make sense of given link.</string>
 
     <!-- messages -->
     <string name="actioncall_message_start_here">Add a new station</string>
