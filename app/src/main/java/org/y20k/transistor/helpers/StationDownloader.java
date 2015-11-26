@@ -95,7 +95,7 @@ public class StationDownloader extends AsyncTask<Void, Void, Station> {
 
             // construct details string
             StringBuilder sb = new StringBuilder("");
-            sb.append("External Storage:\n");
+            sb.append("External storage:\n");
             sb.append(mFolder);
             sb.append("\n\nURL of station:\n");
             sb.append(mStationURLString);
