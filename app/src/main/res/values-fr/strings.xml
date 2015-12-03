@@ -1,0 +1,61 @@
+<resources>
+    <string name="title_activity_player">Lecture en cours</string>
+
+    <!-- menu entries -->
+    <string name="menu_about">À propos</string>
+    <string name="menu_add">Ajouter</string>
+    <string name="menu_delete">Supprimer</string>
+    <string name="menu_rename">Renommer</string>
+    <string name="menu_howto">Comment utiliser</string>
+
+    <!-- headers -->
+    <string name="header_about">À propos</string>
+    <string name="header_howto">Comment utiliser</string>
+
+    <!-- descriptions -->
+    <string name="descr_arrow_actioncall">Flèche pointant vers l\'icône d\'ajout</string>
+    <string name="descr_overflow_button">Options d\'affichage pour la station radio</string>
+    <string name="descr_station_icon">Icône de la station radio</string>
+    <string name="descr_station_name">Nom de la station radio</string>
+    <string name="descr_station_name_example">Exemple FM</string>
+    <string name="descr_playback_button">Grand bouton de lecture</string>
+    <string name="descr_playback_indicator">Indicateur de lecture en cours</string>
+    <string name="descr_playback_indicator_started">Indicateur de lecture en cours</string>
+
+    <!-- dialogs -->
+    <string name="dialog_generic_button_cancel">Annuler</string>
+    <string name="dialog_add_station_button">Ajouter</string>
+    <string name="dialog_add_station_input_hint">Coller un lien streaming valide</string>
+    <string name="dialog_add_station_message">Ajouter une station</string>
+    <string name="dialog_add_station_howto">Vous pouvez également ajouter une station en appuyant sur des liens streaming (.m3u) depuis votre navigateur internet.</string>
+    <string name="dialog_delete_station_message">Supprimer la station</string>
+    <string name="dialog_button_delete">Supprimer</string>
+    <string name="dialog_generic_button_okay">OK</string>
+    <string name="dialog_rename_station_input_hint">Enter un nouveau nom</string>
+    <string name="dialog_rename_station_message">Renommer la station</string>
+    <string name="dialog_button_rename">Renommer</string>
+
+    <!-- error dialogs -->
+    <string name="dialog_error_message_default">Une erreur est survenue</string>
+    <string name="dialog_error_details_button_default">Afficher les détails</string>
+    <string name="dialog_error_details_default">Aucun détail disponible</string>
+    <string name="dialog_error_title_download">Erreur de téléchargement</string>
+    <string name="dialog_error_message_download">Transistor a tout essayé, mais ne pouvait pas donner sens au lien donné.</string>
+
+    <!-- messages -->
+    <string name="actioncall_message_start_here">Ajouter une station</string>
+    <string name="toastalert_rename_unsuccessful">Impossible de renommer la station. Veuillez choisir un nom différent.</string>
+    <string name="toastalert_delete_successful">Station supprimée avec succès.</string>
+    <string name="toastmessage_add_download_started">Téléchargement commencé :</string>
+    <string name="toastalert_no_external_storage">Impossible d\'accéder au stockage externe.</string>
+    <string name="toastalert_headphones_unplugged">Casque débranché. Lecture arrêtée.</string>
+    <string name="dialog_error_title_default">Erreur</string>
+
+    <!-- notification -->
+    <string name="notification_swipe_to_stop">Glissez pour arrêter</string>
+    <string name="notification_playing">Lecture en cours</string>
+
+    <!-- misc -->
+    <string name="title_activity_infosheet">Fiche d\'information</string>
+
+</resources>
