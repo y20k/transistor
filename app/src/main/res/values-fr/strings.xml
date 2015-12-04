@@ -32,7 +32,7 @@
     <string name="dialog_delete_station_message">Supprimer la station</string>
     <string name="dialog_button_delete">Supprimer</string>
     <string name="dialog_generic_button_okay">OK</string>
-    <string name="dialog_rename_station_input_hint">Enter un nouveau nom</string>
+    <string name="dialog_rename_station_input_hint">Entrer un nouveau nom</string>
     <string name="dialog_rename_station_message">Renommer la station</string>
     <string name="dialog_button_rename">Renommer</string>
 
@@ -47,7 +47,7 @@
     <string name="actioncall_message_start_here">Ajouter une station</string>
     <string name="toastalert_rename_unsuccessful">Impossible de renommer la station. Veuillez choisir un nom différent.</string>
     <string name="toastalert_delete_successful">Station supprimée avec succès.</string>
-    <string name="toastmessage_add_download_started">Téléchargement commencé :</string>
+    <string name="toastmessage_add_download_started">Téléchargement démarré :</string>
     <string name="toastalert_no_external_storage">Impossible d\'accéder au stockage externe.</string>
     <string name="toastalert_headphones_unplugged">Casque débranché. Lecture arrêtée.</string>
     <string name="dialog_error_title_default">Erreur</string>
