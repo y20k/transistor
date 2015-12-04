@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">Transistor</string>
     <string name="title_activity_player">Now Playing</string>
@@ -68,8 +69,8 @@
             <h3>Version 1.0 (&quot;Lady Stardust&quot;)</h3>
             <p>Transistor is a bare bones app for listening to radio programs over the internet. The app stores stations as files on your device\'s external storage. Look for files of type m3u within /Android/data/org.y20k.transistor/Collection. It currently understands streams embedded within m3u and pls links.</p>
             <p>Transistor is free software. It is published under the MIT open source license. You can find the code on GitHub. GitHub is also a good place to file bugs or even to contribute, if you are interested.</p>
-            <p><a href="https://github.com/y20k/transistor">https://github.com/y20k/transistor</a></p>
-            <p><a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a></p>
+            <p>https://github.com/y20k/transistor</p>
+            <p>https://opensource.org/licenses/MIT</p>
             <h3>Which Permissions does Transistor need?</h3>
             <p><strong>Permission INTERNET</strong><br />
             Transistor streams radio stations over the internet.</p>

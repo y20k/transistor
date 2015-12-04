@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="title_activity_player">Lecture en cours</string>
 
@@ -57,5 +58,43 @@
 
     <!-- misc -->
     <string name="title_activity_infosheet">Fiche d\'information</string>
+
+    <!-- HTML strings -->
+    <string name="html_about"><![CDATA[<!DOCTYPE html>
+    <html>
+        <body>
+            <h1>About Transistor</h1>
+            <h2>Radio app for Android</h2>
+            <h3>Version 1.0 (&quot;Lady Stardust&quot;)</h3>
+            <p>Transistor is a bare bones app for listening to radio programs over the internet. The app stores stations as files on your device\'s external storage. Look for files of type m3u within /Android/data/org.y20k.transistor/Collection. It currently understands streams embedded within m3u and pls links.</p>
+            <p>Transistor is free software. It is published under the MIT open source license. You can find the code on GitHub. GitHub is also a good place to file bugs or even to contribute, if you are interested.</p>
+            <p>https://github.com/y20k/transistor</p>
+            <p>https://opensource.org/licenses/MIT</p>
+            <h3>Which Permissions does Transistor need?</h3>
+            <p><strong>Permission INTERNET</strong><br />
+            Transistor streams radio stations over the internet.</p>
+        </body>
+    </html>]]></string>
+
+    <string name="html_howto"><![CDATA[<!DOCTYPE html>
+    <html>
+        <body>
+            <h1>How to use Transistor</h1>
+            <h2>How to add a new radio station?</h2>
+            <p>The easiest way to add a new station is to search for streaming links (m3u and pls) and then choose Transistor as a your default handler for those file types. You can also tap the (+) symbol in the top bar and paste in m3u links directly.</p>
+            <h2>How to play back a radio station?</h2>
+            <p>Tap the big Play button ;).</p>
+            <h2>How to stop playback?</h2>
+            <p>Tap the big Stop button or unplug your headphones or swipe off the notification from the lockscreen.</p>
+            <h2>How to rename or delete a station?</h2>
+            <p>The rename and delete options can be accessed both from the list of stations and from the now playing screen. Just tap on the three dots symbol. You can manage the list of stations also from a file browser (see next question).</p>
+            <h2>Where does Transistor store its stations?</h2>
+            <p>Transistor does not save its list of stations in a database. Instead it stores stations as m3u files on your device\'s external storage. Feel free to tinker with those files using the texteditor of your choice. The files are stored in /Android/data/org.y20k.transistor/Collection.</p>
+            <h2>How do I backup and transfer my radio stations?<h2>
+            <p>Transistor supports Android 6\'s Auto Backup feature. Radio stations are always backed up to your Google account and will be restored at reinstall. On devices running on older versions of Android you must manually save and restore the &quot;Collection&quot; folder.</p>
+            <h2>Why does Transistor not have any setting?</h2>
+            <p>There is nothing to be set ;). Transistor is a very simple app. Depending on your point of view &quot;simple&quot; is either great or lame.</p>
+        </body>
+    </html>]]></string>
 
 </resources>

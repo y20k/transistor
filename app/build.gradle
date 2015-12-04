@@ -8,8 +8,8 @@ android {
         applicationId "org.y20k.transistor"
         minSdkVersion 19
         targetSdkVersion 23
-        versionCode 8
-        versionName "1.0.2 (Lady Stardust)"
+        versionCode 9
+        versionName "1.0.3 (Lady Stardust)"
     }
     buildTypes {
         release {

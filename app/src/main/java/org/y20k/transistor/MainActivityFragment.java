@@ -299,7 +299,7 @@ public class MainActivityFragment extends Fragment {
                 stationImageSmall = BitmapFactory.decodeFile(mCollection.getStations().get(i).getStationImageFile().toString());
             } else {
                 // default image
-                stationImageSmall = BitmapFactory.decodeResource(getResources(), R.drawable.ic_notesymbol);
+                stationImageSmall = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_notesymbol);
             }
             stationImageHelper = new ImageHelper(stationImageSmall, context);
             stationImageHelper.setBackgroundColor(R.color.transistor_grey_lighter);
