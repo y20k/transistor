@@ -14,17 +14,23 @@
 
 package org.y20k.transistor;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,6 +50,8 @@ import org.y20k.transistor.helpers.DialogRename;
 import org.y20k.transistor.helpers.ImageHelper;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 
 /**
@@ -63,13 +71,17 @@ public class PlayerActivityFragment extends Fragment {
     private static final String STATION_ID_LAST = "stationIDLast";
     private static final String PLAYBACK = "playback";
     private static final String ACTION_PLAYBACK_STOPPED = "org.y20k.transistor.action.PLAYBACK_STOPPED";
+    private static final int REQUEST_LOAD_IMAGE = 1;
+    private static final int PERMISSION_REQUEST_READ_EXTERNAL_STORAGE = 1;
 
 
     /* Main class variables */
     private Activity mActivity;
+    private View mRootView;
     private String mStationName;
     private String mStreamURL;
     private TextView mStationNameView;
+    private ImageView mStationImageView;
     private ImageButton mPlaybackButton;
     private ImageView mPlaybackIndicator;
     private int mStationID;
@@ -113,7 +125,7 @@ public class PlayerActivityFragment extends Fragment {
             mCollection = new Collection(folder);
         } catch (NullPointerException e) {
             // notify user and log exception
-            Toast.makeText(getActivity(), R.string.toastalert_no_external_storage, Toast.LENGTH_LONG).show();
+            Toast.makeText(mActivity, R.string.toastalert_no_external_storage, Toast.LENGTH_LONG).show();
             Log.e(LOG_TAG, "Unable to access external storage.");
             // finish activity
             mActivity.finish();
@@ -161,23 +173,23 @@ public class PlayerActivityFragment extends Fragment {
         mPlayerService = new PlayerService();
 
         // inflate rootview from xml
-        View rootView = inflater.inflate(R.layout.fragment_player, container, false);
+        mRootView = inflater.inflate(R.layout.fragment_player, container, false);
 
         // find views for station name and image and playback indicator
-        mStationNameView = (TextView) rootView.findViewById(R.id.player_textview_stationname);
-        ImageView stationeImageView = (ImageView) rootView.findViewById(R.id.player_imageview_station_icon);
-        mPlaybackIndicator = (ImageView) rootView.findViewById(R.id.player_playback_indicator);
+        mStationNameView = (TextView) mRootView.findViewById(R.id.player_textview_stationname);
+        mStationImageView = (ImageView) mRootView.findViewById(R.id.player_imageview_station_icon);
+        mPlaybackIndicator = (ImageView) mRootView.findViewById(R.id.player_playback_indicator);
 
         // set station image
         if (stationImage != null) {
-            stationeImageView.setImageBitmap(stationImage);
+            mStationImageView.setImageBitmap(stationImage);
         }
 
         // set text view to station name
         mStationNameView.setText(mStationName);
 
         // construct image button
-        mPlaybackButton = (ImageButton) rootView.findViewById(R.id.player_playback_button);
+        mPlaybackButton = (ImageButton) mRootView.findViewById(R.id.player_playback_button);
 
         // set listener to playback button
         mPlaybackButton.setOnClickListener(new View.OnClickListener() {
@@ -227,7 +239,7 @@ public class PlayerActivityFragment extends Fragment {
         IntentFilter intentFilter = new IntentFilter(ACTION_PLAYBACK_STOPPED);
         LocalBroadcastManager.getInstance(mActivity).registerReceiver(playbackStoppedReceiver, intentFilter);
 
-        return rootView;
+        return mRootView;
     }
 
 
@@ -235,6 +247,14 @@ public class PlayerActivityFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
+
+            // CASE ICON
+            case R.id.menu_icon:
+
+                // get system picker for images
+                selectFromImagePicker();
+
+                return true;
 
             // CASE RENAME
             case R.id.menu_rename:
@@ -275,6 +295,57 @@ public class PlayerActivityFragment extends Fragment {
                 return super.onOptionsItemSelected(item);
         }
 
+    }
+
+
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        switch (requestCode) {
+//            case PERMISSION_REQUEST_READ_EXTERNAL_STORAGE: {
+//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    // permission granted!
+//                } else {
+//                    // permission denied! Disable the functionality that depends on this permission.
+//                }
+//                return;
+//            }
+//        }
+//    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_LOAD_IMAGE && resultCode == Activity.RESULT_OK && null != data) {
+            // retrieve selected image from image picker
+            processNewImage(data.getData());
+        }
+    }
+
+
+    /* Processes new image and saves it to storage */
+    private void processNewImage(Uri newImageUri) {
+
+        ImageHelper imageHelper = new ImageHelper(newImageUri, mActivity);
+        Bitmap newImage = imageHelper.getInputImage();
+
+        if (newImage != null) {
+            // write image to storage
+            File stationImageFile = mCollection.getStations().get(mStationID).getStationImageFile();
+            try (FileOutputStream out = new FileOutputStream(stationImageFile)) {
+                newImage.compress(Bitmap.CompressFormat.PNG, 100, out);
+            } catch (IOException e) {
+                Log.e(LOG_TAG, "Unable to save: " + newImage.toString());
+            }
+            // change mStationImageView
+            imageHelper.setBackgroundColor(R.color.transistor_grey_lighter);
+            Bitmap stationImage = imageHelper.createCircularFramedImage(192);
+            mStationImageView.setImageBitmap(stationImage);
+        } else {
+            Log.e(LOG_TAG, "Unable to get image from media picker: " + newImage.toString());
+            // TODO handle error here
+        }
     }
 
 
@@ -363,5 +434,42 @@ public class PlayerActivityFragment extends Fragment {
         mStationIDLast = settings.getInt(STATION_ID_LAST, -1);
         mPlayback = settings.getBoolean(PLAYBACK, false);
     }
+
+
+    /* Check permissions and start image picker */
+    private void selectFromImagePicker() {
+        // permission to read external storage granted
+        if (ContextCompat.checkSelfPermission(mActivity,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED) {
+
+            // get system picker for images
+            Intent pickImageIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(pickImageIntent, REQUEST_LOAD_IMAGE);
+        }
+        // permission to read external storage granted
+        else {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                // ask for permission and explain why
+                Snackbar snackbar = Snackbar.make(mRootView, R.string.snackbar_request_storage_access, Snackbar.LENGTH_INDEFINITE);
+                snackbar.setAction(R.string.dialog_generic_button_okay, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ActivityCompat.requestPermissions(mActivity,
+                                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                                PERMISSION_REQUEST_READ_EXTERNAL_STORAGE);
+                    }
+                });
+                snackbar.show();
+
+            } else {
+                // ask for permission without explanation
+                ActivityCompat.requestPermissions(mActivity,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        PERMISSION_REQUEST_READ_EXTERNAL_STORAGE);
+            }
+        }
+    }
+
 
 }

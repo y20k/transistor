@@ -49,7 +49,7 @@
         <body>
             <h1>Über Transistor</h1>
             <h2>Radio App für Android</h2>
-            <h3>Version 1.0 (&quot;Lady Stardust&quot;)</h3>
+            <h3>Version 1.1 (&quot;Running Gun Blues&quot;)</h3>
             <p>Transistor ist eine mininalistische App um über das Internet Radio hören zu können. Die App speichert Stationen als Textdateien im externen Gerätespeicher ab - und zwar hier: /Android/data/org.y20k.transistor/Collection. Transistor spielt Streams ab, die in M3U- und PLS-Dateien verpackt sind.</p>
             <p>Transistor ist Freie Software. Die App ist unter der MIT Open Source Lizenz veröffentlicht. Der Quellcode liegt auf GitHub. GitHub ist auch ein guter Ort, um Bugs zu melden oder um sich an der Weiterentwicklung zu beteiligen.</p>
             <p>https://github.com/y20k/transistor</p>
@@ -57,6 +57,8 @@
             <h3>Welche App-Berechtigungen braucht Transistor?</h3>
             <p><strong>Berechtigung INTERNET</strong><br />
             Transistor streamt Radioprogramme über das Internet.</p>
+            <p><strong>Berechtigung READ_EXTERNAL_STORAGE</strong><br />
+            Für die Option die Symbole von Radiostationen zu ändern benötigt Transistor Zugriff auf Fotos und Bilder.</p>
         </body>
     </html>]]></string>
 

@@ -4,7 +4,7 @@ README
 Transistor - Radio app for Android
 ----------------------------------
 
-**Version 1.0.x ("Lady Stardust")**
+**Version 1.1.x ("Running Gun Blues")**
 
 Transistor is a bare bones app for listening to radio programs over the internet. The app stores stations as files on your device\'s external storage. It currently understands streams embedded within m3u and pls links.
 
@@ -43,3 +43,6 @@ Which Permissions does Transistor need?
 ---------------------------------------
 ### Permission "INTERNET"
 Transistor streams radio stations over the internet.
+
+### Permission "READ_EXTERNAL_STORAGE"
+Transistor needs access to images and photos to be able to offer an option to customize radio station icons.

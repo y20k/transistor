@@ -14,15 +14,22 @@
 
 package org.y20k.transistor;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -40,6 +47,8 @@ import org.y20k.transistor.helpers.ImageHelper;
 import org.y20k.transistor.helpers.StationDownloader;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.LinkedList;
 
 
@@ -56,16 +65,19 @@ public class MainActivityFragment extends Fragment {
     private static final String ACTION_COLLECTION_CHANGED = "org.y20k.transistor.action.COLLECTION_CHANGED";
     private static final String ACTION_PLAYBACK_STARTED = "org.y20k.transistor.action.PLAYBACK_STARTED";
     private static final String ACTION_PLAYBACK_STOPPED = "org.y20k.transistor.action.PLAYBACK_STOPPED";
+    private static final String ACTION_IMAGE_CHANGE_REQUESTED = "org.y20k.transistor.action.IMAGE_CHANGE_REQUESTED";
     private static final String LIST_STATE = "ListState";
     private static final String STREAM_URL = "streamURL";
     private static final String STATION_NAME = "stationName";
     private static final String STATION_ID = "stationID";
     private static final String TITLE = "title";
     private static final String CONTENT = "content";
+    private static final int REQUEST_LOAD_IMAGE = 1;
+    private static final int PERMISSION_REQUEST_READ_EXTERNAL_STORAGE = 1;
 
 
     /* Main class variables */
-    private Context mContext;
+    private Activity mActivity;
     private Collection mCollection;
     private CollectionAdapter mCollectionAdapter = null;
     private File mFolder;
@@ -74,6 +86,7 @@ public class MainActivityFragment extends Fragment {
     private View mRootView;
     private ListView mListView;
     private Parcelable mListState;
+    private int mTempStationImageID;
 
 
     /* Constructor (default) */
@@ -86,20 +99,23 @@ public class MainActivityFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         // store context
-        mContext = getActivity();
+        mActivity = getActivity();
 
         // set list state null
         mListState = null;
 
+        // initialize temporary station image id
+        mTempStationImageID = -1;
+
         try {
             // get collection folder from external storage
-            mFolder = new File(getActivity().getExternalFilesDir("Collection").toString());
+            mFolder = new File(mActivity.getExternalFilesDir("Collection").toString());
         } catch (NullPointerException e) {
             // notify user and log exception
-            Toast.makeText(getActivity(), R.string.toastalert_no_external_storage, Toast.LENGTH_LONG).show();
+            Toast.makeText(mActivity, R.string.toastalert_no_external_storage, Toast.LENGTH_LONG).show();
             Log.e(LOG_TAG, "Unable to access external storage.");
             // finish activity
-            getActivity().finish();
+            mActivity.finish();
         }
 
         // fragment has options menu
@@ -108,45 +124,18 @@ public class MainActivityFragment extends Fragment {
         // create adapter for collection
         mStationNames = new LinkedList<>();
         mStationImages = new LinkedList<>();
-        mCollectionAdapter = new CollectionAdapter(getActivity(), mStationNames, mStationImages);
+        mCollectionAdapter = new CollectionAdapter(mActivity, mStationNames, mStationImages);
 
         // listen for data change in mCollection adapter
         mCollectionAdapter.setCollectionChangedListener(new CollectionAdapter.CollectionChangedListener() {
             @Override
             public void collectionChanged() {
-                refreshStationList(getActivity());
+                refreshStationList();
             }
         });
 
-        // broadcast receiver: player service stopped playback
-        BroadcastReceiver playbackStoppedReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                refreshStationList(mContext);
-            }
-        };
-        IntentFilter playbackStoppedIntentFilter = new IntentFilter(ACTION_PLAYBACK_STOPPED);
-        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(playbackStoppedReceiver, playbackStoppedIntentFilter);
-
-        // broadcast receiver: player service stopped playback
-        BroadcastReceiver playbackStartedReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                refreshStationList(mContext);
-            }
-        };
-        IntentFilter playbackStartedIntentFilter = new IntentFilter(ACTION_PLAYBACK_STARTED);
-        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(playbackStartedReceiver, playbackStartedIntentFilter);
-
-        // broadcast receiver: station added, deleted, or changed
-        BroadcastReceiver collectionChangedReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                refreshStationList(mContext);
-            }
-        };
-        IntentFilter collectionChangedIntentFilter = new IntentFilter(ACTION_COLLECTION_CHANGED);
-        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(collectionChangedReceiver, collectionChangedIntentFilter);
+        // initialize broadcast receivers
+        initializeBroadcastReceivers();
 
     }
 
@@ -180,7 +169,7 @@ public class MainActivityFragment extends Fragment {
                     String streamURL = mCollection.getStations().get((Integer) mCollectionAdapter.getItem(position)).getStreamURL().toString();
 
                     // add name, url and id of station to intent
-                    Intent intent = new Intent(getActivity(), PlayerActivity.class);
+                    Intent intent = new Intent(mActivity, PlayerActivity.class);
                     intent.putExtra(STATION_NAME, stationName);
                     intent.putExtra(STREAM_URL, streamURL);
                     intent.putExtra(STATION_ID, position);
@@ -210,7 +199,7 @@ public class MainActivityFragment extends Fragment {
         super.onStart();
 
         // fill collection adapter with stations
-        refreshStationList(getActivity());
+        refreshStationList();
     }
 
 
@@ -220,7 +209,7 @@ public class MainActivityFragment extends Fragment {
 
         // action bar - add
         if (id == R.id.menu_add) {
-            DialogAddStation dialog = new DialogAddStation(getActivity());
+            DialogAddStation dialog = new DialogAddStation(mActivity);
             dialog.show();
             return true;
         }
@@ -228,11 +217,11 @@ public class MainActivityFragment extends Fragment {
         // action bar menu - about
         else if (id == R.id.menu_about) {
             // get title and content
-            String title = getActivity().getString(R.string.header_about);
-            String content = getActivity().getString(R.string.html_about);
+            String title = mActivity.getString(R.string.header_about);
+            String content = mActivity.getString(R.string.html_about);
 
             // create intent
-            Intent intent = new Intent(getActivity(), InfosheetActivity.class);
+            Intent intent = new Intent(mActivity, InfosheetActivity.class);
 
             // put title and content to intent
             intent.putExtra(TITLE, title);
@@ -246,11 +235,11 @@ public class MainActivityFragment extends Fragment {
         // action bar menu - how to
         else if (id == R.id.menu_howto) {
             // get title and content
-            String title = getActivity().getString(R.string.header_howto);
-            String content = getActivity().getString(R.string.html_howto);
+            String title = mActivity.getString(R.string.header_howto);
+            String content = mActivity.getString(R.string.html_howto);
 
             // create intent
-            Intent intent = new Intent(getActivity(), InfosheetActivity.class);
+            Intent intent = new Intent(mActivity, InfosheetActivity.class);
 
             // put title and content to intent
             intent.putExtra(TITLE, title);
@@ -275,12 +264,12 @@ public class MainActivityFragment extends Fragment {
 
 
     /* Fills collection adapter */
-    private void fillCollectionAdapter(Context context) {
+    private void fillCollectionAdapter() {
 
         Bitmap stationImage;
         Bitmap stationImageSmall;
         String stationName;
-        ImageHelper stationImageHelper;
+        ImageHelper imageHelper;
 
         // create collection
         Log.v(LOG_TAG, "Create collection of stations (folder:" + mFolder.toString() + ").");
@@ -299,11 +288,11 @@ public class MainActivityFragment extends Fragment {
                 stationImageSmall = BitmapFactory.decodeFile(mCollection.getStations().get(i).getStationImageFile().toString());
             } else {
                 // default image
-                stationImageSmall = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_notesymbol);
+                stationImageSmall = BitmapFactory.decodeResource(mActivity.getResources(), R.drawable.ic_notesymbol);
             }
-            stationImageHelper = new ImageHelper(stationImageSmall, context);
-            stationImageHelper.setBackgroundColor(R.color.transistor_grey_lighter);
-            stationImage = stationImageHelper.createCircularFramedImage(192);
+            imageHelper = new ImageHelper(stationImageSmall, mActivity);
+            imageHelper.setBackgroundColor(R.color.transistor_grey_lighter);
+            stationImage = imageHelper.createCircularFramedImage(192);
             // add image to linked list of images
             mStationImages.add(stationImage);
         }
@@ -314,14 +303,14 @@ public class MainActivityFragment extends Fragment {
 
 
     /* (Re-)fills collection adapter with stations */
-    private void refreshStationList(Context context) {
+    private void refreshStationList() {
 
         // clear and refill mCollection adapter
         if (!mStationNames.isEmpty() && !mStationImages.isEmpty()) {
             mStationNames.clear();
             mStationImages.clear();
         }
-        fillCollectionAdapter(context);
+        fillCollectionAdapter();
 
         // show call to action, if necessary
         View actioncall = mRootView.findViewById(R.id.main_actioncall_layout);
@@ -338,7 +327,7 @@ public class MainActivityFragment extends Fragment {
     private void handleNewStationIntent() {
 
         // get intent
-        Intent intent = getActivity().getIntent();
+        Intent intent = mActivity.getIntent();
 
         // check for intent of tyoe VIEW
         if (Intent.ACTION_VIEW.equals(intent.getAction())) {
@@ -360,13 +349,13 @@ public class MainActivityFragment extends Fragment {
             // check for null
             if (newStationURL != null) {
                 // download and add new station
-                StationDownloader stationDownloader = new StationDownloader(newStationURL, mContext);
+                StationDownloader stationDownloader = new StationDownloader(newStationURL, mActivity);
                 stationDownloader.execute();
 
                 // send local broadcast
                 Intent i = new Intent();
                 i.setAction(ACTION_COLLECTION_CHANGED);
-                LocalBroadcastManager.getInstance(mContext).sendBroadcast(i);
+                LocalBroadcastManager.getInstance(mActivity).sendBroadcast(i);
 
 
             }
@@ -375,6 +364,142 @@ public class MainActivityFragment extends Fragment {
                 Log.v(LOG_TAG, "Received an empty intent");
             }
 
+        }
+    }
+
+    /* Initializes broadcast receivers fot onCreate */
+    private void initializeBroadcastReceivers() {
+        // broadcast receiver: player service stopped playback
+        BroadcastReceiver playbackStoppedReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                refreshStationList();
+            }
+        };
+        IntentFilter playbackStoppedIntentFilter = new IntentFilter(ACTION_PLAYBACK_STOPPED);
+        LocalBroadcastManager.getInstance(mActivity).registerReceiver(playbackStoppedReceiver, playbackStoppedIntentFilter);
+
+        // broadcast receiver: player service stopped playback
+        BroadcastReceiver playbackStartedReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                refreshStationList();
+            }
+        };
+        IntentFilter playbackStartedIntentFilter = new IntentFilter(ACTION_PLAYBACK_STARTED);
+        LocalBroadcastManager.getInstance(mActivity).registerReceiver(playbackStartedReceiver, playbackStartedIntentFilter);
+
+        // broadcast receiver: station added, deleted, or changed
+        BroadcastReceiver collectionChangedReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                refreshStationList();
+            }
+        };
+        IntentFilter collectionChangedIntentFilter = new IntentFilter(ACTION_COLLECTION_CHANGED);
+        LocalBroadcastManager.getInstance(mActivity).registerReceiver(collectionChangedReceiver, collectionChangedIntentFilter);
+
+        // broadcast receiver: listen for request to change station image
+        BroadcastReceiver imageChangeRequestReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                // get station id and save it
+                mTempStationImageID = intent.getIntExtra(STATION_ID, -1);
+                // start image picker
+                selectFromImagePicker();
+            }
+        };
+        IntentFilter imageChangeRequesIntentFilter = new IntentFilter(ACTION_IMAGE_CHANGE_REQUESTED);
+        LocalBroadcastManager.getInstance(mActivity).registerReceiver(imageChangeRequestReceiver, imageChangeRequesIntentFilter);
+
+    }
+
+
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        switch (requestCode) {
+//            case PERMISSION_REQUEST_READ_EXTERNAL_STORAGE: {
+//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    // permission granted!
+//                } else {
+//                    // permission denied! Disable the functionality that depends on this permission.
+//                }
+//                return;
+//            }
+//        }
+//    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_LOAD_IMAGE && resultCode == Activity.RESULT_OK && null != data) {
+            // retrieve selected image from image picker
+            processNewImage(data.getData());
+        }
+    }
+
+
+    /* Processes new image and saves it to storage */
+    private void processNewImage(Uri newImageUri) {
+
+        System.out.println("!!! station id @processNewImage: " + mTempStationImageID);
+
+        ImageHelper imageHelper = new ImageHelper(newImageUri, mActivity);
+        Bitmap newImage = imageHelper.getInputImage();
+
+        if (newImage != null) {
+            // write image to storage
+            File stationImageFile = mCollection.getStations().get(mTempStationImageID).getStationImageFile();
+            try (FileOutputStream out = new FileOutputStream(stationImageFile)) {
+                newImage.compress(Bitmap.CompressFormat.PNG, 100, out);
+            } catch (IOException e) {
+                Log.e(LOG_TAG, "Unable to save: " + newImage.toString());
+            }
+//            // change mStationImageView
+//            imageHelper.setBackgroundColor(R.color.transistor_grey_lighter);
+//            Bitmap stationImage = imageHelper.createCircularFramedImage(192);
+//            mStationImageView.setImageBitmap(stationImage);
+        } else {
+            Log.e(LOG_TAG, "Unable to get image from media picker: " + newImage.toString());
+            // TODO handle error here
+        }
+    }
+
+
+    /* Check permissions and start image picker */
+    private void selectFromImagePicker() {
+        // permission to read external storage granted
+        if (ContextCompat.checkSelfPermission(mActivity,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED) {
+
+            // get system picker for images
+            Intent pickImageIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(pickImageIntent, REQUEST_LOAD_IMAGE);
+        }
+        // permission to read external storage granted
+        else {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                // ask for permission and explain why
+                Snackbar snackbar = Snackbar.make(mRootView, R.string.snackbar_request_storage_access, Snackbar.LENGTH_INDEFINITE);
+                snackbar.setAction(R.string.dialog_generic_button_okay, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ActivityCompat.requestPermissions(mActivity,
+                                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                                PERMISSION_REQUEST_READ_EXTERNAL_STORAGE);
+                    }
+                });
+                snackbar.show();
+
+            } else {
+                // ask for permission without explanation
+                ActivityCompat.requestPermissions(mActivity,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        PERMISSION_REQUEST_READ_EXTERNAL_STORAGE);
+            }
         }
     }
 

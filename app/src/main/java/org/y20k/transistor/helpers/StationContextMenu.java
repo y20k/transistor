@@ -16,6 +16,8 @@ package org.y20k.transistor.helpers;
 
 import android.app.DialogFragment;
 import android.content.Context;
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
@@ -28,6 +30,14 @@ import org.y20k.transistor.core.Collection;
  * StationContextMenu class
  */
 public class StationContextMenu extends DialogFragment {
+
+    /* Define log tag */
+    private static final String LOG_TAG = StationContextMenu.class.getSimpleName();
+
+
+    /* Keys */
+    private static final String ACTION_IMAGE_CHANGE_REQUESTED = "org.y20k.transistor.action.IMAGE_CHANGE_REQUESTED";
+    private static final String STATION_ID = "stationID";
 
     /* Main class variables */
     private View mView;
@@ -74,6 +84,17 @@ public class StationContextMenu extends DialogFragment {
             public boolean onMenuItemClick(MenuItem item) {
 
                 switch (item.getItemId()) {
+
+                    // CASE ICON
+                    case R.id.menu_icon:
+
+                        // send local broadcast (needed by MainActivityFragment)
+                        Intent i = new Intent();
+                        i.setAction(ACTION_IMAGE_CHANGE_REQUESTED);
+                        i.putExtra(STATION_ID, mStationID);
+                        LocalBroadcastManager.getInstance(mContext).sendBroadcast(i);
+
+                        return true;
 
                     // CASE RENAME
                     case R.id.menu_rename:

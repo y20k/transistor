@@ -4,6 +4,12 @@
     tools:context=".MainActivity">
 
     <item
+        android:id="@+id/menu_icon"
+        android:title="@string/menu_icon"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/menu_rename"
         android:title="@string/menu_rename"
         android:orderInCategory="100"

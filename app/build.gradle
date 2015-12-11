@@ -9,7 +9,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 23
         versionCode 9
-        versionName "1.0.3 (Lady Stardust)"
+        versionName "1.1.0 (Running Gun Blues)"
     }
     buildTypes {
         release {
