@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="title_activity_player">Lecture en cours</string>
+    <string name="title_activity_player">En lecture</string>
 
     <!-- menu entries -->
     <string name="menu_about">À propos</string>
+    <string name="menu_howto">Comment utiliser</string>
+    <string name="menu_icon">Changer image</string>    
     <string name="menu_add">Ajouter</string>
     <string name="menu_delete">Supprimer</string>
     <string name="menu_rename">Renommer</string>
-    <string name="menu_howto">Comment utiliser</string>
 
     <!-- headers -->
     <string name="header_about">À propos</string>
@@ -37,6 +38,7 @@
     <string name="dialog_button_rename">Renommer</string>
 
     <!-- error dialogs -->
+    <string name="dialog_error_title_default">Erreur</string>    
     <string name="dialog_error_message_default">Une erreur est survenue</string>
     <string name="dialog_error_details_button_default">Afficher les détails</string>
     <string name="dialog_error_details_default">Aucun détail disponible</string>
@@ -45,16 +47,16 @@
 
     <!-- messages -->
     <string name="actioncall_message_start_here">Ajouter une station</string>
+    <string name="toastmessage_add_download_started">Téléchargement démarré :</string>    
     <string name="toastalert_rename_unsuccessful">Impossible de renommer la station. Veuillez choisir un nom différent.</string>
     <string name="toastalert_delete_successful">Station supprimée avec succès.</string>
-    <string name="toastmessage_add_download_started">Téléchargement démarré :</string>
     <string name="toastalert_no_external_storage">Impossible d\'accéder au stockage externe.</string>
     <string name="toastalert_headphones_unplugged">Casque débranché. Lecture arrêtée.</string>
-    <string name="dialog_error_title_default">Erreur</string>
+    <string name="snackbar_request_storage_access">Vous souhaitez ajouter une nouvelle miniature pour cette station. Transistor doit accéder à vos images et photos pour cela.</string>
 
     <!-- notification -->
     <string name="notification_swipe_to_stop">Glissez pour arrêter</string>
-    <string name="notification_playing">Lecture en cours</string>
+    <string name="notification_playing">En lecture</string>
 
     <!-- misc -->
     <string name="title_activity_infosheet">Fiche d\'information</string>
