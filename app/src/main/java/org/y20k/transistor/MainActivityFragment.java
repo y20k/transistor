@@ -444,8 +444,6 @@ public class MainActivityFragment extends Fragment {
     /* Processes new image and saves it to storage */
     private void processNewImage(Uri newImageUri) {
 
-        System.out.println("!!! station id @processNewImage: " + mTempStationImageID);
-
         ImageHelper imageHelper = new ImageHelper(newImageUri, mActivity);
         Bitmap newImage = imageHelper.getInputImage();
 
@@ -457,10 +455,6 @@ public class MainActivityFragment extends Fragment {
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Unable to save: " + newImage.toString());
             }
-//            // change mStationImageView
-//            imageHelper.setBackgroundColor(R.color.transistor_grey_lighter);
-//            Bitmap stationImage = imageHelper.createCircularFramedImage(192);
-//            mStationImageView.setImageBitmap(stationImage);
         } else {
             Log.e(LOG_TAG, "Unable to get image from media picker: " + newImage.toString());
             // TODO handle error here

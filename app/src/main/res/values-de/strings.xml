@@ -58,7 +58,7 @@
             <p><strong>Berechtigung INTERNET</strong><br />
             Transistor streamt Radioprogramme über das Internet.</p>
             <p><strong>Berechtigung READ_EXTERNAL_STORAGE</strong><br />
-            Für die Option die Symbole von Radiostationen zu ändern benötigt Transistor Zugriff auf Fotos und Bilder.</p>
+            Für die Option die Icons von Radiostationen zu ändern benötigt Transistor Zugriff auf Fotos und Bilder.</p>
         </body>
     </html>]]></string>
 
@@ -82,5 +82,7 @@
             <p>Es gibt schlicht nichts einzustellen ;). Transistor ist eine sehr einfache App. Abhängig vom eigenen Standpunkt ist &quot;einfach&quot; entweder großartig oder mies.</p>
         </body>
     </html>]]></string>
+    <string name="menu_icon">Icon ändern</string>
+    <string name="snackbar_request_storage_access">Um das Icon einer Radiostation ändern zu können, benötigt Transistor Zugriff auf Fotos und Bilder.</string>
 
 </resources>

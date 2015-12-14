@@ -18,8 +18,9 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
 import android.support.v4.content.ContextCompat;
@@ -83,7 +84,7 @@ public class ImageHelper {
 
         // create empty bitmap and canvas
         Bitmap outputImage = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(outputImage);
+        Canvas imageCanvas = new Canvas(outputImage);
 
         // construct circular background
         mBackgroundColor.setStyle(Paint.Style.FILL);
@@ -92,43 +93,57 @@ public class ImageHelper {
         float radius = size / 2;
 
         // draw circular background
-        canvas.drawCircle(cx, cy, radius, mBackgroundColor);
+        imageCanvas.drawCircle(cx, cy, radius, mBackgroundColor);
 
-        // construct station image frame
+        // get size of original image
         float inputImageHeight = (float)mInputImage.getHeight();
         float inputImageWidth = (float)mInputImage.getWidth();
-        float verticalCorrection;
-        float horizontalCorrection;
-        float scalingFactor;
 
-        // landscape format
-        if (inputImageWidth > inputImageHeight) {
-            horizontalCorrection = 0;
-            scalingFactor = inputImageHeight / inputImageWidth;
-            verticalCorrection = size - (size * scalingFactor);
+        // calculate padding
+        float padding = (float)size/6;
+
+        // define variables needed for transformation matrix
+        Matrix transformationMatrix = new Matrix();
+        float aspectRatio = 0.0f;
+        float xTranslation = 0.0f;
+        float yTranslation = 0.0f;
+
+        // landscape format and square
+        if (inputImageWidth >= inputImageHeight) {
+            aspectRatio = (size - padding*2) / inputImageWidth;
+            xTranslation = 0.0f + padding;
+            yTranslation = (size - inputImageHeight * aspectRatio)/2.0f;
         }
         // portrait format
         else if (inputImageHeight > inputImageWidth) {
-            verticalCorrection = 0;
-            scalingFactor = inputImageWidth / inputImageHeight;
-            horizontalCorrection = size - (size * scalingFactor);
-        }
-        // square format
-        else {
-            verticalCorrection = 0;
-            horizontalCorrection = 0;
+            aspectRatio = (size - padding*2) / inputImageHeight;
+            yTranslation = 0.0f + padding;
+            xTranslation = (size - inputImageWidth * aspectRatio)/2.0f;
         }
 
-        int left = (size - (int)verticalCorrection) / 4;
-        int top = (size - (int)horizontalCorrection) / 4;
-        int right = size - ((size - (int)verticalCorrection) / 4);
-        int bottom = size - ((size - (int)horizontalCorrection) / 4);
-        Rect frame = new Rect(left, top, right, bottom);
+        // construct transformation matrix
+        transformationMatrix.postTranslate(xTranslation, yTranslation);
+        transformationMatrix.preScale(aspectRatio, aspectRatio);
 
-        // overlay station image
-        canvas.drawBitmap(mInputImage, null, frame, null);
+        // draw input image onto canvas using transformation matrix
+        Paint paint = new Paint();
+        paint.setFilterBitmap(true);
+        imageCanvas.drawBitmap(mInputImage, transformationMatrix, paint);
 
         return outputImage;
+    }
+
+
+    /* Get the dominant color within input image - for testing purposes */
+    private int getDominantColor () {
+        Bitmap onePixelBitmap = Bitmap.createScaledBitmap(mInputImage, 1, 1, false);
+        int pixel = onePixelBitmap.getPixel(0, 0);
+
+        int red = Color.red(pixel);
+        int green = Color.green(pixel);
+        int blue = Color.blue(pixel);
+
+        return Color.argb(127, red, green, blue);
     }
 
 
@@ -165,7 +180,7 @@ public class ImageHelper {
 
     /* Calculates parameter needed to scale image down */
     private static int calculateSampleParameter(BitmapFactory.Options options, int reqWidth, int reqHeight) {
-        // Raw height and width of image
+        // get size of original image
         final int height = options.outHeight;
         final int width = options.outWidth;
         int inSampleSize = 1;
@@ -176,7 +191,7 @@ public class ImageHelper {
             final int halfWidth = width / 2;
 
             // calculates the largest inSampleSize value that is a power of 2 and keeps both
-            // height and width larger than the requested height and width.
+            // height and width larger than the requested height and width
             while ((halfHeight / inSampleSize) > reqHeight
                     && (halfWidth / inSampleSize) > reqWidth) {
                 inSampleSize *= 2;
