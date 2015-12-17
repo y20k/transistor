@@ -14,8 +14,8 @@
 
 package org.y20k.transistor.helpers;
 
+import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,15 +30,15 @@ import org.y20k.transistor.R;
 class DialogError {
 
     /* Main class variables */
-    private final Context mContext;
+    private final Activity mActivity;
     private final String mErrorTitle;
     private final String mErrorMessage;
     private final String mErrorDetails;
 
 
     /* Constructor */
-    public DialogError(Context context, String errorTitle, String errorMessage, String errorDetails) {
-        mContext = context;
+    public DialogError(Activity activity, String errorTitle, String errorMessage, String errorDetails) {
+        mActivity = activity;
         mErrorTitle = errorTitle;
         mErrorMessage = errorMessage;
         mErrorDetails = errorDetails;
@@ -48,8 +48,8 @@ class DialogError {
     /* Construct and show dialog */
     public void show() {
         // prepare dialog builder
-        LayoutInflater inflater = LayoutInflater.from(mContext);
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        LayoutInflater inflater = LayoutInflater.from(mActivity);
+        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
 
         // get views
         View view = inflater.inflate(R.layout.dialog_error, null);

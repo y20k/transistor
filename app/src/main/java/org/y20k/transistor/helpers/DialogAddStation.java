@@ -14,8 +14,8 @@
 
 package org.y20k.transistor.helpers;
 
+import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,20 +30,20 @@ import org.y20k.transistor.R;
 public class DialogAddStation {
 
     /* Main class variables */
-    private final Context mContext;
+    private final Activity mActivity;
 
 
     /* Constructor */
-    public DialogAddStation(Context context) {
-        mContext = context;
+    public DialogAddStation(Activity activity) {
+        mActivity = activity;
     }
 
 
     /* Construct and show dialog */
     public void show() {
         // prepare dialog builder
-        LayoutInflater inflater = LayoutInflater.from(mContext);
-        final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        LayoutInflater inflater = LayoutInflater.from(mActivity);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
 
         // get input field
         View view = inflater.inflate(R.layout.dialog_add_station, null);
@@ -61,7 +61,7 @@ public class DialogAddStation {
                     final String input = inputField.getText().toString();
 
                     // download and add new station
-                    StationDownloader stationDownloader = new StationDownloader(input, mContext);
+                    StationDownloader stationDownloader = new StationDownloader(input, mActivity);
                     stationDownloader.execute();
                 }
             }

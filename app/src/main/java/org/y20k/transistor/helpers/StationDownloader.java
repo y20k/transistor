@@ -14,7 +14,7 @@
 
 package org.y20k.transistor.helpers;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.content.LocalBroadcastManager;
@@ -43,7 +43,7 @@ public class StationDownloader extends AsyncTask<Void, Void, Station> {
     private static final String ACTION_COLLECTION_CHANGED = "org.y20k.transistor.action.COLLECTION_CHANGED";
 
     /* Main class variables */
-    private final Context mContext;
+    private final Activity mActivity;
     private Collection mCollection;
     private File mFolder;
     private String mStationURLString;
@@ -52,8 +52,8 @@ public class StationDownloader extends AsyncTask<Void, Void, Station> {
 
 
     /* Constructor */
-    public StationDownloader(String stationURLString, Context context) {
-        mContext = context;
+    public StationDownloader(String stationURLString, Activity activity) {
+        mActivity = activity;
         mStationURLString = stationURLString;
 
         // get mFolder and mStationURL
@@ -62,8 +62,8 @@ public class StationDownloader extends AsyncTask<Void, Void, Station> {
             // load collection
             mCollection = new Collection(mFolder);
             // notify user
-            String toastMessage = mContext.getString(R.string.toastmessage_add_download_started);
-            Toast.makeText(mContext, toastMessage + mStationURLString, Toast.LENGTH_LONG).show();
+            String toastMessage = mActivity.getString(R.string.toastmessage_add_download_started);
+            Toast.makeText(mActivity, toastMessage + mStationURLString, Toast.LENGTH_LONG).show();
         } else {
             // something is wrong with external storage or url
             mErrors = true;
@@ -90,8 +90,8 @@ public class StationDownloader extends AsyncTask<Void, Void, Station> {
 
         if (mErrors || station.getDownloadError()) {
             // construct error message
-            String errorTitle = mContext.getResources().getString(R.string.dialog_error_title_download);
-            String errorMessage = mContext.getResources().getString(R.string.dialog_error_message_download);
+            String errorTitle = mActivity.getResources().getString(R.string.dialog_error_title_download);
+            String errorMessage = mActivity.getResources().getString(R.string.dialog_error_message_download);
 
             // construct details string
             StringBuilder sb = new StringBuilder("");
@@ -107,7 +107,7 @@ public class StationDownloader extends AsyncTask<Void, Void, Station> {
             String errorDetails = sb.toString();
 
             // show error dialog
-            DialogError dialogError = new DialogError(mContext, errorTitle, errorMessage, errorDetails);
+            DialogError dialogError = new DialogError(mActivity, errorTitle, errorMessage, errorDetails);
             dialogError.show();
 
         } else {
@@ -116,7 +116,7 @@ public class StationDownloader extends AsyncTask<Void, Void, Station> {
             // send local broadcast
             Intent i = new Intent();
             i.setAction(ACTION_COLLECTION_CHANGED);
-            LocalBroadcastManager.getInstance(mContext).sendBroadcast(i);
+            LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(i);
         }
 
     }
@@ -125,11 +125,11 @@ public class StationDownloader extends AsyncTask<Void, Void, Station> {
     /* Get collection folder from external storage */
     private boolean getFolder() {
         try {
-            mFolder = new File(mContext.getExternalFilesDir("Collection").toString());
+            mFolder = new File(mActivity.getExternalFilesDir("Collection").toString());
             return true;
         } catch (NullPointerException e) {
             // notify user and log exception
-            Toast.makeText(mContext, R.string.toastalert_no_external_storage, Toast.LENGTH_LONG).show();
+            Toast.makeText(mActivity, R.string.toastalert_no_external_storage, Toast.LENGTH_LONG).show();
             Log.e(LOG_TAG, "Unable to access external storage.");
             return false;
         }

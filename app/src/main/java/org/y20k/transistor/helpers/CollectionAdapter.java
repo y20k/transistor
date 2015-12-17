@@ -14,6 +14,7 @@
 
 package org.y20k.transistor.helpers;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -44,7 +45,7 @@ public class CollectionAdapter extends BaseAdapter {
     /* Main class variables */
     private final LinkedList<String> mStationNames;
     private final LinkedList<Bitmap> mStationImages;
-    private final Context mContext;
+    private final Activity mActivity;
     private Collection mCollection;
     private CollectionChangedListener mCollectionChangedListener;
     private boolean mPlayback;
@@ -58,14 +59,14 @@ public class CollectionAdapter extends BaseAdapter {
 
 
     /* Constructor */
-    public CollectionAdapter(Context context, LinkedList<String> stationNames, LinkedList<Bitmap> stationImage) {
-        mContext = context;
+    public CollectionAdapter(Activity activity, LinkedList<String> stationNames, LinkedList<Bitmap> stationImage) {
+        mActivity = activity;
         mStationNames = stationNames;
         mStationImages = stationImage;
         mCollection = null;
         mCollectionChangedListener = null;
 
-        loadPlaybackState(context);
+        loadPlaybackState(mActivity);
     }
 
 
@@ -94,7 +95,7 @@ public class CollectionAdapter extends BaseAdapter {
 
         // create new view if no convertView available
         if (convertView == null) {
-            LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflater = (LayoutInflater) mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.list_item_collection, parent, false);
 
             holder = new ViewHolder();
@@ -128,7 +129,7 @@ public class CollectionAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 StationContextMenu menu = new StationContextMenu();
-                menu.initialize(mContext, mCollection, view, position);
+                menu.initialize(mActivity, mCollection, view, position);
 
                 // listen for changes invoked by StationContextMenu
                 menu.setStationChangedListener(new StationContextMenu.StationChangedListener() {
@@ -152,7 +153,7 @@ public class CollectionAdapter extends BaseAdapter {
     @Override
     public void notifyDataSetChanged() {
         super.notifyDataSetChanged();
-        loadPlaybackState(mContext);
+        loadPlaybackState(mActivity);
     }
 
 

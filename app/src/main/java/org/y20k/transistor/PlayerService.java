@@ -348,7 +348,7 @@ public class PlayerService extends Service implements
         // send local broadcast (needed by MainActivityFragment)
         Intent i = new Intent();
         i.setAction(ACTION_PLAYBACK_STARTED);
-        LocalBroadcastManager.getInstance(this).sendBroadcast(i);
+        LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(i);
     }
 
 
@@ -364,7 +364,7 @@ public class PlayerService extends Service implements
         // send local broadcast (needed by PlayerActivityFragment and MainActivityFragment)
         Intent i = new Intent();
         i.setAction(ACTION_PLAYBACK_STOPPED);
-        LocalBroadcastManager.getInstance(this).sendBroadcast(i);
+        LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(i);
 
         // retrieve notification system service and cancel notification
         NotificationManager notificationManager = (NotificationManager) getApplication().getSystemService(Context.NOTIFICATION_SERVICE);

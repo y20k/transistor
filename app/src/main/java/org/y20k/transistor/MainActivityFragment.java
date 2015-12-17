@@ -16,6 +16,7 @@ package org.y20k.transistor;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Application;
 import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -77,6 +78,7 @@ public class MainActivityFragment extends Fragment {
 
 
     /* Main class variables */
+    private Application mApplication;
     private Activity mActivity;
     private Collection mCollection;
     private CollectionAdapter mCollectionAdapter = null;
@@ -98,8 +100,9 @@ public class MainActivityFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // store context
+        // get activity and application contexts
         mActivity = getActivity();
+        mApplication = mActivity.getApplication();
 
         // set list state null
         mListState = null;
@@ -377,7 +380,7 @@ public class MainActivityFragment extends Fragment {
             }
         };
         IntentFilter playbackStoppedIntentFilter = new IntentFilter(ACTION_PLAYBACK_STOPPED);
-        LocalBroadcastManager.getInstance(mActivity).registerReceiver(playbackStoppedReceiver, playbackStoppedIntentFilter);
+        LocalBroadcastManager.getInstance(mApplication).registerReceiver(playbackStoppedReceiver, playbackStoppedIntentFilter);
 
         // broadcast receiver: player service stopped playback
         BroadcastReceiver playbackStartedReceiver = new BroadcastReceiver() {
@@ -387,7 +390,7 @@ public class MainActivityFragment extends Fragment {
             }
         };
         IntentFilter playbackStartedIntentFilter = new IntentFilter(ACTION_PLAYBACK_STARTED);
-        LocalBroadcastManager.getInstance(mActivity).registerReceiver(playbackStartedReceiver, playbackStartedIntentFilter);
+        LocalBroadcastManager.getInstance(mApplication).registerReceiver(playbackStartedReceiver, playbackStartedIntentFilter);
 
         // broadcast receiver: station added, deleted, or changed
         BroadcastReceiver collectionChangedReceiver = new BroadcastReceiver() {
@@ -397,7 +400,7 @@ public class MainActivityFragment extends Fragment {
             }
         };
         IntentFilter collectionChangedIntentFilter = new IntentFilter(ACTION_COLLECTION_CHANGED);
-        LocalBroadcastManager.getInstance(mActivity).registerReceiver(collectionChangedReceiver, collectionChangedIntentFilter);
+        LocalBroadcastManager.getInstance(mApplication).registerReceiver(collectionChangedReceiver, collectionChangedIntentFilter);
 
         // broadcast receiver: listen for request to change station image
         BroadcastReceiver imageChangeRequestReceiver = new BroadcastReceiver() {
@@ -410,7 +413,7 @@ public class MainActivityFragment extends Fragment {
             }
         };
         IntentFilter imageChangeRequesIntentFilter = new IntentFilter(ACTION_IMAGE_CHANGE_REQUESTED);
-        LocalBroadcastManager.getInstance(mActivity).registerReceiver(imageChangeRequestReceiver, imageChangeRequesIntentFilter);
+        LocalBroadcastManager.getInstance(mApplication).registerReceiver(imageChangeRequestReceiver, imageChangeRequesIntentFilter);
 
     }
 

@@ -14,8 +14,8 @@
 
 package org.y20k.transistor.helpers;
 
+import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -38,7 +38,7 @@ public class DialogRename {
 
 
     /* Main class variables */
-    private final Context mContext;
+    private final Activity mActivity;
     private final Collection mCollection;
     private final int mStationID;
     private String mStationName;
@@ -52,8 +52,8 @@ public class DialogRename {
 
 
     /* Constructor */
-    public DialogRename(Context context, Collection collection, String stationName, int stationID) {
-        mContext = context;
+    public DialogRename(Activity activity, Collection collection, String stationName, int stationID) {
+        mActivity = activity;
         mStationName = stationName;
         mStationID = stationID;
         mCollection = collection;
@@ -64,8 +64,8 @@ public class DialogRename {
     /* Construct and show dialog */
     public void show() {
         // prepare dialog builder
-        LayoutInflater inflater = LayoutInflater.from(mContext);
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        LayoutInflater inflater = LayoutInflater.from(mActivity);
+        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
 
         // get input field
         View view = inflater.inflate(R.layout.dialog_rename_station, null);
@@ -83,7 +83,7 @@ public class DialogRename {
                 boolean success = mCollection.rename(mStationID, mStationName);
                 if (!success) {
                     // notify the user
-                    Toast.makeText(mContext, R.string.toastalert_rename_unsuccessful, Toast.LENGTH_LONG).show();
+                    Toast.makeText(mActivity, R.string.toastalert_rename_unsuccessful, Toast.LENGTH_LONG).show();
                 } else {
                     // notify MainActivityFragment
                     if (mStationRenamedListener != null) {
@@ -91,12 +91,12 @@ public class DialogRename {
                     }
 
                     // check for playback
-                    SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext);
+                    SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mActivity);
                     boolean playback = settings.getBoolean(PLAYBACK, false);
 
                     if (playback) {
                         // put up changed notification
-                        NotificationHelper notificationHelper = new NotificationHelper(mContext);
+                        NotificationHelper notificationHelper = new NotificationHelper(mActivity);
                         notificationHelper.setStationName(mStationName);
                         notificationHelper.createNotification();
                     }

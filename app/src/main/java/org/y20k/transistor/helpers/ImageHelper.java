@@ -14,7 +14,7 @@
 
 package org.y20k.transistor.helpers;
 
-import android.content.Context;
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -39,28 +39,28 @@ public class ImageHelper {
     /* Main class variables */
     private final Bitmap mInputImage;
     private final Paint mBackgroundColor;
-    private final Context mContext;
+    private final Activity mActivity;
 
 
     /* Constructor when given a Bitmap*/
-    public ImageHelper(Bitmap inputImage, Context context) {
+    public ImageHelper(Bitmap inputImage, Activity activity) {
         mInputImage = inputImage;
-        mContext = context;
+        mActivity = activity;
 
         // set default background color white
-        int backgroundColor = ContextCompat.getColor(mContext, R.color.transistor_white);
+        int backgroundColor = ContextCompat.getColor(mActivity, R.color.transistor_white);
         mBackgroundColor = new Paint();
         mBackgroundColor.setColor(backgroundColor);
     }
 
 
     /* Constructor when given an Uri */
-    public ImageHelper(Uri inputImageUri, Context context) {
-        mContext = context;
+    public ImageHelper(Uri inputImageUri, Activity activity) {
+        mActivity = activity;
         mInputImage = decodeSampledBitmapFromUri(inputImageUri, 72, 72);
 
         // set default background color white
-        int backgroundColor = ContextCompat.getColor(mContext, R.color.transistor_white);
+        int backgroundColor = ContextCompat.getColor(mActivity, R.color.transistor_white);
         mBackgroundColor = new Paint();
         mBackgroundColor.setColor(backgroundColor);
     }
@@ -68,7 +68,7 @@ public class ImageHelper {
 
     /* Setter for color of background */
     public void setBackgroundColor(int color) {
-        int backgroundColor = ContextCompat.getColor(mContext, color);
+        int backgroundColor = ContextCompat.getColor(mActivity, color);
         mBackgroundColor.setColor(backgroundColor);
     }
 
@@ -141,7 +141,7 @@ public class ImageHelper {
         ParcelFileDescriptor parcelFileDescriptor =  null;
 
         try {
-            parcelFileDescriptor = mContext.getContentResolver().openFileDescriptor(imageUri, "r");
+            parcelFileDescriptor = mActivity.getContentResolver().openFileDescriptor(imageUri, "r");
         } catch (FileNotFoundException e) {
             // TODO handle error
             e.printStackTrace();

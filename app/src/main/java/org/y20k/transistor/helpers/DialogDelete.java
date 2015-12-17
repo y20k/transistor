@@ -14,8 +14,8 @@
 
 package org.y20k.transistor.helpers;
 
+import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
@@ -35,7 +35,7 @@ public class DialogDelete {
 
 
     /* Main class variables */
-    private final Context mContext;
+    private final Activity mActivity;
     private final Collection mCollection;
     private final int mStationID;
     private StationDeletedListener mStationDeletedListener;
@@ -48,8 +48,8 @@ public class DialogDelete {
 
 
     /* Constructor */
-    public DialogDelete(Context context, Collection collection, int stationID) {
-        mContext = context;
+    public DialogDelete(Activity activity, Collection collection, int stationID) {
+        mActivity = activity;
         mStationID = stationID;
         mCollection = collection;
         mStationDeletedListener = null;
@@ -58,7 +58,7 @@ public class DialogDelete {
 
     /* Construct and show dialog */
     public void show() {
-        AlertDialog.Builder deleteDialog = new AlertDialog.Builder(mContext);
+        AlertDialog.Builder deleteDialog = new AlertDialog.Builder(mActivity);
 
         // add message to dialog
         deleteDialog.setMessage(R.string.dialog_delete_station_message);
@@ -70,12 +70,12 @@ public class DialogDelete {
                 boolean success = mCollection.delete(mStationID);
                 if (success) {
                     // notify the user
-                    Toast.makeText(mContext, R.string.toastalert_delete_successful, Toast.LENGTH_LONG).show();
+                    Toast.makeText(mActivity, R.string.toastalert_delete_successful, Toast.LENGTH_LONG).show();
 
                     // send local broadcast
                     Intent i = new Intent();
                     i.setAction(ACTION_COLLECTION_CHANGED);
-                    LocalBroadcastManager.getInstance(mContext).sendBroadcast(i);
+                    LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(i);
 
                     // notify MainActivityFragment
                     if (mStationDeletedListener != null) {
