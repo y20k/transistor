@@ -100,7 +100,7 @@ public class ImageHelper {
         float inputImageWidth = (float)mInputImage.getWidth();
 
         // calculate padding
-        float padding = (float)size/6;
+        float padding = (float)size/4;
 
         // define variables needed for transformation matrix
         Matrix transformationMatrix = new Matrix();
@@ -131,19 +131,6 @@ public class ImageHelper {
         imageCanvas.drawBitmap(mInputImage, transformationMatrix, paint);
 
         return outputImage;
-    }
-
-
-    /* Get the dominant color within input image - for testing purposes */
-    private int getDominantColor () {
-        Bitmap onePixelBitmap = Bitmap.createScaledBitmap(mInputImage, 1, 1, false);
-        int pixel = onePixelBitmap.getPixel(0, 0);
-
-        int red = Color.red(pixel);
-        int green = Color.green(pixel);
-        int blue = Color.blue(pixel);
-
-        return Color.argb(127, red, green, blue);
     }
 
 
@@ -198,6 +185,19 @@ public class ImageHelper {
             }
         }
         return inSampleSize;
+    }
+
+
+    /* Get the dominant color within input image - for testing purposes */
+    private int getDominantColor () {
+        Bitmap onePixelBitmap = Bitmap.createScaledBitmap(mInputImage, 1, 1, false);
+        int pixel = onePixelBitmap.getPixel(0, 0);
+
+        int red = Color.red(pixel);
+        int green = Color.green(pixel);
+        int blue = Color.blue(pixel);
+
+        return Color.argb(127, red, green, blue);
     }
 
 }

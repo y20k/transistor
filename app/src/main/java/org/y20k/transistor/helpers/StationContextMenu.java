@@ -92,7 +92,7 @@ public class StationContextMenu extends DialogFragment {
                         Intent i = new Intent();
                         i.setAction(ACTION_IMAGE_CHANGE_REQUESTED);
                         i.putExtra(STATION_ID, mStationID);
-                        LocalBroadcastManager.getInstance(mContext).sendBroadcast(i);
+                        LocalBroadcastManager.getInstance(mContext.getApplicationContext()).sendBroadcast(i);
 
                         return true;
 
