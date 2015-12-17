@@ -8,8 +8,8 @@ android {
         applicationId "org.y20k.transistor"
         minSdkVersion 19
         targetSdkVersion 23
-        versionCode 9
-        versionName "1.1.0 (Running Gun Blues)"
+        versionCode 10
+        versionName "1.1.1 (Running Gun Blues)"
     }
     buildTypes {
         release {
