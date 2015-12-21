@@ -1,27 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- red -->
-    <color name="transistor_red">#FFCC0000</color>
-    <color name="transistor_red_light">#FFE63939</color>
-    <color name="transistor_red_dark">#FF990000</color>
-    <color name="transistor_red_darker">#FF850000</color>
 
-    <!-- gold -->
-    <color name="transistor_gold">#FFCC9933</color>
+    <color name="transistor_red">#FFE53935</color>
+    <color name="transistor_red_dark">#FFB71C1C</color>
+
+    <color name="transistor_grey">#FF99918A</color>
+    <color name="transistor_grey_light">#FFBFBBB8</color>
+    <color name="transistor_grey_lighter">#FFDDDBD9</color>
+    <color name="transistor_grey_dark">#FF2C2926</color>
+
+    <color name="transistor_gold">#FFE6C687</color>
     <color name="transistor_gold_light">#FFE6BA64</color>
-    <color name="transistor_gold_lighter">#FFE6C687</color>
-    <color name="transistor_gold_dark">#FF855E11</color>
+    <color name="transistor_gold_dark">#FFCC9933</color>
 
-    <!-- grey -->
-    <color name="transistor_grey">#FF999999</color>
-    <color name="transistor_grey_light">#FFB3B3B3</color>
-    <color name="transistor_grey_lighter">#FFD8D8D8</color>
-    <color name="transistor_grey_dark">#FF333333</color>
-    <color name="transistor_grey_dark_warm">#FF2C2926</color>
-
-    <!-- misc -->
     <color name="transistor_white">#FFFFFFFF</color>
-    <color name="transistor_black">#FF000000</color>
-    <color name="transistor_red_led">#FF990000</color>
-    <color name="transistor_green_led">#FF3AAA35</color>
+
 </resources>

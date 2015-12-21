@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Base application theme -->
+    <style name="TransistorAppTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+
+        <!-- Set AppCompat’s colors -->
+        <item name="colorPrimary">@color/transistor_red</item>
+        <item name="colorPrimaryDark">@color/transistor_red_dark</item>
+        <item name="android:navigationBarColor">@color/transistor_red</item>
+
+    </style>
+</resources>
