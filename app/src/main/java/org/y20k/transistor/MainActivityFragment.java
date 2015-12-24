@@ -422,19 +422,14 @@ public class MainActivityFragment extends Fragment {
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        System.out.println("!!! permission dingding");
-
-
         switch (requestCode) {
             case PERMISSION_REQUEST_READ_EXTERNAL_STORAGE: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission granted - get system picker for images
                     Intent pickImageIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     startActivityForResult(pickImageIntent, REQUEST_LOAD_IMAGE);
-                    System.out.println("!!! permission granted");
                 } else {
                     // permission denied
-                    System.out.println("!!! permission denied");
                 }
                 return;
             }
@@ -492,8 +487,7 @@ public class MainActivityFragment extends Fragment {
                 snackbar.setAction(R.string.dialog_generic_button_okay, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        ActivityCompat.requestPermissions(mActivity,
-                                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                                 PERMISSION_REQUEST_READ_EXTERNAL_STORAGE);
                     }
                 });
@@ -501,8 +495,7 @@ public class MainActivityFragment extends Fragment {
 
             } else {
                 // ask for permission without explanation
-                ActivityCompat.requestPermissions(mActivity,
-                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                         PERMISSION_REQUEST_READ_EXTERNAL_STORAGE);
             }
         }

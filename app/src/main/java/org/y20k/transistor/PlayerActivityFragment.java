@@ -297,20 +297,22 @@ public class PlayerActivityFragment extends Fragment {
     }
 
 
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//        switch (requestCode) {
-//            case PERMISSION_REQUEST_READ_EXTERNAL_STORAGE: {
-//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    // permission granted!
-//                } else {
-//                    // permission denied! Disable the functionality that depends on this permission.
-//                }
-//                return;
-//            }
-//        }
-//    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case PERMISSION_REQUEST_READ_EXTERNAL_STORAGE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission granted - get system picker for images
+                    Intent pickImageIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(pickImageIntent, REQUEST_LOAD_IMAGE);
+                } else {
+                    // permission denied
+                }
+                return;
+            }
+        }
+    }
 
 
     @Override
@@ -454,8 +456,7 @@ public class PlayerActivityFragment extends Fragment {
                 snackbar.setAction(R.string.dialog_generic_button_okay, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        ActivityCompat.requestPermissions(mActivity,
-                                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                                 PERMISSION_REQUEST_READ_EXTERNAL_STORAGE);
                     }
                 });
@@ -463,8 +464,7 @@ public class PlayerActivityFragment extends Fragment {
 
             } else {
                 // ask for permission without explanation
-                ActivityCompat.requestPermissions(mActivity,
-                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                         PERMISSION_REQUEST_READ_EXTERNAL_STORAGE);
             }
         }
