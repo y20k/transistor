@@ -17,7 +17,6 @@ package org.y20k.transistor;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Application;
-import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -30,7 +29,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -370,6 +369,7 @@ public class MainActivityFragment extends Fragment {
         }
     }
 
+
     /* Initializes broadcast receivers fot onCreate */
     private void initializeBroadcastReceivers() {
         // broadcast receiver: player service stopped playback
@@ -418,20 +418,28 @@ public class MainActivityFragment extends Fragment {
     }
 
 
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//        switch (requestCode) {
-//            case PERMISSION_REQUEST_READ_EXTERNAL_STORAGE: {
-//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    // permission granted!
-//                } else {
-//                    // permission denied! Disable the functionality that depends on this permission.
-//                }
-//                return;
-//            }
-//        }
-//    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        System.out.println("!!! permission dingding");
+
+
+        switch (requestCode) {
+            case PERMISSION_REQUEST_READ_EXTERNAL_STORAGE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission granted - get system picker for images
+                    Intent pickImageIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(pickImageIntent, REQUEST_LOAD_IMAGE);
+                    System.out.println("!!! permission granted");
+                } else {
+                    // permission denied
+                    System.out.println("!!! permission denied");
+                }
+                return;
+            }
+        }
+    }
 
 
     @Override
@@ -468,7 +476,7 @@ public class MainActivityFragment extends Fragment {
     /* Check permissions and start image picker */
     private void selectFromImagePicker() {
         // permission to read external storage granted
-        if (ContextCompat.checkSelfPermission(mActivity,
+        if (ActivityCompat.checkSelfPermission(mActivity,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
                 == PackageManager.PERMISSION_GRANTED) {
 
@@ -476,7 +484,7 @@ public class MainActivityFragment extends Fragment {
             Intent pickImageIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(pickImageIntent, REQUEST_LOAD_IMAGE);
         }
-        // permission to read external storage granted
+        // permission to read external storage not granted
         else {
             if (ActivityCompat.shouldShowRequestPermissionRationale(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE)) {
                 // ask for permission and explain why

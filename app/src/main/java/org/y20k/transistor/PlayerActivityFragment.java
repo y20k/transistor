@@ -30,7 +30,6 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -439,7 +438,7 @@ public class PlayerActivityFragment extends Fragment {
     /* Check permissions and start image picker */
     private void selectFromImagePicker() {
         // permission to read external storage granted
-        if (ContextCompat.checkSelfPermission(mActivity,
+        if (ActivityCompat.checkSelfPermission(mActivity,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
                 == PackageManager.PERMISSION_GRANTED) {
 

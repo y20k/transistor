@@ -99,11 +99,15 @@ public class StationDownloader extends AsyncTask<Void, Void, Station> {
             sb.append(mFolder);
             sb.append("\n\nURL of station:\n");
             sb.append(mStationURLString);
-            String remoteFileContent = station.getRemoteFileContent();
-            if (remoteFileContent != null) {
-                sb.append("\n\nContent of remote file:\n");
-                sb.append(remoteFileContent);
+
+            if (station != null) {
+                String remoteFileContent = station.getRemoteFileContent();
+                if (remoteFileContent != null) {
+                    sb.append("\n\nContent of remote file:\n");
+                    sb.append(remoteFileContent);
+                }
             }
+
             String errorDetails = sb.toString();
 
             // show error dialog
@@ -142,17 +146,18 @@ public class StationDownloader extends AsyncTask<Void, Void, Station> {
         mStationURLString = mStationURLString.trim();
 
         // check file extension
-        if (!mStationURLString.endsWith(".pls") && !mStationURLString.endsWith(".m3u")) {
+        if (mStationURLString.endsWith(".pls") || mStationURLString.endsWith(".m3u")) {
+            // create and check url
+            try {
+                mStationURL = new URL(mStationURLString);
+                return true;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+                return false;
+            }
+        } else {
             return false;
         }
 
-        // create and check url
-        try {
-            mStationURL = new URL(mStationURLString);
-            return true;
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-            return false;
-        }
     }
 }

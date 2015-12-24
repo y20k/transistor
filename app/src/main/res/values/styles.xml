@@ -7,6 +7,7 @@
         <!-- Set AppCompat’s colors -->
         <item name="colorPrimary">@color/transistor_red</item>
         <item name="colorPrimaryDark">@color/transistor_red_dark</item>
+        <item name="colorAccent">@color/transistor_gold_dark</item>
 
     </style>
 
