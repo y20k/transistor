@@ -137,7 +137,7 @@ public class ImageHelper {
     /* Return sampled down image for given Uri */
     private Bitmap decodeSampledBitmapFromUri(Uri imageUri, int reqWidth, int reqHeight) {
 
-        Bitmap bitmap = null;
+        Bitmap bitmap;
         ParcelFileDescriptor parcelFileDescriptor =  null;
 
         try {
@@ -147,21 +147,27 @@ public class ImageHelper {
             e.printStackTrace();
         }
 
-        FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+        if (parcelFileDescriptor != null) {
+            FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
 
-        // decode with inJustDecodeBounds=true to check dimensions
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeFileDescriptor(fileDescriptor, null, options);
+            // decode with inJustDecodeBounds=true to check dimensions
+            final BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+            BitmapFactory.decodeFileDescriptor(fileDescriptor, null, options);
 
-        // calculate inSampleSize
-        options.inSampleSize = calculateSampleParameter(options, reqWidth, reqHeight);
+            // calculate inSampleSize
+            options.inSampleSize = calculateSampleParameter(options, reqWidth, reqHeight);
 
-        // decode bitmap with inSampleSize set
-        options.inJustDecodeBounds = false;
-        bitmap = BitmapFactory.decodeFileDescriptor(fileDescriptor, null, options);
+            // decode bitmap with inSampleSize set
+            options.inJustDecodeBounds = false;
+            bitmap = BitmapFactory.decodeFileDescriptor(fileDescriptor, null, options);
 
-        return bitmap;
+            return bitmap;
+
+        } else {
+            return null;
+        }
+
     }
 
 

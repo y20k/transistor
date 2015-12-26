@@ -31,9 +31,6 @@ import org.y20k.transistor.core.Collection;
  */
 public class StationContextMenu extends DialogFragment {
 
-    /* Define log tag */
-    private static final String LOG_TAG = StationContextMenu.class.getSimpleName();
-
 
     /* Keys */
     private static final String ACTION_IMAGE_CHANGE_REQUESTED = "org.y20k.transistor.action.IMAGE_CHANGE_REQUESTED";

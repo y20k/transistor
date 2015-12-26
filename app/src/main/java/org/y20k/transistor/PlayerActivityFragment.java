@@ -309,7 +309,6 @@ public class PlayerActivityFragment extends Fragment {
                 } else {
                     // permission denied
                 }
-                return;
             }
         }
     }
@@ -344,7 +343,7 @@ public class PlayerActivityFragment extends Fragment {
             Bitmap stationImage = imageHelper.createCircularFramedImage(192);
             mStationImageView.setImageBitmap(stationImage);
         } else {
-            Log.e(LOG_TAG, "Unable to get image from media picker: " + newImage.toString());
+            Log.e(LOG_TAG, "Unable to get image from media picker: " + newImageUri.toString());
             // TODO handle error here
         }
     }

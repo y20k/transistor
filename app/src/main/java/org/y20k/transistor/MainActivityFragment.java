@@ -191,6 +191,9 @@ public class MainActivityFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
+//        // get activity that this fragment is currently attached to
+//        mActivity = getActivity();
+
         // handle incoming intent
         handleNewStationIntent();
     }
@@ -431,7 +434,6 @@ public class MainActivityFragment extends Fragment {
                 } else {
                     // permission denied
                 }
-                return;
             }
         }
     }
@@ -462,7 +464,7 @@ public class MainActivityFragment extends Fragment {
                 Log.e(LOG_TAG, "Unable to save: " + newImage.toString());
             }
         } else {
-            Log.e(LOG_TAG, "Unable to get image from media picker: " + newImage.toString());
+            Log.e(LOG_TAG, "Unable to get image from media picker: " + newImageUri.toString());
             // TODO handle error here
         }
     }
