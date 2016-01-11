@@ -27,7 +27,7 @@ import android.widget.TextView;
 /**
  * InfosheetActivityFragment class
  */
-public class InfosheetActivityFragment extends Fragment {
+public final class InfosheetActivityFragment extends Fragment {
 
     /* Keys */
     private static final String CONTENT = "content";

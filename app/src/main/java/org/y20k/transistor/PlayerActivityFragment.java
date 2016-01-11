@@ -56,7 +56,7 @@ import java.io.IOException;
 /**
  * PlayerActivityFragment class
  */
-public class PlayerActivityFragment extends Fragment {
+public final class PlayerActivityFragment extends Fragment {
 
     /* Define log tag */
     private static final String LOG_TAG = PlayerActivityFragment.class.getSimpleName();

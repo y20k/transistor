@@ -27,7 +27,7 @@ import org.y20k.transistor.R;
 /**
  * DialogAddStation class
  */
-public class DialogAddStation {
+public final class DialogAddStation {
 
     /* Main class variables */
     private final Activity mActivity;

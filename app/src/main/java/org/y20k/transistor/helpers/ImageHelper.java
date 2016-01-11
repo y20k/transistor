@@ -34,7 +34,7 @@ import java.io.FileNotFoundException;
 /**
  * ImageHelper class
  */
-public class ImageHelper {
+public final class ImageHelper {
 
     /* Main class variables */
     private final Bitmap mInputImage;

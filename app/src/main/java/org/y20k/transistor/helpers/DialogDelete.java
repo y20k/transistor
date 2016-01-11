@@ -28,7 +28,7 @@ import org.y20k.transistor.core.Collection;
 /**
  * DialogDelete class
  */
-public class DialogDelete {
+public final class DialogDelete {
 
     /* Keys */
     private static final String ACTION_COLLECTION_CHANGED = "org.y20k.transistor.action.COLLECTION_CHANGED";

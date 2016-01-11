@@ -6,7 +6,7 @@ Transistor - Radio app for Android
 
 **Version 1.1.x ("Running Gun Blues")**
 
-Transistor is a bare bones app for listening to radio programs over the internet. The app stores stations as files on your device\'s external storage. It currently understands streams embedded within m3u and pls links.
+Transistor is a bare bones app for listening to radio programs over the internet. The app stores stations as files on your device's external storage. It currently understands streams embedded within m3u and pls links.
 
 Transistor is free software. It is published under the [MIT open source license](https://opensource.org/licenses/MIT). 
 

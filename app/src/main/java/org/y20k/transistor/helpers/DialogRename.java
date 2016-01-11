@@ -31,7 +31,7 @@ import org.y20k.transistor.core.Collection;
 /**
  * DialogRename class
  */
-public class DialogRename {
+public final class DialogRename {
 
     /* Keys */
     private static final String PLAYBACK = "playback";

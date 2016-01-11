@@ -37,7 +37,7 @@ import java.io.IOException;
 /**
  * PlayerService class
  */
-public class PlayerService extends Service implements
+public final class PlayerService extends Service implements
         AudioManager.OnAudioFocusChangeListener,
         MediaPlayer.OnPreparedListener,
         MediaPlayer.OnErrorListener,

@@ -35,7 +35,7 @@ import java.util.Scanner;
 /**
  * Station class
  */
-public class Station implements Comparable<Station> {
+public final class Station implements Comparable<Station> {
 
     /* Define log tag */
     private static final String LOG_TAG = Station.class.getSimpleName();
@@ -220,7 +220,6 @@ public class Station implements Comparable<Station> {
             // M3U: found stream URL
             } else if (line.startsWith("http") &&
                     !line.contains("wmv") &&
-                    !line.contains("ogg") &&
                     !line.contains("m3u")) {
                 try {
                     mStreamURL = new URL(line.trim());
@@ -232,7 +231,6 @@ public class Station implements Comparable<Station> {
             // PLS: found station name
             else if (line.startsWith("Title1=") &&
                     !line.contains("wmv") &&
-                    !line.contains("ogg") &&
                     !line.contains("m3u")) {
                 mStationName = line.substring(7).trim();
             // PLS: found stream URL
@@ -243,6 +241,7 @@ public class Station implements Comparable<Station> {
                     Log.e(LOG_TAG, line.substring(6).trim() + "is not a valid URL");
                 }
             }
+
         }
 
         in.close();

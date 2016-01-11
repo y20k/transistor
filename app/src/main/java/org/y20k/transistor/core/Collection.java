@@ -27,7 +27,7 @@ import java.util.LinkedList;
 /**
  * Collection class
  */
-public class Collection {
+public final class Collection {
 
     /* Define log tag */
     private static final String LOG_TAG = Collection.class.getSimpleName();

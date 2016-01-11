@@ -22,7 +22,7 @@ import android.view.Menu;
 /**
  * PlayerActivity class
  */
-public class PlayerActivity extends AppCompatActivity {
+public final class PlayerActivity extends AppCompatActivity {
 
 
     @Override

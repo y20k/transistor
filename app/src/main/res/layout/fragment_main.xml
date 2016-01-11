@@ -27,6 +27,7 @@
             android:layout_weight="1"
             android:layout_gravity="center_vertical|bottom"
             android:gravity="bottom|end"
+            android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Widget.ActionMode.Title" />
 

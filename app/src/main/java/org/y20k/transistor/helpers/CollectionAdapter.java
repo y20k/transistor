@@ -35,7 +35,7 @@ import java.util.LinkedList;
 /**
  * CollectionAdapter class
  */
-public class CollectionAdapter extends BaseAdapter {
+public final class CollectionAdapter extends BaseAdapter {
 
     /* Keys */
     private static final String STATION_ID_CURRENT = "stationIDCurrent";

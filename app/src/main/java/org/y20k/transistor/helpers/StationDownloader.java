@@ -33,7 +33,7 @@ import java.net.URL;
 /**
  * StationDownloader class
  */
-public class StationDownloader extends AsyncTask<Void, Void, Station> {
+public final class StationDownloader extends AsyncTask<Void, Void, Station> {
 
     /* Define log tag */
     private static final String LOG_TAG = CollectionLoader.class.getSimpleName();

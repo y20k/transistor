@@ -55,7 +55,7 @@ import java.util.LinkedList;
 /**
  * MainActivityFragment class
  */
-public class MainActivityFragment extends Fragment {
+public final class MainActivityFragment extends Fragment {
 
     /* Define log tag */
     private static final String LOG_TAG = MainActivityFragment.class.getSimpleName();

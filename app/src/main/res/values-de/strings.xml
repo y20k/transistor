@@ -24,6 +24,7 @@
     <string name="dialog_rename_station_message">Station umbenennen</string>
     <string name="header_about">Über Transistor</string>
     <string name="header_howto">Wie Transistor funktioniert</string>
+    <string name="menu_icon">Icon ändern</string>
     <string name="menu_rename">Umbenennen</string>
     <string name="menu_howto">Wie Transistor funktioniert</string>
     <string name="menu_delete">Löschen</string>
@@ -43,6 +44,9 @@
     <string name="dialog_error_message_download">Transistor hat es versucht, kann aber mit diesem Link nichts anfangen.</string>
     <string name="dialog_error_title_default">Fehler</string>
     <string name="dialog_error_title_download">Download Problem</string>
+    <string name="snackbar_request_storage_access">Um das Icon einer Radiostation ändern zu können, benötigt Transistor Zugriff auf Fotos und Bilder.</string>
+
+
 
     <string name="html_about"><![CDATA[<!DOCTYPE html>
     <html>
@@ -82,7 +86,5 @@
             <p>Es gibt schlicht nichts einzustellen ;). Transistor ist eine sehr einfache App. Abhängig vom eigenen Standpunkt ist &quot;einfach&quot; entweder großartig oder mies.</p>
         </body>
     </html>]]></string>
-    <string name="menu_icon">Icon ändern</string>
-    <string name="snackbar_request_storage_access">Um das Icon einer Radiostation ändern zu können, benötigt Transistor Zugriff auf Fotos und Bilder.</string>
 
 </resources>

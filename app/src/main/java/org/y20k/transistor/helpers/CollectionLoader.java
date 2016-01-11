@@ -28,7 +28,7 @@ import java.io.File;
 /**
  * CollectionLoader class
  */
-class CollectionLoader extends AsyncTask<Void, Void, Collection> {
+final class CollectionLoader extends AsyncTask<Void, Void, Collection> {
 
     /* Define log tag */
     private static final String LOG_TAG = CollectionLoader.class.getSimpleName();

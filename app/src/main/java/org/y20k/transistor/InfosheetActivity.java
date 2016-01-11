@@ -22,7 +22,7 @@ import android.support.v7.app.AppCompatActivity;
 /**
  * InfosheetActivity class
  */
-public class InfosheetActivity extends AppCompatActivity {
+public final class InfosheetActivity extends AppCompatActivity {
 
     /* Keys */
     private static final String TITLE = "title";

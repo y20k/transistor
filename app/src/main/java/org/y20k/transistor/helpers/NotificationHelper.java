@@ -31,7 +31,7 @@ import org.y20k.transistor.R;
 /**
  * NotificationHelper class
  */
-public class NotificationHelper {
+public final class NotificationHelper {
 
     /* Keys */
     private static final int PLAYER_SERVICE_NOTIFICATION_ID = 1;

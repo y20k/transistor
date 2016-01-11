@@ -29,7 +29,7 @@ import org.y20k.transistor.core.Collection;
 /**
  * StationContextMenu class
  */
-public class StationContextMenu extends DialogFragment {
+public final class StationContextMenu extends DialogFragment {
 
 
     /* Keys */

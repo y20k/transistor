@@ -23,7 +23,7 @@ import android.view.MenuInflater;
 /**
  * MainActivity class
  */
-public class MainActivity extends AppCompatActivity {
+public final class MainActivity extends AppCompatActivity {
 
 
     @Override
