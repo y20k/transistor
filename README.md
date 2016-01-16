@@ -14,6 +14,8 @@ Install Transistor
 ------------------
 Get the latest release on [Google Play](https://play.google.com/store/apps/details?id=org.y20k.transistor).
 
+Get the app on [F-Droid](https://f-droid.org/repository/browse/?fdid=org.y20k.transistor).
+
 Get an APK here on [GitHub](https://github.com/y20k/transistor/releases).
 
 How to use Transistor
