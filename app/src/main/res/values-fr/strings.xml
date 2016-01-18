@@ -4,20 +4,20 @@
 
     <!-- menu entries -->
     <string name="menu_about">À propos</string>
-    <string name="menu_howto">Mode d'emploi</string>
-    <string name="menu_icon">Changer l'icône</string>    
+    <string name="menu_howto">Guide</string>
+    <string name="menu_icon">Changer le logo</string>    
     <string name="menu_add">Ajouter</string>
     <string name="menu_delete">Supprimer</string>
     <string name="menu_rename">Renommer</string>
 
     <!-- headers -->
     <string name="header_about">À propos</string>
-    <string name="header_howto">Mode d'emploi</string>
+    <string name="header_howto">Guide</string>
 
     <!-- descriptions -->
     <string name="descr_arrow_actioncall">Flèche pointant vers l\'icône d\'ajout</string>
     <string name="descr_overflow_button">Options d\'affichage pour la station radio</string>
-    <string name="descr_station_icon">Icône de la station radio</string>
+    <string name="descr_station_icon">Logo de la station radio</string>
     <string name="descr_station_name">Nom de la station radio</string>
     <string name="descr_station_name_example">Exemple FM</string>
     <string name="descr_playback_button">Grand bouton de lecture</string>
@@ -52,7 +52,7 @@
     <string name="toastalert_delete_successful">Station supprimée avec succès.</string>
     <string name="toastalert_no_external_storage">Impossible d\'accéder au stockage externe.</string>
     <string name="toastalert_headphones_unplugged">Casque débranché. Lecture arrêtée.</string>
-    <string name="snackbar_request_storage_access">Vous souhaitez ajouter une nouvelle miniature pour cette station ? Pour cela, Transistor doit pouvoir accéder à vos images et photos.</string>
+    <string name="snackbar_request_storage_access">Vous souhaitez ajouter un nouveau logo pour cette station. Pour cela, Transistor a besoin d\'accéder à vos images et photos.</string>
 
     <!-- notification -->
     <string name="notification_swipe_to_stop">Glissez pour arrêter</string>
@@ -66,17 +66,17 @@
     <html>
         <body>
             <h1>À propos de Transistor</h1>
-            <h2>Application Radio pour Android</h2>
+            <h2>Application radio pour Android</h2>
             <h3>Version 1.1 (&quot;Running Gun Blues&quot;)</h3>
-            <p>Transistor est une application minimaliste vous permettant d'écouter la radio par internet. L'application stocke les stations en tant que fichiers sur la mémoire externe de votre périphérique. Cherchez des fichiers m3u dans /Android/data/org.y20k.transistor/Collection. Transistor gère pour l'instant les flux contenus dans des liens m3u et pls.</p>
-            <p>Transistor est un logiciel libre. Il est publié sous la licence open source MIT. Le code source est disponible sur GitHub. GitHub est aussi l'endroit idéal pour reporter des bugs ou même contribuer à l'application, si vous êtes interessés.</p>
+            <p>Transistor est une application minimaliste vous permettant d\'écouter la radio par internet. L\'application stocke les stations en tant que fichiers sur la mémoire externe de votre appareil. Recherchez des fichiers m3u dans /Android/data/org.y20k.transistor/Collection. Transistor gère pour l\'instant les flux contenus dans des liens m3u et pls.</p>
+            <p>Transistor est un logiciel libre. Il est publié sous la licence open source MIT. Le code source est disponible sur GitHub. GitHub est aussi l\'endroit idéal pour signaler des bugs, ou même contribuer à l\'application si vous êtes interessés.</p>
             <p>https://github.com/y20k/transistor</p>
             <p>https://opensource.org/licenses/MIT</p>
-            <h3>Quelles Permissions nécessite Transistor ?</h3>
-            <p><strong>Permission INTERNET</strong><br />
+            <h3>Quelles autorisations sont nécessaires à Transistor ?</h3>
+            <p><strong>Autorisation INTERNET</strong><br />
             Transistor lit des flux radio par internet.</p>
-            <p><strong>Permission READ_EXTERNAL_STORAGE</strong><br />
-            Transistor nécessite l'accès aux images et aux photos afin de vous permettre de personnaliser les icônes des stations radios.</p>
+            <p><strong>Autorisation READ_EXTERNAL_STORAGE</strong><br />
+            Transistor nécessite l\'accès aux images et aux photos afin de vous permettre de personnaliser les logos des stations radios.</p>
         </body>
     </html>]]></string>
 
@@ -85,19 +85,19 @@
         <body>
             <h1>Comment utiliser Transistor</h1>
             <h2>Comment ajouter une nouvelle station radio ?</h2>
-            <p>Le moyen le plus simple pour ajouter une station est de chercher un lien de flux (m3u ou pls) et de choisir Transistor en tant qu'application par défaut pour ce type de fichiers. Vous pouvez également appuyer sur le symbole (+) dans la barre de titre et directement y coller un lien m3u.</p>
+            <p>Le moyen le plus simple pour ajouter une station est de rechercher un lien de flux (m3u ou pls) et de choisir Transistor en tant qu\'application par défaut pour ce type de fichiers. Vous pouvez également appuyer sur le symbole (+) dans la barre et directement y coller un lien m3u.</p>
             <h2>Comment écouter une station radio ?</h2>
             <p>Appuyez sur le gros bouton Lecture ;).</p>
             <h2>Comment arrêter la lecture ?</h2>
-            <p>Appuyez sur le gros bouton stop, débranchez vos écouteurs ou faîtes glisser la notification à partir de l'écran de verrouillage.</p>
+            <p>Appuyez sur le gros bouton Arrêter, débranchez vos écouteurs ou faîtes glisser la notification depuis l\'écran de verrouillage.</p>
             <h2>Comment renommer ou supprimer une station ?</h2>
-            <p>Vous pouvez accéder aux options "renommer" et "supprimer" à partir de la liste de stations et de l'écran de lecture. Appuyez simplement sur le symbole composé de trois points. Vous pouvez aussi gérer la liste des stations à partir d'un navigateur de fichier (voir question suivante).</p>
+            <p>Vous pouvez accéder aux options Renommer et Supprimer à partir de la liste de stations et de l\'écran de lecture. Appuyez simplement sur le symbole composé de trois points. Vous pouvez aussi gérer la liste des stations à partir d\'un navigateur de fichier (voir question suivante).</p>
             <h2>Où Transistor stocke-t-il ses stations ?</h2>
-            <p>Transistor ne sauvegarde pas ses stations dans une base de données, mais dans des fichiers m3u trouvables dans la mémoire externe de votre périphérique. Vous êtes libres de modifier ces fichiers grâce à l'éditeur de texte de votre choix. Les fichiers sont stockés dans /Android/data/org.y20k.transistor/Collection.</p>
+            <p>Transistor ne sauvegarde pas ses stations dans une base de données, mais dans des fichiers m3u trouvables dans la mémoire externe de votre appareil. Vous êtes libres de modifier ces fichiers grâce à l\'éditeur de texte de votre choix. Les fichiers sont stockés dans /Android/data/org.y20k.transistor/Collection.</p>
             <h2>Comment puis-je sauvegarder et restaurer mes stations ?<h2>
-            <p>Transistor supporte la fonction de restauration automatique d'Android 6. Les stations de radio sont toujours synchronisées sur votre compte Google et seront restaurées en cas de réinstallation. Pour les anciennes versions d'Android, il vous faudra sauvegarder et restaurer manuellement le dossier &quot;Collection&quot;.</p>
-            <h2>Pourquoi n'y a-t-il aucun paramètre dans Transistor ?</h2>
-            <p>Il n'y a rien à paramétrer ;). Transistor est une application très simple. &quot;Simple&quot; peut vouloir dire génial ou mauvais, tout dépend de votre point de vue.</p>
+            <p>Transistor supporte la fonction de restauration automatique d\'Android 6. Les stations de radio sont toujours synchronisées sur votre compte Google et seront restaurées en cas de réinstallation. Pour les anciennes versions d\'Android, il vous faudra sauvegarder et restaurer manuellement le dossier &quot;Collection&quot;.</p>
+            <h2>Pourquoi n\'y a-t-il aucun paramètre dans Transistor ?</h2>
+            <p>Il n\'y a rien à paramétrer ;). Transistor est une application très simple. &quot;Simple&quot; peut vouloir dire génial ou mauvais, tout dépend de votre point de vue.</p>
         </body>
     </html>]]></string>
 
