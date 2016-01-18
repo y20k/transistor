@@ -16,6 +16,7 @@ package org.y20k.transistor.core;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -27,7 +28,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
 
@@ -46,7 +46,7 @@ public final class Station implements Comparable<Station> {
     private File mStationImageFile;
     private String mStationName;
     private File mStationPlaylistFile;
-    private URL mStreamURL;
+    private Uri mStreamUri;
     private String mRemoteFileContent;
     private boolean mDownloadError;
 
@@ -70,10 +70,10 @@ public final class Station implements Comparable<Station> {
 
 
     /* Constructor when given name and stream url */
-    private Station(File folder, String stationName, URL streamURL) {
+    private Station(File folder, String stationName, Uri streamUri) {
         // set name and url object for station
         mStationName = stationName;
-        mStreamURL = streamURL;
+        mStreamUri = streamUri;
 
         // set playlist file object - name of station required
         setStationPlaylistFile(folder);
@@ -123,7 +123,7 @@ public final class Station implements Comparable<Station> {
         sb.append("#EXTINF:-1,");
         sb.append(mStationName);
         sb.append("\n");
-        sb.append(mStreamURL.toString());
+        sb.append(mStreamUri.toString());
         sb.append("\n");
         m3uString = sb.toString();
 
@@ -135,6 +135,8 @@ public final class Station implements Comparable<Station> {
     private boolean downloadPlaylistFile(URL fileLocation) {
 
         Log.v(LOG_TAG, "Downloading... " + fileLocation.toString());
+
+        // TODO create URL for InputStreamReader
 
         try (BufferedReader br = new BufferedReader(new InputStreamReader(
                 fileLocation.openStream()))) {
@@ -218,14 +220,11 @@ public final class Station implements Comparable<Station> {
             if (line.contains("#EXTINF:-1,")) {
                 mStationName = line.substring(11).trim();
             // M3U: found stream URL
-            } else if (line.startsWith("http") &&
+            // TODO / TESTING: Now accepting mms:// Links - no rtsp support yet
+            } else if ((line.startsWith("http")) || (line.startsWith("mms")) &
                     !line.contains("wmv") &&
                     !line.contains("m3u")) {
-                try {
-                    mStreamURL = new URL(line.trim());
-                } catch (MalformedURLException e) {
-                    Log.e(LOG_TAG, line.trim() + "is not a valid URL");
-                }
+                mStreamUri = Uri.parse(line.trim());
             }
 
             // PLS: found station name
@@ -235,11 +234,7 @@ public final class Station implements Comparable<Station> {
                 mStationName = line.substring(7).trim();
             // PLS: found stream URL
             } else if (line.startsWith("File1=http")) {
-                try {
-                    mStreamURL = new URL(line.substring(6).trim());
-                } catch (MalformedURLException e) {
-                    Log.e(LOG_TAG, line.substring(6).trim() + "is not a valid URL");
-                }
+                mStreamUri = Uri.parse(line.substring(6).trim());
             }
 
         }
@@ -253,10 +248,10 @@ public final class Station implements Comparable<Station> {
             mStationName = "New Station";
         }
 
-        if (mStreamURL != null) {
+        if (mStreamUri != null) {
             // log station name and URL
             Log.v(LOG_TAG, "Name: " + mStationName);
-            Log.v(LOG_TAG, "URL: " + mStreamURL.toString());
+            Log.v(LOG_TAG, "URL: " + mStreamUri.toString());
             return true;
         } else {
             // log error
@@ -299,7 +294,7 @@ public final class Station implements Comparable<Station> {
     /* Custom toString method */
     @Override
     public String toString() {
-        return "Station [mStationName=" + mStationName + ", mStationPlaylistFile=\" + mStationPlaylistFile + \", mStreamURL=" + mStreamURL + "]";
+        return "Station [mStationName=" + mStationName + ", mStationPlaylistFile=\" + mStationPlaylistFile + \", mStreamUri=" + mStreamUri + "]";
     }
 
 
@@ -309,7 +304,7 @@ public final class Station implements Comparable<Station> {
         setStationPlaylistFile(folder);
 
         if (mStationPlaylistFile.exists()) {
-            Log.w(LOG_TAG, "File exists. Overwriting " + mStationPlaylistFile.getName() + " " + mStationName + " " + mStreamURL);
+            Log.w(LOG_TAG, "File exists. Overwriting " + mStationPlaylistFile.getName() + " " + mStationName + " " + mStreamUri);
         }
 
         Log.v(LOG_TAG, "Saving... " + mStationPlaylistFile.toString());
@@ -405,14 +400,14 @@ public final class Station implements Comparable<Station> {
 
 
     /* Getter for URL of stream */
-    public URL getStreamURL() {
-        return mStreamURL;
+    public Uri getStreamUri() {
+        return mStreamUri;
     }
 
 
     /* Setter for URL of station */
-    public void setStreamURL(URL newStreamURL) {
-        mStreamURL = newStreamURL;
+    public void setmStreamUri(Uri newStreamUri) {
+        mStreamUri = newStreamUri;
     }
 
 }

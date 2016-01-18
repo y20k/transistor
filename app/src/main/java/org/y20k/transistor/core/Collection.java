@@ -14,12 +14,12 @@
 
 package org.y20k.transistor.core;
 
+import android.net.Uri;
 import android.util.Log;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URL;
 import java.util.Collections;
 import java.util.LinkedList;
 
@@ -74,7 +74,7 @@ public final class Collection {
                         && listOfFile.toString().endsWith(".m3u")) {
                     // create new station from file
                     Station newStation = new Station(listOfFile);
-                    if (newStation.getStreamURL() != null) {
+                    if (newStation.getStreamUri() != null) {
                         mStations.add(newStation);
                     }
                 }
@@ -88,7 +88,7 @@ public final class Collection {
 
     /* add station to collection */
     public boolean add(Station station) {
-        if (station.getStationName() != null && station.getStreamURL() != null
+        if (station.getStationName() != null && station.getStreamUri() != null
                 && unique(station) && !station.getStationPlaylistFile().exists()) {
 
             // add station to array list of mStations
@@ -214,17 +214,17 @@ public final class Collection {
         // traverse mStations
         for (Station station : mStations) {
             // compare new station with existing mStations
-            URL streamURL = station.getStreamURL();
-            URL newStreamURL = newStation.getStreamURL();
+            Uri streamUri = station.getStreamUri();
+            Uri newStreamUri = newStation.getStreamUri();
 
             // compare URL of stream
-            if (streamURL.equals(newStreamURL)) {
+            if (streamUri.equals(newStreamUri)) {
                 Log.e(LOG_TAG, "Stream URL of " + station.getStationName() + " equals stream URL of "
-                        + newStation.getStationName() + ": " + streamURL);
+                        + newStation.getStationName() + ": " + streamUri);
                 return false;
             }
         }
-        Log.v(LOG_TAG, newStation.getStationName() + " has a unique stream URL: " + newStation.getStreamURL());
+        Log.v(LOG_TAG, newStation.getStationName() + " has a unique stream URL: " + newStation.getStreamUri());
         return true;
     }
 }

@@ -67,7 +67,7 @@ public final class MainActivityFragment extends Fragment {
     private static final String ACTION_PLAYBACK_STOPPED = "org.y20k.transistor.action.PLAYBACK_STOPPED";
     private static final String ACTION_IMAGE_CHANGE_REQUESTED = "org.y20k.transistor.action.IMAGE_CHANGE_REQUESTED";
     private static final String LIST_STATE = "ListState";
-    private static final String STREAM_URL = "streamURL";
+    private static final String STREAM_URI = "streamUri";
     private static final String STATION_NAME = "stationName";
     private static final String STATION_ID = "stationID";
     private static final String TITLE = "title";
@@ -168,12 +168,12 @@ public final class MainActivityFragment extends Fragment {
                 if (mCollection != null) {
                     // get station name and URL from position
                     String stationName = mCollection.getStations().get((Integer) mCollectionAdapter.getItem(position)).getStationName();
-                    String streamURL = mCollection.getStations().get((Integer) mCollectionAdapter.getItem(position)).getStreamURL().toString();
+                    String streamUri = mCollection.getStations().get((Integer) mCollectionAdapter.getItem(position)).getStreamUri().toString();
 
                     // add name, url and id of station to intent
                     Intent intent = new Intent(mActivity, PlayerActivity.class);
                     intent.putExtra(STATION_NAME, stationName);
-                    intent.putExtra(STREAM_URL, streamURL);
+                    intent.putExtra(STREAM_URI, streamUri);
                     intent.putExtra(STATION_ID, position);
 
                     // start activity with intent

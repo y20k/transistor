@@ -63,7 +63,7 @@ public final class PlayerActivityFragment extends Fragment {
 
 
     /* Keys */
-    private static final String STREAM_URL = "streamURL";
+    private static final String STREAM_URI = "streamUri";
     private static final String STATION_NAME = "stationName";
     private static final String STATION_ID = "stationID";
     private static final String STATION_ID_CURRENT = "stationIDCurrent";
@@ -78,7 +78,7 @@ public final class PlayerActivityFragment extends Fragment {
     private Activity mActivity;
     private View mRootView;
     private String mStationName;
-    private String mStreamURL;
+    private String mStreamUri;
     private TextView mStationNameView;
     private ImageView mStationImageView;
     private ImageButton mPlaybackButton;
@@ -107,7 +107,7 @@ public final class PlayerActivityFragment extends Fragment {
         Intent intent = mActivity.getIntent();
         mStationID = intent.getIntExtra(STATION_ID, -1);
         mStationName = intent.getStringExtra(STATION_NAME);
-        mStreamURL = intent.getStringExtra(STREAM_URL);
+        mStreamUri = intent.getStringExtra(STREAM_URI);
 
         // load playback state from preferences
         loadPlaybackState(mActivity);
@@ -131,7 +131,7 @@ public final class PlayerActivityFragment extends Fragment {
         }
 
         // get URL and name for stream
-        mStreamURL = mCollection.getStations().get(mStationID).getStreamURL().toString();
+        mStreamUri = mCollection.getStations().get(mStationID).getStreamUri().toString();
         mStationName = mCollection.getStations().get(mStationID).getStationName();
 
         // fragment has options menu
@@ -203,7 +203,7 @@ public final class PlayerActivityFragment extends Fragment {
                     // rotate playback button
                     changeVisualState(mActivity);
                     // start player
-                    mPlayerService.startActionPlay(mActivity, mStreamURL, mStationName);
+                    mPlayerService.startActionPlay(mActivity, mStreamUri, mStationName);
                     Log.v(LOG_TAG, "Starting player service.");
 
                 }

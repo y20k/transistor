@@ -52,7 +52,7 @@ public final class PlayerService extends Service implements
     private static final String ACTION_STOP = "org.y20k.transistor.action.STOP";
     private static final String ACTION_PLAYBACK_STARTED = "org.y20k.transistor.action.PLAYBACK_STARTED";
     private static final String ACTION_PLAYBACK_STOPPED = "org.y20k.transistor.action.PLAYBACK_STOPPED";
-    private static final String EXTRA_STREAM_URL = "STREAM_URL";
+    private static final String EXTRA_STREAM_URI = "STREAM_URI";
     private static final String PLAYBACK = "playback";
     private static final int PLAYER_SERVICE_NOTIFICATION_ID = 1;
 
@@ -60,7 +60,7 @@ public final class PlayerService extends Service implements
     /* Main class variables */
     private AudioManager mAudioManager;
     private MediaPlayer mMediaPlayer;
-    private String mStreamURL;
+    private String mStreamUri;
     private boolean mPlayback;
     private HeadphoneUnplugReceiver mHeadphoneUnplugReceiver;
 
@@ -105,7 +105,7 @@ public final class PlayerService extends Service implements
             mPlayback = true;
 
             // get URL of station from intent
-            mStreamURL = intent.getStringExtra(EXTRA_STREAM_URL);
+            mStreamUri = intent.getStringExtra(EXTRA_STREAM_URI);
 
             // start playback
             startPlayback();
@@ -260,14 +260,14 @@ public final class PlayerService extends Service implements
 
 
     /* Method to start the player */
-    public void startActionPlay(Context context, String streamURL, String stationName) {
-        mStreamURL = streamURL;
-        Log.v(LOG_TAG, "starting playback service: " + mStreamURL);
+    public void startActionPlay(Context context, String streamUri, String stationName) {
+        mStreamUri = streamUri;
+        Log.v(LOG_TAG, "starting playback service: " + mStreamUri);
 
         // start player service using intent
         Intent intent = new Intent(context, PlayerService.class);
         intent.setAction(ACTION_PLAY);
-        intent.putExtra(EXTRA_STREAM_URL, mStreamURL);
+        intent.putExtra(EXTRA_STREAM_URI, mStreamUri);
         context.startService(intent);
 
         // put up notification
@@ -303,9 +303,9 @@ public final class PlayerService extends Service implements
         });
 
         try {
-            mMediaPlayer.setDataSource(mStreamURL);
+            mMediaPlayer.setDataSource(mStreamUri);
             mMediaPlayer.prepareAsync();
-            Log.v(LOG_TAG, "setting: " + mStreamURL);
+            Log.v(LOG_TAG, "setting: " + mStreamUri);
         } catch (IllegalArgumentException | IllegalStateException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -337,7 +337,7 @@ public final class PlayerService extends Service implements
         }
 
         // request focus and initialize media player
-        if (mStreamURL != null && requestFocus()) {
+        if (mStreamUri != null && requestFocus()) {
             initializeMediaPlayer();
         }
 
