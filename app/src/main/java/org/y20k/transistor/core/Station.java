@@ -136,8 +136,6 @@ public final class Station implements Comparable<Station> {
 
         Log.v(LOG_TAG, "Downloading... " + fileLocation.toString());
 
-        // TODO create URL for InputStreamReader
-
         try (BufferedReader br = new BufferedReader(new InputStreamReader(
                 fileLocation.openStream()))) {
 

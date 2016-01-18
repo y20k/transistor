@@ -2,8 +2,8 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.y20k.transistor"
-    android:versionCode="13"
-    android:versionName="1.1.4 (Running Gun Blues)">
+    android:versionCode="14"
+    android:versionName="1.1.5 (Running Gun Blues)">
 
     <uses-sdk android:minSdkVersion="19" android:targetSdkVersion="23" />
 
