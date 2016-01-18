@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="title_activity_player">Зараз грає</string>
+
+    <!-- menu entries -->
+    <string name="menu_about">Про додаток</string>
+    <string name="menu_howto">Як користуватися</string>
+    <string name="menu_icon">Змінити піктограму</string>
+    <string name="menu_add">Додати</string>
+    <string name="menu_delete">Видалити</string>
+    <string name="menu_rename">Перейменувати</string>
+
+    <!-- headers -->
+    <string name="header_about">Про додаток</string>
+    <string name="header_howto">Як користуватися</string>
+
+    <!-- descriptions -->
+    <string name="descr_arrow_actioncall">Стрілка вказує на піктограму додавання станції</string>
+    <string name="descr_overflow_button">Показ параметрів радіостанції</string>
+    <string name="descr_station_icon">Піктограма для радіостанції</string>
+    <string name="descr_station_name">Назва радіостанції</string>
+    <string name="descr_station_name_example">Приклад FM</string>
+    <string name="descr_playback_button">Велика кнопка «грати»</string>
+    <string name="descr_playback_indicator">Індикатор активності відтворення</string>
+    <string name="descr_playback_indicator_started">Індикатор відтворення активний</string>
+
+    <!-- dialogs -->
+    <string name="dialog_generic_button_cancel">Скасувати</string>
+    <string name="dialog_add_station_button">Додати</string>
+    <string name="dialog_add_station_input_hint">Вставити перевірене посилання на мовлення</string>
+    <string name="dialog_add_station_message">Додати нову станцію</string>
+    <string name="dialog_add_station_howto">Ви також можете додати станцію натиснувши на піктограму посилання мовлення (.m3u) у вашому оглядачі.</string>
+    <string name="dialog_delete_station_message">Видалити станцію</string>
+    <string name="dialog_button_delete">Видалити</string>
+    <string name="dialog_generic_button_okay">Гаразд</string>
+    <string name="dialog_rename_station_input_hint">Ввести нову назву</string>
+    <string name="dialog_rename_station_message">Перейменувати станцію</string>
+    <string name="dialog_button_rename">Перейменувати</string>
+
+    <!-- error dialogs -->
+    <string name="dialog_error_title_default">Помилка</string>
+    <string name="dialog_error_message_default">Трапилась помилка</string>
+    <string name="dialog_error_details_button_default">Показати подробиці</string>
+    <string name="dialog_error_details_default">Подробиці відсутні</string>
+    <string name="dialog_error_title_download">Проблеми із завантаженням</string>
+    <string name="dialog_error_message_download">Transistor намагався, але все ж таки не зміг зрозуміти отримане посилання.</string>
+
+    <!-- messages -->
+    <string name="actioncall_message_start_here">Додати нову станцію</string>
+    <string name="toastmessage_add_download_started">Завантаження розпочато:</string>
+    <string name="toastalert_rename_unsuccessful">Не вдалося перейменувати станцію. Будь ласка, оберіть іншу назву.</string>
+    <string name="toastalert_delete_successful">Станцію вилучено.</string>
+    <string name="toastalert_no_external_storage">Не вдалося отримати доступ до зовнішнього сховища.</string>
+    <string name="toastalert_headphones_unplugged">Навушники відключені. Відтворення призупинено.</string>
+    <string name="snackbar_request_storage_access">Ви можете додати нову піктограму для станції. Для цього додаток потребує доступ до ваших зображень та фотографій.</string>
+
+    <!-- notification -->
+    <string name="notification_swipe_to_stop">Посуньте для зупинки</string>
+    <string name="notification_playing">Відтворення</string>
+
+    <!-- misc -->
+    <string name="title_activity_infosheet">Інормаційний лист</string>
+
+    <!-- HTML strings -->
+    <string name="html_about"><![CDATA[<!DOCTYPE html>
+    <html>
+        <body>
+            <h1>Про Transistor</h1>
+            <h2>Додаток інтернет радіо для Android</h2>
+            <h3>Версія 1.1 (&quot;Running Gun Blues&quot;)</h3>
+            <p>Transistor — це додаток для прослуховування радіо програм через інтернет. Додаток зберігає станції у файли на зовнішньому сховищі вашого пристрою. Файли із розширенням m3u можете знайти у /Android/data/org.y20k.transistor/Collection. На разі розпізнаються потоки вбудовані у m3u та pls посилання.</p>
+            <p>Transistor це вільне програмне забезпечення. Воно публікується під ліцензією MIT . Ви можете знайти джерельний код на GitHub. GitHub також непогане місце для розміщення вад, підтримки, якщо ви зацікавлені.</p>
+            <p>https://github.com/y20k/transistor</p>
+            <p>https://opensource.org/licenses/MIT</p>
+            <h3>Які дозволи потребує Transistor?</h3>
+            <p><strong>Доступ до INTERNET</strong><br />
+            Transistor веде мовлення радіостанцій через інтернет.</p>
+            <p><strong>Доступ до READ_EXTERNAL_STORAGE</strong><br />
+            Transistor потребує доступ на читання зображень та фотографій, аби мати можливість міняти піктограми радіо станцій.</p>
+        </body>
+    </html>]]></string>
+
+    <string name="html_howto"><![CDATA[<!DOCTYPE html>
+    <html>
+        <body>
+            <h1>Як використовувати Transistor</h1>
+            <h2>Як додати нову радіостанцію?</h2>
+            <p>Найпростіший шлях, аби додати радіостанцію, це знайти потокове посилання (m3u та pls) та обрати додаток Transistor як типовий обробник даного типу файлів. Ви також можете натиснути символ (+) у верхній частині додатку та вставити посилання m3u напряму.</p>
+            <h2>Як відтворити радіостанцію?</h2>
+            <p>Торкніться великої кнопки із піктограмою «Грати» ;).</p>
+            <h2>Як зупинити відтворення?</h2>
+            <p>Торкніться великої кнопки «Стоп» чи від\'єднайте ваші навушники, або ж посуньте сповіщення з екрану блокування чи панелі сповіщень.</p>
+            <h2>Як перейменувати чи видалити станцію?</h2>
+            <p>Перейменування та видалення станцій доступно зі списку станцій та екрана відтворення. Просто торкніться символу «…». Ви також можете керувати вашим списком станцій з файлового менеджера (дивіться наступне питання).</p>
+            <h2>Де Transistor зберігає станції?</h2>
+            <p>Transistor не зберігає списки станцій в базі даних. Натомість станції зберігаються як m3u файли на зовнішньому сховищі вашого пристрою. Ви можете вільно редагувати ці текстові файли, використовуючи редактор на ваш вибір. Файли зберігаються у теці /Android/data/org.y20k.transistor/Collection.</p>
+            <h2>Як я може зробити резервну копію моїх радіостанцій та передати їх?<h2>
+            <p>Transistor підтримує автоматичну можливість резервного копіювання Android 6. Радіо станції завжди будуть зберігатися на ваш обліковий запис Google та будуть відновлені при перевстановленні. На старіших версіях Android ви повинні вручну зберігати та відновлювати теку &quot;Collection&quot;.</p>
+            <h2>Чому Transistor не має налаштувань?</h2>
+            <p>Нема чого налаштовувати ;). Transistor — це дуже простий додаток. В залежності від вашої точки зору &quot;простий&quot; це або великий або куций.</p>
+        </body>
+    </html>]]></string>
+
+</resources>
