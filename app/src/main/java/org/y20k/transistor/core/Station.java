@@ -246,6 +246,11 @@ public final class Station implements Comparable<Station> {
             mStationName = "New Station";
         }
 
+        // strip out problematic characters
+        // TODO make a regex
+        mStationName = mStationName.replaceAll(":", "_");
+        mStationName = mStationName.replaceAll("/", "_");
+
         if (mStreamUri != null) {
             // log station name and URL
             Log.v(LOG_TAG, "Name: " + mStationName);
