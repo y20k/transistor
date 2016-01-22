@@ -15,6 +15,7 @@
 package org.y20k.transistor;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Application;
 import android.content.BroadcastReceiver;
@@ -25,6 +26,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.design.widget.Snackbar;
@@ -471,6 +473,7 @@ public final class MainActivityFragment extends Fragment {
 
 
     /* Check permissions and start image picker */
+    @TargetApi(Build.VERSION_CODES.M)
     private void selectFromImagePicker() {
         // permission to read external storage granted
         if (ActivityCompat.checkSelfPermission(mActivity,
@@ -487,9 +490,10 @@ public final class MainActivityFragment extends Fragment {
                 // ask for permission and explain why
                 Snackbar snackbar = Snackbar.make(mRootView, R.string.snackbar_request_storage_access, Snackbar.LENGTH_INDEFINITE);
                 snackbar.setAction(R.string.dialog_generic_button_okay, new View.OnClickListener() {
+                    @TargetApi(Build.VERSION_CODES.M)
                     @Override
                     public void onClick(View view) {
-                        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        mActivity.requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                                 PERMISSION_REQUEST_READ_EXTERNAL_STORAGE);
                     }
                 });
@@ -497,7 +501,7 @@ public final class MainActivityFragment extends Fragment {
 
             } else {
                 // ask for permission without explanation
-                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                mActivity.requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                         PERMISSION_REQUEST_READ_EXTERNAL_STORAGE);
             }
         }
