@@ -95,15 +95,24 @@ public final class StationDownloader extends AsyncTask<Void, Void, Station> {
 
             // construct details string
             StringBuilder sb = new StringBuilder("");
-            sb.append("External storage:\n");
+            sb.append(R.string.dialog_error_message_download_external_storage);
+            sb.append("\n");
             sb.append(mFolder);
-            sb.append("\n\nURL of station:\n");
+            sb.append("\n\n");
+            sb.append(R.string.dialog_error_message_download_station_url);
+            sb.append("\n");
             sb.append(mStationURLString);
+            if (!mStationURLString.endsWith("m3u") || !mStationURLString.endsWith("pls") ) {
+                sb.append("\n");
+                sb.append(R.string.dialog_error_message_download_hint_m3u);
+            }
 
             if (station != null) {
                 String remoteFileContent = station.getRemoteFileContent();
                 if (remoteFileContent != null) {
-                    sb.append("\n\nContent of remote file:\n");
+                    sb.append("\n\n");
+                    sb.append(R.string.dialog_error_message_download_file_content);
+                    sb.append("\n");
                     sb.append(remoteFileContent);
                 }
             }

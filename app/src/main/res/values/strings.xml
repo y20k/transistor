@@ -26,14 +26,14 @@
     <string name="descr_playback_indicator_started">Indicator for running playback</string>
 
     <!-- dialogs -->
+    <string name="dialog_generic_button_okay">Okay</string>
     <string name="dialog_generic_button_cancel">Cancel</string>
     <string name="dialog_add_station_button">Add</string>
     <string name="dialog_add_station_input_hint">Paste a valid streaming URL</string>
     <string name="dialog_add_station_message">Add new station</string>
-    <string name="dialog_add_station_howto">You can also add a new station by tapping on streaming links (.m3u) in your web browser.</string>
+    <string name="dialog_add_station_howto">You can add streaming links ending in .m3u or .pls. Alternatively you can add a new station by tapping on streaming links in your web browser.</string>
     <string name="dialog_delete_station_message">Delete station</string>
     <string name="dialog_button_delete">Delete</string>
-    <string name="dialog_generic_button_okay">Okay</string>
     <string name="dialog_rename_station_input_hint">Enter a new name</string>
     <string name="dialog_rename_station_message">Rename station</string>
     <string name="dialog_button_rename">Rename</string>
@@ -45,6 +45,10 @@
     <string name="dialog_error_details_default">No details available</string>
     <string name="dialog_error_title_download">Download Issue</string>
     <string name="dialog_error_message_download">Transistor tried hard but could not make sense of given link.</string>
+    <string name="dialog_error_message_download_external_storage">External storage:</string>
+    <string name="dialog_error_message_download_station_url">URL of station:</string>
+    <string name="dialog_error_message_download_hint_m3u">Hint: Transistor can only process URLs ending in .m3u or .pls.</string>
+    <string name="dialog_error_message_download_file_content">Content of remote file:</string>
 
     <!-- messages -->
     <string name="actioncall_message_start_here">Add a new station</string>

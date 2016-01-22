@@ -30,7 +30,8 @@
     <string name="dialog_add_station_button">Додати</string>
     <string name="dialog_add_station_input_hint">Вставити перевірене посилання на мовлення</string>
     <string name="dialog_add_station_message">Додати нову станцію</string>
-    <string name="dialog_add_station_howto">Ви також можете додати станцію натиснувши на піктограму посилання мовлення (.m3u) у вашому оглядачі.</string>
+    <string name="dialog_add_station_howto">You can add streaming links ending in .m3u or .pls. Alternatively you can add a new station by tapping on streaming links in your web browser.</string>
+    <!-- <string name="dialog_add_station_howto">Ви також можете додати станцію натиснувши на піктограму посилання мовлення (.m3u) у вашому оглядачі.</string> -->
     <string name="dialog_delete_station_message">Видалити станцію</string>
     <string name="dialog_button_delete">Видалити</string>
     <string name="dialog_generic_button_okay">Гаразд</string>
@@ -45,6 +46,10 @@
     <string name="dialog_error_details_default">Подробиці відсутні</string>
     <string name="dialog_error_title_download">Проблеми із завантаженням</string>
     <string name="dialog_error_message_download">Transistor намагався, але все ж таки не зміг зрозуміти отримане посилання.</string>
+    <string name="dialog_error_message_download_external_storage">External storage:</string>
+    <string name="dialog_error_message_download_station_url">URL of station:</string>
+    <string name="dialog_error_message_download_hint_m3u">Hint: Transistor can only process URLs ending in .m3u or .pls.</string>
+    <string name="dialog_error_message_download_file_content">Content of remote file:</string>
 
     <!-- messages -->
     <string name="actioncall_message_start_here">Додати нову станцію</string>
