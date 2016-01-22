@@ -27,10 +27,9 @@
     <!-- dialogs -->
     <string name="dialog_generic_button_cancel">Annuler</string>
     <string name="dialog_add_station_button">Ajouter</string>
-    <string name="dialog_add_station_input_hint">Coller un lien streaming valide</string>
+    <string name="dialog_add_station_input_hint">Coller un lien de diffusion valide</string>
     <string name="dialog_add_station_message">Ajouter une station</string>
-    <string name="dialog_add_station_howto">You can add streaming links ending in .m3u or .pls. Alternatively you can add a new station by tapping on streaming links in your web browser.</string>
-    <!-- <string name="dialog_add_station_howto">Vous pouvez également ajouter une station en appuyant sur des liens streaming (.m3u) depuis votre navigateur internet.</string> -->
+    <string name="dialog_add_station_howto">Vous pouvez ajouter des liens de diffusion se terminant par .m3u ou .pls. Sinon, vous pouvez ajouter une nouvelle station en appuyant sur les liens de diffusion dans votre navigateur internet.</string>
     <string name="dialog_delete_station_message">Supprimer la station</string>
     <string name="dialog_button_delete">Supprimer</string>
     <string name="dialog_generic_button_okay">OK</string>
@@ -45,10 +44,10 @@
     <string name="dialog_error_details_default">Aucun détail disponible</string>
     <string name="dialog_error_title_download">Erreur de téléchargement</string>
     <string name="dialog_error_message_download">Transistor a tout essayé, mais ne pouvait pas donner sens au lien donné.</string>
-    <string name="dialog_error_message_download_external_storage">External storage:</string>
-    <string name="dialog_error_message_download_station_url">URL of station:</string>
-    <string name="dialog_error_message_download_hint_m3u">Hint: Transistor can only process URLs ending in .m3u or .pls.</string>
-    <string name="dialog_error_message_download_file_content">Content of remote file:</string>
+    <string name="dialog_error_message_download_external_storage">Stockage externe :</string>
+    <string name="dialog_error_message_download_station_url">Adresse de la station :</string>
+    <string name="dialog_error_message_download_hint_m3u">Astuce : Transistor peut traiter uniquement les adresses se terminant par .m3u ou .pls.</string>
+    <string name="dialog_error_message_download_file_content">Contenu du fichier distant :</string>
 
 
     <!-- messages -->
@@ -91,7 +90,7 @@
         <body>
             <h1>Comment utiliser Transistor</h1>
             <h2>Comment ajouter une nouvelle station radio ?</h2>
-            <p>Le moyen le plus simple pour ajouter une station est de rechercher un lien de flux (m3u ou pls) et de choisir Transistor en tant qu\'application par défaut pour ce type de fichiers. Vous pouvez également appuyer sur le symbole (+) dans la barre et directement y coller un lien m3u.</p>
+            <p>Le moyen le plus simple pour ajouter une station est de rechercher un lien de diffusion (m3u ou pls) et de choisir Transistor en tant qu\'application par défaut pour ce type de fichiers. Vous pouvez également appuyer sur le symbole (+) dans la barre et directement y coller un lien m3u.</p>
             <h2>Comment écouter une station radio ?</h2>
             <p>Appuyez sur le gros bouton Lecture ;).</p>
             <h2>Comment arrêter la lecture ?</h2>
