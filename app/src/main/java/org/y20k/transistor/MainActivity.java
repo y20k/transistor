@@ -15,6 +15,7 @@ package org.y20k.transistor;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -49,5 +50,12 @@ public final class MainActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_main);
+        // hand results over to fragment main
+        fragment.onActivityResult(requestCode, resultCode, data);
+    }
 
 }
