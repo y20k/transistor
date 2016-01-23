@@ -473,7 +473,6 @@ public final class MainActivityFragment extends Fragment {
 
 
     /* Check permissions and start image picker */
-    @TargetApi(Build.VERSION_CODES.M)
     private void selectFromImagePicker() {
         // permission to read external storage granted
         if (ActivityCompat.checkSelfPermission(mActivity,
@@ -493,7 +492,7 @@ public final class MainActivityFragment extends Fragment {
                     @TargetApi(Build.VERSION_CODES.M)
                     @Override
                     public void onClick(View view) {
-                        mActivity.requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                                 PERMISSION_REQUEST_READ_EXTERNAL_STORAGE);
                     }
                 });
@@ -501,7 +500,7 @@ public final class MainActivityFragment extends Fragment {
 
             } else {
                 // ask for permission without explanation
-                mActivity.requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                         PERMISSION_REQUEST_READ_EXTERNAL_STORAGE);
             }
         }
