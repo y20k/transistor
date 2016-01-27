@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!--     Since Serbian uses Cyrillic script, we tend to translate/transcribe app_name, too. -->
+    <string name="app_name">Транзистор</string>
+    <string name="title_activity_player">Тренутно пуштање</string>
+
+    <!-- menu entries -->
+    <string name="menu_about">О програму</string>
+    <string name="menu_howto">Како се користи</string>
+    <string name="menu_icon">Промени икону</string>
+    <string name="menu_add">Додај</string>
+    <string name="menu_delete">Обриши</string>
+    <string name="menu_rename">Преименуј</string>
+
+    <!-- headers -->
+    <string name="header_about">О програму</string>
+    <string name="header_howto">Како се користи</string>
+
+    <!-- descriptions -->
+    <string name="descr_arrow_actioncall">Стрелица која показује ка дугмету за додавање станице</string>
+    <string name="descr_overflow_button">Опције приказа за радио станицу</string>
+    <string name="descr_station_icon">Икона радио станице</string>
+    <string name="descr_station_name">Назив радио станице</string>
+    <string name="descr_station_name_example">Пример ФМ</string>
+    <string name="descr_playback_button">Дугме за пуштање</string>
+    <string name="descr_playback_indicator">Показивач тренутног пуштања</string>
+    <string name="descr_playback_indicator_started">Показивач тренутног пуштања</string>
+
+    <!-- dialogs -->
+    <string name="dialog_generic_button_okay">У реду</string>
+    <string name="dialog_generic_button_cancel">Одустани</string>
+    <string name="dialog_add_station_button">Додај</string>
+    <string name="dialog_add_station_input_hint">Унесите исправан УРЛ тока</string>
+    <string name="dialog_add_station_message">Додавање нове станице</string>
+    <string name="dialog_add_station_howto">Можете да додајете везе тока које завршавају са .m3u или .pls. Алтернативно можете да додате нову станицу тапом на везе токова унутар ваше веб прегледача.</string>
+    <string name="dialog_delete_station_message">Брисање станице</string>
+    <string name="dialog_button_delete">Обриши</string>
+    <string name="dialog_rename_station_input_hint">Унесите нови назив</string>
+    <string name="dialog_rename_station_message">Преименовање станице</string>
+    <string name="dialog_button_rename">Преименуј</string>
+
+    <!-- error dialogs -->
+    <string name="dialog_error_title_default">Грешка</string>
+    <string name="dialog_error_message_default">Десила се грешка</string>
+    <string name="dialog_error_details_button_default">Прикажи детаље</string>
+    <string name="dialog_error_details_default">Нема детаља</string>
+    <string name="dialog_error_title_download">Грешка преузимања</string>
+    <string name="dialog_error_message_download">Транзистор није успио да рашчлани дату везу.</string>
+    <string name="dialog_error_message_download_external_storage">Спољашње складиште:</string>
+    <string name="dialog_error_message_download_station_url">Адреса станице:</string>
+    <string name="dialog_error_message_download_hint_m3u">Савет: Транзистор може да обради само адресе које завршавају са .m3u или .pls.</string>
+    <string name="dialog_error_message_download_file_content">Садржај удаљеног фајла:</string>
+
+    <!-- messages -->
+    <string name="actioncall_message_start_here">Додајте нову станицу</string>
+    <string name="toastmessage_add_download_started">Преузимање започето:</string>
+    <string name="toastalert_rename_unsuccessful">Не могох да преименујем станицу. Унесите други назив.</string>
+    <string name="toastalert_delete_successful">Станица успешно преименована.</string>
+    <string name="toastalert_no_external_storage">Не могох да приступим спољашњем складишту.</string>
+    <string name="toastalert_headphones_unplugged">Слушалице искључене. Пуштање заустављено.</string>
+    <string name="snackbar_request_storage_access">Желите да ставите нову икону за ову станицу. Транзистору за то треба приступ вашим сликама и фотографијама.</string>
+
+    <!-- notification -->
+    <string name="notification_swipe_to_stop">Превуците да зауставите</string>
+    <string name="notification_playing">Пуштам</string>
+
+    <!-- misc -->
+    <string name="title_activity_infosheet">Страница са подацима</string>
+
+    <!-- HTML strings -->
+    <string name="html_about"><![CDATA[<!DOCTYPE html>
+    <html>
+        <body>
+            <h1>О Транзистору</h1>
+            <h2>Радио апликација за Андроид</h2>
+            <h3>Издање 1.1 („Running Gun Blues“)</h3>
+            <p>Транзистор је проста апликација за слушање радија преко интернета. Апликација успрема станице као фајлове на спољашње складиште вашег уређаја. Потражите m3u фајлове унутар /Android/data/org.y20k.transistor/Collection. Тренутно су подржани токови уграђени у m3u и pls везе.</p>
+            <p>Транзистор је слободан софтвер. Објављен је под МИТ лиценцом отвореног кôда. Кôд можете наћи на Гитхабу. Гитхаб је такође добро место за пријаву грешака или за допринос, ако сте заинтересовани.</p>
+            <p>https://github.com/y20k/transistor</p>
+            <p>https://opensource.org/licenses/MIT</p>
+            <h3>Које су дозволе потребне Транзистору?</h3>
+            <p><strong>Дозвола INTERNET</strong><br />
+            Транзистор пушта токове радио станица са интернета.</p>
+            <p><strong>Дозвола READ_EXTERNAL_STORAGE</strong><br />
+            Транзистору треба приступ вашим сликама и фотографијама како бисте могли да прилагодите иконе радио станица.</p>
+        </body>
+    </html>]]></string>
+
+    <string name="html_howto"><![CDATA[<!DOCTYPE html>
+    <html>
+        <body>
+            <h1>Како користити Транзистор</h1>
+            <h2>Како додати нову радио станицу?</h2>
+            <p>Најлакши начин додавања нове станице је да отворите везе тока (m3u и pls) и затим одредите Транзистор као подразумевану апликацију за те типове фајлова. Такође можете да тапнете на (+) знак унутар апликације и налепите m3u везе директно.</p>
+            <h2>Како пустити радио станицу?</h2>
+            <p>Тапните велико дугме за пуштање ;).</p>
+            <h2>Како зауставити пуштање?</h2>
+            <p>Тапните велико дугме за заустављање или искључите слушалице или превуците обавештење са екрана закључавања.</p>
+            <h2>Како преименовати или обрисати станицу?</h2>
+            <p>Обе опције се налазе на менијима на списку станица и на екрану тренутног пуштања. Само тапните на три тачкице. Такође можете да уређујете списак станица помоћу прегледача фајлова (следеће питање).</p>
+            <h2>Где транзистор уписује станице?</h2>
+            <p>Транзистор не уписује списак станица у бази података, већ смешта станице као m3u фајлове на спољашње складиште вашег уређаја. Слободно чачкајте по њима помоћу омиљеног уређивача текста. Фајлови су смештени на у /Android/data/org.y20k.transistor/Collection.</p>
+            <h2>Како да архивирам или пренесем моје радио станице?<h2>
+            <p>Транзистор подржава функцију Аутоматког архивисања у Андроиду 6. Радио станице се увек архивишу на ваш наш Гугл налог и биће враћене по поновој инсталацији. На уређајима са старијим издањима Андроида морате ручно да сачувате и вратите фасциклу „Collection“.</p>
+            <h2>Зашто Транзистор нема никаквих подешавања?</h2>
+            <p>Нема шта да се подешава ;). Транзистор је веома једноставна апликација. У зависности од ваше тачке гледишта „једноставно“ је или одлично или безвезе.</p>
+        </body>
+    </html>]]></string>
+
+</resources>
