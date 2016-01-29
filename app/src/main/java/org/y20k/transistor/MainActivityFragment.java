@@ -15,20 +15,20 @@
 package org.y20k.transistor;
 
 import android.Manifest;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Application;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -72,6 +72,9 @@ public final class MainActivityFragment extends Fragment {
     private static final String STREAM_URI = "streamUri";
     private static final String STATION_NAME = "stationName";
     private static final String STATION_ID = "stationID";
+    private static final String STATION_ID_CURRENT = "stationIDCurrent";
+    private static final String STATION_ID_LAST = "stationIDLast";
+    private static final String PLAYBACK = "playback";
     private static final String TITLE = "title";
     private static final String CONTENT = "content";
     private static final int REQUEST_LOAD_IMAGE = 1;
@@ -90,6 +93,7 @@ public final class MainActivityFragment extends Fragment {
     private ListView mListView;
     private Parcelable mListState;
     private int mTempStationImageID;
+    private PlayerService mPlayerService;
 
 
     /* Constructor (default) */
@@ -152,6 +156,9 @@ public final class MainActivityFragment extends Fragment {
             mListState = savedInstanceState.getParcelable(MainActivityFragment.LIST_STATE);
         }
 
+        // initiate playback service
+        mPlayerService = new PlayerService();
+
         // inflate rootview from xml
         mRootView = inflater.inflate(R.layout.fragment_main, container, false);
 
@@ -184,6 +191,15 @@ public final class MainActivityFragment extends Fragment {
             }
         });
 
+        // TODO: Long click (Test)
+        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                handleLongClick(position);
+                return true;
+            }
+        });
+
         // return list view
         return mRootView;
     }
@@ -192,9 +208,6 @@ public final class MainActivityFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
-//        // get activity that this fragment is currently attached to
-//        mActivity = getActivity();
 
         // handle incoming intent
         handleNewStationIntent();
@@ -364,7 +377,6 @@ public final class MainActivityFragment extends Fragment {
                 i.setAction(ACTION_COLLECTION_CHANGED);
                 LocalBroadcastManager.getInstance(mActivity).sendBroadcast(i);
 
-
             }
             // unsuccessful - log failure
             else {
@@ -489,7 +501,6 @@ public final class MainActivityFragment extends Fragment {
                 // ask for permission and explain why
                 Snackbar snackbar = Snackbar.make(mRootView, R.string.snackbar_request_storage_access, Snackbar.LENGTH_INDEFINITE);
                 snackbar.setAction(R.string.dialog_generic_button_okay, new View.OnClickListener() {
-                    @TargetApi(Build.VERSION_CODES.M)
                     @Override
                     public void onClick(View view) {
                         ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
@@ -504,6 +515,45 @@ public final class MainActivityFragment extends Fragment {
                         PERMISSION_REQUEST_READ_EXTERNAL_STORAGE);
             }
         }
+    }
+
+    /* Handles long click on list item */
+    private void handleLongClick(int position) {
+
+        int stationIDCurrent;
+        int stationIDLast;
+
+        // get current playback state
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mActivity);
+        stationIDCurrent = settings.getInt(STATION_ID_CURRENT, -1);
+        boolean playback = settings.getBoolean(PLAYBACK, false);
+
+        if (playback && position == stationIDCurrent ) {
+            // stop playback service
+            mPlayerService.startActionStop(mActivity);
+            stationIDLast = stationIDCurrent;
+            playback = false;
+            Toast.makeText(mActivity, R.string.toastmessage_long_press_playback_stopped, Toast.LENGTH_LONG).show();
+        } else {
+            // start playback service
+            String stationName = mCollection.getStations().get((Integer) mCollectionAdapter.getItem(position)).getStationName();
+            String streamUri = mCollection.getStations().get((Integer) mCollectionAdapter.getItem(position)).getStreamUri().toString();
+            mPlayerService.startActionPlay(mActivity, streamUri, stationName);
+            stationIDLast = stationIDCurrent;
+            stationIDCurrent = position;
+            playback = true;
+            Toast.makeText(mActivity, R.string.toastmessage_long_press_playback_started, Toast.LENGTH_LONG).show();
+        }
+
+        // Save station name and ID and playback state
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putInt(STATION_ID_CURRENT, stationIDCurrent);
+        editor.putInt(STATION_ID_LAST, stationIDLast);
+        editor.putBoolean(PLAYBACK, playback);
+        editor.apply();
+
+        // refresh view
+        refreshStationList();
     }
 
 }

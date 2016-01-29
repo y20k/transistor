@@ -53,6 +53,8 @@
     <!-- messages -->
     <string name="actioncall_message_start_here">Eine neue Station hinzufügen</string>
     <string name="toastmessage_add_download_started">Herunterladen:</string>
+    <string name="toastmessage_long_press_playback_stopped">Playback gestoppt (Long Press)</string>
+    <string name="toastmessage_long_press_playback_started">Playback gestarted (Long Press)</string>
     <string name="toastalert_rename_unsuccessful">Station kann nicht umbenannt werden. Bitte wählen Sie einen anderen Namen.</string>
     <string name="toastalert_delete_successful">Station erfolgreich entfernt.</string>
     <string name="toastalert_no_external_storage">Zugriff auf den externen Speicher verweigert.</string>

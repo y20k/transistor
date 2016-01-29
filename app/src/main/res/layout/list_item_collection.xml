@@ -10,8 +10,6 @@
     android:paddingBottom="6dp"
     android:descendantFocusability="blocksDescendants">
 
-    <!-- REMOVE PLACEHOLDERS -->
-
     <ImageView
         android:id="@+id/list_item_station_icon"
         android:contentDescription="@string/descr_station_icon"
