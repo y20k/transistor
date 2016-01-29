@@ -84,6 +84,8 @@
             Transistor lit des flux radio par internet.</p>
             <p><strong>Autorisation READ_EXTERNAL_STORAGE</strong><br />
             Transistor nécessite l\'accès aux images et aux photos afin de vous permettre de personnaliser les logos des stations radios.</p>
+            <p><strong>Permission VIBRATE</strong><br />
+            Long press on a radio station toggles a tiny vibration.</p>
         </body>
     </html>]]></string>
 

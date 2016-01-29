@@ -84,6 +84,8 @@
             Transistor веде мовлення радіостанцій через інтернет.</p>
             <p><strong>Доступ до READ_EXTERNAL_STORAGE</strong><br />
             Transistor потребує доступ на читання зображень та фотографій, аби мати можливість міняти піктограми радіо станцій.</p>
+            <p><strong>Permission VIBRATE</strong><br />
+            Long press on a radio station toggles a tiny vibration.</p>
         </body>
     </html>]]></string>
 

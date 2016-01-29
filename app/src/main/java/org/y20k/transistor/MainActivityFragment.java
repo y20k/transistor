@@ -28,6 +28,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -544,6 +545,10 @@ public final class MainActivityFragment extends Fragment {
             playback = true;
             Toast.makeText(mActivity, R.string.toastmessage_long_press_playback_started, Toast.LENGTH_LONG).show();
         }
+
+        // vibrate 100 milliseconds
+        Vibrator v = (Vibrator) mActivity.getSystemService(Context.VIBRATOR_SERVICE);
+        v.vibrate(100);
 
         // Save station name and ID and playback state
         SharedPreferences.Editor editor = settings.edit();

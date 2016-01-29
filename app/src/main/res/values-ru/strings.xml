@@ -83,6 +83,8 @@
             Transistor вещает радиостанции через интернет.</p>
             <p><strong>Доступ к READ_EXTERNAL_STORAGE</strong><br />
             Transistor требует доступ к изображениям и фотографиям, чтобы иметь возможность менять значки радиостанций.</p>
+            <p><strong>Permission VIBRATE</strong><br />
+            Long press on a radio station toggles a tiny vibration.</p>
         </body>
     </html>]]></string>
 

@@ -84,6 +84,8 @@
             Transistor streams radio stations over the internet.</p>
             <p><strong>Permission READ_EXTERNAL_STORAGE</strong><br />
             Transistor needs access to images and photos to be able to offer an option to customize radio station icons.</p>
+            <p><strong>Permission VIBRATE</strong><br />
+            Long press on a radio station toggles a tiny vibration.</p>
         </body>
     </html>]]></string>
 
