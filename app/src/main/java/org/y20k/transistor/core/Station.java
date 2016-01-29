@@ -276,7 +276,7 @@ public final class Station implements Comparable<Station> {
             if (line.contains("#EXTINF:-1,")) {
                 mStationName = line.substring(11).trim();
             // M3U: found stream URL
-            // TODO test mms and rstp -> || (line.startsWith("rtsp")
+            // TODO test mms and rtsp -> || (line.startsWith("rtsp")
             } else if (line.startsWith("http") &&
                     !line.contains("wmv") &&
                     !line.contains("m3u")) {
@@ -466,7 +466,7 @@ public final class Station implements Comparable<Station> {
 
 
     /* Setter for URL of station */
-    public void setmStreamUri(Uri newStreamUri) {
+    public void setStreamUri(Uri newStreamUri) {
         mStreamUri = newStreamUri;
     }
 
