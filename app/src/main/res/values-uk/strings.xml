@@ -74,7 +74,7 @@
         <body>
             <h1>Про Transistor</h1>
             <h2>Додаток інтернет радіо для Android</h2>
-            <h3>Версія 1.1 (&quot;Running Gun Blues&quot;)</h3>
+            <h3>Версія 1.2 (&quot;Cygnet Committee&quot;)</h3>
             <p>Transistor — це додаток для прослуховування радіо програм через інтернет. Додаток зберігає станції у файли на зовнішньому сховищі вашого пристрою. Файли із розширенням m3u можете знайти у /Android/data/org.y20k.transistor/Collection. На разі розпізнаються потоки вбудовані у m3u та pls посилання.</p>
             <p>Transistor це вільне програмне забезпечення. Воно публікується під ліцензією MIT . Ви можете знайти джерельний код на GitHub. GitHub також непогане місце для розміщення вад, підтримки, якщо ви зацікавлені.</p>
             <p>https://github.com/y20k/transistor</p>
@@ -84,6 +84,8 @@
             Transistor веде мовлення радіостанцій через інтернет.</p>
             <p><strong>Доступ до READ_EXTERNAL_STORAGE</strong><br />
             Transistor потребує доступ на читання зображень та фотографій, аби мати можливість міняти піктограми радіо станцій.</p>
+            <p><strong>Permission VIBRATE</strong><br />
+            Tapping and holding a radio station will toggle a tiny vibration.</p>
         </body>
     </html>]]></string>
 
