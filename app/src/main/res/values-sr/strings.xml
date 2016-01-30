@@ -85,8 +85,6 @@
             Транзистор пушта токове радио станица са интернета.</p>
             <p><strong>Дозвола READ_EXTERNAL_STORAGE</strong><br />
             Транзистору треба приступ вашим сликама и фотографијама како бисте могли да прилагодите иконе радио станица.</p>
-            <p><strong>Permission VIBRATE</strong><br />
-            Long press on a radio station toggles a tiny vibration.</p>
         </body>
     </html>]]></string>
 

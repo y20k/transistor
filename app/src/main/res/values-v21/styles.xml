@@ -10,7 +10,7 @@
         <item name="colorAccent">@color/transistor_gold_dark</item>
 
         <!-- Tint NavigationBar on v21 -->
-        <item name="android:navigationBarColor">@color/transistor_red_dark</item>
+        <item name="android:navigationBarColor">@color/transistor_red</item>
 
     </style>
 </resources>

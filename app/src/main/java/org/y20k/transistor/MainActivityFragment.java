@@ -21,15 +21,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.os.Vibrator;
-import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -192,14 +189,14 @@ public final class MainActivityFragment extends Fragment {
             }
         });
 
-        // TODO: Long click (Test)
-        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                handleLongClick(position);
-                return true;
-            }
-        });
+//        // TODO: Long click (Test)
+//        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+//                handleLongClick(position);
+//                return true;
+//            }
+//        });
 
         // return list view
         return mRootView;
@@ -518,47 +515,47 @@ public final class MainActivityFragment extends Fragment {
         }
     }
 
-    /* Handles long click on list item */
-    private void handleLongClick(int position) {
-
-        int stationIDCurrent;
-        int stationIDLast;
-
-        // get current playback state
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mActivity);
-        stationIDCurrent = settings.getInt(STATION_ID_CURRENT, -1);
-        boolean playback = settings.getBoolean(PLAYBACK, false);
-
-        if (playback && position == stationIDCurrent ) {
-            // stop playback service
-            mPlayerService.startActionStop(mActivity);
-            stationIDLast = stationIDCurrent;
-            playback = false;
-            Toast.makeText(mActivity, R.string.toastmessage_long_press_playback_stopped, Toast.LENGTH_LONG).show();
-        } else {
-            // start playback service
-            String stationName = mCollection.getStations().get((Integer) mCollectionAdapter.getItem(position)).getStationName();
-            String streamUri = mCollection.getStations().get((Integer) mCollectionAdapter.getItem(position)).getStreamUri().toString();
-            mPlayerService.startActionPlay(mActivity, streamUri, stationName);
-            stationIDLast = stationIDCurrent;
-            stationIDCurrent = position;
-            playback = true;
-            Toast.makeText(mActivity, R.string.toastmessage_long_press_playback_started, Toast.LENGTH_LONG).show();
-        }
-
-        // vibrate 100 milliseconds
-        Vibrator v = (Vibrator) mActivity.getSystemService(Context.VIBRATOR_SERVICE);
-        v.vibrate(100);
-
-        // Save station name and ID and playback state
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putInt(STATION_ID_CURRENT, stationIDCurrent);
-        editor.putInt(STATION_ID_LAST, stationIDLast);
-        editor.putBoolean(PLAYBACK, playback);
-        editor.apply();
-
-        // refresh view
-        refreshStationList();
-    }
+//    /* Handles long click on list item */
+//    private void handleLongClick(int position) {
+//
+//        int stationIDCurrent;
+//        int stationIDLast;
+//
+//        // get current playback state
+//        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mActivity);
+//        stationIDCurrent = settings.getInt(STATION_ID_CURRENT, -1);
+//        boolean playback = settings.getBoolean(PLAYBACK, false);
+//
+//        if (playback && position == stationIDCurrent ) {
+//            // stop playback service
+//            mPlayerService.startActionStop(mActivity);
+//            stationIDLast = stationIDCurrent;
+//            playback = false;
+//            Toast.makeText(mActivity, R.string.toastmessage_long_press_playback_stopped, Toast.LENGTH_LONG).show();
+//        } else {
+//            // start playback service
+//            String stationName = mCollection.getStations().get((Integer) mCollectionAdapter.getItem(position)).getStationName();
+//            String streamUri = mCollection.getStations().get((Integer) mCollectionAdapter.getItem(position)).getStreamUri().toString();
+//            mPlayerService.startActionPlay(mActivity, streamUri, stationName);
+//            stationIDLast = stationIDCurrent;
+//            stationIDCurrent = position;
+//            playback = true;
+//            Toast.makeText(mActivity, R.string.toastmessage_long_press_playback_started, Toast.LENGTH_LONG).show();
+//        }
+//
+//        // vibrate 100 milliseconds
+//        Vibrator v = (Vibrator) mActivity.getSystemService(Context.VIBRATOR_SERVICE);
+//        v.vibrate(100);
+//
+//        // Save station name and ID and playback state
+//        SharedPreferences.Editor editor = settings.edit();
+//        editor.putInt(STATION_ID_CURRENT, stationIDCurrent);
+//        editor.putInt(STATION_ID_LAST, stationIDLast);
+//        editor.putBoolean(PLAYBACK, playback);
+//        editor.apply();
+//
+//        // refresh view
+//        refreshStationList();
+//    }
 
 }
