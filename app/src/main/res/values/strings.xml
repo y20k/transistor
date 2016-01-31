@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">Transistor</string>
+    <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
     <string name="title_activity_player">Now Playing</string>
 
     <!-- menu entries -->
@@ -85,7 +85,7 @@
             <p><strong>Permission READ_EXTERNAL_STORAGE</strong><br />
             Transistor needs access to images and photos to be able to offer an option to customize radio station icons.</p>
             <p><strong>Permission VIBRATE</strong><br />
-            Tap and hold a radio station will toggle a tiny vibration.</p>
+            Tapping and holding a radio station will toggle a tiny vibration.</p>
         </body>
     </html>]]></string>
 

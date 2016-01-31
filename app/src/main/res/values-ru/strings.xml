@@ -1,4 +1,5 @@
 <resources>
+    <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
     <string name="title_activity_player">"Сейчас играет"</string>
 
     <!-- menu entries -->

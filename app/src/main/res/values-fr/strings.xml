@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
     <string name="title_activity_player">Lecture en cours</string>
 
     <!-- menu entries -->
