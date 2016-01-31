@@ -110,6 +110,9 @@ public final class MainActivityFragment extends Fragment {
         mActivity = getActivity();
         mApplication = mActivity.getApplication();
 
+        // initiate playback service
+        mPlayerService = new PlayerService();
+
         // set list state null
         mListState = null;
 
@@ -157,8 +160,6 @@ public final class MainActivityFragment extends Fragment {
             mListState = savedInstanceState.getParcelable(MainActivityFragment.LIST_STATE);
         }
 
-        // initiate playback service
-        mPlayerService = new PlayerService();
 
         // inflate rootview from xml
         mRootView = inflater.inflate(R.layout.fragment_main, container, false);
