@@ -534,7 +534,7 @@ public final class MainActivityFragment extends Fragment {
             // stop playback service
             mPlayerService.startActionStop(mActivity);
             stationIDLast = stationIDCurrent;
-            playback = false;
+
             Toast.makeText(mActivity, R.string.toastmessage_long_press_playback_stopped, Toast.LENGTH_LONG).show();
         } else {
             // start playback service
@@ -543,19 +543,17 @@ public final class MainActivityFragment extends Fragment {
             mPlayerService.startActionPlay(mActivity, streamUri, stationName);
             stationIDLast = stationIDCurrent;
             stationIDCurrent = position;
-            playback = true;
             Toast.makeText(mActivity, R.string.toastmessage_long_press_playback_started, Toast.LENGTH_LONG).show();
         }
 
-        // vibrate 100 milliseconds
+        // vibrate 50 milliseconds
         Vibrator v = (Vibrator) mActivity.getSystemService(Context.VIBRATOR_SERVICE);
-        v.vibrate(100);
+        v.vibrate(50);
 
-        // Save station name and ID and playback state
+        // Save station name and ID
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt(STATION_ID_CURRENT, stationIDCurrent);
         editor.putInt(STATION_ID_LAST, stationIDLast);
-        editor.putBoolean(PLAYBACK, playback);
         editor.apply();
 
         // refresh view
