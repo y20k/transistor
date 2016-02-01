@@ -534,7 +534,6 @@ public final class MainActivityFragment extends Fragment {
             // stop playback service
             mPlayerService.startActionStop(mActivity);
             stationIDLast = stationIDCurrent;
-
             Toast.makeText(mActivity, R.string.toastmessage_long_press_playback_stopped, Toast.LENGTH_LONG).show();
         } else {
             // start playback service
