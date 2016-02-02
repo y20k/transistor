@@ -95,8 +95,9 @@ public final class Station implements Comparable<Station> {
         else if (isPlaylist(contentType) && downloadPlaylistFile(fileLocation)) {
             setDownloadError(false);
         } else {
-            // set error flag
+            // set error flag and return
             setDownloadError(true);
+            return;
         }
 
         // set playlist file object - name of station required
@@ -213,7 +214,7 @@ public final class Station implements Comparable<Station> {
     }
 
 
-    /* Determines name of station based on the location url */
+    /* Determines name of station based on the location URL */
     private String getStationName(URL fileLocationUrl) {
 
         String stationName;
@@ -221,7 +222,7 @@ public final class Station implements Comparable<Station> {
         int stationNameStart = fileLocation.lastIndexOf('/') + 1;
         int stationNameEnd = fileLocation.lastIndexOf('.');
 
-        // try to cut out station name from given url
+        // try to cut out station name from given URL
         if (stationNameStart < stationNameEnd) {
             stationName = fileLocation.substring(stationNameStart, stationNameEnd);
         } else {
