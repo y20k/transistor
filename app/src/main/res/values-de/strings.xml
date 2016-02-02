@@ -31,7 +31,7 @@
     <string name="dialog_add_station_button">Hinzufügen</string>
     <string name="dialog_add_station_input_hint">Streaming-Adresse einfügen</string>
     <string name="dialog_add_station_message">Neue Station hinzufügen</string>
-    <string name="dialog_add_station_howto">Sie können Streaming-Links mit den Endungen .m3u und .pls hinzufügen. Alternativ können Sie eine neue Station auch hinzufügen, indem Sie auf Streaming-Links im Web klicken.</string>
+    <string name="dialog_add_station_howto">Sie können Audiostreams in den Formaten MP3 und OGG sowie Streaming-Dateien mit den Endungen .m3u und .pls hinzufügen. Alternativ können Sie eine neue Station auch hinzufügen, indem Sie auf Streaming-Links (pls oder m3u) im Web klicken.</string>
     <string name="dialog_delete_station_message">Station löschen</string>
     <string name="dialog_button_delete">Löschen</string>
     <string name="dialog_rename_station_input_hint">Bitte neuen Namen eingeben</string>
@@ -47,7 +47,7 @@
     <string name="dialog_error_message_download">Transistor hat es versucht, kann aber mit diesem Link nichts anfangen.</string>
     <string name="dialog_error_message_download_external_storage">Externer Speicher:</string>
     <string name="dialog_error_message_download_station_url">URL der Radiostation:</string>
-    <string name="dialog_error_message_download_hint_m3u">Hinweis: Transistor kann nur URLs mit der Endung .m3u oder .pls verarbeiten.</string>
+    <string name="dialog_error_message_download_hint_m3u">Hinweis: Transistor kann nur Audiostreams in den Formaten MP3 und OGG oder URLs mit der Endung .m3u oder .pls verarbeiten.</string>
     <string name="dialog_error_message_download_file_content">Inhalt der Datei:</string>
 
     <!-- messages -->
@@ -94,7 +94,7 @@
         <body>
             <h1>Wie Transistor funktioniert</h1>
             <h2>Wie füge ich eine neue Radiostation hinzu?</h2>
-            <p>Die einfachste Variante eine neue Station hinzuzufügen ist: Im Web nach Streaminglinks (M3U und PLS) suchen und diese dann mit Transistor zu öffnen. Man kann zudem auch auf das (+)-Symbol tippen und Streaminglinks via Copy und Paste direkt eingeben.</p>
+            <p>Die einfachste Variante eine neue Station hinzuzufügen ist: Im Web nach Streaminglinks suchen und diese dann mit Transistor zu öffnen. Man kann zudem auch auf das (+)-Symbol tippen und Streaminglinks via Copy und Paste direkt eingeben.</p>
             <h2>Wie schalte ich das Radio ein?</h2>
             <p>Den großen Play-Knopf drücken ;).</p>
             <h2>Wie schalte ich das Radio wieder aus?</h2>

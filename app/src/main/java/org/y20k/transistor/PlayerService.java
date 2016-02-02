@@ -182,7 +182,6 @@ public final class PlayerService extends Service implements
     public void onCompletion(MediaPlayer mp) {
         Log.v(LOG_TAG, "Resuming playback after completion / signal loss");
         mMediaPlayer.reset();
-
         initializeMediaPlayer();
     }
 

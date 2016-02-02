@@ -6,7 +6,7 @@ Transistor - Radio app for Android
 
 **Version 1.2.x ("Cygnet Committee")**
 
-Transistor is a bare bones app for listening to radio programs over the internet. The app stores stations as files on your device's external storage. It currently understands streams embedded within m3u and pls links.
+Transistor is a bare bones app for listening to radio programs over the internet. The app stores stations as files on your device's external storage. It currently understands streams encoded in MP3 and OGG.
 
 Transistor is free software. It is published under the [MIT open source license](https://opensource.org/licenses/MIT). 
 
@@ -21,7 +21,7 @@ Install Transistor
 How to use Transistor
 ---------------------
 ### How to add a new radio station?
-The easiest way to add a new station is to search for m3u streaming links and then choose Transistor as a your default handler for m3u. You can also tap the (+) symbol in the top bar and paste in m3u links directly.
+The easiest way to add a new station is to search for streaming links and then choose Transistor as a your default handler for those file types. You can also tap the (+) symbol in the top bar and paste in streaming links directly.
 
 ### How to play back a radio station?
 Tap the big Play button ;).
@@ -50,4 +50,4 @@ Transistor streams radio stations over the internet.
 Transistor needs access to images and photos to be able to offer an option to customize radio station icons.
 
 ### Permission "VIBRATE"
-Taping and holding a radio station will toggle a tiny vibration.
+Tapping and holding a radio station will toggle a tiny vibration.
