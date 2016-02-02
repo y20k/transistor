@@ -183,13 +183,6 @@ public final class PlayerService extends Service implements
         Log.v(LOG_TAG, "Resuming playback after completion / signal loss");
         mMediaPlayer.reset();
 
-//        // wait-a-sec
-//        try {
-//            Thread.sleep(1000,0);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-
         initializeMediaPlayer();
     }
 
@@ -311,6 +304,7 @@ public final class PlayerService extends Service implements
 
     /* Set up the media player */
     private void initializeMediaPlayer() {
+        // TODO somehow reset the mediaplayer.
         if (mMediaPlayer == null) {
             mMediaPlayer = new MediaPlayer();
         }

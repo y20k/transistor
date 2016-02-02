@@ -78,29 +78,15 @@ public final class Station implements Comparable<Station> {
     }
 
 
-    /* Constructor when given name and stream url */
-    private Station(File folder, String stationName, Uri streamUri) {
-        // set name and url object for station
-        mStationName = stationName;
-        mStreamUri = streamUri;
-
-        // set playlist file object - name of station required
-        setStationPlaylistFile(folder);
-
-        // set image file object
-        setStationImageFile(folder);
-    }
-
-
     /* Constructor when given folder and remote location for playlist file */
     public Station(File folder, URL fileLocation) {
 
-        // Determine content type of remote file
+        // determine content type of remote file
         Log.v(LOG_TAG, "Determining content type");
         String contentType = getContentType(fileLocation);
         Log.v(LOG_TAG, "Content type is " + contentType);
 
-        // Just use the audio file for station data
+        // use raw audio file for station data
         if (isAudioFile(contentType)) {
             mStreamUri = Uri.parse(fileLocation.toString().trim());
             mStationName = getStationName(fileLocation);
@@ -228,10 +214,21 @@ public final class Station implements Comparable<Station> {
 
 
     /* Determines name of station based on the location url */
-    private String getStationName(URL fileLocation) {
-        return fileLocation.toString().substring(
-                fileLocation.toString().lastIndexOf('/') + 1,
-                fileLocation.toString().lastIndexOf('.'));
+    private String getStationName(URL fileLocationUrl) {
+
+        String stationName;
+        String fileLocation = fileLocationUrl.toString();
+        int stationNameStart = fileLocation.lastIndexOf('/') + 1;
+        int stationNameEnd = fileLocation.lastIndexOf('.');
+
+        // try to cut out station name from given url
+        if (stationNameStart < stationNameEnd) {
+            stationName = fileLocation.substring(stationNameStart, stationNameEnd);
+        } else {
+            stationName = fileLocation;
+        }
+
+        return stationName;
     }
 
 
@@ -303,10 +300,6 @@ public final class Station implements Comparable<Station> {
         } else if (mStationPlaylistFile == null && mStationName == null) {
             mStationName = "New Station";
         }
-
-        // strip out problematic characters
-        // TODO there are probably more characters that are problematic
-        mStationName = mStationName.replaceAll("[:/]", "_");
 
         if (mStreamUri != null) {
             // log station name and URL
@@ -433,16 +426,20 @@ public final class Station implements Comparable<Station> {
 
     /* Setter for playlist file object of station */
     public void setStationPlaylistFile(File folder) {
+        // strip out problematic characters
+        String stationNameCleaned = mStationName.replaceAll("[:/]", "_");
         // construct location of m3u playlist file from station name and folder
-        String fileLocation = folder.toString() + "/" + mStationName + ".m3u";
+        String fileLocation = folder.toString() + "/" + stationNameCleaned + ".m3u";
         mStationPlaylistFile = new File(fileLocation);
     }
 
 
     /* Setter for image file object of station */
     public void setStationImageFile(File folder) {
+        // strip out problematic characters
+        String stationNameCleaned = mStationName.replaceAll("[:/]", "_");
         // construct location of png image file from station name and folder
-        String fileLocation = folder.toString() + "/" + mStationName + ".png";
+        String fileLocation = folder.toString() + "/" + stationNameCleaned + ".png";
         mStationImageFile = new File(fileLocation);
     }
 

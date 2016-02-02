@@ -144,9 +144,6 @@ public final class PlayerActivityFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        // TODO check connectivity
-        // requires additional permission
-
         // set up button symbol and playback indicator
         setVisualState();
 
