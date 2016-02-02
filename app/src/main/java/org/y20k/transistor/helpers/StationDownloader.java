@@ -154,19 +154,13 @@ public final class StationDownloader extends AsyncTask<Void, Void, Station> {
         // remove whitespaces
         mStationURLString = mStationURLString.trim();
 
-        // check file extension
-        if (mStationURLString.endsWith(".pls") || mStationURLString.endsWith(".m3u")) {
-            // create and check url
-            try {
-                mStationURL = new URL(mStationURLString);
-                return true;
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-                return false;
-            }
-        } else {
+        // create and check url
+        try {
+            mStationURL = new URL(mStationURLString);
+            return true;
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
             return false;
         }
-
     }
 }

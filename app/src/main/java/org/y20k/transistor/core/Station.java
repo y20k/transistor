@@ -28,7 +28,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Scanner;
 
 
@@ -40,6 +42,13 @@ public final class Station implements Comparable<Station> {
     /* Define log tag */
     private static final String LOG_TAG = Station.class.getSimpleName();
 
+    /* Supported audio file content types */
+    private static final String[] CONTENT_TYPES_MPEG = {"audio/mpeg"};
+    private static final String[] CONTENT_TYPES_OGG = {"audio/ogg", "application/ogg"};
+
+    /* Supported playlist content types */
+    private static final String[] CONTENT_TYPES_PLS = {"audio/x-scpls"};
+    private static final String[] CONTENT_TYPES_M3U = {"audio/x-mpegurl"};
 
     /* Main class variables */
     private Bitmap mStationImage;
@@ -85,8 +94,19 @@ public final class Station implements Comparable<Station> {
 
     /* Constructor when given folder and remote location for playlist file */
     public Station(File folder, URL fileLocation) {
+
+        // Determine content type of remote file
+        Log.v(LOG_TAG, "Determining content type");
+        String contentType = getContentType(fileLocation);
+        Log.v(LOG_TAG, "Content type is " + contentType);
+
+        // Just use the audio file for station data
+        if (isAudioFile(contentType)) {
+            mStreamUri = Uri.parse(fileLocation.toString().trim());
+            mStationName = getStationName(fileLocation);
+        }
         // download and parse station data from remote playlist file
-        if (downloadPlaylistFile(fileLocation)) {
+        else if (isPlaylist(contentType) && downloadPlaylistFile(fileLocation)) {
             setDownloadError(false);
         } else {
             // set error flag
@@ -101,7 +121,39 @@ public final class Station implements Comparable<Station> {
 
         // set image file object
         setStationImageFile(folder);
+    }
 
+
+    private String getContentType(URL fileLocation) {
+        try {
+            HttpURLConnection connection = (HttpURLConnection)fileLocation.openConnection();
+            connection.setConnectTimeout(5000);
+            connection.setReadTimeout(5000);
+            return connection.getContentType();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    private boolean isPlaylist(String contentType) {
+        for (String[] array : new String[][]{CONTENT_TYPES_PLS, CONTENT_TYPES_M3U}) {
+            if (Arrays.asList(array).contains(contentType)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    private boolean isAudioFile(String contentType) {
+        for (String[] array : new String[][]{CONTENT_TYPES_MPEG, CONTENT_TYPES_OGG}) {
+            if (Arrays.asList(array).contains(contentType)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 
@@ -157,9 +209,7 @@ public final class Station implements Comparable<Station> {
             }
 
             // set name of station
-            mStationName = fileLocation.toString().substring(
-                    fileLocation.toString().lastIndexOf('/') + 1,
-                    fileLocation.toString().lastIndexOf('.'));
+            mStationName = getStationName(fileLocation);
 
             // parse result of downloadPlaylistFile
             if (parse(mRemoteFileContent)) {
@@ -174,6 +224,14 @@ public final class Station implements Comparable<Station> {
             Log.e(LOG_TAG, mRemoteFileContent);
             return false;
         }
+    }
+
+
+    /* Determines name of station based on the location url */
+    private String getStationName(URL fileLocation) {
+        return fileLocation.toString().substring(
+                fileLocation.toString().lastIndexOf('/') + 1,
+                fileLocation.toString().lastIndexOf('.'));
     }
 
 
