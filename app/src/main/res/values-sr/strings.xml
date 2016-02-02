@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
 <!--     Since Serbian uses Cyrillic script, we tend to translate/transcribe app_name, too. -->
     <string name="app_name">Транзистор</string>
@@ -54,8 +54,8 @@
     <!-- messages -->
     <string name="actioncall_message_start_here">Додајте нову станицу</string>
     <string name="toastmessage_add_download_started">Преузимање започето:</string>
-    <string name="toastmessage_long_press_playback_stopped">Playback stopped (long press detected)</string>
-    <string name="toastmessage_long_press_playback_started">Playback started (long press detected)</string>
+    <string name="toastmessage_long_press_playback_stopped">Пуштање заустављено (примећен дуги тап)</string>
+    <string name="toastmessage_long_press_playback_started">Пуштање почето (примећен дуги тап)</string>
     <string name="toastalert_rename_unsuccessful">Не могох да преименујем станицу. Унесите други назив.</string>
     <string name="toastalert_delete_successful">Станица успешно преименована.</string>
     <string name="toastalert_no_external_storage">Не могох да приступим спољашњем складишту.</string>
