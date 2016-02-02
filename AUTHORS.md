@@ -4,6 +4,9 @@ AUTHORS
 ### Development
 Transistor is designed, developed and maintained by [Y20K.org](http://www.y20k.org/)
 
+Contributing developer(s)
+[meonwax](https://github.com/meonwax) 
+
 ### Translations
 French version:  [M2ck](https://github.com/M2ck)
 
