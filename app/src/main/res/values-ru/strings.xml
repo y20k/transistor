@@ -1,4 +1,5 @@
 <resources>
+    <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
     <string name="title_activity_player">"Сейчас играет"</string>
 
     <!-- menu entries -->
@@ -52,8 +53,8 @@
     <!-- messages -->
     <string name="actioncall_message_start_here">"Добавить новую станцию"</string>
     <string name="toastmessage_add_download_started">"Скачивается:"</string>
-    <string name="toastmessage_long_press_playback_stopped">Playback stopped (long press detected)</string>
-    <string name="toastmessage_long_press_playback_started">Playback started (long press detected)</string>
+    <string name="toastmessage_long_press_playback_stopped">Воспроизведение остановлено</string>
+    <string name="toastmessage_long_press_playback_started">Начинаю воспроизведение радиостанции</string>
     <string name="toastalert_rename_unsuccessful">"Невозможно переименовать станцию. Пожалуйста, выберите другое имя."</string>
     <string name="toastalert_delete_successful">"Станция успешно удалена."</string>
     <string name="toastalert_no_external_storage">"Нет доступа к внешнему накопителю."</string>
@@ -73,16 +74,18 @@
         <body>
             <h1>О программе Transistor</h1>
             <h2>Приложение интернет радио для Android</h2>
-            <h3>Версия 1.1 (&quot;Running Gun Blues&quot;)</h3>
+            <h3>Версия 1.2 (&quot;Cygnet Committee&quot;)</h3>
             <p>Transistor простое приложение для прослушивания радиопередач через интернет. Приложение хранит станции как файлы на внешнем накопителе вашего устройства. Посмотрите на файлы с расширением m3u в директории /Android/data/org.y20k.transistor/Collection. В настоящее время приложение умеет работать с потоками, встроенными в m3u и pls ссылки.</p>
             <p>Transistor свободное приложение. Оно распространяется под лицензией MIT. Вы можете найти исходный код на GitHub. Также на GitHub вы можете сообщить об ошибках или помочь в разработке.</p>
             <p>https://github.com/y20k/transistor</p>
             <p>https://opensource.org/licenses/MIT</p>
             <h3>Какие разрешения необходимы Transistor?</h3>
-            <p><strong>Доступ к INTERNET</strong><br />
+            <p><strong>INTERNET</strong><br />
             Transistor вещает радиостанции через интернет.</p>
-            <p><strong>Доступ к READ_EXTERNAL_STORAGE</strong><br />
+            <p><strong>READ_EXTERNAL_STORAGE</strong><br />
             Transistor требует доступ к изображениям и фотографиям, чтобы иметь возможность менять значки радиостанций.</p>
+            <p><strong>VIBRATE</strong><br />
+            Долгое нажатие на названии радиостанции вызывает небольшую вибрацию.</p>
         </body>
     </html>]]></string>
 

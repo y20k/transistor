@@ -39,6 +39,7 @@ import java.io.IOException;
  */
 public final class PlayerService extends Service implements
         AudioManager.OnAudioFocusChangeListener,
+        MediaPlayer.OnCompletionListener,
         MediaPlayer.OnPreparedListener,
         MediaPlayer.OnErrorListener,
         MediaPlayer.OnInfoListener {
@@ -78,7 +79,7 @@ public final class PlayerService extends Service implements
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         mMediaPlayer = null;
 
-        // Listen for headphone unplug
+        // listen for headphone unplug
         IntentFilter headphoneUnplugIntentFilter = new IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
         mHeadphoneUnplugReceiver = new HeadphoneUnplugReceiver();
         registerReceiver(mHeadphoneUnplugReceiver, headphoneUnplugIntentFilter);
@@ -108,7 +109,7 @@ public final class PlayerService extends Service implements
             mStreamUri = intent.getStringExtra(EXTRA_STREAM_URI);
 
             // start playback
-            startPlayback();
+            preparePlayback();
         }
 
         // ACTION STOP
@@ -119,7 +120,7 @@ public final class PlayerService extends Service implements
             mPlayback = false;
 
             // stop playback
-            stopPlayback();
+            finishPlayback();
         }
 
         // default return value for media playback
@@ -149,12 +150,12 @@ public final class PlayerService extends Service implements
                 break;
             // loss of audio focus of unknown duration
             case AudioManager.AUDIOFOCUS_LOSS:
-                stopPlayback();
+                finishPlayback();
                 break;
             // transient loss of audio focus
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
                 if (!mPlayback && mMediaPlayer != null && mMediaPlayer.isPlaying()) {
-                    stopPlayback();
+                    finishPlayback();
                 }
                 else if (mPlayback && mMediaPlayer != null && mMediaPlayer.isPlaying()) {
                     mMediaPlayer.pause();
@@ -172,7 +173,24 @@ public final class PlayerService extends Service implements
 
     @Override
     public void onPrepared(MediaPlayer mp) {
+        Log.v(LOG_TAG, "Preparation finished. Starting playback.");
         mp.start();
+    }
+
+
+    @Override
+    public void onCompletion(MediaPlayer mp) {
+        Log.v(LOG_TAG, "Resuming playback after completion / signal loss");
+        mMediaPlayer.reset();
+
+//        // wait-a-sec
+//        try {
+//            Thread.sleep(1000,0);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+
+        initializeMediaPlayer();
     }
 
 
@@ -255,14 +273,20 @@ public final class PlayerService extends Service implements
         // retrieve notification system service and cancel notification
         NotificationManager notificationManager = (NotificationManager) getApplication().getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.cancel(PLAYER_SERVICE_NOTIFICATION_ID);
-
+        Log.v(LOG_TAG, "Notification cancelled (onDestroy)");
     }
 
 
     /* Method to start the player */
     public void startActionPlay(Context context, String streamUri, String stationName) {
         mStreamUri = streamUri;
-        Log.v(LOG_TAG, "starting playback service: " + mStreamUri);
+        Log.v(LOG_TAG, "Starting playback service: " + mStreamUri);
+
+        // put up notification
+        NotificationHelper notificationHelper = new NotificationHelper(context);
+        notificationHelper.setStationName(stationName);
+        notificationHelper.createNotification();
+        Log.v(LOG_TAG, "Notification created (startActionPlay)");
 
         // start player service using intent
         Intent intent = new Intent(context, PlayerService.class);
@@ -270,16 +294,12 @@ public final class PlayerService extends Service implements
         intent.putExtra(EXTRA_STREAM_URI, mStreamUri);
         context.startService(intent);
 
-        // put up notification
-        NotificationHelper notificationHelper = new NotificationHelper(context);
-        notificationHelper.setStationName(stationName);
-        notificationHelper.createNotification();
     }
 
 
     /* Method to stop the player */
     public void startActionStop(Context context) {
-        Log.v(LOG_TAG, "stopping playback service:");
+        Log.v(LOG_TAG, "Stopping playback service");
 
         // stop player service using intent
         Intent intent = new Intent(context, PlayerService.class);
@@ -288,11 +308,15 @@ public final class PlayerService extends Service implements
     }
 
 
+
     /* Set up the media player */
     private void initializeMediaPlayer() {
-        mMediaPlayer = new MediaPlayer();
+        if (mMediaPlayer == null) {
+            mMediaPlayer = new MediaPlayer();
+        }
         mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         mMediaPlayer.setOnPreparedListener(this);
+        mMediaPlayer.setOnCompletionListener(this);
         mMediaPlayer.setOnErrorListener(this);
         mMediaPlayer.setOnInfoListener(this);
         mMediaPlayer.setOnBufferingUpdateListener(new MediaPlayer.OnBufferingUpdateListener() {
@@ -305,7 +329,7 @@ public final class PlayerService extends Service implements
         try {
             mMediaPlayer.setDataSource(mStreamUri);
             mMediaPlayer.prepareAsync();
-            Log.v(LOG_TAG, "setting: " + mStreamUri);
+            Log.v(LOG_TAG, "Initializing MediaPlayer data source: " + mStreamUri);
         } catch (IllegalArgumentException | IllegalStateException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -329,8 +353,8 @@ public final class PlayerService extends Service implements
     }
 
 
-    /* Start playback */
-    private void startPlayback() {
+    /* Prepare playback */
+    private void preparePlayback() {
         // stop running player
         if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
             releaseMediaPlayer();
@@ -352,8 +376,8 @@ public final class PlayerService extends Service implements
     }
 
 
-    /* Stop playback */
-    private void stopPlayback() {
+    /* Finish playback */
+    private void finishPlayback() {
         // release player
         releaseMediaPlayer();
 
@@ -361,14 +385,15 @@ public final class PlayerService extends Service implements
         mPlayback = false;
         savePlaybackState();
 
+        // retrieve notification system service and cancel notification
+        NotificationManager notificationManager = (NotificationManager) getApplication().getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancel(PLAYER_SERVICE_NOTIFICATION_ID);
+        Log.v(LOG_TAG, "Notification cancelled (stopPlayback)");
+
         // send local broadcast (needed by PlayerActivityFragment and MainActivityFragment)
         Intent i = new Intent();
         i.setAction(ACTION_PLAYBACK_STOPPED);
         LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(i);
-
-        // retrieve notification system service and cancel notification
-        NotificationManager notificationManager = (NotificationManager) getApplication().getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancel(PLAYER_SERVICE_NOTIFICATION_ID);
     }
 
 
@@ -381,13 +406,6 @@ public final class PlayerService extends Service implements
     }
 
 
-//    /* Abandon audio manager focus */
-//    private boolean abandonFocus() {
-//        return AudioManager.AUDIOFOCUS_REQUEST_GRANTED ==
-//                mAudioManager.abandonAudioFocus(this);
-//    }
-
-
     /* Saves state of playback */
     private void savePlaybackState () {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplication());
@@ -395,7 +413,6 @@ public final class PlayerService extends Service implements
         editor.putBoolean(PLAYBACK, mPlayback);
         editor.apply();
     }
-
 
 
     /**
@@ -408,7 +425,7 @@ public final class PlayerService extends Service implements
             if (mPlayback && AudioManager.ACTION_AUDIO_BECOMING_NOISY.equals(intent.getAction())) {
                 Log.v(LOG_TAG, "Headphones unplugged. Stopping playback.");
                 // stop playback
-                stopPlayback();
+                finishPlayback();
                 // notify user
                 Toast.makeText(context, R.string.toastalert_headphones_unplugged, Toast.LENGTH_LONG).show();
             }

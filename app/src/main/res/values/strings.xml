@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">Transistor</string>
+    <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
     <string name="title_activity_player">Now Playing</string>
 
     <!-- menu entries -->
@@ -74,7 +74,7 @@
         <body>
             <h1>About Transistor</h1>
             <h2>Radio app for Android</h2>
-            <h3>Version 1.1 (&quot;Running Gun Blues&quot;)</h3>
+            <h3>Version 1.2 (&quot;Cygnet Committee&quot;)</h3>
             <p>Transistor is a bare bones app for listening to radio programs over the internet. The app stores stations as files on your device\'s external storage. Look for files of type m3u within /Android/data/org.y20k.transistor/Collection. It currently understands streams embedded within m3u and pls links.</p>
             <p>Transistor is free software. It is published under the MIT open source license. You can find the code on GitHub. GitHub is also a good place to file bugs or even to contribute, if you are interested.</p>
             <p>https://github.com/y20k/transistor</p>
@@ -84,6 +84,8 @@
             Transistor streams radio stations over the internet.</p>
             <p><strong>Permission READ_EXTERNAL_STORAGE</strong><br />
             Transistor needs access to images and photos to be able to offer an option to customize radio station icons.</p>
+            <p><strong>Permission VIBRATE</strong><br />
+            Tapping and holding a radio station will toggle a tiny vibration.</p>
         </body>
     </html>]]></string>
 

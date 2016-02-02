@@ -28,6 +28,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -109,6 +110,9 @@ public final class MainActivityFragment extends Fragment {
         mActivity = getActivity();
         mApplication = mActivity.getApplication();
 
+        // initiate playback service
+        mPlayerService = new PlayerService();
+
         // set list state null
         mListState = null;
 
@@ -156,8 +160,6 @@ public final class MainActivityFragment extends Fragment {
             mListState = savedInstanceState.getParcelable(MainActivityFragment.LIST_STATE);
         }
 
-        // initiate playback service
-        mPlayerService = new PlayerService();
 
         // inflate rootview from xml
         mRootView = inflater.inflate(R.layout.fragment_main, container, false);
@@ -168,7 +170,7 @@ public final class MainActivityFragment extends Fragment {
         // attach adapter to list view
         mListView.setAdapter(mCollectionAdapter);
 
-        // attach OnItemClickListener to mListView
+        // attach OnItemClickListener to mListView  (single tap)
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             // inner method override for OnItemClickListener
@@ -191,7 +193,7 @@ public final class MainActivityFragment extends Fragment {
             }
         });
 
-        // TODO: Long click (Test)
+        // attach OnItemLongClickListener to mListView (tap and hold)
         mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -532,7 +534,6 @@ public final class MainActivityFragment extends Fragment {
             // stop playback service
             mPlayerService.startActionStop(mActivity);
             stationIDLast = stationIDCurrent;
-            playback = false;
             Toast.makeText(mActivity, R.string.toastmessage_long_press_playback_stopped, Toast.LENGTH_LONG).show();
         } else {
             // start playback service
@@ -541,15 +542,17 @@ public final class MainActivityFragment extends Fragment {
             mPlayerService.startActionPlay(mActivity, streamUri, stationName);
             stationIDLast = stationIDCurrent;
             stationIDCurrent = position;
-            playback = true;
             Toast.makeText(mActivity, R.string.toastmessage_long_press_playback_started, Toast.LENGTH_LONG).show();
         }
 
-        // Save station name and ID and playback state
+        // vibrate 50 milliseconds
+        Vibrator v = (Vibrator) mActivity.getSystemService(Context.VIBRATOR_SERVICE);
+        v.vibrate(50);
+
+        // Save station name and ID
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt(STATION_ID_CURRENT, stationIDCurrent);
         editor.putInt(STATION_ID_LAST, stationIDLast);
-        editor.putBoolean(PLAYBACK, playback);
         editor.apply();
 
         // refresh view
