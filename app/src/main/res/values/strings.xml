@@ -31,7 +31,7 @@
     <string name="dialog_add_station_button">Add</string>
     <string name="dialog_add_station_input_hint">Paste a valid streaming URL</string>
     <string name="dialog_add_station_message">Add new station</string>
-    <string name="dialog_add_station_howto">You can add streaming links ending in .m3u or .pls. Alternatively you can add a new station by tapping on streaming links in your web browser.</string>
+    <string name="dialog_add_station_howto">You can add raw audio streams encoded in MP3 and OGG as well as streams encapsulated in pls or m3u files. Alternatively you can add new stations by tapping on streaming links (pls or m3u) in your web browser.</string>
     <string name="dialog_delete_station_message">Delete station</string>
     <string name="dialog_button_delete">Delete</string>
     <string name="dialog_rename_station_input_hint">Enter a new name</string>
@@ -47,7 +47,7 @@
     <string name="dialog_error_message_download">Transistor tried hard but could not make sense of given link.</string>
     <string name="dialog_error_message_download_external_storage">External storage:</string>
     <string name="dialog_error_message_download_station_url">URL of station:</string>
-    <string name="dialog_error_message_download_hint_m3u">Hint: Transistor can only process URLs ending in .m3u or .pls.</string>
+    <string name="dialog_error_message_download_hint_m3u">Hint: Transistor can only process MP3 and OGG encoded streams or URLs ending in .m3u or .pls.</string>
     <string name="dialog_error_message_download_file_content">Content of remote file:</string>
 
     <!-- messages -->
@@ -75,7 +75,7 @@
             <h1>About Transistor</h1>
             <h2>Radio app for Android</h2>
             <h3>Version 1.2 (&quot;Cygnet Committee&quot;)</h3>
-            <p>Transistor is a bare bones app for listening to radio programs over the internet. The app stores stations as files on your device\'s external storage. Look for files of type m3u within /Android/data/org.y20k.transistor/Collection. It currently understands streams embedded within m3u and pls links.</p>
+            <p>Transistor is a bare bones app for listening to radio programs over the internet. The app stores stations as files on your device\'s external storage. Look for files of type m3u within /Android/data/org.y20k.transistor/Collection. It currently understands streams encoded in MP3 and OGG.</p>
             <p>Transistor is free software. It is published under the MIT open source license. You can find the code on GitHub. GitHub is also a good place to file bugs or even to contribute, if you are interested.</p>
             <p>https://github.com/y20k/transistor</p>
             <p>https://opensource.org/licenses/MIT</p>
@@ -94,7 +94,7 @@
         <body>
             <h1>How to use Transistor</h1>
             <h2>How to add a new radio station?</h2>
-            <p>The easiest way to add a new station is to search for streaming links (m3u and pls) and then choose Transistor as a your default handler for those file types. You can also tap the (+) symbol in the top bar and paste in m3u links directly.</p>
+            <p>The easiest way to add a new station is to search for streaming links and then choose Transistor as a your default handler for those file types. You can also tap the (+) symbol in the top bar and paste in streaming links directly.</p>
             <h2>How to play back a radio station?</h2>
             <p>Tap the big Play button ;).</p>
             <h2>How to stop playback?</h2>
