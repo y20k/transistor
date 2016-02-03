@@ -190,7 +190,8 @@ public final class PlayerService extends Service implements
             mp.start();
         } else {
             Log.v(LOG_TAG, "Stopping player service and re-initializing media player. Player instance count: " + mPlayerInstanceCounter);
-            stopSelf();
+            mp.stop();
+            mp.release();
             mPlayerInstanceCounter = mPlayerInstanceCounter - 2;
             initializeMediaPlayer();
         }
@@ -266,6 +267,8 @@ public final class PlayerService extends Service implements
     @Override
     public void onDestroy() {
         super.onDestroy();
+
+        Log.v(LOG_TAG, "onDestroy called.");
 
         // save state
         mPlayback = false;
