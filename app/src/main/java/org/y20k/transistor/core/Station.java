@@ -302,15 +302,13 @@ public final class Station implements Comparable<Station> {
             mStationName = "New Station";
         }
 
-        if (mStreamUri != null) {
-            // log station name and URL
-            Log.v(LOG_TAG, "Name: " + mStationName);
-            Log.v(LOG_TAG, "URL: " + mStreamUri.toString());
-            return true;
-        } else {
-            // log error
+        if (mStreamUri == null) {
             Log.e(LOG_TAG, "Unable to parse: " + fileContent);
             return false;
+        } else {
+//            Log.v(LOG_TAG, "Name: " + mStationName);
+//            Log.v(LOG_TAG, "URL: " + mStreamUri.toString());
+            return true;
         }
 
     }

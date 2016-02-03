@@ -342,6 +342,8 @@ public final class MainActivityFragment extends Fragment {
             actioncall.setVisibility(View.GONE);
         }
 
+        Log.v(LOG_TAG, "Refreshing list of stations");
+
     }
 
 
@@ -519,6 +521,7 @@ public final class MainActivityFragment extends Fragment {
         }
     }
 
+
     /* Handles long click on list item */
     private void handleLongClick(int position) {
 
@@ -533,15 +536,25 @@ public final class MainActivityFragment extends Fragment {
         if (playback && position == stationIDCurrent ) {
             // stop playback service
             mPlayerService.startActionStop(mActivity);
+
+            // set playback state
             stationIDLast = stationIDCurrent;
+            playback = false;
+
+            // inform user
             Toast.makeText(mActivity, R.string.toastmessage_long_press_playback_stopped, Toast.LENGTH_LONG).show();
         } else {
             // start playback service
             String stationName = mCollection.getStations().get((Integer) mCollectionAdapter.getItem(position)).getStationName();
             String streamUri = mCollection.getStations().get((Integer) mCollectionAdapter.getItem(position)).getStreamUri().toString();
             mPlayerService.startActionPlay(mActivity, streamUri, stationName);
+
+            // set playback state
             stationIDLast = stationIDCurrent;
             stationIDCurrent = position;
+            playback = true;
+
+            // inform user
             Toast.makeText(mActivity, R.string.toastmessage_long_press_playback_started, Toast.LENGTH_LONG).show();
         }
 
@@ -553,6 +566,7 @@ public final class MainActivityFragment extends Fragment {
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt(STATION_ID_CURRENT, stationIDCurrent);
         editor.putInt(STATION_ID_LAST, stationIDLast);
+        editor.putBoolean(PLAYBACK, playback);
         editor.apply();
 
         // refresh view

@@ -63,6 +63,7 @@ public final class PlayerService extends Service implements
     private MediaPlayer mMediaPlayer;
     private String mStreamUri;
     private boolean mPlayback;
+    private int mPlayerInstanceCounter;
     private HeadphoneUnplugReceiver mHeadphoneUnplugReceiver;
 
 
@@ -78,8 +79,9 @@ public final class PlayerService extends Service implements
         // set up variables
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         mMediaPlayer = null;
+        mPlayerInstanceCounter = 0;
 
-        // listen for headphone unplug
+        // Listen for headphone unplug
         IntentFilter headphoneUnplugIntentFilter = new IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
         mHeadphoneUnplugReceiver = new HeadphoneUnplugReceiver();
         registerReceiver(mHeadphoneUnplugReceiver, headphoneUnplugIntentFilter);
@@ -171,18 +173,28 @@ public final class PlayerService extends Service implements
     }
 
 
-    @Override
-    public void onPrepared(MediaPlayer mp) {
-        Log.v(LOG_TAG, "Preparation finished. Starting playback.");
-        mp.start();
-    }
-
 
     @Override
     public void onCompletion(MediaPlayer mp) {
         Log.v(LOG_TAG, "Resuming playback after completion / signal loss");
         mMediaPlayer.reset();
         initializeMediaPlayer();
+    }
+
+
+    @Override
+    public void onPrepared(MediaPlayer mp) {
+
+        if (mPlayerInstanceCounter == 1) {
+            Log.v(LOG_TAG, "+++ Preparation finished. Starting playback. Player instance count: " + mPlayerInstanceCounter + " +++");
+            mp.start();
+        } else {
+            Log.v(LOG_TAG, "Stopping player service and re-initializing media player. Player instance count: " + mPlayerInstanceCounter);
+            stopSelf();
+            mPlayerInstanceCounter = mPlayerInstanceCounter - 2;
+            initializeMediaPlayer();
+        }
+
     }
 
 
@@ -265,20 +277,14 @@ public final class PlayerService extends Service implements
         // retrieve notification system service and cancel notification
         NotificationManager notificationManager = (NotificationManager) getApplication().getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.cancel(PLAYER_SERVICE_NOTIFICATION_ID);
-        Log.v(LOG_TAG, "Notification cancelled (onDestroy)");
+
     }
 
 
     /* Method to start the player */
     public void startActionPlay(Context context, String streamUri, String stationName) {
         mStreamUri = streamUri;
-        Log.v(LOG_TAG, "Starting playback service: " + mStreamUri);
-
-        // put up notification
-        NotificationHelper notificationHelper = new NotificationHelper(context);
-        notificationHelper.setStationName(stationName);
-        notificationHelper.createNotification();
-        Log.v(LOG_TAG, "Notification created (startActionPlay)");
+        Log.v(LOG_TAG, "starting playback service: " + mStreamUri);
 
         // start player service using intent
         Intent intent = new Intent(context, PlayerService.class);
@@ -286,12 +292,16 @@ public final class PlayerService extends Service implements
         intent.putExtra(EXTRA_STREAM_URI, mStreamUri);
         context.startService(intent);
 
+        // put up notification
+        NotificationHelper notificationHelper = new NotificationHelper(context);
+        notificationHelper.setStationName(stationName);
+        notificationHelper.createNotification();
     }
 
 
     /* Method to stop the player */
     public void startActionStop(Context context) {
-        Log.v(LOG_TAG, "Stopping playback service");
+        Log.v(LOG_TAG, "stopping playback service:");
 
         // stop player service using intent
         Intent intent = new Intent(context, PlayerService.class);
@@ -300,16 +310,11 @@ public final class PlayerService extends Service implements
     }
 
 
-
     /* Set up the media player */
     private void initializeMediaPlayer() {
-        // TODO somehow reset the mediaplayer.
-        if (mMediaPlayer == null) {
-            mMediaPlayer = new MediaPlayer();
-        }
+        mMediaPlayer = new MediaPlayer();
         mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         mMediaPlayer.setOnPreparedListener(this);
-        mMediaPlayer.setOnCompletionListener(this);
         mMediaPlayer.setOnErrorListener(this);
         mMediaPlayer.setOnInfoListener(this);
         mMediaPlayer.setOnBufferingUpdateListener(new MediaPlayer.OnBufferingUpdateListener() {
@@ -322,12 +327,14 @@ public final class PlayerService extends Service implements
         try {
             mMediaPlayer.setDataSource(mStreamUri);
             mMediaPlayer.prepareAsync();
-            Log.v(LOG_TAG, "Initializing MediaPlayer data source: " + mStreamUri);
+            mPlayerInstanceCounter++;
+            Log.v(LOG_TAG, "setting: " + mStreamUri);
         } catch (IllegalArgumentException | IllegalStateException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
 
     }
 
@@ -378,15 +385,14 @@ public final class PlayerService extends Service implements
         mPlayback = false;
         savePlaybackState();
 
-        // retrieve notification system service and cancel notification
-        NotificationManager notificationManager = (NotificationManager) getApplication().getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancel(PLAYER_SERVICE_NOTIFICATION_ID);
-        Log.v(LOG_TAG, "Notification cancelled (stopPlayback)");
-
         // send local broadcast (needed by PlayerActivityFragment and MainActivityFragment)
         Intent i = new Intent();
         i.setAction(ACTION_PLAYBACK_STOPPED);
         LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(i);
+
+        // retrieve notification system service and cancel notification
+        NotificationManager notificationManager = (NotificationManager) getApplication().getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancel(PLAYER_SERVICE_NOTIFICATION_ID);
     }
 
 
