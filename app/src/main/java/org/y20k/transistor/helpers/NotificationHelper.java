@@ -63,7 +63,6 @@ public final class NotificationHelper {
         String notificationText;
         String notificationTitle;
         int notificationColor;
-        // Bitmap largeIcon;
 
         // retrieve notification system service
         notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -72,7 +71,6 @@ public final class NotificationHelper {
         notificationText = mContext.getString(R.string.notification_swipe_to_stop);
         notificationTitle = mContext.getString(R.string.notification_playing) + ": " + mStationName;
         notificationColor = ContextCompat.getColor(mContext, R.color.transistor_red);
-        // largeIcon = BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.ic_launcher);
 
         // explicit intent for notification tap
         Intent tapIntent = new Intent(mContext, PlayerActivity.class);

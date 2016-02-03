@@ -112,6 +112,9 @@ public final class PlayerService extends Service implements
 
             // start playback
             preparePlayback();
+
+            // increase counter
+            mPlayerInstanceCounter++;
         }
 
         // ACTION STOP
@@ -123,6 +126,9 @@ public final class PlayerService extends Service implements
 
             // stop playback
             finishPlayback();
+
+            // reset counter
+            mPlayerInstanceCounter = 0;
         }
 
         // default return value for media playback
@@ -187,13 +193,27 @@ public final class PlayerService extends Service implements
 
         if (mPlayerInstanceCounter == 1) {
             Log.v(LOG_TAG, "+++ Preparation finished. Starting playback. Player instance count: " + mPlayerInstanceCounter + " +++");
+            Log.v(LOG_TAG, "+++ " + mStreamUri + " +++");
+
+            // starting media player
             mp.start();
+
+            // decrease counter
+            mPlayerInstanceCounter--;
+
         } else {
-            Log.v(LOG_TAG, "Stopping player service and re-initializing media player. Player instance count: " + mPlayerInstanceCounter);
-            mp.stop();
-            mp.release();
-            mPlayerInstanceCounter = mPlayerInstanceCounter - 2;
-            initializeMediaPlayer();
+            Log.v(LOG_TAG, "Stopping and re-initializing media player. Player instance count: " + mPlayerInstanceCounter);
+
+            // release media player
+            releaseMediaPlayer();
+
+            // decrease counter
+            mPlayerInstanceCounter--;
+
+            // re-initializing media player
+            if (mPlayerInstanceCounter >= 0) {
+                initializeMediaPlayer();
+            }
         }
 
     }
@@ -286,8 +306,9 @@ public final class PlayerService extends Service implements
 
     /* Method to start the player */
     public void startActionPlay(Context context, String streamUri, String stationName) {
-        mStreamUri = streamUri;
         Log.v(LOG_TAG, "starting playback service: " + mStreamUri);
+
+        mStreamUri = streamUri;
 
         // start player service using intent
         Intent intent = new Intent(context, PlayerService.class);
@@ -330,14 +351,12 @@ public final class PlayerService extends Service implements
         try {
             mMediaPlayer.setDataSource(mStreamUri);
             mMediaPlayer.prepareAsync();
-            mPlayerInstanceCounter++;
             Log.v(LOG_TAG, "setting: " + mStreamUri);
         } catch (IllegalArgumentException | IllegalStateException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
 
     }
 
