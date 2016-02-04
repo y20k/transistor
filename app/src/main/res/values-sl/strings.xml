@@ -1,2 +1,57 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<?xml version='1.0' encoding='UTF-8'?>
+<resources><string name="app_name">Transistor</string> <string name="title_activity_player">Zdaj se predvaja</string>
+
+    <string name="menu_about">O programu</string>
+    <string name="menu_howto">Kako uporabljati</string>
+    <string name="menu_icon">Zamenjaj ikono</string>
+    <string name="menu_add">Dodaj</string>
+    <string name="menu_delete">Izbriši</string>
+    <string name="menu_rename">Preimenuj</string>
+
+    <string name="header_about">O programu</string>
+    <string name="header_howto">Kako uporabljati</string>
+
+    <string name="descr_station_icon">Ikona radijske postaje</string>
+    <string name="descr_station_name">Ime radijske postaje</string>
+    <string name="descr_station_name_example">Primer FM</string>
+    <string name="dialog_add_station_button">Dodaj</string>
+    <string name="dialog_generic_button_okay">OK</string>
+    <string name="dialog_generic_button_cancel">Prekliči</string>
+    <string name="dialog_add_station_input_hint">Veljaven URL za tok</string>
+    <string name="dialog_add_station_message">Dodaj novo postajo</string>
+    <string name="dialog_add_station_howto">Lahko dodate neobdelan medijski tok, kodiran v formatu MP3 ali OGG, ali pa takšnega, ki je vključen v datoteko .pls ali .m3u. Namesto tega lahko v spletnem brskalniku tudi tapnete na medijsko povezavo (.pls ali .m3u).</string>
+    <string name="dialog_delete_station_message">Izbriši postajo</string>
+    <string name="dialog_button_delete">Izbriši</string>
+    <string name="dialog_rename_station_input_hint">Vpiši novo ime</string>
+    <string name="dialog_rename_station_message">Preimenuj postajo</string>
+    <string name="dialog_button_rename">Preimenuj</string>
+
+    <string name="dialog_error_title_default">Napaka</string>
+    <string name="dialog_error_message_default">Prišlo je do napake</string>
+    <string name="dialog_error_details_button_default">Prikaz podrobnosti</string>
+    <string name="dialog_error_details_default">Podrobnosti niso na voljo</string>
+    <string name="dialog_error_title_download">Težava pri prenosu</string>
+    <string name="dialog_error_message_download">Aplikacji Transistor ni uspelo pridobiti ustreznih podatkov iz vnešene povezave.</string>
+    <string name="dialog_error_message_download_external_storage">Zunanja shramba:</string>
+    <string name="dialog_error_message_download_station_url">URL postaje:</string>
+    <string name="dialog_error_message_download_hint_m3u">Namig: aplikacija Transistor lahko obdela le medijske tokove kodirane v formatu MP3 ali OGG, oziroma medijske povezave s končnicami .m3u ali .pls.</string>
+    <string name="dialog_error_message_download_file_content">Vsebina oddaljene datoteke:</string>
+
+    <string name="actioncall_message_start_here">Dodaj novo postajo</string>
+    <string name="toastmessage_add_download_started">Prenos se je začel:</string>
+    <string name="toastmessage_long_press_playback_stopped">Radijski prenos je bil ustavljen</string>
+    <string name="toastmessage_long_press_playback_started">Radijski prenos se je začel</string>
+    <string name="toastalert_rename_unsuccessful">Ne morem preimenovati postaje. Prosim izberite drugo ime.</string>
+    <string name="toastalert_delete_successful">Postaja je bila odstranjena.</string>
+    <string name="toastalert_no_external_storage">Nimam dostopa do zunanjega pomnilnika.</string>
+    <string name="toastalert_headphones_unplugged">Prenos je bil ustavljen zaradi odstranitve slušalk.</string>
+    <string name="snackbar_request_storage_access">Za dodajanje nove ikone radijski postaji potrebuje Transistor dostop do vaših slik in fotografij.</string>
+
+    <string name="notification_swipe_to_stop">Za izklop podrsajte</string>
+    <string name="notification_playing">Igra</string>
+
+    <string name="title_activity_infosheet">Podrobnosti</string>
+
+    <string name="html_about">&lt;!DOCTYPE html&gt; &lt;html&gt; &lt;body&gt; &lt;h1&gt;O aplikaciji Transistor&lt;/h1&gt; &lt;h2&gt;Spletni radio za Android&lt;/h2&gt; &lt;h3&gt;Različica 1.2 (&amp;quot;Cygnet Committee&amp;quot;)&lt;/h3&gt; &lt;p&gt;Transistor je minimalistična aplikacija za poslušanje radijskih postaj preko spleta. Program spravi radijske postaje kot datoteke v zunanji pomnilnik vaše naprave. Datoteke najdete v obliki m3u na /Android/data/org.y20k.transistor/Collection. Trenutno lahko Transistor predvaja medijske tokove kodirane v formatih MP3 ali OGG.&lt;/p&gt; &lt;p&gt;Transistor je brezplačna aplikacija, objavljena pod odprtokodno licenco MIT. Koda je na voljo na GitHub-u. Na GitHub-u lahko tudi poročate o najdenih hroščih in prispevate k razvoju aplikacije.&lt;/p&gt; &lt;p&gt;https://github.com/y20k/transistor&lt;/p&gt; &lt;p&gt;https://opensource.org/licenses/MIT&lt;/p&gt; &lt;h3&gt;Katera dovoljenja potrebuje Transistor?&lt;/h3&gt; &lt;p&gt;&lt;strong&gt;Dovoljenje INTERNET&lt;/strong&gt;&lt;br /&gt; Transistor prenaša radio preko medmrežja.&lt;/p&gt; &lt;p&gt;&lt;strong&gt;Dovoljenje READ_EXTERNAL_STORAGE&lt;/strong&gt;&lt;br /&gt; Transistor potrebuje dostop do slik in fotografij za zamenjavo ikon radijskih postaj.&lt;/p&gt; &lt;p&gt;&lt;strong&gt;Dovoljenje VIBRATE&lt;/strong&gt;&lt;br /&gt; Če s prstom tapnete in pridržite radisjko postajo boste sproćili rahlo vibracijo.&lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</string>
+
+    </resources>
