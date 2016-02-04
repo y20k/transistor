@@ -14,4 +14,6 @@ Russian version: [Boris Timofeev](https://github.com/btimofeev)
 
 Serbian version: [pejakm](https://github.com/pejakm)
 
+Slovenian version: [bungabunga](https://github.com/bungabunga)
+
 Ukrainian version: [burunduk](https://github.com/burunduk) 
