@@ -111,6 +111,7 @@ public final class Station implements Comparable<Station> {
     }
 
 
+    /* Returns content type for given URL */
     private String getContentType(URL fileLocation) {
         try {
             HttpURLConnection connection = (HttpURLConnection)fileLocation.openConnection();
@@ -124,6 +125,7 @@ public final class Station implements Comparable<Station> {
     }
 
 
+    /* Determines if given content type is a playlist */
     private boolean isPlaylist(String contentType) {
         for (String[] array : new String[][]{CONTENT_TYPES_PLS, CONTENT_TYPES_M3U}) {
             if (Arrays.asList(array).contains(contentType)) {
@@ -134,6 +136,7 @@ public final class Station implements Comparable<Station> {
     }
 
 
+    /* Determines if given content type is an audio file */
     private boolean isAudioFile(String contentType) {
         for (String[] array : new String[][]{CONTENT_TYPES_MPEG, CONTENT_TYPES_OGG}) {
             if (Arrays.asList(array).contains(contentType)) {
@@ -302,6 +305,7 @@ public final class Station implements Comparable<Station> {
             mStationName = "New Station";
         }
 
+        // TODO check if found mStreamUri is a raw audio file using getContentType and isAudioFile
         if (mStreamUri == null) {
             Log.e(LOG_TAG, "Unable to parse: " + fileContent);
             return false;
