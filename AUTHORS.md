@@ -17,3 +17,6 @@ Serbian version: [pejakm](https://github.com/pejakm)
 Slovenian version: [bungabunga](https://github.com/bungabunga)
 
 Ukrainian version: [burunduk](https://github.com/burunduk) 
+
+### Want to help?
+The translations are managed on [Weblate](https://hosted.weblate.org/projects/transistor/strings/). The code is being maintained on [GitHub](https://github.com/y20k/transistor). Please suggest new features or enhancements before implementing them on the [issue tracker](https://github.com/y20k/transistor/issues) in advance.
