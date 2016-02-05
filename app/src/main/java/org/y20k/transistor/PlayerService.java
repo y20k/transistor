@@ -39,6 +39,7 @@ import java.io.IOException;
  */
 public final class PlayerService extends Service implements
         AudioManager.OnAudioFocusChangeListener,
+        MediaPlayer.OnBufferingUpdateListener,
         MediaPlayer.OnCompletionListener,
         MediaPlayer.OnPreparedListener,
         MediaPlayer.OnErrorListener,
@@ -285,6 +286,12 @@ public final class PlayerService extends Service implements
 
 
     @Override
+    public void onBufferingUpdate(MediaPlayer mp, int percent) {
+        Log.v(LOG_TAG, "Buffering: " + percent);
+    }
+
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
 
@@ -342,12 +349,7 @@ public final class PlayerService extends Service implements
         mMediaPlayer.setOnPreparedListener(this);
         mMediaPlayer.setOnErrorListener(this);
         mMediaPlayer.setOnInfoListener(this);
-        mMediaPlayer.setOnBufferingUpdateListener(new MediaPlayer.OnBufferingUpdateListener() {
-            @Override
-            public void onBufferingUpdate(MediaPlayer mp, int percent) {
-                Log.v(LOG_TAG, "Buffering: " + percent);
-            }
-        });
+        mMediaPlayer.setOnBufferingUpdateListener(this);
 
         try {
             mMediaPlayer.setDataSource(mStreamUri);
