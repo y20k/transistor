@@ -355,8 +355,6 @@ public final class PlayerService extends Service implements
             mMediaPlayer.setDataSource(mStreamUri);
             mMediaPlayer.prepareAsync();
             Log.v(LOG_TAG, "setting: " + mStreamUri);
-        } catch (IllegalArgumentException | IllegalStateException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

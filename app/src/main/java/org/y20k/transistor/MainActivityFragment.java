@@ -433,8 +433,8 @@ public final class MainActivityFragment extends Fragment {
                 selectFromImagePicker();
             }
         };
-        IntentFilter imageChangeRequesIntentFilter = new IntentFilter(ACTION_IMAGE_CHANGE_REQUESTED);
-        LocalBroadcastManager.getInstance(mApplication).registerReceiver(imageChangeRequestReceiver, imageChangeRequesIntentFilter);
+        IntentFilter imageChangeRequestIntentFilter = new IntentFilter(ACTION_IMAGE_CHANGE_REQUESTED);
+        LocalBroadcastManager.getInstance(mApplication).registerReceiver(imageChangeRequestReceiver, imageChangeRequestIntentFilter);
 
     }
 
