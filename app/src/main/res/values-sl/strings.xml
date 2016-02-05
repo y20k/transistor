@@ -1,6 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources><string name="app_name">Transistor</string> <string name="title_activity_player">Zdaj se predvaja</string>
+<resources>
+    <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
+    <string name="title_activity_player">Zdaj se predvaja</string>
 
+    <!-- menu entries -->
     <string name="menu_about">O programu</string>
     <string name="menu_howto">Kako uporabljati</string>
     <string name="menu_icon">Zamenjaj ikono</string>
@@ -8,12 +11,21 @@
     <string name="menu_delete">Izbriši</string>
     <string name="menu_rename">Preimenuj</string>
 
+    <!-- headers -->
     <string name="header_about">O programu</string>
     <string name="header_howto">Kako uporabljati</string>
 
+    <!-- descriptions -->
     <string name="descr_station_icon">Ikona radijske postaje</string>
     <string name="descr_station_name">Ime radijske postaje</string>
     <string name="descr_station_name_example">Primer FM</string>
+    <string name="descr_playback_indicator">Kazalnik za predvajanje v teku</string>
+    <string name="descr_playback_button">Velik gumb za predvajanje</string>
+    <string name="descr_overflow_button">Prikaz možnosti za radisjko postajo</string>
+    <string name="descr_arrow_actioncall">Puščica, ki kaže k simbolu za dodajanje postaje</string>
+    <string name="descr_playback_indicator_started">Kazalnik za predvajanje v teku</string>
+
+    <!-- dialogs -->
     <string name="dialog_add_station_button">Dodaj</string>
     <string name="dialog_generic_button_okay">OK</string>
     <string name="dialog_generic_button_cancel">Prekliči</string>
@@ -26,6 +38,7 @@
     <string name="dialog_rename_station_message">Preimenuj postajo</string>
     <string name="dialog_button_rename">Preimenuj</string>
 
+    <!-- error dialogs -->
     <string name="dialog_error_title_default">Napaka</string>
     <string name="dialog_error_message_default">Prišlo je do napake</string>
     <string name="dialog_error_details_button_default">Prikaz podrobnosti</string>
@@ -37,6 +50,7 @@
     <string name="dialog_error_message_download_hint_m3u">Namig: aplikacija Transistor lahko obdela le medijske tokove kodirane v formatu MP3 ali OGG, oziroma medijske povezave s končnicami .m3u ali .pls.</string>
     <string name="dialog_error_message_download_file_content">Vsebina oddaljene datoteke:</string>
 
+    <!-- messages -->
     <string name="actioncall_message_start_here">Dodaj novo postajo</string>
     <string name="toastmessage_add_download_started">Prenos se je začel:</string>
     <string name="toastmessage_long_press_playback_stopped">Radijski prenos je bil ustavljen</string>
@@ -47,19 +61,53 @@
     <string name="toastalert_headphones_unplugged">Prenos je bil ustavljen zaradi odstranitve slušalk.</string>
     <string name="snackbar_request_storage_access">Za dodajanje nove ikone radijski postaji potrebuje Transistor dostop do vaših slik in fotografij.</string>
 
+    <!-- notification -->
     <string name="notification_swipe_to_stop">Za izklop podrsajte</string>
     <string name="notification_playing">Igra</string>
 
+    <!-- misc -->
     <string name="title_activity_infosheet">Podrobnosti</string>
 
-    <string name="html_about">&lt;!DOCTYPE html&gt; &lt;html&gt; &lt;body&gt; &lt;h1&gt;O aplikaciji Transistor&lt;/h1&gt; &lt;h2&gt;Spletni radio za Android&lt;/h2&gt; &lt;h3&gt;Različica 1.2 (&amp;quot;Cygnet Committee&amp;quot;)&lt;/h3&gt; &lt;p&gt;Transistor je minimalistična aplikacija za poslušanje radijskih postaj preko spleta. Program spravi radijske postaje kot datoteke v zunanji pomnilnik vaše naprave. Datoteke najdete v obliki m3u na /Android/data/org.y20k.transistor/Collection. Trenutno lahko Transistor predvaja medijske tokove kodirane v formatih MP3 ali OGG.&lt;/p&gt; &lt;p&gt;Transistor je brezplačna aplikacija, objavljena pod odprtokodno licenco MIT. Koda je na voljo na GitHub-u. Na GitHub-u lahko tudi poročate o najdenih hroščih in prispevate k razvoju aplikacije.&lt;/p&gt; &lt;p&gt;https://github.com/y20k/transistor&lt;/p&gt; &lt;p&gt;https://opensource.org/licenses/MIT&lt;/p&gt; &lt;h3&gt;Katera dovoljenja potrebuje Transistor?&lt;/h3&gt; &lt;p&gt;&lt;strong&gt;Dovoljenje INTERNET&lt;/strong&gt;&lt;br /&gt; Transistor prenaša radio preko medmrežja.&lt;/p&gt; &lt;p&gt;&lt;strong&gt;Dovoljenje READ_EXTERNAL_STORAGE&lt;/strong&gt;&lt;br /&gt; Transistor potrebuje dostop do slik in fotografij za zamenjavo ikon radijskih postaj.&lt;/p&gt; &lt;p&gt;&lt;strong&gt;Dovoljenje VIBRATE&lt;/strong&gt;&lt;br /&gt; Če s prstom tapnete in pridržite radisjko postajo boste sproćili rahlo vibracijo.&lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</string>
+    <!-- HTML strings -->
+    <string name="html_about"><![CDATA[<!DOCTYPE html>
+    <html>
+        <body>
+            <h1>O aplikaciji Transistor</h1>
+            <h2>Spletni radio za Android</h2>
+            <h3>Različica 1.2 (&amp;quot;Cygnet Committee&amp;quot;)</h3>
+            <p>Transistor je minimalistična aplikacija za poslušanje radijskih postaj preko spleta. Program spravi radijske postaje kot datoteke v zunanji pomnilnik vaše naprave. Datoteke najdete v obliki m3u na /Android/data/org.y20k.transistor/Collection. Trenutno lahko Transistor predvaja medijske tokove kodirane v formatih MP3 ali OGG.</p>
+            <p>Transistor je brezplačna aplikacija, objavljena pod odprtokodno licenco MIT. Koda je na voljo na GitHub-u. Na GitHub-u lahko tudi poročate o najdenih hroščih in prispevate k razvoju aplikacije.</p>
+            <p>https://github.com/y20k/transistor</p>
+            <p>https://opensource.org/licenses/MIT</p>
+            <h3>Katera dovoljenja potrebuje Transistor?</h3>
+            <p><strong>Dovoljenje INTERNET</strong><br />
+            Transistor prenaša radio preko medmrežja.</p>
+            <p><strong>Dovoljenje READ_EXTERNAL_STORAGE</strong><br />
+            Transistor potrebuje dostop do slik in fotografij za zamenjavo ikon radijskih postaj.</p>
+            <p><strong>Dovoljenje VIBRATE</strong><br />
+            Če s prstom tapnete in pridržite radisjko postajo boste sproćili rahlo vibracijo.</p>
+        </body>
+    </html>]]></string>
 
-    <string name="html_howto">&lt;!DOCTYPE html&gt; &lt;html&gt; &lt;body&gt; &lt;h1&gt;Kako uporabljati aplikacijo Transistor&lt;/h1&gt; &lt;h2&gt;Kako dodam novo radijsko postajo?&lt;/h2&gt; &lt;p&gt;Najlažji način je, da na spletu poiščete medijsko povezavo za prenos izbrane radijske postaje, tapnete nanjo in nato izberete Transistor kot privzeto aplikacijo za odpiranje tovrstnih vsebin. Drugi način je, da v aplikaciji tapnete na simbol (+) v zgornji vrstici in prilepite povezavo do medija.&lt;/p&gt; &lt;h2&gt;Kako poslušam radijsko postajo?&lt;/h2&gt; &lt;p&gt;Tapnite na velik gumb \"Predvajaj\" ;).&lt;/p&gt; &lt;h2&gt;Kako ustavim predvajanje?&lt;/h2&gt; &lt;p&gt;Tapnete na veliki gumb \"Stop\" ali iztaknete svoje slušalke iz naprave ali pa podrsate obvestilo na zaklenjenem zaslonu.&lt;/p&gt; &lt;h2&gt;Kako preimenujem ali pa odstranim postajo?&lt;/h2&gt; &lt;p&gt;Opciji za preimenovanje in izbris sta dostopni na listi radijskih postaj in na strani s trenutnim predvajanjem. Tapnite na simol s tremi pikami. Listo s postajami lahko upravljate tudi z brskalnikom datotek (glej naslednje vprašanje.&lt;/p&gt; &lt;h2&gt;Kam Transistor spravlja radijske postaje?&lt;/h2&gt; &lt;p&gt;Transistor radijskih postaj ne spravlja v bazo podatkov. Namesto tega jih spravi v pomnilnik naprave v obliki m3u datotek. S temi datotekami lahko upravljate z urejevalnikom teksta po izbiri. Najdete jih na /Android/data/org.y20k.transistor/Collection.&lt;/p&gt; &lt;h2&gt;Kako naredim varnostno kopijo datotek oziroma jih prenesem drugam?&lt;h2&gt; &lt;p&gt;Transistor podpira funkcijo Auto Backup za Android 6. Radijske postaje bodo vedno shranjene na vašem računu Google in bodo ponovno nameščene ob ponastavitvi naprave. Pri napravah s starejšimi verzijami sistema Android morate ob ponastavitvi ročno shraniti in ponovno namestiti mapo &amp;quot;Collection&amp;quot;.&lt;/p&gt; &lt;h2&gt;Zakaj nima Transistor menija z nastavitvami?&lt;/h2&gt; &lt;p&gt;Za to ni potrebe. ;). Transistor je zelo preprosta aplikacija. &amp;quot;Preprosto&amp;quot; je lahko kul ali pa trapasto, odvisno od vašega prepričanja. ;)&lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</string>
+    <string name="html_howto"><![CDATA[<!DOCTYPE html>
+    <html>
+        <body>
+            <h1>Kako uporabljati aplikacijo Transistor</h1>
+            <h2>Kako dodam novo radijsko postajo?</h2>
+            <p>Najlažji način je, da na spletu poiščete medijsko povezavo za prenos izbrane radijske postaje, tapnete nanjo in nato izberete Transistor kot privzeto aplikacijo za odpiranje tovrstnih vsebin. Drugi način je, da v aplikaciji tapnete na simbol (+) v zgornji vrstici in prilepite povezavo do medija.</p>
+            <h2>Kako poslušam radijsko postajo?</h2>
+            <p>Tapnite na velik gumb \"Predvajaj\" ;).</p>
+            <h2>Kako ustavim predvajanje?</h2>
+            <p>Tapnete na veliki gumb \"Stop\" ali iztaknete svoje slušalke iz naprave ali pa podrsate obvestilo na zaklenjenem zaslonu.</p>
+            <h2>Kako preimenujem ali pa odstranim postajo?</h2>
+            <p>Opciji za preimenovanje in izbris sta dostopni na listi radijskih postaj in na strani s trenutnim predvajanjem. Tapnite na simol s tremi pikami. Listo s postajami lahko upravljate tudi z brskalnikom datotek (glej naslednje vprašanje.</p>
+            <h2>Kam Transistor spravlja radijske postaje?</h2>
+            <p>Transistor radijskih postaj ne spravlja v bazo podatkov. Namesto tega jih spravi v pomnilnik naprave v obliki m3u datotek. S temi datotekami lahko upravljate z urejevalnikom teksta po izbiri. Najdete jih na /Android/data/org.y20k.transistor/Collection.</p>
+            <h2>Kako naredim varnostno kopijo datotek oziroma jih prenesem drugam?<h2>
+            <p>Transistor podpira funkcijo Auto Backup za Android 6. Radijske postaje bodo vedno shranjene na vašem računu Google in bodo ponovno nameščene ob ponastavitvi naprave. Pri napravah s starejšimi verzijami sistema Android morate ob ponastavitvi ročno shraniti in ponovno namestiti mapo &amp;quot;Collection&amp;quot;.</p>
+            <h2>Zakaj nima Transistor menija z nastavitvami?</h2>
+            <p>Za to ni potrebe. ;). Transistor je zelo preprosta aplikacija. &amp;quot;Preprosto&amp;quot; je lahko kul ali pa trapasto, odvisno od vašega prepričanja. ;)</p>
+        </body>
+    </html>]]></string>
 
-<string name="descr_playback_indicator_started">Kazalnik za predvajanje v teku</string>
-
-    <string name="descr_playback_indicator">Kazalnik za predvajanje v teku</string>
-    <string name="descr_playback_button">Velik gumb za predvajanje</string>
-    <string name="descr_overflow_button">Prikaz možnosti za radisjko postajo</string>
-    <string name="descr_arrow_actioncall">Puščica, ki kaže k simbolu za dodajanje postaje</string>
-    </resources>
+</resources>
