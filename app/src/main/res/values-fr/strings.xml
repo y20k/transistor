@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='UTF-8'?>
 <resources>
     <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
     <string name="title_activity_player">Lecture en cours</string>
@@ -53,7 +53,7 @@
     <!-- messages -->
     <string name="actioncall_message_start_here">Ajouter une station</string>
     <string name="toastmessage_add_download_started">Téléchargement démarré :</string>
-    <string name="toastmessage_long_press_playback_stopped">Playback stopped (long press detected)</string>
+    <string name="toastmessage_long_press_playback_stopped">Lecture arrêtée (appui long détecté)</string>
     <string name="toastmessage_long_press_playback_started">Lecture démarrée (appui long détecté)</string>
     <string name="toastalert_rename_unsuccessful">Impossible de renommer la station. Veuillez choisir un nom différent.</string>
     <string name="toastalert_delete_successful">Station supprimée avec succès.</string>
