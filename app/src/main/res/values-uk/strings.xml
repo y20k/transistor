@@ -69,7 +69,25 @@
     <string name="title_activity_infosheet">Інформаційний лист</string>
 
     <!-- HTML strings -->
-    <string name="html_about">&lt;!DOCTYPE html&gt; &lt;html&gt; &lt;body&gt; &lt;h1&gt;Про Transistor&lt;/h1&gt; &lt;h2&gt;Додаток інтернет радіо для Android&lt;/h2&gt; &lt;h3&gt;Версія 1.2 (&amp;quot;Cygnet Committee&amp;quot;)&lt;/h3&gt; &lt;p&gt;Transistor — це додаток для прослуховування радіо програм через інтернет. Додаток зберігає станції у файли на зовнішньому сховищі вашого пристрою. Файли із розширенням m3u можете знайти у /Android/data/org.y20k.transistor/Collection. На разі розпізнаються потоки вбудовані у m3u та pls посилання.&lt;/p&gt; &lt;p&gt;Transistor це вільне програмне забезпечення. Воно публікується під ліцензією MIT . Ви можете знайти джерельний код на GitHub. GitHub також непогане місце для розміщення вад, підтримки, якщо ви зацікавлені.&lt;/p&gt; &lt;p&gt;https://github.com/y20k/transistor&lt;/p&gt; &lt;p&gt;https://opensource.org/licenses/MIT&lt;/p&gt; &lt;h3&gt;Які дозволи потребує Transistor?&lt;/h3&gt; &lt;p&gt;&lt;strong&gt;Доступ до INTERNET&lt;/strong&gt;&lt;br /&gt; Transistor веде мовлення радіостанцій через інтернет.&lt;/p&gt; &lt;p&gt;&lt;strong&gt;Доступ до READ_EXTERNAL_STORAGE&lt;/strong&gt;&lt;br /&gt; Transistor потребує доступ на читання зображень та фотографій, аби мати можливість міняти піктограми радіо станцій.&lt;/p&gt; &lt;p&gt;&lt;strong&gt;Доступ до VIBRATE&lt;/strong&gt;&lt;br /&gt; Дотик та утримання на радіостанції супроводжуватиметься короткою вібрацією.&lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</string>
+    <string name="html_about"><![CDATA[<!DOCTYPE html>
+    <html>
+        <body>
+            <h1>Про Transistor</h1> 
+            <h2>Додаток інтернет радіо для Android</h2>
+            <h3>Версія 1.2 (&amp;quot;Cygnet Committee&amp;quot;)</h3>
+            <p>Transistor — це додаток для прослуховування радіо програм через інтернет. Додаток зберігає станції у файли на зовнішньому сховищі вашого пристрою. Файли із розширенням m3u можете знайти у /Android/data/org.y20k.transistor/Collection. На разі розпізнаються потоки вбудовані у m3u та pls посилання.</p>
+            <p>Transistor це вільне програмне забезпечення. Воно публікується під ліцензією MIT . Ви можете знайти джерельний код на GitHub. GitHub також непогане місце для розміщення вад, підтримки, якщо ви зацікавлені.</p>
+            <p>https://github.com/y20k/transistor</p>
+            <p>https://opensource.org/licenses/MIT</p>
+            <h3>Які дозволи потребує Transistor?</h3>
+            <p><strong>Доступ до INTERNET</strong><br /> 
+            Transistor веде мовлення радіостанцій через інтернет.</p>
+            <p><strong>Доступ до READ_EXTERNAL_STORAGE</strong><br /> 
+            Transistor потребує доступ на читання зображень та фотографій, аби мати можливість міняти піктограми радіо станцій.</p>
+            <p><strong>Доступ до VIBRATE</strong><br /> 
+            Дотик та утримання на радіостанції супроводжуватиметься короткою вібрацією.</p>
+        </body>
+    </html>]]></string>
 
     <string name="html_howto"><![CDATA[<!DOCTYPE html>
     <html>
