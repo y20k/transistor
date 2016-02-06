@@ -1,2 +1,60 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<?xml version='1.0' encoding='UTF-8'?>
+<resources><string name="app_name">トランジスター</string> <string name="title_activity_player">再生しています</string>
+
+    <string name="menu_about">アプリについて</string>
+    <string name="menu_howto">使用方法</string>
+    <string name="menu_icon">アイコンの変更</string>
+    <string name="menu_add">追加</string>
+    <string name="menu_delete">削除</string>
+    <string name="menu_rename">名前の変更</string>
+
+    <string name="header_about">アプリについて</string>
+    <string name="header_howto">使用方法</string>
+
+    <string name="descr_arrow_actioncall">追加する放送局のシンボルに矢印が向きます</string>
+    <string name="descr_overflow_button">ラジオ局の表示オプション</string>
+    <string name="descr_station_icon">ラジオ局のアイコン</string>
+    <string name="descr_station_name">ラジオ局の名前</string>
+    <string name="descr_station_name_example">FM の例</string>
+    <string name="descr_playback_button">大きな再生ボタン</string>
+    <string name="descr_playback_indicator">再生中のインジケーター</string>
+    <string name="descr_playback_indicator_started">再生中のインジケーター</string>
+
+    <string name="dialog_generic_button_okay">OK</string>
+    <string name="dialog_generic_button_cancel">キャンセル</string>
+    <string name="dialog_add_station_button">追加</string>
+    <string name="dialog_add_station_input_hint">正しいストリーミング URL を貼り付けてください</string>
+    <string name="dialog_add_station_message">新しい放送局を追加</string>
+    <string name="dialog_delete_station_message">放送局を削除</string>
+    <string name="dialog_button_delete">削除</string>
+    <string name="dialog_rename_station_input_hint">新しい名前を入力してください</string>
+    <string name="dialog_rename_station_message">放送局の名前を変更</string>
+    <string name="dialog_button_rename">名前の変更</string>
+
+    <string name="dialog_error_title_default">エラー</string>
+    <string name="dialog_error_message_default">エラーが発生しました</string>
+    <string name="dialog_error_details_button_default">詳細の表示</string>
+    <string name="dialog_error_details_default">詳細はありません</string>
+    <string name="dialog_error_title_download">ダウンロードの問題</string>
+    <string name="dialog_error_message_download">トランジスターの努力にもかかわらず、リンクが意味をなさない可能性があります。</string>
+    <string name="dialog_error_message_download_external_storage">外部ストレージ:</string>
+    <string name="dialog_error_message_download_station_url">放送局の URL:</string>
+    <string name="dialog_error_message_download_hint_m3u">ヒント: トランジスターは MP3 と OGG でエンコードされたストリームや .m3u または .pls で終わる Url のみ処理することができます。</string>
+    <string name="dialog_error_message_download_file_content">リモート ファイルのコンテンツ:</string>
+
+    <string name="actioncall_message_start_here">新しい放送局を追加</string>
+    <string name="toastmessage_add_download_started">ダウンロードを開始:</string>
+    <string name="toastmessage_long_press_playback_stopped">再生が停止しました (長押しを検出しました)</string>
+    <string name="toastmessage_long_press_playback_started">再生を開始しました (長押しを検出しました)</string>
+    <string name="toastalert_rename_unsuccessful">放送局の名前を変更できません。別の名前を選択してください。</string>
+    <string name="toastalert_delete_successful">放送局が削除されました。</string>
+    <string name="toastalert_no_external_storage">外部ストレージにアクセスすることができません。</string>
+    <string name="toastalert_headphones_unplugged">ヘッドフォンのプラグを外しました。再生を停止します。</string>
+    <string name="snackbar_request_storage_access">この放送局の新しいアイコンを追加したい場合、トランジスターは、その画像や写真にアクセスする必要があります。</string>
+
+    <string name="notification_swipe_to_stop">スワイプすると停止</string>
+    <string name="notification_playing">再生中</string>
+
+    <string name="title_activity_infosheet">情報シート</string>
+
+    </resources>
