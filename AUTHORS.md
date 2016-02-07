@@ -8,7 +8,9 @@ Contributing developer(s)
 [meonwax](https://github.com/meonwax) 
 
 ### Translations
-French version:  [M2ck](https://github.com/M2ck)
+French version: [M2ck](https://github.com/M2ck)
+
+Japanese version: [naofum](https://github.com/naofum)
 
 Russian version: [Boris Timofeev](https://github.com/btimofeev)
 
