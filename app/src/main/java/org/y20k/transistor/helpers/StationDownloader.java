@@ -114,7 +114,10 @@ public final class StationDownloader extends AsyncTask<Void, Void, Station> {
                     sb.append(mActivity.getResources().getString(R.string.dialog_error_message_download_file_content));
                     sb.append("\n");
                     sb.append(remoteFileContent);
+                } else {
+                    Log.v(LOG_TAG, "no remoteFileContent");
                 }
+
             }
 
             String errorDetails = sb.toString();

@@ -17,6 +17,7 @@ package org.y20k.transistor.helpers;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -57,6 +58,9 @@ public final class DialogError {
         final TextView errorMessageView = (TextView) view.findViewById(R.id.dialog_error_message);
         final TextView errorDetailsLinkView = (TextView) view.findViewById(R.id.dialog_error_details_link);
         final TextView errorDetailsView = (TextView) view.findViewById(R.id.dialog_error_details);
+
+        // allow scrolling on details view
+        errorDetailsView.setMovementMethod(new ScrollingMovementMethod());
 
         // show and hide details
         errorDetailsLinkView.setOnClickListener(new View.OnClickListener() {

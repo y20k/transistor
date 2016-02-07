@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -48,7 +49,7 @@ public final class Station implements Comparable<Station> {
 
     /* Supported playlist content types */
     private static final String[] CONTENT_TYPES_PLS = {"audio/x-scpls"};
-    private static final String[] CONTENT_TYPES_M3U = {"audio/x-mpegurl"};
+    private static final String[] CONTENT_TYPES_M3U = {"audio/x-mpegurl", "application/vnd.apple.mpegurl; charset=utf-8"};
 
     /* Main class variables */
     private Bitmap mStationImage;
@@ -75,6 +76,7 @@ public final class Station implements Comparable<Station> {
         if (folder != null) {
             setStationImageFile(folder);
         }
+
     }
 
 
@@ -82,18 +84,24 @@ public final class Station implements Comparable<Station> {
     public Station(File folder, URL fileLocation) {
 
         // determine content type of remote file
-        Log.v(LOG_TAG, "Determining content type");
         String contentType = getContentType(fileLocation);
         Log.v(LOG_TAG, "Content type is " + contentType);
 
-        // use raw audio file for station data
+
+        // content type is raw audio file
         if (isAudioFile(contentType)) {
+            // use raw audio file for station data
             mStreamUri = Uri.parse(fileLocation.toString().trim());
             mStationName = getStationName(fileLocation);
-        }
-        // download and parse station data from remote playlist file
-        else if (isPlaylist(contentType) && downloadPlaylistFile(fileLocation)) {
             setDownloadError(false);
+        }
+
+        // content type is playlist
+        else if (isPlaylist(contentType) && downloadPlaylistFile(fileLocation)) {
+            // download and parse station data from playlist file
+            setDownloadError(false);
+
+        // content type is none of the above
         } else {
             // set error flag and return
             setDownloadError(true);
@@ -202,7 +210,7 @@ public final class Station implements Comparable<Station> {
             mStationName = getStationName(fileLocation);
 
             // parse result of downloadPlaylistFile
-            if (parse(mRemoteFileContent)) {
+            if (parse(mRemoteFileContent) && streamUriIsAudioFile()) {
                 return true;
             } else {
                 mRemoteFileContent = "File does not contain valid streaming URL:\n" + mRemoteFileContent;
@@ -214,6 +222,33 @@ public final class Station implements Comparable<Station> {
             Log.e(LOG_TAG, mRemoteFileContent);
             return false;
         }
+    }
+
+
+    /* Checks if stream URI of station is valid audio file */
+    private boolean streamUriIsAudioFile () {
+
+        if (mStreamUri == null) {
+            return false;
+        }
+
+        try {
+            // determine content type of remote file
+            URL streamURL = new URL(mStreamUri.toString());
+            String contentType = getContentType(streamURL);
+            Log.v(LOG_TAG, "Content type is " + contentType);
+
+            if (isAudioFile(contentType)) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
     }
 
 
@@ -278,16 +313,12 @@ public final class Station implements Comparable<Station> {
                 mStationName = line.substring(11).trim();
             // M3U: found stream URL
             // TODO test mms and rtsp -> || (line.startsWith("rtsp")
-            } else if (line.startsWith("http") &&
-                    !line.contains("wmv") &&
-                    !line.contains("m3u")) {
+            } else if (line.startsWith("http")) {
                 mStreamUri = Uri.parse(line.trim());
             }
 
             // PLS: found station name
-            else if (line.startsWith("Title1=") &&
-                    !line.contains("wmv") &&
-                    !line.contains("m3u")) {
+            else if (line.startsWith("Title1=")) {
                 mStationName = line.substring(7).trim();
             // PLS: found stream URL
             } else if (line.startsWith("File1=http")) {
@@ -305,7 +336,6 @@ public final class Station implements Comparable<Station> {
             mStationName = "New Station";
         }
 
-        // TODO check if found mStreamUri is a raw audio file using getContentType and isAudioFile
         if (mStreamUri == null) {
             Log.e(LOG_TAG, "Unable to parse: " + fileContent);
             return false;
@@ -429,21 +459,25 @@ public final class Station implements Comparable<Station> {
 
     /* Setter for playlist file object of station */
     public void setStationPlaylistFile(File folder) {
-        // strip out problematic characters
-        String stationNameCleaned = mStationName.replaceAll("[:/]", "_");
-        // construct location of m3u playlist file from station name and folder
-        String fileLocation = folder.toString() + "/" + stationNameCleaned + ".m3u";
-        mStationPlaylistFile = new File(fileLocation);
+        if (mStationName != null) {
+            // strip out problematic characters
+            String stationNameCleaned = mStationName.replaceAll("[:/]", "_");
+            // construct location of m3u playlist file from station name and folder
+            String fileLocation = folder.toString() + "/" + stationNameCleaned + ".m3u";
+            mStationPlaylistFile = new File(fileLocation);
+        }
     }
 
 
     /* Setter for image file object of station */
     public void setStationImageFile(File folder) {
-        // strip out problematic characters
-        String stationNameCleaned = mStationName.replaceAll("[:/]", "_");
-        // construct location of png image file from station name and folder
-        String fileLocation = folder.toString() + "/" + stationNameCleaned + ".png";
-        mStationImageFile = new File(fileLocation);
+        if (mStationName != null) {
+            // strip out problematic characters
+            String stationNameCleaned = mStationName.replaceAll("[:/]", "_");
+            // construct location of png image file from station name and folder
+            String fileLocation = folder.toString() + "/" + stationNameCleaned + ".png";
+            mStationImageFile = new File(fileLocation);
+        }
     }
 
 
