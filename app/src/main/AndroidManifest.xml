@@ -40,6 +40,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:scheme="http"/>
                 <data android:mimeType="audio/x-mpegurl" />
+                <data android:mimeType="audio/x-scpls" />
             </intent-filter>
 
             <!-- File extensions -->
