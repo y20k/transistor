@@ -8,6 +8,8 @@ Transistor - Radio app for Android
 
 Transistor is a bare bones app for listening to radio programs over the internet. The app stores stations as files on your device's external storage. It currently understands streams encoded in MP3 and OGG.
 
+Important note: This is an app of type BYOS ("bring your own station"). It does not feature any kind of built-in search option. You will have to manually add radio stations.
+
 Transistor is free software. It is published under the [MIT open source license](https://opensource.org/licenses/MIT). 
 
 Install Transistor
@@ -21,7 +23,7 @@ Install Transistor
 How to use Transistor
 ---------------------
 ### How to add a new radio station?
-The easiest way to add a new station is to search for streaming links and then choose Transistor as a your default handler for those file types. You can also tap the (+) symbol in the top bar and paste in streaming links directly.
+The easiest way to add a new station is to search for streaming links and then choose Transistor as a your default handler for those file types. You can also tap the (+) symbol in the top bar and paste in streaming links directly. Please note: Transistor does not feature any kind of built-in search option.
 
 ### How to play back a radio station?
 Tap the big Play button ;).
