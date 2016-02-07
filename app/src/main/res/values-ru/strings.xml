@@ -1,3 +1,4 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <resources>
     <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
     <string name="title_activity_player">"Сейчас играет"</string>
@@ -29,7 +30,7 @@
     <string name="dialog_add_station_button">"Добавить"</string>
     <string name="dialog_add_station_input_hint">"Вставьте адрес потокового вещания"</string>
     <string name="dialog_add_station_message">"Добавить новую станцию"</string>
-    <string name="dialog_add_station_howto">Вы можете добавлять ссылки оканчивающиеся на .m3u или .pls. Также возможно добавить новую станцию нажав на ссылку на поток в вашем веб-браузере.</string>
+    <string name="dialog_add_station_howto">Вы можете добавлять аудио потоки закодированные в mp3 или ogg, так же как и встроенные в m3u или pls файлах. Также возможно добавить новую станцию нажав на ссылку на поток (pls или m3u) в вашем веб-браузере.</string>
     <string name="dialog_delete_station_message">"Удалить станцию"</string>
     <string name="dialog_button_delete">"Удалить"</string>
     <string name="dialog_generic_button_okay">"Хорошо"</string>
@@ -46,7 +47,7 @@
     <string name="dialog_error_message_download">"Transistor старался, но не cмог понять данную ссылку."</string>
     <string name="dialog_error_message_download_external_storage">Внешнее хранилище:</string>
     <string name="dialog_error_message_download_station_url">Адрес станции:</string>
-    <string name="dialog_error_message_download_hint_m3u">Подсказка: Transistor может работать только с адресами оканчивающимися на .m3u или .pls.</string>
+    <string name="dialog_error_message_download_hint_m3u">Подсказка: Transistor может работать только с потоками закодированными в mp3 и ogg, или с адресами оканчивающимися на .m3u или .pls.</string>
     <string name="dialog_error_message_download_file_content">Содержание файла:</string>
 
 
@@ -69,45 +70,8 @@
     <string name="title_activity_infosheet">"Информационная страница"</string>
 
     <!-- HTML strings -->
-    <string name="html_about"><![CDATA[<!DOCTYPE html>
-    <html>
-        <body>
-            <h1>О программе Transistor</h1>
-            <h2>Приложение интернет радио для Android</h2>
-            <h3>Версия 1.2 (&quot;Cygnet Committee&quot;)</h3>
-            <p>Transistor простое приложение для прослушивания радиопередач через интернет. Приложение хранит станции как файлы на внешнем накопителе вашего устройства. Посмотрите на файлы с расширением m3u в директории /Android/data/org.y20k.transistor/Collection. В настоящее время приложение умеет работать с потоками, встроенными в m3u и pls ссылки.</p>
-            <p>Transistor свободное приложение. Оно распространяется под лицензией MIT. Вы можете найти исходный код на GitHub. Также на GitHub вы можете сообщить об ошибках или помочь в разработке.</p>
-            <p>https://github.com/y20k/transistor</p>
-            <p>https://opensource.org/licenses/MIT</p>
-            <h3>Какие разрешения необходимы Transistor?</h3>
-            <p><strong>INTERNET</strong><br />
-            Transistor вещает радиостанции через интернет.</p>
-            <p><strong>READ_EXTERNAL_STORAGE</strong><br />
-            Transistor требует доступ к изображениям и фотографиям, чтобы иметь возможность менять значки радиостанций.</p>
-            <p><strong>VIBRATE</strong><br />
-            Долгое нажатие на названии радиостанции вызывает небольшую вибрацию.</p>
-        </body>
-    </html>]]></string>
+    <string name="html_about">&lt;!DOCTYPE html&gt; &lt;html&gt; &lt;body&gt; &lt;h1&gt;О программе Transistor&lt;/h1&gt; &lt;h2&gt;Приложение интернет радио для Android&lt;/h2&gt; &lt;h3&gt;Версия 1.2 (&amp;quot;Cygnet Committee&amp;quot;)&lt;/h3&gt; &lt;p&gt;Transistor простое приложение для прослушивания радиопередач через интернет. Приложение хранит станции как файлы на внешнем накопителе вашего устройства. Посмотрите на файлы с расширением m3u в директории /Android/data/org.y20k.transistor/Collection. В настоящее время приложение умеет работать с потоками в форматах MP3 и OGG.&lt;/p&gt; &lt;p&gt;Важное примечание: в приложении нет какой-либо функции поиска радиостанций. Вы должны вручную добавлять их.&lt;/p&gt; &lt;p&gt;Transistor свободное приложение. Оно распространяется под лицензией MIT. Вы можете найти исходный код на GitHub. Также на GitHub вы можете сообщить об ошибках или помочь в разработке.&lt;/p&gt; &lt;p&gt;https://github.com/y20k/transistor&lt;/p&gt; &lt;p&gt;https://opensource.org/licenses/MIT&lt;/p&gt; &lt;h3&gt;Какие разрешения необходимы Transistor?&lt;/h3&gt; &lt;p&gt;&lt;strong&gt;INTERNET&lt;/strong&gt;&lt;br /&gt; Transistor вещает радиостанции через интернет.&lt;/p&gt; &lt;p&gt;&lt;strong&gt;READ_EXTERNAL_STORAGE&lt;/strong&gt;&lt;br /&gt; Transistor требует доступ к изображениям и фотографиям, чтобы иметь возможность менять значки радиостанций.&lt;/p&gt; &lt;p&gt;&lt;strong&gt;VIBRATE&lt;/strong&gt;&lt;br /&gt; Долгое нажатие на названии радиостанции вызывает небольшую вибрацию.&lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</string>
 
-    <string name="html_howto"><![CDATA[<!DOCTYPE html>
-    <html>
-        <body>
-            <h1>Как использовать Transistor</h1>
-            <h2>Как добавить новую радиостанцию?</h2>
-            <p>Самый простой способ добавить новую станцию - найти ссылку на поток (m3u или pls) и затем выбрать Transistor в качестве приложения по умолчанию для этих типов файлов. Вы также можете нажать на символ (+) в верхней части приложения и вставить ссылку на m3u.</p>
-            <h2>Как воспроизвести радиостанцию?</h2>
-            <p>Нажать большую кнопку «Воспроизведение» ;).</p>
-            <h2>Как остановить воспроизведение?</h2>
-            <p>Нажать большую кнопку «Стоп» или отсоединить наушники или смахнуть уведомление с экрана блокировки.</p>
-            <h2>Как переименовать или удалить станцию?</h2>
-            <p>Опции переименования и удаления доступны из списка станций и с экрана воспроизведения. Просто нажмите на символ с тремя точками. Вы также можете управлять списком станций через файловый менеджер (см. следующий вопрос).</p>
-            <h2>Где Transistor хранит станции?</h2>
-            <p>Transistor не хранит список станций в базе данных. Вместо этого он сохраняет станции как m3u файлы на внешнем накопителе вашего устройства. Можете свободно изменять эти файлы текстовым редактором. Файлы хранятся в директории /Android/data/org.y20k.transistor/Collection.</p>
-            <h2>Как я могу сделать резервную копию моих радиостанций и передать их?<h2>
-            <p>Transistor поддерживает функцию резервного копирования Android 6. Радиостанции всегда сохраняются в вашем аккаунте Google и могут быть восстановлены при переустановке. На устройствах работающих под более старыми версиями Android вы должны вручную сохранить и восстановить директорию &quot;Collection&quot;.</p>
-            <h2>Почему Transistor не имеет настроек?</h2>
-            <p>Здесь нечего настраивать ;). Transistor очень простое приложение. В зависимости от вашей точки зрения &quot;простое&quot; может значить великолепное или неполноценное.</p>
-        </body>
-    </html>]]></string>
+    <string name="html_howto">&lt;!DOCTYPE html&gt; &lt;html&gt; &lt;body&gt; &lt;h1&gt;Как использовать Transistor&lt;/h1&gt; &lt;h2&gt;Как добавить новую радиостанцию?&lt;/h2&gt; &lt;p&gt;Самый простой способ добавить новую станцию - найти ссылку на поток (m3u или pls) в интернете и затем выбрать Transistor в качестве приложения по умолчанию для этих типов файлов. Вы также можете нажать на символ (+) в верхней части приложения и вставить ссылку на m3u. Примите во внимание: Transistor не имеет встроенной функции поиска радиостанций.&lt;/p&gt; &lt;h2&gt;Как воспроизвести радиостанцию?&lt;/h2&gt; &lt;p&gt;Нажать большую кнопку «Воспроизведение» ;).&lt;/p&gt; &lt;h2&gt;Как остановить воспроизведение?&lt;/h2&gt; &lt;p&gt;Нажать большую кнопку «Стоп» или отсоединить наушники или смахнуть уведомление с экрана блокировки.&lt;/p&gt; &lt;h2&gt;Как переименовать или удалить станцию?&lt;/h2&gt; &lt;p&gt;Опции переименования и удаления доступны из списка станций и с экрана воспроизведения. Просто нажмите на символ с тремя точками. Вы также можете управлять списком станций через файловый менеджер (см. следующий вопрос).&lt;/p&gt; &lt;h2&gt;Где Transistor хранит станции?&lt;/h2&gt; &lt;p&gt;Transistor не хранит список станций в базе данных. Вместо этого он сохраняет станции как m3u файлы на внешнем накопителе вашего устройства. Можете свободно изменять эти файлы текстовым редактором. Файлы хранятся в директории /Android/data/org.y20k.transistor/Collection.&lt;/p&gt; &lt;h2&gt;Как я могу сделать резервную копию моих радиостанций и передать их?&lt;h2&gt; &lt;p&gt;Transistor поддерживает функцию резервного копирования Android 6. Радиостанции всегда сохраняются в вашем аккаунте Google и могут быть восстановлены при переустановке. На устройствах работающих под более старыми версиями Android вы должны вручную сохранить и восстановить директорию &amp;quot;Collection&amp;quot;.&lt;/p&gt; &lt;h2&gt;Почему Transistor не имеет настроек?&lt;/h2&gt; &lt;p&gt;Здесь нечего настраивать ;). Transistor очень простое приложение. В зависимости от вашей точки зрения &amp;quot;простое&amp;quot; может значить великолепное или неполноценное.&lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</string>
 
 </resources>
