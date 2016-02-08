@@ -35,8 +35,9 @@ public final class NotificationHelper {
 
     /* Keys */
     private static final int PLAYER_SERVICE_NOTIFICATION_ID = 1;
+    private static final String ACTION_START = "org.y20k.transistor.action.PLAY";
+    private static final String ACTION_PAUSE = "org.y20k.transistor.action.PAUSE";
     private static final String ACTION_STOP = "org.y20k.transistor.action.STOP";
-
 
     /* Main class variables */
     private final Context mContext;
@@ -60,7 +61,7 @@ public final class NotificationHelper {
         NotificationCompat.Builder builder;
         Notification notification;
         NotificationManager notificationManager;
-        String notificationText;
+        //String notificationText;
         String notificationTitle;
         int notificationColor;
 
@@ -68,16 +69,23 @@ public final class NotificationHelper {
         notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 
         // create content of notification
-        notificationText = mContext.getString(R.string.notification_swipe_to_stop);
+        //notificationText = mContext.getString(R.string.notification_swipe_to_stop);
         notificationTitle = mContext.getString(R.string.notification_playing) + ": " + mStationName;
         notificationColor = ContextCompat.getColor(mContext, R.color.transistor_red);
 
         // explicit intent for notification tap
         Intent tapIntent = new Intent(mContext, PlayerActivity.class);
 
-        // explicit intent for notification swipe
-        Intent swipeIntent = new Intent(mContext, PlayerService.class);
-        swipeIntent.setAction(ACTION_STOP);
+
+        // explicit intent to start player
+        Intent startIntent = new Intent(mContext, PlayerService.class);
+        startIntent.setAction(ACTION_START);
+        // explicit intent to pause player
+        Intent pauseIntent = new Intent(mContext, PlayerService.class);
+        pauseIntent.setAction(ACTION_PAUSE);
+        // explicit intent to stop player
+        Intent stopIntent = new Intent(mContext, PlayerService.class);
+        stopIntent.setAction(ACTION_STOP);
 
 
         // artificial back stack for started Activity.
@@ -91,25 +99,38 @@ public final class NotificationHelper {
 
         // pending intent wrapper for notification tap
         PendingIntent tapPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-        // pending intent wrapper for notification swipe
-        PendingIntent swipePendingIntent = PendingIntent.getService(mContext, 0, swipeIntent, 0);
+        // pending intent wrapper for notification - start player
+        PendingIntent startPendingIntent = PendingIntent.getService(mContext, 0, startIntent, 0);
+        // pending intent wrapper for notification - pause player
+        PendingIntent pausePendingIntent = PendingIntent.getService(mContext, 0, pauseIntent, 0);
+        // pending intent wrapper for notification - stop player
+        PendingIntent stopPendingIntent = PendingIntent.getService(mContext, 0, stopIntent, 0);
+
 
         // construct notification in builder
         builder = new NotificationCompat.Builder(mContext);
         builder.setSmallIcon(R.drawable.notification_icon_24dp);
         builder.setContentTitle(notificationTitle);
-        builder.setContentText(notificationText);
+        //builder.setContentText(notificationText);
         builder.setColor(notificationColor);
         // builder.setLargeIcon(largeIcon);
+
+        // notification actions
         builder.setContentIntent(tapPendingIntent);
-        builder.setDeleteIntent(swipePendingIntent);
+        builder.addAction(R.drawable.ic_play_arrow_black, "PLAY", startPendingIntent);
+        builder.addAction(R.drawable.ic_pause_black, "PAUSE", pausePendingIntent);
+        builder.addAction(R.drawable.ic_stop_black, "STOP", stopPendingIntent);
+
+        // set auto cancel
+        builder.setAutoCancel(false);
 
         // build notification
         notification = builder.build();
 
+        // don't clear notification
+        notification.flags = Notification.FLAG_NO_CLEAR;
+
         // display notification
         notificationManager.notify(PLAYER_SERVICE_NOTIFICATION_ID, notification);
-
     }
-
 }

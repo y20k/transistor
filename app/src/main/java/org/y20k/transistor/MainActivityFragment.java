@@ -67,6 +67,7 @@ public final class MainActivityFragment extends Fragment {
     /* Keys */
     private static final String ACTION_COLLECTION_CHANGED = "org.y20k.transistor.action.COLLECTION_CHANGED";
     private static final String ACTION_PLAYBACK_STARTED = "org.y20k.transistor.action.PLAYBACK_STARTED";
+    private static final String ACTION_PLAYBACK_PAUSED = "org.y20k.transistor.action.PLAYBACK_PAUSED";
     private static final String ACTION_PLAYBACK_STOPPED = "org.y20k.transistor.action.PLAYBACK_STOPPED";
     private static final String ACTION_IMAGE_CHANGE_REQUESTED = "org.y20k.transistor.action.IMAGE_CHANGE_REQUESTED";
     private static final String LIST_STATE = "ListState";
@@ -403,7 +404,17 @@ public final class MainActivityFragment extends Fragment {
         IntentFilter playbackStoppedIntentFilter = new IntentFilter(ACTION_PLAYBACK_STOPPED);
         LocalBroadcastManager.getInstance(mApplication).registerReceiver(playbackStoppedReceiver, playbackStoppedIntentFilter);
 
-        // broadcast receiver: player service stopped playback
+        // broadcast receiver: player service paused playback
+        BroadcastReceiver playbackPausedReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                refreshStationList();
+            }
+        };
+        IntentFilter playbackPausedIntentFilter = new IntentFilter(ACTION_PLAYBACK_PAUSED);
+        LocalBroadcastManager.getInstance(mApplication).registerReceiver(playbackPausedReceiver, playbackPausedIntentFilter);
+
+        // broadcast receiver: player service started playback
         BroadcastReceiver playbackStartedReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -451,6 +462,7 @@ public final class MainActivityFragment extends Fragment {
                     startActivityForResult(pickImageIntent, REQUEST_LOAD_IMAGE);
                 } else {
                     // permission denied
+                    Toast.makeText(mActivity, "Permissions denied", Toast.LENGTH_SHORT).show();
                 }
             }
         }

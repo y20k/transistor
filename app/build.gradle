@@ -9,7 +9,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 23
         versionCode 17
-        versionName "1.2.1 (Cygnet Committee)"
+        versionName "1.2.2 (Cygnet Committee)"
     }
     buildTypes {
         release {

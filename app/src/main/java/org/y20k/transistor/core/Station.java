@@ -238,11 +238,7 @@ public final class Station implements Comparable<Station> {
             String contentType = getContentType(streamURL);
             Log.v(LOG_TAG, "Content type is " + contentType);
 
-            if (isAudioFile(contentType)) {
-                return true;
-            } else {
-                return false;
-            }
+            return isAudioFile(contentType);
 
         } catch (MalformedURLException e) {
             e.printStackTrace();

@@ -200,8 +200,8 @@ public final class PlayerActivityFragment extends Fragment {
                     // rotate playback button
                     changeVisualState(mActivity);
                     // start player
-                    mPlayerService.startActionPlay(mActivity, mStreamUri, mStationName);
                     Log.v(LOG_TAG, "Starting player service.");
+                    mPlayerService.startActionPlay(mActivity, mStreamUri, mStationName);
 
                 }
                 // playback active - stop playback
@@ -305,6 +305,7 @@ public final class PlayerActivityFragment extends Fragment {
                     startActivityForResult(pickImageIntent, REQUEST_LOAD_IMAGE);
                 } else {
                     // permission denied
+                    Toast.makeText(mActivity, "Permissions denied", Toast.LENGTH_SHORT).show();
                 }
             }
         }
