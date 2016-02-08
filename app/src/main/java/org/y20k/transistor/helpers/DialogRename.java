@@ -35,6 +35,7 @@ public final class DialogRename {
 
     /* Keys */
     private static final String PLAYBACK = "playback";
+    private static final String STATION_ID_CURRENT = "stationIDCurrent";
 
 
     /* Main class variables */
@@ -85,11 +86,6 @@ public final class DialogRename {
                     // notify the user
                     Toast.makeText(mActivity, R.string.toastalert_rename_unsuccessful, Toast.LENGTH_LONG).show();
                 } else {
-                    // notify MainActivityFragment
-                    if (mStationRenamedListener != null) {
-                        mStationRenamedListener.stationRenamed();
-                    }
-
                     // check for playback
                     SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mActivity);
                     boolean playback = settings.getBoolean(PLAYBACK, false);
@@ -99,6 +95,20 @@ public final class DialogRename {
                         NotificationHelper notificationHelper = new NotificationHelper(mActivity);
                         notificationHelper.setStationName(mStationName);
                         notificationHelper.createNotification();
+
+                        // save new station ID if changed
+                        int newIndex = mCollection.getStationIndexChanged();
+                        if (newIndex != -1) {
+                            SharedPreferences.Editor editor = settings.edit();
+                            editor.putInt(STATION_ID_CURRENT, newIndex);
+                            editor.apply();
+                        }
+
+                    }
+
+                    // notify MainActivityFragment
+                    if (mStationRenamedListener != null) {
+                        mStationRenamedListener.stationRenamed();
                     }
 
                 }

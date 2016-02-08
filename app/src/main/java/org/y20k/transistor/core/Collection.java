@@ -36,6 +36,7 @@ public final class Collection {
     /* Main class variables */
     private final File mFolder;
     private final LinkedList<Station> mStations;
+    private int mStationIndexChanged;
 
 
     /* Constructor */
@@ -82,6 +83,9 @@ public final class Collection {
             // sort mStations
             Collections.sort(mStations);
         }
+
+        // default value for mStationIndexChanged
+        mStationIndexChanged = -1;
 
     }
 
@@ -170,6 +174,12 @@ public final class Collection {
             // sort mStations
             Collections.sort(mStations);
 
+            // save new index if changed
+            int newIndex = mStations.indexOf(station);
+            if (newIndex != stationID) {
+                mStationIndexChanged = newIndex;
+            }
+
             return true;
         } else {
             // name of station is null or not new
@@ -188,6 +198,12 @@ public final class Collection {
     /* Getter for mStations */
     public LinkedList<Station> getStations() {
         return mStations;
+    }
+
+
+    /* Getter for mStationIndexChanged */
+    public int getStationIndexChanged () {
+        return mStationIndexChanged;
     }
 
 
