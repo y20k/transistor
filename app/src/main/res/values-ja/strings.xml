@@ -57,4 +57,7 @@
 
     <string name="title_activity_infosheet">情報シート</string>
 
+    <string name="dialog_add_station_howto">MP3 と OGG にエンコードされた素のオーディオ ストリーム同様、pls または m3u ファイルにカプセル化されたストリーム を追加できます。また、web ブラウザーでストリーミングのリンクをタップして新しいステーションを追加できます (pls または m3u)。</string>
+    <string name="html_about">&lt;!DOCTYPE html&gt; &lt;html&gt; &lt;body&gt; &lt;h1&gt;トランジスターについて&lt;/h1&gt; &lt;h2&gt;Android 用ラジオ アプリ&lt;/h2&gt; &lt;h3&gt;バージョン 1.2 (&amp;quot;Cygnet Committee&amp;quot;)&lt;/h3&gt; &lt;p&gt;トランジスターはインターネット上のラジオ番組を聴くためベアボーン アプリです。アプリは、デバイスの外部ストレージにファイルとして局を格納します。/Android/data/org.y20k.transistor/Collection で、m3u の種類のファイルを探します。現在、MP3 や OGG ファイルでエンコードされたストリームを理解することができます。&lt;/p&gt; &lt;p&gt;重要な注意: これはBYOS (&amp;quot;あなた自身で局を持ち込む&amp;quot;) 形式のアプリです。内蔵の検索オプションの類は機能しません。ラジオ局を手動で追加する必要があります。&lt;/p&gt; &lt;p&gt;トランジスターは、フリー ソフトウェアです。MIT オープンソース ライセンスの下で公開されます。コードは GitHub で見つけることができます。GitHub はまた、バグを報告したり、興味があれば貢献するのに良い場所です。&lt;/p&gt; &lt;p&gt;https://github.com/y20k/transistor&lt;/p&gt; &lt;p&gt;https://opensource.org/licenses/MIT&lt;/p&gt; &lt;h3&gt;トランジスターが必要なアクセス許可は何ですか?&lt;/h3&gt; &lt;p&gt;&lt;strong&gt;INTERNET アクセス許可&lt;/strong&gt;&lt;br /&gt; トランジスターは、インターネット上のラジオ局をストリームします。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;READ_EXTERNAL_STORAGE アクセス許可&lt;/strong&gt;&lt;br /&gt; トランジスターは、ラジオ局アイコンをカスタマイズするオプションを提供するため、画像と写真へのアクセスを必要とします。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;VIBRATE アクセス許可&lt;/strong&gt;&lt;br /&gt; ラジオ局を長押しすると、小さな振動が切り替わります。&lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</string>
+
     </resources>
