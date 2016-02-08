@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.y20k.transistor"
-    android:versionCode="17"
-    android:versionName="1.2.1 (Cygnet Committee)">
-
-    <uses-sdk android:minSdkVersion="19" android:targetSdkVersion="23" />
+    package="org.y20k.transistor">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -92,6 +88,7 @@
             android:exported="false">
             <intent-filter>
                 <action android:name="org.y20k.transistor.action.PLAY" />
+                <action android:name="org.y20k.transistor.action.PAUSE" />
                 <action android:name="org.y20k.transistor.action.STOP" />
             </intent-filter>
         </service>

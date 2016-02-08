@@ -26,6 +26,7 @@ import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.service.notification.StatusBarNotification;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
@@ -53,8 +54,10 @@ public final class PlayerService extends Service implements
 
     /* Keys */
     private static final String ACTION_PLAY = "org.y20k.transistor.action.PLAY";
+    private static final String ACTION_PAUSE = "org.y20k.transistor.action.PAUSE";
     private static final String ACTION_STOP = "org.y20k.transistor.action.STOP";
     private static final String ACTION_PLAYBACK_STARTED = "org.y20k.transistor.action.PLAYBACK_STARTED";
+    private static final String ACTION_PLAYBACK_PAUSE = "org.y20k.transistor.action.PLAYBACK_PAUSED";
     private static final String ACTION_PLAYBACK_STOPPED = "org.y20k.transistor.action.PLAYBACK_STOPPED";
     private static final String EXTRA_STREAM_URI = "STREAM_URI";
     private static final String PLAYBACK = "playback";
@@ -108,11 +111,16 @@ public final class PlayerService extends Service implements
         else if (intent.getAction().equals(ACTION_PLAY)) {
             Log.v(LOG_TAG, "Service received command: PLAY");
 
+            // show Toast
+            Toast.makeText(this, "Transistor - Start Stream...", Toast.LENGTH_SHORT).show();
+
             // set mPlayback true
             mPlayback = true;
 
             // get URL of station from intent
-            mStreamUri = intent.getStringExtra(EXTRA_STREAM_URI);
+            if (intent.hasExtra(EXTRA_STREAM_URI)) {
+                mStreamUri = intent.getStringExtra(EXTRA_STREAM_URI);
+            }
 
             // start playback
             preparePlayback();
@@ -121,9 +129,26 @@ public final class PlayerService extends Service implements
             mPlayerInstanceCounter++;
         }
 
+        // ACTION PAUSE
+        else if (intent.getAction().equals(ACTION_PAUSE)) {
+            Log.v(LOG_TAG, "Service received command: PAUSE");
+
+            // show toast
+            Toast.makeText(this, "Transistor - Pause Stream...", Toast.LENGTH_SHORT).show();
+
+            // pause playback
+            pausePlayback();
+
+            // reset counter
+            mPlayerInstanceCounter = 0;
+        }
+
         // ACTION STOP
         else if (intent.getAction().equals(ACTION_STOP)) {
             Log.v(LOG_TAG, "Service received command: STOP");
+
+            // show Toast
+            Toast.makeText(this, "Transistor - Stop Stream...", Toast.LENGTH_SHORT).show();
 
             // set mPlayback false
             mPlayback = false;
@@ -416,6 +441,22 @@ public final class PlayerService extends Service implements
         LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(i);
     }
 
+    /* pause playback */
+    private void pausePlayback() {
+        // stop running player
+        if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
+            mMediaPlayer.pause();
+        }
+
+        // save state
+        mPlayback = false;
+        savePlaybackState();
+
+        // send local broadcast (needed by MainActivityFragment)
+        Intent i = new Intent();
+        i.setAction(ACTION_PLAYBACK_PAUSE);
+        LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(i);
+    }
 
     /* Finish playback */
     private void finishPlayback() {
