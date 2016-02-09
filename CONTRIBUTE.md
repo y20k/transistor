@@ -1,4 +1,5 @@
-## How to contribute to Transistor
+How to contribute to Transistor
+===============================
 
 ### Report a bug or suggest a new feature
 Bug and new features are being discussed on the [Issue Tracker](https://github.com/y20k/transistor/issues) on GitHub.
