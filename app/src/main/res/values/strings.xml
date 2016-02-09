@@ -59,6 +59,7 @@
     <string name="toastalert_delete_successful">Successfully removed station.</string>
     <string name="toastalert_no_external_storage">Unable to accesss external storage.</string>
     <string name="toastalert_headphones_unplugged">Headphones unplugged. Playback stopped.</string>
+    <string name="toastalert_permission_denied">Permission denied:</string>
     <string name="snackbar_request_storage_access">You want to add a new icon for this station. Transistor needs access to your images and photos for that.</string>
 
     <!-- notification -->

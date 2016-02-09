@@ -59,6 +59,7 @@
     <string name="toastalert_delete_successful">Station erfolgreich entfernt.</string>
     <string name="toastalert_no_external_storage">Zugriff auf den externen Speicher verweigert.</string>
     <string name="toastalert_headphones_unplugged">Kopfhörer entfernt. Playback gestoppt.</string>
+    <string name="toastalert_permission_denied">Fehlende Berechtigung:</string>
     <string name="snackbar_request_storage_access">Um das Icon einer Radiostation ändern zu können, benötigt Transistor Zugriff auf Fotos und Bilder.</string>
 
     <!-- notification --> 

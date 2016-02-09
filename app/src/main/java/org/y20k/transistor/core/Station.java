@@ -213,12 +213,12 @@ public final class Station implements Comparable<Station> {
             if (parse(mRemoteFileContent) && streamUriIsAudioFile()) {
                 return true;
             } else {
-                mRemoteFileContent = "File does not contain valid streaming URL:\n" + mRemoteFileContent;
+                mRemoteFileContent = mRemoteFileContent + "\n[File probably does not contain a valid streaming URL.]";
                 return false;
             }
 
         } catch (IOException e) {
-            mRemoteFileContent = "HTTP error. Unable to get playlist file from server " + fileLocation.toString();
+            mRemoteFileContent = "[HTTP error. Unable to get playlist file from server\n" + fileLocation.toString() + "]";
             Log.e(LOG_TAG, mRemoteFileContent);
             return false;
         }
@@ -236,13 +236,9 @@ public final class Station implements Comparable<Station> {
             // determine content type of remote file
             URL streamURL = new URL(mStreamUri.toString());
             String contentType = getContentType(streamURL);
+            Log.v(LOG_TAG, "Content type of URL within playlist:" + contentType);
 
-            if (isAudioFile(contentType)) {
-                return true;
-            } else {
-                Log.v(LOG_TAG, "Content type of URL within playlist is not an audio file (" + contentType + ")");
-                return false;
-            }
+            return isAudioFile(contentType);
 
         } catch (MalformedURLException e) {
             e.printStackTrace();

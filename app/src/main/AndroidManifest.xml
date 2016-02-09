@@ -2,8 +2,8 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.y20k.transistor"
-    android:versionCode="17"
-    android:versionName="1.2.1 (Cygnet Committee)">
+    android:versionCode="18"
+    android:versionName="1.2.2 (Cygnet Committee)">
 
     <uses-sdk android:minSdkVersion="19" android:targetSdkVersion="23" />
 

@@ -78,8 +78,7 @@ public final class StationDownloader extends AsyncTask<Void, Void, Station> {
         if (mErrors) {
             return null;
         } else {
-            Station station = new Station(mFolder, mStationURL);
-            return station;
+            return new Station(mFolder, mStationURL);
         }
     }
 

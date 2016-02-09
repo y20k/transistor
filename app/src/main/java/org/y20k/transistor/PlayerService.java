@@ -109,7 +109,9 @@ public final class PlayerService extends Service implements
             mPlayback = true;
 
             // get URL of station from intent
-            mStreamUri = intent.getStringExtra(EXTRA_STREAM_URI);
+            if (intent.hasExtra(EXTRA_STREAM_URI)) {
+                mStreamUri = intent.getStringExtra(EXTRA_STREAM_URI);
+            }
 
             // start playback
             preparePlayback();

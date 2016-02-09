@@ -451,6 +451,7 @@ public final class MainActivityFragment extends Fragment {
                     startActivityForResult(pickImageIntent, REQUEST_LOAD_IMAGE);
                 } else {
                     // permission denied
+                    Toast.makeText(mActivity, R.string.toastalert_permission_denied + " READ_EXTERNAL_STORAGE", Toast.LENGTH_LONG).show();
                 }
             }
         }

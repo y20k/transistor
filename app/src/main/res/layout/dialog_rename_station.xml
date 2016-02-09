@@ -19,5 +19,5 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:hint="@string/dialog_rename_station_input_hint"
-        android:maxLength="255" />
+        android:maxLength="250" />
 </LinearLayout>
