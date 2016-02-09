@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='UTF-8'?>
 <resources>
     <string name="app_name">Транзистор</string>  <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
     <string name="title_activity_player">Тренутно пуштање</string>
@@ -69,25 +69,7 @@
     <string name="title_activity_infosheet">Страница са подацима</string>
 
     <!-- HTML strings -->
-    <string name="html_about"><![CDATA[<!DOCTYPE html>
-    <html>
-        <body>
-            <h1>О Транзистору</h1> 
-            <h2>Радио апликација за Андроид</h2> 
-            <h3>Издање 1.2 (&amp;quot;Cygnet Committee&amp;quot;)</h3> 
-            <p>Транзистор је проста апликација за слушање радија преко интернета. Апликација успрема станице као фајлове на спољашње складиште вашег уређаја. Потражите m3u фајлове унутар /Android/data/org.y20k.transistor/Collection. Тренутно су подржани токови кодирани као МП3 или ОГГ.</p> 
-            <p>Транзистор је слободан софтвер. Објављен је под МИТ лиценцом отвореног кôда. Кôд можете наћи на Гитхабу. Гитхаб је такође добро место за пријаву грешака или за допринос, ако сте заинтересовани.</p> 
-            <p>https://github.com/y20k/transistor</p> 
-            <p>https://opensource.org/licenses/MIT</p> 
-            <h3>Које су дозволе потребне Транзистору?</h3> 
-            <p><strong>Дозвола INTERNET</strong><br /> 
-            Транзистор пушта токове радио станица са интернета.</p> 
-            <p><strong>Дозвола READ_EXTERNAL_STORAGE</strong><br /> 
-            Транзистору треба приступ вашим сликама и фотографијама како бисте могли да прилагодите иконе радио станица.</p> 
-            <p><strong>Permission VIBRATE</strong><br /> 
-            Tapping and holding a radio station will toggle a tiny vibration.</p> 
-        </body>
-    </html>]]></string>
+    <string name="html_about">&lt;!DOCTYPE html&gt; &lt;html&gt; &lt;body&gt; &lt;h1&gt;О Транзистору&lt;/h1&gt; &lt;h2&gt;Радио апликација за Андроид&lt;/h2&gt; &lt;h3&gt;Издање 1.2 (&amp;amp;quot;Cygnet Committee&amp;amp;quot;)&lt;/h3&gt; &lt;p&gt;Транзистор је проста апликација за слушање радија преко интернета. Апликација успрема станице као фајлове на спољашње складиште вашег уређаја. Потражите m3u фајлове унутар /Android/data/org.y20k.transistor/Collection. Тренутно су подржани токови кодирани као МП3 или ОГГ.&lt;/p&gt; &lt;p&gt;Важна напомена: Ова апликација је типа „уради сам“ (&amp;quot;додајте своју станицу&amp;quot;). Нема уграђене претраге већ морате ручно да додајете радио станице.&lt;/p&gt; &lt;p&gt;Транзистор је слободан софтвер. Објављен је под МИТ лиценцом отвореног кôда. Кôд можете наћи на Гитхабу. Гитхаб је такође добро место за пријаву грешака или за допринос, ако сте заинтересовани.&lt;/p&gt; &lt;p&gt;https://github.com/y20k/transistor&lt;/p&gt; &lt;p&gt;https://opensource.org/licenses/MIT&lt;/p&gt; &lt;h3&gt;Које су дозволе потребне Транзистору?&lt;/h3&gt; &lt;p&gt;&lt;strong&gt;Дозвола INTERNET&lt;/strong&gt;&lt;br /&gt; Транзистор пушта токове радио станица са интернета.&lt;/p&gt; &lt;p&gt;&lt;strong&gt;Дозвола READ_EXTERNAL_STORAGE&lt;/strong&gt;&lt;br /&gt; Транзистору треба приступ вашим сликама и фотографијама како бисте могли да прилагодите иконе радио станица.&lt;/p&gt; &lt;p&gt;&lt;strong&gt;Permission VIBRATE&lt;/strong&gt;&lt;br /&gt; Tapping and holding a radio station will toggle a tiny vibration.&lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</string>
 
     <string name="html_howto"><![CDATA[<!DOCTYPE html>
     <html>
@@ -110,4 +92,5 @@
         </body>
     </html>]]></string>
 
-</resources>
+<string name="toastalert_permission_denied">Дозвола одбијена:</string>
+    </resources>
