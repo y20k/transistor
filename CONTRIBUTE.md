@@ -9,4 +9,4 @@ The translations are managed on [Weblate](https://hosted.weblate.org/projects/tr
 
 ### Submit your own solutions
 Help is very welcome. Be it in the form of code, or artwork, or enhancements to the website, or tutorial videos, or whatever. 
-**But please** suggest new features or enhancements in advance on the [Issue Tracker](https://github.com/y20k/transistor/issues) before implementing them.
+**But please** suggest new features or enhancements in advance on the [Issue Tracker](https://github.com/y20k/transistor/issues) before implementing them. The issue "[Previous discussions and feature requests](https://github.com/y20k/transistor/issues/48)" lists some of the features that were rejected - either because they did not fit conceptually or becaue I could not figure out how to implement them.
