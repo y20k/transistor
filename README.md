@@ -10,7 +10,7 @@ Transistor is a bare bones app for listening to radio programs over the internet
 
 Important note: This is an app of type BYOS ("bring your own station"). It does not feature any kind of built-in search option. You will have to manually add radio stations.
 
-Transistor is free software. It is published under the [MIT open source license](https://opensource.org/licenses/MIT). 
+Transistor is free software. It is published under the [MIT open source license](https://opensource.org/licenses/MIT). Want to help? Please check out the notes in [CONTRIBUTE.md](https://github.com/y20k/transistor/blob/master/CONTRIBUTE.md) first.
 
 Install Transistor
 ------------------
