@@ -121,7 +121,7 @@ public final class MainActivityFragment extends Fragment {
 
         try {
             // get collection folder from external storage
-            mFolder = new File(mActivity.getExternalFilesDir("Collection").toString());
+            mFolder = mActivity.getExternalFilesDir("Collection");
         } catch (NullPointerException e) {
             // notify user and log exception
             Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_no_external_storage), Toast.LENGTH_LONG).show();
@@ -356,24 +356,15 @@ public final class MainActivityFragment extends Fragment {
         // check for intent of tyoe VIEW
         if (Intent.ACTION_VIEW.equals(intent.getAction())) {
 
-            // set new station URL
-            String newStationURL;
-            // mime type check
-            if (intent.getType() != null && intent.getType().startsWith("audio/")) {
-                newStationURL = intent.getDataString();
-            }
-            // no mime type
-            else {
-                newStationURL = intent.getDataString();
-            }
+            Uri newStationUri = intent.getData();
 
             // clear the intent
             intent.setAction("");
 
             // check for null
-            if (newStationURL != null) {
+            if (newStationUri != null) {
                 // download and add new station
-                StationDownloader stationDownloader = new StationDownloader(newStationURL, mActivity);
+                StationDownloader stationDownloader = new StationDownloader(newStationUri, mActivity);
                 stationDownloader.execute();
 
                 // send local broadcast

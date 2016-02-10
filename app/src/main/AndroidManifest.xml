@@ -39,8 +39,11 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:scheme="http"/>
+                <data android:scheme="content" />
+                <data android:scheme="file" />
                 <data android:mimeType="audio/x-mpegurl" />
                 <data android:mimeType="audio/x-scpls" />
+                <data android:mimeType="application/x-mpegurl" />
             </intent-filter>
 
             <!-- File extensions -->
@@ -49,6 +52,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:scheme="http"/>
+                <data android:scheme="https" />
+                <data android:scheme="content" />
+                <data android:scheme="file" />
                 <data android:host="*" />
                 <data android:pathPattern=".*\\.m3u" />
                 <data android:pathPattern=".*\\.m3u8" />

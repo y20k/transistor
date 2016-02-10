@@ -16,6 +16,7 @@ package org.y20k.transistor.helpers;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -46,24 +47,22 @@ public final class StationDownloader extends AsyncTask<Void, Void, Station> {
     private final Activity mActivity;
     private Collection mCollection;
     private File mFolder;
-    private String mStationURLString;
+    private Uri mStationUri;
     private URL mStationURL;
     private final boolean mErrors;
 
 
     /* Constructor */
-    public StationDownloader(String stationURLString, Activity activity) {
+    public StationDownloader(Uri stationUri, Activity activity) {
         mActivity = activity;
-        mStationURLString = stationURLString;
+        mStationUri = stationUri;
 
         // get mFolder and mStationURL
-        if (getFolder() && urlCleanup()) {
+        if (getFolder()) {
             mErrors = false;
             // load collection
             mCollection = new Collection(mFolder);
-            // notify user
-            String toastMessage = mActivity.getString(R.string.toastmessage_add_download_started);
-            Toast.makeText(mActivity, toastMessage + mStationURLString, Toast.LENGTH_LONG).show();
+
         } else {
             // something is wrong with external storage or url
             mErrors = true;
@@ -75,10 +74,23 @@ public final class StationDownloader extends AsyncTask<Void, Void, Station> {
     /* Background thread: download station */
     @Override
     public Station doInBackground(Void... params) {
-        if (mErrors) {
-            return null;
-        } else {
+
+        String scheme = mStationUri.getScheme();
+
+        if (!mErrors && scheme.startsWith("http")  && urlCleanup()) {
+            // notify user
+//            Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_add_download_started) + " " + mStationLocationString, Toast.LENGTH_LONG).show();
+            // download and return new station
             return new Station(mFolder, mStationURL);
+
+        } else if (!mErrors && scheme.startsWith("file")){
+            // notify user
+//            Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_add_open_file_started) + " " + mStationLocationString, Toast.LENGTH_LONG).show();
+            // TODO read file and return new station
+            return new Station(mFolder, mStationUri);
+
+        } else {
+            return null;
         }
     }
 
@@ -87,7 +99,7 @@ public final class StationDownloader extends AsyncTask<Void, Void, Station> {
     @Override
     protected void onPostExecute(Station station) {
 
-        if (mErrors || station.getDownloadError()) {
+        if (mErrors || station == null) {
             // construct error message
             String errorTitle = mActivity.getResources().getString(R.string.dialog_error_title_download);
             String errorMessage = mActivity.getResources().getString(R.string.dialog_error_message_download);
@@ -100,13 +112,13 @@ public final class StationDownloader extends AsyncTask<Void, Void, Station> {
             sb.append("\n\n");
             sb.append(mActivity.getResources().getString(R.string.dialog_error_message_download_station_url));
             sb.append("\n");
-            sb.append(mStationURLString);
-            if (!mStationURLString.endsWith("m3u") || !mStationURLString.endsWith("pls") ) {
+            sb.append(mStationUri);
+            if (!mStationUri.getLastPathSegment().contains("m3u") || !mStationUri.getLastPathSegment().contains("pls") ) {
                 sb.append("\n\n");
                 sb.append(mActivity.getResources().getString(R.string.dialog_error_message_download_hint_m3u));
             }
 
-            if (station != null) {
+            if (station != null && station.getDownloadError()) {
                 String remoteFileContent = station.getRemoteFileContent();
                 if (remoteFileContent != null) {
                     sb.append("\n\n");
@@ -140,7 +152,7 @@ public final class StationDownloader extends AsyncTask<Void, Void, Station> {
     /* Get collection folder from external storage */
     private boolean getFolder() {
         try {
-            mFolder = new File(mActivity.getExternalFilesDir("Collection").toString());
+            mFolder = mActivity.getExternalFilesDir("Collection");
             return true;
         } catch (NullPointerException e) {
             // notify user and log exception
@@ -154,11 +166,11 @@ public final class StationDownloader extends AsyncTask<Void, Void, Station> {
     /* checks and cleans url string and return url */
     private boolean urlCleanup() {
         // remove whitespaces
-        mStationURLString = mStationURLString.trim();
+//        mStationUri = mStationUri.trim();
 
         // create and check url
         try {
-            mStationURL = new URL(mStationURLString);
+            mStationURL = new URL(mStationUri.toString());
             return true;
         } catch (MalformedURLException e) {
             e.printStackTrace();

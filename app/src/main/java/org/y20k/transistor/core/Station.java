@@ -66,9 +66,9 @@ public final class Station implements Comparable<Station> {
         // set mStationPlaylistFile and filename
         mStationPlaylistFile = file;
 
-        // read mStationPlaylistFile
+        // read and parse mStationPlaylistFile
         if (mStationPlaylistFile.exists()) {
-            read();
+            parse(read(mStationPlaylistFile));
         }
 
         // set image file object
@@ -116,6 +116,37 @@ public final class Station implements Comparable<Station> {
 
         // set image file object
         setStationImageFile(folder);
+    }
+
+
+    /* Constructor when given folder and local file location for playlist */
+    public Station(File folder, Uri fileLocation) {
+
+        File localFile = new File(fileLocation.getPath());
+
+        if (localFile.exists()) {
+            mRemoteFileContent = read(localFile);
+        } else {
+            Log.v(LOG_TAG, "File does not exist " + localFile);
+        }
+
+
+        Log.v(LOG_TAG, "CONTENT " + mRemoteFileContent);
+
+        // parse result of downloadPlaylistFile
+        if (parse(mRemoteFileContent) && streamUriIsAudioFile()) {
+            mDownloadError = false;
+        } else {
+            mRemoteFileContent = mRemoteFileContent + "\n[File probably does not contain a valid streaming URL.]";
+            mDownloadError = true;
+        }
+
+        // set playlist file object - name of station required
+        setStationPlaylistFile(folder);
+
+        // set image file object
+        setStationImageFile(folder);
+
     }
 
 
@@ -344,12 +375,10 @@ public final class Station implements Comparable<Station> {
     }
 
 
-    /* Reads local mStationPlaylistFile and parses station */
-    private void read() {
+    /* Reads local stationPlaylistFile and parses station */
+    private String read(File stationPlaylistFile) {
 
-        String fileContent;
-
-        try (BufferedReader br = new BufferedReader(new FileReader(mStationPlaylistFile))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(stationPlaylistFile))) {
             String line;
             int counter = 0;
             StringBuilder sb = new StringBuilder("");
@@ -360,14 +389,13 @@ public final class Station implements Comparable<Station> {
                 sb.append("\n");
                 counter++;
             }
-            // point fileContent to StringBuilder result
-            fileContent = sb.toString();
 
-            // parse result of read operation and create new station
-            parse(fileContent);
+            // StringBuilder result
+            return sb.toString();
 
         } catch (IOException e) {
-            Log.e(LOG_TAG, "Unable to read mStationPlaylistFile " + mStationPlaylistFile.toString());
+            Log.e(LOG_TAG, "Unable to read mStationPlaylistFile " + stationPlaylistFile.toString());
+            return null;
         }
 
     }

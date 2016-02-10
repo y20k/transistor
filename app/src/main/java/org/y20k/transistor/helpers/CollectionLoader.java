@@ -51,7 +51,7 @@ final class CollectionLoader extends AsyncTask<Void, Void, Collection> {
     public CollectionLoader(Context context) {
         try {
             // get collection folder from external storage
-            mFolder = new File(context.getExternalFilesDir("Collection").toString());
+            mFolder = context.getExternalFilesDir("Collection");
             externalFilesDirDenied = false;
         } catch (NullPointerException e) {
             // notify user and log exception

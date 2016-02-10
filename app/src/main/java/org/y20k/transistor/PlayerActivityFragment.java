@@ -121,7 +121,7 @@ public final class PlayerActivityFragment extends Fragment {
 
         try {
             // get collection folder from external storage
-            File folder = new File(mActivity.getExternalFilesDir("Collection").toString());
+            File folder = mActivity.getExternalFilesDir("Collection");
             // load collection
             mCollection = new Collection(folder);
         } catch (NullPointerException e) {

@@ -17,6 +17,7 @@ package org.y20k.transistor.helpers;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -61,7 +62,7 @@ public final class DialogAddStation {
                     final String input = inputField.getText().toString();
 
                     // download and add new station
-                    StationDownloader stationDownloader = new StationDownloader(input, mActivity);
+                    StationDownloader stationDownloader = new StationDownloader(Uri.parse(input.trim()), mActivity);
                     stationDownloader.execute();
                 }
             }

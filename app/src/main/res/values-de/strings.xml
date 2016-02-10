@@ -53,6 +53,7 @@
     <!-- messages -->
     <string name="actioncall_message_start_here">Eine neue Station hinzufügen</string>
     <string name="toastmessage_add_download_started">Herunterladen:</string>
+    <string name="toastmessage_add_open_file_started">Öffne Datei:</string>
     <string name="toastmessage_long_press_playback_stopped">Playback gestoppt (Long Press)</string>
     <string name="toastmessage_long_press_playback_started">Playback gestarted (Long Press)</string>
     <string name="toastmessage_station_copied">Station kopiert</string>
