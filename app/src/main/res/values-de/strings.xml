@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <resources>
     <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
     <string name="title_activity_player">Jetzt hören</string>
@@ -7,7 +7,7 @@
     <string name="menu_about">Über Transistor</string>
     <string name="menu_howto">Wie Transistor funktioniert</string>
     <string name="menu_icon">Icon ändern</string>
-    <string name="menu_add">Hinzufügen</string>
+    <string name="menu_add">beifügen</string>
     <string name="menu_delete">Löschen</string>
     <string name="menu_rename">Umbenennen</string>
 
