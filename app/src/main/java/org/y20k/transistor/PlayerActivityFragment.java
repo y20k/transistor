@@ -17,6 +17,8 @@ package org.y20k.transistor;
 import android.Manifest;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -124,7 +126,7 @@ public final class PlayerActivityFragment extends Fragment {
             mCollection = new Collection(folder);
         } catch (NullPointerException e) {
             // notify user and log exception
-            Toast.makeText(mActivity, R.string.toastalert_no_external_storage, Toast.LENGTH_LONG).show();
+            Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_no_external_storage), Toast.LENGTH_LONG).show();
             Log.e(LOG_TAG, "Unable to access external storage.");
             // finish activity
             mActivity.finish();
@@ -183,6 +185,14 @@ public final class PlayerActivityFragment extends Fragment {
 
         // set text view to station name
         mStationNameView.setText(mStationName);
+
+
+        mStationNameView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                copyStationToClipboard();
+            }
+        });
 
         // construct image button
         mPlaybackButton = (ImageButton) mRootView.findViewById(R.id.player_playback_button);
@@ -305,7 +315,7 @@ public final class PlayerActivityFragment extends Fragment {
                     startActivityForResult(pickImageIntent, REQUEST_LOAD_IMAGE);
                 } else {
                     // permission denied
-                    Toast.makeText(mActivity, R.string.toastalert_permission_denied + " READ_EXTERNAL_STORAGE", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_permission_denied) + " READ_EXTERNAL_STORAGE", Toast.LENGTH_LONG).show();
                 }
             }
         }
@@ -318,6 +328,24 @@ public final class PlayerActivityFragment extends Fragment {
         if (requestCode == REQUEST_LOAD_IMAGE && resultCode == Activity.RESULT_OK && null != data) {
             // retrieve selected image from image picker
             processNewImage(data.getData());
+        }
+    }
+
+
+    /* Copy station date to system clipboard */
+    private void copyStationToClipboard() {
+        if (mStreamUri != null && mStationName != null) {
+            // prepare clip
+            String stationData = mStationName + " - " + mStreamUri.toString();
+            ClipData clip = ClipData.newPlainText("simple text",stationData);
+
+
+            // copy clip to clipboard
+            ClipboardManager cm = (ClipboardManager) mActivity.getSystemService(Context.CLIPBOARD_SERVICE);
+            cm.setPrimaryClip(clip);
+
+            // notify user
+            Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_station_copied), Toast.LENGTH_SHORT).show();
         }
     }
 

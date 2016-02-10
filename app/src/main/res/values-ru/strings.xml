@@ -56,6 +56,7 @@
     <string name="toastmessage_add_download_started">"Скачивается:"</string>
     <string name="toastmessage_long_press_playback_stopped">Воспроизведение остановлено</string>
     <string name="toastmessage_long_press_playback_started">Начинаю воспроизведение радиостанции</string>
+    <string name="toastmessage_station_copied">Station copied</string>
     <string name="toastalert_rename_unsuccessful">"Невозможно переименовать станцию. Пожалуйста, выберите другое имя."</string>
     <string name="toastalert_delete_successful">"Станция успешно удалена."</string>
     <string name="toastalert_no_external_storage">"Нет доступа к внешнему накопителю."</string>

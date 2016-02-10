@@ -84,7 +84,7 @@ public final class DialogRename {
                 boolean success = mCollection.rename(mStationID, mStationName);
                 if (!success) {
                     // notify the user
-                    Toast.makeText(mActivity, R.string.toastalert_rename_unsuccessful, Toast.LENGTH_LONG).show();
+                    Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_rename_unsuccessful), Toast.LENGTH_LONG).show();
                 } else {
                     // check for playback
                     SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mActivity);

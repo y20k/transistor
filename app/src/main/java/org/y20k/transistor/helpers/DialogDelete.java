@@ -70,7 +70,7 @@ public final class DialogDelete {
                 boolean success = mCollection.delete(mStationID);
                 if (success) {
                     // notify the user
-                    Toast.makeText(mActivity, R.string.toastalert_delete_successful, Toast.LENGTH_LONG).show();
+                    Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_delete_successful), Toast.LENGTH_LONG).show();
 
                     // send local broadcast
                     Intent i = new Intent();

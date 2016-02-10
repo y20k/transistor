@@ -46,6 +46,7 @@
     <string name="toastmessage_add_download_started">ダウンロードを開始:</string>
     <string name="toastmessage_long_press_playback_stopped">再生が停止しました (長押しを検出しました)</string>
     <string name="toastmessage_long_press_playback_started">再生を開始しました (長押しを検出しました)</string>
+    <string name="toastmessage_station_copied">Station copied</string>
     <string name="toastalert_rename_unsuccessful">放送局の名前を変更できません。別の名前を選択してください。</string>
     <string name="toastalert_delete_successful">放送局が削除されました。</string>
     <string name="toastalert_no_external_storage">外部ストレージにアクセスすることができません。</string>

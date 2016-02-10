@@ -450,7 +450,7 @@ public final class PlayerService extends Service implements
                 // stop playback
                 finishPlayback();
                 // notify user
-                Toast.makeText(context, R.string.toastalert_headphones_unplugged, Toast.LENGTH_LONG).show();
+                Toast.makeText(context, context.getString(R.string.toastalert_headphones_unplugged), Toast.LENGTH_LONG).show();
             }
         }
     }

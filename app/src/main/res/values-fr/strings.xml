@@ -55,6 +55,7 @@
     <string name="toastmessage_add_download_started">Téléchargement démarré :</string>
     <string name="toastmessage_long_press_playback_stopped">Lecture arrêtée (appui long détecté)</string>
     <string name="toastmessage_long_press_playback_started">Lecture démarrée (appui long détecté)</string>
+    <string name="toastmessage_station_copied">Station copied</string>
     <string name="toastalert_rename_unsuccessful">Impossible de renommer la station. Veuillez choisir un nom différent.</string>
     <string name="toastalert_delete_successful">Station supprimée avec succès.</string>
     <string name="toastalert_no_external_storage">Impossible d\'accéder au stockage externe.</string>

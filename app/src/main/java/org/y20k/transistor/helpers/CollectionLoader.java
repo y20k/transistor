@@ -55,7 +55,7 @@ final class CollectionLoader extends AsyncTask<Void, Void, Collection> {
             externalFilesDirDenied = false;
         } catch (NullPointerException e) {
             // notify user and log exception
-            Toast.makeText(context, R.string.toastalert_no_external_storage, Toast.LENGTH_LONG).show();
+            Toast.makeText(context, context.getString(R.string.toastalert_no_external_storage), Toast.LENGTH_LONG).show();
             Log.e(LOG_TAG, "Unable to access external storage.");
             externalFilesDirDenied = true;
         }

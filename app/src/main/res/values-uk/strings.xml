@@ -55,6 +55,7 @@
     <string name="toastmessage_add_download_started">Завантаження розпочато:</string>
     <string name="toastmessage_long_press_playback_stopped">Відтворення зупинено</string>
     <string name="toastmessage_long_press_playback_started">Відтворення розпочато</string>
+    <string name="toastmessage_station_copied">Station copied</string>
     <string name="toastalert_rename_unsuccessful">Не вдалося перейменувати станцію. Будь ласка, оберіть іншу назву.</string>
     <string name="toastalert_delete_successful">Станцію вилучено.</string>
     <string name="toastalert_no_external_storage">Не вдалося отримати доступ до зовнішнього сховища.</string>

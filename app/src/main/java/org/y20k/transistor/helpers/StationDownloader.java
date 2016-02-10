@@ -144,7 +144,7 @@ public final class StationDownloader extends AsyncTask<Void, Void, Station> {
             return true;
         } catch (NullPointerException e) {
             // notify user and log exception
-            Toast.makeText(mActivity, R.string.toastalert_no_external_storage, Toast.LENGTH_LONG).show();
+            Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_no_external_storage), Toast.LENGTH_LONG).show();
             Log.e(LOG_TAG, "Unable to access external storage.");
             return false;
         }
