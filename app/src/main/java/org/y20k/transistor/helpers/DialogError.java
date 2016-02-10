@@ -28,7 +28,7 @@ import org.y20k.transistor.R;
 /**
  * DialogError class
  */
-public final class DialogError {
+final class DialogError {
 
     /* Main class variables */
     private final Activity mActivity;

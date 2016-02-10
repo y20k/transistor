@@ -60,6 +60,7 @@
     <string name="toastalert_delete_successful">Postaja je bila odstranjena.</string>
     <string name="toastalert_no_external_storage">Nimam dostopa do zunanjega pomnilnika.</string>
     <string name="toastalert_headphones_unplugged">Prenos je bil ustavljen zaradi odstranitve slušalk.</string>
+    <string name="toastalert_permission_denied">Permission denied:</string>
     <string name="snackbar_request_storage_access">Za dodajanje nove ikone radijski postaji potrebuje Transistor dostop do vaših slik in fotografij.</string>
 
     <!-- notification -->

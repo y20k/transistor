@@ -60,6 +60,7 @@
     <string name="toastalert_delete_successful">Станцію вилучено.</string>
     <string name="toastalert_no_external_storage">Не вдалося отримати доступ до зовнішнього сховища.</string>
     <string name="toastalert_headphones_unplugged">Навушники відключені. Відтворення призупинено.</string>
+    <string name="toastalert_permission_denied">Permission denied:</string>
     <string name="snackbar_request_storage_access">Ви можете додати нову піктограму для станції. Для цього додаток потребує доступ до ваших зображень та фотографій.</string>
 
     <!-- notification -->

@@ -60,6 +60,7 @@
     <string name="toastalert_delete_successful">Станица успешно преименована.</string>
     <string name="toastalert_no_external_storage">Не могох да приступим спољашњем складишту.</string>
     <string name="toastalert_headphones_unplugged">Слушалице искључене. Пуштање заустављено.</string>
+    <string name="toastalert_permission_denied">Дозвола одбијена:</string>
     <string name="snackbar_request_storage_access">Желите да ставите нову икону за ову станицу. Транзистору за то треба приступ вашим сликама и фотографијама.</string>
 
     <!-- notification -->
@@ -93,5 +94,4 @@
         </body>
     </html>]]></string>
 
-<string name="toastalert_permission_denied">Дозвола одбијена:</string>
     </resources>

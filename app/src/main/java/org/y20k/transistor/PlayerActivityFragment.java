@@ -336,7 +336,7 @@ public final class PlayerActivityFragment extends Fragment {
     private void copyStationToClipboard() {
         if (mStreamUri != null && mStationName != null) {
             // prepare clip
-            String stationData = mStationName + " - " + mStreamUri.toString();
+            String stationData = mStationName + " - " + mStreamUri;
             ClipData clip = ClipData.newPlainText("simple text",stationData);
 
 

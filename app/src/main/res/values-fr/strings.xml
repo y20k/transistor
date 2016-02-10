@@ -60,6 +60,7 @@
     <string name="toastalert_delete_successful">Station supprimée avec succès.</string>
     <string name="toastalert_no_external_storage">Impossible d\'accéder au stockage externe.</string>
     <string name="toastalert_headphones_unplugged">Casque débranché. Lecture arrêtée.</string>
+    <string name="toastalert_permission_denied">Permission denied:</string>
     <string name="snackbar_request_storage_access">Vous souhaitez ajouter un nouveau logo pour cette station. Pour cela, Transistor a besoin d\'accéder à vos images et photos.</string>
 
     <!-- notification -->

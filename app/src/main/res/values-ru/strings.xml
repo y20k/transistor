@@ -61,6 +61,7 @@
     <string name="toastalert_delete_successful">"Станция успешно удалена."</string>
     <string name="toastalert_no_external_storage">"Нет доступа к внешнему накопителю."</string>
     <string name="toastalert_headphones_unplugged">"Наушники отключили. Воспроизведение остановлено."</string>
+    <string name="toastalert_permission_denied">Permission denied:</string>
     <string name="snackbar_request_storage_access">"Вы хотите добавить новую иконку для этой станции. Для этого приложению необходим доступ к изображениям и фотографиям."</string>
 
     <!-- notification -->
