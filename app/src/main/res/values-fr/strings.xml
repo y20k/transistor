@@ -52,16 +52,16 @@
 
     <!-- messages -->
     <string name="actioncall_message_start_here">Ajouter une station</string>
-    <string name="toastmessage_add_download_started">Téléchargement démarré:</string>
-    <string name="toastmessage_add_open_file_started">Opening file:</string>
+    <string name="toastmessage_add_download_started">Téléchargement démarré :</string>
+    <string name="toastmessage_add_open_file_started">Ouverture du fichier :</string>
     <string name="toastmessage_long_press_playback_stopped">Lecture arrêtée (appui long détecté)</string>
     <string name="toastmessage_long_press_playback_started">Lecture démarrée (appui long détecté)</string>
-    <string name="toastmessage_station_copied">Station copied</string>
+    <string name="toastmessage_station_copied">Station copiée</string>
     <string name="toastalert_rename_unsuccessful">Impossible de renommer la station. Veuillez choisir un nom différent.</string>
     <string name="toastalert_delete_successful">Station supprimée avec succès.</string>
     <string name="toastalert_no_external_storage">Impossible d\'accéder au stockage externe.</string>
     <string name="toastalert_headphones_unplugged">Casque débranché. Lecture arrêtée.</string>
-    <string name="toastalert_permission_denied">Permission denied:</string>
+    <string name="toastalert_permission_denied">Autorisation refusée :</string>
     <string name="snackbar_request_storage_access">Vous souhaitez ajouter un nouveau logo pour cette station. Pour cela, Transistor a besoin d\'accéder à vos images et photos.</string>
 
     <!-- notification -->
