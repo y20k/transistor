@@ -53,10 +53,10 @@
     <!-- messages -->
     <string name="actioncall_message_start_here">Додајте нову станицу</string>
     <string name="toastmessage_add_download_started">Преузимање започето:</string>
-    <string name="toastmessage_add_open_file_started">Opening file:</string>
+    <string name="toastmessage_add_open_file_started">Отварам фајл:</string>
     <string name="toastmessage_long_press_playback_stopped">Пуштање заустављено (примећен дуги тап)</string>
     <string name="toastmessage_long_press_playback_started">Пуштање почето (примећен дуги тап)</string>
-    <string name="toastmessage_station_copied">Station copied</string>
+    <string name="toastmessage_station_copied">Станица копирана</string>
     <string name="toastalert_rename_unsuccessful">Не могох да преименујем станицу. Унесите други назив.</string>
     <string name="toastalert_delete_successful">Станица успешно преименована.</string>
     <string name="toastalert_no_external_storage">Не могох да приступим спољашњем складишту.</string>
