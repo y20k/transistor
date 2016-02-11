@@ -62,8 +62,8 @@ public final class DialogAddStation {
                     final String input = inputField.getText().toString();
 
                     // download and add new station
-                    StationDownloader stationDownloader = new StationDownloader(Uri.parse(input.trim()), mActivity);
-                    stationDownloader.execute();
+                    StationFetcher stationFetcher = new StationFetcher(Uri.parse(input.trim()), mActivity);
+                    stationFetcher.execute();
                 }
             }
         });

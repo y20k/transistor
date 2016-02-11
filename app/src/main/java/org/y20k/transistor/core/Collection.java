@@ -111,7 +111,7 @@ public final class Collection {
 
             return true;
         } else {
-            Log.e(LOG_TAG, "Unable to add station to collection: Duplicate name and/or stream URL.");
+            Log.e(LOG_TAG, "Unable to add station to collection: Duplicate name and/or stream URL.\n"  + station.getStationName() + " / " + station.getStreamUri());
             return false;
         }
     }

@@ -43,12 +43,12 @@
     <string name="dialog_error_message_default">Ein Fehler ist aufgetreten</string>
     <string name="dialog_error_details_button_default">Details anzeigen</string>
     <string name="dialog_error_details_default">Keine Detailinformationen vorhanden</string>
-    <string name="dialog_error_title_download">Download-Problem</string>
-    <string name="dialog_error_message_download">Transistor hat es versucht, kann aber mit diesem Link nichts anfangen.</string>
-    <string name="dialog_error_message_download_external_storage">Externer Speicher:</string>
-    <string name="dialog_error_message_download_station_url">URL der Radiostation:</string>
-    <string name="dialog_error_message_download_hint_m3u">Hinweis: Transistor kann nur Audiostreams in den Formaten MP3 und OGG oder URLs mit der Endung .m3u oder .pls verarbeiten.</string>
-    <string name="dialog_error_message_download_file_content">Inhalt der Datei:</string>
+    <string name="dialog_error_title_fetch_download">Download-Problem</string>
+    <string name="dialog_error_message_fetch_download">Transistor hat es versucht, kann aber mit diesem Link nichts anfangen.</string>
+    <string name="dialog_error_message_fetch_general_external_storage">Externer Speicher:</string>
+    <string name="dialog_error_message_fetch_download_station_url">URL der Radiostation:</string>
+    <string name="dialog_error_message_fetch_general_hint_m3u">Hinweis: Transistor kann nur Audiostreams in den Formaten MP3 und OGG oder URLs mit der Endung .m3u oder .pls verarbeiten.</string>
+    <string name="dialog_error_message_fetch_general_file_content">Inhalt der Datei:</string>
 
     <!-- messages -->
     <string name="actioncall_message_start_here">Eine neue Station hinzufügen</string>

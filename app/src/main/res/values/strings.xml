@@ -43,12 +43,18 @@
     <string name="dialog_error_message_default">An error occurred</string>
     <string name="dialog_error_details_button_default">Show details</string>
     <string name="dialog_error_details_default">No details available</string>
-    <string name="dialog_error_title_download">Download Issue</string>
-    <string name="dialog_error_message_download">Transistor tried hard but could not make sense of given link.</string>
-    <string name="dialog_error_message_download_external_storage">External storage:</string>
-    <string name="dialog_error_message_download_station_url">URL of station:</string>
-    <string name="dialog_error_message_download_hint_m3u">Hint: Transistor can only process MP3 and OGG encoded streams or URLs ending in .m3u or .pls.</string>
-    <string name="dialog_error_message_download_file_content">Content of remote file:</string>
+    <string name="dialog_error_details_write">Station is probably a duplicate or else you might want to check your external storage.</string>
+    <string name="dialog_error_title_fetch_download">Download Issue</string>
+    <string name="dialog_error_title_fetch_read">Read Issue</string>
+    <string name="dialog_error_title_fetch_write">Write Issue</string>
+    <string name="dialog_error_message_fetch_general_external_storage">External storage:</string>
+    <string name="dialog_error_message_fetch_general_hint_m3u">Hint: Transistor can only process MP3 and OGG encoded streams or URLs ending in .m3u or .pls.</string>
+    <string name="dialog_error_message_fetch_general_file_content">Content of file:</string>
+    <string name="dialog_error_message_fetch_download">Transistor tried hard but could not make sense of given link.</string>
+    <string name="dialog_error_message_fetch_download_station_url">URL of station:</string>
+    <string name="dialog_error_message_fetch_read">Transistor tried hard but could not make sense of given file.</string>
+    <string name="dialog_error_message_fetch_read_file_location">Location of file:</string>
+    <string name="dialog_error_message_fetch_write">Transistor tried hard but could not save given station to storage.</string>
 
     <!-- messages -->
     <string name="actioncall_message_start_here">Add a new station</string>

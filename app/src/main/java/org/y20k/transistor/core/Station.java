@@ -30,6 +30,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -57,18 +58,18 @@ public final class Station implements Comparable<Station> {
     private String mStationName;
     private File mStationPlaylistFile;
     private Uri mStreamUri;
-    private String mRemoteFileContent;
-    private boolean mDownloadError;
+    private String mPlaylistFileContent;
+    private boolean mStationFetchError;
 
 
-    /* Constructor when given mStationPlaylistFile */
+    /* Constructor when given file from the Collection folder */
     public Station(File file) {
         // set mStationPlaylistFile and filename
         mStationPlaylistFile = file;
 
         // read and parse mStationPlaylistFile
         if (mStationPlaylistFile.exists()) {
-            parse(read(mStationPlaylistFile));
+            parse(readPlaylistFile(mStationPlaylistFile));
         }
 
         // set image file object
@@ -80,12 +81,12 @@ public final class Station implements Comparable<Station> {
     }
 
 
-    /* Constructor when given folder and remote location for playlist file */
+    /* Constructor when given folder and remote location */
     public Station(File folder, URL fileLocation) {
 
         // determine content type of remote file
         String contentType = getContentType(fileLocation);
-        Log.v(LOG_TAG, "Content type of given URL is " + contentType);
+        Log.v(LOG_TAG, "Content type of given file is " + contentType);
 
 
         // content type is raw audio file
@@ -93,59 +94,162 @@ public final class Station implements Comparable<Station> {
             // use raw audio file for station data
             mStreamUri = Uri.parse(fileLocation.toString().trim());
             mStationName = getStationName(fileLocation);
-            setDownloadError(false);
+            setStationFetchError(false);
         }
 
         // content type is playlist
-        else if (isPlaylist(contentType) && downloadPlaylistFile(fileLocation)) {
+        else if (isPlaylist(contentType)) {
             // download and parse station data from playlist file
-            setDownloadError(false);
+            mPlaylistFileContent = downloadPlaylistFile(fileLocation);
+
+            // parse result of downloadPlaylistFile
+            if (parse(mPlaylistFileContent) && streamUriIsAudioFile()) {
+                mStationName = getStationName(fileLocation);
+                setStationFetchError(false);
+            } else {
+                mPlaylistFileContent = mPlaylistFileContent + "\n[File probably does not contain a valid streaming URL.]";
+                setStationFetchError(true);
+            }
 
         // content type is none of the above
         } else {
             // set error flag and return
-            setDownloadError(true);
+            setStationFetchError(true);
             return;
         }
 
-        // set playlist file object - name of station required
+        // set Transistor's playlist file object
         setStationPlaylistFile(folder);
 
         // download favicon and store bitmap object
         downloadImageFile(fileLocation);
 
-        // set image file object
+        // set Transistor's image file object
         setStationImageFile(folder);
     }
 
 
-    /* Constructor when given folder and local file location for playlist */
+    /* Constructor when given folder and file on sd card */
     public Station(File folder, Uri fileLocation) {
 
-        File localFile = new File(fileLocation.getPath());
+        File localFile = new File(URI.create(fileLocation.toString()));
 
+        // read local file and put result into mPlaylistFileContent
         if (localFile.exists()) {
-            mRemoteFileContent = read(localFile);
+            mPlaylistFileContent = readPlaylistFile(localFile);
         } else {
             Log.v(LOG_TAG, "File does not exist " + localFile);
         }
 
-
-        Log.v(LOG_TAG, "CONTENT " + mRemoteFileContent);
-
-        // parse result of downloadPlaylistFile
-        if (parse(mRemoteFileContent) && streamUriIsAudioFile()) {
-            mDownloadError = false;
+        // parse the raw content of playlist file (mPlaylistFileContent)
+        if (parse(mPlaylistFileContent) && streamUriIsAudioFile()) {
+            mStationFetchError = false;
         } else {
-            mRemoteFileContent = mRemoteFileContent + "\n[File probably does not contain a valid streaming URL.]";
-            mDownloadError = true;
+            mPlaylistFileContent = mPlaylistFileContent + "\n[File probably does not contain a valid streaming URL.]";
+            mStationFetchError = true;
         }
 
-        // set playlist file object - name of station required
+        // set Transistor's playlist file object
         setStationPlaylistFile(folder);
 
-        // set image file object
+        // set Transistor's image file object
         setStationImageFile(folder);
+
+    }
+
+
+    /* Compares two stations */
+    @Override
+    public int compareTo(Station otherStation) {
+        // return "1" if name if this station is greater than name of given station
+        return mStationName.compareToIgnoreCase(otherStation.mStationName);
+    }
+
+
+    /* Custom toString method */
+    @Override
+    public String toString() {
+        return "Station [mStationName=" + mStationName + ", mStationPlaylistFile=\" + mStationPlaylistFile + \", mStreamUri=" + mStreamUri + "]";
+    }
+
+
+    /* Construct string representation of m3u mStationPlaylistFile */
+    private String createM3u() {
+
+        // construct m3u String
+        StringBuilder sb = new StringBuilder("");
+        sb.append("#EXTM3U\n\n");
+        sb.append("#EXTINF:-1,");
+        sb.append(mStationName);
+        sb.append("\n");
+        sb.append(mStreamUri.toString());
+        sb.append("\n");
+
+        return sb.toString();
+    }
+
+
+    /* Downloads remote playlist file */
+    private String downloadPlaylistFile(URL fileLocation) {
+
+        Log.v(LOG_TAG, "Downloading... " + fileLocation.toString());
+
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(
+                fileLocation.openStream()))) {
+
+            String line;
+            int counter = 0;
+            StringBuilder sb = new StringBuilder("");
+
+            // read until last last reached or until line five
+            while ((line = br.readLine()) != null && counter < 5) {
+                sb.append(line);
+                sb.append("\n");
+                counter++;
+            }
+
+            if (sb.length() == 0) {
+                Log.e(LOG_TAG, "Input stream was empty: " + fileLocation.toString());
+            }
+
+            // set mPlaylistFileContent and return String
+            mPlaylistFileContent = sb.toString();
+            return sb.toString();
+
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Unable to get playlist file from server: " + fileLocation.toString());
+            // set mPlaylistFileContent and return null
+            mPlaylistFileContent = "[HTTP error. Unable to get playlist file from server: " + fileLocation.toString() + "]";
+            return null;
+        }
+    }
+
+
+    /* Reads local playlist file */
+    private String readPlaylistFile(File playlistFile) {
+
+        try (BufferedReader br = new BufferedReader(new FileReader(playlistFile))) {
+            String line;
+            int counter = 0;
+            StringBuilder sb = new StringBuilder("");
+
+            // read until last line reached or until line five
+            while ((line = br.readLine()) != null && counter < 5) {
+                sb.append(line);
+                sb.append("\n");
+                counter++;
+            }
+
+            // set mPlaylistFileContent and return String
+            mPlaylistFileContent = sb.toString();
+            return sb.toString();
+
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Unable to read playlist file: " + playlistFile.toString());
+            // set mPlaylistFileContent and return null
+            mPlaylistFileContent = "[IO error. Unable to read playlist file: " + playlistFile.toString()  + "]";
+            return null;
+        }
 
     }
 
@@ -183,76 +287,6 @@ public final class Station implements Comparable<Station> {
             }
         }
         return false;
-    }
-
-
-    /* Compares two stations */
-    @Override
-    public int compareTo(Station otherStation) {
-        // return "1" if name if this station is greater than name of given station
-        return mStationName.compareToIgnoreCase(otherStation.mStationName);
-    }
-
-
-    /* Construct string representation of m3u mStationPlaylistFile */
-    private String createM3u() {
-        String m3uString;
-
-        // construct m3uString
-        StringBuilder sb = new StringBuilder("");
-        sb.append("#EXTM3U\n\n");
-        sb.append("#EXTINF:-1,");
-        sb.append(mStationName);
-        sb.append("\n");
-        sb.append(mStreamUri.toString());
-        sb.append("\n");
-        m3uString = sb.toString();
-
-        return m3uString;
-    }
-
-
-    /* Downloads remote playlist file and parses station */
-    private boolean downloadPlaylistFile(URL fileLocation) {
-
-        Log.v(LOG_TAG, "Downloading... " + fileLocation.toString());
-
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(
-                fileLocation.openStream()))) {
-
-            String line;
-            int counter = 0;
-            StringBuilder sb = new StringBuilder("");
-
-            // read until last last reached or until line five
-            while ((line = br.readLine()) != null && counter < 5) {
-                sb.append(line);
-                sb.append("\n");
-                counter++;
-            }
-            // get fileContent from StringBuilder result
-            mRemoteFileContent = sb.toString();
-
-            if (sb.length() == 0) {
-                Log.e(LOG_TAG, "Input stream was empty: " + fileLocation.toString());
-            }
-
-            // set name of station
-            mStationName = getStationName(fileLocation);
-
-            // parse result of downloadPlaylistFile
-            if (parse(mRemoteFileContent) && streamUriIsAudioFile()) {
-                return true;
-            } else {
-                mRemoteFileContent = mRemoteFileContent + "\n[File probably does not contain a valid streaming URL.]";
-                return false;
-            }
-
-        } catch (IOException e) {
-            mRemoteFileContent = "[HTTP error. Unable to get playlist file from server\n" + fileLocation.toString() + "]";
-            Log.e(LOG_TAG, mRemoteFileContent);
-            return false;
-        }
     }
 
 
@@ -323,8 +357,16 @@ public final class Station implements Comparable<Station> {
 
     }
 
+
     /* Parses string representation of mStationPlaylistFile */
     private boolean parse(String fileContent) {
+
+        mPlaylistFileContent = fileContent;
+
+        // check for null
+        if (fileContent == null) {
+            return false;
+        }
 
         // prepare scanner
         Scanner in = new Scanner(fileContent);
@@ -339,7 +381,6 @@ public final class Station implements Comparable<Station> {
             if (line.contains("#EXTINF:-1,")) {
                 mStationName = line.substring(11).trim();
             // M3U: found stream URL
-            // TODO test mms and rtsp -> || (line.startsWith("rtsp")
             } else if (line.startsWith("http")) {
                 mStreamUri = Uri.parse(line.trim());
             }
@@ -356,6 +397,11 @@ public final class Station implements Comparable<Station> {
 
         in.close();
 
+        if (mStreamUri == null) {
+            Log.e(LOG_TAG, "Unable to parse: " + fileContent);
+            return false;
+        }
+
         // try to construct name of station from remote mStationPlaylistFile name
         if (mStationPlaylistFile != null && mStationName == null) {
             mStationName = mStationPlaylistFile.getName().substring(0, mStationPlaylistFile.getName().lastIndexOf("."));
@@ -363,48 +409,9 @@ public final class Station implements Comparable<Station> {
             mStationName = "New Station";
         }
 
-        if (mStreamUri == null) {
-            Log.e(LOG_TAG, "Unable to parse: " + fileContent);
-            return false;
-        } else {
-//            Log.v(LOG_TAG, "Name: " + mStationName);
-//            Log.v(LOG_TAG, "URL: " + mStreamUri.toString());
-            return true;
-        }
+        // file content string parsed successfully
+        return true;
 
-    }
-
-
-    /* Reads local stationPlaylistFile and parses station */
-    private String read(File stationPlaylistFile) {
-
-        try (BufferedReader br = new BufferedReader(new FileReader(stationPlaylistFile))) {
-            String line;
-            int counter = 0;
-            StringBuilder sb = new StringBuilder("");
-
-            // read until last last reached or until line five
-            while ((line = br.readLine()) != null && counter < 5) {
-                sb.append(line);
-                sb.append("\n");
-                counter++;
-            }
-
-            // StringBuilder result
-            return sb.toString();
-
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "Unable to read mStationPlaylistFile " + stationPlaylistFile.toString());
-            return null;
-        }
-
-    }
-
-
-    /* Custom toString method */
-    @Override
-    public String toString() {
-        return "Station [mStationName=" + mStationName + ", mStationPlaylistFile=\" + mStationPlaylistFile + \", mStreamUri=" + mStreamUri + "]";
     }
 
 
@@ -446,8 +453,8 @@ public final class Station implements Comparable<Station> {
 
 
     /* Getter for download error flag */
-    public boolean getDownloadError() {
-        return mDownloadError;
+    public boolean getStationFetchError() {
+        return mStationFetchError;
     }
 
 
@@ -463,9 +470,9 @@ public final class Station implements Comparable<Station> {
     }
 
 
-    /* Getter for content of remote file image */
-    public String getRemoteFileContent() {
-        return mRemoteFileContent;
+    /* Getter for raw content of a playlist file */
+    public String getPlaylistFileContent() {
+        return mPlaylistFileContent;
     }
 
 
@@ -506,8 +513,8 @@ public final class Station implements Comparable<Station> {
 
 
     /* Setter for download error flag */
-    private void setDownloadError(boolean downloadError) {
-        mDownloadError = downloadError;
+    private void setStationFetchError(boolean stationFetchError) {
+        mStationFetchError = stationFetchError;
     }
 
 

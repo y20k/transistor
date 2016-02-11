@@ -43,12 +43,12 @@
     <string name="dialog_error_message_default">Prišlo je do napake</string>
     <string name="dialog_error_details_button_default">Prikaz podrobnosti</string>
     <string name="dialog_error_details_default">Podrobnosti niso na voljo</string>
-    <string name="dialog_error_title_download">Težava pri prenosu</string>
-    <string name="dialog_error_message_download">Aplikacji Transistor ni uspelo pridobiti ustreznih podatkov iz vnešene povezave.</string>
-    <string name="dialog_error_message_download_external_storage">Zunanja shramba:</string>
-    <string name="dialog_error_message_download_station_url">URL postaje:</string>
-    <string name="dialog_error_message_download_hint_m3u">Namig: aplikacija Transistor lahko obdela le medijske tokove kodirane v formatu MP3 ali OGG, oziroma medijske povezave s končnicami .m3u ali .pls.</string>
-    <string name="dialog_error_message_download_file_content">Vsebina oddaljene datoteke:</string>
+    <string name="dialog_error_title_fetch_download">Težava pri prenosu</string>
+    <string name="dialog_error_message_fetch_download">Aplikacji Transistor ni uspelo pridobiti ustreznih podatkov iz vnešene povezave.</string>
+    <string name="dialog_error_message_fetch_general_external_storage">Zunanja shramba:</string>
+    <string name="dialog_error_message_fetch_download_station_url">URL postaje:</string>
+    <string name="dialog_error_message_fetch_general_hint_m3u">Namig: aplikacija Transistor lahko obdela le medijske tokove kodirane v formatu MP3 ali OGG, oziroma medijske povezave s končnicami .m3u ali .pls.</string>
+    <string name="dialog_error_message_fetch_general_file_content">Vsebina oddaljene datoteke:</string>
 
     <!-- messages -->
     <string name="actioncall_message_start_here">Dodaj novo postajo</string>
