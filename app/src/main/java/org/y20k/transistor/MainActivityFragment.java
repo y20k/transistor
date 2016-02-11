@@ -47,7 +47,7 @@ import org.y20k.transistor.core.Collection;
 import org.y20k.transistor.helpers.CollectionAdapter;
 import org.y20k.transistor.helpers.DialogAddStation;
 import org.y20k.transistor.helpers.ImageHelper;
-import org.y20k.transistor.helpers.StationDownloader;
+import org.y20k.transistor.helpers.StationFetcher;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -364,8 +364,8 @@ public final class MainActivityFragment extends Fragment {
             // check for null
             if (newStationUri != null) {
                 // download and add new station
-                StationDownloader stationDownloader = new StationDownloader(newStationUri, mActivity);
-                stationDownloader.execute();
+                StationFetcher stationFetcher = new StationFetcher(newStationUri, mActivity);
+                stationFetcher.execute();
 
                 // send local broadcast
                 Intent i = new Intent();

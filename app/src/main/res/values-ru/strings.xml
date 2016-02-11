@@ -43,12 +43,12 @@
     <string name="dialog_error_message_default">"Произошла ошибка"</string>
     <string name="dialog_error_details_button_default">"Показать детали"</string>
     <string name="dialog_error_details_default">"Подробности недоступны"</string>
-    <string name="dialog_error_title_download">"Скачать выпуск"</string>
-    <string name="dialog_error_message_download">"Transistor старался, но не cмог понять данную ссылку."</string>
-    <string name="dialog_error_message_download_external_storage">Внешнее хранилище:</string>
-    <string name="dialog_error_message_download_station_url">Адрес станции:</string>
-    <string name="dialog_error_message_download_hint_m3u">Подсказка: Transistor может работать только с потоками закодированными в mp3 и ogg, или с адресами оканчивающимися на .m3u или .pls.</string>
-    <string name="dialog_error_message_download_file_content">Содержание файла:</string>
+    <string name="dialog_error_title_fetch_download">"Скачать выпуск"</string>
+    <string name="dialog_error_message_fetch_download">"Transistor старался, но не cмог понять данную ссылку."</string>
+    <string name="dialog_error_message_fetch_general_external_storage">Внешнее хранилище:</string>
+    <string name="dialog_error_message_fetch_download_station_url">Адрес станции:</string>
+    <string name="dialog_error_message_fetch_general_hint_m3u">Подсказка: Transistor может работать только с потоками закодированными в mp3 и ogg, или с адресами оканчивающимися на .m3u или .pls.</string>
+    <string name="dialog_error_message_fetch_general_file_content">Содержание файла:</string>
 
 
     <!-- messages -->

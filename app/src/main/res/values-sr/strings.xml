@@ -43,12 +43,12 @@
     <string name="dialog_error_message_default">Десила се грешка</string>
     <string name="dialog_error_details_button_default">Прикажи детаље</string>
     <string name="dialog_error_details_default">Нема детаља</string>
-    <string name="dialog_error_title_download">Грешка преузимања</string>
-    <string name="dialog_error_message_download">Транзистор није успио да рашчлани дату везу.</string>
-    <string name="dialog_error_message_download_external_storage">Спољашње складиште:</string>
-    <string name="dialog_error_message_download_station_url">Адреса станице:</string>
-    <string name="dialog_error_message_download_hint_m3u">Савет: Транзистор може да обради само МП3 или ОГГ кодиране токове или адресе које завршавају са .m3u или .pls.</string>
-    <string name="dialog_error_message_download_file_content">Садржај удаљеног фајла:</string>
+    <string name="dialog_error_title_fetch_download">Грешка преузимања</string>
+    <string name="dialog_error_message_fetch_download">Транзистор није успио да рашчлани дату везу.</string>
+    <string name="dialog_error_message_fetch_general_external_storage">Спољашње складиште:</string>
+    <string name="dialog_error_message_fetch_download_station_url">Адреса станице:</string>
+    <string name="dialog_error_message_fetch_general_hint_m3u">Савет: Транзистор може да обради само МП3 или ОГГ кодиране токове или адресе које завршавају са .m3u или .pls.</string>
+    <string name="dialog_error_message_fetch_general_file_content">Садржај удаљеног фајла:</string>
 
     <!-- messages -->
     <string name="actioncall_message_start_here">Додајте нову станицу</string>

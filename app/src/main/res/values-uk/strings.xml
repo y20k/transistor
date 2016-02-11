@@ -43,12 +43,12 @@
     <string name="dialog_error_message_default">Трапилась помилка</string>
     <string name="dialog_error_details_button_default">Показати подробиці</string>
     <string name="dialog_error_details_default">Подробиці відсутні</string>
-    <string name="dialog_error_title_download">Проблеми із завантаженням</string>
-    <string name="dialog_error_message_download">Transistor намагався, але все ж таки не зміг зрозуміти отримане посилання.</string>
-    <string name="dialog_error_message_download_external_storage">Зовнішнє сховище:</string>
-    <string name="dialog_error_message_download_station_url">URL станції:</string>
-    <string name="dialog_error_message_download_hint_m3u">Підказка: Transistor може обробляти MP3 та OGG аудіо потоки, або посилання на файли .m3u чи .pls.</string>
-    <string name="dialog_error_message_download_file_content">Вміст віддаленого файлу:</string>
+    <string name="dialog_error_title_fetch_download">Проблеми із завантаженням</string>
+    <string name="dialog_error_message_fetch_download">Transistor намагався, але все ж таки не зміг зрозуміти отримане посилання.</string>
+    <string name="dialog_error_message_fetch_general_external_storage">Зовнішнє сховище:</string>
+    <string name="dialog_error_message_fetch_download_station_url">URL станції:</string>
+    <string name="dialog_error_message_fetch_general_hint_m3u">Підказка: Transistor може обробляти MP3 та OGG аудіо потоки, або посилання на файли .m3u чи .pls.</string>
+    <string name="dialog_error_message_fetch_general_file_content">Вміст віддаленого файлу:</string>
 
     <!-- messages -->
     <string name="actioncall_message_start_here">Додати нову станцію</string>

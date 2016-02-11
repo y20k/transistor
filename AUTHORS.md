@@ -2,13 +2,15 @@ AUTHORS
 =======
 
 ### Development
-Transistor is designed, developed and maintained by [Y20K.org](http://www.y20k.org/)
+Transistor is designed, developed and maintained by: [y20k](https://github.com/y20k)
 
-Contributing developer(s)
+Contributing developer(s):
 [meonwax](https://github.com/meonwax) 
 
 ### Translations
 French version: [M2ck](https://github.com/M2ck)
+
+German version: [y20k](https://github.com/y20k)
 
 Japanese version: [naofum](https://github.com/naofum)
 
