@@ -43,6 +43,7 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
     /* Keys */
     private static final String ACTION_COLLECTION_CHANGED = "org.y20k.transistor.action.COLLECTION_CHANGED";
 
+
     /* Main class variables */
     private final Activity mActivity;
     private Collection mCollection;
@@ -65,6 +66,7 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
             // load collection
             mCollection = new Collection(mFolder);
         }
+
     }
 
 
@@ -73,15 +75,11 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
     public Station doInBackground(Void... params) {
 
         if (mFolderExists && mStationUriScheme.startsWith("http")  && urlCleanup()) {
-            // notify user
-//            Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_add_download_started) + " " + mStationLocationString, Toast.LENGTH_LONG).show();
             // download and return new station
             return new Station(mFolder, mStationURL);
 
-        } else if (mFolderExists && mStationUriScheme.startsWith("file")){
-            // notify user
-//            Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_add_open_file_started) + " " + mStationLocationString, Toast.LENGTH_LONG).show();
-            // TODO read file and return new station
+        } else if (mFolderExists && mStationUriScheme.startsWith("file")) {
+            // read file and return new station
             return new Station(mFolder, mStationUri);
 
         } else {
@@ -120,12 +118,12 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
                 errorTitle = mActivity.getResources().getString(R.string.dialog_error_title_fetch_write);
                 errorMessage = mActivity.getResources().getString(R.string.dialog_error_message_fetch_write);
                 errorDetails = mActivity.getResources().getString(R.string.dialog_error_details_write);
-            } else if (mStationUriScheme.startsWith("http") && station != null) {
+            } else if (mStationUriScheme.startsWith("http")) {
                 // construct error message for "http"
                 errorTitle = mActivity.getResources().getString(R.string.dialog_error_title_fetch_download);
                 errorMessage = mActivity.getResources().getString(R.string.dialog_error_message_fetch_download);
                 errorDetails = buildDownloadErrorDetails(station);
-            } else if (mStationUriScheme.startsWith("file")  && station != null) {
+            } else if (mStationUriScheme.startsWith("file")) {
                 // construct error message for "file"
                 errorTitle = mActivity.getResources().getString(R.string.dialog_error_title_fetch_read);
                 errorMessage = mActivity.getResources().getString(R.string.dialog_error_message_fetch_read);
@@ -159,14 +157,11 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
     }
 
 
-    /* checks and cleans url string and return url */
+    /* checks and cleans url string and sets mStationURL */
     private boolean urlCleanup() {
-        // remove whitespaces
-//        mStationUri = mStationUri.trim();
-
-        // create and check url
+        // remove whitespaces and create url
         try {
-            mStationURL = new URL(mStationUri.toString());
+            mStationURL = new URL(mStationUri.toString().trim());
             return true;
         } catch (MalformedURLException e) {
             e.printStackTrace();

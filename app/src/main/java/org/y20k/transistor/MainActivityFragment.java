@@ -79,7 +79,9 @@ public final class MainActivityFragment extends Fragment {
     private static final String TITLE = "title";
     private static final String CONTENT = "content";
     private static final int REQUEST_LOAD_IMAGE = 1;
-    private static final int PERMISSION_REQUEST_READ_EXTERNAL_STORAGE = 1;
+    private static final int PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE = 1;
+    private static final int PERMISSION_REQUEST_STATION_FETCHER_READ_EXTERNAL_STORAGE = 2;
+
 
 
     /* Main class variables */
@@ -94,6 +96,7 @@ public final class MainActivityFragment extends Fragment {
     private ListView mListView;
     private Parcelable mListState;
     private int mTempStationImageID;
+    private Uri mNewStationUri;
     private PlayerService mPlayerService;
 
 
@@ -210,7 +213,6 @@ public final class MainActivityFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
         // handle incoming intent
         handleNewStationIntent();
     }
@@ -356,23 +358,28 @@ public final class MainActivityFragment extends Fragment {
         // check for intent of tyoe VIEW
         if (Intent.ACTION_VIEW.equals(intent.getAction())) {
 
-            Uri newStationUri = intent.getData();
+            mNewStationUri = intent.getData();
 
             // clear the intent
             intent.setAction("");
 
-            // check for null
-            if (newStationUri != null) {
+            // check for null and type "http"
+            if (mNewStationUri != null && mNewStationUri.getScheme().startsWith("http")) {
+                // notify user
+                Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_add_download_started) + " " + mNewStationUri.toString(), Toast.LENGTH_LONG).show();
                 // download and add new station
-                StationFetcher stationFetcher = new StationFetcher(newStationUri, mActivity);
-                stationFetcher.execute();
+                fetchNewStation(mNewStationUri);
 
-                // send local broadcast
-                Intent i = new Intent();
-                i.setAction(ACTION_COLLECTION_CHANGED);
-                LocalBroadcastManager.getInstance(mActivity).sendBroadcast(i);
-
+            } else if (mNewStationUri != null && mNewStationUri.getScheme().startsWith("file")) {
+                // notify user
+                Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_add_open_file_started) + " " + mNewStationUri.toString(), Toast.LENGTH_LONG).show();
+                // check for read permission
+                if (requestPermissionReadExternalStorage(PERMISSION_REQUEST_STATION_FETCHER_READ_EXTERNAL_STORAGE)) {
+                    // read and add new station
+                    fetchNewStation(mNewStationUri);
+                }
             }
+
             // unsuccessful - log failure
             else {
                 Log.v(LOG_TAG, "Received an empty intent");
@@ -435,16 +442,29 @@ public final class MainActivityFragment extends Fragment {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         switch (requestCode) {
-            case PERMISSION_REQUEST_READ_EXTERNAL_STORAGE: {
+            case PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission granted - get system picker for images
                     Intent pickImageIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(pickImageIntent, REQUEST_LOAD_IMAGE);
+                    mActivity.startActivityForResult(pickImageIntent, REQUEST_LOAD_IMAGE);
                 } else {
                     // permission denied
                     Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_permission_denied) + " READ_EXTERNAL_STORAGE", Toast.LENGTH_LONG).show();
                 }
             }
+
+            case PERMISSION_REQUEST_STATION_FETCHER_READ_EXTERNAL_STORAGE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission granted - fetch station from given Uri
+                    fetchNewStation(mNewStationUri);
+                } else {
+                    // permission denied
+                    Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_permission_denied) + " READ_EXTERNAL_STORAGE", Toast.LENGTH_LONG).show();
+                }
+            }
+
+
+
         }
     }
 
@@ -475,22 +495,32 @@ public final class MainActivityFragment extends Fragment {
             }
         } else {
             Log.e(LOG_TAG, "Unable to get image from media picker: " + newImageUri.toString());
-            // TODO handle error here
         }
     }
 
 
     /* Check permissions and start image picker */
     private void selectFromImagePicker() {
-        // permission to read external storage granted
-        if (ActivityCompat.checkSelfPermission(mActivity,
-                Manifest.permission.READ_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_GRANTED) {
 
+        // request read permissions
+        if (requestPermissionReadExternalStorage(PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE)) {
             // get system picker for images
             Intent pickImageIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             mActivity.startActivityForResult(pickImageIntent, REQUEST_LOAD_IMAGE);
         }
+    }
+
+
+    /* Request Read Permissions */
+    private boolean requestPermissionReadExternalStorage(final int requestType) {
+
+        // permission to read external storage granted
+        if (ActivityCompat.checkSelfPermission(mActivity,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED) {
+            return true;
+        }
+
         // permission to read external storage not granted
         else {
             if (ActivityCompat.shouldShowRequestPermissionRationale(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE)) {
@@ -499,16 +529,18 @@ public final class MainActivityFragment extends Fragment {
                 snackbar.setAction(R.string.dialog_generic_button_okay, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                                PERMISSION_REQUEST_READ_EXTERNAL_STORAGE);
+                        ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, requestType);
                     }
                 });
                 snackbar.show();
 
+                return false;
+
             } else {
                 // ask for permission without explanation
-                ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                        PERMISSION_REQUEST_READ_EXTERNAL_STORAGE);
+                ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, requestType);
+
+                return false;
             }
         }
     }
@@ -564,5 +596,19 @@ public final class MainActivityFragment extends Fragment {
         // refresh view
         refreshStationList();
     }
+
+
+    /* Fetch new station with given Uri */
+    private void fetchNewStation(Uri stationUri) {
+        // download and add new station
+        StationFetcher stationFetcher = new StationFetcher(stationUri, mActivity);
+        stationFetcher.execute();
+
+        // send local broadcast
+        Intent i = new Intent();
+        i.setAction(ACTION_COLLECTION_CHANGED);
+        LocalBroadcastManager.getInstance(mActivity).sendBroadcast(i);
+    }
+
 
 }
