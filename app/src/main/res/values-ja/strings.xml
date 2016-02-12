@@ -53,7 +53,7 @@
     <string name="toastalert_no_external_storage">外部ストレージにアクセスすることができません。</string>
     <string name="toastalert_headphones_unplugged">ヘッドフォンのプラグを外しました。再生を停止します。</string>
     <string name="toastalert_permission_denied">アクセスが拒否されました:</string>
-    <string name="snackbar_request_storage_access">この放送局の新しいアイコンを追加したい場合、トランジスターは、その画像や写真にアクセスする必要があります。</string>
+    <string name="snackbar_request_storage_access">トランジスターは、外部ストレージからデータをアクセスできるように、読み取りアクセス許可を付与する必要があります。</string>
 
     <string name="notification_swipe_to_stop">スワイプすると停止</string>
     <string name="notification_playing">再生中</string>
