@@ -68,7 +68,7 @@
     <string name="toastalert_no_external_storage">Zugriff auf den externen Speicher verweigert.</string>
     <string name="toastalert_headphones_unplugged">Kopfhörer entfernt. Playback gestoppt.</string>
     <string name="toastalert_permission_denied">Fehlende Berechtigung:</string>
-    <string name="snackbar_request_storage_access">Transistor benögt Lese-Rechte, um auf Dateien auf dem externen Speicher zugreifen zu können.</string>
+    <string name="snackbar_request_storage_access">Transistor benötigt Lese-Rechte, um auf Dateien auf dem externen Speicher zugreifen zu können.</string>
 
     <!-- notification --> 
     <string name="notification_playing">Playback</string>
