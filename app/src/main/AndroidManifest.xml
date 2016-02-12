@@ -39,7 +39,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:scheme="http"/>
-                <data android:scheme="content" />
+                <data android:scheme="https" />
                 <data android:scheme="file" />
                 <data android:mimeType="audio/x-mpegurl" />
                 <data android:mimeType="audio/x-scpls" />
@@ -53,7 +53,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:scheme="http"/>
                 <data android:scheme="https" />
-                <data android:scheme="content" />
                 <data android:scheme="file" />
                 <data android:host="*" />
                 <data android:pathPattern=".*\\.m3u" />
