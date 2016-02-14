@@ -20,6 +20,8 @@ Serbian version: [pejakm](https://github.com/pejakm)
 
 Slovenian version: [bungabunga](https://github.com/bungabunga)
 
+Spanish version: [franciscot](https://github.com/franciscot)
+
 Ukrainian version: [burunduk](https://github.com/burunduk) 
 
 ### Want to help?
