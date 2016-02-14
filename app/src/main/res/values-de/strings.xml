@@ -43,7 +43,7 @@
     <string name="dialog_error_message_default">Ein Fehler ist aufgetreten</string>
     <string name="dialog_error_details_button_default">Details anzeigen</string>
     <string name="dialog_error_details_default">Keine Detailinformationen vorhanden</string>
-    <string name="dialog_error_details_write">Station is probably a duplicate or else you might want to check your external storage.</string>
+    <string name="dialog_error_details_write">Die Radiostation ist eventuell schon vorhanden oder es gibt ein Problem mit dem externen Speicher.</string>
     <string name="dialog_error_title_fetch_download">Download-Problem</string>
     <string name="dialog_error_title_fetch_read">Lese-Problem</string>
     <string name="dialog_error_title_fetch_write">Speicher-Problem</string>
