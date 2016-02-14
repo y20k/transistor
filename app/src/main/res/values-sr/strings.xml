@@ -17,7 +17,7 @@
 
     <!-- descriptions -->
     <string name="descr_arrow_actioncall">Стрелица која показује ка дугмету за додавање станице</string>
-    <string name="descr_overflow_button">Опције приказа за радио станицу</string>
+    <string name="descr_overflow_button">Прикажи опције за радио станицу</string>
     <string name="descr_station_icon">Икона радио станице</string>
     <string name="descr_station_name">Назив радио станице</string>
     <string name="descr_station_name_example">Пример ФМ</string>
