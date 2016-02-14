@@ -49,7 +49,7 @@ Which Permissions does Transistor need?
 Transistor streams radio stations over the internet.
 
 ### Permission "READ_EXTERNAL_STORAGE"
-Transistor needs access to images and photos to be able to offer an option to customize radio station icons.
-
+Transistor needs access to images, photos and documents to be able customize radio station icons and to able to open locally saved playlist files.
+            
 ### Permission "VIBRATE"
 Tapping and holding a radio station will toggle a tiny vibration.

@@ -93,7 +93,7 @@
             <p><strong>Permission INTERNET</strong><br />
             Transistor streams radio stations over the internet.</p>
             <p><strong>Permission READ_EXTERNAL_STORAGE</strong><br />
-            Transistor needs access to images and photos to be able to offer an option to customize radio station icons.</p>
+            Transistor needs access to images, photos and documents to be able customize radio station icons and to able to open locally saved playlist files.</p>
             <p><strong>Permission VIBRATE</strong><br />
             Tapping and holding a radio station will toggle a tiny vibration.</p>
         </body>
