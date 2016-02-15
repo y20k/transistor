@@ -8,7 +8,8 @@
     <!-- menu entries -->
     <string name="menu_about">À propos</string>
     <string name="menu_howto">Guide</string>
-    <string name="menu_icon">Changer le logo</string>    
+    <string name="menu_timer">Sleep timer</string>
+    <string name="menu_icon">Changer le logo</string>
     <string name="menu_add">Ajouter</string>
     <string name="menu_delete">Supprimer</string>
     <string name="menu_rename">Renommer</string>
@@ -64,6 +65,7 @@
     <string name="toastmessage_add_open_file_started">Ouverture du fichier :</string>
     <string name="toastmessage_long_press_playback_stopped">Lecture arrêtée (appui long détecté)</string>
     <string name="toastmessage_long_press_playback_started">Lecture démarrée (appui long détecté)</string>
+    <string name="toastmessage_timer_set">Sleep timer set to</string>
     <string name="toastmessage_station_copied">Station copiée</string>
     <string name="toastalert_rename_unsuccessful">Impossible de renommer la station. Veuillez choisir un nom différent.</string>
     <string name="toastalert_delete_successful">Station supprimée avec succès.</string>

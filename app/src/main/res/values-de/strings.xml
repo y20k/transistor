@@ -8,6 +8,7 @@
     <!-- menu entries -->
     <string name="menu_about">Über Transistor</string>
     <string name="menu_howto">Wie Transistor funktioniert</string>
+    <string name="menu_timer">Sleep timer</string>
     <string name="menu_icon">Icon ändern</string>
     <string name="menu_add">Hinzufügen</string>
     <string name="menu_delete">Löschen</string>
@@ -64,6 +65,7 @@
     <string name="toastmessage_add_open_file_started">Öffne Datei:</string>
     <string name="toastmessage_long_press_playback_stopped">Playback gestoppt (Long Press)</string>
     <string name="toastmessage_long_press_playback_started">Playback gestarted (Long Press)</string>
+    <string name="toastmessage_timer_set">Sleep timer set to</string>
     <string name="toastmessage_station_copied">Station kopiert</string>
     <string name="toastalert_rename_unsuccessful">Station kann nicht umbenannt werden. Bitte wählen Sie einen anderen Namen.</string>
     <string name="toastalert_delete_successful">Station entfernt.</string>

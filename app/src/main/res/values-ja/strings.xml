@@ -8,6 +8,7 @@
     <!-- menu entries -->
     <string name="menu_about">アプリについて</string>
     <string name="menu_howto">使用方法</string>
+    <string name="menu_timer">Sleep timer</string>
     <string name="menu_icon">アイコンの変更</string>
     <string name="menu_add">追加</string>
     <string name="menu_delete">削除</string>
@@ -64,6 +65,7 @@
     <string name="toastmessage_add_open_file_started">開いているファイル:</string>
     <string name="toastmessage_long_press_playback_stopped">再生が停止しました (長押しを検出しました)</string>
     <string name="toastmessage_long_press_playback_started">再生を開始しました (長押しを検出しました)</string>
+    <string name="toastmessage_timer_set">Sleep timer set to</string>
     <string name="toastmessage_station_copied">放送局をコピーしました</string>
     <string name="toastalert_rename_unsuccessful">放送局の名前を変更できません。別の名前を選択してください。</string>
     <string name="toastalert_delete_successful">放送局を削除しました。</string>

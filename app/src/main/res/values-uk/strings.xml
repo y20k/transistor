@@ -8,6 +8,7 @@
     <!-- menu entries -->
     <string name="menu_about">Про додаток</string>
     <string name="menu_howto">Як користуватися</string>
+    <string name="menu_timer">Sleep timer</string>
     <string name="menu_icon">Змінити піктограму</string>
     <string name="menu_add">Додати</string>
     <string name="menu_delete">Видалити</string>
@@ -64,6 +65,7 @@
     <string name="toastmessage_add_open_file_started">Opening file:</string>
     <string name="toastmessage_long_press_playback_stopped">Відтворення зупинено</string>
     <string name="toastmessage_long_press_playback_started">Відтворення розпочато</string>
+    <string name="toastmessage_timer_set">Sleep timer set to</string>
     <string name="toastmessage_station_copied">Station copied</string>
     <string name="toastalert_rename_unsuccessful">Не вдалося перейменувати станцію. Будь ласка, оберіть іншу назву.</string>
     <string name="toastalert_delete_successful">Станцію вилучено.</string>

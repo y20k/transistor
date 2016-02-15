@@ -8,6 +8,7 @@
     <!-- menu entries -->
     <string name="menu_about">О програму</string>
     <string name="menu_howto">Како се користи</string>
+    <string name="menu_timer">Sleep timer</string>
     <string name="menu_icon">Промени икону</string>
     <string name="menu_add">Додај</string>
     <string name="menu_delete">Обриши</string>
@@ -64,6 +65,7 @@
     <string name="toastmessage_add_open_file_started">Отварам фајл:</string>
     <string name="toastmessage_long_press_playback_stopped">Пуштање заустављено (примећен дуги тап)</string>
     <string name="toastmessage_long_press_playback_started">Пуштање почето (примећен дуги тап)</string>
+    <string name="toastmessage_timer_set">Sleep timer set to</string>
     <string name="toastmessage_station_copied">Станица копирана</string>
     <string name="toastalert_rename_unsuccessful">Не могох да преименујем станицу. Унесите други назив.</string>
     <string name="toastalert_delete_successful">Станица уклоњена.</string>

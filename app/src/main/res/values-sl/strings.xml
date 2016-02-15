@@ -8,6 +8,7 @@
     <!-- menu entries -->
     <string name="menu_about">O programu</string>
     <string name="menu_howto">Uporaba</string>
+    <string name="menu_timer">Sleep timer</string>
     <string name="menu_icon">Zamenjaj ikono</string>
     <string name="menu_add">Dodaj</string>
     <string name="menu_delete">Izbriši</string>
@@ -64,6 +65,7 @@
     <string name="toastmessage_add_open_file_started">Opening file:</string>
     <string name="toastmessage_long_press_playback_stopped">Radijski prenos je bil ustavljen</string>
     <string name="toastmessage_long_press_playback_started">Radijski prenos se je začel</string>
+    <string name="toastmessage_timer_set">Sleep timer set to</string>
     <string name="toastmessage_station_copied">Station copied</string>
     <string name="toastalert_rename_unsuccessful">Ne morem preimenovati postaje. Prosim izberite drugo ime.</string>
     <string name="toastalert_delete_successful">Postaja je bila odstranjena.</string>

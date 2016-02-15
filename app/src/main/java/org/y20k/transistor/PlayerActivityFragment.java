@@ -246,6 +246,15 @@ public final class PlayerActivityFragment extends Fragment {
 
         switch (item.getItemId()) {
 
+            // CASE TIMER
+            case R.id.menu_timer:
+
+                long milliseconds = 20000;
+                Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_timer_set) + " " + milliseconds + " milliseconds", Toast.LENGTH_LONG).show();
+                mPlayerService.setSleepTimer(mActivity, milliseconds);
+
+                return true;
+
             // CASE ICON
             case R.id.menu_icon:
 
@@ -362,7 +371,6 @@ public final class PlayerActivityFragment extends Fragment {
             mStationImageView.setImageBitmap(stationImage);
         } else {
             Log.e(LOG_TAG, "Unable to get image from media picker: " + newImageUri.toString());
-            // TODO handle error here
         }
     }
 

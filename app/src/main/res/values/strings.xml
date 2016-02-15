@@ -8,6 +8,7 @@
     <!-- menu entries -->
     <string name="menu_about">About</string>
     <string name="menu_howto">How to use</string>
+    <string name="menu_timer">Sleep timer</string>
     <string name="menu_icon">Change icon</string>
     <string name="menu_add">Add</string>
     <string name="menu_delete">Delete</string>
@@ -64,6 +65,7 @@
     <string name="toastmessage_add_open_file_started">Opening file:</string>
     <string name="toastmessage_long_press_playback_stopped">Playback stopped (long press detected)</string>
     <string name="toastmessage_long_press_playback_started">Playback started (long press detected)</string>
+    <string name="toastmessage_timer_set">Sleep timer set to</string>
     <string name="toastmessage_station_copied">Station copied</string>
     <string name="toastalert_rename_unsuccessful">Unable to rename station. Please choose a different name.</string>
     <string name="toastalert_delete_successful">Station removed.</string>

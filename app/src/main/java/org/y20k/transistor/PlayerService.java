@@ -23,6 +23,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.CountDownTimer;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
@@ -62,6 +63,7 @@ public final class PlayerService extends Service implements
     /* Main class variables */
     private AudioManager mAudioManager;
     private MediaPlayer mMediaPlayer;
+    private CountDownTimer mSleepTimer;
     private String mStreamUri;
     private boolean mPlayback;
     private int mPlayerInstanceCounter;
@@ -435,6 +437,29 @@ public final class PlayerService extends Service implements
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean(PLAYBACK, mPlayback);
         editor.apply();
+    }
+
+
+    /* Set sleep timer */
+    public void setSleepTimer(final Context context, long duration) {
+
+        // prepare timer
+        mSleepTimer = new CountDownTimer(duration, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                Log.v(LOG_TAG, "Tick. (" + millisUntilFinished +")");
+            }
+
+            @Override
+            public void onFinish() {
+                startActionStop(context);
+                Log.v(LOG_TAG, "Sleep timer finished. Sweet dreams, dear user.");
+            }
+        };
+
+        // start countdown
+        mSleepTimer.start();
+
     }
 
 
