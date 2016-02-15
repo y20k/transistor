@@ -1,7 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+    <!-- activities -->
     <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
     <string name="title_activity_player">Lecture en cours</string>
+    <string name="title_activity_infosheet">Fiche d\'information</string>
 
     <!-- menu entries -->
     <string name="menu_about">À propos</string>
@@ -43,12 +45,18 @@
     <string name="dialog_error_message_default">Une erreur est survenue</string>
     <string name="dialog_error_details_button_default">Afficher les détails</string>
     <string name="dialog_error_details_default">Aucun détail disponible</string>
+    <string name="dialog_error_details_write">Station is probably a duplicate or else you might want to check your external storage.</string>
     <string name="dialog_error_title_fetch_download">Erreur de téléchargement</string>
-    <string name="dialog_error_message_fetch_download">Transistor a tout essayé, mais ne pouvait pas donner sens au lien donné.</string>
+    <string name="dialog_error_title_fetch_read">Read Issue</string>
+    <string name="dialog_error_title_fetch_write">Write Issue</string>
     <string name="dialog_error_message_fetch_general_external_storage">Stockage externe :</string>
-    <string name="dialog_error_message_fetch_download_station_url">Adresse de la station :</string>
     <string name="dialog_error_message_fetch_general_hint_m3u">Astuce : Transistor peut traiter uniquement les flux MP3 et OGG ou les adresses se terminant par .m3u ou .pls.</string>
     <string name="dialog_error_message_fetch_general_file_content">Contenu du fichier distant :</string>
+    <string name="dialog_error_message_fetch_download">Transistor a tout essayé, mais ne pouvait pas donner sens au lien donné.</string>
+    <string name="dialog_error_message_fetch_download_station_url">Adresse de la station :</string>
+    <string name="dialog_error_message_fetch_read">Transistor tried hard but could not make sense of given file.</string>
+    <string name="dialog_error_message_fetch_read_file_location">Location of file:</string>
+    <string name="dialog_error_message_fetch_write">Transistor tried hard but could not save given station to storage.</string>
 
     <!-- messages -->
     <string name="actioncall_message_start_here">Ajouter une station</string>
@@ -67,9 +75,6 @@
     <!-- notification -->
     <string name="notification_swipe_to_stop">Glissez pour arrêter</string>
     <string name="notification_playing">Lecture en cours</string>
-
-    <!-- misc -->
-    <string name="title_activity_infosheet">Fiche d\'information</string>
 
     <!-- HTML strings -->
     <string name="html_about"><![CDATA[<!DOCTYPE html>

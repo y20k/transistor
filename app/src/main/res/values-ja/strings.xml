@@ -1,6 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources><string name="app_name">トランジスター</string> <string name="title_activity_player">再生しています</string>
+<resources>
+    <!-- activities -->
+    <string name="app_name">トランジスター</string>
+    <string name="title_activity_player">再生しています</string>
+    <string name="title_activity_infosheet">情報シート</string>
 
+    <!-- menu entries -->
     <string name="menu_about">アプリについて</string>
     <string name="menu_howto">使用方法</string>
     <string name="menu_icon">アイコンの変更</string>
@@ -8,9 +13,11 @@
     <string name="menu_delete">削除</string>
     <string name="menu_rename">名前の変更</string>
 
+    <!-- headers -->
     <string name="header_about">アプリについて</string>
     <string name="header_howto">使用方法</string>
 
+    <!-- descriptions -->
     <string name="descr_arrow_actioncall">追加する放送局のシンボルに矢印が向きます</string>
     <string name="descr_overflow_button">ラジオ局の表示オプション</string>
     <string name="descr_station_icon">ラジオ局のアイコン</string>
@@ -20,28 +27,38 @@
     <string name="descr_playback_indicator">再生中のインジケーター</string>
     <string name="descr_playback_indicator_started">再生中のインジケーター</string>
 
+    <!-- dialogs -->
     <string name="dialog_generic_button_okay">OK</string>
     <string name="dialog_generic_button_cancel">キャンセル</string>
     <string name="dialog_add_station_button">追加</string>
     <string name="dialog_add_station_input_hint">正しいストリーミング URL を貼り付けてください</string>
     <string name="dialog_add_station_message">新しい放送局を追加</string>
+    <string name="dialog_add_station_howto">MP3 と OGG にエンコードされた素のオーディオ ストリーム同様、pls または m3u ファイルにカプセル化されたストリーム を追加できます。また、web ブラウザーでストリーミングのリンクをタップして新しいステーションを追加できます (pls または m3u)。</string>
     <string name="dialog_delete_station_message">放送局を削除</string>
     <string name="dialog_button_delete">削除</string>
     <string name="dialog_rename_station_input_hint">新しい名前を入力してください</string>
     <string name="dialog_rename_station_message">放送局の名前を変更</string>
     <string name="dialog_button_rename">名前の変更</string>
 
+    <!-- error dialogs -->
     <string name="dialog_error_title_default">エラー</string>
     <string name="dialog_error_message_default">エラーが発生しました</string>
     <string name="dialog_error_details_button_default">詳細の表示</string>
     <string name="dialog_error_details_default">詳細はありません</string>
+    <string name="dialog_error_details_write">局がおそらく重複しているか、外部ストレージを確認する必要があります。</string>
     <string name="dialog_error_title_fetch_download">ダウンロードの問題</string>
-    <string name="dialog_error_message_fetch_download">トランジスターの努力にもかかわらず、リンクが意味をなさない可能性があります。</string>
+    <string name="dialog_error_title_fetch_read">問題を読む</string>
+    <string name="dialog_error_title_fetch_write">問題を書き込む</string>
     <string name="dialog_error_message_fetch_general_external_storage">外部ストレージ:</string>
-    <string name="dialog_error_message_fetch_download_station_url">放送局の URL:</string>
     <string name="dialog_error_message_fetch_general_hint_m3u">ヒント: トランジスターは MP3 と OGG でエンコードされたストリームや .m3u または .pls で終わる Url のみ処理することができます。</string>
     <string name="dialog_error_message_fetch_general_file_content">リモート ファイルのコンテンツ:</string>
+    <string name="dialog_error_message_fetch_download">トランジスターの努力にもかかわらず、リンクが意味をなさない可能性があります。</string>
+    <string name="dialog_error_message_fetch_download_station_url">放送局の URL:</string>
+    <string name="dialog_error_message_fetch_read">トランジスターは努力しましたが、与えられた報告は意味をなさない可能性があります。</string>
+    <string name="dialog_error_message_fetch_read_file_location">ファイルの場所:</string>
+    <string name="dialog_error_message_fetch_write">トランジスターは努力しましたが、指定された局をストレージに保存できませんでした。</string>
 
+    <!-- messages -->
     <string name="actioncall_message_start_here">新しい放送局を追加</string>
     <string name="toastmessage_add_download_started">ダウンロードを開始:</string>
     <string name="toastmessage_add_open_file_started">開いているファイル:</string>
@@ -55,21 +72,13 @@
     <string name="toastalert_permission_denied">アクセスが拒否されました:</string>
     <string name="snackbar_request_storage_access">トランジスターは、外部ストレージからデータをアクセスできるように、読み取りアクセス許可を付与する必要があります。</string>
 
+    <!-- notification -->
     <string name="notification_swipe_to_stop">スワイプすると停止</string>
     <string name="notification_playing">再生中</string>
 
-    <string name="title_activity_infosheet">情報シート</string>
-
-    <string name="dialog_add_station_howto">MP3 と OGG にエンコードされた素のオーディオ ストリーム同様、pls または m3u ファイルにカプセル化されたストリーム を追加できます。また、web ブラウザーでストリーミングのリンクをタップして新しいステーションを追加できます (pls または m3u)。</string>
+    <!-- HTML strings -->
     <string name="html_about">&lt;!DOCTYPE html&gt; &lt;html&gt; &lt;body&gt; &lt;h1&gt;トランジスターについて&lt;/h1&gt; &lt;h2&gt;Android 用ラジオ アプリ&lt;/h2&gt; &lt;h3&gt;バージョン 1.2 (&amp;quot;Cygnet Committee&amp;quot;)&lt;/h3&gt; &lt;p&gt;トランジスターはインターネット上のラジオ番組を聴くためベアボーン アプリです。アプリは、デバイスの外部ストレージにファイルとして局を格納します。/Android/data/org.y20k.transistor/Collection で、m3u の種類のファイルを探します。現在、MP3 や OGG ファイルでエンコードされたストリームを理解することができます。&lt;/p&gt; &lt;p&gt;重要な注意: これはBYOS (&amp;quot;あなた自身で局を持ち込む&amp;quot;) 形式のアプリです。内蔵の検索オプションの類は機能しません。ラジオ局を手動で追加する必要があります。&lt;/p&gt; &lt;p&gt;トランジスターは、フリー ソフトウェアです。MIT オープンソース ライセンスの下で公開されます。コードは GitHub で見つけることができます。GitHub はまた、バグを報告したり、興味があれば貢献するのに良い場所です。&lt;/p&gt; &lt;p&gt;https://github.com/y20k/transistor&lt;/p&gt; &lt;p&gt;https://opensource.org/licenses/MIT&lt;/p&gt; &lt;h3&gt;トランジスターが必要なアクセス許可は何ですか?&lt;/h3&gt; &lt;p&gt;&lt;strong&gt;INTERNET アクセス許可&lt;/strong&gt;&lt;br /&gt; トランジスターは、インターネット上のラジオ局をストリームします。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;READ_EXTERNAL_STORAGE アクセス許可&lt;/strong&gt;&lt;br /&gt; トランジスターは、ラジオ局アイコンをカスタマイズするオプションを提供するため、画像と写真へのアクセスを必要とします。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;VIBRATE アクセス許可&lt;/strong&gt;&lt;br /&gt; ラジオ局を長押しすると、小さな振動が切り替わります。&lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</string>
 
     <string name="html_howto">&lt;!DOCTYPE html&gt; &lt;html&gt; &lt;body&gt; &lt;h1&gt;トランジスターの使用方法&lt;/h1&gt; &lt;h2&gt;新しいラジオ局を追加する方法は?&lt;/h2&gt; &lt;p&gt;新しいステーションを追加する最も簡単な方法は、ストリーミングのリンクを Web で検索して、そのファイルの種類をデフォルトのハンドラーとしてトランジスターを選択します。上部のバーで (+) シンボルをタップして、直接リンクをストリーミングに貼り付けることもできます。注意: トランジスターは内蔵の検索オプションの類は機能しません。&lt;/p&gt; &lt;h2&gt;ラジオ局を再生する方法は?&lt;/h2&gt; &lt;p&gt;大きな再生ボタンをタップします ;)&lt;/p&gt; &lt;h2&gt;再生を停止する方法は?&lt;/h2&gt; &lt;p&gt;大きな停止ボタンをタップ、またはヘッドフォンを外す、またはロック画面から通知をスワイプします。&lt;/p&gt; &lt;h2&gt;局の名前を変更または削除する方法は?&lt;/h2&gt; &lt;p&gt;名前の変更と削除のオプションは局のリストと、今再生中の画面からアクセスすることができます。3 つのドット記号をタップしてください。ファイル ブラウザーからも局のリストを管理できます (次の質問を参照してください)。&lt;/p&gt; &lt;h2&gt;トランジスターはどこに局を保存しますか?&lt;/h2&gt; &lt;p&gt;トランジスターは、データベースに局のリストを保存しません。代わりに、デバイスの外部ストレージに m3u ファイルとして局を格納します。お好みのテキストエディターを使用して、気軽にそれらのファイルを触ってください。ファイルは /Android/data/org.y20k.transistor/Collection に保存されます。&lt;/p&gt; &lt;h2&gt;私のラジオ局をバックアップと、転送する方法は?&lt;/h2&gt; &lt;p&gt;トランジスターは Android 6 の自動バックアップ機能をサポートします。ラジオ局は、常にあなたの Google アカウントにバックアップされ、再インストールで復元されます。Android の古いバージョンを実行しているデバイスでは、手動で &amp;quot;Collection&amp;quot; フォルダーを保存し、復元する必要があります。&lt;/p&gt; &lt;h2&gt;なぜトランジスターには設定がないのですか?&lt;/h2&gt; &lt;p&gt;設定するものがないからです ;)。トランジスターは非常にシンプルなアプリです。&amp;quot;シンプル&amp;quot;な視点によって、偉大か不自由になります。&lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</string>
-
-    <string name="dialog_error_details_write">局がおそらく重複しているか、外部ストレージを確認する必要があります。</string>
-    <string name="dialog_error_title_fetch_read">問題を読む</string>
-    <string name="dialog_error_title_fetch_write">問題を書き込む</string>
-    <string name="dialog_error_message_fetch_read">トランジスターは努力しましたが、与えられた報告は意味をなさない可能性があります。</string>
-    <string name="dialog_error_message_fetch_read_file_location">ファイルの場所:</string>
-    <string name="dialog_error_message_fetch_write">トランジスターは努力しましたが、指定された局をストレージに保存できませんでした。</string>
 
     </resources>

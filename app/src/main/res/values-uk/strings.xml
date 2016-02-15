@@ -1,7 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+    <!-- activities -->
     <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
     <string name="title_activity_player">Зараз грає</string>
+    <string name="title_activity_infosheet">Інформаційний лист</string>
 
     <!-- menu entries -->
     <string name="menu_about">Про додаток</string>
@@ -43,12 +45,18 @@
     <string name="dialog_error_message_default">Трапилась помилка</string>
     <string name="dialog_error_details_button_default">Показати подробиці</string>
     <string name="dialog_error_details_default">Подробиці відсутні</string>
+    <string name="dialog_error_details_write">Station is probably a duplicate or else you might want to check your external storage.</string>
     <string name="dialog_error_title_fetch_download">Проблеми із завантаженням</string>
-    <string name="dialog_error_message_fetch_download">Transistor намагався, але все ж таки не зміг зрозуміти отримане посилання.</string>
+    <string name="dialog_error_title_fetch_read">Read Issue</string>
+    <string name="dialog_error_title_fetch_write">Write Issue</string>
     <string name="dialog_error_message_fetch_general_external_storage">Зовнішнє сховище:</string>
-    <string name="dialog_error_message_fetch_download_station_url">URL станції:</string>
     <string name="dialog_error_message_fetch_general_hint_m3u">Підказка: Transistor може обробляти MP3 та OGG аудіо потоки, або посилання на файли .m3u чи .pls.</string>
     <string name="dialog_error_message_fetch_general_file_content">Вміст віддаленого файлу:</string>
+    <string name="dialog_error_message_fetch_download">Transistor намагався, але все ж таки не зміг зрозуміти отримане посилання.</string>
+    <string name="dialog_error_message_fetch_download_station_url">URL станції:</string>
+    <string name="dialog_error_message_fetch_read">Transistor tried hard but could not make sense of given file.</string>
+    <string name="dialog_error_message_fetch_read_file_location">Location of file:</string>
+    <string name="dialog_error_message_fetch_write">Transistor tried hard but could not save given station to storage.</string>
 
     <!-- messages -->
     <string name="actioncall_message_start_here">Додати нову станцію</string>
@@ -67,9 +75,6 @@
     <!-- notification -->
     <string name="notification_swipe_to_stop">Посуньте для зупинки</string>
     <string name="notification_playing">Відтворення</string>
-
-    <!-- misc -->
-    <string name="title_activity_infosheet">Інформаційний лист</string>
 
     <!-- HTML strings -->
     <string name="html_about">&lt;!DOCTYPE html&gt; &lt;html&gt; &lt;body&gt; &lt;h1&gt;Про Transistor&lt;/h1&gt; &lt;h2&gt;Додаток інтернет радіо для Android&lt;/h2&gt; &lt;h3&gt;Версія 1.2 (&amp;amp;quot;Cygnet Committee&amp;amp;quot;)&lt;/h3&gt; &lt;p&gt;Transistor — це додаток для прослуховування радіо програм через інтернет. Додаток зберігає станції у файли на зовнішньому сховищі вашого пристрою. Файли із розширенням m3u можете знайти у /Android/data/org.y20k.transistor/Collection. На разі розпізнаються потоки вбудовані у m3u та pls посилання.&lt;/p&gt; &lt;p&gt;Важливе зауваження: Цей додаток не містить функції пошуку радіостанцій. Вам потрібно вручну додавати радіостанції.&lt;/p&gt; &lt;p&gt;Transistor це вільне програмне забезпечення. Воно публікується під ліцензією MIT . Ви можете знайти джерельний код на GitHub. GitHub також непогане місце для розміщення вад, підтримки, якщо ви зацікавлені.&lt;/p&gt; &lt;p&gt;https://github.com/y20k/transistor&lt;/p&gt; &lt;p&gt;https://opensource.org/licenses/MIT&lt;/p&gt; &lt;h3&gt;Які дозволи потребує Transistor?&lt;/h3&gt; &lt;p&gt;&lt;strong&gt;Доступ до INTERNET&lt;/strong&gt;&lt;br /&gt; Transistor веде мовлення радіостанцій через інтернет.&lt;/p&gt; &lt;p&gt;&lt;strong&gt;Доступ до READ_EXTERNAL_STORAGE&lt;/strong&gt;&lt;br /&gt; Transistor потребує доступ на читання зображень та фотографій, аби мати можливість міняти піктограми радіо станцій.&lt;/p&gt; &lt;p&gt;&lt;strong&gt;Доступ до VIBRATE&lt;/strong&gt;&lt;br /&gt; Дотик та утримання на радіостанції супроводжуватиметься короткою вібрацією.&lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</string>

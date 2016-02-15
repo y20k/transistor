@@ -1,7 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+    <!-- activities -->
     <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
     <string name="title_activity_player">"Сейчас играет"</string>
+    <string name="title_activity_infosheet">"Информационная страница"</string>
 
     <!-- menu entries -->
     <string name="menu_about">"О программе"</string>
@@ -43,13 +45,18 @@
     <string name="dialog_error_message_default">"Произошла ошибка"</string>
     <string name="dialog_error_details_button_default">"Показать детали"</string>
     <string name="dialog_error_details_default">"Подробности недоступны"</string>
+    <string name="dialog_error_details_write">Station is probably a duplicate or else you might want to check your external storage.</string>
     <string name="dialog_error_title_fetch_download">"Скачать выпуск"</string>
-    <string name="dialog_error_message_fetch_download">"Transistor старался, но не cмог понять данную ссылку."</string>
+    <string name="dialog_error_title_fetch_read">Read Issue</string>
+    <string name="dialog_error_title_fetch_write">Write Issue</string>
     <string name="dialog_error_message_fetch_general_external_storage">Внешнее хранилище:</string>
-    <string name="dialog_error_message_fetch_download_station_url">Адрес станции:</string>
     <string name="dialog_error_message_fetch_general_hint_m3u">Подсказка: Transistor может работать только с потоками закодированными в mp3 и ogg, или с адресами оканчивающимися на .m3u или .pls.</string>
     <string name="dialog_error_message_fetch_general_file_content">Содержание файла:</string>
-
+    <string name="dialog_error_message_fetch_download">"Transistor старался, но не cмог понять данную ссылку."</string>
+    <string name="dialog_error_message_fetch_download_station_url">Адрес станции:</string>
+    <string name="dialog_error_message_fetch_read">Transistor tried hard but could not make sense of given file.</string>
+    <string name="dialog_error_message_fetch_read_file_location">Location of file:</string>
+    <string name="dialog_error_message_fetch_write">Transistor tried hard but could not save given station to storage.</string>
 
     <!-- messages -->
     <string name="actioncall_message_start_here">"Добавить новую станцию"</string>
@@ -68,9 +75,6 @@
     <!-- notification -->
     <string name="notification_swipe_to_stop">"Смахните, чтобы остановить"</string>
     <string name="notification_playing">"Играет"</string>
-
-    <!-- misc -->
-    <string name="title_activity_infosheet">"Информационная страница"</string>
 
     <!-- HTML strings -->
     <string name="html_about"><![CDATA[<!DOCTYPE html>

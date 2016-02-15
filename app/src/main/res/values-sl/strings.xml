@@ -1,7 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+    <!-- activities -->
     <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
     <string name="title_activity_player">Zdaj se predvaja</string>
+    <string name="title_activity_infosheet">Podrobnosti</string>
 
     <!-- menu entries -->
     <string name="menu_about">O programu</string>
@@ -43,12 +45,18 @@
     <string name="dialog_error_message_default">Prišlo je do napake</string>
     <string name="dialog_error_details_button_default">Prikaz podrobnosti</string>
     <string name="dialog_error_details_default">Podrobnosti niso na voljo</string>
+    <string name="dialog_error_details_write">Station is probably a duplicate or else you might want to check your external storage.</string>
     <string name="dialog_error_title_fetch_download">Težava pri prenosu</string>
-    <string name="dialog_error_message_fetch_download">Aplikacji Transistor ni uspelo pridobiti ustreznih podatkov iz vnešene povezave.</string>
+    <string name="dialog_error_title_fetch_read">Read Issue</string>
+    <string name="dialog_error_title_fetch_write">Write Issue</string>
     <string name="dialog_error_message_fetch_general_external_storage">Zunanja shramba:</string>
-    <string name="dialog_error_message_fetch_download_station_url">URL postaje:</string>
     <string name="dialog_error_message_fetch_general_hint_m3u">Namig: aplikacija Transistor lahko obdela le medijske tokove kodirane v formatu MP3 ali OGG, oziroma medijske povezave s končnicami .m3u ali .pls.</string>
     <string name="dialog_error_message_fetch_general_file_content">Vsebina oddaljene datoteke:</string>
+    <string name="dialog_error_message_fetch_download">Aplikacji Transistor ni uspelo pridobiti ustreznih podatkov iz vnešene povezave.</string>
+    <string name="dialog_error_message_fetch_download_station_url">URL postaje:</string>
+    <string name="dialog_error_message_fetch_read">Transistor tried hard but could not make sense of given file.</string>
+    <string name="dialog_error_message_fetch_read_file_location">Location of file:</string>
+    <string name="dialog_error_message_fetch_write">Transistor tried hard but could not save given station to storage.</string>
 
     <!-- messages -->
     <string name="actioncall_message_start_here">Dodaj novo postajo</string>
@@ -67,9 +75,6 @@
     <!-- notification -->
     <string name="notification_swipe_to_stop">Za izklop podrsajte</string>
     <string name="notification_playing">Predvaja se:</string>
-
-    <!-- misc -->
-    <string name="title_activity_infosheet">Podrobnosti</string>
 
     <!-- HTML strings -->
     <string name="html_about">"&lt;!DOCTYPE html&gt; &lt;html&gt; &lt;body&gt; &lt;h1&gt;O aplikaciji Transistor&lt;/h1&gt; &lt;h2&gt;Spletni radio za Android&lt;/h2&gt; &lt;h3&gt;Različica 1.2 \"Cygnet Committee\"&lt;/h3&gt; &lt;p&gt;Transistor je minimalistična aplikacija za poslušanje radijskih postaj preko spleta. Program spravlja radijske postaje kot datoteke v zunanji pomnilnik vaše naprave. Datoteke najdete v obliki m3u na /Android/data/org.y20k.transistor/Collection. Transistor lahko trenutno predvaja medijske tokove kodirane v formatih MP3 ali OGG.&lt;/p&gt;&lt;p&gt;Pomembno: Aplikacija ne vsebuje iskalnika radijskih postaj. Postaje, ki jih želite dodati, morate poiskati sami in vnesti ročno.&lt;/p&gt;  &lt;p&gt;Transistor je brezplačna aplikacija, objavljena pod odprtokodno licenco MIT. Koda je na voljo na spletišču GitHub. Tam lahko tudi poročate o najdenih hroščih in prispevate k razvoju aplikacije.&lt;/p&gt; &lt;p&gt;https://github.com/y20k/transistor&lt;/p&gt; &lt;p&gt;https://opensource.org/licenses/MIT&lt;/p&gt; &lt;h3&gt;Katera dovoljenja potrebuje Transistor?&lt;/h3&gt; &lt;p&gt;&lt;strong&gt;Dovoljenje INTERNET&lt;/strong&gt;&lt;br /&gt; Transistor prenaša radio preko medmrežja.&lt;/p&gt; &lt;p&gt;&lt;strong&gt;Dovoljenje READ_EXTERNAL_STORAGE&lt;/strong&gt;&lt;br /&gt; Za zamenjavo ikon radijskih postaj potrebuje Transistor dostop do slik in fotografij.&lt;/p&gt; &lt;p&gt;&lt;strong&gt;Dovoljenje VIBRATE&lt;/strong&gt;&lt;br /&gt; Če s prstom tapnete in pridržite napis z radijsko postajo boste sprožili rahlo vibracijo.&lt;/p&gt; &lt;/body&gt; &lt;/html&gt;"</string>

@@ -1,7 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+    <!-- activities -->
     <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
     <string name="title_activity_player">Jetzt hören</string>
+    <string name="title_activity_infosheet">Informationsanzeige</string>
 
     <!-- menu entries -->
     <string name="menu_about">Über Transistor</string>
@@ -73,9 +75,6 @@
     <!-- notification --> 
     <string name="notification_playing">Playback</string>
     <string name="notification_swipe_to_stop">Ausblenden um Playback zu stoppen</string>
-
-    <!-- misc -->
-    <string name="title_activity_infosheet">Informationsanzeige</string>
 
     <!-- HTML strings -->
     <string name="html_about"><![CDATA[<!DOCTYPE html>
