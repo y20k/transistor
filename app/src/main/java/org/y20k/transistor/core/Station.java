@@ -30,7 +30,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -132,7 +131,7 @@ public final class Station implements Comparable<Station> {
     /* Constructor when given folder and file on sd card */
     public Station(File folder, Uri fileLocation) {
 
-        File localFile = new File(URI.create(fileLocation.toString()));
+        File localFile = new File(fileLocation.getPath());
 
         // read local file and put result into mPlaylistFileContent
         if (localFile.exists()) {

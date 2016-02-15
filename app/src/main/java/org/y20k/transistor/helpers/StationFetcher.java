@@ -18,7 +18,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.os.EnvironmentCompat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -37,7 +39,7 @@ import java.net.URL;
 public final class StationFetcher extends AsyncTask<Void, Void, Station> {
 
     /* Define log tag */
-    private static final String LOG_TAG = CollectionLoader.class.getSimpleName();
+    private static final String LOG_TAG = StationFetcher.class.getSimpleName();
 
 
     /* Keys */
@@ -59,13 +61,16 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
         mActivity = activity;
         mStationUri = stationUri;
         mStationUriScheme = stationUri.getScheme();
-        mFolderExists = getFolder();
 
-        // get mFolder and mStationURL
-        if (mFolderExists) {
-            // load collection
-            mCollection = new Collection(mFolder);
-        }
+        // get collection folder from external storage
+        mFolder = getCollectionDirectory("Collection");
+
+        // set mFolderExists
+        assert mFolder != null;
+        mFolderExists = mFolder.exists();
+
+        // load collection
+        mCollection = new Collection(mFolder);
 
     }
 
@@ -140,20 +145,6 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
             dialogError.show();
         }
 
-    }
-
-
-    /* Get collection folder from external storage */
-    private boolean getFolder() {
-        try {
-            mFolder = mActivity.getExternalFilesDir("Collection");
-            return true;
-        } catch (NullPointerException e) {
-            // notify user and log exception
-            Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_no_external_storage), Toast.LENGTH_LONG).show();
-            Log.e(LOG_TAG, "Unable to access external storage.");
-            return false;
-        }
     }
 
 
@@ -236,5 +227,25 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
         return sb.toString();
 
     }
+
+
+    /* Return a writeable sub-directory from external storage  */
+    private File getCollectionDirectory(String subDirectory) {
+        File[] storage = mActivity.getExternalFilesDirs(subDirectory);
+        for (File file : storage) {
+            String state = EnvironmentCompat.getStorageState(file);
+            if (Environment.MEDIA_MOUNTED.equals(state)) {
+                Log.i(LOG_TAG, "External storage: " + file.toString());
+                return file;
+            }
+        }
+        Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_no_external_storage), Toast.LENGTH_LONG).show();
+        Log.e(LOG_TAG, "Unable to access external storage.");
+        // finish activity
+        mActivity.finish();
+
+        return null;
+    }
+
 
 }
