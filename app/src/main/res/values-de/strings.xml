@@ -65,7 +65,6 @@
     <string name="toastmessage_add_open_file_started">Öffne Datei:</string>
     <string name="toastmessage_long_press_playback_stopped">Playback gestoppt (Long Press)</string>
     <string name="toastmessage_long_press_playback_started">Playback gestarted (Long Press)</string>
-    <string name="toastmessage_timer_set">Sleep timer set to</string>
     <string name="toastmessage_station_copied">Station kopiert</string>
     <string name="toastalert_rename_unsuccessful">Station kann nicht umbenannt werden. Bitte wählen Sie einen anderen Namen.</string>
     <string name="toastalert_delete_successful">Station entfernt.</string>
@@ -73,6 +72,7 @@
     <string name="toastalert_headphones_unplugged">Kopfhörer entfernt. Playback gestoppt.</string>
     <string name="toastalert_permission_denied">Fehlende Berechtigung:</string>
     <string name="snackbar_request_storage_access">Transistor benötigt Lese-Rechte, um auf Dateien auf dem externen Speicher zugreifen zu können.</string>
+    <string name="snackbar_message_timer_set">Sleep timer set to</string>
 
     <!-- notification --> 
     <string name="notification_playing">Playback</string>

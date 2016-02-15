@@ -65,7 +65,6 @@
     <string name="toastmessage_add_open_file_started">Abriendo archivo:</string>
     <string name="toastmessage_long_press_playback_stopped">Reproducción detenida (detectada pulsación larga)</string>
     <string name="toastmessage_long_press_playback_started">Reproducción empezada (detectada pulsación larga)</string>
-    <string name="toastmessage_timer_set">Sleep timer set to</string>
     <string name="toastmessage_station_copied">Estación copiada</string>
     <string name="toastalert_rename_unsuccessful">No se ha podido renombrar la estación. Por favor elija un nombre diferente.</string>
     <string name="toastalert_delete_successful">Estación borrada.</string>
@@ -73,6 +72,7 @@
     <string name="toastalert_headphones_unplugged">Auriculares desconectados. Reproducción detenida.</string>
     <string name="toastalert_permission_denied">Permiso denegado:</string>
     <string name="snackbar_request_storage_access">Transistor necesita obtener permisos de lectura para acceder a los datos del almacenamiento externo.</string>
+    <string name="snackbar_message_timer_set">Sleep timer set to</string>
 
     <!-- notification -->
     <string name="notification_swipe_to_stop">Deslizar para detener</string>

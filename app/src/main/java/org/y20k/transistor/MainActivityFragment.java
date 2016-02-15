@@ -519,7 +519,7 @@ public final class MainActivityFragment extends Fragment {
         else {
             if (ActivityCompat.shouldShowRequestPermissionRationale(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE)) {
                 // ask for permission and explain why
-                Snackbar snackbar = Snackbar.make(mRootView, R.string.snackbar_request_storage_access, Snackbar.LENGTH_INDEFINITE);
+                Snackbar snackbar = Snackbar.make(mRootView, mActivity.getString(R.string.snackbar_request_storage_access), Snackbar.LENGTH_INDEFINITE);
                 snackbar.setAction(R.string.dialog_generic_button_okay, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

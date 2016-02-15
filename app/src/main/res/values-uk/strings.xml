@@ -65,7 +65,6 @@
     <string name="toastmessage_add_open_file_started">Opening file:</string>
     <string name="toastmessage_long_press_playback_stopped">Відтворення зупинено</string>
     <string name="toastmessage_long_press_playback_started">Відтворення розпочато</string>
-    <string name="toastmessage_timer_set">Sleep timer set to</string>
     <string name="toastmessage_station_copied">Station copied</string>
     <string name="toastalert_rename_unsuccessful">Не вдалося перейменувати станцію. Будь ласка, оберіть іншу назву.</string>
     <string name="toastalert_delete_successful">Станцію вилучено.</string>
@@ -73,6 +72,7 @@
     <string name="toastalert_headphones_unplugged">Навушники відключені. Відтворення призупинено.</string>
     <string name="toastalert_permission_denied">Permission denied:</string>
     <string name="snackbar_request_storage_access">Ви можете додати нову піктограму для станції. Для цього додаток потребує доступ до ваших зображень та фотографій.</string>
+    <string name="snackbar_message_timer_set">Sleep timer set to</string>
 
     <!-- notification -->
     <string name="notification_swipe_to_stop">Посуньте для зупинки</string>

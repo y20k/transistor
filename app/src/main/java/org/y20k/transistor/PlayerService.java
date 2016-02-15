@@ -26,8 +26,10 @@ import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import org.y20k.transistor.helpers.NotificationHelper;
@@ -441,13 +443,27 @@ public final class PlayerService extends Service implements
 
 
     /* Set sleep timer */
-    public void setSleepTimer(final Context context, long duration) {
+    public void setSleepTimer(final Context context, View rootView, long duration) {
+
+        final String snackbarMessage = context.getString(R.string.snackbar_message_timer_set) + " ";
+
+        // ask for permission and explain why
+        final Snackbar snackbar = Snackbar.make(rootView, snackbarMessage + duration, Snackbar.LENGTH_INDEFINITE);
+        snackbar.setAction(R.string.dialog_generic_button_cancel, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mSleepTimer.cancel();
+                Log.v(LOG_TAG, "Sleep timer cancelled.");
+            }
+        });
+        snackbar.show();
+
 
         // prepare timer
         mSleepTimer = new CountDownTimer(duration, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                Log.v(LOG_TAG, "Tick. (" + millisUntilFinished +")");
+                snackbar.setText(snackbarMessage + millisUntilFinished);
             }
 
             @Override
