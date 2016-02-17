@@ -15,6 +15,7 @@ package org.y20k.transistor;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -62,7 +63,7 @@ public final class MainActivity extends AppCompatActivity {
 
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, @NonNull int[] grantResults) {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_main);
         // hand results over to fragment main
         fragment.onRequestPermissionsResult(requestCode, permissions, grantResults);

@@ -49,9 +49,9 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
     /* Main class variables */
     private final Activity mActivity;
     private Collection mCollection;
-    private File mFolder;
-    private Uri mStationUri;
-    private String mStationUriScheme;
+    private final File mFolder;
+    private final Uri mStationUri;
+    private final String mStationUriScheme;
     private URL mStationURL;
     private final boolean mFolderExists;
 

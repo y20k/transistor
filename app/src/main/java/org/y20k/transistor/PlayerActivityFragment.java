@@ -30,6 +30,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -342,7 +343,7 @@ public final class PlayerActivityFragment extends Fragment {
 
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case PERMISSION_REQUEST_READ_EXTERNAL_STORAGE: {
@@ -447,7 +448,7 @@ public final class PlayerActivityFragment extends Fragment {
 
 
     /* Shows notification for a running timer */
-    public void showTimerNotification (long remainingTime) {
+    private void showTimerNotification(long remainingTime) {
 
         mTimerNotification = Snackbar.make(mRootView, mTimerNotificationMessage + remainingTime, Snackbar.LENGTH_INDEFINITE);
         mTimerNotification.setAction(R.string.dialog_generic_button_cancel, new View.OnClickListener() {
