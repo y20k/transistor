@@ -51,6 +51,7 @@ import org.y20k.transistor.core.Collection;
 import org.y20k.transistor.helpers.DialogDelete;
 import org.y20k.transistor.helpers.DialogRename;
 import org.y20k.transistor.helpers.ImageHelper;
+import org.y20k.transistor.helpers.SleepTimerService;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -74,6 +75,8 @@ public final class PlayerActivityFragment extends Fragment {
     private static final String STATION_ID_LAST = "stationIDLast";
     private static final String PLAYBACK = "playback";
     private static final String ACTION_PLAYBACK_STOPPED = "org.y20k.transistor.action.PLAYBACK_STOPPED";
+    private static final String ACTION_TIMER_RUNNING = "org.y20k.transistor.action.TIMER_RUNNING";
+    private static final String EXTRA_TIMER_REMAINING = "TIMER_REMAINING";
     private static final int REQUEST_LOAD_IMAGE = 1;
     private static final int PERMISSION_REQUEST_READ_EXTERNAL_STORAGE = 1;
 
@@ -93,6 +96,9 @@ public final class PlayerActivityFragment extends Fragment {
     private boolean mPlayback;
     private Collection mCollection;
     private PlayerService mPlayerService;
+    private SleepTimerService mSleepTimerService;
+    private Snackbar mTimerNotification;
+    private String mTimerNotificationMessage;
 
 
     /* Constructor (default) */
@@ -106,6 +112,9 @@ public final class PlayerActivityFragment extends Fragment {
 
         // get activity
         mActivity = getActivity();
+
+        // get notification message
+        mTimerNotificationMessage = mActivity.getString(R.string.snackbar_message_timer_set) + " ";
 
         // get station name, URL and id from intent
         Intent intent = mActivity.getIntent();
@@ -178,7 +187,7 @@ public final class PlayerActivityFragment extends Fragment {
         // set text view to station name
         mStationNameView.setText(mStationName);
 
-
+        // set listener for clipboard copy
         mStationNameView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -234,8 +243,26 @@ public final class PlayerActivityFragment extends Fragment {
                 savePlaybackState(context);
             }
         };
-        IntentFilter intentFilter = new IntentFilter(ACTION_PLAYBACK_STOPPED);
-        LocalBroadcastManager.getInstance(mActivity).registerReceiver(playbackStoppedReceiver, intentFilter);
+        IntentFilter playbackIntentFilter = new IntentFilter(ACTION_PLAYBACK_STOPPED);
+        LocalBroadcastManager.getInstance(mActivity).registerReceiver(playbackStoppedReceiver, playbackIntentFilter);
+
+        // broadcast receiver: player service stopped playback
+        BroadcastReceiver sleepTimerStartedReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                // get duration from intent
+                long remaining = intent.getLongExtra(EXTRA_TIMER_REMAINING, 0);
+                if (remaining == 0) {
+                    mTimerNotification.dismiss();
+                } else {
+                    mTimerNotification.setText(mTimerNotificationMessage + remaining);
+                }
+
+
+            }
+        };
+        IntentFilter sleepTimerIntentFilter = new IntentFilter(ACTION_TIMER_RUNNING);
+        LocalBroadcastManager.getInstance(mActivity).registerReceiver(sleepTimerStartedReceiver, sleepTimerIntentFilter);
 
         return mRootView;
     }
@@ -249,8 +276,18 @@ public final class PlayerActivityFragment extends Fragment {
             // CASE TIMER
             case R.id.menu_timer:
 
-                long milliseconds = 20000;
-                mPlayerService.setSleepTimer(mActivity, mRootView, milliseconds);
+                long duration = 20000;
+
+                if (mSleepTimerService == null) {
+                    mSleepTimerService = new SleepTimerService();
+                }
+                mSleepTimerService.startActionStart(mActivity, duration);
+
+                showTimerNotification(duration);
+
+//                long duration = mPlayerService.getTimerRemaining() + 20000;
+//                mPlayerService.setSleepTimer(mActivity, duration);
+//                mPlayerService.showTimerNotification(mActivity, mRootView, duration);
 
                 return true;
 
@@ -405,6 +442,22 @@ public final class PlayerActivityFragment extends Fragment {
 
         // start animation of button
         mPlaybackButton.startAnimation(rotate);
+
+    }
+
+
+    /* Shows notification for a running timer */
+    public void showTimerNotification (long remainingTime) {
+
+        mTimerNotification = Snackbar.make(mRootView, mTimerNotificationMessage + remainingTime, Snackbar.LENGTH_INDEFINITE);
+        mTimerNotification.setAction(R.string.dialog_generic_button_cancel, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mSleepTimerService.startActionStop(mActivity);
+                Log.v(LOG_TAG, "Sleep timer cancelled.");
+            }
+        });
+        mTimerNotification.show();
 
     }
 
