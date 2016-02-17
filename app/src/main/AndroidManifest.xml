@@ -102,6 +102,11 @@
         </service>
 
 
+        <!-- SLEEP TIMER SERVICE -->
+        <service
+            android:name=".helpers.SleepTimerService">
+        </service>
+
     </application>
 
 </manifest>

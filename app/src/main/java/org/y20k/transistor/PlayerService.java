@@ -1,7 +1,7 @@
 /**
  * PlayerService.java
  * Implements the app's playback background service
- * The player service does xyz
+ * The player service plays streaming audio
  *
  * This file is part of
  * TRANSISTOR - Radio App for Android
@@ -23,13 +23,11 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.os.CountDownTimer;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
-import android.support.design.widget.Snackbar;
+import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import org.y20k.transistor.helpers.NotificationHelper;
@@ -65,7 +63,6 @@ public final class PlayerService extends Service implements
     /* Main class variables */
     private AudioManager mAudioManager;
     private MediaPlayer mMediaPlayer;
-    private CountDownTimer mSleepTimer;
     private String mStreamUri;
     private boolean mPlayback;
     private int mPlayerInstanceCounter;
@@ -143,6 +140,7 @@ public final class PlayerService extends Service implements
     }
 
 
+    @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return null;
@@ -318,7 +316,7 @@ public final class PlayerService extends Service implements
 
     /* Method to start the player */
     public void startActionPlay(Context context, String streamUri, String stationName) {
-        Log.v(LOG_TAG, "starting playback service: " + mStreamUri);
+        Log.v(LOG_TAG, "Starting playback service: " + mStreamUri);
 
         mStreamUri = streamUri;
 
@@ -337,7 +335,7 @@ public final class PlayerService extends Service implements
 
     /* Method to stop the player */
     public void startActionStop(Context context) {
-        Log.v(LOG_TAG, "stopping playback service:");
+        Log.v(LOG_TAG, "Stopping playback service.");
 
         // stop player service using intent
         Intent intent = new Intent(context, PlayerService.class);
@@ -439,43 +437,6 @@ public final class PlayerService extends Service implements
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean(PLAYBACK, mPlayback);
         editor.apply();
-    }
-
-
-    /* Set sleep timer */
-    public void setSleepTimer(final Context context, View rootView, long duration) {
-
-        final String snackbarMessage = context.getString(R.string.snackbar_message_timer_set) + " ";
-
-        // ask for permission and explain why
-        final Snackbar snackbar = Snackbar.make(rootView, snackbarMessage + duration, Snackbar.LENGTH_INDEFINITE);
-        snackbar.setAction(R.string.dialog_generic_button_cancel, new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mSleepTimer.cancel();
-                Log.v(LOG_TAG, "Sleep timer cancelled.");
-            }
-        });
-        snackbar.show();
-
-
-        // prepare timer
-        mSleepTimer = new CountDownTimer(duration, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                snackbar.setText(snackbarMessage + millisUntilFinished);
-            }
-
-            @Override
-            public void onFinish() {
-                startActionStop(context);
-                Log.v(LOG_TAG, "Sleep timer finished. Sweet dreams, dear user.");
-            }
-        };
-
-        // start countdown
-        mSleepTimer.start();
-
     }
 
 
