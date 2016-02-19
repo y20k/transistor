@@ -300,7 +300,7 @@ public final class Station implements Comparable<Station> {
             // determine content type of remote file
             URL streamURL = new URL(mStreamUri.toString());
             String contentType = getContentType(streamURL);
-            Log.v(LOG_TAG, "Content type of URL within playlist:" + contentType);
+            Log.v(LOG_TAG, "Content type of URL within playlist: " + contentType);
 
             return isAudioFile(contentType);
 

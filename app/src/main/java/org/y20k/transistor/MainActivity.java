@@ -63,7 +63,7 @@ public final class MainActivity extends AppCompatActivity {
 
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_main);
         // hand results over to fragment main
         fragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
