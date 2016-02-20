@@ -103,6 +103,7 @@ public final class NotificationHelper {
         // builder.setLargeIcon(largeIcon);
         builder.setContentIntent(tapPendingIntent);
         builder.setDeleteIntent(swipePendingIntent);
+        builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
 
         // build notification
         notification = builder.build();
