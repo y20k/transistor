@@ -44,6 +44,7 @@
                 <data android:mimeType="audio/x-mpegurl" />
                 <data android:mimeType="audio/x-scpls" />
                 <data android:mimeType="application/x-mpegurl" />
+                <data android:mimeType="audio/mpegurl" />
             </intent-filter>
 
             <!-- File extensions -->
