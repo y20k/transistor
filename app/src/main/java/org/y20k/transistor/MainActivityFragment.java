@@ -360,14 +360,10 @@ public final class MainActivityFragment extends Fragment {
 
             // check for null and type "http"
             if (mNewStationUri != null && mNewStationUri.getScheme().startsWith("http")) {
-                // notify user
-                Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_add_download_started) + " " + mNewStationUri.toString(), Toast.LENGTH_LONG).show();
                 // download and add new station
                 fetchNewStation(mNewStationUri);
 
             } else if (mNewStationUri != null && mNewStationUri.getScheme().startsWith("file")) {
-                // notify user
-                Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_add_open_file_started) + " " + mNewStationUri.toString(), Toast.LENGTH_LONG).show();
                 // check for read permission
                 if (requestPermissionReadExternalStorage(PERMISSION_REQUEST_STATION_FETCHER_READ_EXTERNAL_STORAGE)) {
                     // read and add new station

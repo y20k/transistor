@@ -72,6 +72,14 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
         // load collection
         mCollection = new Collection(mFolder);
 
+        // notify user
+        if (stationUri != null && stationUri.getScheme().startsWith("http")) {
+            Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_add_download_started) + " " + stationUri.toString(), Toast.LENGTH_LONG).show();
+        } else if (stationUri != null && stationUri.getScheme().startsWith("file")) {
+            // notify user
+            Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_add_open_file_started) + " " + stationUri.toString(), Toast.LENGTH_LONG).show();
+        }
+
     }
 
 
