@@ -8,7 +8,7 @@
     <!-- menu entries -->
     <string name="menu_about">"О программе"</string>
     <string name="menu_howto">"Помощь"</string>
-    <string name="menu_timer">Sleep timer</string>
+    <string name="menu_timer">Таймер сна</string>
     <string name="menu_icon">"Изменить иконку"</string>
     <string name="menu_add">"Добавить"</string>
     <string name="menu_delete">"Удалить"</string>
@@ -47,58 +47,39 @@
     <string name="dialog_error_details_button_default">"Показать детали"</string>
     <string name="dialog_error_details_default">"Подробности недоступны"</string>
     <string name="dialog_error_details_write">Station is probably a duplicate or else you might want to check your external storage.</string>
-    <string name="dialog_error_title_fetch_download">"Скачать выпуск"</string>
-    <string name="dialog_error_title_fetch_read">Read Issue</string>
-    <string name="dialog_error_title_fetch_write">Write Issue</string>
+    <string name="dialog_error_title_fetch_download">Проблема скачивания</string>
+    <string name="dialog_error_title_fetch_read">Проблема чтения</string>
+    <string name="dialog_error_title_fetch_write">Проблема записи</string>
     <string name="dialog_error_message_fetch_general_external_storage">Внешнее хранилище:</string>
     <string name="dialog_error_message_fetch_general_hint_m3u">Подсказка: Transistor может работать только с потоками закодированными в mp3 и ogg, или с адресами оканчивающимися на .m3u или .pls.</string>
     <string name="dialog_error_message_fetch_general_file_content">Содержание файла:</string>
-    <string name="dialog_error_message_fetch_download">"Transistor старался, но не cмог понять данную ссылку."</string>
+    <string name="dialog_error_message_fetch_download">Transistor не может обработать эту ссылку.</string>
     <string name="dialog_error_message_fetch_download_station_url">Адрес станции:</string>
-    <string name="dialog_error_message_fetch_read">Transistor tried hard but could not make sense of given file.</string>
-    <string name="dialog_error_message_fetch_read_file_location">Location of file:</string>
-    <string name="dialog_error_message_fetch_write">Transistor tried hard but could not save given station to storage.</string>
+    <string name="dialog_error_message_fetch_read">Transistor не может обработать этот файл.</string>
+    <string name="dialog_error_message_fetch_read_file_location">Расположение файла:</string>
+    <string name="dialog_error_message_fetch_write">Transistor не смог сохранить эту станцию в хранилище.</string>
 
     <!-- messages -->
     <string name="actioncall_message_start_here">"Добавить новую станцию"</string>
     <string name="toastmessage_add_download_started">"Скачивается:"</string>
-    <string name="toastmessage_add_open_file_started">Opening file:</string>
+    <string name="toastmessage_add_open_file_started">Открытие файла:</string>
     <string name="toastmessage_long_press_playback_stopped">Воспроизведение остановлено</string>
     <string name="toastmessage_long_press_playback_started">Начинаю воспроизведение радиостанции</string>
-    <string name="toastmessage_station_copied">Station copied</string>
+    <string name="toastmessage_station_copied">Станция скопирована</string>
     <string name="toastalert_rename_unsuccessful">"Невозможно переименовать станцию. Пожалуйста, выберите другое имя."</string>
-    <string name="toastalert_delete_successful">"Станция успешно удалена."</string>
+    <string name="toastalert_delete_successful">Станция удалена.</string>
     <string name="toastalert_no_external_storage">"Нет доступа к внешнему накопителю."</string>
     <string name="toastalert_headphones_unplugged">"Наушники отключили. Воспроизведение остановлено."</string>
-    <string name="toastalert_permission_denied">Permission denied:</string>
-    <string name="snackbar_request_storage_access">"Вы хотите добавить новую иконку для этой станции. Для этого приложению необходим доступ к изображениям и фотографиям."</string>
-    <string name="snackbar_message_timer_set">Sleep timer set to</string>
+    <string name="toastalert_permission_denied">Доступ запрещен:</string>
+    <string name="snackbar_request_storage_access">Приложению должно быть предоставлено разрешение на чтение данных на внешнем накопителе.</string>
+    <string name="snackbar_message_timer_set">Таймер сна установлен на</string>
 
     <!-- notification -->
     <string name="notification_swipe_to_stop">"Смахните, чтобы остановить"</string>
     <string name="notification_playing">"Играет"</string>
 
     <!-- HTML strings -->
-    <string name="html_about"><![CDATA[<!DOCTYPE html>
-    <html>
-        <body>
-            <h1>О программе Transistor</h1>
-            <h2>Приложение интернет радио для Android</h2>
-            <h3>Версия 1.2 (&quot;Cygnet Committee&quot;)</h3>
-            <p>Transistor простое приложение для прослушивания радиопередач через интернет. Приложение хранит станции как файлы на внешнем накопителе вашего устройства. Посмотрите на файлы с расширением m3u в директории /Android/data/org.y20k.transistor/Collection. В настоящее время приложение умеет работать с потоками в форматах MP3 и OGG.</p>
-            <p>Важное примечание: в приложении нет какой-либо функции поиска радиостанций. Вам необходимо вручную добавить их.</p>
-            <p>Transistor свободное приложение. Оно распространяется под лицензией MIT. Вы можете найти исходный код на GitHub. Также на GitHub вы можете сообщить об ошибках или помочь в разработке.</p>
-            <p>https://github.com/y20k/transistor</p>
-            <p>https://opensource.org/licenses/MIT</p>
-            <h3>Какие разрешения необходимы Transistor?</h3>
-            <p><strong>INTERNET</strong><br />
-            Transistor вещает радиостанции через интернет.</p>
-            <p><strong>READ_EXTERNAL_STORAGE</strong><br />
-            Transistor требует доступ к изображениям и фотографиям, чтобы иметь возможность менять значки радиостанций.</p>
-            <p><strong>VIBRATE</strong><br />
-            Долгое нажатие на названии радиостанции вызывает небольшую вибрацию.</p>
-        </body>
-    </html>]]></string>
+    <string name="html_about">&lt;!DOCTYPE html&gt; &lt;html&gt; &lt;body&gt; &lt;h1&gt;О программе Transistor&lt;/h1&gt; &lt;h2&gt;Приложение интернет радио для Android&lt;/h2&gt; &lt;h3&gt;Версия 1.2 (&amp;quot;Cygnet Committee&amp;quot;)&lt;/h3&gt; &lt;p&gt;Transistor простое приложение для прослушивания радиопередач через интернет. Приложение хранит станции как файлы на внешнем накопителе вашего устройства. Посмотрите на файлы с расширением m3u в директории /Android/data/org.y20k.transistor/Collection. В настоящее время приложение умеет работать с потоками в форматах MP3 и OGG.&lt;/p&gt; &lt;p&gt;Важное примечание: в приложении нет какой-либо функции поиска радиостанций. Вам необходимо вручную добавить их.&lt;/p&gt; &lt;p&gt;Transistor свободное приложение. Оно распространяется под лицензией MIT. Вы можете найти исходный код на GitHub. Также на GitHub вы можете сообщить об ошибках или помочь в разработке.&lt;/p&gt; &lt;p&gt;https://github.com/y20k/transistor&lt;/p&gt; &lt;p&gt;https://opensource.org/licenses/MIT&lt;/p&gt; &lt;h3&gt;Какие разрешения необходимы Transistor?&lt;/h3&gt; &lt;p&gt;&lt;strong&gt;INTERNET&lt;/strong&gt;&lt;br /&gt; Transistor вещает радиостанции через интернет.&lt;/p&gt; &lt;p&gt;&lt;strong&gt;READ_EXTERNAL_STORAGE&lt;/strong&gt;&lt;br /&gt; Transistor\'у необходим доступ к изображениям, фотографиям и документам для настройки иконок радиостанций и чтения локально сохранённых плейлистов.&lt;/p&gt; &lt;p&gt;&lt;strong&gt;VIBRATE&lt;/strong&gt;&lt;br /&gt; Долгое нажатие на названии радиостанции вызывает небольшую вибрацию.&lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</string>
 
     <string name="html_howto"><![CDATA[<!DOCTYPE html>
     <html>
