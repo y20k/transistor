@@ -46,7 +46,7 @@
     <string name="dialog_error_message_default">"Произошла ошибка"</string>
     <string name="dialog_error_details_button_default">"Показать детали"</string>
     <string name="dialog_error_details_default">"Подробности недоступны"</string>
-    <string name="dialog_error_details_write">Station is probably a duplicate or else you might want to check your external storage.</string>
+    <string name="dialog_error_details_write">Возможно радиостанция уже существеут или проблема с внешним накопителем.</string>
     <string name="dialog_error_title_fetch_download">Проблема скачивания</string>
     <string name="dialog_error_title_fetch_read">Проблема чтения</string>
     <string name="dialog_error_title_fetch_write">Проблема записи</string>
