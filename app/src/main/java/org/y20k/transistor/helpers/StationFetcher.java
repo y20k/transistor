@@ -73,9 +73,9 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
         mCollection = new Collection(mFolder);
 
         // notify user
-        if (stationUri != null && stationUri.getScheme().startsWith("http")) {
+        if (stationUri != null && mStationUriScheme != null && mStationUriScheme.startsWith("http")) {
             Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_add_download_started) + " " + stationUri.toString(), Toast.LENGTH_LONG).show();
-        } else if (stationUri != null && stationUri.getScheme().startsWith("file")) {
+        } else if (stationUri != null && mStationUriScheme != null && mStationUriScheme.startsWith("file")) {
             // notify user
             Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_add_open_file_started) + " " + stationUri.toString(), Toast.LENGTH_LONG).show();
         }
@@ -87,11 +87,11 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
     @Override
     public Station doInBackground(Void... params) {
 
-        if (mFolderExists && mStationUriScheme.startsWith("http")  && urlCleanup()) {
+        if (mFolderExists && mStationUriScheme != null && mStationUriScheme.startsWith("http")  && urlCleanup()) {
             // download and return new station
             return new Station(mFolder, mStationURL);
 
-        } else if (mFolderExists && mStationUriScheme.startsWith("file")) {
+        } else if (mFolderExists && mStationUriScheme != null && mStationUriScheme.startsWith("file")) {
             // read file and return new station
             return new Station(mFolder, mStationUri);
 
@@ -126,17 +126,17 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
             String errorMessage;
             String errorDetails;
 
-            if (mStationUriScheme.startsWith("http")) {
+            if (mStationUriScheme != null && mStationUriScheme.startsWith("http")) {
                 // construct error message for "http"
                 errorTitle = mActivity.getResources().getString(R.string.dialog_error_title_fetch_download);
                 errorMessage = mActivity.getResources().getString(R.string.dialog_error_message_fetch_download);
                 errorDetails = buildDownloadErrorDetails(station);
-            } else if (mStationUriScheme.startsWith("file")) {
+            } else if (mStationUriScheme != null && mStationUriScheme.startsWith("file")) {
                 // construct error message for "file"
                 errorTitle = mActivity.getResources().getString(R.string.dialog_error_title_fetch_read);
                 errorMessage = mActivity.getResources().getString(R.string.dialog_error_message_fetch_read);
                 errorDetails = buildReadErrorDetails(station);
-            } else if (!stationAdded) {
+            } else if (!stationAdded  && mStationUriScheme != null) {
                 // construct error message for write error
                 errorTitle = mActivity.getResources().getString(R.string.dialog_error_title_fetch_write);
                 errorMessage = mActivity.getResources().getString(R.string.dialog_error_message_fetch_write);

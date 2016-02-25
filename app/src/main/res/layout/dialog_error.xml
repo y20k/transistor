@@ -24,6 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/dialog_error_details_button_default"
+        android:textIsSelectable="true"
         android:layout_gravity="center_horizontal"
         android:scrollbars="vertical"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Widget.Button" />
@@ -32,8 +33,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:scrollbars="vertical"
         android:text="@string/dialog_error_details_default"
+        android:textIsSelectable="true"
+        android:scrollbars="vertical"
         android:visibility="gone"
         android:textAppearance="@android:style/TextAppearance.Small" />
 </LinearLayout>
