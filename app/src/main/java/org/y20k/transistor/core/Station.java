@@ -49,7 +49,7 @@ public final class Station implements Comparable<Station> {
 
     /* Supported playlist content types */
     private static final String[] CONTENT_TYPES_PLS = {"audio/x-scpls"};
-    private static final String[] CONTENT_TYPES_M3U = {"audio/x-mpegurl", "application/vnd.apple.mpegurl; charset=utf-8", "audio/x-mpegurl; charset=utf-8", "audio/mpegurl"};
+    private static final String[] CONTENT_TYPES_M3U = {"audio/x-mpegurl", "application/vnd.apple.mpegurl; charset=utf-8", "audio/x-mpegurl; charset=utf-8", "audio/mpegurl", "audio/x-mpegurl; charset=iso-8859-1"};
 
     /* Main class variables */
     private Bitmap mStationImage;

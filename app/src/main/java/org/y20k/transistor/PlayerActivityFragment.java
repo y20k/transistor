@@ -75,6 +75,7 @@ public final class PlayerActivityFragment extends Fragment {
     private static final String STATION_ID_CURRENT = "stationIDCurrent";
     private static final String STATION_ID_LAST = "stationIDLast";
     private static final String PLAYBACK = "playback";
+    private static final String TIMER_RUNNING = "timerRunning";
     private static final String ACTION_PLAYBACK_STOPPED = "org.y20k.transistor.action.PLAYBACK_STOPPED";
     private static final String ACTION_TIMER_RUNNING = "org.y20k.transistor.action.TIMER_RUNNING";
     private static final String EXTRA_TIMER_REMAINING = "TIMER_REMAINING";
@@ -100,6 +101,7 @@ public final class PlayerActivityFragment extends Fragment {
     private SleepTimerService mSleepTimerService;
     private Snackbar mTimerNotification;
     private String mTimerNotificationMessage;
+    private boolean mTimerRunning;
 
 
     /* Constructor (default) */
@@ -206,7 +208,6 @@ public final class PlayerActivityFragment extends Fragment {
 
                 // playback stopped or new station - start playback
                 if (!mPlayback || mStationID != mStationIDCurrent) {
-
                     // set playback true
                     mPlayback = true;
                     // rotate playback button
@@ -253,9 +254,16 @@ public final class PlayerActivityFragment extends Fragment {
             public void onReceive(Context context, Intent intent) {
                 // get duration from intent
                 long remaining = intent.getLongExtra(EXTRA_TIMER_REMAINING, 0);
-                if (remaining == 0) {
+                if (mTimerNotification == null) {
+                    showTimerNotification(remaining);
+                } else if (mTimerNotification != null && remaining == 0) {
+                    // cancel notification
                     mTimerNotification.dismiss();
-                } else {
+                    // save state
+                    mTimerRunning = false;
+                    savePlaybackState(mActivity);
+                } else if (mTimerNotification != null ) {
+                    // update text
                     mTimerNotification.setText(mTimerNotificationMessage + remaining);
                 }
 
@@ -284,7 +292,12 @@ public final class PlayerActivityFragment extends Fragment {
                 }
                 mSleepTimerService.startActionStart(mActivity, duration);
 
+                // show notification
                 showTimerNotification(duration);
+
+                // save state
+                mTimerRunning = true;
+                savePlaybackState(mActivity);
 
 //                long duration = mPlayerService.getTimerRemaining() + 20000;
 //                mPlayerService.setSleepTimer(mActivity, duration);
@@ -472,6 +485,11 @@ public final class PlayerActivityFragment extends Fragment {
             mPlaybackButton.setImageResource(R.drawable.smbl_stop);
             // change playback indicator
             mPlaybackIndicator.setBackgroundResource(R.drawable.ic_playback_indicator_started_24dp);
+
+            if (mTimerRunning) {
+                showTimerNotification(1000);
+            }
+
         }
         // playback stopped
         else {
@@ -501,6 +519,7 @@ public final class PlayerActivityFragment extends Fragment {
         editor.putInt(STATION_ID_CURRENT, mStationIDCurrent);
         editor.putInt(STATION_ID_LAST, mStationIDLast);
         editor.putBoolean(PLAYBACK, mPlayback);
+        editor.putBoolean(TIMER_RUNNING, mTimerRunning);
         editor.apply();
 
     }
@@ -512,6 +531,7 @@ public final class PlayerActivityFragment extends Fragment {
         mStationIDCurrent = settings.getInt(STATION_ID_CURRENT, -1);
         mStationIDLast = settings.getInt(STATION_ID_LAST, -1);
         mPlayback = settings.getBoolean(PLAYBACK, false);
+        mTimerRunning = settings.getBoolean(TIMER_RUNNING, false);
     }
 
 
