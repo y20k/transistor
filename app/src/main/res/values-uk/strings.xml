@@ -8,7 +8,7 @@
     <!-- menu entries -->
     <string name="menu_about">Про додаток</string>
     <string name="menu_howto">Як користуватися</string>
-    <string name="menu_timer">Sleep timer</string>
+    <string name="menu_timer">Таймер сну</string>
     <string name="menu_icon">Змінити піктограму</string>
     <string name="menu_add">Додати</string>
     <string name="menu_delete">Видалити</string>
@@ -46,33 +46,33 @@
     <string name="dialog_error_message_default">Трапилась помилка</string>
     <string name="dialog_error_details_button_default">Показати подробиці</string>
     <string name="dialog_error_details_default">Подробиці відсутні</string>
-    <string name="dialog_error_details_write">Station is probably a duplicate or else you might want to check your external storage.</string>
+    <string name="dialog_error_details_write">Можливо станція вже існує, або виникла проблема із зовнішнім сховищем.</string>
     <string name="dialog_error_title_fetch_download">Проблеми із завантаженням</string>
-    <string name="dialog_error_title_fetch_read">Read Issue</string>
-    <string name="dialog_error_title_fetch_write">Write Issue</string>
+    <string name="dialog_error_title_fetch_read">Проблема під час читання</string>
+    <string name="dialog_error_title_fetch_write">Проблема під час запису</string>
     <string name="dialog_error_message_fetch_general_external_storage">Зовнішнє сховище:</string>
     <string name="dialog_error_message_fetch_general_hint_m3u">Підказка: Transistor може обробляти MP3 та OGG аудіо потоки, або посилання на файли .m3u чи .pls.</string>
     <string name="dialog_error_message_fetch_general_file_content">Вміст віддаленого файлу:</string>
     <string name="dialog_error_message_fetch_download">Transistor намагався, але все ж таки не зміг зрозуміти отримане посилання.</string>
     <string name="dialog_error_message_fetch_download_station_url">URL станції:</string>
-    <string name="dialog_error_message_fetch_read">Transistor tried hard but could not make sense of given file.</string>
-    <string name="dialog_error_message_fetch_read_file_location">Location of file:</string>
-    <string name="dialog_error_message_fetch_write">Transistor tried hard but could not save given station to storage.</string>
+    <string name="dialog_error_message_fetch_read">Transistor не може обробити вказаний файл.</string>
+    <string name="dialog_error_message_fetch_read_file_location">Розміщення файлу:</string>
+    <string name="dialog_error_message_fetch_write">Transistor не зміг зберегти вказану станцію до сховища.</string>
 
     <!-- messages -->
     <string name="actioncall_message_start_here">Додати нову станцію</string>
     <string name="toastmessage_add_download_started">Завантаження розпочато:</string>
-    <string name="toastmessage_add_open_file_started">Opening file:</string>
+    <string name="toastmessage_add_open_file_started">Відкриття файлу:</string>
     <string name="toastmessage_long_press_playback_stopped">Відтворення зупинено</string>
     <string name="toastmessage_long_press_playback_started">Відтворення розпочато</string>
-    <string name="toastmessage_station_copied">Station copied</string>
+    <string name="toastmessage_station_copied">Станцію скопійовано</string>
     <string name="toastalert_rename_unsuccessful">Не вдалося перейменувати станцію. Будь ласка, оберіть іншу назву.</string>
     <string name="toastalert_delete_successful">Станцію вилучено.</string>
     <string name="toastalert_no_external_storage">Не вдалося отримати доступ до зовнішнього сховища.</string>
     <string name="toastalert_headphones_unplugged">Навушники відключені. Відтворення призупинено.</string>
-    <string name="toastalert_permission_denied">Permission denied:</string>
+    <string name="toastalert_permission_denied">Доступ не надано:</string>
     <string name="snackbar_request_storage_access">Transistor потребує доступу для читання даних зі зовнішнього сховища.</string>
-    <string name="snackbar_message_timer_set">Sleep timer set to</string>
+    <string name="snackbar_message_timer_set">Таймер сну встановлено на</string>
 
     <!-- notification -->
     <string name="notification_swipe_to_stop">Посуньте для зупинки</string>
