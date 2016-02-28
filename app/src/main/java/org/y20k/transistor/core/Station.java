@@ -49,7 +49,7 @@ public final class Station implements Comparable<Station> {
 
     /* Supported playlist content types */
     private static final String[] CONTENT_TYPES_PLS = {"audio/x-scpls"};
-    private static final String[] CONTENT_TYPES_M3U = {"audio/x-mpegurl", "application/vnd.apple.mpegurl; charset=utf-8", "audio/x-mpegurl; charset=utf-8", "audio/mpegurl", "audio/x-mpegurl; charset=iso-8859-1"};
+    private static final String[] CONTENT_TYPES_M3U = {"audio/x-mpegurl", "application/vnd.apple.mpegurl", "audio/mpegurl"};
 
     /* Main class variables */
     private Bitmap mStationImage;
@@ -269,9 +269,15 @@ public final class Station implements Comparable<Station> {
 
     /* Determines if given content type is a playlist */
     private boolean isPlaylist(String contentType) {
-        for (String[] array : new String[][]{CONTENT_TYPES_PLS, CONTENT_TYPES_M3U}) {
-            if (Arrays.asList(array).contains(contentType)) {
-                return true;
+        if (contentType != null) {
+            // get mime type without charset
+            contentType = contentType.substring(0, contentType.indexOf(";"));
+
+            // check if content type is part of one the content type lists
+            for (String[] array : new String[][]{CONTENT_TYPES_PLS, CONTENT_TYPES_M3U}) {
+                if (Arrays.asList(array).contains(contentType)) {
+                    return true;
+                }
             }
         }
         return false;
