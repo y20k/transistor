@@ -6,7 +6,7 @@
  * This file is part of
  * TRANSISTOR - Radio App for Android
  *
- * Copyright (c) 2015 - Y20K.org
+ * Copyright (c) 2015-16 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
  */
@@ -107,6 +107,10 @@ public class SleepTimerService  extends Service {
         else if (intent.getAction().equals(ACTION_TIMER_STOP)) {
             Log.v(LOG_TAG, "Service received command: STOP");
 
+            // set remaining time
+            mTimerRemaining = 0;
+
+            // cancel timer
             if (mSleepTimer != null) {
                 mSleepTimer.cancel();
             }
