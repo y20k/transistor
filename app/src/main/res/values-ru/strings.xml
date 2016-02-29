@@ -79,7 +79,26 @@
     <string name="notification_playing">"Играет"</string>
 
     <!-- HTML strings -->
-    <string name="html_about">&lt;!DOCTYPE html&gt; &lt;html&gt; &lt;body&gt; &lt;h1&gt;О программе Transistor&lt;/h1&gt; &lt;h2&gt;Приложение интернет радио для Android&lt;/h2&gt; &lt;h3&gt;Версия 1.2 (&amp;quot;Cygnet Committee&amp;quot;)&lt;/h3&gt; &lt;p&gt;Transistor простое приложение для прослушивания радиопередач через интернет. Приложение хранит станции как файлы на внешнем накопителе вашего устройства. Посмотрите на файлы с расширением m3u в директории /Android/data/org.y20k.transistor/Collection. В настоящее время приложение умеет работать с потоками в форматах MP3 и OGG.&lt;/p&gt; &lt;p&gt;Важное примечание: в приложении нет какой-либо функции поиска радиостанций. Вам необходимо вручную добавить их.&lt;/p&gt; &lt;p&gt;Transistor свободное приложение. Оно распространяется под лицензией MIT. Вы можете найти исходный код на GitHub. Также на GitHub вы можете сообщить об ошибках или помочь в разработке.&lt;/p&gt; &lt;p&gt;https://github.com/y20k/transistor&lt;/p&gt; &lt;p&gt;https://opensource.org/licenses/MIT&lt;/p&gt; &lt;h3&gt;Какие разрешения необходимы Transistor?&lt;/h3&gt; &lt;p&gt;&lt;strong&gt;INTERNET&lt;/strong&gt;&lt;br /&gt; Transistor вещает радиостанции через интернет.&lt;/p&gt; &lt;p&gt;&lt;strong&gt;READ_EXTERNAL_STORAGE&lt;/strong&gt;&lt;br /&gt; Transistor\'у необходим доступ к изображениям, фотографиям и документам для настройки иконок радиостанций и чтения локально сохранённых плейлистов.&lt;/p&gt; &lt;p&gt;&lt;strong&gt;VIBRATE&lt;/strong&gt;&lt;br /&gt; Долгое нажатие на названии радиостанции вызывает небольшую вибрацию.&lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</string>
+    <string name="html_about"><![CDATA[<!DOCTYPE html>
+    <html>
+        <body>
+            <h1>О программе Transistor</h1>
+            <h2>Приложение интернет радио для Android</h2>
+            <h3>Версия 1.2 (&quot;Cygnet Committee&quot;)</h3>
+            <p>Transistor простое приложение для прослушивания радиопередач через интернет. Приложение хранит станции как файлы на внешнем накопителе вашего устройства. Посмотрите на файлы с расширением m3u в директории /Android/data/org.y20k.transistor/Collection. В настоящее время приложение умеет работать с потоками в форматах MP3 и OGG.</p>
+            <p>Важное примечание: в приложении нет какой-либо функции поиска радиостанций. Вам необходимо вручную добавить их.</p>
+            <p>Transistor свободное приложение. Оно распространяется под лицензией MIT. Вы можете найти исходный код на GitHub. Также на GitHub вы можете сообщить об ошибках или помочь в разработке.</p>
+            <p>https://github.com/y20k/transistor</p>
+            <p>https://opensource.org/licenses/MIT</p>
+            <h3>Какие разрешения необходимы Transistor?</h3>
+            <p><strong>INTERNET</strong><br />
+            Transistor вещает радиостанции через интернет.</p>
+            <p><strong>READ_EXTERNAL_STORAGE</strong><br />
+            Transistor&apos;у необходим доступ к изображениям, фотографиям и документам для настройки иконок радиостанций и чтения локально сохранённых плейлистов.</p>
+            <p><strong>VIBRATE</strong><br />
+            Долгое нажатие на названии радиостанции вызывает небольшую вибрацию.</p>
+        </body>
+    </html>]]></string>
 
     <string name="html_howto"><![CDATA[<!DOCTYPE html>
     <html>
