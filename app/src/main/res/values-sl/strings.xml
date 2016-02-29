@@ -65,7 +65,9 @@
     <string name="toastmessage_add_open_file_started">Opening file:</string>
     <string name="toastmessage_long_press_playback_stopped">Radijski prenos je bil ustavljen</string>
     <string name="toastmessage_long_press_playback_started">Radijski prenos se je začel</string>
-    <string name="toastmessage_station_copied">Station copied</string>
+    <string name="toastmessage_station_copied">Station copied.</string>
+    <string name="toastmessage_timer_activated">Sleep timer activated.</string>
+    <string name="toastmessage_timer_cancelled">Sleep timer cancelled.</string>
     <string name="toastalert_rename_unsuccessful">Ne morem preimenovati postaje. Prosim izberite drugo ime.</string>
     <string name="toastalert_delete_successful">Postaja je bila odstranjena.</string>
     <string name="toastalert_no_external_storage">Nimam dostopa do zunanjega pomnilnika.</string>

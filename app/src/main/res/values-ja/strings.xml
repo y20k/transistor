@@ -66,6 +66,8 @@
     <string name="toastmessage_long_press_playback_stopped">再生が停止しました (長押しを検出しました)</string>
     <string name="toastmessage_long_press_playback_started">再生を開始しました (長押しを検出しました)</string>
     <string name="toastmessage_station_copied">放送局をコピーしました</string>
+    <string name="toastmessage_timer_activated">Sleep timer activated.</string>
+    <string name="toastmessage_timer_cancelled">Sleep timer cancelled.</string>
     <string name="toastalert_rename_unsuccessful">放送局の名前を変更できません。別の名前を選択してください。</string>
     <string name="toastalert_delete_successful">放送局を削除しました。</string>
     <string name="toastalert_no_external_storage">外部ストレージにアクセスすることができません。</string>

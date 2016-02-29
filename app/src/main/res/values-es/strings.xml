@@ -65,7 +65,9 @@
     <string name="toastmessage_add_open_file_started">Abriendo archivo:</string>
     <string name="toastmessage_long_press_playback_stopped">Reproducción detenida (detectada pulsación larga)</string>
     <string name="toastmessage_long_press_playback_started">Reproducción empezada (detectada pulsación larga)</string>
-    <string name="toastmessage_station_copied">Estación copiada</string>
+    <string name="toastmessage_station_copied">Estación copiada.</string>
+    <string name="toastmessage_timer_activated">Sleep timer activated.</string>
+    <string name="toastmessage_timer_cancelled">Sleep timer cancelled.</string>
     <string name="toastalert_rename_unsuccessful">No se ha podido renombrar la estación. Por favor elija un nombre diferente.</string>
     <string name="toastalert_delete_successful">Estación borrada.</string>
     <string name="toastalert_no_external_storage">No se ha podido acceder al almacenamiento externo.</string>

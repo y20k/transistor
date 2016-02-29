@@ -8,6 +8,8 @@ Contributing developer(s):
 [meonwax](https://github.com/meonwax) 
 
 ### Translations
+Catalan version: [Zagur](https://github.com/Zagur)
+
 French version: [M2ck](https://github.com/M2ck)
 
 German version: [y20k](https://github.com/y20k)

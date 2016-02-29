@@ -65,7 +65,9 @@
     <string name="toastmessage_add_open_file_started">Opening file:</string>
     <string name="toastmessage_long_press_playback_stopped">Playback stopped (long press detected)</string>
     <string name="toastmessage_long_press_playback_started">Playback started (long press detected)</string>
-    <string name="toastmessage_station_copied">Station copied</string>
+    <string name="toastmessage_station_copied">Station copied.</string>
+    <string name="toastmessage_timer_activated">Sleep timer activated.</string>
+    <string name="toastmessage_timer_cancelled">Sleep timer cancelled.</string>
     <string name="toastalert_rename_unsuccessful">Unable to rename station. Please choose a different name.</string>
     <string name="toastalert_delete_successful">Station removed.</string>
     <string name="toastalert_no_external_storage">Unable to accesss external storage.</string>
