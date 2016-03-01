@@ -32,7 +32,10 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -50,6 +53,9 @@ public final class Station implements Comparable<Station> {
     /* Supported playlist content types */
     private static final String[] CONTENT_TYPES_PLS = {"audio/x-scpls"};
     private static final String[] CONTENT_TYPES_M3U = {"audio/x-mpegurl", "application/vnd.apple.mpegurl", "audio/mpegurl"};
+
+    /* Regular expression to extract content-type and charset from header string */
+    private static final Pattern CONTENT_TYPE_PATTERN = Pattern.compile("([^;]*)(; ?charset=([^;]+))?");
 
     /* Main class variables */
     private Bitmap mStationImage;
@@ -84,9 +90,8 @@ public final class Station implements Comparable<Station> {
     public Station(File folder, URL fileLocation) {
 
         // determine content type of remote file
-        String contentType = getContentType(fileLocation);
+        ContentType contentType = getContentType(fileLocation);
         Log.v(LOG_TAG, "Content type of given file is " + contentType);
-
 
         // content type is raw audio file
         if (isAudioFile(contentType)) {
@@ -254,12 +259,28 @@ public final class Station implements Comparable<Station> {
 
 
     /* Returns content type for given URL */
-    private String getContentType(URL fileLocation) {
+    private ContentType getContentType(URL fileLocation) {
         try {
             HttpURLConnection connection = (HttpURLConnection)fileLocation.openConnection();
             connection.setConnectTimeout(5000);
             connection.setReadTimeout(5000);
-            return connection.getContentType();
+            String contentTypeHeader = connection.getContentType();
+
+            if (contentTypeHeader != null) {
+                Matcher matcher = CONTENT_TYPE_PATTERN.matcher(contentTypeHeader.trim().toLowerCase(Locale.ENGLISH));
+                if (matcher.matches()) {
+                    ContentType contentType = new ContentType();
+                    String contentTypeString = matcher.group(1);
+                    String charsetString = matcher.group(3);
+                    if (contentTypeString != null) {
+                        contentType.type = contentTypeString.trim();
+                    }
+                    if (charsetString != null) {
+                        contentType.charset = charsetString.trim();
+                    }
+                    return contentType;
+                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -268,14 +289,10 @@ public final class Station implements Comparable<Station> {
 
 
     /* Determines if given content type is a playlist */
-    private boolean isPlaylist(String contentType) {
+    private boolean isPlaylist(ContentType contentType) {
         if (contentType != null) {
-            // get mime type without charset
-            contentType = contentType.substring(0, contentType.indexOf(";"));
-
-            // check if content type is part of one the content type lists
             for (String[] array : new String[][]{CONTENT_TYPES_PLS, CONTENT_TYPES_M3U}) {
-                if (Arrays.asList(array).contains(contentType)) {
+                if (Arrays.asList(array).contains(contentType.type)) {
                     return true;
                 }
             }
@@ -285,10 +302,12 @@ public final class Station implements Comparable<Station> {
 
 
     /* Determines if given content type is an audio file */
-    private boolean isAudioFile(String contentType) {
-        for (String[] array : new String[][]{CONTENT_TYPES_MPEG, CONTENT_TYPES_OGG}) {
-            if (Arrays.asList(array).contains(contentType)) {
-                return true;
+    private boolean isAudioFile(ContentType contentType) {
+        if (contentType != null) {
+            for (String[] array : new String[][]{CONTENT_TYPES_MPEG, CONTENT_TYPES_OGG}) {
+                if (Arrays.asList(array).contains(contentType.type)) {
+                    return true;
+                }
             }
         }
         return false;
@@ -305,7 +324,7 @@ public final class Station implements Comparable<Station> {
         try {
             // determine content type of remote file
             URL streamURL = new URL(mStreamUri.toString());
-            String contentType = getContentType(streamURL);
+            ContentType contentType = getContentType(streamURL);
             Log.v(LOG_TAG, "Content type of URL within playlist: " + contentType);
 
             return isAudioFile(contentType);
@@ -540,4 +559,17 @@ public final class Station implements Comparable<Station> {
         mStreamUri = newStreamUri;
     }
 
+    /**
+     * Container class representing the content-type and charset string
+     * received from the response header of an HTTP server.
+     */
+    private class ContentType {
+        String type;
+        String charset;
+
+        @Override
+        public String toString() {
+            return "ContentType{type='" + type + "'" + ", charset='" + charset + "'}";
+        }
+    }
 }
