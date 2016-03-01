@@ -66,8 +66,8 @@
     <string name="toastmessage_long_press_playback_stopped">Lecture arrêtée (appui long détecté)</string>
     <string name="toastmessage_long_press_playback_started">Lecture démarrée (appui long détecté)</string>
     <string name="toastmessage_station_copied">Station copiée.</string>
-    <string name="toastmessage_timer_activated">Sleep timer activated.</string>
-    <string name="toastmessage_timer_cancelled">Sleep timer cancelled.</string>
+    <string name="toastmessage_timer_activated">Minuterie de veille activée.</string>
+    <string name="toastmessage_timer_cancelled">Minuterie de veille annulée.</string>
     <string name="toastalert_rename_unsuccessful">Impossible de renommer la station. Veuillez choisir un nom différent.</string>
     <string name="toastalert_delete_successful">Station supprimée.</string>
     <string name="toastalert_no_external_storage">Impossible d\'accéder au stockage externe.</string>
