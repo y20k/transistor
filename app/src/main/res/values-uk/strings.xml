@@ -66,8 +66,8 @@
     <string name="toastmessage_long_press_playback_stopped">Відтворення зупинено</string>
     <string name="toastmessage_long_press_playback_started">Відтворення розпочато</string>
     <string name="toastmessage_station_copied">Станцію скопійовано.</string>
-    <string name="toastmessage_timer_activated">Sleep timer activated.</string>
-    <string name="toastmessage_timer_cancelled">Sleep timer cancelled.</string>
+    <string name="toastmessage_timer_activated">Таймер сну увімкнуто.</string>
+    <string name="toastmessage_timer_cancelled">Таймер сну вимкнено.</string>
     <string name="toastalert_rename_unsuccessful">Не вдалося перейменувати станцію. Будь ласка, оберіть іншу назву.</string>
     <string name="toastalert_delete_successful">Станцію вилучено.</string>
     <string name="toastalert_no_external_storage">Не вдалося отримати доступ до зовнішнього сховища.</string>
