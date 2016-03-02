@@ -27,6 +27,7 @@
     <string name="descr_playback_button">Gran botó de reproducció</string>
     <string name="descr_playback_indicator">Indicador pel funcionament de la reproducció</string>
     <string name="descr_playback_indicator_started">Indicador pel funcionament de la reproducció</string>
+    <string name="descr_timer_indicator_started">Indicator for running sleep timer</string>
 
     <!-- dialogs -->
     <string name="dialog_generic_button_okay">D\'acord</string>

@@ -437,6 +437,7 @@ public final class PlayerService extends Service implements
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean(PLAYBACK, mPlayback);
         editor.apply();
+        Log.v(LOG_TAG, "Saving state.");
     }
 
 

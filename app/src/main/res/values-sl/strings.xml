@@ -27,6 +27,7 @@
     <string name="descr_overflow_button">Prikaz možnosti za radisjko postajo</string>
     <string name="descr_arrow_actioncall">Puščica, ki kaže k simbolu za dodajanje postaje</string>
     <string name="descr_playback_indicator_started">Kazalnik za predvajanje v teku</string>
+    <string name="descr_timer_indicator_started">Indicator for running sleep timer</string>
 
     <!-- dialogs -->
     <string name="dialog_add_station_button">Dodaj</string>

@@ -130,11 +130,6 @@ public class SleepTimerService  extends Service {
         return START_STICKY;
 
     }
-    // TODO remove this
-    // For started services, there are two additional major modes of operation they can decide to run in,
-    // depending on the value they return from onStartCommand(): START_STICKY is used for services that are explicitly
-    // started and stopped as needed, while START_NOT_STICKY or START_REDELIVER_INTENT are used for services that should
-    // only remain running while processing any commands sent to them. See the linked documentation for more detail on the semantics.
 
 
     @Nullable
@@ -211,14 +206,15 @@ public class SleepTimerService  extends Service {
 
     }
 
+
+    /* save state of timer to shared preferences */
     private void saveTimerState (boolean running) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplication());
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean(TIMER_RUNNING, running);
         editor.apply();
+        Log.v(LOG_TAG, "Saving state.");
     }
-
-
 
 
 }

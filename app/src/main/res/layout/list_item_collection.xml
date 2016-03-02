@@ -25,11 +25,20 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:paddingStart="24dp"
+        android:paddingEnd="4dp"
         android:text="@string/descr_station_name_example"
         android:layout_weight="1"
         android:singleLine="true"
         android:ellipsize="end"
         android:textAppearance="@android:style/TextAppearance.Medium" />
+
+    <ImageView
+        android:id="@+id/list_item_timer_indicator"
+        android:contentDescription="@string/descr_timer_indicator_started"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_timer_black_24dp"
+        android:visibility="gone" />
 
     <ImageView
         android:id="@+id/list_item_playback_indicator"
