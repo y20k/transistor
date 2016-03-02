@@ -27,6 +27,7 @@
     <string name="descr_playback_button">大きな再生ボタン</string>
     <string name="descr_playback_indicator">再生中のインジケーター</string>
     <string name="descr_playback_indicator_started">再生中のインジケーター</string>
+    <string name="descr_timer_indicator_started">Indicator for running sleep timer</string>
 
     <!-- dialogs -->
     <string name="dialog_generic_button_okay">OK</string>

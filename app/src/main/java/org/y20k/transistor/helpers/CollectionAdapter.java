@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,9 +38,14 @@ import java.util.LinkedList;
  */
 public final class CollectionAdapter extends BaseAdapter {
 
+    /* Define log tag */
+    private static final String LOG_TAG = CollectionAdapter.class.getSimpleName();
+
+
     /* Keys */
     private static final String STATION_ID_CURRENT = "stationIDCurrent";
     private static final String PLAYBACK = "playback";
+    private static final String TIMER_RUNNING = "timerRunning";
 
 
     /* Main class variables */
@@ -50,6 +56,7 @@ public final class CollectionAdapter extends BaseAdapter {
     private CollectionChangedListener mCollectionChangedListener;
     private boolean mPlayback;
     private int mStationIDCurrent;
+    private boolean mTimerRunning;
 
 
     /* Interface for custom listener */
@@ -101,6 +108,7 @@ public final class CollectionAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.stationImageView = (ImageView) convertView.findViewById(R.id.list_item_station_icon);
             holder.stationNameView = (TextView) convertView.findViewById(R.id.list_item_textview);
+            holder.timerIndicator = (ImageView) convertView.findViewById(R.id.list_item_timer_indicator);
             holder.playbackIndicator = (ImageView) convertView.findViewById(R.id.list_item_playback_indicator);
             holder.stationMenuView = (ImageView) convertView.findViewById(R.id.list_item_more_button);
 
@@ -116,6 +124,13 @@ public final class CollectionAdapter extends BaseAdapter {
 
         // set station name
         holder.stationNameView.setText(mStationNames.get(position));
+
+        // set timer indicator
+        if (mPlayback && mTimerRunning && mStationIDCurrent == position) {
+            holder.timerIndicator.setVisibility(View.VISIBLE);
+        } else {
+            holder.timerIndicator.setVisibility(View.GONE);
+        }
 
         // set playback indicator
         if (mPlayback && mStationIDCurrent == position) {
@@ -162,6 +177,8 @@ public final class CollectionAdapter extends BaseAdapter {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         mStationIDCurrent = settings.getInt(STATION_ID_CURRENT, -1);
         mPlayback = settings.getBoolean(PLAYBACK, false);
+        mTimerRunning = settings.getBoolean(TIMER_RUNNING, false);
+        Log.v(LOG_TAG, "Loading state.");
     }
 
 
@@ -183,6 +200,7 @@ public final class CollectionAdapter extends BaseAdapter {
     static class ViewHolder {
         ImageView stationImageView;
         TextView stationNameView;
+        ImageView timerIndicator;
         ImageView playbackIndicator;
         ImageView stationMenuView;
     }

@@ -150,8 +150,10 @@ public final class PlayerActivityFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
+        // load playback state
         loadPlaybackState(mActivity);
 
+        // initiate sleep timer if necessary
         if (mTimerRunning && mSleepTimerService == null) {
             mSleepTimerService = new SleepTimerService();
         }
@@ -214,24 +216,11 @@ public final class PlayerActivityFragment extends Fragment {
 
                 // playback stopped or new station - start playback
                 if (!mPlayback || mStationID != mStationIDCurrent) {
-                    // set playback true
-                    mPlayback = true;
-                    // rotate playback button
-                    changeVisualState(mActivity);
-                    // start player
-                    Log.v(LOG_TAG, "Starting player service.");
-                    mPlayerService.startActionPlay(mActivity, mStreamUri, mStationName);
-
+                    startPlayback();
                 }
                 // playback active - stop playback
                 else {
-                    // set playback false
-                    mPlayback = false;
-                    // rotate playback button
-                    changeVisualState(mActivity);
-                    // stop player
-                    Log.v(LOG_TAG, "Stopping player service.");
-                    mPlayerService.startActionStop(mActivity);
+                    stopPlayback();
                 }
 
                 // save state of playback in settings store
@@ -266,6 +255,8 @@ public final class PlayerActivityFragment extends Fragment {
                 } else if (mTimerNotification != null) {
                     // cancel notification
                     mTimerNotification.dismiss();
+                    mTimerRunning = false;
+                    savePlaybackState(mActivity);
                 }
 
             }
@@ -285,33 +276,8 @@ public final class PlayerActivityFragment extends Fragment {
             // CASE TIMER
             case R.id.menu_timer:
 
-                long duration = 20000;
-
-                if (mSleepTimerService == null) {
-                    mSleepTimerService = new SleepTimerService();
-                }
-
-
-                if (!mPlayback) {
-                    // TODO redundant code - can be reused
-                    // set playback true
-                    mPlayback = true;
-                    // rotate playback button
-                    changeVisualState(mActivity);
-                    // start player
-                    Log.v(LOG_TAG, "Starting player service.");
-                    mPlayerService.startActionPlay(mActivity, mStreamUri, mStationName);
-                }
-                mSleepTimerService.startActionStart(mActivity, duration);
-
-
-
-                // show notification
-                showTimerNotification(duration);
-
-                // notify user
-                Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_timer_activated), Toast.LENGTH_LONG).show();
-
+                // handle click on timer menu item
+                handleMenuTimerClick();
 
                 return true;
 
@@ -390,6 +356,104 @@ public final class PlayerActivityFragment extends Fragment {
             // retrieve selected image from image picker
             processNewImage(data.getData());
         }
+    }
+
+
+    /* Starts player service */
+    private void startPlayback() {
+        // set playback true
+        mPlayback = true;
+        // rotate playback button
+        changeVisualState(mActivity);
+        // start player
+        Log.v(LOG_TAG, "Starting player service.");
+        mPlayerService.startActionPlay(mActivity, mStreamUri, mStationName);
+    }
+
+
+    /* Stops player service */
+    private void stopPlayback() {
+        // set playback false
+        mPlayback = false;
+        // rotate playback button
+        changeVisualState(mActivity);
+        // stop player
+        Log.v(LOG_TAG, "Stopping player service.");
+        mPlayerService.startActionStop(mActivity);
+
+        // stop sleep timer if necessary
+        if (mSleepTimerService != null) {
+            mSleepTimerService.startActionStop(mActivity);
+        }
+        if (mTimerNotification != null && mTimerNotification.isShown()) {
+            mTimerNotification.dismiss();
+        }
+
+    }
+
+
+    /* handles timer menu click */
+    private void handleMenuTimerClick() {
+        long duration = 20000;
+
+        // initiate sleep timer if necessary
+        if (mSleepTimerService == null) {
+            mSleepTimerService = new SleepTimerService();
+        }
+
+        // CASE 1:
+        // No station is playing,
+        // No timer is running
+        if (!mPlayback && !mTimerRunning) {
+            startPlayback();
+            mSleepTimerService.startActionStart(mActivity, duration);
+            showTimerNotification(duration);
+            Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_timer_activated), Toast.LENGTH_LONG).show();
+        }
+
+        // CASE 2:
+        // This station is playing,
+        // No sleep timer is running
+        if (mPlayback && mStationIDCurrent == mStationID && !mTimerRunning) {
+            mSleepTimerService.startActionStart(mActivity, duration);
+            showTimerNotification(duration);
+            Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_timer_activated), Toast.LENGTH_LONG).show();
+        }
+
+
+        // CASE 3:
+        // This station is playing,
+        // Sleep timer is running
+        if (mPlayback && mStationIDCurrent == mStationID && !mTimerRunning) {
+            mSleepTimerService.startActionStart(mActivity, duration);
+            showTimerNotification(duration);
+            Toast.makeText(mActivity, "Sleep timer duration increased by:" + duration, Toast.LENGTH_LONG).show();
+        }
+
+
+        // CASE 4:
+        // Another station is playing,
+        // No sleep timer is running
+        if (mPlayback && mStationIDCurrent != mStationID && !mTimerRunning) {
+            stopPlayback();
+            startPlayback();
+            mSleepTimerService.startActionStart(mActivity, duration);
+            showTimerNotification(duration);
+            Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_timer_activated), Toast.LENGTH_LONG).show();
+        }
+
+
+        // CASE 5:
+        // Another station is playing,
+        // Sleep timer is running
+        if (mPlayback && mStationIDCurrent != mStationID && mTimerRunning) {
+            stopPlayback();
+            startPlayback();
+            mSleepTimerService.startActionStart(mActivity, duration);
+            showTimerNotification(duration);
+            Toast.makeText(mActivity, "Sleep timer duration increased by:" + duration, Toast.LENGTH_LONG).show();
+        }
+
     }
 
 
@@ -488,6 +552,8 @@ public final class PlayerActivityFragment extends Fragment {
             public void onClick(View view) {
                 // stop sleep timer service
                 mSleepTimerService.startActionStop(mActivity);
+                mTimerRunning = false;
+                savePlaybackState(mActivity);
                 // notify user
                 Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_timer_cancelled), Toast.LENGTH_LONG).show();
                 Log.v(LOG_TAG, "Sleep timer cancelled.");
@@ -507,13 +573,10 @@ public final class PlayerActivityFragment extends Fragment {
             mPlaybackButton.setImageResource(R.drawable.smbl_stop);
             // change playback indicator
             mPlaybackIndicator.setBackgroundResource(R.drawable.ic_playback_indicator_started_24dp);
-
-            Log.v(LOG_TAG, "mTimerRunning is " + mTimerRunning);
-
+            // show sleep timer notification
             if (mTimerRunning && (mTimerNotification == null || !mTimerNotification.isShown())) {
                 showTimerNotification(-1);
             }
-
         }
         // playback stopped
         else {
@@ -525,7 +588,7 @@ public final class PlayerActivityFragment extends Fragment {
     }
 
 
-    /* Save station name and ID and playback state to SharedPreferences */
+    /* Saves playback state to SharedPreferences */
     private void savePlaybackState(Context context) {
         // playback started
         if (mPlayback) {
@@ -543,8 +606,9 @@ public final class PlayerActivityFragment extends Fragment {
         editor.putInt(STATION_ID_CURRENT, mStationIDCurrent);
         editor.putInt(STATION_ID_LAST, mStationIDLast);
         editor.putBoolean(PLAYBACK, mPlayback);
+        editor.putBoolean(TIMER_RUNNING, mTimerRunning);
         editor.apply();
-
+        Log.v(LOG_TAG, "Saving state.");
     }
 
 
@@ -555,6 +619,7 @@ public final class PlayerActivityFragment extends Fragment {
         mStationIDLast = settings.getInt(STATION_ID_LAST, -1);
         mPlayback = settings.getBoolean(PLAYBACK, false);
         mTimerRunning = settings.getBoolean(TIMER_RUNNING, false);
+        Log.v(LOG_TAG, "Loading state.");
     }
 
 

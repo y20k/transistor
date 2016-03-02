@@ -27,6 +27,7 @@
     <string name="descr_playback_button">Big playback button</string>
     <string name="descr_playback_indicator">Indicator for running playback</string>
     <string name="descr_playback_indicator_started">Indicator for running playback</string>
+    <string name="descr_timer_indicator_started">Indicator for running sleep timer</string>
 
     <!-- dialogs -->
     <string name="dialog_generic_button_okay">Okay</string>

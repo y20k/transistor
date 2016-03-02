@@ -57,6 +57,7 @@ public final class Station implements Comparable<Station> {
     /* Regular expression to extract content-type and charset from header string */
     private static final Pattern CONTENT_TYPE_PATTERN = Pattern.compile("([^;]*)(; ?charset=([^;]+))?");
 
+
     /* Main class variables */
     private Bitmap mStationImage;
     private File mStationImageFile;
@@ -559,6 +560,7 @@ public final class Station implements Comparable<Station> {
         mStreamUri = newStreamUri;
     }
 
+
     /**
      * Container class representing the content-type and charset string
      * received from the response header of an HTTP server.
@@ -572,4 +574,5 @@ public final class Station implements Comparable<Station> {
             return "ContentType{type='" + type + "'" + ", charset='" + charset + "'}";
         }
     }
+
 }

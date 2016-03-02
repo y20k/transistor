@@ -547,6 +547,7 @@ public final class MainActivityFragment extends Fragment {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mActivity);
         stationIDCurrent = settings.getInt(STATION_ID_CURRENT, -1);
         boolean playback = settings.getBoolean(PLAYBACK, false);
+        Log.v(LOG_TAG, "Loading state.");
 
         if (playback && position == stationIDCurrent ) {
             // stop playback service
@@ -583,6 +584,7 @@ public final class MainActivityFragment extends Fragment {
         editor.putInt(STATION_ID_LAST, stationIDLast);
         editor.putBoolean(PLAYBACK, playback);
         editor.apply();
+        Log.v(LOG_TAG, "Saving state.");
 
         // refresh view
         refreshStationList();
