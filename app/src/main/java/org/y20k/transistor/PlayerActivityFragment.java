@@ -213,18 +213,7 @@ public final class PlayerActivityFragment extends Fragment {
         mPlaybackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                // playback stopped or new station - start playback
-                if (!mPlayback || mStationID != mStationIDCurrent) {
-                    startPlayback();
-                }
-                // playback active - stop playback
-                else {
-                    stopPlayback();
-                }
-
-                // save state of playback in settings store
-                savePlaybackState(mActivity);
+                handlePlaybackButtonClick ();
             }
         });
 
@@ -392,7 +381,72 @@ public final class PlayerActivityFragment extends Fragment {
     }
 
 
-    /* handles timer menu click */
+    /* Handles tap on the big playback button */
+    private void handlePlaybackButtonClick() {
+        // playback stopped or new station - start playback
+        if (!mPlayback || mStationID != mStationIDCurrent) {
+            startPlayback();
+        }
+        // playback active - stop playback
+        else {
+            stopPlayback();
+        }
+
+        // save state of playback in settings store
+        savePlaybackState(mActivity);
+    }
+
+
+    /* WORK IN PROGRESS HERE: Handles tap on the big playback button */
+    private void handlePlaybackButtonClickPlus() {
+
+        // CASE 1:
+        // This Station IS NOT playing,
+        // Timer IS NOT running
+        // -> start playback
+        if (!mTimerRunning && (!mPlayback || mStationID != mStationIDCurrent)) {
+            // start playback
+            startPlayback();
+        }
+
+        // CASE 2:
+        // This Station IS NOT playing,
+        // Timer IS running
+        // -> stop timer & start playback
+        if (mTimerRunning && (!mPlayback || mStationID != mStationIDCurrent)) {
+            // stop timer
+            // TODO implement stopTimer
+
+            // start playback
+            startPlayback();
+        }
+
+        // CASE 3:
+        // This Station IS playing,
+        // Timer IS running
+        // -> stop timer & stop playback
+        if (mTimerRunning && (mPlayback && mStationID != mStationIDCurrent)) {
+            // stop timer
+            // TODO implement stopTimer
+
+            // stop playback
+            stopPlayback();
+        }
+
+        // CASE 4:
+        // This Station IS playing,
+        // Timer IS NOT running
+        if (mTimerRunning && (mPlayback && mStationID != mStationIDCurrent)) {
+            // stop playback
+            stopPlayback();
+        }
+
+        // save state of playback in settings store
+        savePlaybackState(mActivity);
+    }
+
+
+    /* WORK IN PROGRESS HERE: Handles tap timer icon in actionbar */
     private void handleMenuTimerClick() {
         long duration = 20000;
 

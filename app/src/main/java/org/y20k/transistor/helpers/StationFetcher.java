@@ -44,7 +44,7 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
 
     /* Keys */
     private static final String ACTION_COLLECTION_CHANGED = "org.y20k.transistor.action.COLLECTION_CHANGED";
-
+    private static final String EXTRA_STATION_POSITION = "STATION_POSITION";
 
     /* Main class variables */
     private final Activity mActivity;
@@ -113,10 +113,17 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
             // add station to collection
             stationAdded = mCollection.add(station);
 
-            // send local broadcast
-            Intent i = new Intent();
-            i.setAction(ACTION_COLLECTION_CHANGED);
-            LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(i);
+            if (stationAdded) {
+                // get position
+                int position = mCollection.getStations().indexOf(station);
+
+                // send local broadcast
+                Intent i = new Intent();
+                i.setAction(ACTION_COLLECTION_CHANGED);
+                i.putExtra(EXTRA_STATION_POSITION, position);
+                LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(i);
+            }
+
 
         }
 
