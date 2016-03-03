@@ -72,6 +72,7 @@ public final class MainActivityFragment extends Fragment {
     private static final String ACTION_PLAYBACK_STARTED = "org.y20k.transistor.action.PLAYBACK_STARTED";
     private static final String ACTION_PLAYBACK_STOPPED = "org.y20k.transistor.action.PLAYBACK_STOPPED";
     private static final String ACTION_IMAGE_CHANGE_REQUESTED = "org.y20k.transistor.action.IMAGE_CHANGE_REQUESTED";
+    private static final String EXTRA_STATION_POSITION = "STATION_POSITION";
     private static final String LIST_STATE = "ListState";
     private static final String STREAM_URI = "streamUri";
     private static final String STATION_NAME = "stationName";
@@ -407,6 +408,11 @@ public final class MainActivityFragment extends Fragment {
             @Override
             public void onReceive(Context context, Intent intent) {
                 refreshStationList();
+                // if new station - scroll towards it
+                if (intent.hasExtra(EXTRA_STATION_POSITION)) {
+                    int position = intent.getIntExtra(EXTRA_STATION_POSITION, 0);
+                    mListView.smoothScrollToPosition(position);
+                }
             }
         };
         IntentFilter collectionChangedIntentFilter = new IntentFilter(ACTION_COLLECTION_CHANGED);

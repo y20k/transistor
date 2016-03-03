@@ -37,7 +37,7 @@
         android:contentDescription="@string/descr_timer_indicator_started"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_timer_black_24dp"
+        android:src="@drawable/ic_timer_indicator_small_started_24dp"
         android:visibility="gone" />
 
     <ImageView
