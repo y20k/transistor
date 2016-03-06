@@ -150,9 +150,20 @@ public final class Collection {
 
         Station station = mStations.get(stationID);
         String oldStationName = station.getStationName();
+        boolean existingName = false;
+
+        // do not overwrite another station
+        for (Station s: mStations) {
+            if (s.getStationName().equals(newStationName)) {
+                existingName = true;
+                break;
+            } else {
+                existingName = false;
+            }
+        }
 
         // name of station is new
-        if (newStationName != null && !(newStationName.equals(oldStationName))) {
+        if (newStationName != null && !newStationName.equals(oldStationName) && !existingName) {
 
             // get reference to old files
             File oldStationPlaylistFile = station.getStationPlaylistFile();
