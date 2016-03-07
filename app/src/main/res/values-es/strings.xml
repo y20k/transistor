@@ -69,6 +69,8 @@
     <string name="toastmessage_station_copied">Estación copiada.</string>
     <string name="toastmessage_timer_activated">Sleep timer activated.</string>
     <string name="toastmessage_timer_cancelled">Sleep timer cancelled.</string>
+    <string name="toastmessage_timer_duration_increased">Duration increased (+ 15 min).</string>
+    <string name="toastmessage_timer_start_unable">Please start playback first.</string>
     <string name="toastalert_rename_unsuccessful">No se ha podido renombrar la estación. Por favor elija un nombre diferente.</string>
     <string name="toastalert_delete_successful">Estación borrada.</string>
     <string name="toastalert_no_external_storage">No se ha podido acceder al almacenamiento externo.</string>

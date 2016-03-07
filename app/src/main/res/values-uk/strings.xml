@@ -69,6 +69,8 @@
     <string name="toastmessage_station_copied">Станцію скопійовано.</string>
     <string name="toastmessage_timer_activated">Таймер сну увімкнуто.</string>
     <string name="toastmessage_timer_cancelled">Таймер сну вимкнено.</string>
+    <string name="toastmessage_timer_duration_increased">Duration increased (+ 15 min).</string>
+    <string name="toastmessage_timer_start_unable">Please start playback first.</string>
     <string name="toastalert_rename_unsuccessful">Не вдалося перейменувати станцію. Будь ласка, оберіть іншу назву.</string>
     <string name="toastalert_delete_successful">Станцію вилучено.</string>
     <string name="toastalert_no_external_storage">Не вдалося отримати доступ до зовнішнього сховища.</string>

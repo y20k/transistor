@@ -33,14 +33,6 @@
         android:textAppearance="@android:style/TextAppearance.Medium" />
 
     <ImageView
-        android:id="@+id/list_item_timer_indicator"
-        android:contentDescription="@string/descr_timer_indicator_started"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_timer_indicator_small_started_24dp"
-        android:visibility="gone" />
-
-    <ImageView
         android:id="@+id/list_item_playback_indicator"
         android:contentDescription="@string/descr_playback_indicator_started"
         android:layout_width="wrap_content"

@@ -108,7 +108,6 @@ public final class CollectionAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.stationImageView = (ImageView) convertView.findViewById(R.id.list_item_station_icon);
             holder.stationNameView = (TextView) convertView.findViewById(R.id.list_item_textview);
-            holder.timerIndicator = (ImageView) convertView.findViewById(R.id.list_item_timer_indicator);
             holder.playbackIndicator = (ImageView) convertView.findViewById(R.id.list_item_playback_indicator);
             holder.stationMenuView = (ImageView) convertView.findViewById(R.id.list_item_more_button);
 
@@ -124,13 +123,6 @@ public final class CollectionAdapter extends BaseAdapter {
 
         // set station name
         holder.stationNameView.setText(mStationNames.get(position));
-
-        // set timer indicator
-        if (mPlayback && mTimerRunning && mStationIDCurrent == position) {
-            holder.timerIndicator.setVisibility(View.VISIBLE);
-        } else {
-            holder.timerIndicator.setVisibility(View.GONE);
-        }
 
         // set playback indicator
         if (mPlayback && mStationIDCurrent == position) {
@@ -200,7 +192,6 @@ public final class CollectionAdapter extends BaseAdapter {
     static class ViewHolder {
         ImageView stationImageView;
         TextView stationNameView;
-        ImageView timerIndicator;
         ImageView playbackIndicator;
         ImageView stationMenuView;
     }

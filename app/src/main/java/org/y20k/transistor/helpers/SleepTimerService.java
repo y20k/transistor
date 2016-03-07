@@ -24,7 +24,6 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
-import android.widget.Toast;
 
 import org.y20k.transistor.PlayerService;
 
@@ -40,7 +39,6 @@ public class SleepTimerService  extends Service {
 
 
     /* Keys */
-    private static final String ACTION_PLAY = "org.y20k.transistor.action.PLAY";
     private static final String ACTION_STOP = "org.y20k.transistor.action.STOP";
     private static final String ACTION_TIMER_START = "org.y20k.transistor.action.TIMER_START";
     private static final String ACTION_TIMER_STOP = "org.y20k.transistor.action.TIMER_STOP";
@@ -92,7 +90,6 @@ public class SleepTimerService  extends Service {
                 // set remaining time
                 if (mTimerRemaining > 0) {
                     mTimerRemaining = mTimerRemaining + duration;
-                    Toast.makeText(getApplication(), "Added " + duration + " milliseconds.", Toast.LENGTH_LONG).show();
                 } else {
                     mTimerRemaining = duration;
                 }
