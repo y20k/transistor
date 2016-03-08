@@ -29,7 +29,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
-import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -37,16 +36,17 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.os.EnvironmentCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import org.y20k.transistor.core.Collection;
+import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.CollectionAdapter;
 import org.y20k.transistor.helpers.DialogAddStation;
 import org.y20k.transistor.helpers.ImageHelper;
@@ -77,8 +77,6 @@ public final class MainActivityFragment extends Fragment {
     private static final String EXTRA_STATION_POSITION = "STATION_POSITION";
     private static final String EXTRA_TIMER_REMAINING = "TIMER_REMAINING";
     private static final String LIST_STATE = "ListState";
-    private static final String STREAM_URI = "streamUri";
-    private static final String STATION_NAME = "stationName";
     private static final String STATION_ID = "stationID";
     private static final String STATION_ID_CURRENT = "stationIDCurrent";
     private static final String STATION_ID_LAST = "stationIDLast";
@@ -99,9 +97,11 @@ public final class MainActivityFragment extends Fragment {
     private CollectionAdapter mCollectionAdapter = null;
     private File mFolder;
     private LinkedList<String> mStationNames;
+    private LinkedList<Uri> mStationUris;
     private LinkedList<Bitmap> mStationImages;
     private View mRootView;
-    private ListView mListView;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.LayoutManager mLayoutManager;
     private Parcelable mListState;
     private int mStationIDCurrent;
     private int mStationIDLast;
@@ -154,8 +154,9 @@ public final class MainActivityFragment extends Fragment {
 
         // create adapter for collection
         mStationNames = new LinkedList<>();
+        mStationUris = new LinkedList<>();
         mStationImages = new LinkedList<>();
-        mCollectionAdapter = new CollectionAdapter(mActivity, mStationNames, mStationImages);
+        mCollectionAdapter = new CollectionAdapter(mActivity, mStationNames, mStationUris, mStationImages);
 
         // listen for data change in mCollection adapter
         mCollectionAdapter.setCollectionChangedListener(new CollectionAdapter.CollectionChangedListener() {
@@ -184,42 +185,18 @@ public final class MainActivityFragment extends Fragment {
         mRootView = inflater.inflate(R.layout.fragment_main, container, false);
 
         // get reference to list view from inflated root view
-        mListView = (ListView) mRootView.findViewById(R.id.main_listview_collection);
+        mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.main_recyclerview_collection);
+
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        mRecyclerView.setHasFixedSize(true);
+
+        // use a linear layout manager
+        mLayoutManager = new LinearLayoutManager(mActivity);
+        mRecyclerView.setLayoutManager(mLayoutManager);
 
         // attach adapter to list view
-        mListView.setAdapter(mCollectionAdapter);
-
-        // attach OnItemClickListener to mListView  (single tap)
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            // inner method override for OnItemClickListener
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (mCollection != null) {
-                    // get station name and URL from position
-                    String stationName = mCollection.getStations().get((Integer) mCollectionAdapter.getItem(position)).getStationName();
-                    String streamUri = mCollection.getStations().get((Integer) mCollectionAdapter.getItem(position)).getStreamUri().toString();
-
-                    // add name, url and id of station to intent
-                    Intent intent = new Intent(mActivity, PlayerActivity.class);
-                    intent.putExtra(STATION_NAME, stationName);
-                    intent.putExtra(STREAM_URI, streamUri);
-                    intent.putExtra(STATION_ID, position);
-
-                    // start activity with intent
-                    startActivity(intent);
-                }
-            }
-        });
-
-        // attach OnItemLongClickListener to mListView (tap and hold)
-        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                handleLongClick(position);
-                return true;
-            }
-        });
+        mRecyclerView.setAdapter(mCollectionAdapter);
 
         return mRootView;
     }
@@ -300,7 +277,7 @@ public final class MainActivityFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         // save list view position
-        mListState = mListView.onSaveInstanceState();
+        mListState = mLayoutManager.onSaveInstanceState();
         outState.putParcelable(LIST_STATE, mListState);
     }
 
@@ -310,7 +287,6 @@ public final class MainActivityFragment extends Fragment {
 
         Bitmap stationImage;
         Bitmap stationImageSmall;
-        String stationName;
         ImageHelper imageHelper;
 
         // create collection
@@ -318,16 +294,17 @@ public final class MainActivityFragment extends Fragment {
         mCollection = new Collection(mFolder);
 
         // put stations into collection adapter
-        for (int i = 0; i < mCollection.getStations().size(); i++) {
-            // set name of station
-            stationName = mCollection.getStations().get(i).getStationName();
+        for (Station station : mCollection.getStations()) {
             // add name to linked list of names
-            mStationNames.add(stationName);
+            mStationNames.add(station.getStationName());
+
+            // add Uri to linked list of Uris
+            mStationUris.add(station.getStreamUri());
 
             // set image for station
-            if (mCollection.getStations().get(i).getStationImageFile().exists()) {
+            if (station.getStationImageFile().exists()) {
                 // get image from collection
-                stationImageSmall = BitmapFactory.decodeFile(mCollection.getStations().get(i).getStationImageFile().toString());
+                stationImageSmall = BitmapFactory.decodeFile(station.getStationImageFile().toString());
             } else {
                 // get default image
                 stationImageSmall = BitmapFactory.decodeResource(mActivity.getResources(), R.drawable.ic_notesymbol);
@@ -348,15 +325,16 @@ public final class MainActivityFragment extends Fragment {
     private void refreshStationList() {
 
         // clear and refill mCollection adapter
-        if (!mStationNames.isEmpty() && !mStationImages.isEmpty()) {
+        if (!mStationNames.isEmpty() && !mStationUris.isEmpty() && !mStationImages.isEmpty()) {
             mStationNames.clear();
+            mStationUris.clear();
             mStationImages.clear();
         }
         fillCollectionAdapter();
 
         // show call to action, if necessary
         View actioncall = mRootView.findViewById(R.id.main_actioncall_layout);
-        if (mCollectionAdapter.isEmpty()) {
+        if (mCollectionAdapter.getItemCount() == 0) {
             actioncall.setVisibility(View.VISIBLE);
         } else {
             actioncall.setVisibility(View.GONE);
@@ -506,49 +484,6 @@ public final class MainActivityFragment extends Fragment {
                 return false;
             }
         }
-    }
-
-
-    /* Handles long click on list item */
-    private void handleLongClick(int position) {
-
-        // get current playback state
-        loadPlaybackState(mActivity);
-
-        if (mPlayback && position == mStationIDCurrent ) {
-            // stop playback service
-            mPlayerService.startActionStop(mActivity);
-
-            // set playback state
-            mStationIDLast = mStationIDCurrent;
-            mPlayback = false;
-
-            // inform user
-            Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_long_press_playback_stopped), Toast.LENGTH_LONG).show();
-        } else {
-            // start playback service
-            String stationName = mCollection.getStations().get((Integer) mCollectionAdapter.getItem(position)).getStationName();
-            String streamUri = mCollection.getStations().get((Integer) mCollectionAdapter.getItem(position)).getStreamUri().toString();
-            mPlayerService.startActionPlay(mActivity, streamUri, stationName);
-
-            // set playback state
-            mStationIDLast = mStationIDCurrent;
-            mStationIDCurrent = position;
-            mPlayback = true;
-
-            // inform user
-            Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_long_press_playback_started), Toast.LENGTH_LONG).show();
-        }
-
-        // vibrate 50 milliseconds
-        Vibrator v = (Vibrator) mActivity.getSystemService(Context.VIBRATOR_SERVICE);
-        v.vibrate(50);
-
-        // Save station name and ID
-        savePlaybackState(mActivity);
-
-        // refresh view
-        refreshStationList();
     }
 
 
@@ -706,7 +641,7 @@ public final class MainActivityFragment extends Fragment {
                 // if new station - scroll towards it
                 if (intent.hasExtra(EXTRA_STATION_POSITION)) {
                     int position = intent.getIntExtra(EXTRA_STATION_POSITION, 0);
-                    mListView.setSelection(position);
+                    mLayoutManager.scrollToPosition(position);
                 }
             }
         };
@@ -770,6 +705,5 @@ public final class MainActivityFragment extends Fragment {
 
         return null;
     }
-
 
 }
