@@ -27,7 +27,7 @@
     <string name="descr_playback_button">"Большая кнопка воспроизведения"</string>
     <string name="descr_playback_indicator">"Индикатор воспроизведения"</string>
     <string name="descr_playback_indicator_started">"Индикатор воспроизведения"</string>
-    <string name="descr_timer_indicator_started">Indicator for running sleep timer</string>
+    <string name="descr_timer_indicator_started">Индикатор запущенного таймера сна</string>
 
     <!-- dialogs -->
     <string name="dialog_generic_button_cancel">"Отмена"</string>
@@ -67,10 +67,10 @@
     <string name="toastmessage_long_press_playback_stopped">Воспроизведение остановлено</string>
     <string name="toastmessage_long_press_playback_started">Начинаю воспроизведение радиостанции</string>
     <string name="toastmessage_station_copied">Станция скопирована.</string>
-    <string name="toastmessage_timer_activated">Sleep timer activated.</string>
-    <string name="toastmessage_timer_cancelled">Sleep timer cancelled.</string>
-    <string name="toastmessage_timer_duration_increased">Duration increased (+ 15 min).</string>
-    <string name="toastmessage_timer_start_unable">Please start playback first.</string>
+    <string name="toastmessage_timer_activated">Таймер сна активирован.</string>
+    <string name="toastmessage_timer_cancelled">Таймер сна отключен.</string>
+    <string name="toastmessage_timer_duration_increased">Время увеличено (+ 15 мин).</string>
+    <string name="toastmessage_timer_start_unable">Сперва запустите воспроизведение.</string>
     <string name="toastalert_rename_unsuccessful">"Невозможно переименовать станцию. Пожалуйста, выберите другое имя."</string>
     <string name="toastalert_delete_successful">Станция удалена.</string>
     <string name="toastalert_no_external_storage">"Нет доступа к внешнему накопителю."</string>
