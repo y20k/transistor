@@ -75,7 +75,7 @@
     <string name="toastmessage_timer_start_unable">Сперва запустите воспроизведение.</string>
     <string name="toastalert_rename_unsuccessful">"Невозможно переименовать станцию. Пожалуйста, выберите другое имя."</string>
     <string name="toastalert_delete_successful">Станция удалена.</string>
-    <string name="toastalert_no_external_storage">"Нет доступа к внешнему накопителю."</string>
+    <string name="toastalert_no_external_storage">Нет доступа к внешнему накопителю.</string>
     <string name="toastalert_headphones_unplugged">"Наушники отключили. Воспроизведение остановлено."</string>
     <string name="toastalert_permission_denied">Доступ запрещен:</string>
     <string name="toastalert_stream_not_found">Transistor does not recognize this station. Please delete and add it again to the Home screen.</string>
