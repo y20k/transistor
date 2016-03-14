@@ -45,6 +45,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -72,6 +73,7 @@ public final class PlayerActivityFragment extends Fragment {
     private static final String STATION_ID_CURRENT = "stationIDCurrent";
     private static final String STATION_ID_LAST = "stationIDLast";
     private static final String PLAYBACK = "playback";
+    private static final String TWOPANE = "twopane";
     private static final String ACTION_PLAYBACK_STOPPED = "org.y20k.transistor.action.PLAYBACK_STOPPED";
     private static final String ACTION_CREATE_SHORTCUT_REQUESTED = "org.y20k.transistor.action.CREATE_SHORTCUT_REQUESTED";
     private static final int REQUEST_LOAD_IMAGE = 1;
@@ -85,12 +87,14 @@ public final class PlayerActivityFragment extends Fragment {
     private String mStreamUri;
     private TextView mStationNameView;
     private ImageView mStationImageView;
-    private ImageButton mPlaybackButton;
+    private ImageButton mStationMenuView;
     private ImageView mPlaybackIndicator;
+    private ImageButton mPlaybackButton;
     private int mStationID;
     private int mStationIDCurrent;
     private int mStationIDLast;
     private boolean mPlayback;
+    private boolean mTwoPane;
     private Collection mCollection;
     private PlayerService mPlayerService;
 
@@ -125,6 +129,7 @@ public final class PlayerActivityFragment extends Fragment {
         Bundle arguments = getArguments();
         if (arguments != null) {
             mStationID = arguments.getInt(STATION_ID);
+            mTwoPane = arguments.getBoolean(TWOPANE, false);
         }
 
         // set station ID if not in intent or in arguments
@@ -157,6 +162,7 @@ public final class PlayerActivityFragment extends Fragment {
         mStationNameView = (TextView) mRootView.findViewById(R.id.player_textview_stationname);
         mStationImageView = (ImageView) mRootView.findViewById(R.id.player_imageview_station_icon);
         mPlaybackIndicator = (ImageView) mRootView.findViewById(R.id.player_playback_indicator);
+        mStationMenuView = (ImageButton) mRootView.findViewById(R.id.player_item_more_button);
 
         // set station image
         Bitmap stationImage = createStationImage();
@@ -172,6 +178,29 @@ public final class PlayerActivityFragment extends Fragment {
                 copyStationToClipboard();
             }
         });
+
+
+        // show three dots menu in tablet mode
+        // TODO remove debugging mTwoPane=true assignment
+        // mTwoPane = true;
+        if (mTwoPane) {
+            mStationMenuView.setVisibility(View.VISIBLE);
+            // attach three dots menu
+            mStationMenuView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    PopupMenu popup = new PopupMenu(mActivity, view);
+                    popup.inflate(R.menu.menu_main_list_item);
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            return handleMenuClick(item, false);
+                        }
+                    });
+                    popup.show();
+                }
+            });
+        }
 
         // construct big playback button
         mPlaybackButton = (ImageButton) mRootView.findViewById(R.id.player_playback_button);
@@ -200,64 +229,7 @@ public final class PlayerActivityFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-
-            // CASE ICON
-            case R.id.menu_icon:
-                // get system picker for images
-                selectFromImagePicker();
-                return true;
-
-            // CASE RENAME
-            case R.id.menu_rename:
-                // construct rename dialog
-                final DialogRename dialogRename = new DialogRename(mActivity, mCollection, mStationName, mStationID);
-                dialogRename.setStationRenamedListener(new DialogRename.StationRenamedListener() {
-                    @Override
-                    public void stationRenamed() {
-                        mStationNameView.setText(dialogRename.getStationName());
-                    }
-                });
-                // run dialog
-                dialogRename.show();
-                return true;
-
-            // CASE DELETE
-            case R.id.menu_delete:
-                // stop playback
-                mPlayerService.startActionStop(mActivity);
-                // construct delete dialog
-                DialogDelete dialogDelete = new DialogDelete(mActivity, mCollection, mStationID);
-                dialogDelete.setStationDeletedListener(new DialogDelete.StationDeletedListener() {
-                    @Override
-                    public void stationDeleted() {
-                        // start main activity
-                        Intent mainActivityStartIntent = new Intent(mActivity, MainActivity.class);
-                        startActivity(mainActivityStartIntent);
-                        // finish player activity
-                        mActivity.finish();
-                    }
-                });
-                // run dialog
-                dialogDelete.show();
-                return true;
-
-            // CASE SHORTCUT
-            case R.id.menu_shortcut: {
-                // send local broadcast (needed by MainActivityFragment)
-                Intent shortcutIntent = new Intent();
-                shortcutIntent.setAction(ACTION_CREATE_SHORTCUT_REQUESTED);
-                shortcutIntent.putExtra(STATION_ID, mStationID);
-                LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(shortcutIntent);
-                return true;
-            }
-
-            // CASE DEFAULT
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-
+        return handleMenuClick(item, super.onOptionsItemSelected(item));
     }
 
 
@@ -326,6 +298,69 @@ public final class PlayerActivityFragment extends Fragment {
         // update and save currently and last played station
         setStationState();
         saveAppState(mActivity);
+    }
+
+
+    /* Handles menu selection */
+    private boolean handleMenuClick(MenuItem item, boolean defaultReturn) {
+
+        switch (item.getItemId()) {
+
+            // CASE ICON
+            case R.id.menu_icon:
+                // get system picker for images
+                selectFromImagePicker();
+                return true;
+
+            // CASE RENAME
+            case R.id.menu_rename:
+                // construct rename dialog
+                final DialogRename dialogRename = new DialogRename(mActivity, mCollection, mStationName, mStationID);
+                dialogRename.setStationRenamedListener(new DialogRename.StationRenamedListener() {
+                    @Override
+                    public void stationRenamed() {
+                        mStationNameView.setText(dialogRename.getStationName());
+                    }
+                });
+                // run dialog
+                dialogRename.show();
+                return true;
+
+            // CASE DELETE
+            case R.id.menu_delete:
+                // stop playback
+                mPlayerService.startActionStop(mActivity);
+                // construct delete dialog
+                DialogDelete dialogDelete = new DialogDelete(mActivity, mCollection, mStationID);
+                dialogDelete.setStationDeletedListener(new DialogDelete.StationDeletedListener() {
+                    @Override
+                    public void stationDeleted() {
+                        // start main activity
+                        Intent mainActivityStartIntent = new Intent(mActivity, MainActivity.class);
+                        startActivity(mainActivityStartIntent);
+                        // finish player activity
+                        mActivity.finish();
+                    }
+                });
+                // run dialog
+                dialogDelete.show();
+                return true;
+
+            // CASE SHORTCUT
+            case R.id.menu_shortcut: {
+                // send local broadcast (needed by MainActivityFragment)
+                Intent shortcutIntent = new Intent();
+                shortcutIntent.setAction(ACTION_CREATE_SHORTCUT_REQUESTED);
+                shortcutIntent.putExtra(STATION_ID, mStationID);
+                LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(shortcutIntent);
+                return true;
+            }
+
+            // CASE DEFAULT
+            default:
+                return defaultReturn;
+        }
+
     }
 
 
@@ -554,7 +589,6 @@ public final class PlayerActivityFragment extends Fragment {
 
         return null;
     }
-
 
 
 }

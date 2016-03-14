@@ -188,6 +188,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<RecyclerViewH
         if (mTwoPane) {
             Bundle args = new Bundle();
             args.putInt(STATION_ID, position);
+            args.putBoolean(TWOPANE, mTwoPane);
 
             PlayerActivityFragment playerActivityFragment = new PlayerActivityFragment();
             playerActivityFragment.setArguments(args);
