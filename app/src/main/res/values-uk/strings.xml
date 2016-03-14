@@ -66,6 +66,7 @@
     <string name="toastmessage_add_open_file_started">Відкриття файлу:</string>
     <string name="toastmessage_long_press_playback_stopped">Відтворення зупинено</string>
     <string name="toastmessage_long_press_playback_started">Відтворення розпочато</string>
+    <string name="toastmessage_shortcut_created">Shortcut created.</string>
     <string name="toastmessage_station_copied">Станцію скопійовано.</string>
     <string name="toastmessage_timer_activated">Таймер сну увімкнуто.</string>
     <string name="toastmessage_timer_cancelled">Таймер сну вимкнено.</string>

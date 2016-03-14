@@ -90,6 +90,9 @@ public class ShortcutHelper {
         addIntent.putExtra("duplicate", false);
         addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
         mActivity.getApplicationContext().sendBroadcast(addIntent);
+
+        // notify user
+        Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_shortcut_created), Toast.LENGTH_LONG).show();
     }
 
 
@@ -132,11 +135,23 @@ public class ShortcutHelper {
                 editor.putBoolean(PLAYBACK, playback);
                 editor.apply();
 
+                // TODO check for twopane (use intent for phone mode)
                 // add name, url and id of station to intent
                 Intent startIntent = new Intent(mActivity, PlayerActivity.class);
                 startIntent.putExtra(STATION_NAME, stationName);
                 startIntent.putExtra(STREAM_URI, streamUri);
                 startIntent.putExtra(STATION_ID, stationID);
+
+                // TODO use beginTransaction for tablet mode
+//                Bundle args = new Bundle();
+//                args.putInt(STATION_ID, position);
+//                args.putBoolean(TWOPANE, mTwoPane);
+//
+//                PlayerActivityFragment playerActivityFragment = new PlayerActivityFragment();
+//                playerActivityFragment.setArguments(args);
+//                mActivity.getFragmentManager().beginTransaction()
+//                        .replace(R.id.player_container, playerActivityFragment, PLAYERFRAGMENT_TAG)
+//                        .commit();
 
                 // start activity with intent
                 mActivity.startActivity(startIntent);
@@ -145,6 +160,12 @@ public class ShortcutHelper {
                 Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_stream_not_found), Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+
+    /* Removes shortcut for given station from Home screen */
+    private void removeShortcut(Station station) {
+        //
     }
 
 }

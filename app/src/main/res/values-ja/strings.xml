@@ -67,6 +67,7 @@
     <string name="toastmessage_add_open_file_started">開いているファイル:</string>
     <string name="toastmessage_long_press_playback_stopped">再生が停止しました (長押しを検出しました)</string>
     <string name="toastmessage_long_press_playback_started">再生を開始しました (長押しを検出しました)</string>
+    <string name="toastmessage_shortcut_created">Shortcut created.</string>
     <string name="toastmessage_station_copied">放送局をコピーしました。</string>
     <string name="toastmessage_timer_activated">スリープタイマーを有効にしました。</string>
     <string name="toastmessage_timer_cancelled">スリープタイマーを取り消しました。</string>

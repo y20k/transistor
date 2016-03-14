@@ -67,6 +67,7 @@
     <string name="toastmessage_add_open_file_started">Abriendo archivo:</string>
     <string name="toastmessage_long_press_playback_stopped">Reproducción detenida (detectada pulsación larga)</string>
     <string name="toastmessage_long_press_playback_started">Reproducción empezada (detectada pulsación larga)</string>
+    <string name="toastmessage_shortcut_created">Shortcut created.</string>
     <string name="toastmessage_station_copied">Estación copiada.</string>
     <string name="toastmessage_timer_activated">Temporizador de apagado activado.</string>
     <string name="toastmessage_timer_cancelled">Temporizador de apagado cancelado.</string>

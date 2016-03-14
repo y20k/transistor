@@ -67,6 +67,7 @@
     <string name="toastmessage_add_open_file_started">Öffne Datei:</string>
     <string name="toastmessage_long_press_playback_stopped">Playback gestoppt (Long Press)</string>
     <string name="toastmessage_long_press_playback_started">Playback gestarted (Long Press)</string>
+    <string name="toastmessage_shortcut_created">Shortcut created.</string>
     <string name="toastmessage_station_copied">Station kopiert.</string>
     <string name="toastmessage_timer_activated">Sleeptimer aktiviert.</string>
     <string name="toastmessage_timer_cancelled">Sleeptimer de-aktiviert.</string>

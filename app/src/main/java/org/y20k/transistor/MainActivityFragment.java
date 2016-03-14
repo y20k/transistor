@@ -753,8 +753,7 @@ public final class MainActivityFragment extends Fragment {
 
         Station station = mCollection.getStations().get(stationID);
 
-        //Adding shortcut for MainActivity
-        //on Home screen
+        // Adding shortcut for MainActivity on Home screen
         Intent shortcutIntent = new Intent(mActivity, MainActivity.class);
         shortcutIntent.putExtra(STREAM_URI, station.getStreamUri().toString());
         shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -778,6 +777,9 @@ public final class MainActivityFragment extends Fragment {
         addIntent.putExtra("duplicate", false);
         addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
         mActivity.getApplicationContext().sendBroadcast(addIntent);
+
+        // notify user
+        Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_shortcut_created), Toast.LENGTH_LONG).show();
     }
 
 

@@ -67,6 +67,7 @@
     <string name="toastmessage_add_open_file_started">Obrint fitxer:</string>
     <string name="toastmessage_long_press_playback_stopped">Reproducció aturada (pulsació llarga detectada)</string>
     <string name="toastmessage_long_press_playback_started">Reproducció iniciada (pulsació llarga detectada)</string>
+    <string name="toastmessage_shortcut_created">Shortcut created.</string>
     <string name="toastmessage_station_copied">Emissora copiada.</string>
     <string name="toastmessage_timer_activated">Sleep timer activated.</string>
     <string name="toastmessage_timer_cancelled">Sleep timer cancelled.</string>
