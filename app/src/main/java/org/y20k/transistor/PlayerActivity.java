@@ -29,6 +29,11 @@ public final class PlayerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
+        if (savedInstanceState == null) {
+            getFragmentManager().beginTransaction()
+                    .add(R.id.player_container, new PlayerActivityFragment())
+                    .commit();
+        }
     }
 
 

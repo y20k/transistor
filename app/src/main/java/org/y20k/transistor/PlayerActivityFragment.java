@@ -16,6 +16,7 @@ package org.y20k.transistor;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -33,7 +34,6 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.os.EnvironmentCompat;
 import android.util.Log;
@@ -68,13 +68,12 @@ public final class PlayerActivityFragment extends Fragment {
 
 
     /* Keys */
-    private static final String STREAM_URI = "streamUri";
-    private static final String STATION_NAME = "stationName";
     private static final String STATION_ID = "stationID";
     private static final String STATION_ID_CURRENT = "stationIDCurrent";
     private static final String STATION_ID_LAST = "stationIDLast";
     private static final String PLAYBACK = "playback";
     private static final String ACTION_PLAYBACK_STOPPED = "org.y20k.transistor.action.PLAYBACK_STOPPED";
+    private static final String ACTION_CREATE_SHORTCUT_REQUESTED = "org.y20k.transistor.action.CREATE_SHORTCUT_REQUESTED";
     private static final int REQUEST_LOAD_IMAGE = 1;
     private static final int PERMISSION_REQUEST_READ_EXTERNAL_STORAGE = 1;
 
@@ -94,10 +93,6 @@ public final class PlayerActivityFragment extends Fragment {
     private boolean mPlayback;
     private Collection mCollection;
     private PlayerService mPlayerService;
-//    private SleepTimerService mSleepTimerService;
-//    private Snackbar mSleepTimerNotification;
-//    private String mSleepTimerNotificationMessage;
-//    private boolean mSleepTimerRunning;
 
 
     /* Constructor (default) */
@@ -116,21 +111,28 @@ public final class PlayerActivityFragment extends Fragment {
         mPlayerService = new PlayerService();
 
         // load playback state from preferences
-        loadPlaybackState(mActivity);
+        loadAppState(mActivity);
 
         // get station name, URL and id from intent
         Intent intent = mActivity.getIntent();
-        mStationID = intent.getIntExtra(STATION_ID, -1);
-        mStationName = intent.getStringExtra(STATION_NAME);
-        mStreamUri = intent.getStringExtra(STREAM_URI);
-
-        // set station ID if not in intent
-        if (mStationID == -1) {
-            mStationID = mStationIDCurrent;
+        if (intent != null) {
+            mStationID = intent.getIntExtra(STATION_ID, 0);
         }
 
         // get collection from external storage
         mCollection = new Collection(getCollectionDirectory("Collection"));
+
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            mStationID = arguments.getInt(STATION_ID);
+        }
+
+        // set station ID if not in intent or in arguments
+        if (mStationID == -1 && mStationIDCurrent == -1) {
+            mStationID = 0;
+        } else if (mStationID == -1 ) {
+            mStationID = mStationIDCurrent;
+        }
 
         // get URL and name for stream
         mStreamUri = mCollection.getStations().get(mStationID).getStreamUri().toString();
@@ -189,7 +191,8 @@ public final class PlayerActivityFragment extends Fragment {
     public void onResume() {
         super.onResume();
         // refresh playback state
-        loadPlaybackState(mActivity);
+        loadAppState(mActivity);
+
         // set up button symbol and playback indicator
         setVisualState();
     }
@@ -239,6 +242,16 @@ public final class PlayerActivityFragment extends Fragment {
                 // run dialog
                 dialogDelete.show();
                 return true;
+
+            // CASE SHORTCUT
+            case R.id.menu_shortcut: {
+                // send local broadcast (needed by MainActivityFragment)
+                Intent shortcutIntent = new Intent();
+                shortcutIntent.setAction(ACTION_CREATE_SHORTCUT_REQUESTED);
+                shortcutIntent.putExtra(STATION_ID, mStationID);
+                LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(shortcutIntent);
+                return true;
+            }
 
             // CASE DEFAULT
             default:
@@ -312,7 +325,7 @@ public final class PlayerActivityFragment extends Fragment {
         }
         // update and save currently and last played station
         setStationState();
-        savePlaybackState(mActivity);
+        saveAppState(mActivity);
     }
 
 
@@ -320,7 +333,7 @@ public final class PlayerActivityFragment extends Fragment {
     private Bitmap createStationImage () {
         Bitmap stationImageSmall;
         ImageHelper imageHelper;
-        if (mCollection.getStations().get(mStationID).getStationImageFile().exists()) {
+        if (!mCollection.getStations().isEmpty() && mCollection.getStations().get(mStationID).getStationImageFile().exists()) {
             // get image from collection
             stationImageSmall = BitmapFactory.decodeFile(mCollection.getStations().get(mStationID).getStationImageFile().toString());
         } else {
@@ -445,8 +458,8 @@ public final class PlayerActivityFragment extends Fragment {
     }
 
 
-    /* Saves playback state to SharedPreferences */
-    private void savePlaybackState(Context context) {
+    /* Saves app state to SharedPreferences */
+    private void saveAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt(STATION_ID_CURRENT, mStationIDCurrent);
@@ -457,8 +470,8 @@ public final class PlayerActivityFragment extends Fragment {
     }
 
 
-    /* Loads playback state from preferences */
-    private void loadPlaybackState(Context context) {
+    /* Loads app state from preferences */
+    private void loadAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         mStationIDCurrent = settings.getInt(STATION_ID_CURRENT, -1);
         mStationIDLast = settings.getInt(STATION_ID_LAST, -1);
@@ -515,7 +528,7 @@ public final class PlayerActivityFragment extends Fragment {
                 // update currently and last played station
                 setStationState();
                 // save state of playback to settings
-                savePlaybackState(context);
+                saveAppState(context);
             }
         };
         IntentFilter playbackIntentFilter = new IntentFilter(ACTION_PLAYBACK_STOPPED);

@@ -17,6 +17,7 @@ package org.y20k.transistor;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Application;
+import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -33,7 +34,6 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.os.EnvironmentCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -57,6 +57,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -74,9 +75,12 @@ public final class MainActivityFragment extends Fragment {
     private static final String ACTION_PLAYBACK_STOPPED = "org.y20k.transistor.action.PLAYBACK_STOPPED";
     private static final String ACTION_TIMER_RUNNING = "org.y20k.transistor.action.TIMER_RUNNING";
     private static final String ACTION_IMAGE_CHANGE_REQUESTED = "org.y20k.transistor.action.IMAGE_CHANGE_REQUESTED";
+    private static final String ACTION_PLAY = "org.y20k.transistor.action.PLAY";
     private static final String EXTRA_STATION_POSITION = "STATION_POSITION";
     private static final String EXTRA_TIMER_REMAINING = "TIMER_REMAINING";
     private static final String LIST_STATE = "ListState";
+    private static final String STREAM_URI = "streamUri";
+    private static final String STATION_NAME = "stationName";
     private static final String STATION_ID = "stationID";
     private static final String STATION_ID_CURRENT = "stationIDCurrent";
     private static final String STATION_ID_LAST = "stationIDLast";
@@ -87,7 +91,6 @@ public final class MainActivityFragment extends Fragment {
     private static final int REQUEST_LOAD_IMAGE = 1;
     private static final int PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE = 1;
     private static final int PERMISSION_REQUEST_STATION_FETCHER_READ_EXTERNAL_STORAGE = 2;
-
 
 
     /* Main class variables */
@@ -138,7 +141,7 @@ public final class MainActivityFragment extends Fragment {
         mSleepTimerService = new SleepTimerService();
 
         // load playback state
-        loadPlaybackState(mActivity);
+        loadAppState(mActivity);
 
         // set list state null
         mListState = null;
@@ -208,7 +211,7 @@ public final class MainActivityFragment extends Fragment {
         // handle incoming intent
         handleNewStationIntent();
         // refresh playback state
-        loadPlaybackState(mActivity);
+        loadAppState(mActivity);
         // show notification bar if timer is running
         if (mSleepTimerRunning) {
             showSleepTimerNotification(-1);
@@ -334,10 +337,13 @@ public final class MainActivityFragment extends Fragment {
 
         // show call to action, if necessary
         View actioncall = mRootView.findViewById(R.id.main_actioncall_layout);
+        View recyclerview = mRootView.findViewById(R.id.main_recyclerview_collection);
         if (mCollectionAdapter.getItemCount() == 0) {
             actioncall.setVisibility(View.VISIBLE);
+            recyclerview.setVisibility(View.GONE);
         } else {
             actioncall.setVisibility(View.GONE);
+            recyclerview.setVisibility(View.VISIBLE);
         }
 
         Log.v(LOG_TAG, "Refreshing list of stations");
@@ -547,7 +553,7 @@ public final class MainActivityFragment extends Fragment {
         // set snackbar message
         String message;
         if (remainingTime > 0) {
-            message = mSleepTimerNotificationMessage + remainingTime;
+            message = mSleepTimerNotificationMessage + getReadableTime(remainingTime);
         } else {
             message = mSleepTimerNotificationMessage;
         }
@@ -560,7 +566,7 @@ public final class MainActivityFragment extends Fragment {
                 // stop sleep timer service
                 mSleepTimerService.startActionStop(mActivity);
                 mSleepTimerRunning = false;
-                savePlaybackState(mActivity);
+                saveAppState(mActivity);
                 // notify user
                 Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_timer_cancelled), Toast.LENGTH_SHORT).show();
                 Log.v(LOG_TAG, "Sleep timer cancelled.");
@@ -571,8 +577,19 @@ public final class MainActivityFragment extends Fragment {
     }
 
 
-    /* Loads playback state from preferences */
-    private void loadPlaybackState(Context context) {
+    /* Translates milliseconds into minutes and seconds */
+    private String getReadableTime (long remainingTime) {
+        String readableTime = String.format("%02d:%02d",
+                TimeUnit.MILLISECONDS.toMinutes(remainingTime),
+                TimeUnit.MILLISECONDS.toSeconds(remainingTime) -
+                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(remainingTime))
+        );
+        return readableTime;
+    }
+
+
+    /* Loads app state from preferences */
+    private void loadAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         mStationIDCurrent = settings.getInt(STATION_ID_CURRENT, -1);
         mStationIDLast = settings.getInt(STATION_ID_LAST, -1);
@@ -582,8 +599,8 @@ public final class MainActivityFragment extends Fragment {
     }
 
 
-    /* Saves playback state to SharedPreferences */
-    private void savePlaybackState(Context context) {
+    /* Saves app state to SharedPreferences */
+    private void saveAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt(STATION_ID_CURRENT, mStationIDCurrent);
@@ -618,6 +635,7 @@ public final class MainActivityFragment extends Fragment {
                     stopSleepTimer();
                 }
                 refreshStationList();
+                mPlayback = false;
             }
         };
         IntentFilter playbackStoppedIntentFilter = new IntentFilter(ACTION_PLAYBACK_STOPPED);
@@ -628,6 +646,7 @@ public final class MainActivityFragment extends Fragment {
             @Override
             public void onReceive(Context context, Intent intent) {
                 refreshStationList();
+                mPlayback = true;
             }
         };
         IntentFilter playbackStartedIntentFilter = new IntentFilter(ACTION_PLAYBACK_STARTED);
@@ -669,14 +688,14 @@ public final class MainActivityFragment extends Fragment {
                 long remaining = intent.getLongExtra(EXTRA_TIMER_REMAINING, 0);
                 if (mSleepTimerNotification != null && remaining > 0) {
                     // update existing notification
-                    mSleepTimerNotification.setText(mSleepTimerNotificationMessage + remaining);
+                    mSleepTimerNotification.setText(mSleepTimerNotificationMessage + getReadableTime(remaining));
                 } else if (mSleepTimerNotification != null) {
                     // cancel notification
                     mSleepTimerNotification.dismiss();
                     // save state and update user interface
                     mPlayback = false;
                     mSleepTimerRunning = false;
-                    savePlaybackState(mActivity);
+                    saveAppState(mActivity);
                     refreshStationList();
                 }
 
@@ -705,5 +724,100 @@ public final class MainActivityFragment extends Fragment {
 
         return null;
     }
+
+
+    /* Creates shortcut on Home screen for given station ID */
+    private void createShortcut(int stationID) {
+
+        Station station = mCollection.getStations().get(stationID);
+
+        //Adding shortcut for MainActivity
+        //on Home screen
+        Intent shortcutIntent = new Intent(mActivity, MainActivity.class);
+        shortcutIntent.putExtra(STREAM_URI, station.getStreamUri().toString());
+        shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        shortcutIntent.setAction(ACTION_PLAY);
+
+        Intent addIntent = new Intent();
+        addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
+        addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, station.getStationName());
+
+        // set image for station
+        if (station.getStationImageFile().exists()) {
+            // station image
+            Bitmap icon = BitmapFactory.decodeFile(station.getStationImageFile().toString());
+            addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON, icon);
+        } else {
+            // default image
+            addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
+                    Intent.ShortcutIconResource.fromContext(mActivity, R.mipmap.ic_launcher));
+        }
+
+        addIntent.putExtra("duplicate", false);
+        addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
+        mActivity.getApplicationContext().sendBroadcast(addIntent);
+    }
+
+
+    /* Handles incoming intent from Home screen shortcut  */
+    private void handleShortcutIntent(Intent intent, Bundle savedInstanceState) {
+        String streamUri = intent.getStringExtra(STREAM_URI);
+
+        // check if there is a previous saved state to detect if the activity is restored
+        // after being destroyed and that playback should not be resumed
+        if (ACTION_PLAY.equals(intent.getAction()) && savedInstanceState == null) {
+            // create collection
+            Log.v(LOG_TAG, "Create collection of stations (folder:" + mFolder.toString() + ").");
+            mCollection = new Collection(mFolder);
+
+            // find the station corresponding to the stream URI
+            int stationID = mCollection.findStationID(streamUri);
+            if (stationID != -1) {
+                String stationName = mCollection.getStations().get(stationID).getStationName();
+
+                // get current playback state
+                SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mActivity);
+                int stationIDCurrent = settings.getInt(STATION_ID_CURRENT, -1);
+                boolean playback = settings.getBoolean(PLAYBACK, false);
+                int stationIDLast = stationIDCurrent;
+
+                // check if this station is not already playing
+                if(!playback || stationIDCurrent != stationID) {
+                    // start playback service
+
+                    mPlayerService.startActionPlay(mActivity, streamUri, stationName);
+
+                    stationIDLast = stationIDCurrent;
+                    stationIDCurrent = stationID;
+                    playback = true;
+                }
+
+                // save station name and ID
+                // TODO replace with saveAppState
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putInt(STATION_ID_CURRENT, stationIDCurrent);
+                editor.putInt(STATION_ID_LAST, stationIDLast);
+                editor.putBoolean(PLAYBACK, playback);
+                editor.apply();
+
+
+                // add name, url and id of station to intent
+                Intent startIntent = new Intent(mActivity, PlayerActivity.class);
+                startIntent.putExtra(STATION_NAME, stationName);
+                startIntent.putExtra(STREAM_URI, streamUri);
+                startIntent.putExtra(STATION_ID, stationID);
+
+                // start activity with intent
+                startActivity(startIntent);
+            }
+            else {
+                Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_stream_not_found), Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+
+
+
 
 }

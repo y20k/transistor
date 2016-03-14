@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,6 +31,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import org.y20k.transistor.PlayerActivity;
+import org.y20k.transistor.PlayerActivityFragment;
 import org.y20k.transistor.PlayerService;
 import org.y20k.transistor.R;
 import org.y20k.transistor.core.Collection;
@@ -47,12 +49,13 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<RecyclerViewH
 
 
     /* Keys */
+    private static final String TWOPANE = "twopane";
+    private static final String PLAYERFRAGMENT_TAG = "PFTAG";
     private static final String STATION_ID_CURRENT = "stationIDCurrent";
     private static final String STATION_ID_LAST = "stationIDLast";
     private static final String PLAYBACK = "playback";
-    private static final String STREAM_URI = "streamUri";
-    private static final String STATION_NAME = "stationName";
     private static final String STATION_ID = "stationID";
+
 
 
     /* Main class variables */
@@ -64,9 +67,11 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<RecyclerViewH
     private Collection mCollection;
     private CollectionChangedListener mCollectionChangedListener;
     private ClickListener mClickListener;
+    private int mSelectedItem;
     private boolean mPlayback;
     private int mStationIDCurrent;
     private int mStationIDLast;
+    private boolean mTwoPane;
 
 
     /* Interface for custom listener */
@@ -90,6 +95,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<RecyclerViewH
         mStationImages = stationImage;
         mCollection = null;
         mCollectionChangedListener = null;
+        mSelectedItem = 0;
 
         // initiate player service
         mPlayerService = new PlayerService();
@@ -111,7 +117,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<RecyclerViewH
     @Override
     public void onBindViewHolder(RecyclerViewHolder holder, final int position) {
         // load state
-        loadPlaybackState(mActivity);
+        loadAppState(mActivity);
 
         // set station image
         holder.getStationImageView().setImageBitmap(mStationImages.get(position));
@@ -163,6 +169,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<RecyclerViewH
 
     }
 
+
     @Override
     public long getItemId(int position) {
         return position;
@@ -177,14 +184,24 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<RecyclerViewH
 
     /* Handles click on list item */
     private void handleSingleClick(int position) {
-        // add name, url and id of station to intent
-        Intent intent = new Intent(mActivity, PlayerActivity.class);
-        intent.putExtra(STATION_NAME, mStationNames.get(position));
-        intent.putExtra(STREAM_URI, mStationUris.get(position));
-        intent.putExtra(STATION_ID, position);
 
-        // start activity with intent
-        mActivity.startActivity(intent);
+        if (mTwoPane) {
+            Bundle args = new Bundle();
+            args.putInt(STATION_ID, position);
+
+            PlayerActivityFragment playerActivityFragment = new PlayerActivityFragment();
+            playerActivityFragment.setArguments(args);
+            mActivity.getFragmentManager().beginTransaction()
+                    .replace(R.id.player_container, playerActivityFragment, PLAYERFRAGMENT_TAG)
+                    .commit();
+        } else {
+            // add id of station to intent
+            Intent intent = new Intent(mActivity, PlayerActivity.class);
+            intent.putExtra(STATION_ID, position);
+
+            // start activity with intent
+            mActivity.startActivity(intent);
+        }
     }
 
 
@@ -192,7 +209,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<RecyclerViewH
     private void handleLongClick(int position) {
 
         // get current playback state
-        loadPlaybackState(mActivity);
+        loadAppState(mActivity);
 
         if (mPlayback && position == mStationIDCurrent ) {
             // stop playback service
@@ -229,13 +246,14 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<RecyclerViewH
         }
 
         // Save station name and ID
-        savePlaybackState(mActivity);
+        saveAppState(mActivity);
     }
 
 
-    /* Loads playback state from preferences */
-    private void loadPlaybackState(Context context) {
+    /* Loads app state from preferences */
+    private void loadAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
+        mTwoPane = settings.getBoolean(TWOPANE, false);
         mStationIDCurrent = settings.getInt(STATION_ID_CURRENT, -1);
         mStationIDLast = settings.getInt(STATION_ID_LAST, -1);
         mPlayback = settings.getBoolean(PLAYBACK, false);
@@ -243,8 +261,8 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<RecyclerViewH
     }
 
 
-    /* Saves playback state to SharedPreferences */
-    private void savePlaybackState(Context context) {
+    /* Saves app state to SharedPreferences */
+    private void saveAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt(STATION_ID_CURRENT, mStationIDCurrent);

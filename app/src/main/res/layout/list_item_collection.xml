@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:gravity="center_vertical"
+    android:background="@color/transistor_white"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
@@ -8,7 +9,8 @@
     android:paddingEnd="2dp"
     android:paddingTop="6dp"
     android:paddingBottom="6dp"
-    android:descendantFocusability="blocksDescendants">
+    android:layout_marginBottom="1px"
+    android:descendantFocusability="blocksDescendants" >
 
     <ImageView
         android:id="@+id/list_item_station_icon"

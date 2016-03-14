@@ -33,6 +33,7 @@ public class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.
 
 
     /* Main class variables */
+    private View mListItemLayout;
     private ImageView mStationImageView;
     private TextView mStationNameView;
     private ImageView mPlaybackIndicator;
@@ -51,6 +52,8 @@ public class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.
         super(itemView);
         itemView.setOnClickListener(this);
         itemView.setOnLongClickListener(this);
+        itemView.setClickable(true);
+        mListItemLayout = itemView;
         mStationImageView = (ImageView) itemView.findViewById(R.id.list_item_station_icon);
         mStationNameView = (TextView) itemView.findViewById(R.id.list_item_textview);
         mPlaybackIndicator = (ImageView) itemView.findViewById(R.id.list_item_playback_indicator);
@@ -75,6 +78,11 @@ public class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.
     }
 
 
+    /* Getter for parent list item layout */
+    public View getListItemLayout() {
+        return mListItemLayout;
+    }
+
     /* Getter for station image view */
     public ImageView getStationImageView() {
         return mStationImageView;
@@ -86,10 +94,12 @@ public class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.
         return mStationNameView;
     }
 
+
     /* Getter for station playback indicator */
     public ImageView getPlaybackIndicator() {
         return mPlaybackIndicator;
     }
+
 
     /* Getter for station menu view */
     public ImageView getStationMenuView() {

@@ -200,6 +200,19 @@ public final class Collection {
     }
 
 
+    /* Get ID from station from given Uri */
+    public int findStationID(String streamUri) {
+        int stationID = 0;
+        for(Station station : mStations) {
+            if(station.getStreamUri().toString().equals(streamUri)) {
+                return stationID;
+            }
+            stationID++;
+        }
+        return -1;
+    }
+
+
     /* Getter for mFolder */
     public File getFolder() {
         return mFolder;

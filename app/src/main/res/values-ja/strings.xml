@@ -13,6 +13,7 @@
     <string name="menu_add">追加</string>
     <string name="menu_delete">削除</string>
     <string name="menu_rename">名前の変更</string>
+    <string name="menu_shortcut">Place on Home screen</string>
 
     <!-- headers -->
     <string name="header_about">アプリについて</string>
@@ -76,6 +77,7 @@
     <string name="toastalert_no_external_storage">外部ストレージにアクセスすることができません。</string>
     <string name="toastalert_headphones_unplugged">ヘッドフォンのプラグを外しました。再生を停止します。</string>
     <string name="toastalert_permission_denied">アクセスが拒否されました:</string>
+    <string name="toastalert_stream_not_found">Transistor does not recognize this station. Please delete and add it again to the Home screen.</string>
     <string name="snackbar_request_storage_access">トランジスターは、外部ストレージからデータをアクセスできるように、読み取りアクセス許可を付与する必要があります。</string>
     <string name="snackbar_message_timer_set">スリープタイマーをセットします</string>
 

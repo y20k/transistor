@@ -13,6 +13,7 @@
     <string name="menu_add">Додај</string>
     <string name="menu_delete">Обриши</string>
     <string name="menu_rename">Преименуј</string>
+    <string name="menu_shortcut">Place on Home screen</string>
 
     <!-- headers -->
     <string name="header_about">О програму</string>
@@ -76,6 +77,7 @@
     <string name="toastalert_no_external_storage">Не могох да приступим спољашњем складишту.</string>
     <string name="toastalert_headphones_unplugged">Слушалице искључене. Пуштање заустављено.</string>
     <string name="toastalert_permission_denied">Дозвола одбијена:</string>
+    <string name="toastalert_stream_not_found">Transistor does not recognize this station. Please delete and add it again to the Home screen.</string>
     <string name="snackbar_request_storage_access">Транзистору треба приступ читања да би могао да приступи подацима са спољашњег складишта.</string>
     <string name="snackbar_message_timer_set">Sleep timer set to</string>
 

@@ -13,6 +13,7 @@
     <string name="menu_add">Ajouter</string>
     <string name="menu_delete">Supprimer</string>
     <string name="menu_rename">Renommer</string>
+    <string name="menu_shortcut">Place on Home screen</string>
 
     <!-- headers -->
     <string name="header_about">À propos</string>
@@ -76,6 +77,7 @@
     <string name="toastalert_no_external_storage">Impossible d\'accéder au stockage externe.</string>
     <string name="toastalert_headphones_unplugged">Casque débranché. Lecture arrêtée.</string>
     <string name="toastalert_permission_denied">Autorisation refusée :</string>
+    <string name="toastalert_stream_not_found">Transistor does not recognize this station. Please delete and add it again to the Home screen.</string>
     <string name="snackbar_request_storage_access">Transistor requiert d\'accorder l\'autorisation afin d\'accéder aux données du stockage externe.</string>
     <string name="snackbar_message_timer_set">Minuterie de veille réglée sur</string>
 

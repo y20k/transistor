@@ -302,7 +302,7 @@ public final class PlayerService extends Service implements
 
         // save state
         mPlayback = false;
-        savePlaybackState();
+        saveAppState();
 
         // unregister receivers
         this.unregisterReceiver(mHeadphoneUnplugReceiver);
@@ -393,7 +393,7 @@ public final class PlayerService extends Service implements
 
         // save state
         mPlayback = true;
-        savePlaybackState();
+        saveAppState();
 
         // send local broadcast (needed by MainActivityFragment)
         Intent i = new Intent();
@@ -409,7 +409,7 @@ public final class PlayerService extends Service implements
 
         // save state
         mPlayback = false;
-        savePlaybackState();
+        saveAppState();
 
         // send local broadcast (needed by PlayerActivityFragment and MainActivityFragment)
         Intent i = new Intent();
@@ -432,7 +432,7 @@ public final class PlayerService extends Service implements
 
 
     /* Saves state of playback */
-    private void savePlaybackState () {
+    private void saveAppState () {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplication());
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean(PLAYBACK, mPlayback);
