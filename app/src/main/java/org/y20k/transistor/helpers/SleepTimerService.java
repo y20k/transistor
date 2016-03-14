@@ -33,7 +33,6 @@ import org.y20k.transistor.PlayerService;
  */
 public class SleepTimerService  extends Service {
 
-
     /* Define log tag */
     private static final String LOG_TAG = SleepTimerService.class.getSimpleName();
 

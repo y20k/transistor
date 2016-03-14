@@ -64,16 +64,14 @@ public class CollectionAdapterViewHolder extends RecyclerView.ViewHolder impleme
     @Override
     public void onClick(View v) {
         // if not long clicked, pass last variable as false.
-        // TODO change getPosition
-        mClickListener.onClick(v, getPosition(), false);
+        mClickListener.onClick(v, getAdapterPosition(), false);
     }
 
 
     @Override
     public boolean onLongClick(View v) {
         // if long clicked, passed last variable as true.
-        // TODO change getPosition
-        mClickListener.onClick(v, getPosition(), true);
+        mClickListener.onClick(v, getAdapterPosition(), true);
         return true;
     }
 
