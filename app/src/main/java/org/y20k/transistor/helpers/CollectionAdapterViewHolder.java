@@ -1,7 +1,7 @@
 /**
- * RecyclerViewHolder.java
+ * CollectionAdapterViewHolder.java
  * Implements the a custom view holder
- * A RecyclerViewHolder is an implementation of the Android "view holder" design pattern
+ * A CollectionAdapterViewHolder is an implementation of the Android "view holder" design pattern
  *
  * This file is part of
  * TRANSISTOR - Radio App for Android
@@ -24,12 +24,12 @@ import org.y20k.transistor.R;
 
 
 /**
- * RecyclerViewHolder.class
+ * CollectionAdapterViewHolder.class
  */
-public class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+public class CollectionAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
     /* Define log tag */
-    private static final String LOG_TAG = RecyclerViewHolder.class.getSimpleName();
+    private static final String LOG_TAG = CollectionAdapterViewHolder.class.getSimpleName();
 
 
     /* Main class variables */
@@ -48,7 +48,7 @@ public class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.
 
 
     /* Constructor */
-    public RecyclerViewHolder (View itemView) {
+    public CollectionAdapterViewHolder(View itemView) {
         super(itemView);
         itemView.setOnClickListener(this);
         itemView.setOnLongClickListener(this);

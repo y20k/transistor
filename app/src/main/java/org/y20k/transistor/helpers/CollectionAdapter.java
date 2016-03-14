@@ -42,7 +42,7 @@ import java.util.LinkedList;
 /**
  * CollectionAdapter class
  */
-public final class CollectionAdapter  extends RecyclerView.Adapter<RecyclerViewHolder> {
+public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAdapterViewHolder> {
 
     /* Define log tag */
     private static final String LOG_TAG = CollectionAdapter.class.getSimpleName();
@@ -103,19 +103,19 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<RecyclerViewH
 
 
     @Override
-    public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CollectionAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         // get view
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_collection, parent, false);
 
         // put view into holder and return
-        RecyclerViewHolder vh = new RecyclerViewHolder(v);
+        CollectionAdapterViewHolder vh = new CollectionAdapterViewHolder(v);
         return vh;
     }
 
 
     @Override
-    public void onBindViewHolder(RecyclerViewHolder holder, final int position) {
+    public void onBindViewHolder(CollectionAdapterViewHolder holder, final int position) {
         // load state
         loadAppState(mActivity);
 
@@ -125,8 +125,8 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<RecyclerViewH
         // set station name
         holder.getStationNameView().setText(mStationNames.get(position));
 
-        // set playback indicator
-        if (mPlayback && mStationIDCurrent == position) {
+        // set playback indicator - in phone view only
+        if (!mTwoPane && mPlayback && mStationIDCurrent == position) {
             holder.getPlaybackIndicator().setVisibility(View.VISIBLE);
         } else {
             holder.getPlaybackIndicator().setVisibility(View.GONE);
@@ -155,14 +155,14 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<RecyclerViewH
         });
 
         // attach click listener
-        holder.setClickListener(new RecyclerViewHolder.ClickListener() {
+        holder.setClickListener(new CollectionAdapterViewHolder.ClickListener() {
             @Override
             public void onClick(View v, int pos, boolean isLongClick) {
-                if (isLongClick) {
+                // long click is only available in tablet mode
+                if (isLongClick && !mTwoPane) {
                     handleLongClick(pos);
                 } else {
                     handleSingleClick(pos);
-
                 }
             }
         });

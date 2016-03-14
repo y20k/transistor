@@ -75,6 +75,7 @@ public final class MainActivityFragment extends Fragment {
     private static final String ACTION_PLAYBACK_STOPPED = "org.y20k.transistor.action.PLAYBACK_STOPPED";
     private static final String ACTION_TIMER_RUNNING = "org.y20k.transistor.action.TIMER_RUNNING";
     private static final String ACTION_IMAGE_CHANGE_REQUESTED = "org.y20k.transistor.action.IMAGE_CHANGE_REQUESTED";
+    private static final String ACTION_CREATE_SHORTCUT_REQUESTED = "org.y20k.transistor.action.CREATE_SHORTCUT_REQUESTED";
     private static final String ACTION_PLAY = "org.y20k.transistor.action.PLAY";
     private static final String EXTRA_STATION_POSITION = "STATION_POSITION";
     private static final String EXTRA_TIMER_REMAINING = "TIMER_REMAINING";
@@ -172,6 +173,12 @@ public final class MainActivityFragment extends Fragment {
         // initialize broadcast receivers
         initializeBroadcastReceivers();
 
+        // receive shortcut intent
+        Intent intent = mActivity.getIntent();
+        if (intent != null) {
+            handleShortcutIntent(intent, savedInstanceState);
+        }
+
     }
 
 
@@ -183,7 +190,6 @@ public final class MainActivityFragment extends Fragment {
             mListState = savedInstanceState.getParcelable(MainActivityFragment.LIST_STATE);
         }
 
-
         // inflate rootview from xml
         mRootView = inflater.inflate(R.layout.fragment_main, container, false);
 
@@ -192,6 +198,7 @@ public final class MainActivityFragment extends Fragment {
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
+        // TODO check if necessary here
         mRecyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
@@ -510,7 +517,7 @@ public final class MainActivityFragment extends Fragment {
         // CASE: A station is playing, Sleep timer is running
         else if (mPlayback && mSleepTimerRunning) {
             startSleepTimer(duration);
-            Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_timer_duration_increased), Toast.LENGTH_SHORT).show();
+            Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_timer_duration_increased) + " " + getReadableTime(duration), Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -704,6 +711,21 @@ public final class MainActivityFragment extends Fragment {
         IntentFilter sleepTimerIntentFilter = new IntentFilter(ACTION_TIMER_RUNNING);
         LocalBroadcastManager.getInstance(mActivity).registerReceiver(sleepTimerStartedReceiver, sleepTimerIntentFilter);
 
+
+        BroadcastReceiver shortcutCreationRequestReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                // get station id and save it
+                int stationID = intent.getIntExtra(STATION_ID, -1);
+
+                // create shortcut
+                createShortcut(stationID);
+            }
+        };
+        IntentFilter shortcutCreationRequestIntentFilter = new IntentFilter(ACTION_CREATE_SHORTCUT_REQUESTED);
+        LocalBroadcastManager.getInstance(mApplication).registerReceiver(shortcutCreationRequestReceiver, shortcutCreationRequestIntentFilter);
+
+
     }
 
 
@@ -782,9 +804,8 @@ public final class MainActivityFragment extends Fragment {
                 int stationIDLast = stationIDCurrent;
 
                 // check if this station is not already playing
-                if(!playback || stationIDCurrent != stationID) {
+                if (!playback || stationIDCurrent != stationID) {
                     // start playback service
-
                     mPlayerService.startActionPlay(mActivity, streamUri, stationName);
 
                     stationIDLast = stationIDCurrent;
@@ -800,7 +821,6 @@ public final class MainActivityFragment extends Fragment {
                 editor.putBoolean(PLAYBACK, playback);
                 editor.apply();
 
-
                 // add name, url and id of station to intent
                 Intent startIntent = new Intent(mActivity, PlayerActivity.class);
                 startIntent.putExtra(STATION_NAME, stationName);
@@ -815,9 +835,5 @@ public final class MainActivityFragment extends Fragment {
             }
         }
     }
-
-
-
-
 
 }
