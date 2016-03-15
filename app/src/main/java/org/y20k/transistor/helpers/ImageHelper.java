@@ -18,7 +18,6 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.net.Uri;
@@ -38,7 +37,6 @@ public final class ImageHelper {
 
     /* Main class variables */
     private final Bitmap mInputImage;
-    private final Paint mBackgroundColor;
     private final Activity mActivity;
 
 
@@ -46,11 +44,6 @@ public final class ImageHelper {
     public ImageHelper(Bitmap inputImage, Activity activity) {
         mInputImage = inputImage;
         mActivity = activity;
-
-        // set default background color white
-        int backgroundColor = ContextCompat.getColor(mActivity, R.color.transistor_white);
-        mBackgroundColor = new Paint();
-        mBackgroundColor.setColor(backgroundColor);
     }
 
 
@@ -58,52 +51,82 @@ public final class ImageHelper {
     public ImageHelper(Uri inputImageUri, Activity activity) {
         mActivity = activity;
         mInputImage = decodeSampledBitmapFromUri(inputImageUri, 72, 72);
-
-        // set default background color white
-        int backgroundColor = ContextCompat.getColor(mActivity, R.color.transistor_white);
-        mBackgroundColor = new Paint();
-        mBackgroundColor.setColor(backgroundColor);
     }
 
 
-    /* Setter for color of background */
-    public void setBackgroundColor(int color) {
-        int backgroundColor = ContextCompat.getColor(mActivity, color);
-        mBackgroundColor.setColor(backgroundColor);
-    }
+    /* Creates shortcut icon for Home screen */
+    public Bitmap createShortcut(int size) {
 
+        // get scaled background bitmap
+        Bitmap background = BitmapFactory.decodeResource(mActivity.getResources(), R.drawable.background_shortcut_grey);
+        background = Bitmap.createScaledBitmap(background, size, size, false);
 
-    /* Getter for input image */
-    public Bitmap getInputImage() {
-        return mInputImage;
+        // compose output image
+        Bitmap outputImage = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(outputImage);
+        canvas.drawBitmap(background, 0, 0, null);
+        canvas.drawBitmap(mInputImage, createTransformationMatrix(size), null);
+
+        return outputImage;
     }
 
 
     /* Creates station image on a circular background */
-    public Bitmap createCircularFramedImage(int size) {
+    public Bitmap createCircularFramedImage(int size, int color) {
+
+        Paint background = createBackground(color);
 
         // create empty bitmap and canvas
         Bitmap outputImage = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
         Canvas imageCanvas = new Canvas(outputImage);
 
-        // construct circular background
-        mBackgroundColor.setStyle(Paint.Style.FILL);
+        // draw circular background
         float cx = size / 2;
         float cy = size / 2;
         float radius = size / 2;
+        imageCanvas.drawCircle(cx, cy, radius, background);
 
-        // draw circular background
-        imageCanvas.drawCircle(cx, cy, radius, mBackgroundColor);
+        // draw input image onto canvas using transformation matrix
+        Paint paint = new Paint();
+        paint.setFilterBitmap(true);
+        imageCanvas.drawBitmap(mInputImage, createTransformationMatrix(size), paint);
 
-        // get size of original image
+        return outputImage;
+    }
+
+
+    /* Setter for color of background */
+    private Paint createBackground(int color) {
+
+        // get background color value in the form 0xAARRGGBB
+        int backgroundColor;
+        try {
+            backgroundColor = ContextCompat.getColor(mActivity, color);
+        } catch (Exception e) {
+            // set default background color white
+            backgroundColor = ContextCompat.getColor(mActivity, R.color.transistor_white);
+            e.printStackTrace();
+        }
+
+        // construct circular background
+        Paint background = new Paint();
+        background.setColor(backgroundColor);
+        background.setStyle(Paint.Style.FILL);
+
+        return background;
+    }
+
+
+    /* Creates a transformation matrix for given */
+    private Matrix createTransformationMatrix (int size) {
+        Matrix matrix = new Matrix();
+
+        // get size of original image and calculate padding
         float inputImageHeight = (float)mInputImage.getHeight();
         float inputImageWidth = (float)mInputImage.getWidth();
-
-        // calculate padding
         float padding = (float)size/4;
 
         // define variables needed for transformation matrix
-        Matrix transformationMatrix = new Matrix();
         float aspectRatio = 0.0f;
         float xTranslation = 0.0f;
         float yTranslation = 0.0f;
@@ -122,15 +145,10 @@ public final class ImageHelper {
         }
 
         // construct transformation matrix
-        transformationMatrix.postTranslate(xTranslation, yTranslation);
-        transformationMatrix.preScale(aspectRatio, aspectRatio);
+        matrix.postTranslate(xTranslation, yTranslation);
+        matrix.preScale(aspectRatio, aspectRatio);
 
-        // draw input image onto canvas using transformation matrix
-        Paint paint = new Paint();
-        paint.setFilterBitmap(true);
-        imageCanvas.drawBitmap(mInputImage, transformationMatrix, paint);
-
-        return outputImage;
+        return matrix;
     }
 
 
@@ -194,16 +212,9 @@ public final class ImageHelper {
     }
 
 
-    /* Get the dominant color within input image - for testing purposes */
-    private int getDominantColor () {
-        Bitmap onePixelBitmap = Bitmap.createScaledBitmap(mInputImage, 1, 1, false);
-        int pixel = onePixelBitmap.getPixel(0, 0);
-
-        int red = Color.red(pixel);
-        int green = Color.green(pixel);
-        int blue = Color.blue(pixel);
-
-        return Color.argb(127, red, green, blue);
+    /* Getter for input image */
+    public Bitmap getInputImage() {
+        return mInputImage;
     }
 
 }

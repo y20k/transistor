@@ -65,28 +65,33 @@ public class ShortcutHelper {
     /* Creates shortcut on Home screen */
     private void createShortcut(Station station) {
 
-        //Adding shortcut for MainActivity
-        //on Home screen
+        // create shortcut icon for station
+        ImageHelper imageHelper;
+        Bitmap stationImage;
+        Bitmap shortcutIcon;
+        if (station.getStationImageFile().exists()) {
+            // use station image
+            stationImage = BitmapFactory.decodeFile(station.getStationImageFile().toString());
+            imageHelper = new ImageHelper(stationImage, mActivity);
+            shortcutIcon = imageHelper.createShortcut(192);
+        } else {
+            // use default station image
+            stationImage = BitmapFactory.decodeResource(mActivity.getResources(), R.drawable.ic_notesymbol);
+            imageHelper = new ImageHelper(stationImage, mActivity);
+            shortcutIcon = imageHelper.createShortcut(192);
+        }
+
+        // create intent to start MainActivity
         Intent shortcutIntent = new Intent(mActivity, MainActivity.class);
         shortcutIntent.putExtra(STREAM_URI, station.getStreamUri().toString());
         shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         shortcutIntent.setAction(ACTION_PLAY);
 
+        // create shortcut for Home screen
         Intent addIntent = new Intent();
         addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
         addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, station.getStationName());
-
-        // set image for station
-        if (station.getStationImageFile().exists()) {
-            // station image
-            Bitmap icon = BitmapFactory.decodeFile(station.getStationImageFile().toString());
-            addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON, icon);
-        } else {
-            // default image
-            addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
-                    Intent.ShortcutIconResource.fromContext(mActivity, R.mipmap.ic_launcher));
-        }
-
+        addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON, shortcutIcon);
         addIntent.putExtra("duplicate", false);
         addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
         mActivity.getApplicationContext().sendBroadcast(addIntent);
