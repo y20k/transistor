@@ -13,7 +13,7 @@
     <string name="menu_add">Ajouter</string>
     <string name="menu_delete">Supprimer</string>
     <string name="menu_rename">Renommer</string>
-    <string name="menu_shortcut">Place on Home screen</string>
+    <string name="menu_shortcut">Placer à l\'accueil</string>
 
     <!-- headers -->
     <string name="header_about">À propos</string>
@@ -67,18 +67,18 @@
     <string name="toastmessage_add_open_file_started">Ouverture du fichier :</string>
     <string name="toastmessage_long_press_playback_stopped">Lecture arrêtée (appui long détecté)</string>
     <string name="toastmessage_long_press_playback_started">Lecture démarrée (appui long détecté)</string>
-    <string name="toastmessage_shortcut_created">Shortcut created.</string>
+    <string name="toastmessage_shortcut_created">Raccourci créé.</string>
     <string name="toastmessage_station_copied">Station copiée.</string>
     <string name="toastmessage_timer_activated">Minuterie de veille activée.</string>
     <string name="toastmessage_timer_cancelled">Minuterie de veille annulée.</string>
-    <string name="toastmessage_timer_duration_increased">Duration increased (+ 15 min).</string>
-    <string name="toastmessage_timer_start_unable">Please start playback first.</string>
+    <string name="toastmessage_timer_duration_increased">Durée augmentée (+ 15 min).</string>
+    <string name="toastmessage_timer_start_unable">Veuillez d\'abord démarrer la lecture.</string>
     <string name="toastalert_rename_unsuccessful">Impossible de renommer la station. Veuillez choisir un nom différent.</string>
     <string name="toastalert_delete_successful">Station supprimée.</string>
     <string name="toastalert_no_external_storage">Impossible d\'accéder au stockage externe.</string>
     <string name="toastalert_headphones_unplugged">Casque débranché. Lecture arrêtée.</string>
     <string name="toastalert_permission_denied">Autorisation refusée :</string>
-    <string name="toastalert_stream_not_found">Transistor does not recognize this station. Please delete and add it again to the Home screen.</string>
+    <string name="toastalert_stream_not_found">Transistor ne reconnaît pas cette station. Veuillez la supprimer et l\'ajouter à nouveau à l\'écran d\'accueil.</string>
     <string name="snackbar_request_storage_access">Transistor requiert d\'accorder l\'autorisation afin d\'accéder aux données du stockage externe.</string>
     <string name="snackbar_message_timer_set">Minuterie de veille réglée sur</string>
 
