@@ -16,7 +16,6 @@ package org.y20k.transistor;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
@@ -31,6 +30,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import org.y20k.transistor.core.Collection;
+import org.y20k.transistor.helpers.ShortcutHelper;
 
 import java.io.File;
 
@@ -45,6 +45,7 @@ public final class MainActivity extends AppCompatActivity {
 
 
     /* Keys */
+    private static final String ACTION_PLAY = "org.y20k.transistor.action.PLAY";
     private static final String PLAYERFRAGMENT_TAG = "PFTAG";
     private static final String TWOPANE = "twopane";
 
@@ -60,10 +61,20 @@ public final class MainActivity extends AppCompatActivity {
 
         Collection collection = new Collection(getCollectionDirectory("Collection"));
 
+        // receive shortcut intent
+        Intent intent = getIntent();
+        boolean shortcutReceived = false;
+        if (intent != null && intent.getAction().equals(ACTION_PLAY)) {
+            ShortcutHelper shortcutHelper = new ShortcutHelper(this, collection);
+            shortcutHelper.handleShortcutIntent(intent, savedInstanceState);
+            shortcutReceived = true;
+        }
+
         // if player_container is present two-pane layout has been loaded
-        if (findViewById(R.id.player_container) != null) {
+        if (findViewById(R.id.player_container) != null && !shortcutReceived) {
             mTwoPane = true;
             if (savedInstanceState == null && !collection.getStations().isEmpty()) {
+
                 getFragmentManager().beginTransaction()
                         .replace(R.id.player_container, new PlayerActivityFragment(), PLAYERFRAGMENT_TAG)
                         .commit();
@@ -75,13 +86,6 @@ public final class MainActivity extends AppCompatActivity {
         }
 
         saveAppState(this);
-
-        Configuration configuration = this.getResources().getConfiguration();
-        int screenWidthDp = configuration.screenWidthDp;
-        int smallestScreenWidthDp = configuration.smallestScreenWidthDp;
-        Log.d("TAG", "width: " + String.valueOf(screenWidthDp) + " height: " + String.valueOf(smallestScreenWidthDp));
-
-
 
     }
 
