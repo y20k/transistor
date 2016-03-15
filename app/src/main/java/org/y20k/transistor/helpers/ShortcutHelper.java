@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import org.y20k.transistor.MainActivity;
 import org.y20k.transistor.PlayerActivity;
+import org.y20k.transistor.PlayerActivityFragment;
 import org.y20k.transistor.PlayerService;
 import org.y20k.transistor.R;
 import org.y20k.transistor.core.Collection;
@@ -43,11 +44,12 @@ public class ShortcutHelper {
     /* Keys */
     private static final String ACTION_PLAY = "org.y20k.transistor.action.PLAY";
     private static final String STREAM_URI = "streamUri";
-    private static final String STATION_NAME = "stationName";
     private static final String STATION_ID = "stationID";
     private static final String STATION_ID_CURRENT = "stationIDCurrent";
     private static final String STATION_ID_LAST = "stationIDLast";
     private static final String PLAYBACK = "playback";
+    private static final String TWOPANE = "twopane";
+    private static final String PLAYERFRAGMENT_TAG = "PFTAG";
 
 
     /* Main class variables */
@@ -63,9 +65,12 @@ public class ShortcutHelper {
 
 
     /* Creates shortcut on Home screen */
-    private void createShortcut(Station station) {
+    public void createShortcut(int stationID) {
 
-        // create shortcut icon for station
+        // get station
+        Station station = mCollection.getStations().get(stationID);
+
+        // create shortcut icon
         ImageHelper imageHelper;
         Bitmap stationImage;
         Bitmap shortcutIcon;
@@ -102,7 +107,7 @@ public class ShortcutHelper {
 
 
     /* Handles incoming intent from Home screen shortcut  */
-    private void handleShortcutIntent(Intent intent, Bundle savedInstanceState) {
+    public void handleShortcutIntent(Intent intent, Bundle savedInstanceState) {
         String streamUri = intent.getStringExtra(STREAM_URI);
 
         // check if there is a previous saved state to detect if the activity is restored
@@ -114,11 +119,12 @@ public class ShortcutHelper {
             if (stationID != -1) {
                 String stationName = mCollection.getStations().get(stationID).getStationName();
 
-                // get current playback state
-                // TODO replace with loadAppState
+                // get current app state
                 SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mActivity);
                 int stationIDCurrent = settings.getInt(STATION_ID_CURRENT, -1);
                 boolean playback = settings.getBoolean(PLAYBACK, false);
+                boolean twoPane = settings.getBoolean(TWOPANE, false);
+
                 int stationIDLast = stationIDCurrent;
 
                 // check if this station is not already playing
@@ -133,33 +139,32 @@ public class ShortcutHelper {
                 }
 
                 // save station name and ID
-                // TODO replace with saveAppState
                 SharedPreferences.Editor editor = settings.edit();
                 editor.putInt(STATION_ID_CURRENT, stationIDCurrent);
                 editor.putInt(STATION_ID_LAST, stationIDLast);
                 editor.putBoolean(PLAYBACK, playback);
                 editor.apply();
 
-                // TODO check for twopane (use intent for phone mode)
-                // add name, url and id of station to intent
-                Intent startIntent = new Intent(mActivity, PlayerActivity.class);
-                startIntent.putExtra(STATION_NAME, stationName);
-                startIntent.putExtra(STREAM_URI, streamUri);
-                startIntent.putExtra(STATION_ID, stationID);
+                // check for tablet mode
+                if (twoPane) {
+                    Bundle args = new Bundle();
+                    args.putInt(STATION_ID, stationIDCurrent);
+                    args.putBoolean(TWOPANE, twoPane);
 
-                // TODO use beginTransaction for tablet mode
-//                Bundle args = new Bundle();
-//                args.putInt(STATION_ID, position);
-//                args.putBoolean(TWOPANE, mTwoPane);
-//
-//                PlayerActivityFragment playerActivityFragment = new PlayerActivityFragment();
-//                playerActivityFragment.setArguments(args);
-//                mActivity.getFragmentManager().beginTransaction()
-//                        .replace(R.id.player_container, playerActivityFragment, PLAYERFRAGMENT_TAG)
-//                        .commit();
+                    PlayerActivityFragment playerActivityFragment = new PlayerActivityFragment();
+                    playerActivityFragment.setArguments(args);
+                    mActivity.getFragmentManager().beginTransaction()
+                            .replace(R.id.player_container, playerActivityFragment, PLAYERFRAGMENT_TAG)
+                            .commit();
+                } else {
+                    // add if of station to intent and start activity
+                    Intent startIntent = new Intent(mActivity, PlayerActivity.class);
+                    startIntent.putExtra(STATION_ID, stationID);
+                    mActivity.startActivity(startIntent);
+                }
 
-                // start activity with intent
-                mActivity.startActivity(startIntent);
+
+
             }
             else {
                 Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_stream_not_found), Toast.LENGTH_LONG).show();
@@ -169,8 +174,14 @@ public class ShortcutHelper {
 
 
     /* Removes shortcut for given station from Home screen */
-    private void removeShortcut(Station station) {
-        //
+    private void removeShortcut(int stationID) {
+
+        // get station
+        Station station = mCollection.getStations().get(stationID);
+
+        // TODO http://developer.android.com/reference/android/Manifest.permission.html#UNINSTALL_SHORTCUT
+
     }
+
 
 }
