@@ -376,9 +376,8 @@ public final class PlayerActivityFragment extends Fragment {
             stationImageSmall = BitmapFactory.decodeResource(getResources(), R.drawable.ic_notesymbol);
         }
         imageHelper = new ImageHelper(stationImageSmall, mActivity);
-        imageHelper.setBackgroundColor(R.color.transistor_grey_lighter);
 
-        return imageHelper.createCircularFramedImage(192);
+        return imageHelper.createCircularFramedImage(192, R.color.transistor_grey_lighter);
     }
 
 
@@ -415,8 +414,7 @@ public final class PlayerActivityFragment extends Fragment {
                 Log.e(LOG_TAG, "Unable to save: " + newImage.toString());
             }
             // change mStationImageView
-            imageHelper.setBackgroundColor(R.color.transistor_grey_lighter);
-            Bitmap stationImage = imageHelper.createCircularFramedImage(192);
+            Bitmap stationImage = imageHelper.createCircularFramedImage(192, R.color.transistor_grey_lighter);
             mStationImageView.setImageBitmap(stationImage);
         } else {
             Log.e(LOG_TAG, "Unable to get image from media picker: " + newImageUri.toString());
