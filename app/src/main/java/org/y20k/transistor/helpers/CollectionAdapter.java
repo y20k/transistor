@@ -15,14 +15,17 @@
 package org.y20k.transistor.helpers;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -55,6 +58,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     private static final String STATION_ID_LAST = "stationIDLast";
     private static final String PLAYBACK = "playback";
     private static final String STATION_ID = "stationID";
+    private static final String ACTION_PLAYBACK_STOPPED = "org.y20k.transistor.action.PLAYBACK_STOPPED";
 
 
 
@@ -102,6 +106,17 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
 
         // load state
         loadAppState(mActivity);
+
+        // broadcast receiver: player service stopped playback
+        BroadcastReceiver playbackStoppedReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                loadAppState(mActivity);
+            }
+        };
+        IntentFilter playbackStoppedIntentFilter = new IntentFilter(ACTION_PLAYBACK_STOPPED);
+        LocalBroadcastManager.getInstance(mActivity.getApplication()).registerReceiver(playbackStoppedReceiver, playbackStoppedIntentFilter);
+
     }
 
 

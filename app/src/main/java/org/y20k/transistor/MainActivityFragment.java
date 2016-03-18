@@ -636,6 +636,7 @@ public final class MainActivityFragment extends Fragment {
                 }
                 refreshStationList();
                 mPlayback = false;
+                Log.v(LOG_TAG, "!!!DING.");
             }
         };
         IntentFilter playbackStoppedIntentFilter = new IntentFilter(ACTION_PLAYBACK_STOPPED);
@@ -704,7 +705,7 @@ public final class MainActivityFragment extends Fragment {
         IntentFilter sleepTimerIntentFilter = new IntentFilter(ACTION_TIMER_RUNNING);
         LocalBroadcastManager.getInstance(mActivity).registerReceiver(sleepTimerStartedReceiver, sleepTimerIntentFilter);
 
-
+        // broadcast receiver:handles request for shortcut being created
         BroadcastReceiver shortcutCreationRequestReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
