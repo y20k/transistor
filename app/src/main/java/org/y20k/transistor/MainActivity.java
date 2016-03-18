@@ -13,6 +13,7 @@
 
 package org.y20k.transistor;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,7 +21,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v4.os.EnvironmentCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -47,6 +47,7 @@ public final class MainActivity extends AppCompatActivity {
     /* Keys */
     private static final String ACTION_PLAY = "org.y20k.transistor.action.PLAY";
     private static final String PLAYERFRAGMENT_TAG = "PFTAG";
+    private static final String STATION_ID = "stationID";
     private static final String TWOPANE = "twopane";
 
 
@@ -75,9 +76,16 @@ public final class MainActivity extends AppCompatActivity {
             mTwoPane = true;
             if (savedInstanceState == null && !collection.getStations().isEmpty()) {
 
+                Bundle args = new Bundle();
+                args.putInt(STATION_ID, 0);
+                args.putBoolean(TWOPANE, mTwoPane);
+
+                PlayerActivityFragment playerActivityFragment = new PlayerActivityFragment();
+                playerActivityFragment.setArguments(args);
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.player_container, new PlayerActivityFragment(), PLAYERFRAGMENT_TAG)
+                        .replace(R.id.player_container, playerActivityFragment, PLAYERFRAGMENT_TAG)
                         .commit();
+
             } else {
                 findViewById(R.id.player_container).setVisibility(View.GONE);
             }
@@ -127,7 +135,7 @@ public final class MainActivity extends AppCompatActivity {
     // See: https://github.com/y20k/transistor/issues/21
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_main);
+        Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment_main);
         // hand results over to fragment main
         fragment.onActivityResult(requestCode, resultCode, data);
     }
@@ -135,7 +143,7 @@ public final class MainActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_main);
+        Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment_main);
         // hand results over to fragment main
         fragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
 

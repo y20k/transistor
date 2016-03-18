@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:gravity="center_vertical"
-    android:background="@color/transistor_white"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:background="@drawable/selector_list_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
     android:paddingStart="12dp"
     android:paddingEnd="2dp"
     android:paddingTop="6dp"
     android:paddingBottom="6dp"
     android:layout_marginBottom="1px"
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:orientation="horizontal"
     android:descendantFocusability="blocksDescendants" >
 
     <ImageView
@@ -17,7 +19,6 @@
         android:contentDescription="@string/descr_station_icon"
         android:layout_width="?android:attr/listPreferredItemHeight"
         android:layout_height="?android:attr/listPreferredItemHeight"
-        android:minHeight="?android:attr/listPreferredItemHeight"
         android:src="@drawable/ic_notesymbol" />
 
     <TextView

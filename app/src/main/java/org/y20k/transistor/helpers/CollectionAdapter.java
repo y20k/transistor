@@ -67,7 +67,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     private Collection mCollection;
     private CollectionChangedListener mCollectionChangedListener;
     private ClickListener mClickListener;
-    private int mSelectedItem;
+    private View mSelectedView;
     private boolean mPlayback;
     private int mStationIDCurrent;
     private int mStationIDLast;
@@ -95,10 +95,13 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
         mStationImages = stationImage;
         mCollection = null;
         mCollectionChangedListener = null;
-        mSelectedItem = 0;
+        mSelectedView = null;
 
         // initiate player service
         mPlayerService = new PlayerService();
+
+        // load state
+        loadAppState(mActivity);
     }
 
 
@@ -116,8 +119,10 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
 
     @Override
     public void onBindViewHolder(CollectionAdapterViewHolder holder, final int position) {
-        // load state
-        loadAppState(mActivity);
+
+//        if (mSelectedView == null && position == mStationIDCurrent) {
+//            setSelectedView(holder.getListItemLayout());
+//        }
 
         // set station image
         holder.getStationImageView().setImageBitmap(mStationImages.get(position));
@@ -132,37 +137,44 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
             holder.getPlaybackIndicator().setVisibility(View.GONE);
         }
 
-        // attach three dots menu
-        holder.getStationMenuView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                StationContextMenu menu = new StationContextMenu();
-                menu.initialize(mActivity, mCollection, view, position);
+        // attach three dots menu - in phone view only
+        if (!mTwoPane) {
+            holder.getStationMenuView().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    StationContextMenu menu = new StationContextMenu();
+                    menu.initialize(mActivity, mCollection, view, position);
 
-                // listen for changes invoked by StationContextMenu
-                menu.setStationChangedListener(new StationContextMenu.StationChangedListener() {
-                    @Override
-                    public void stationChanged() {
-                        // notify MainActivityFragment
-                        if (mCollectionChangedListener != null) {
-                            mCollectionChangedListener.collectionChanged();
+                    // listen for changes invoked by StationContextMenu
+                    menu.setStationChangedListener(new StationContextMenu.StationChangedListener() {
+                        @Override
+                        public void stationChanged() {
+                            // notify MainActivityFragment
+                            if (mCollectionChangedListener != null) {
+                                mCollectionChangedListener.collectionChanged();
+                            }
                         }
-                    }
-                });
+                    });
 
-                menu.show();
-            }
-        });
+                    menu.show();
+                }
+            });
+        } else {
+            holder.getStationMenuView().setVisibility(View.GONE);
+        }
 
         // attach click listener
         holder.setClickListener(new CollectionAdapterViewHolder.ClickListener() {
             @Override
-            public void onClick(View v, int pos, boolean isLongClick) {
-                // long click is only available in tablet mode
+            public void onClick(View view, int pos, boolean isLongClick) {
+                // long click is only available in phone mode
                 if (isLongClick && !mTwoPane) {
                     handleLongClick(pos);
+                } else if (!isLongClick && !mTwoPane) {
+                    handleSingleClick(pos);
                 } else {
                     handleSingleClick(pos);
+                    setSelectedView(view);
                 }
             }
         });
@@ -195,7 +207,8 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
             mActivity.getFragmentManager().beginTransaction()
                     .replace(R.id.player_container, playerActivityFragment, PLAYERFRAGMENT_TAG)
                     .commit();
-        } else {
+
+            } else {
             // add id of station to intent
             Intent intent = new Intent(mActivity, PlayerActivity.class);
             intent.putExtra(STATION_ID, position);
@@ -251,6 +264,20 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     }
 
 
+    /* Sets given view selected */
+    private void setSelectedView(View view) {
+        if (mSelectedView != null) {
+            // set previously selected false
+            mSelectedView.setSelected(false);
+        }
+        // store selected view
+        mSelectedView = view;
+        // set selected view true
+        mSelectedView.setSelected(true);
+
+    }
+
+
     /* Loads app state from preferences */
     private void loadAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
@@ -290,4 +317,5 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     public void setCollectionChangedListener(CollectionChangedListener collectionChangedListener) {
         mCollectionChangedListener = collectionChangedListener;
     }
+
 }
