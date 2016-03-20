@@ -3,11 +3,11 @@
 
     <!-- Row is being pressed -->
     <item android:state_pressed="true"
-        android:drawable="@color/transistor_gold_lighter" />
+        android:drawable="@color/transistor_grey_lighter" />
 
     <!-- View is "selected" -->
     <item android:state_selected="true"
-        android:drawable="@color/transistor_grey_lighter" />
+        android:drawable="@color/transistor_grey_very_light" />
 
     <!-- Default state. -->
     <item android:drawable="@color/transistor_white" />
