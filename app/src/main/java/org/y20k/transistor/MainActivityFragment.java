@@ -495,7 +495,7 @@ public final class MainActivityFragment extends Fragment {
 
     /* Handles tap timer icon in actionbar */
     private void handleMenuSleepTimerClick() {
-        long duration = 20000;
+        long duration = 900000; // equals 15 minutes
 
         // CASE: No station is playing, no timer is running
         if (!mPlayback && !mSleepTimerRunning) {
@@ -510,7 +510,7 @@ public final class MainActivityFragment extends Fragment {
         // CASE: A station is playing, Sleep timer is running
         else if (mPlayback && mSleepTimerRunning) {
             startSleepTimer(duration);
-            Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_timer_duration_increased) + " " + getReadableTime(duration), Toast.LENGTH_SHORT).show();
+            Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_timer_duration_increased) + " [+" + getReadableTime(duration) +"]", Toast.LENGTH_SHORT).show();
         }
 
     }

@@ -71,7 +71,7 @@
     <string name="toastmessage_station_copied">Station copiée.</string>
     <string name="toastmessage_timer_activated">Minuterie de veille activée.</string>
     <string name="toastmessage_timer_cancelled">Minuterie de veille annulée.</string>
-    <string name="toastmessage_timer_duration_increased">Durée augmentée (+ 15 min).</string>
+    <string name="toastmessage_timer_duration_increased">Durée augmentée.</string>
     <string name="toastmessage_timer_start_unable">Veuillez d\'abord démarrer la lecture.</string>
     <string name="toastalert_rename_unsuccessful">Impossible de renommer la station. Veuillez choisir un nom différent.</string>
     <string name="toastalert_delete_successful">Station supprimée.</string>
