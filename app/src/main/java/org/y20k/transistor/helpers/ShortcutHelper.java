@@ -21,6 +21,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.y20k.transistor.MainActivity;
@@ -64,45 +65,24 @@ public class ShortcutHelper {
     }
 
 
-    /* Creates shortcut on Home screen */
-    public void createShortcut(int stationID) {
-
-        // get station
-        Station station = mCollection.getStations().get(stationID);
-
-        // create shortcut icon
-        ImageHelper imageHelper;
-        Bitmap stationImage;
-        Bitmap shortcutIcon;
-        if (station.getStationImageFile().exists()) {
-            // use station image
-            stationImage = BitmapFactory.decodeFile(station.getStationImageFile().toString());
-            imageHelper = new ImageHelper(stationImage, mActivity);
-            shortcutIcon = imageHelper.createShortcut(192);
-        } else {
-            // use default station image
-            stationImage = BitmapFactory.decodeResource(mActivity.getResources(), R.drawable.ic_notesymbol);
-            imageHelper = new ImageHelper(stationImage, mActivity);
-            shortcutIcon = imageHelper.createShortcut(192);
-        }
-
-        // create intent to start MainActivity
-        Intent shortcutIntent = new Intent(mActivity, MainActivity.class);
-        shortcutIntent.putExtra(STREAM_URI, station.getStreamUri().toString());
-        shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        shortcutIntent.setAction(ACTION_PLAY);
-
-        // create shortcut for Home screen
-        Intent addIntent = new Intent();
-        addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
-        addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, station.getStationName());
-        addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON, shortcutIcon);
-        addIntent.putExtra("duplicate", false);
+    /* Places shortcut on Home screen */
+    public void placeShortcut(int stationID) {
+        // create and launch intent to put shortcut on Home screen
+        Intent addIntent = createShortcutIntent(stationID);
         addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
         mActivity.getApplicationContext().sendBroadcast(addIntent);
 
         // notify user
         Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_shortcut_created), Toast.LENGTH_LONG).show();
+    }
+
+
+    /* Removes shortcut for given station from Home screen */
+    public void removeShortcut(int stationID) {
+        // create and launch intent to remove shortcut on Home screen
+        Intent removeIntent = createShortcutIntent(stationID);
+        removeIntent.setAction("com.android.launcher.action.UNINSTALL_SHORTCUT");
+        mActivity.getApplicationContext().sendBroadcast(removeIntent);
     }
 
 
@@ -163,8 +143,6 @@ public class ShortcutHelper {
                     mActivity.startActivity(startIntent);
                 }
 
-
-
             }
             else {
                 Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_stream_not_found), Toast.LENGTH_LONG).show();
@@ -173,15 +151,47 @@ public class ShortcutHelper {
     }
 
 
-    /* Removes shortcut for given station from Home screen */
-    private void removeShortcut(int stationID) {
+    /* Creates Intent for a station shortcut */
+    private Intent createShortcutIntent (int stationID) {
 
         // get station
         Station station = mCollection.getStations().get(stationID);
 
-        // TODO http://developer.android.com/reference/android/Manifest.permission.html#UNINSTALL_SHORTCUT
+        // create shortcut icon
+        ImageHelper imageHelper;
+        Bitmap stationImage;
+        Bitmap shortcutIcon;
+        if (station.getStationImageFile().exists()) {
+            // use station image
+            stationImage = BitmapFactory.decodeFile(station.getStationImageFile().toString());
+            imageHelper = new ImageHelper(stationImage, mActivity);
+            shortcutIcon = imageHelper.createShortcut(192);
+        } else {
+            // use default station image
+            stationImage = BitmapFactory.decodeResource(mActivity.getResources(), R.drawable.ic_notesymbol);
+            imageHelper = new ImageHelper(stationImage, mActivity);
+            shortcutIcon = imageHelper.createShortcut(192);
+        }
 
+
+        // create intent to start MainActivity
+        Intent shortcutIntent = new Intent(mActivity, MainActivity.class);
+        shortcutIntent.putExtra(STREAM_URI, station.getStreamUri().toString());
+        shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        shortcutIntent.setAction(ACTION_PLAY);
+
+        Log.v(LOG_TAG, "!!! Intent for Home screen shortcut: " + shortcutIntent.toString() + " Activity: " + mActivity);
+        Log.v(LOG_TAG, "!!! Uri: " + station.getStreamUri().toString() + " Name: " +  station.getStationName());
+
+        // create and launch intent put shortcut on Home screen
+        Intent addIntent = new Intent();
+        addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, station.getStationName());
+        addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON, shortcutIcon);
+        addIntent.putExtra("duplicate", false);
+        addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
+
+        return addIntent;
     }
-
 
 }

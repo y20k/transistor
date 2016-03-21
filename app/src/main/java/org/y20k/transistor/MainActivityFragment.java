@@ -636,7 +636,6 @@ public final class MainActivityFragment extends Fragment {
                 }
                 refreshStationList();
                 mPlayback = false;
-                Log.v(LOG_TAG, "!!!DING.");
             }
         };
         IntentFilter playbackStoppedIntentFilter = new IntentFilter(ACTION_PLAYBACK_STOPPED);
@@ -714,7 +713,7 @@ public final class MainActivityFragment extends Fragment {
 
                 // create shortcut
                 ShortcutHelper shortcutHelper = new ShortcutHelper(mActivity, mCollection);
-                shortcutHelper.createShortcut(stationID);
+                shortcutHelper.placeShortcut(stationID);
             }
         };
         IntentFilter shortcutCreationRequestIntentFilter = new IntentFilter(ACTION_CREATE_SHORTCUT_REQUESTED);

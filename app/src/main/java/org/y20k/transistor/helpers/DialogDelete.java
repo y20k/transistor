@@ -67,6 +67,12 @@ public final class DialogDelete {
         deleteDialog.setPositiveButton(R.string.dialog_button_delete, new DialogInterface.OnClickListener() {
             // listen for click on delete button
             public void onClick(DialogInterface arg0, int arg1) {
+
+                // delete station shortcut
+                ShortcutHelper shortcutHelper = new ShortcutHelper(mActivity, mCollection);
+                shortcutHelper.removeShortcut(mStationID);
+
+                // delete station entry
                 boolean success = mCollection.delete(mStationID);
                 if (success) {
                     // notify the user
@@ -81,8 +87,8 @@ public final class DialogDelete {
                     if (mStationDeletedListener != null) {
                         mStationDeletedListener.stationDeleted();
                     }
-
                 }
+
             }
         });
 

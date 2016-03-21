@@ -7,9 +7,8 @@
         android:id="@+id/menu_timer"
         android:icon="@drawable/ic_timer_white_24dp"
         android:title="@string/menu_timer"
-        android:visible="false"
+        android:visible="true"
         app:showAsAction="ifRoom" />
-    <!-- TODO make timer icon visible -->
 
     <item
         android:id="@+id/menu_add"

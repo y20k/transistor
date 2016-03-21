@@ -65,7 +65,7 @@ public final class MainActivity extends AppCompatActivity {
         // receive shortcut intent
         Intent intent = getIntent();
         boolean shortcutReceived = false;
-        if (intent != null && intent.getAction().equals(ACTION_PLAY)) {
+        if (intent != null && ACTION_PLAY.equals(intent.getAction())) {
             ShortcutHelper shortcutHelper = new ShortcutHelper(this, collection);
             shortcutHelper.handleShortcutIntent(intent, savedInstanceState);
             shortcutReceived = true;
