@@ -181,8 +181,7 @@ public class ShortcutHelper {
         shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         shortcutIntent.setAction(ACTION_PLAY);
 
-        Log.v(LOG_TAG, "!!! Intent for Home screen shortcut: " + shortcutIntent.toString() + " Activity: " + mActivity);
-        Log.v(LOG_TAG, "!!! Uri: " + station.getStreamUri().toString() + " Name: " +  station.getStationName());
+        Log.v(LOG_TAG, "Intent for Home screen shortcut: " + shortcutIntent.toString() + " Activity: " + mActivity);
 
         // create and launch intent put shortcut on Home screen
         Intent addIntent = new Intent();
