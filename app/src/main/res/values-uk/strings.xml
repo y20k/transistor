@@ -70,7 +70,7 @@
     <string name="toastmessage_station_copied">Станцію скопійовано.</string>
     <string name="toastmessage_timer_activated">Таймер сну увімкнуто.</string>
     <string name="toastmessage_timer_cancelled">Таймер сну вимкнено.</string>
-    <string name="toastmessage_timer_duration_increased">Тривалість збільшено (+ 15 хв).</string>
+    <string name="toastmessage_timer_duration_increased">Тривалість збільшено.</string>
     <string name="toastmessage_timer_start_unable">Будь ласка, спершу розпочніть список відтворення.</string>
     <string name="toastalert_rename_unsuccessful">Не вдалося перейменувати станцію. Будь ласка, оберіть іншу назву.</string>
     <string name="toastalert_delete_successful">Станцію вилучено.</string>

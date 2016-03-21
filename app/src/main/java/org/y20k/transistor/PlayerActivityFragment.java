@@ -181,8 +181,6 @@ public final class PlayerActivityFragment extends Fragment {
 
 
         // show three dots menu in tablet mode
-        // TODO remove debugging mTwoPane=true assignment
-        // mTwoPane = true;
         if (mTwoPane) {
             mStationMenuView.setVisibility(View.VISIBLE);
             // attach three dots menu
@@ -221,8 +219,6 @@ public final class PlayerActivityFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         setVisualState();
     }
-
-
 
 
     @Override
@@ -329,6 +325,12 @@ public final class PlayerActivityFragment extends Fragment {
                     @Override
                     public void stationRenamed() {
                         mStationNameView.setText(dialogRename.getStationName());
+                        int newStationID = mCollection.getStationIndexChanged();
+                        if (newStationID != -1) {
+                            // ID of station has changed
+                            mStationID = newStationID;
+                        }
+                        mStationName = dialogRename.getStationName();
                     }
                 });
                 // run dialog
@@ -563,12 +565,12 @@ public final class PlayerActivityFragment extends Fragment {
         BroadcastReceiver playbackStoppedReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                // set playback false
-                mPlayback = false;
-                // rotate playback button
-                changeVisualState(context);
-                // update currently and last played station
-                setStationState();
+                if (mPlayback) {
+                    // set playback false
+                    mPlayback = false;
+                    // rotate playback button
+                    changeVisualState(context);
+                }
                 // save state of playback to settings
                 saveAppState(context);
             }

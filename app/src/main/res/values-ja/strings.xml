@@ -71,7 +71,7 @@
     <string name="toastmessage_station_copied">放送局をコピーしました。</string>
     <string name="toastmessage_timer_activated">スリープタイマーを有効にしました。</string>
     <string name="toastmessage_timer_cancelled">スリープタイマーを取り消しました。</string>
-    <string name="toastmessage_timer_duration_increased">Duration increased (+ 15 min).</string>
+    <string name="toastmessage_timer_duration_increased">Duration increased.</string>
     <string name="toastmessage_timer_start_unable">Please start playback first.</string>
     <string name="toastalert_rename_unsuccessful">放送局の名前を変更できません。別の名前を選択してください。</string>
     <string name="toastalert_delete_successful">放送局を削除しました。</string>

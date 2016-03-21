@@ -71,7 +71,7 @@
     <string name="toastmessage_station_copied">Station copied.</string>
     <string name="toastmessage_timer_activated">Sleep timer activated.</string>
     <string name="toastmessage_timer_cancelled">Sleep timer cancelled.</string>
-    <string name="toastmessage_timer_duration_increased">Duration increased (+ 15 min).</string>
+    <string name="toastmessage_timer_duration_increased">Duration increased.</string>
     <string name="toastmessage_timer_start_unable">Please start playback first.</string>
     <string name="toastalert_rename_unsuccessful">Unable to rename station. Please choose a different name.</string>
     <string name="toastalert_delete_successful">Station removed.</string>

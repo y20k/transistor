@@ -71,7 +71,7 @@
     <string name="toastmessage_station_copied">Станция скопирована.</string>
     <string name="toastmessage_timer_activated">Таймер сна активирован.</string>
     <string name="toastmessage_timer_cancelled">Таймер сна отключен.</string>
-    <string name="toastmessage_timer_duration_increased">Время увеличено (+ 15 мин).</string>
+    <string name="toastmessage_timer_duration_increased">Время увеличено.</string>
     <string name="toastmessage_timer_start_unable">Сперва запустите воспроизведение.</string>
     <string name="toastalert_rename_unsuccessful">"Невозможно переименовать станцию. Пожалуйста, выберите другое имя."</string>
     <string name="toastalert_delete_successful">Станция удалена.</string>

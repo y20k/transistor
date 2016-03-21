@@ -15,6 +15,7 @@
 package org.y20k.transistor.helpers;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -24,7 +25,6 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
-import org.y20k.transistor.MainActivity;
 import org.y20k.transistor.PlayerActivity;
 import org.y20k.transistor.PlayerActivityFragment;
 import org.y20k.transistor.PlayerService;
@@ -175,7 +175,9 @@ public class ShortcutHelper {
 
 
         // create intent to start MainActivity
-        Intent shortcutIntent = new Intent(mActivity, MainActivity.class);
+//        Intent shortcutIntent = new Intent(mActivity, MainActivity.class);
+        Intent shortcutIntent = new Intent();
+        shortcutIntent.setComponent(new ComponentName(mActivity.getPackageName(), "." + mActivity.getLocalClassName()));
         shortcutIntent.putExtra(STREAM_URI, station.getStreamUri().toString());
         shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
