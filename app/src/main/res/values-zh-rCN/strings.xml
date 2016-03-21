@@ -1,2 +1,81 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<?xml version='1.0' encoding='UTF-8'?>
+<resources><string name="app_name">Transistor</string> <string name="title_activity_player">正在播放</string>
+    <string name="title_activity_infosheet">信息表</string>
+
+    <string name="menu_about">关于</string>
+    <string name="menu_howto">如何使用</string>
+    <string name="menu_timer">睡眠定时器</string>
+    <string name="menu_icon">更改图标</string>
+    <string name="menu_add">添加</string>
+    <string name="menu_delete">删除</string>
+    <string name="menu_rename">重命名</string>
+    <string name="menu_shortcut">放在首页</string>
+
+    <string name="header_about">关于</string>
+    <string name="header_howto">如何使用</string>
+
+    <string name="descr_overflow_button">显示电台选项</string>
+    <string name="descr_station_icon">电台图标</string>
+    <string name="descr_station_name">电台名称</string>
+    <string name="descr_station_name_example">示例 FM</string>
+    <string name="descr_playback_button">大播放按钮</string>
+    <string name="descr_playback_indicator">播放中指示器</string>
+    <string name="descr_playback_indicator_started">播放中指示器</string>
+    <string name="descr_timer_indicator_started">睡眠定时器指示器</string>
+
+    <string name="dialog_generic_button_okay">确定</string>
+    <string name="dialog_generic_button_cancel">取消</string>
+    <string name="dialog_add_station_button">添加</string>
+    <string name="dialog_add_station_input_hint">请输入一个有效的流媒体网址</string>
+    <string name="dialog_add_station_message">添加新电台</string>
+    <string name="dialog_delete_station_message">删除电台</string>
+    <string name="dialog_button_delete">删除</string>
+    <string name="dialog_rename_station_input_hint">请输入新名称</string>
+    <string name="dialog_rename_station_message">重命名电台</string>
+    <string name="dialog_button_rename">重命名</string>
+
+    <string name="dialog_error_title_default">错误</string>
+    <string name="dialog_error_message_default">发生错误</string>
+    <string name="dialog_error_details_button_default">显示详情</string>
+    <string name="dialog_error_details_default">无详情可用</string>
+    <string name="dialog_error_title_fetch_download">下载问题</string>
+    <string name="dialog_error_title_fetch_read">读取问题</string>
+    <string name="dialog_error_title_fetch_write">写入问题</string>
+    <string name="dialog_error_message_fetch_general_external_storage">外部存储：</string>
+    <string name="dialog_error_message_fetch_general_hint_m3u">提示：Transistor 只能处理 MP3 和 OGG 编码的流媒体，或者以 .m3u 或 .pls 结尾的 URL。</string>
+    <string name="dialog_error_message_fetch_general_file_content">文件内容：</string>
+    <string name="dialog_error_message_fetch_download">Transistor 努力尝试，但没能感应到指定链接。</string>
+    <string name="dialog_error_message_fetch_download_station_url">电台 URL：</string>
+    <string name="dialog_error_message_fetch_read">Transistor 努力尝试，但没能感应到指定文件。</string>
+    <string name="dialog_error_message_fetch_read_file_location">文件位置：</string>
+    <string name="dialog_error_message_fetch_write">Transistor 努力尝试，但没能保存指定电台到存储。</string>
+
+    <string name="toastmessage_add_download_started">下载开始：</string>
+    <string name="actioncall_message_start_here">添加新电台</string>
+    <string name="toastmessage_add_open_file_started">打开文件：</string>
+    <string name="toastmessage_long_press_playback_stopped">播放已停止（长按删除）</string>
+    <string name="toastmessage_long_press_playback_started">播放已开始（长按删除）</string>
+    <string name="toastmessage_shortcut_created">捷径已创建。</string>
+    <string name="toastmessage_station_copied">电台已复制。</string>
+    <string name="toastmessage_timer_activated">睡眠定时器已激活。</string>
+    <string name="toastmessage_timer_cancelled">睡眠定时器已取消。</string>
+    <string name="toastmessage_timer_duration_increased">已增加持续时间 (+ 15 分钟)。</string>
+    <string name="toastmessage_timer_start_unable">请先开始播放。</string>
+    <string name="toastalert_rename_unsuccessful">无法重命名电台。请另选其他名称。</string>
+    <string name="toastalert_delete_successful">电台已移除。</string>
+    <string name="toastalert_no_external_storage">无法访问外部存储。</string>
+    <string name="toastalert_headphones_unplugged">耳机已拔出。播放停止。</string>
+    <string name="toastalert_permission_denied">权限被拒绝：</string>
+    <string name="snackbar_message_timer_set">睡眠定时器设为</string>
+
+    <string name="notification_swipe_to_stop">滑动以停止</string>
+    <string name="notification_playing">正在播放</string>
+
+    <string name="descr_arrow_actioncall">箭头指向添加电梯符号</string>
+    <string name="dialog_add_station_howto">您可以添加 MP3 和 OGG 编码的原始音频流，以及封装在 pls 或 m3u 文件中的这些流。您也可以在您的网页浏览器中点击流链接（pls 或 m3u）添加新电台。</string>
+    <string name="dialog_error_details_write">电台可能出现了重复，或者您可能需要检查您的外部存储。</string>
+    <string name="toastalert_stream_not_found">Transistor 无法识别此电台。请删除它并重新添加到首页。</string>
+    <string name="snackbar_request_storage_access">Transistor 需要被授权读取以从外部存储访问数据。</string>
+    <string name="html_about">&lt;!DOCTYPE html&gt; &lt;html&gt; &lt;body&gt; &lt;h1&gt;关于 Transistor&lt;/h1&gt; &lt;h2&gt;用于 Android 的电台应用&lt;/h2&gt; &lt;h3&gt;Version 1.2 (&amp;quot;Cygnet Committee&amp;quot;)&lt;/h3&gt; &lt;p&gt;Transistor 是一款基于 Bones 应用的在互联网上收听电台的程序。本应用在您的设备的外部存储上存储电台为文件。文件为 /Android/data/org.y20k.transistor/Collection 目录中的 m3u 文件。目前支持解析 MP3 和 OGG 数据流。&lt;/p&gt; &lt;p&gt;重要说明：这是一个 BYOS（“自己找电台”, &amp;quot;bring your own station&amp;quot;） 类型的应用。它不提供任何类型的内置搜索选项。您必须手动添加电台。&lt;/p&gt; &lt;p&gt;Transistor 是自由软件，以 MIT 开源许可证发布。你可以在 GitHub 上找到其源代码。GitHub 也是报告缺陷乃至作出贡献的一个好去处，如果你有兴趣的话。&lt;/p&gt; &lt;p&gt;https://github.com/y20k/transistor&lt;/p&gt; &lt;p&gt;https://opensource.org/licenses/MIT&lt;/p&gt; &lt;h3&gt;Transistor 需要哪些权限？&lt;/h3&gt; &lt;p&gt;&lt;strong&gt;互联网权限&lt;/strong&gt;&lt;br /&gt; Transistor 基于互联网上的流媒体电台。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;外部存储读取权限&lt;/strong&gt;&lt;br /&gt; Transistor 需要访问图像、照片和文件，以便支持自定义电台图标，以及打开本地保存的播放列表文件。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;振动权限&lt;/strong&gt;&lt;br /&gt; 点击并按住一个电台将触发一次小的振动。&lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</string>
+
+    </resources>
