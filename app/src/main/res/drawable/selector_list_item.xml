@@ -2,8 +2,8 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Row is being pressed -->
-    <item android:state_pressed="true"
-        android:drawable="@color/transistor_grey_lighter" />
+    <!-- <item android:state_pressed="true"
+        android:drawable="@color/transistor_grey_lighter" /> -->
 
     <!-- View is "selected" -->
     <item android:state_selected="true"
