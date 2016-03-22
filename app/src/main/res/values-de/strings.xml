@@ -92,7 +92,7 @@
         <body>
             <h1>Über Transistor</h1>
             <h2>Radio App für Android</h2>
-            <h3>Version 1.2 (&quot;Cygnet Committee&quot;)</h3>
+            <h3>Version 2.0 (&quot;Starman&quot;)</h3>
             <p>Transistor ist eine minimalistische App, um über das Internet Radio hören zu können. Die App speichert Stationen als Textdateien im externen Gerätespeicher ab – und zwar hier: /Android/data/org.y20k.transistor/Collection. Transistor spielt Streams in den Formaten MP3 und OGG ab.</p>
             <p>Wichtiger Hinweis: Dies ist eine App vom Typ BYOS (&quot;bring your own station&quot;). Es gibt keine interne Suchfunktion. Radiostation müssen manuell hinzugefügt werden.</p>
             <p>Transistor ist Freie Software. Die App ist unter der MIT Open Source Lizenz veröffentlicht. Der Quellcode liegt auf GitHub. GitHub ist auch ein guter Ort, um Bugs zu melden oder um sich an der Weiterentwicklung zu beteiligen.</p>
@@ -118,8 +118,12 @@
             <p>Den großen Play-Knopf drücken ;).</p>
             <h2>Wie schalte ich das Radio wieder aus?</h2>
             <p>Den großen Stop-Knopf drücken oder das Kopfhörerkabel abziehen oder die &quot;Notification&quot; der App ausblenden.</p>
+            <h2>Wie starte ich den Sleep Timer?</h2>
+            <p>Über den Knopf mit dem Uhr-Symbol kann ein 15-minütiger Countdown aktiviert werden - wenn der abläuft, stoppt Transistor die Wiedergabe. Wiederholtes Tippen verlängert den Countdown um 15 Minuten. Der Sleep Timer kann nur aktiviert werden, wenn die Wiedergabe einer Station läuft.</p>
+            <h2>Wie speichere ich eine Radiostation auf dem Startbildschirm ab?</h2>
+            <p>Die Option eine Station auf dem Startbildschirm zu speichern erreicht man über das Drei-Punkte-Menü der jeweiligen Station. Mit den Shortcut dieser Station kann Transistor aufgerufen und die Wiedergabe umgehend gestartet werden.</p>
             <h2>Wie kann ich eine Station löschen oder umbenennen?</h2>
-            <p>Optionen für Löschen und Umbenennen finden sich sowohl in der Listenansicht als auch in der Einzelansicht für Play und Stop – dazu einfach auf das Drei-Punkte-Menü tippen. Es ist zudem möglich, die Liste der Stationen direkt mit einem Datei-Browser zu bearbeiten (siehe nächste Frage).</p>
+            <p>Die Optionen für Löschen und Umbenennen finden sich im Kontextmenü der jeweiligen Station – dazu einfach auf das Drei-Punkte-Symbol tippen. Es ist zudem möglich, die Liste der Stationen direkt mit einem Datei-Browser zu bearbeiten (siehe nächste Frage).</p>
             <h2>Wo speichert Transistor seine Radiostationen ab?</h2>
             <p>Transistor speichert seine Stationen nicht in einer Datenbank. Stattdessen werden Stationen als M3U-Textdateien im externen Gerätespeicher abgelegt. Diese können auch manuell mit Hilfe eines Texteditors bearbeitet werden. Die Dateien finden sich hier: /Android/data/org.y20k.transistor/Collection</p>
             <h2>Wie kann ich meine Radiostationen sichern und wiederherstellen?<h2>

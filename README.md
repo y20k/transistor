@@ -4,7 +4,7 @@ README
 Transistor - Radio app for Android
 ----------------------------------
 
-**Version 1.2.x ("Cygnet Committee")**
+**Version 2.0.x ("Starman")**
 
 Transistor is a bare bones app for listening to radio programs over the internet. The app stores stations as files on your device's external storage. It currently understands streams encoded in MP3 and OGG.
 
@@ -31,8 +31,14 @@ Tap the big Play button ;).
 ### How to stop playback?
 Tap the big Stop button or unplug your headphones or swipe off the notification from the lock screen.
 
+### How to start the sleep timer?
+Tapping the Clock symbol starts a 15 minute countdown after which Transistor stops playback. An additional tap adds 15 minutes to the clock. Playback must be running to be able to activate the sleep timer. 
+
+### How to place a station shortcut on the Home screen?
+The option to place a shortcut for a station on the Home screen can be accessed from the station's three dots menu. A tap on a shortcut will open Transistor - playback will start immediately.
+
 ### How to rename or delete a station?
-The rename and delete options can be accessed both from the list of stations and from the now playing screen. Just tap on the three dots symbol. You can manage the list of stations also from a file browser (see next question).
+The rename and delete options can be accessed both from the station's context menu. Just tap on the three dots symbol. You can manage the list of stations also from a file browser (see next question).
 
 ### Where does Transistor store its stations?
 Transistor does not save its list of stations in a database. Instead it stores stations as m3u files on your device's external storage. Feel free to tinker with those files using the text editor of your choice. The files are stored in /Android/data/org.y20k.transistor/Collection.
