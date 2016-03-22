@@ -9,6 +9,8 @@ Contributing developer(s): [azixMcAze](https://github.com/azixMcAze) & [meonwax]
 ### Translations
 Catalan version: [Zagur](https://github.com/Zagur)
 
+Chinese version: [YFdyh000](https://github.com/yfdyh000)
+
 French version: [M2ck](https://github.com/M2ck)
 
 German version: [y20k](https://github.com/y20k)
