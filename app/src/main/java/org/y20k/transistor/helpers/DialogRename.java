@@ -17,8 +17,10 @@ package org.y20k.transistor.helpers;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -36,20 +38,16 @@ public final class DialogRename {
     /* Keys */
     private static final String PLAYBACK = "playback";
     private static final String STATION_ID_CURRENT = "stationIDCurrent";
+    private static final String ACTION_COLLECTION_CHANGED = "org.y20k.transistor.action.COLLECTION_CHANGED";
+    private static final String EXTRA_STATION_NEW_POSITION = "STATION_NEW_POSITION";
+    private static final String EXTRA_STATION_DELETED = "STATION_DELETED";
 
 
     /* Main class variables */
     private final Activity mActivity;
     private final Collection mCollection;
-    private final int mStationID;
+    private int mStationID;
     private String mStationName;
-    private StationRenamedListener mStationRenamedListener;
-
-
-    /* Interface for custom listener */
-    public interface StationRenamedListener {
-        void stationRenamed();
-    }
 
 
     /* Constructor */
@@ -58,7 +56,6 @@ public final class DialogRename {
         mStationName = stationName;
         mStationID = stationID;
         mCollection = collection;
-        mStationRenamedListener = null;
     }
 
 
@@ -86,16 +83,18 @@ public final class DialogRename {
                     // notify the user
                     Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_rename_unsuccessful), Toast.LENGTH_LONG).show();
                 } else {
+
+                    // check if station index has changed
+                    int newStationID = mCollection.getStationIndexChanged();
+                    if (newStationID != -1) {
+                        // ID of station has changed
+                        mStationID = newStationID;
+                    }
+
                     // check for playback
                     SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mActivity);
                     boolean playback = settings.getBoolean(PLAYBACK, false);
-
                     if (playback) {
-                        // put up changed notification
-                        NotificationHelper notificationHelper = new NotificationHelper(mActivity);
-                        notificationHelper.setStationName(mStationName);
-                        notificationHelper.createNotification();
-
                         // save new station ID if changed
                         int newIndex = mCollection.getStationIndexChanged();
                         if (newIndex != -1) {
@@ -104,12 +103,19 @@ public final class DialogRename {
                             editor.apply();
                         }
 
+                        // put up changed notification
+                        NotificationHelper notificationHelper = new NotificationHelper(mActivity);
+                        notificationHelper.setStationName(mStationName);
+                        notificationHelper.setStationID(mStationID);
+                        notificationHelper.createNotification();
                     }
 
-                    // notify MainActivityFragment
-                    if (mStationRenamedListener != null) {
-                        mStationRenamedListener.stationRenamed();
-                    }
+                    // send local broadcast
+                    Intent i = new Intent();
+                    i.setAction(ACTION_COLLECTION_CHANGED);
+                    i.putExtra(EXTRA_STATION_NEW_POSITION, mStationID);
+                    i.putExtra(EXTRA_STATION_DELETED, false);
+                    LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(i);
 
                 }
             }
@@ -127,11 +133,6 @@ public final class DialogRename {
         builder.show();
     }
 
-
-    /* Setter for custom listener */
-    public void setStationRenamedListener(StationRenamedListener stationRenamedListener) {
-        mStationRenamedListener = stationRenamedListener;
-    }
 
 
     /* Getter for name of station */

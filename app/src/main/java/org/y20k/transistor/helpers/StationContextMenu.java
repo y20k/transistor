@@ -35,6 +35,8 @@ public final class StationContextMenu extends DialogFragment {
     /* Keys */
     private static final String ACTION_IMAGE_CHANGE_REQUESTED = "org.y20k.transistor.action.IMAGE_CHANGE_REQUESTED";
     private static final String ACTION_CREATE_SHORTCUT_REQUESTED = "org.y20k.transistor.action.CREATE_SHORTCUT_REQUESTED";
+    private static final String ACTION_COLLECTION_CHANGED = "org.y20k.transistor.action.COLLECTION_CHANGED";
+    private static final String EXTRA_STATION_POSITION = "STATION_POSITION";
     private static final String STATION_ID = "stationID";
 
     /* Main class variables */
@@ -42,25 +44,13 @@ public final class StationContextMenu extends DialogFragment {
     private int mStationID;
     private Activity mActivity;
     private Collection mCollection;
-    private StationChangedListener mStationChangedListener;
 
 
-    /* Interface for custom listener */
-    public interface StationChangedListener {
-        void stationChanged();
-    }
-
-
-    /* Constructor */
+    /* Constructor (default) */
     public StationContextMenu() {
-        mStationChangedListener = null;
     }
 
 
-    /* Setter for custom listener */
-    public void setStationChangedListener(StationChangedListener stationChangedListener) {
-        mStationChangedListener = stationChangedListener;
-    }
 
 
     /* Initializer for main class variables */
@@ -98,25 +88,15 @@ public final class StationContextMenu extends DialogFragment {
                     case R.id.menu_rename:
                         // get name of station
                         String stationName = mCollection.getStations().get(mStationID).getStationName();
-                        // construct rename dialog
+                        // construct and run rename dialog
                         DialogRename dialogRename = new DialogRename(mActivity, mCollection, stationName, mStationID);
-                        dialogRename.setStationRenamedListener(new DialogRename.StationRenamedListener() {
-                            @Override
-                            public void stationRenamed() {
-                                if (mStationChangedListener != null) {
-                                    mStationChangedListener.stationChanged();
-                                }
-                            }
-                        });
-                        // run dialog
                         dialogRename.show();
                         return true;
 
                     // CASE DELETE
                     case R.id.menu_delete:
-                        // construct delete dialog
+                        // construct and run delete dialog
                         DialogDelete dialogDelete = new DialogDelete(mActivity, mCollection, mStationID);
-                        // run dialog
                         dialogDelete.show();
                         return true;
 

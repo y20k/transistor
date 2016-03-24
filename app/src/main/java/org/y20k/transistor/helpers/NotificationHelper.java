@@ -23,7 +23,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
 
-import org.y20k.transistor.PlayerActivity;
+import org.y20k.transistor.MainActivity;
 import org.y20k.transistor.PlayerService;
 import org.y20k.transistor.R;
 
@@ -36,11 +36,15 @@ public final class NotificationHelper {
     /* Keys */
     private static final int PLAYER_SERVICE_NOTIFICATION_ID = 1;
     private static final String ACTION_STOP = "org.y20k.transistor.action.STOP";
+    private static final String ACTION_SHOW_PLAYER = "org.y20k.transistor.action.PLAY";
+    private static final String EXTRA_STATION_ID = "EXTRA_STATION_ID";
+    private static final String EXTRA_PLAYBACK_STATE = "EXTRA_PLAYBACK_STATE";
 
 
     /* Main class variables */
     private final Context mContext;
     private String mStationName;
+    private int mStationID;
 
 
     /* Constructor */
@@ -52,6 +56,12 @@ public final class NotificationHelper {
     /* Setter for name of station */
     public void setStationName(String stationName) {
         mStationName = stationName;
+    }
+
+
+    /* Setter for name of station */
+    public void setStationID(int stationID) {
+        mStationID = stationID;
     }
 
 
@@ -73,7 +83,9 @@ public final class NotificationHelper {
         notificationColor = ContextCompat.getColor(mContext, R.color.transistor_red);
 
         // explicit intent for notification tap
-        Intent tapIntent = new Intent(mContext, PlayerActivity.class);
+        Intent tapIntent = new Intent(mContext, MainActivity.class);
+        tapIntent.setAction(ACTION_SHOW_PLAYER);
+        tapIntent.putExtra(EXTRA_STATION_ID, mStationID);
 
         // explicit intent for notification swipe
         Intent swipeIntent = new Intent(mContext, PlayerService.class);
@@ -84,7 +96,7 @@ public final class NotificationHelper {
         // -> navigating backward from the Activity leads to Home screen.
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(mContext);
         // backstack: adds back stack for Intent (but not the Intent itself)
-        stackBuilder.addParentStack(PlayerActivity.class);
+        stackBuilder.addParentStack(MainActivity.class);
         // backstack: add explicit intent for notification tap
         stackBuilder.addNextIntent(tapIntent);
 

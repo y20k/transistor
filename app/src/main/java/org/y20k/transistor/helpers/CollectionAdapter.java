@@ -52,14 +52,16 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
 
 
     /* Keys */
+    private static final String ACTION_PLAYBACK_STOPPED = "org.y20k.transistor.action.PLAYBACK_STOPPED";
+    private static final String ACTION_SHOW_PLAYER = "org.y20k.transistor.action.PLAY";
+    private static final String EXTRA_STATION_ID = "EXTRA_STATION_ID";
+    private static final String ARG_STATION_ID = "ArgStationID";
+    private static final String ARG_TWO_PANE = "ArgTwoPane";
     private static final String TWOPANE = "twopane";
     private static final String PLAYERFRAGMENT_TAG = "PFTAG";
     private static final String STATION_ID_CURRENT = "stationIDCurrent";
     private static final String STATION_ID_LAST = "stationIDLast";
     private static final String PLAYBACK = "playback";
-    private static final String STATION_ID = "stationID";
-    private static final String ACTION_PLAYBACK_STOPPED = "org.y20k.transistor.action.PLAYBACK_STOPPED";
-
 
 
     /* Main class variables */
@@ -86,7 +88,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
 
     /* Interface for handling clicks - both normal and long ones. */
     public interface ClickListener {
-        public void onClick(View v, int position, boolean isLongClick);
+        void onClick(View v, int position, boolean isLongClick);
     }
 
 
@@ -135,9 +137,11 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     @Override
     public void onBindViewHolder(CollectionAdapterViewHolder holder, final int position) {
 
-//        if (mSelectedView == null && position == mStationIDCurrent) {
-//            setSelectedView(holder.getListItemLayout());
-//        }
+        if (mTwoPane && mSelectedView == null) {
+            markViewSelected(holder.getListItemLayout());
+        } else if (mTwoPane) {
+            mSelectedView.setSelected(true);
+        }
 
         // set station image
         holder.getStationImageView().setImageBitmap(mStationImages.get(position));
@@ -159,18 +163,6 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
                 public void onClick(View view) {
                     StationContextMenu menu = new StationContextMenu();
                     menu.initialize(mActivity, mCollection, view, position);
-
-                    // listen for changes invoked by StationContextMenu
-                    menu.setStationChangedListener(new StationContextMenu.StationChangedListener() {
-                        @Override
-                        public void stationChanged() {
-                            // notify MainActivityFragment
-                            if (mCollectionChangedListener != null) {
-                                mCollectionChangedListener.collectionChanged();
-                            }
-                        }
-                    });
-
                     menu.show();
                 }
             });
@@ -189,7 +181,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
                     handleSingleClick(pos);
                 } else {
                     handleSingleClick(pos);
-                    setSelectedView(view);
+                    markViewSelected(view);
                 }
             }
         });
@@ -209,26 +201,30 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     }
 
 
+    /* Refreshes app state info */
+    public void refresh() {
+        loadAppState(mActivity);
+    }
+
+
     /* Handles click on list item */
     private void handleSingleClick(int position) {
 
         if (mTwoPane) {
             Bundle args = new Bundle();
-            args.putInt(STATION_ID, position);
-            args.putBoolean(TWOPANE, mTwoPane);
+            args.putInt(ARG_STATION_ID, position);
+            args.putBoolean(ARG_TWO_PANE, mTwoPane);
 
             PlayerActivityFragment playerActivityFragment = new PlayerActivityFragment();
             playerActivityFragment.setArguments(args);
             mActivity.getFragmentManager().beginTransaction()
                     .replace(R.id.player_container, playerActivityFragment, PLAYERFRAGMENT_TAG)
                     .commit();
-
-            } else {
-            // add id of station to intent
+        } else {
+            // add id of station to intent and start activity
             Intent intent = new Intent(mActivity, PlayerActivity.class);
-            intent.putExtra(STATION_ID, position);
-
-            // start activity with intent
+            intent.setAction(ACTION_SHOW_PLAYER);
+            intent.putExtra(EXTRA_STATION_ID, position);
             mActivity.startActivity(intent);
         }
     }
@@ -254,7 +250,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
             // start playback service
             String stationName = mCollection.getStations().get(position).getStationName();
             String streamUri = mCollection.getStations().get(position).getStreamUri().toString();
-            mPlayerService.startActionPlay(mActivity, streamUri, stationName);
+            mPlayerService.startActionPlay(mActivity, streamUri, stationName, position);
 
             // set playback state
             mStationIDLast = mStationIDCurrent;
@@ -280,7 +276,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
 
 
     /* Sets given view selected */
-    private void setSelectedView(View view) {
+    private void markViewSelected(View view) {
         if (mSelectedView != null) {
             // set previously selected false
             mSelectedView.setSelected(false);
@@ -289,7 +285,6 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
         mSelectedView = view;
         // set selected view true
         mSelectedView.setSelected(true);
-
     }
 
 
@@ -316,6 +311,19 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     }
 
 
+    /* Setter for selected view */
+    public void setSelectedView(View view) {
+        // deselected previously selected
+        if (mSelectedView != null) {
+            mSelectedView.setSelected(false);
+        }
+
+        // load app state and set new selection
+        loadAppState(mActivity);
+        mSelectedView = view;
+    }
+
+
     /* Setter for collection */
     public void setCollection(Collection collection) {
         mCollection = collection;
@@ -327,10 +335,5 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
         mClickListener = clickListener;
     }
 
-
-    /* Setter for custom listener */
-    public void setCollectionChangedListener(CollectionChangedListener collectionChangedListener) {
-        mCollectionChangedListener = collectionChangedListener;
-    }
 
 }

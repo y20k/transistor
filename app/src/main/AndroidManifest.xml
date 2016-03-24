@@ -93,10 +93,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.y20k.transistor.MainActivity" />
 
-            <intent-filter>
-                <action android:name="org.y20k.transistor.action.PLAY" />
-            </intent-filter>
-
         </activity>
 
 

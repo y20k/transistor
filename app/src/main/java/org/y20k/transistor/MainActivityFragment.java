@@ -77,7 +77,8 @@ public final class MainActivityFragment extends Fragment {
     private static final String ACTION_TIMER_RUNNING = "org.y20k.transistor.action.TIMER_RUNNING";
     private static final String ACTION_IMAGE_CHANGE_REQUESTED = "org.y20k.transistor.action.IMAGE_CHANGE_REQUESTED";
     private static final String ACTION_CREATE_SHORTCUT_REQUESTED = "org.y20k.transistor.action.CREATE_SHORTCUT_REQUESTED";
-    private static final String EXTRA_STATION_POSITION = "STATION_POSITION";
+    private static final String EXTRA_STATION_NEW_POSITION = "STATION_NEW_POSITION";
+    private static final String EXTRA_STATION_DELETED = "STATION_DELETED";
     private static final String EXTRA_TIMER_REMAINING = "TIMER_REMAINING";
     private static final String LIST_STATE = "ListState";
     private static final String STATION_ID = "stationID";
@@ -160,14 +161,6 @@ public final class MainActivityFragment extends Fragment {
         mStationImages = new LinkedList<>();
         mCollectionAdapter = new CollectionAdapter(mActivity, mStationNames, mStationUris, mStationImages);
 
-        // listen for data change in mCollection adapter
-        mCollectionAdapter.setCollectionChangedListener(new CollectionAdapter.CollectionChangedListener() {
-            @Override
-            public void collectionChanged() {
-                refreshStationList();
-            }
-        });
-
         // initialize broadcast receivers
         initializeBroadcastReceivers();
 
@@ -207,10 +200,16 @@ public final class MainActivityFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
         // handle incoming intent
         handleNewStationIntent();
+
+        // get state of playback
+        boolean playbackState = mPlayback;
+
         // refresh playback state
         loadAppState(mActivity);
+
         // show notification bar if timer is running
         if (mSleepTimerRunning) {
             showSleepTimerNotification(-1);
@@ -259,8 +258,8 @@ public final class MainActivityFragment extends Fragment {
             // CASE HOWTO
             case R.id.menu_howto:
                 // get title and content
-                String howToTitle = mActivity.getString(R.string.header_about);
-                String howToContent = mActivity.getString(R.string.html_about);
+                String howToTitle = mActivity.getString(R.string.header_howto);
+                String howToContent = mActivity.getString(R.string.html_howto);
                 // put title and content into intent and start activity
                 Intent howToIntent = new Intent(mActivity, InfosheetActivity.class);
                 howToIntent.putExtra(TITLE, howToTitle);
@@ -641,10 +640,11 @@ public final class MainActivityFragment extends Fragment {
         IntentFilter playbackStoppedIntentFilter = new IntentFilter(ACTION_PLAYBACK_STOPPED);
         LocalBroadcastManager.getInstance(mApplication).registerReceiver(playbackStoppedReceiver, playbackStoppedIntentFilter);
 
-        // broadcast receiver: player service stopped playback
+        // broadcast receiver: player service started playback
         BroadcastReceiver playbackStartedReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
+                mCollectionAdapter.refresh();
                 refreshStationList();
                 mPlayback = true;
             }
@@ -656,12 +656,27 @@ public final class MainActivityFragment extends Fragment {
         BroadcastReceiver collectionChangedReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                refreshStationList();
-                // if new station - scroll towards it
-                if (intent.hasExtra(EXTRA_STATION_POSITION)) {
-                    int position = intent.getIntExtra(EXTRA_STATION_POSITION, 0);
+
+                // CASE: station was deleted
+                if (intent.hasExtra(EXTRA_STATION_NEW_POSITION) && intent.hasExtra(EXTRA_STATION_DELETED) && intent.getBooleanExtra(EXTRA_STATION_DELETED, false)) {
+                    int position = intent.getIntExtra(EXTRA_STATION_NEW_POSITION, 0);
+                    mLayoutManager.removeViewAt(position);
+                    refreshStationList();
+                    mCollectionAdapter.setSelectedView(mLayoutManager.getChildAt(position));
+                    mLayoutManager.scrollToPosition(position);
+                    // TODO Fragment transition?
+                }
+
+                // CASE: station has new position
+                else if (intent.hasExtra(EXTRA_STATION_NEW_POSITION)) {
+                    int position = intent.getIntExtra(EXTRA_STATION_NEW_POSITION, 0);
+                    refreshStationList();
+                    mCollectionAdapter.setSelectedView(mLayoutManager.getChildAt(position));
                     mLayoutManager.scrollToPosition(position);
                 }
+                // CASE: new station
+                // Todo
+
             }
         };
         IntentFilter collectionChangedIntentFilter = new IntentFilter(ACTION_COLLECTION_CHANGED);

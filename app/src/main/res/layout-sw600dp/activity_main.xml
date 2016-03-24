@@ -7,9 +7,7 @@
     android:orientation="horizontal"
     tools:context="org.y20k.transistor.MainActivity">
 
-    <!--
-    This layout is a two-pane layout for the Items master/detail flow.
-    -->
+    <!-- this layout is a two-pane layout for larger screens -->
 
     <fragment
         android:id="@+id/fragment_main"

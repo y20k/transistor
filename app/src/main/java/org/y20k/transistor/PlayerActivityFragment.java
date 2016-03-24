@@ -15,6 +15,7 @@
 package org.y20k.transistor;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.BroadcastReceiver;
@@ -28,6 +29,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
@@ -69,13 +71,18 @@ public final class PlayerActivityFragment extends Fragment {
 
 
     /* Keys */
+    private static final String ACTION_COLLECTION_CHANGED = "org.y20k.transistor.action.COLLECTION_CHANGED";
+    private static final String ACTION_PLAYBACK_STOPPED = "org.y20k.transistor.action.PLAYBACK_STOPPED";
+    private static final String ACTION_CREATE_SHORTCUT_REQUESTED = "org.y20k.transistor.action.CREATE_SHORTCUT_REQUESTED";
+    private static final String EXTRA_STATION_NEW_POSITION = "STATION_NEW_POSITION";
+    private static final String EXTRA_STATION_DELETED = "STATION_DELETED";
+    private static final String ARG_STATION_ID = "ArgStationID";
+    private static final String ARG_TWO_PANE = "ArgTwoPane";
+    private static final String ARG_PLAYBACK = "ArgPlayback";
     private static final String STATION_ID = "stationID";
     private static final String STATION_ID_CURRENT = "stationIDCurrent";
     private static final String STATION_ID_LAST = "stationIDLast";
     private static final String PLAYBACK = "playback";
-    private static final String TWOPANE = "twopane";
-    private static final String ACTION_PLAYBACK_STOPPED = "org.y20k.transistor.action.PLAYBACK_STOPPED";
-    private static final String ACTION_CREATE_SHORTCUT_REQUESTED = "org.y20k.transistor.action.CREATE_SHORTCUT_REQUESTED";
     private static final int REQUEST_LOAD_IMAGE = 1;
     private static final int PERMISSION_REQUEST_READ_EXTERNAL_STORAGE = 1;
 
@@ -95,6 +102,7 @@ public final class PlayerActivityFragment extends Fragment {
     private int mStationIDLast;
     private boolean mPlayback;
     private boolean mTwoPane;
+    private boolean mVisibility;
     private Collection mCollection;
     private PlayerService mPlayerService;
 
@@ -117,22 +125,16 @@ public final class PlayerActivityFragment extends Fragment {
         // load playback state from preferences
         loadAppState(mActivity);
 
-        // get station name, URL and id from intent
-        Intent intent = mActivity.getIntent();
-        if (intent != null) {
-            mStationID = intent.getIntExtra(STATION_ID, 0);
-        }
-
         // get collection from external storage
         mCollection = new Collection(getCollectionDirectory("Collection"));
 
         Bundle arguments = getArguments();
         if (arguments != null) {
-            mStationID = arguments.getInt(STATION_ID);
-            mTwoPane = arguments.getBoolean(TWOPANE, false);
+            mStationID = arguments.getInt(ARG_STATION_ID, 0);
+            mTwoPane = arguments.getBoolean(ARG_TWO_PANE, false);
         }
 
-        // set station ID if not in intent or in arguments
+        // set station ID if not in arguments
         if (mStationID == -1 && mStationIDCurrent == -1) {
             mStationID = 0;
         } else if (mStationID == -1 ) {
@@ -179,7 +181,6 @@ public final class PlayerActivityFragment extends Fragment {
             }
         });
 
-
         // show three dots menu in tablet mode
         if (mTwoPane) {
             mStationMenuView.setVisibility(View.VISIBLE);
@@ -224,11 +225,38 @@ public final class PlayerActivityFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        // set fragment visibility
+        mVisibility = true;
+
         // refresh playback state
         loadAppState(mActivity);
 
+        // check if activity started from shortcut
+        Bundle arguments = getArguments();
+        if (arguments != null && arguments.getBoolean(ARG_PLAYBACK)) {
+            // check if this station is not already playing
+            if (!mPlayback || mStationIDCurrent != mStationID) {
+                // start playback
+                startPlayback();
+                // save state
+                mStationIDLast = mStationIDCurrent;
+                mStationIDCurrent = mStationID;
+                saveAppState(mActivity);
+            }
+
+        }
+
         // set up button symbol and playback indicator
         setVisualState();
+
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        // set fragment visibility
+        mVisibility = false;
     }
 
 
@@ -274,7 +302,7 @@ public final class PlayerActivityFragment extends Fragment {
         changeVisualState(mActivity);
         // start player
         Log.v(LOG_TAG, "Starting player service.");
-        mPlayerService.startActionPlay(mActivity, mStreamUri, mStationName);
+        mPlayerService.startActionPlay(mActivity, mStreamUri, mStationName, mStationID);
     }
 
 
@@ -319,21 +347,8 @@ public final class PlayerActivityFragment extends Fragment {
 
             // CASE RENAME
             case R.id.menu_rename:
-                // construct rename dialog
+                // construct and run rename dialog
                 final DialogRename dialogRename = new DialogRename(mActivity, mCollection, mStationName, mStationID);
-                dialogRename.setStationRenamedListener(new DialogRename.StationRenamedListener() {
-                    @Override
-                    public void stationRenamed() {
-                        mStationNameView.setText(dialogRename.getStationName());
-                        int newStationID = mCollection.getStationIndexChanged();
-                        if (newStationID != -1) {
-                            // ID of station has changed
-                            mStationID = newStationID;
-                        }
-                        mStationName = dialogRename.getStationName();
-                    }
-                });
-                // run dialog
                 dialogRename.show();
                 return true;
 
@@ -341,19 +356,8 @@ public final class PlayerActivityFragment extends Fragment {
             case R.id.menu_delete:
                 // stop playback
                 mPlayerService.startActionStop(mActivity);
-                // construct delete dialog
+                // construct and run delete dialog
                 DialogDelete dialogDelete = new DialogDelete(mActivity, mCollection, mStationID);
-                dialogDelete.setStationDeletedListener(new DialogDelete.StationDeletedListener() {
-                    @Override
-                    public void stationDeleted() {
-                        // start main activity
-                        Intent mainActivityStartIntent = new Intent(mActivity, MainActivity.class);
-                        startActivity(mainActivityStartIntent);
-                        // finish player activity
-                        mActivity.finish();
-                    }
-                });
-                // run dialog
                 dialogDelete.show();
                 return true;
 
@@ -398,7 +402,6 @@ public final class PlayerActivityFragment extends Fragment {
             // prepare clip
             String stationData = mStationName + " - " + mStreamUri;
             ClipData clip = ClipData.newPlainText("simple text",stationData);
-
 
             // copy clip to clipboard
             ClipboardManager cm = (ClipboardManager) mActivity.getSystemService(Context.CLIPBOARD_SERVICE);
@@ -525,6 +528,7 @@ public final class PlayerActivityFragment extends Fragment {
 
 
     /* Check permissions and start image picker */
+    @TargetApi(Build.VERSION_CODES.M)
     private void selectFromImagePicker() {
         // permission to read external storage granted
         if (ActivityCompat.checkSelfPermission(mActivity,
@@ -577,6 +581,31 @@ public final class PlayerActivityFragment extends Fragment {
         };
         IntentFilter playbackIntentFilter = new IntentFilter(ACTION_PLAYBACK_STOPPED);
         LocalBroadcastManager.getInstance(mActivity).registerReceiver(playbackStoppedReceiver, playbackIntentFilter);
+
+        // broadcast receiver: station added, deleted, or changed
+        BroadcastReceiver collectionChangedReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                // CASE: station was deleted - phone mode
+                if (!mTwoPane && mVisibility && intent.hasExtra(EXTRA_STATION_DELETED) && intent.getBooleanExtra(EXTRA_STATION_DELETED, false)) {
+                    // start main activity
+                    Intent mainActivityStartIntent = new Intent(mActivity, MainActivity.class);
+                    startActivity(mainActivityStartIntent);
+                    // finish player activity
+                    mActivity.finish();
+                }
+
+                // CASE: station has new position
+                else if (intent.hasExtra(EXTRA_STATION_NEW_POSITION)) {
+                    int position = intent.getIntExtra(EXTRA_STATION_NEW_POSITION, 0);
+                    mStationName = mCollection.getStations().get(position).getStationName();
+                    mStationNameView.setText(mStationName);
+                }
+
+            }
+        };
+        IntentFilter collectionChangedIntentFilter = new IntentFilter(ACTION_COLLECTION_CHANGED);
+        LocalBroadcastManager.getInstance(mActivity).registerReceiver(collectionChangedReceiver, collectionChangedIntentFilter);
 
     }
 

@@ -315,7 +315,7 @@ public final class PlayerService extends Service implements
 
 
     /* Method to start the player */
-    public void startActionPlay(Context context, String streamUri, String stationName) {
+    public void startActionPlay(Context context, String streamUri, String stationName, int stationID) {
         Log.v(LOG_TAG, "Starting playback service: " + mStreamUri);
 
         mStreamUri = streamUri;
@@ -329,6 +329,7 @@ public final class PlayerService extends Service implements
         // put up notification
         NotificationHelper notificationHelper = new NotificationHelper(context);
         notificationHelper.setStationName(stationName);
+        notificationHelper.setStationID(stationID);
         notificationHelper.createNotification();
     }
 

@@ -13,10 +13,12 @@
 
 package org.y20k.transistor;
 
+import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
@@ -30,7 +32,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import org.y20k.transistor.core.Collection;
-import org.y20k.transistor.helpers.ShortcutHelper;
 
 import java.io.File;
 
@@ -45,10 +46,12 @@ public final class MainActivity extends AppCompatActivity {
 
 
     /* Keys */
-    private static final String ACTION_PLAY = "org.y20k.transistor.action.PLAY";
-    private static final String PLAYERFRAGMENT_TAG = "PFTAG";
-    private static final String STATION_ID = "stationID";
+    private static final String ACTION_SHOW_PLAYER = "org.y20k.transistor.action.PLAY";
+    private static final String EXTRA_STATION_ID = "EXTRA_STATION_ID";
+    private static final String EXTRA_PLAYBACK_STATE = "EXTRA_PLAYBACK_STATE";
+    private static final String EXTRA_TWOPANE = "EXTRA_TWOPANE";
     private static final String TWOPANE = "twopane";
+    private static final String PLAYERFRAGMENT_TAG = "PFTAG";
 
 
     /* Main class variables */
@@ -58,39 +61,65 @@ public final class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        Collection collection = new Collection(getCollectionDirectory("Collection"));
-
-        // receive shortcut intent
-        Intent intent = getIntent();
-        boolean shortcutReceived = false;
-        if (intent != null && ACTION_PLAY.equals(intent.getAction())) {
-            ShortcutHelper shortcutHelper = new ShortcutHelper(this, collection);
-            shortcutHelper.handleShortcutIntent(intent, savedInstanceState);
-            shortcutReceived = true;
-        }
 
         // if player_container is present two-pane layout has been loaded
-        if (findViewById(R.id.player_container) != null && !shortcutReceived) {
+        if (findViewById(R.id.player_container) != null) {
             mTwoPane = true;
-            if (savedInstanceState == null && !collection.getStations().isEmpty()) {
+        } else {
+            mTwoPane = false;
+        }
 
+        // set layout
+        setContentView(R.layout.activity_main);
+
+        // get intent
+        Intent intent = getIntent();
+
+        // special case: player activity should be launched
+        if (intent != null && ACTION_SHOW_PLAYER.equals(intent.getAction())) {
+
+            // load collection
+            Collection collection = new Collection(getCollectionDirectory("Collection"));
+
+            // get id of station from intent
+            int stationID;
+            if (intent.hasExtra(EXTRA_STATION_ID)) {
+                stationID = intent.getIntExtra(EXTRA_STATION_ID, 0);
+            } else {
+                stationID = 0;
+            }
+
+            // get playback action from intent
+            boolean startPlayback;
+            if (intent.hasExtra(EXTRA_PLAYBACK_STATE)) {
+                startPlayback = intent.getBooleanExtra(EXTRA_PLAYBACK_STATE, false);
+            } else {
+                startPlayback = false;
+            }
+
+            if (!mTwoPane) {
+                // start player activity - on phone
+                Intent i = new Intent(this, PlayerActivity.class);
+                i.setAction(ACTION_SHOW_PLAYER);
+                i.putExtra(EXTRA_STATION_ID, stationID);
+                i.putExtra(EXTRA_PLAYBACK_STATE, startPlayback);
+                startActivity(i);
+            } else if (mTwoPane && savedInstanceState == null && !collection.getStations().isEmpty()) {
                 Bundle args = new Bundle();
-                args.putInt(STATION_ID, 0);
-                args.putBoolean(TWOPANE, mTwoPane);
+                args.putInt(EXTRA_STATION_ID, stationID);
+                args.putBoolean(EXTRA_TWOPANE, mTwoPane);
+                args.putBoolean(EXTRA_PLAYBACK_STATE, startPlayback);
 
                 PlayerActivityFragment playerActivityFragment = new PlayerActivityFragment();
                 playerActivityFragment.setArguments(args);
                 getFragmentManager().beginTransaction()
                         .replace(R.id.player_container, playerActivityFragment, PLAYERFRAGMENT_TAG)
                         .commit();
-
-            } else {
+            } else if (mTwoPane) {
+                // make room for action call
                 findViewById(R.id.player_container).setVisibility(View.GONE);
             }
-        } else {
-            mTwoPane = false;
+
         }
 
         saveAppState(this);
@@ -102,10 +131,11 @@ public final class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        // TODO Replace with collection changed listener
+        // TODO Replace with collection changed listener?
         Collection collection = new Collection(getCollectionDirectory("Collection"));
         View container = findViewById(R.id.player_container);
         if (collection.getStations().isEmpty() && container != null) {
+            // make room for action call
             container.setVisibility(View.GONE);
         } else if (container != null) {
             container.setVisibility(View.VISIBLE);
@@ -141,12 +171,12 @@ public final class MainActivity extends AppCompatActivity {
     }
 
 
+    @TargetApi(Build.VERSION_CODES.M)
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment_main);
         // hand results over to fragment main
         fragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
     }
 
 

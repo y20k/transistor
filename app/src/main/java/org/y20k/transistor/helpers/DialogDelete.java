@@ -32,19 +32,14 @@ public final class DialogDelete {
 
     /* Keys */
     private static final String ACTION_COLLECTION_CHANGED = "org.y20k.transistor.action.COLLECTION_CHANGED";
+    private static final String EXTRA_STATION_POSITION = "STATION_POSITION";
+    private static final String EXTRA_STATION_DELETED = "STATION_DELETED";
 
 
     /* Main class variables */
     private final Activity mActivity;
     private final Collection mCollection;
     private final int mStationID;
-    private StationDeletedListener mStationDeletedListener;
-
-
-    /* Interface for custom listener */
-    public interface StationDeletedListener {
-        void stationDeleted();
-    }
 
 
     /* Constructor */
@@ -52,7 +47,6 @@ public final class DialogDelete {
         mActivity = activity;
         mStationID = stationID;
         mCollection = collection;
-        mStationDeletedListener = null;
     }
 
 
@@ -81,12 +75,10 @@ public final class DialogDelete {
                     // send local broadcast
                     Intent i = new Intent();
                     i.setAction(ACTION_COLLECTION_CHANGED);
+                    i.putExtra(EXTRA_STATION_POSITION, mStationID);
+                    i.putExtra(EXTRA_STATION_DELETED, true);
                     LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(i);
 
-                    // notify MainActivityFragment
-                    if (mStationDeletedListener != null) {
-                        mStationDeletedListener.stationDeleted();
-                    }
                 }
 
             }
@@ -103,11 +95,5 @@ public final class DialogDelete {
         // display delete dialog
         deleteDialog.show();
     }
-
-    /* Setter for custom listener */
-    public void setStationDeletedListener(StationDeletedListener stationDeletedListener) {
-        mStationDeletedListener = stationDeletedListener;
-    }
-
 
 }

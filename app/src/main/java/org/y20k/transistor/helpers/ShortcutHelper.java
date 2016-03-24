@@ -16,18 +16,12 @@ package org.y20k.transistor.helpers;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
 import org.y20k.transistor.MainActivity;
-import org.y20k.transistor.PlayerActivity;
-import org.y20k.transistor.PlayerActivityFragment;
-import org.y20k.transistor.PlayerService;
 import org.y20k.transistor.R;
 import org.y20k.transistor.core.Collection;
 import org.y20k.transistor.core.Station;
@@ -43,6 +37,12 @@ public class ShortcutHelper {
 
 
     /* Keys */
+    private static final String ACTION_SHOW_PLAYER = "org.y20k.transistor.action.PLAY";
+    private static final String EXTRA_STATION_ID = "EXTRA_STATION_ID";
+    private static final String EXTRA_PLAYBACK_STATE = "EXTRA_PLAYBACK_STATE";
+    private static final String EXTRA_STREAM_URI = "EXTRA_STREAM_URI";
+    private static final String EXTRA_TWOPANE = "EXTRA_TWOPANE";
+
     private static final String ACTION_PLAY = "org.y20k.transistor.action.PLAY";
     private static final String STREAM_URI = "streamUri";
     private static final String STATION_ID = "stationID";
@@ -86,71 +86,6 @@ public class ShortcutHelper {
     }
 
 
-    /* Handles incoming intent from Home screen shortcut  */
-    public void handleShortcutIntent(Intent intent, Bundle savedInstanceState) {
-        String streamUri = intent.getStringExtra(STREAM_URI);
-
-        // check if there is a previous saved state to detect if the activity is restored
-        // after being destroyed and that playback should not be resumed
-        if (ACTION_PLAY.equals(intent.getAction()) && savedInstanceState == null) {
-
-            // find the station corresponding to the stream URI
-            int stationID = mCollection.findStationID(streamUri);
-            if (stationID != -1) {
-                String stationName = mCollection.getStations().get(stationID).getStationName();
-
-                // get current app state
-                SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mActivity);
-                int stationIDCurrent = settings.getInt(STATION_ID_CURRENT, -1);
-                boolean playback = settings.getBoolean(PLAYBACK, false);
-                boolean twoPane = settings.getBoolean(TWOPANE, false);
-
-                int stationIDLast = stationIDCurrent;
-
-                // check if this station is not already playing
-                if (!playback || stationIDCurrent != stationID) {
-                    // start playback service
-                    PlayerService playerService = new PlayerService();
-                    playerService.startActionPlay(mActivity, streamUri, stationName);
-
-                    stationIDLast = stationIDCurrent;
-                    stationIDCurrent = stationID;
-                    playback = true;
-                }
-
-                // save station name and ID
-                SharedPreferences.Editor editor = settings.edit();
-                editor.putInt(STATION_ID_CURRENT, stationIDCurrent);
-                editor.putInt(STATION_ID_LAST, stationIDLast);
-                editor.putBoolean(PLAYBACK, playback);
-                editor.apply();
-
-                // check for tablet mode
-                if (twoPane) {
-                    Bundle args = new Bundle();
-                    args.putInt(STATION_ID, stationIDCurrent);
-                    args.putBoolean(TWOPANE, twoPane);
-
-                    PlayerActivityFragment playerActivityFragment = new PlayerActivityFragment();
-                    playerActivityFragment.setArguments(args);
-                    mActivity.getFragmentManager().beginTransaction()
-                            .replace(R.id.player_container, playerActivityFragment, PLAYERFRAGMENT_TAG)
-                            .commit();
-                } else {
-                    // add if of station to intent and start activity
-                    Intent startIntent = new Intent(mActivity, PlayerActivity.class);
-                    startIntent.putExtra(STATION_ID, stationID);
-                    mActivity.startActivity(startIntent);
-                }
-
-            }
-            else {
-                Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_stream_not_found), Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-
-
     /* Creates Intent for a station shortcut */
     private Intent createShortcutIntent (int stationID) {
 
@@ -176,12 +111,11 @@ public class ShortcutHelper {
 
         // create intent to start MainActivity
         Intent shortcutIntent = new Intent(mActivity, MainActivity.class);
-//        Intent shortcutIntent = new Intent();
-//        shortcutIntent.setComponent(new ComponentName(mActivity.getPackageName(), "." + mActivity.getLocalClassName()));
-        shortcutIntent.putExtra(STREAM_URI, station.getStreamUri().toString());
+        shortcutIntent.setAction(ACTION_SHOW_PLAYER);
+        shortcutIntent.putExtra(EXTRA_STATION_ID, stationID);
+        shortcutIntent.putExtra(EXTRA_PLAYBACK_STATE, true);
         shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        shortcutIntent.setAction(ACTION_PLAY);
 
         Log.v(LOG_TAG, "Intent for Home screen shortcut: " + shortcutIntent.toString() + " Activity: " + mActivity);
 
