@@ -46,11 +46,13 @@ public final class MainActivity extends AppCompatActivity {
 
 
     /* Keys */
-    private static final String ACTION_SHOW_PLAYER = "org.y20k.transistor.action.PLAY";
+    private static final String ACTION_SHOW_PLAYER = "org.y20k.transistor.action.SHOW_PLAYER";
     private static final String EXTRA_STATION_ID = "EXTRA_STATION_ID";
     private static final String EXTRA_PLAYBACK_STATE = "EXTRA_PLAYBACK_STATE";
-    private static final String EXTRA_TWOPANE = "EXTRA_TWOPANE";
-    private static final String TWOPANE = "twopane";
+    private static final String ARG_STATION_ID = "ArgStationID";
+    private static final String ARG_TWO_PANE = "ArgTwoPane";
+    private static final String ARG_PLAYBACK = "ArgPlayback";
+    private static final String PREF_TWO_PANE = "prefTwoPane";
     private static final String PLAYERFRAGMENT_TAG = "PFTAG";
 
 
@@ -62,6 +64,9 @@ public final class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // set layout
+        setContentView(R.layout.activity_main);
+
         // if player_container is present two-pane layout has been loaded
         if (findViewById(R.id.player_container) != null) {
             mTwoPane = true;
@@ -69,20 +74,24 @@ public final class MainActivity extends AppCompatActivity {
             mTwoPane = false;
         }
 
-        // set layout
-        setContentView(R.layout.activity_main);
+
+        // load collection
+        Collection collection = new Collection(getCollectionDirectory("Collection"));
 
         // get intent
         Intent intent = getIntent();
 
+        // prepare bundle
+        Bundle playerArgs = new Bundle();
+        int stationID;
+        boolean startPlayback;
+
         // special case: player activity should be launched
         if (intent != null && ACTION_SHOW_PLAYER.equals(intent.getAction())) {
 
-            // load collection
-            Collection collection = new Collection(getCollectionDirectory("Collection"));
+            Log.v(LOG_TAG, "!!! Special case.");
 
             // get id of station from intent
-            int stationID;
             if (intent.hasExtra(EXTRA_STATION_ID)) {
                 stationID = intent.getIntExtra(EXTRA_STATION_ID, 0);
             } else {
@@ -90,36 +99,36 @@ public final class MainActivity extends AppCompatActivity {
             }
 
             // get playback action from intent
-            boolean startPlayback;
             if (intent.hasExtra(EXTRA_PLAYBACK_STATE)) {
                 startPlayback = intent.getBooleanExtra(EXTRA_PLAYBACK_STATE, false);
             } else {
                 startPlayback = false;
             }
 
-            if (!mTwoPane) {
+            if (mTwoPane) {
+                playerArgs.putInt(ARG_STATION_ID, stationID);
+                playerArgs.putBoolean(ARG_PLAYBACK, startPlayback);
+            } else {
                 // start player activity - on phone
-                Intent i = new Intent(this, PlayerActivity.class);
-                i.setAction(ACTION_SHOW_PLAYER);
-                i.putExtra(EXTRA_STATION_ID, stationID);
-                i.putExtra(EXTRA_PLAYBACK_STATE, startPlayback);
-                startActivity(i);
-            } else if (mTwoPane && savedInstanceState == null && !collection.getStations().isEmpty()) {
-                Bundle args = new Bundle();
-                args.putInt(EXTRA_STATION_ID, stationID);
-                args.putBoolean(EXTRA_TWOPANE, mTwoPane);
-                args.putBoolean(EXTRA_PLAYBACK_STATE, startPlayback);
-
-                PlayerActivityFragment playerActivityFragment = new PlayerActivityFragment();
-                playerActivityFragment.setArguments(args);
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.player_container, playerActivityFragment, PLAYERFRAGMENT_TAG)
-                        .commit();
-            } else if (mTwoPane) {
-                // make room for action call
-                findViewById(R.id.player_container).setVisibility(View.GONE);
+                Intent playerIntent = new Intent(this, PlayerActivity.class);
+                playerIntent.setAction(ACTION_SHOW_PLAYER);
+                playerIntent.putExtra(EXTRA_STATION_ID, stationID);
+                playerIntent.putExtra(EXTRA_PLAYBACK_STATE, startPlayback);
+                startActivity(playerIntent);
             }
+        }
 
+        // tablet mode: show player fragment in player container
+        if (mTwoPane && savedInstanceState == null && !collection.getStations().isEmpty()) {
+            playerArgs.putBoolean(ARG_TWO_PANE, mTwoPane);
+            PlayerActivityFragment playerActivityFragment = new PlayerActivityFragment();
+            playerActivityFragment.setArguments(playerArgs);
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.player_container, playerActivityFragment, PLAYERFRAGMENT_TAG)
+                    .commit();
+        } else {
+            // make room for action call
+            findViewById(R.id.player_container).setVisibility(View.GONE);
         }
 
         saveAppState(this);
@@ -184,7 +193,7 @@ public final class MainActivity extends AppCompatActivity {
     private void saveAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putBoolean(TWOPANE, mTwoPane);
+        editor.putBoolean(PREF_TWO_PANE, mTwoPane);
         editor.apply();
         Log.v(LOG_TAG, "Saving state.");
     }

@@ -36,11 +36,13 @@ import org.y20k.transistor.core.Collection;
 public final class DialogRename {
 
     /* Keys */
-    private static final String PLAYBACK = "playback";
-    private static final String STATION_ID_CURRENT = "stationIDCurrent";
     private static final String ACTION_COLLECTION_CHANGED = "org.y20k.transistor.action.COLLECTION_CHANGED";
+    private static final String PREF_STATION_ID_CURRENT = "prefStationIDCurrent";
+    private static final String EXTRA_STATION_URI_CURRENT = "STATION_URI_CURRENT";
+    private static final String EXTRA_STATION_NEW_NAME = "STATION_NEW_NAME";
     private static final String EXTRA_STATION_NEW_POSITION = "STATION_NEW_POSITION";
-    private static final String EXTRA_STATION_DELETED = "STATION_DELETED";
+    private static final String EXTRA_STATION_OLD_POSITION = "STATION_OLD_POSITION";
+    private static final String EXTRA_STATION_RENAMED = "STATION_RENAMED";
 
 
     /* Main class variables */
@@ -77,47 +79,31 @@ public final class DialogRename {
         builder.setPositiveButton(R.string.dialog_button_rename, new DialogInterface.OnClickListener() {
             // listen for click on delete button
             public void onClick(DialogInterface arg0, int arg1) {
+                // get new station name
                 mStationName = inputField.getText().toString();
+
+                // get currently playing station
+                SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mActivity);
+                String stationUriCurrent = mCollection.getStations().get(settings.getInt(PREF_STATION_ID_CURRENT, -1)).getStreamUri().toString();
+
+                // rename station
                 boolean success = mCollection.rename(mStationID, mStationName);
-                if (!success) {
-                    // notify the user
-                    Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_rename_unsuccessful), Toast.LENGTH_LONG).show();
-                } else {
-
-                    // check if station index has changed
-                    int newStationID = mCollection.getStationIndexChanged();
-                    if (newStationID != -1) {
-                        // ID of station has changed
-                        mStationID = newStationID;
-                    }
-
-                    // check for playback
-                    SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mActivity);
-                    boolean playback = settings.getBoolean(PLAYBACK, false);
-                    if (playback) {
-                        // save new station ID if changed
-                        int newIndex = mCollection.getStationIndexChanged();
-                        if (newIndex != -1) {
-                            SharedPreferences.Editor editor = settings.edit();
-                            editor.putInt(STATION_ID_CURRENT, newIndex);
-                            editor.apply();
-                        }
-
-                        // put up changed notification
-                        NotificationHelper notificationHelper = new NotificationHelper(mActivity);
-                        notificationHelper.setStationName(mStationName);
-                        notificationHelper.setStationID(mStationID);
-                        notificationHelper.createNotification();
-                    }
-
+                if (success) {
                     // send local broadcast
                     Intent i = new Intent();
                     i.setAction(ACTION_COLLECTION_CHANGED);
-                    i.putExtra(EXTRA_STATION_NEW_POSITION, mStationID);
-                    i.putExtra(EXTRA_STATION_DELETED, false);
+                    i.putExtra(EXTRA_STATION_URI_CURRENT, stationUriCurrent);
+//                    i.putExtra(EXTRA_STATION_NEW_NAME, mStationName);
+                    i.putExtra(EXTRA_STATION_NEW_POSITION, mCollection.getStationIndexChanged());
+                    i.putExtra(EXTRA_STATION_OLD_POSITION, mStationID);
+//                    i.putExtra(EXTRA_STATION_RENAMED, true);
                     LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(i);
 
+                } else {
+                    // rename operation unsuccessful, notify user
+                    Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_rename_unsuccessful), Toast.LENGTH_LONG).show();
                 }
+
             }
         });
 

@@ -56,7 +56,7 @@ public final class PlayerService extends Service implements
     private static final String ACTION_PLAYBACK_STARTED = "org.y20k.transistor.action.PLAYBACK_STARTED";
     private static final String ACTION_PLAYBACK_STOPPED = "org.y20k.transistor.action.PLAYBACK_STOPPED";
     private static final String EXTRA_STREAM_URI = "STREAM_URI";
-    private static final String PLAYBACK = "playback";
+    private static final String PREF_PLAYBACK = "prefPlayback";
     private static final int PLAYER_SERVICE_NOTIFICATION_ID = 1;
 
 
@@ -436,7 +436,7 @@ public final class PlayerService extends Service implements
     private void saveAppState () {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplication());
         SharedPreferences.Editor editor = settings.edit();
-        editor.putBoolean(PLAYBACK, mPlayback);
+        editor.putBoolean(PREF_PLAYBACK, mPlayback);
         editor.apply();
         Log.v(LOG_TAG, "Saving state.");
     }

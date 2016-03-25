@@ -76,13 +76,15 @@ public final class PlayerActivityFragment extends Fragment {
     private static final String ACTION_CREATE_SHORTCUT_REQUESTED = "org.y20k.transistor.action.CREATE_SHORTCUT_REQUESTED";
     private static final String EXTRA_STATION_NEW_POSITION = "STATION_NEW_POSITION";
     private static final String EXTRA_STATION_DELETED = "STATION_DELETED";
+    private static final String EXTRA_STATION_ID = "STATION_ID";
     private static final String ARG_STATION_ID = "ArgStationID";
     private static final String ARG_TWO_PANE = "ArgTwoPane";
     private static final String ARG_PLAYBACK = "ArgPlayback";
-    private static final String STATION_ID = "stationID";
-    private static final String STATION_ID_CURRENT = "stationIDCurrent";
-    private static final String STATION_ID_LAST = "stationIDLast";
-    private static final String PLAYBACK = "playback";
+    private static final String PREF_STATION_ID = "prefStationID";
+    private static final String PREF_STATION_ID_CURRENT = "prefStationIDCurrent";
+    private static final String PREF_STATION_ID_LAST = "prefStationIDLast";
+    private static final String PREF_PLAYBACK = "prefPlayback";
+    private static final String PREF_TWO_PANE = "prefTwoPane";
     private static final int REQUEST_LOAD_IMAGE = 1;
     private static final int PERMISSION_REQUEST_READ_EXTERNAL_STORAGE = 1;
 
@@ -242,6 +244,8 @@ public final class PlayerActivityFragment extends Fragment {
                 mStationIDLast = mStationIDCurrent;
                 mStationIDCurrent = mStationID;
                 saveAppState(mActivity);
+                // clear playback state argument
+                getArguments().putBoolean(ARG_PLAYBACK, false);
             }
 
         }
@@ -366,7 +370,7 @@ public final class PlayerActivityFragment extends Fragment {
                 // send local broadcast (needed by MainActivityFragment)
                 Intent shortcutIntent = new Intent();
                 shortcutIntent.setAction(ACTION_CREATE_SHORTCUT_REQUESTED);
-                shortcutIntent.putExtra(STATION_ID, mStationID);
+                shortcutIntent.putExtra(EXTRA_STATION_ID, mStationID);
                 LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(shortcutIntent);
                 return true;
             }
@@ -509,9 +513,9 @@ public final class PlayerActivityFragment extends Fragment {
     private void saveAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putInt(STATION_ID_CURRENT, mStationIDCurrent);
-        editor.putInt(STATION_ID_LAST, mStationIDLast);
-        editor.putBoolean(PLAYBACK, mPlayback);
+        editor.putInt(PREF_STATION_ID_CURRENT, mStationIDCurrent);
+        editor.putInt(PREF_STATION_ID_LAST, mStationIDLast);
+        editor.putBoolean(PREF_PLAYBACK, mPlayback);
         editor.apply();
         Log.v(LOG_TAG, "Saving state.");
     }
@@ -520,9 +524,9 @@ public final class PlayerActivityFragment extends Fragment {
     /* Loads app state from preferences */
     private void loadAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-        mStationIDCurrent = settings.getInt(STATION_ID_CURRENT, -1);
-        mStationIDLast = settings.getInt(STATION_ID_LAST, -1);
-        mPlayback = settings.getBoolean(PLAYBACK, false);
+        mStationIDCurrent = settings.getInt(PREF_STATION_ID_CURRENT, -1);
+        mStationIDLast = settings.getInt(PREF_STATION_ID_LAST, -1);
+        mPlayback = settings.getBoolean(PREF_PLAYBACK, false);
         Log.v(LOG_TAG, "Loading state.");
     }
 

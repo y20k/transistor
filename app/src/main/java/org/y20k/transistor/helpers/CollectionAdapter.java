@@ -53,15 +53,15 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
 
     /* Keys */
     private static final String ACTION_PLAYBACK_STOPPED = "org.y20k.transistor.action.PLAYBACK_STOPPED";
-    private static final String ACTION_SHOW_PLAYER = "org.y20k.transistor.action.PLAY";
+    private static final String ACTION_SHOW_PLAYER = "org.y20k.transistor.action.SHOW_PLAYER";
     private static final String EXTRA_STATION_ID = "EXTRA_STATION_ID";
     private static final String ARG_STATION_ID = "ArgStationID";
     private static final String ARG_TWO_PANE = "ArgTwoPane";
-    private static final String TWOPANE = "twopane";
+    private static final String PREF_TWO_PANE = "prefTwoPane";
+    private static final String PREF_STATION_ID_CURRENT = "prefStationIDCurrent";
+    private static final String PREF_STATION_ID_LAST = "prefStationIDLast";
+    private static final String PREF_PLAYBACK = "prefPlayback";
     private static final String PLAYERFRAGMENT_TAG = "PFTAG";
-    private static final String STATION_ID_CURRENT = "stationIDCurrent";
-    private static final String STATION_ID_LAST = "stationIDLast";
-    private static final String PLAYBACK = "playback";
 
 
     /* Main class variables */
@@ -77,6 +77,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     private boolean mPlayback;
     private int mStationIDCurrent;
     private int mStationIDLast;
+    private int mStationIDSelected;
     private boolean mTwoPane;
 
 
@@ -102,6 +103,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
         mCollection = null;
         mCollectionChangedListener = null;
         mSelectedView = null;
+        mStationIDSelected = 0;
 
         // initiate player service
         mPlayerService = new PlayerService();
@@ -174,6 +176,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
         holder.setClickListener(new CollectionAdapterViewHolder.ClickListener() {
             @Override
             public void onClick(View view, int pos, boolean isLongClick) {
+                mStationIDSelected = pos;
                 // long click is only available in phone mode
                 if (isLongClick && !mTwoPane) {
                     handleLongClick(pos);
@@ -291,10 +294,10 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     /* Loads app state from preferences */
     private void loadAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-        mTwoPane = settings.getBoolean(TWOPANE, false);
-        mStationIDCurrent = settings.getInt(STATION_ID_CURRENT, -1);
-        mStationIDLast = settings.getInt(STATION_ID_LAST, -1);
-        mPlayback = settings.getBoolean(PLAYBACK, false);
+        mTwoPane = settings.getBoolean(PREF_TWO_PANE, false);
+        mStationIDCurrent = settings.getInt(PREF_STATION_ID_CURRENT, -1);
+        mStationIDLast = settings.getInt(PREF_STATION_ID_LAST, -1);
+        mPlayback = settings.getBoolean(PREF_PLAYBACK, false);
         Log.v(LOG_TAG, "Loading state.");
     }
 
@@ -303,9 +306,9 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     private void saveAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putInt(STATION_ID_CURRENT, mStationIDCurrent);
-        editor.putInt(STATION_ID_LAST, mStationIDLast);
-        editor.putBoolean(PLAYBACK, mPlayback);
+        editor.putInt(PREF_STATION_ID_CURRENT, mStationIDCurrent);
+        editor.putInt(PREF_STATION_ID_LAST, mStationIDLast);
+        editor.putBoolean(PREF_PLAYBACK, mPlayback);
         editor.apply();
         Log.v(LOG_TAG, "Saving state.");
     }
@@ -336,4 +339,8 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     }
 
 
+    /* Getter for ID of currently selected station */
+    public int getStationIDSelected() {
+        return mStationIDSelected;
+    }
 }
