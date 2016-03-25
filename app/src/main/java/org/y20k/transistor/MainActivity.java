@@ -126,7 +126,7 @@ public final class MainActivity extends AppCompatActivity {
             getFragmentManager().beginTransaction()
                     .replace(R.id.player_container, playerActivityFragment, PLAYERFRAGMENT_TAG)
                     .commit();
-        } else {
+        } else if (mTwoPane) {
             // make room for action call
             findViewById(R.id.player_container).setVisibility(View.GONE);
         }
