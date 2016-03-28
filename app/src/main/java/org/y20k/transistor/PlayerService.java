@@ -23,7 +23,9 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.wifi.WifiManager;
 import android.os.IBinder;
+import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
@@ -67,6 +69,7 @@ public final class PlayerService extends Service implements
     private boolean mPlayback;
     private int mPlayerInstanceCounter;
     private HeadphoneUnplugReceiver mHeadphoneUnplugReceiver;
+    private WifiManager.WifiLock mWifiLock;
 
 
     /* Constructor (default) */
@@ -320,6 +323,11 @@ public final class PlayerService extends Service implements
 
         mStreamUri = streamUri;
 
+        // acquire WifiLock
+//        mWifiLock = ((WifiManager) getSystemService(Context.WIFI_SERVICE)).createWifiLock(WifiManager.WIFI_MODE_FULL, "mylock");
+//        mWifiLock.acquire();
+
+
         // start player service using intent
         Intent intent = new Intent(context, PlayerService.class);
         intent.setAction(ACTION_PLAY);
@@ -338,6 +346,9 @@ public final class PlayerService extends Service implements
     public void startActionStop(Context context) {
         Log.v(LOG_TAG, "Stopping playback service.");
 
+        // release WifiLock
+//        mWifiLock.release();
+
         // stop player service using intent
         Intent intent = new Intent(context, PlayerService.class);
         intent.setAction(ACTION_STOP);
@@ -354,6 +365,7 @@ public final class PlayerService extends Service implements
         mMediaPlayer.setOnErrorListener(this);
         mMediaPlayer.setOnInfoListener(this);
         mMediaPlayer.setOnBufferingUpdateListener(this);
+        mMediaPlayer.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK); // needs android.permission.WAKE_LOCK
 
         try {
             mMediaPlayer.setDataSource(mStreamUri);
@@ -362,6 +374,8 @@ public final class PlayerService extends Service implements
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
 
     }
 

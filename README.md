@@ -51,6 +51,9 @@ There is nothing to be set ;). Transistor is a very simple app. Depending on you
 
 Which Permissions does Transistor need?
 ---------------------------------------
+### Permissions "INSTALL_SHORTCUT" and "UNINSTALL_SHORTCUT"
+This permission is needed to install and uninstall radio station shortcuts on the Android Home screen.
+
 ### Permission "INTERNET"
 Transistor streams radio stations over the internet.
 
@@ -59,3 +62,6 @@ Transistor needs access to images, photos and documents to be able customize rad
             
 ### Permission "VIBRATE"
 Tapping and holding a radio station will toggle a tiny vibration.
+
+### Permission "WAKE_LOCK"
+During Playback Transistor acquires a so called partial wake lock. That prevents the Android system to stop playback for power saving reasons.
