@@ -37,7 +37,7 @@ public final class StationContextMenu extends DialogFragment {
     private static final String ACTION_CREATE_SHORTCUT_REQUESTED = "org.y20k.transistor.action.CREATE_SHORTCUT_REQUESTED";
     private static final String ACTION_COLLECTION_CHANGED = "org.y20k.transistor.action.COLLECTION_CHANGED";
     private static final String EXTRA_STATION_POSITION = "STATION_POSITION";
-    private static final String STATION_ID = "stationID";
+    private static final String EXTRA_STATION_ID = "STATION_ID";
 
     /* Main class variables */
     private View mView;
@@ -79,7 +79,7 @@ public final class StationContextMenu extends DialogFragment {
                         // send local broadcast (needed by MainActivityFragment)
                         Intent iconIntent = new Intent();
                         iconIntent.setAction(ACTION_IMAGE_CHANGE_REQUESTED);
-                        iconIntent.putExtra(STATION_ID, mStationID);
+                        iconIntent.putExtra(EXTRA_STATION_ID, mStationID);
                         LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(iconIntent);
 
                         return true;
@@ -105,7 +105,7 @@ public final class StationContextMenu extends DialogFragment {
                         // send local broadcast (needed by MainActivityFragment)
                         Intent shortcutIntent = new Intent();
                         shortcutIntent.setAction(ACTION_CREATE_SHORTCUT_REQUESTED);
-                        shortcutIntent.putExtra(STATION_ID, mStationID);
+                        shortcutIntent.putExtra(EXTRA_STATION_ID, mStationID);
                         LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(shortcutIntent);
                         return true;
                     }
