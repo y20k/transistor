@@ -25,7 +25,10 @@ import android.support.v7.app.AppCompatActivity;
 public final class InfosheetActivity extends AppCompatActivity {
 
     /* Keys */
-    private static final String TITLE = "title";
+    private static final String EXTRA_INFOSHEET_TITLE = "INFOSHEET_TITLE";
+    private static final String EXTRA_INFOSHEET_CONTENT = "INFOSHEET_CONTENT";
+    private static final int INFOSHEET_CONTENT_ABOUT = 1;
+    private static final int INFOSHEET_CONTENT_HOWTO = 2;
 
 
     @Override
@@ -34,15 +37,20 @@ public final class InfosheetActivity extends AppCompatActivity {
 
         // get activity title from intent
         Intent intent = this.getIntent();
-        String title = intent.getExtras().getString(TITLE);
+        String title = intent.getExtras().getString(EXTRA_INFOSHEET_TITLE);
 
         // set activity title
-        if (title != null) {
-            this.setTitle(title);
+        if (intent.hasExtra(EXTRA_INFOSHEET_TITLE)) {
+            this.setTitle(intent.getStringExtra(EXTRA_INFOSHEET_TITLE));
         }
 
-        // set view
-        setContentView(R.layout.activity_infosheet);
+        // set activity view
+        if (intent.hasExtra(EXTRA_INFOSHEET_CONTENT) && intent.getIntExtra(EXTRA_INFOSHEET_CONTENT, -1) == INFOSHEET_CONTENT_ABOUT) {
+            setContentView(R.layout.fragment_infosheet_about);
+        } else if (intent.hasExtra(EXTRA_INFOSHEET_CONTENT) && intent.getIntExtra(EXTRA_INFOSHEET_CONTENT, -1) == INFOSHEET_CONTENT_HOWTO) {
+            setContentView(R.layout.fragment_infosheet_howto);
+        }
+
     }
 
 }

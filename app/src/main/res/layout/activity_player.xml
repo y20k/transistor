@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/player_container"
-    android:name="org.y20k.transistor.PlayerActivityFragment"
+    android:name="org.y20k.transistor.PlayerActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="org.y20k.transistor.PlayerActivity"

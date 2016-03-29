@@ -51,7 +51,7 @@ There is nothing to be set ;). Transistor is a very simple app. Depending on you
 
 Which Permissions does Transistor need?
 ---------------------------------------
-### Permissions "INSTALL_SHORTCUT" and "UNINSTALL_SHORTCUT"
+### Permission "INSTALL_SHORTCUT" and "UNINSTALL_SHORTCUT"
 This permission is needed to install and uninstall radio station shortcuts on the Android Home screen.
 
 ### Permission "INTERNET"

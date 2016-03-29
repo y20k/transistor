@@ -87,13 +87,16 @@ public final class MainActivityFragment extends Fragment {
     private static final String EXTRA_STATION_DELETED = "STATION_DELETED";
     private static final String EXTRA_STATION_ID = "STATION_ID";
     private static final String EXTRA_TIMER_REMAINING = "TIMER_REMAINING";
+    private static final String EXTRA_INFOSHEET_TITLE = "INFOSHEET_TITLE";
+    private static final String EXTRA_INFOSHEET_CONTENT = "INFOSHEET_CONTENT";
     private static final String LIST_STATE = "ListState";
     private static final String PREF_PREF_STATION_ID_CURRENT = "prefStationIDCurrent";
     private static final String PREF_STATION_ID_LAST = "prefStationIDLast";
     private static final String PREF_PLAYBACK = "prefPlayback";
     private static final String TIMER_RUNNING = "timerRunning";
-    private static final String TITLE = "title";
     private static final String CONTENT = "content";
+    private static final int INFOSHEET_CONTENT_ABOUT = 1;
+    private static final int INFOSHEET_CONTENT_HOWTO = 2;
     private static final int REQUEST_LOAD_IMAGE = 1;
     private static final int PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE = 1;
     private static final int PERMISSION_REQUEST_STATION_FETCHER_READ_EXTERNAL_STORAGE = 2;
@@ -256,8 +259,8 @@ public final class MainActivityFragment extends Fragment {
                 String aboutContent = mActivity.getString(R.string.html_about);
                 // put title and content into intent and start activity
                 Intent aboutIntent = new Intent(mActivity, InfosheetActivity.class);
-                aboutIntent.putExtra(TITLE, aboutTitle);
-                aboutIntent.putExtra(CONTENT, aboutContent);
+                aboutIntent.putExtra(EXTRA_INFOSHEET_TITLE, aboutTitle);
+                aboutIntent.putExtra(EXTRA_INFOSHEET_CONTENT, INFOSHEET_CONTENT_ABOUT);
                 startActivity(aboutIntent);
                 return true;
 
@@ -268,7 +271,8 @@ public final class MainActivityFragment extends Fragment {
                 String howToContent = mActivity.getString(R.string.html_howto);
                 // put title and content into intent and start activity
                 Intent howToIntent = new Intent(mActivity, InfosheetActivity.class);
-                howToIntent.putExtra(TITLE, howToTitle);
+                howToIntent.putExtra(EXTRA_INFOSHEET_TITLE, howToTitle);
+                howToIntent.putExtra(EXTRA_INFOSHEET_CONTENT, INFOSHEET_CONTENT_HOWTO);
                 howToIntent.putExtra(CONTENT, howToContent);
                 startActivity(howToIntent);
                 return true;
@@ -513,7 +517,7 @@ public final class MainActivityFragment extends Fragment {
             Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_timer_activated), Toast.LENGTH_SHORT).show();
         }
         // CASE: A station is playing, Sleep timer is running
-        else if (mPlayback && mSleepTimerRunning) {
+        else if (mPlayback) {
             startSleepTimer(duration);
             Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_timer_duration_increased) + " [+" + getReadableTime(duration) +"]", Toast.LENGTH_SHORT).show();
         }

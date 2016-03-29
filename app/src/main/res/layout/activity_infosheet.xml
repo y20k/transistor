@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment_infosheet"
-    android:name="org.y20k.transistor.InfosheetActivityFragment"
+    android:id="@+id/infosheet_container"
+    android:name="org.y20k.transistor.InfosheetActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:layout="@layout/fragment_infosheet" />
+    tools:context="org.y20k.transistor.InfosheetActivity"
+    tools:ignore="MergeRootFrame" />
