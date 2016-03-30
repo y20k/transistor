@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.os.EnvironmentCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -47,6 +48,7 @@ public final class MainActivity extends AppCompatActivity {
 
     /* Keys */
     private static final String ACTION_SHOW_PLAYER = "org.y20k.transistor.action.SHOW_PLAYER";
+    private static final String ACTION_CHANGE_VIEW_SELECTION = "org.y20k.transistor.action.CHANGE_VIEW_SELECTION";
     private static final String EXTRA_STATION_ID = "EXTRA_STATION_ID";
     private static final String EXTRA_PLAYBACK_STATE = "EXTRA_PLAYBACK_STATE";
     private static final String ARG_STATION_ID = "ArgStationID";
@@ -86,7 +88,7 @@ public final class MainActivity extends AppCompatActivity {
         int stationID;
         boolean startPlayback;
 
-        // special case: player activity should be launched
+        // CASE: player should be launched (e.g. from shortcut or notification)
         if (intent != null && ACTION_SHOW_PLAYER.equals(intent.getAction())) {
 
             Log.v(LOG_TAG, "!!! Special case.");
@@ -105,9 +107,16 @@ public final class MainActivity extends AppCompatActivity {
                 startPlayback = false;
             }
 
+            // prepare arguments and intent
             if (mTwoPane) {
+                // prepare args for player fragment
                 playerArgs.putInt(ARG_STATION_ID, stationID);
                 playerArgs.putBoolean(ARG_PLAYBACK, startPlayback);
+                // notify main activity fragment
+                Intent changeSelectionIntent = new Intent();
+                changeSelectionIntent.setAction(ACTION_CHANGE_VIEW_SELECTION);
+                changeSelectionIntent.putExtra(EXTRA_STATION_ID, stationID);
+                LocalBroadcastManager.getInstance(getApplication()).sendBroadcast(changeSelectionIntent);
             } else {
                 // start player activity - on phone
                 Intent playerIntent = new Intent(this, PlayerActivity.class);
