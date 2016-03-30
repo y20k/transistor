@@ -72,7 +72,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     private PlayerService mPlayerService;
     private Collection mCollection;
     private CollectionChangedListener mCollectionChangedListener;
-    private ClickListener mClickListener;
+//    private ClickListener mClickListener;
     private View mSelectedView;
     private boolean mPlayback;
     private int mStationIDCurrent;
@@ -84,12 +84,6 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     /* Interface for custom listener */
     public interface CollectionChangedListener {
         void collectionChanged();
-    }
-
-
-    /* Interface for handling clicks - both normal and long ones. */
-    public interface ClickListener {
-        void onClick(View v, int position, boolean isLongClick);
     }
 
 
@@ -140,9 +134,9 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     public void onBindViewHolder(CollectionAdapterViewHolder holder, final int position) {
 
         if (mTwoPane && mSelectedView == null) {
-            markViewSelected(holder.getListItemLayout());
+            // markViewSelected(holder.getListItemLayout());
         } else if (mTwoPane) {
-            mSelectedView.setSelected(true);
+            // mSelectedView.setSelected(true);
         }
 
         // set station image
@@ -177,12 +171,14 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
             @Override
             public void onClick(View view, int pos, boolean isLongClick) {
                 mStationIDSelected = pos;
-                // long click is only available in phone mode
                 if (isLongClick && !mTwoPane) {
+                    // long click in phone mode
                     handleLongClick(pos);
                 } else if (!isLongClick && !mTwoPane) {
+                    // click in phone mode
                     handleSingleClick(pos);
                 } else {
+                    // click in tablet mode
                     handleSingleClick(pos);
                     markViewSelected(view);
                 }
@@ -314,28 +310,22 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     }
 
 
-    /* Setter for selected view */
-    public void setSelectedView(View view) {
-        // deselected previously selected
-        if (mSelectedView != null) {
-            mSelectedView.setSelected(false);
-        }
-
-        // load app state and set new selection
-        loadAppState(mActivity);
-        mSelectedView = view;
-    }
-
-
     /* Setter for collection */
     public void setCollection(Collection collection) {
         mCollection = collection;
     }
 
 
-    /* Setter for listener. */
-    public void setClickListener(ClickListener clickListener) {
-        mClickListener = clickListener;
+    /* Resets selection */
+    public void resetSelection() {
+        if (mSelectedView != null) {
+            mSelectedView.setSelected(false);
+        }
+    }
+
+    /* Setter for ID of currently selected station */
+    public void setStationIDSelected(int stationIDSelected) {
+        mStationIDSelected = stationIDSelected;
     }
 
 

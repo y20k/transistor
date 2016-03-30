@@ -36,6 +36,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.os.EnvironmentCompat;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -77,6 +78,7 @@ public final class MainActivityFragment extends Fragment {
     private static final String ACTION_TIMER_RUNNING = "org.y20k.transistor.action.TIMER_RUNNING";
     private static final String ACTION_IMAGE_CHANGE_REQUESTED = "org.y20k.transistor.action.IMAGE_CHANGE_REQUESTED";
     private static final String ACTION_CREATE_SHORTCUT_REQUESTED = "org.y20k.transistor.action.CREATE_SHORTCUT_REQUESTED";
+    private static final String ACTION_CHANGE_VIEW_SELECTION = "org.y20k.transistor.action.CHANGE_VIEW_SELECTION";
     private static final String ACTION_COLLECTION_CHANGED = "org.y20k.transistor.action.COLLECTION_CHANGED";
     private static final String EXTRA_STATION_URI_CURRENT = "STATION_URI_CURRENT";
     private static final String EXTRA_STATION_NEW_NAME = "STATION_NEW_NAME";
@@ -119,7 +121,6 @@ public final class MainActivityFragment extends Fragment {
     private int mStationIDLast;
     private int mTempStationImageID;
     private Uri mNewStationUri;
-    private PlayerService mPlayerService;
     private boolean mPlayback;
     private SleepTimerService mSleepTimerService;
     private boolean mSleepTimerRunning;
@@ -142,9 +143,6 @@ public final class MainActivityFragment extends Fragment {
 
         // get notification message
         mSleepTimerNotificationMessage = mActivity.getString(R.string.snackbar_message_timer_set) + " ";
-
-        // initiate playback service
-        mPlayerService = new PlayerService();
 
         // initiate sleep timer service
         mSleepTimerService = new SleepTimerService();
@@ -195,6 +193,10 @@ public final class MainActivityFragment extends Fragment {
         // TODO check if necessary here
         mRecyclerView.setHasFixedSize(true);
 
+        // set animator
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
+
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(mActivity);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -212,9 +214,6 @@ public final class MainActivityFragment extends Fragment {
 
         // handle incoming intent
         handleNewStationIntent();
-
-        // get state of playback
-        boolean playbackState = mPlayback;
 
         // refresh playback state
         loadAppState(mActivity);
@@ -730,7 +729,7 @@ public final class MainActivityFragment extends Fragment {
         IntentFilter sleepTimerIntentFilter = new IntentFilter(ACTION_TIMER_RUNNING);
         LocalBroadcastManager.getInstance(mActivity).registerReceiver(sleepTimerStartedReceiver, sleepTimerIntentFilter);
 
-        // broadcast receiver:handles request for shortcut being created
+        // RECEIVER: handles request for shortcut being created
         BroadcastReceiver shortcutCreationRequestReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -744,6 +743,23 @@ public final class MainActivityFragment extends Fragment {
         };
         IntentFilter shortcutCreationRequestIntentFilter = new IntentFilter(ACTION_CREATE_SHORTCUT_REQUESTED);
         LocalBroadcastManager.getInstance(mApplication).registerReceiver(shortcutCreationRequestReceiver, shortcutCreationRequestIntentFilter);
+
+
+        // RECEIVER: (re-)sets the selection if needed
+        BroadcastReceiver changeViewSelectionReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                // reset previous selection
+                mCollectionAdapter.resetSelection();
+                if (intent.hasExtra(EXTRA_STATION_ID)) {
+                    // set new id selected
+                    mCollectionAdapter.setStationIDSelected(intent.getIntExtra(EXTRA_STATION_ID, 0));
+                    mCollectionAdapter.notifyDataSetChanged();
+                }
+            }
+        };
+        IntentFilter changeViewSelectionIntentFilter = new IntentFilter(ACTION_CHANGE_VIEW_SELECTION);
+        LocalBroadcastManager.getInstance(mApplication).registerReceiver(changeViewSelectionReceiver, changeViewSelectionIntentFilter);
 
     }
 
