@@ -8,7 +8,7 @@
     <!-- menu entries -->
     <string name="menu_about">À propos</string>
     <string name="menu_howto">Guide</string>
-    <string name="menu_timer">Minuterie de veille</string>
+    <string name="menu_timer">Minuteur de veille</string>
     <string name="menu_icon">Changer le logo</string>
     <string name="menu_add">Ajouter</string>
     <string name="menu_delete">Supprimer</string>
@@ -28,7 +28,7 @@
     <string name="descr_playback_button">Grand bouton de lecture</string>
     <string name="descr_playback_indicator">Indicateur de lecture en cours</string>
     <string name="descr_playback_indicator_started">Indicateur de lecture en cours</string>
-    <string name="descr_timer_indicator_started">Indicateur d\'exécution de la minuterie de veille</string>
+    <string name="descr_timer_indicator_started">Indicateur d\'exécution du minuteur de veille</string>
 
     <!-- dialogs -->
     <string name="dialog_generic_button_cancel">Annuler</string>
@@ -54,7 +54,7 @@
     <string name="dialog_error_title_fetch_write">Erreur d\'écriture</string>
     <string name="dialog_error_message_fetch_general_external_storage">Stockage externe :</string>
     <string name="dialog_error_message_fetch_general_hint_m3u">Astuce : Transistor peut traiter uniquement les flux MP3 et OGG ou les adresses se terminant par .m3u ou .pls.</string>
-    <string name="dialog_error_message_fetch_general_file_content">Contenu du fichier distant :</string>
+    <string name="dialog_error_message_fetch_general_file_content">Contenu du fichier :</string>
     <string name="dialog_error_message_fetch_download">Transistor a tout essayé, mais ne pouvait pas donner sens au lien donné.</string>
     <string name="dialog_error_message_fetch_download_station_url">Adresse de la station :</string>
     <string name="dialog_error_message_fetch_read">Transistor a tout essayé mais ne pouvait pas donner sens au fichier donné.</string>
@@ -69,8 +69,8 @@
     <string name="toastmessage_long_press_playback_started">Lecture démarrée (appui long détecté)</string>
     <string name="toastmessage_shortcut_created">Raccourci créé.</string>
     <string name="toastmessage_station_copied">Station copiée.</string>
-    <string name="toastmessage_timer_activated">Minuterie de veille activée.</string>
-    <string name="toastmessage_timer_cancelled">Minuterie de veille annulée.</string>
+    <string name="toastmessage_timer_activated">Minuteur de veille activé.</string>
+    <string name="toastmessage_timer_cancelled">Minuteur de veille annulé.</string>
     <string name="toastmessage_timer_duration_increased">Durée augmentée.</string>
     <string name="toastmessage_timer_start_unable">Veuillez d\'abord démarrer la lecture.</string>
     <string name="toastalert_rename_unsuccessful">Impossible de renommer la station. Veuillez choisir un nom différent.</string>
@@ -80,18 +80,18 @@
     <string name="toastalert_permission_denied">Autorisation refusée :</string>
     <string name="toastalert_stream_not_found">Transistor ne reconnaît pas cette station. Veuillez la supprimer et l\'ajouter à nouveau à l\'écran d\'accueil.</string>
     <string name="snackbar_request_storage_access">Transistor requiert d\'accorder l\'autorisation afin d\'accéder aux données du stockage externe.</string>
-    <string name="snackbar_message_timer_set">Minuterie de veille réglée sur</string>
+    <string name="snackbar_message_timer_set">Minuteur de veille réglé sur</string>
 
     <!-- notification -->
     <string name="notification_swipe_to_stop">Glissez pour arrêter</string>
     <string name="notification_playing">Lecture en cours</string>
 
     <!-- infosheet about -->
-    <string name="infosheet_about_h1_about">About Transistor</string>
-    <string name="infosheet_about_h2_radio">Radio app for Android</string>
+    <string name="infosheet_about_h1_about">À propos de Transistor</string>
+    <string name="infosheet_about_h2_radio">Application radio pour Android</string>
     <string name="infosheet_about_h3_version">Version 2.0 ("Starman")</string>
     <string name="infosheet_about_p_bare">Transistor is a bare bones app for listening to radio programs over the internet. The app stores stations as files on your device\'s external storage. Look for files of type m3u within /Android/data/org.y20k.transistor/Collection. It currently understands streams encoded in MP3 and OGG.</string>
-    <string name="infosheet_about_p_note">Important note: This is an app of type BYOS (&quot;bring your own station&quot;). It does not feature any kind of built-in search option. You will have to manually add radio stations.</string>
+    <string name="infosheet_about_p_note">Important note: This is an app of type BYOS ("bring your own station"). It does not feature any kind of built-in search option. You will have to manually add radio stations.</string>
     <string name="infosheet_about_p_free">Transistor is free software. It is published under the MIT open source license. You can find the code on GitHub. GitHub is also a good place to file bugs or even to contribute, if you are interested.</string>
     <string name="infosheet_about_p_github">https://github.com/y20k/transistor</string>
     <string name="infosheet_about_p_license">https://opensource.org/licenses/MIT</string>
@@ -124,9 +124,9 @@
     <string name="infosheet_howto_h2_storage">Where does Transistor store its stations?</string>
     <string name="infosheet_howto_p_storage">Transistor does not save its list of stations in a database. Instead it stores stations as m3u files on your device\'s external storage. Feel free to tinker with those files using the texteditor of your choice. The files are stored in /Android/data/org.y20k.transistor/Collection.</string>
     <string name="infosheet_howto_h2_backup">How do I backup and transfer my radio stations?</string>
-    <string name="infosheet_howto_p_backup">Transistor supports Android 6\'s Auto Backup feature. Radio stations are always backed up to your Google account and will be restored at reinstall. On devices running on older versions of Android you must manually save and restore the &quot;Collection&quot; folder.</string>
+    <string name="infosheet_howto_p_backup">Transistor supports Android 6\'s Auto Backup feature. Radio stations are always backed up to your Google account and will be restored at reinstall. On devices running on older versions of Android you must manually save and restore the "Collection" folder.</string>
     <string name="infosheet_howto_h2_settings">Why does Transistor not have any setting?</string>
-    <string name="infosheet_howto_p_settings">There is nothing to be set ;). Transistor is a very simple app. Depending on your point of view &quot;simple&quot; is either great or lame.</string>
+    <string name="infosheet_howto_p_settings">There is nothing to be set ;). Transistor is a very simple app. Depending on your point of view "simple" is either great or lame.</string>
 
 
     <!-- HTML strings -->
