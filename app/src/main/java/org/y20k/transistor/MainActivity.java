@@ -20,21 +20,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.os.EnvironmentCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.widget.Toast;
 
 import org.y20k.transistor.core.Collection;
-
-import java.io.File;
+import org.y20k.transistor.helpers.StorageHelper;
 
 
 /**
@@ -60,6 +56,7 @@ public final class MainActivity extends AppCompatActivity {
 
     /* Main class variables */
     private boolean mTwoPane;
+    private Collection mCollection;
 
 
     @Override
@@ -78,7 +75,8 @@ public final class MainActivity extends AppCompatActivity {
 
 
         // load collection
-        Collection collection = new Collection(getCollectionDirectory("Collection"));
+        StorageHelper storageHelper = new StorageHelper(this);
+        mCollection = new Collection(storageHelper.getCollectionDirectory());
 
         // get intent
         Intent intent = getIntent();
@@ -90,8 +88,6 @@ public final class MainActivity extends AppCompatActivity {
 
         // CASE: player should be launched (e.g. from shortcut or notification)
         if (intent != null && ACTION_SHOW_PLAYER.equals(intent.getAction())) {
-
-            Log.v(LOG_TAG, "!!! Special case.");
 
             // get id of station from intent
             if (intent.hasExtra(EXTRA_STATION_ID)) {
@@ -128,7 +124,7 @@ public final class MainActivity extends AppCompatActivity {
         }
 
         // tablet mode: show player fragment in player container
-        if (mTwoPane && savedInstanceState == null && !collection.getStations().isEmpty()) {
+        if (mTwoPane && savedInstanceState == null && !mCollection.getStations().isEmpty()) {
             playerArgs.putBoolean(ARG_TWO_PANE, mTwoPane);
             PlayerActivityFragment playerActivityFragment = new PlayerActivityFragment();
             playerActivityFragment.setArguments(playerArgs);
@@ -150,9 +146,8 @@ public final class MainActivity extends AppCompatActivity {
         super.onResume();
 
         // TODO Replace with collection changed listener?
-        Collection collection = new Collection(getCollectionDirectory("Collection"));
         View container = findViewById(R.id.player_container);
-        if (collection.getStations().isEmpty() && container != null) {
+        if (mCollection.getStations().isEmpty() && container != null) {
             // make room for action call
             container.setVisibility(View.GONE);
         } else if (container != null) {
@@ -205,25 +200,6 @@ public final class MainActivity extends AppCompatActivity {
         editor.putBoolean(PREF_TWO_PANE, mTwoPane);
         editor.apply();
         Log.v(LOG_TAG, "Saving state.");
-    }
-
-
-    /* Return a writeable sub-directory from external storage  */
-    private File getCollectionDirectory(String subDirectory) {
-        File[] storage = this.getExternalFilesDirs(subDirectory);
-        for (File file : storage) {
-            String state = EnvironmentCompat.getStorageState(file);
-            if (Environment.MEDIA_MOUNTED.equals(state)) {
-                Log.i(LOG_TAG, "External storage: " + file.toString());
-                return file;
-            }
-        }
-        Toast.makeText(this, this.getString(R.string.toastalert_no_external_storage), Toast.LENGTH_LONG).show();
-        Log.e(LOG_TAG, "Unable to access external storage.");
-        // finish activity
-        this.finish();
-
-        return null;
     }
 
 }

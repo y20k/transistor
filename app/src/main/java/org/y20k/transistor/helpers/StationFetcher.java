@@ -19,10 +19,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.os.EnvironmentCompat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -66,7 +64,8 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
         mStationUriScheme = stationUri.getScheme();
 
         // get collection folder from external storage
-        mFolder = getCollectionDirectory("Collection");
+        StorageHelper storageHelper = new StorageHelper(mActivity);
+        mFolder = storageHelper.getCollectionDirectory();
 
         // set mFolderExists
         assert mFolder != null;
@@ -249,25 +248,5 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
         return sb.toString();
 
     }
-
-
-    /* Return a writeable sub-directory from external storage  */
-    private File getCollectionDirectory(String subDirectory) {
-        File[] storage = mActivity.getExternalFilesDirs(subDirectory);
-        for (File file : storage) {
-            String state = EnvironmentCompat.getStorageState(file);
-            if (Environment.MEDIA_MOUNTED.equals(state)) {
-                Log.i(LOG_TAG, "External storage: " + file.toString());
-                return file;
-            }
-        }
-        Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_no_external_storage), Toast.LENGTH_LONG).show();
-        Log.e(LOG_TAG, "Unable to access external storage.");
-        // finish activity
-        mActivity.finish();
-
-        return null;
-    }
-
 
 }

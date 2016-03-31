@@ -31,13 +31,11 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.os.EnvironmentCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -55,6 +53,7 @@ import org.y20k.transistor.core.Collection;
 import org.y20k.transistor.helpers.DialogDelete;
 import org.y20k.transistor.helpers.DialogRename;
 import org.y20k.transistor.helpers.ImageHelper;
+import org.y20k.transistor.helpers.StorageHelper;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -128,7 +127,8 @@ public final class PlayerActivityFragment extends Fragment {
         loadAppState(mActivity);
 
         // get collection from external storage
-        mCollection = new Collection(getCollectionDirectory("Collection"));
+        StorageHelper storageHelper = new StorageHelper(mActivity);
+        mCollection = new Collection(storageHelper.getCollectionDirectory());
 
         Bundle arguments = getArguments();
         if (arguments != null) {
@@ -612,25 +612,5 @@ public final class PlayerActivityFragment extends Fragment {
         LocalBroadcastManager.getInstance(mActivity).registerReceiver(collectionChangedReceiver, collectionChangedIntentFilter);
 
     }
-
-
-    /* Return a writeable sub-directory from external storage  */
-    private File getCollectionDirectory(String subDirectory) {
-        File[] storage = mActivity.getExternalFilesDirs(subDirectory);
-        for (File file : storage) {
-            String state = EnvironmentCompat.getStorageState(file);
-            if (Environment.MEDIA_MOUNTED.equals(state)) {
-                Log.i(LOG_TAG, "External storage: " + file.toString());
-                return file;
-            }
-        }
-        Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_no_external_storage), Toast.LENGTH_LONG).show();
-        Log.e(LOG_TAG, "Unable to access external storage.");
-        // finish activity
-        mActivity.finish();
-
-        return null;
-    }
-
 
 }
