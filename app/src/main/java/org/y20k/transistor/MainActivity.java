@@ -15,8 +15,10 @@ package org.y20k.transistor;
 
 import android.annotation.TargetApi;
 import android.app.Fragment;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -45,6 +47,7 @@ public final class MainActivity extends AppCompatActivity {
     /* Keys */
     private static final String ACTION_SHOW_PLAYER = "org.y20k.transistor.action.SHOW_PLAYER";
     private static final String ACTION_CHANGE_VIEW_SELECTION = "org.y20k.transistor.action.CHANGE_VIEW_SELECTION";
+    private static final String ACTION_COLLECTION_CHANGED = "org.y20k.transistor.action.COLLECTION_CHANGED";
     private static final String EXTRA_STATION_ID = "EXTRA_STATION_ID";
     private static final String EXTRA_PLAYBACK_STATE = "EXTRA_PLAYBACK_STATE";
     private static final String ARG_STATION_ID = "ArgStationID";
@@ -57,6 +60,7 @@ public final class MainActivity extends AppCompatActivity {
     /* Main class variables */
     private boolean mTwoPane;
     private Collection mCollection;
+    private View mContainer;
 
 
     @Override
@@ -67,7 +71,8 @@ public final class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // if player_container is present two-pane layout has been loaded
-        if (findViewById(R.id.player_container) != null) {
+        mContainer = findViewById(R.id.player_container);
+        if (mContainer != null) {
             mTwoPane = true;
         } else {
             mTwoPane = false;
@@ -133,10 +138,13 @@ public final class MainActivity extends AppCompatActivity {
                     .commit();
         } else if (mTwoPane) {
             // make room for action call
-            findViewById(R.id.player_container).setVisibility(View.GONE);
+            mContainer.setVisibility(View.GONE);
         }
 
         saveAppState(this);
+
+        // initialize broadcast receivers
+        initializeBroadcastReceivers();
 
     }
 
@@ -144,16 +152,6 @@ public final class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-        // TODO Replace with collection changed listener?
-        View container = findViewById(R.id.player_container);
-        if (mCollection.getStations().isEmpty() && container != null) {
-            // make room for action call
-            container.setVisibility(View.GONE);
-        } else if (container != null) {
-            container.setVisibility(View.VISIBLE);
-        }
-
     }
 
 
@@ -200,6 +198,25 @@ public final class MainActivity extends AppCompatActivity {
         editor.putBoolean(PREF_TWO_PANE, mTwoPane);
         editor.apply();
         Log.v(LOG_TAG, "Saving state.");
+    }
+
+
+    /* Initializes broadcast receivers for onCreate */
+    private void initializeBroadcastReceivers() {
+        // RECEIVER: station added, deleted, or changed
+        BroadcastReceiver collectionChangedReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (mTwoPane && mCollection.getStations().isEmpty()) {
+                    // make room for action call
+                    mContainer.setVisibility(View.GONE);
+                } else if (mTwoPane) {
+                    mContainer.setVisibility(View.VISIBLE);
+                }
+            }
+        };
+        IntentFilter collectionChangedIntentFilter = new IntentFilter(ACTION_COLLECTION_CHANGED);
+        LocalBroadcastManager.getInstance(this).registerReceiver(collectionChangedReceiver, collectionChangedIntentFilter);
     }
 
 }

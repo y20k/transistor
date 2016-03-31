@@ -13,6 +13,7 @@
     <string name="menu_add">Додати</string>
     <string name="menu_delete">Видалити</string>
     <string name="menu_rename">Перейменувати</string>
+    <string name="menu_shortcut">Place on Home screen</string>
 
     <!-- headers -->
     <string name="header_about">Про додаток</string>

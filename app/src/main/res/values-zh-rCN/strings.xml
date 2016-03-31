@@ -132,4 +132,32 @@
     <!-- HTML strings -->
     <string name="html_about">&lt;!DOCTYPE html&gt; &lt;html&gt; &lt;body&gt; &lt;h1&gt;关于 Transistor&lt;/h1&gt; &lt;h2&gt;用于 Android 的电台应用&lt;/h2&gt; &lt;h3&gt;Version 1.2 (&amp;quot;Cygnet Committee&amp;quot;)&lt;/h3&gt; &lt;p&gt;Transistor 是一款基于 Bones 应用的在互联网上收听电台的程序。本应用在您的设备的外部存储上存储电台为文件。文件为 /Android/data/org.y20k.transistor/Collection 目录中的 m3u 文件。目前支持解析 MP3 和 OGG 数据流。&lt;/p&gt; &lt;p&gt;重要说明：这是一个 BYOS（“自己找电台”, &amp;quot;bring your own station&amp;quot;） 类型的应用。它不提供任何类型的内置搜索选项。您必须手动添加电台。&lt;/p&gt; &lt;p&gt;Transistor 是自由软件，以 MIT 开源许可证发布。你可以在 GitHub 上找到其源代码。GitHub 也是报告缺陷乃至作出贡献的一个好去处，如果你有兴趣的话。&lt;/p&gt; &lt;p&gt;https://github.com/y20k/transistor&lt;/p&gt; &lt;p&gt;https://opensource.org/licenses/MIT&lt;/p&gt; &lt;h3&gt;Transistor 需要哪些权限？&lt;/h3&gt; &lt;p&gt;&lt;strong&gt;互联网权限&lt;/strong&gt;&lt;br /&gt; Transistor 基于互联网上的流媒体电台。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;外部存储读取权限&lt;/strong&gt;&lt;br /&gt; Transistor 需要访问图像、照片和文件，以便支持自定义电台图标，以及打开本地保存的播放列表文件。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;振动权限&lt;/strong&gt;&lt;br /&gt; 点击并按住一个电台将触发一次小的振动。&lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</string>
 
+        <string name="html_howto"><![CDATA[<!DOCTYPE html>
+    <html>
+        <body>
+            <h1>!!!! PLEASE SO NOT TRANSLATE THIS - INSTEAD PLEASE TRANSLATE infosheet howto !!!!<h1>
+            <h1>How to use Transistor</h1>
+            <h2>How to add a new radio station?</h2>
+            <p>The easiest way to add a new station is to search the web for streaming links and then choose Transistor as a your default handler for those file types. You can also tap the (+) symbol in the top bar and paste in streaming links directly. Please note: Transistor does not feature any kind of built-in search option.</p>
+            <h2>How to play back a radio station?</h2>
+            <p>Tap the big Play button ;).</p>
+            <h2>How to stop playback?</h2>
+            <p>Tap the big Stop button or unplug your headphones or swipe off the notification from the lockscreen.</p>
+            <h2>How to start the sleep timer?</h2>
+            <p>Tapping the Clock symbol starts a 15 minute countdown after which Transistor stops playback. An additional tap adds 15 minutes to the clock. Playback must be running to be able to activate the sleep timer.</p>
+            <h2>How to place a station shortcut on the Home screen?</h2>
+            <p>The option to place a shortcut for a station on the Home screen can be accessed from the station\'s three dots menu. A tap on a shortcut will open Transistor - playback will start immediately.</p>
+            <h2>How to rename or delete a station?</h2>
+            <p>The rename and delete options can be accessed both from the station\'s context menu. Just tap on the three dots symbol. You can manage the list of stations also from a file browser (see next question).</p>
+            <h2>Where does Transistor store its stations?</h2>
+            <p>Transistor does not save its list of stations in a database. Instead it stores stations as m3u files on your device\'s external storage. Feel free to tinker with those files using the texteditor of your choice. The files are stored in /Android/data/org.y20k.transistor/Collection.</p>
+            <h2>How do I backup and transfer my radio stations?<h2>
+            <p>Transistor supports Android 6\'s Auto Backup feature. Radio stations are always backed up to your Google account and will be restored at reinstall. On devices running on older versions of Android you must manually save and restore the &quot;Collection&quot; folder.</p>
+            <h2>Why does Transistor not have any setting?</h2>
+            <p>There is nothing to be set ;). Transistor is a very simple app. Depending on your point of view &quot;simple&quot; is either great or lame.</p>
+        </body>
+    </html>]]></string>
+
+
+
 </resources>
