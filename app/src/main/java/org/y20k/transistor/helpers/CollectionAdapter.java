@@ -72,7 +72,6 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     private PlayerService mPlayerService;
     private Collection mCollection;
     private CollectionChangedListener mCollectionChangedListener;
-//    private ClickListener mClickListener;
     private View mSelectedView;
     private boolean mPlayback;
     private int mStationIDCurrent;
@@ -200,12 +199,6 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     }
 
 
-    /* Refreshes app state info */
-    public void refresh() {
-        loadAppState(mActivity);
-    }
-
-
     /* Handles click on list item */
     private void handleSingleClick(int position) {
 
@@ -264,13 +257,14 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
         Vibrator v = (Vibrator) mActivity.getSystemService(Context.VIBRATOR_SERVICE);
         v.vibrate(50);
 
+        // save app state
+        saveAppState(mActivity);
+
         // notify MainActivityFragment
         if (mCollectionChangedListener != null) {
             mCollectionChangedListener.collectionChanged();
         }
 
-        // Save station name and ID
-        saveAppState(mActivity);
     }
 
 
@@ -313,6 +307,13 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     /* Setter for collection */
     public void setCollection(Collection collection) {
         mCollection = collection;
+    }
+
+
+
+    /* Refreshes app state info */
+    public void refresh() {
+        loadAppState(mActivity);
     }
 
 

@@ -33,14 +33,15 @@ import org.y20k.transistor.core.Collection;
 public final class DialogDelete {
 
     /* Keys */
-    private static final String PREF_STATION_ID_CURRENT = "prefStationIDCurrent";
     private static final String ACTION_COLLECTION_CHANGED = "org.y20k.transistor.action.COLLECTION_CHANGED";
+    private static final String EXTRA_COLLECTION_CHANGE = "COLLECTION_CHANGE";
+    private static final String EXTRA_STATION_ID = "STATION_ID";
     private static final String EXTRA_STATION_URI_CURRENT = "STATION_URI_CURRENT";
     private static final String EXTRA_STATION_NEW_NAME = "STATION_NEW_NAME";
     private static final String EXTRA_STATION_NEW_POSITION = "STATION_NEW_POSITION";
     private static final String EXTRA_STATION_OLD_POSITION = "STATION_OLD_POSITION";
-    private static final String EXTRA_STATION_DELETED = "STATION_DELETED";
-
+    private static final String PREF_STATION_ID_CURRENT = "prefStationIDCurrent";
+    private static final int STATION_DELETED = 3;
 
     /* Main class variables */
     private final Activity mActivity;
@@ -72,9 +73,13 @@ public final class DialogDelete {
                 ShortcutHelper shortcutHelper = new ShortcutHelper(mActivity, mCollection);
                 shortcutHelper.removeShortcut(mStationID);
 
-                // get currently playing station
+                // get currently playing station before deleting
+                String stationUriCurrent = null;
                 SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mActivity);
-                String stationUriCurrent = mCollection.getStations().get(settings.getInt(PREF_STATION_ID_CURRENT, -1)).getStreamUri().toString();
+                int stationIDCurrent = settings.getInt(PREF_STATION_ID_CURRENT, -1);
+                if (stationIDCurrent != -1) {
+                    stationUriCurrent = mCollection.getStations().get(stationIDCurrent).getStreamUri().toString();
+                }
 
                 // delete station entry
                 boolean success = mCollection.delete(mStationID);
@@ -82,12 +87,14 @@ public final class DialogDelete {
                     // send local broadcast
                     Intent i = new Intent();
                     i.setAction(ACTION_COLLECTION_CHANGED);
-                    i.putExtra(EXTRA_STATION_URI_CURRENT, stationUriCurrent);
-//                    i.putExtra(EXTRA_STATION_OLD_POSITION, mStationID);
-//                    i.putExtra(EXTRA_STATION_DELETED, true);
+                    i.putExtra(EXTRA_COLLECTION_CHANGE, STATION_DELETED);
+                    i.putExtra(EXTRA_STATION_ID, mStationID);
+                    if (stationUriCurrent != null) {
+                        i.putExtra(EXTRA_STATION_URI_CURRENT, stationUriCurrent);
+                        i.putExtra(EXTRA_STATION_OLD_POSITION, mStationID);
+                    }
                     LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(i);
-
-                    // notify the user
+                    // notify user
                     Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_delete_successful), Toast.LENGTH_LONG).show();
                 }
 

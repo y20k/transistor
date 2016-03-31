@@ -16,10 +16,8 @@ package org.y20k.transistor.helpers;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
@@ -43,9 +41,11 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
 
 
     /* Keys */
-    private static final String EXTRA_STATION_URI_CURRENT = "STATION_URI_CURRENT";
     private static final String ACTION_COLLECTION_CHANGED = "org.y20k.transistor.action.COLLECTION_CHANGED";
+    private static final String EXTRA_COLLECTION_CHANGE = "COLLECTION_CHANGE";
+    private static final String EXTRA_STATION_URI_CURRENT = "STATION_URI_CURRENT";
     private static final String PREF_STATION_ID_CURRENT = "prefStationIDCurrent";
+    private static final int STATION_ADDED = 1;
 
     /* Main class variables */
     private final Activity mActivity;
@@ -113,20 +113,21 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
         if (station != null && !station.getStationFetchError() && mFolderExists) {
 
             // get currently playing station
-            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mActivity);
-            String stationUriCurrent = mCollection.getStations().get(settings.getInt(PREF_STATION_ID_CURRENT, -1)).getStreamUri().toString();
+//            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mActivity);
+//            String stationUriCurrent = mCollection.getStations().get(settings.getInt(PREF_STATION_ID_CURRENT, -1)).getStreamUri().toString();
 
             // add station to collection
             stationAdded = mCollection.add(station);
 
             if (stationAdded) {
                 // get position
-                int position = mCollection.getStations().indexOf(station);
+//                int position = mCollection.getStations().indexOf(station);
 
                 // send local broadcast
                 Intent i = new Intent();
                 i.setAction(ACTION_COLLECTION_CHANGED);
-                i.putExtra(EXTRA_STATION_URI_CURRENT, stationUriCurrent);
+                i.putExtra(EXTRA_COLLECTION_CHANGE, STATION_ADDED);
+//                i.putExtra(EXTRA_STATION_URI_CURRENT, stationUriCurrent);
                 LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(i);
             }
 

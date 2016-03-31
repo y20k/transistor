@@ -18,6 +18,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.Application;
 import android.app.Fragment;
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -79,6 +80,7 @@ public final class MainActivityFragment extends Fragment {
     private static final String ACTION_CREATE_SHORTCUT_REQUESTED = "org.y20k.transistor.action.CREATE_SHORTCUT_REQUESTED";
     private static final String ACTION_CHANGE_VIEW_SELECTION = "org.y20k.transistor.action.CHANGE_VIEW_SELECTION";
     private static final String ACTION_COLLECTION_CHANGED = "org.y20k.transistor.action.COLLECTION_CHANGED";
+    private static final String EXTRA_COLLECTION_CHANGE = "COLLECTION_CHANGE";
     private static final String EXTRA_STATION_URI_CURRENT = "STATION_URI_CURRENT";
     private static final String EXTRA_STATION_NEW_NAME = "STATION_NEW_NAME";
     private static final String EXTRA_STATION_NEW_POSITION = "STATION_NEW_POSITION";
@@ -90,17 +92,20 @@ public final class MainActivityFragment extends Fragment {
     private static final String EXTRA_TIMER_REMAINING = "TIMER_REMAINING";
     private static final String EXTRA_INFOSHEET_TITLE = "INFOSHEET_TITLE";
     private static final String EXTRA_INFOSHEET_CONTENT = "INFOSHEET_CONTENT";
-    private static final String LIST_STATE = "ListState";
-    private static final String PREF_PREF_STATION_ID_CURRENT = "prefStationIDCurrent";
+    private static final String PREF_STATION_ID_CURRENT = "prefStationIDCurrent";
     private static final String PREF_STATION_ID_LAST = "prefStationIDLast";
     private static final String PREF_PLAYBACK = "prefPlayback";
-    private static final String TIMER_RUNNING = "timerRunning";
-    private static final String CONTENT = "content";
+    private static final String PREF_TIMER_RUNNING = "prefTimerRunning";
+    private static final String INSTANCE_LIST_STATE = "instanceListState";
+    private static final int STATION_ADDED = 1;
+    private static final int STATION_RENAMED = 2;
+    private static final int STATION_DELETED = 3;
     private static final int INFOSHEET_CONTENT_ABOUT = 1;
     private static final int INFOSHEET_CONTENT_HOWTO = 2;
     private static final int REQUEST_LOAD_IMAGE = 1;
     private static final int PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE = 1;
     private static final int PERMISSION_REQUEST_STATION_FETCHER_READ_EXTERNAL_STORAGE = 2;
+    private static final int PLAYER_SERVICE_NOTIFICATION_ID = 1;
 
 
     /* Main class variables */
@@ -179,7 +184,7 @@ public final class MainActivityFragment extends Fragment {
 
         // get list state from saved instance
         if (savedInstanceState != null) {
-            mListState = savedInstanceState.getParcelable(MainActivityFragment.LIST_STATE);
+            mListState = savedInstanceState.getParcelable(MainActivityFragment.INSTANCE_LIST_STATE);
         }
 
         // inflate rootview from xml
@@ -255,7 +260,6 @@ public final class MainActivityFragment extends Fragment {
             case R.id.menu_about:
                 // get title and content
                 String aboutTitle = mActivity.getString(R.string.header_about);
-                String aboutContent = mActivity.getString(R.string.html_about);
                 // put title and content into intent and start activity
                 Intent aboutIntent = new Intent(mActivity, InfosheetActivity.class);
                 aboutIntent.putExtra(EXTRA_INFOSHEET_TITLE, aboutTitle);
@@ -267,12 +271,10 @@ public final class MainActivityFragment extends Fragment {
             case R.id.menu_howto:
                 // get title and content
                 String howToTitle = mActivity.getString(R.string.header_howto);
-                String howToContent = mActivity.getString(R.string.html_howto);
                 // put title and content into intent and start activity
                 Intent howToIntent = new Intent(mActivity, InfosheetActivity.class);
                 howToIntent.putExtra(EXTRA_INFOSHEET_TITLE, howToTitle);
                 howToIntent.putExtra(EXTRA_INFOSHEET_CONTENT, INFOSHEET_CONTENT_HOWTO);
-                howToIntent.putExtra(CONTENT, howToContent);
                 startActivity(howToIntent);
                 return true;
 
@@ -289,7 +291,7 @@ public final class MainActivityFragment extends Fragment {
         super.onSaveInstanceState(outState);
         // save list view position
         mListState = mLayoutManager.onSaveInstanceState();
-        outState.putParcelable(LIST_STATE, mListState);
+        outState.putParcelable(INSTANCE_LIST_STATE, mListState);
     }
 
 
@@ -599,10 +601,10 @@ public final class MainActivityFragment extends Fragment {
     /* Loads app state from preferences */
     private void loadAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-        mStationIDCurrent = settings.getInt(PREF_PREF_STATION_ID_CURRENT, -1);
+        mStationIDCurrent = settings.getInt(PREF_STATION_ID_CURRENT, -1);
         mStationIDLast = settings.getInt(PREF_STATION_ID_LAST, -1);
         mPlayback = settings.getBoolean(PREF_PLAYBACK, false);
-        mSleepTimerRunning = settings.getBoolean(TIMER_RUNNING, false);
+        mSleepTimerRunning = settings.getBoolean(PREF_TIMER_RUNNING, false);
         Log.v(LOG_TAG, "Loading state.");
     }
 
@@ -611,10 +613,10 @@ public final class MainActivityFragment extends Fragment {
     private void saveAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putInt(PREF_PREF_STATION_ID_CURRENT, mStationIDCurrent);
+        editor.putInt(PREF_STATION_ID_CURRENT, mStationIDCurrent);
         editor.putInt(PREF_STATION_ID_LAST, mStationIDLast);
         editor.putBoolean(PREF_PLAYBACK, mPlayback);
-        editor.putBoolean(TIMER_RUNNING, mSleepTimerRunning);
+        editor.putBoolean(PREF_TIMER_RUNNING, mSleepTimerRunning);
         editor.apply();
         Log.v(LOG_TAG, "Saving state.");
     }
@@ -642,6 +644,7 @@ public final class MainActivityFragment extends Fragment {
                 if (mSleepTimerRunning && mSleepTimerService != null) {
                     stopSleepTimer();
                 }
+                mCollectionAdapter.refresh();
                 refreshStationList();
                 mPlayback = false;
             }
@@ -665,26 +668,9 @@ public final class MainActivityFragment extends Fragment {
         BroadcastReceiver collectionChangedReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                // keep track of playback state
-                if (mPlayback && intent.hasExtra(EXTRA_STATION_URI_CURRENT)) {
-
-                    mCollectionAdapter.refresh();
-
-                    mStationIDCurrent = mCollection.findStationID(intent.getStringExtra(EXTRA_STATION_URI_CURRENT));
-                    // put up changed notification
-                    NotificationHelper notificationHelper = new NotificationHelper(mActivity);
-                    notificationHelper.setStationName(mCollection.getStations().get(mStationIDCurrent).getStationName());
-                    notificationHelper.setStationID(mStationIDCurrent);
-                    notificationHelper.createNotification();
-
-                    // save app state
-                    saveAppState(mActivity);
+                if (intent != null && intent.hasExtra(EXTRA_COLLECTION_CHANGE)) {
+                    handleCollectionChanges(intent);
                 }
-
-
-
-                mCollectionAdapter.refresh();
-                refreshStationList();
             }
         };
         IntentFilter collectionChangedIntentFilter = new IntentFilter(ACTION_COLLECTION_CHANGED);
@@ -758,6 +744,73 @@ public final class MainActivityFragment extends Fragment {
         };
         IntentFilter changeViewSelectionIntentFilter = new IntentFilter(ACTION_CHANGE_VIEW_SELECTION);
         LocalBroadcastManager.getInstance(mApplication).registerReceiver(changeViewSelectionReceiver, changeViewSelectionIntentFilter);
+
+    }
+
+
+    /* Handles adding, deleting and renaming of station */
+    private void handleCollectionChanges(Intent intent) {
+        // load app state
+        loadAppState(mActivity);
+
+        switch (intent.getIntExtra(EXTRA_COLLECTION_CHANGE, 1)) {
+
+            // CASE: station was added
+            case STATION_ADDED:
+                // refresh collection
+                mCollectionAdapter.refresh();
+                // refresh station list
+                refreshStationList();
+                break;
+
+            // CASE: station was renamed
+            case STATION_RENAMED:
+                // keep track of playback state
+                if (mPlayback && intent.hasExtra(EXTRA_STATION_ID) && intent.hasExtra(EXTRA_STATION_URI_CURRENT)) {
+
+                    // retrieve and save ID of currently playing station from Uri
+                    mStationIDCurrent = mCollection.findStationID(intent.getStringExtra(EXTRA_STATION_URI_CURRENT));
+                    saveAppState(mActivity);
+
+                    // put up notification
+                    NotificationHelper notificationHelper = new NotificationHelper(mActivity);
+                    notificationHelper.setStationName(mCollection.getStations().get(mStationIDCurrent).getStationName());
+                    notificationHelper.setStationID(mStationIDCurrent);
+                    notificationHelper.createNotification();
+                }
+
+                // refresh collection adapter and station list
+                mCollectionAdapter.refresh();
+                refreshStationList();
+
+                break;
+
+            // CASE: station was deleted
+            case STATION_DELETED:
+                // keep track of playback state
+                if (mPlayback && intent.hasExtra(EXTRA_STATION_ID) && mStationIDCurrent == intent.getIntExtra(EXTRA_STATION_ID, -1)) {
+                    mPlayback = false;
+                    saveAppState(mActivity);
+
+                    PlayerService playerService = new PlayerService();
+                    playerService.startActionStop(mActivity);
+
+                    NotificationManager notificationManager = (NotificationManager) mActivity.getSystemService(Context.NOTIFICATION_SERVICE);
+                    notificationManager.cancel(PLAYER_SERVICE_NOTIFICATION_ID);
+
+                } else if (mPlayback && intent.hasExtra(EXTRA_STATION_URI_CURRENT)) {
+                    mStationIDCurrent = mCollection.findStationID(intent.getStringExtra(EXTRA_STATION_URI_CURRENT));
+                    saveAppState(mActivity);
+                }
+
+                // refresh collection adapter and station list
+                mCollectionAdapter.refresh();
+                refreshStationList();
+                break;
+
+            // TODO station was renamed in PlayerActivityFragment (playback indicator in list)
+
+        }
 
     }
 

@@ -44,7 +44,7 @@ public class SleepTimerService  extends Service {
     private static final String ACTION_TIMER_RUNNING = "org.y20k.transistor.action.TIMER_RUNNING";
     private static final String EXTRA_TIMER_DURATION = "TIMER_DURATION";
     private static final String EXTRA_TIMER_REMAINING = "TIMER_REMAINING";
-    private static final String TIMER_RUNNING = "timerRunning";
+    private static final String PREF_TIMER_RUNNING = "prefTimerRunning";
 
 
     /* Main class variables */
@@ -207,7 +207,7 @@ public class SleepTimerService  extends Service {
     private void saveTimerState (boolean running) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplication());
         SharedPreferences.Editor editor = settings.edit();
-        editor.putBoolean(TIMER_RUNNING, running);
+        editor.putBoolean(PREF_TIMER_RUNNING, running);
         editor.apply();
         Log.v(LOG_TAG, "Saving state.");
     }

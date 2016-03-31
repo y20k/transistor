@@ -73,17 +73,19 @@ public final class PlayerActivityFragment extends Fragment {
     private static final String ACTION_COLLECTION_CHANGED = "org.y20k.transistor.action.COLLECTION_CHANGED";
     private static final String ACTION_PLAYBACK_STOPPED = "org.y20k.transistor.action.PLAYBACK_STOPPED";
     private static final String ACTION_CREATE_SHORTCUT_REQUESTED = "org.y20k.transistor.action.CREATE_SHORTCUT_REQUESTED";
+    private static final String EXTRA_COLLECTION_CHANGE = "COLLECTION_CHANGE";
     private static final String EXTRA_STATION_NEW_POSITION = "STATION_NEW_POSITION";
+    private static final String EXTRA_STATION_NEW_NAME = "STATION_NEW_NAME";
     private static final String EXTRA_STATION_DELETED = "STATION_DELETED";
     private static final String EXTRA_STATION_ID = "STATION_ID";
     private static final String ARG_STATION_ID = "ArgStationID";
     private static final String ARG_TWO_PANE = "ArgTwoPane";
     private static final String ARG_PLAYBACK = "ArgPlayback";
-    private static final String PREF_STATION_ID = "prefStationID";
     private static final String PREF_STATION_ID_CURRENT = "prefStationIDCurrent";
     private static final String PREF_STATION_ID_LAST = "prefStationIDLast";
     private static final String PREF_PLAYBACK = "prefPlayback";
-    private static final String PREF_TWO_PANE = "prefTwoPane";
+    private static final int STATION_RENAMED = 2;
+    private static final int STATION_DELETED = 3;
     private static final int REQUEST_LOAD_IMAGE = 1;
     private static final int PERMISSION_REQUEST_READ_EXTERNAL_STORAGE = 1;
 
@@ -590,27 +592,39 @@ public final class PlayerActivityFragment extends Fragment {
         BroadcastReceiver collectionChangedReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                // CASE: station was deleted - phone mode
-                if (!mTwoPane && mVisibility && intent.hasExtra(EXTRA_STATION_DELETED) && intent.getBooleanExtra(EXTRA_STATION_DELETED, false)) {
+                if (intent != null && intent.hasExtra(EXTRA_COLLECTION_CHANGE)) {
+                    handleCollectionChanges(intent);
+                }
+            }
+        };
+        IntentFilter collectionChangedIntentFilter = new IntentFilter(ACTION_COLLECTION_CHANGED);
+        LocalBroadcastManager.getInstance(mActivity).registerReceiver(collectionChangedReceiver, collectionChangedIntentFilter);
+
+    }
+
+
+    /* Handles adding, deleting and renaming of station */
+    private void handleCollectionChanges(Intent intent) {
+        switch (intent.getIntExtra(EXTRA_COLLECTION_CHANGE, 1)) {
+            // CASE: station was renamed
+            case STATION_RENAMED:
+                if (intent.hasExtra(EXTRA_STATION_NEW_NAME)) {
+                    mStationName = intent.getStringExtra(EXTRA_STATION_NEW_NAME);
+                    mStationNameView.setText(mStationName);
+                }
+                break;
+
+            // CASE: station was deleted
+            case STATION_DELETED:
+                if (!mTwoPane && mVisibility) {
                     // start main activity
                     Intent mainActivityStartIntent = new Intent(mActivity, MainActivity.class);
                     startActivity(mainActivityStartIntent);
                     // finish player activity
                     mActivity.finish();
                 }
-
-                // CASE: station has new position
-                else if (intent.hasExtra(EXTRA_STATION_NEW_POSITION)) {
-                    int position = intent.getIntExtra(EXTRA_STATION_NEW_POSITION, 0);
-                    mStationName = mCollection.getStations().get(position).getStationName();
-                    mStationNameView.setText(mStationName);
-                }
-
-            }
-        };
-        IntentFilter collectionChangedIntentFilter = new IntentFilter(ACTION_COLLECTION_CHANGED);
-        LocalBroadcastManager.getInstance(mActivity).registerReceiver(collectionChangedReceiver, collectionChangedIntentFilter);
-
+                break;
+        }
     }
 
 }
