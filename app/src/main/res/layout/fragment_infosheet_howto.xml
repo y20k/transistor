@@ -17,13 +17,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/infosheet_howto_h1_howto"
-            android:textAppearance="@android:style/TextAppearance.Large" />
+            android:textAppearance="@android:style/TextAppearance.Large"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/infosheet_howto_h2_add"
-            android:textAppearance="@android:style/TextAppearance.Medium" />
+            android:textAppearance="@android:style/TextAppearance.Medium"
+            android:textStyle="bold"
+            android:layout_marginTop="4dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -35,7 +38,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/infosheet_howto_h2_play"
-            android:textAppearance="@android:style/TextAppearance.Medium" />
+            android:textAppearance="@android:style/TextAppearance.Medium"
+            android:textStyle="bold"
+            android:layout_marginTop="4dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -47,7 +52,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/infosheet_howto_h2_stop"
-            android:textAppearance="@android:style/TextAppearance.Medium" />
+            android:textAppearance="@android:style/TextAppearance.Medium"
+            android:textStyle="bold"
+            android:layout_marginTop="4dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -59,7 +66,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/infosheet_howto_h2_sleep"
-            android:textAppearance="@android:style/TextAppearance.Medium" />
+            android:textAppearance="@android:style/TextAppearance.Medium"
+            android:textStyle="bold"
+            android:layout_marginTop="4dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -71,7 +80,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/infosheet_howto_h2_shortcut"
-            android:textAppearance="@android:style/TextAppearance.Medium" />
+            android:textAppearance="@android:style/TextAppearance.Medium"
+            android:textStyle="bold"
+            android:layout_marginTop="4dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -83,7 +94,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/infosheet_howto_h2_edit"
-            android:textAppearance="@android:style/TextAppearance.Medium" />
+            android:textAppearance="@android:style/TextAppearance.Medium"
+            android:textStyle="bold"
+            android:layout_marginTop="4dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -95,7 +108,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/infosheet_howto_h2_storage"
-            android:textAppearance="@android:style/TextAppearance.Medium" />
+            android:textAppearance="@android:style/TextAppearance.Medium"
+            android:textStyle="bold"
+            android:layout_marginTop="4dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -107,7 +122,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/infosheet_howto_h2_backup"
-            android:textAppearance="@android:style/TextAppearance.Medium" />
+            android:textAppearance="@android:style/TextAppearance.Medium"
+            android:textStyle="bold"
+            android:layout_marginTop="4dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -119,7 +136,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/infosheet_howto_h2_settings"
-            android:textAppearance="@android:style/TextAppearance.Medium" />
+            android:textAppearance="@android:style/TextAppearance.Medium"
+            android:textStyle="bold"
+            android:layout_marginTop="4dp" />
 
         <TextView
             android:layout_width="match_parent"

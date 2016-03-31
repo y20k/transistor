@@ -17,13 +17,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/infosheet_about_h1_about"
-            android:textAppearance="@android:style/TextAppearance.Large" />
+            android:textAppearance="@android:style/TextAppearance.Large"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/infosheet_about_h2_radio"
-            android:textAppearance="@android:style/TextAppearance.Medium" />
+            android:textAppearance="@android:style/TextAppearance.Medium"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
@@ -36,44 +38,53 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/infosheet_about_p_bare"
-            android:textAppearance="@android:style/TextAppearance.Small" />
+            android:textAppearance="@android:style/TextAppearance.Small"
+            android:layout_marginTop="4dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/infosheet_about_p_note"
-            android:textAppearance="@android:style/TextAppearance.Small" />
+            android:textAppearance="@android:style/TextAppearance.Small"
+            android:layout_marginTop="2dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/infosheet_about_p_free"
-            android:textAppearance="@android:style/TextAppearance.Small" />
+            android:textAppearance="@android:style/TextAppearance.Small"
+            android:layout_marginTop="2dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/infosheet_about_p_github"
-            android:textAppearance="@android:style/TextAppearance.Small" />
+            android:textAppearance="@android:style/TextAppearance.Small"
+            android:layout_marginTop="4dp"
+            android:autoLink="web" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/infosheet_about_p_license"
-            android:textAppearance="@android:style/TextAppearance.Small" />
+            android:textAppearance="@android:style/TextAppearance.Small"
+            android:autoLink="web" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/infosheet_about_h2_permissions"
-            android:textAppearance="@android:style/TextAppearance.Medium" />
+            android:textAppearance="@android:style/TextAppearance.Medium"
+            android:layout_marginTop="8dp"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/infosheet_about_h3_shortcut"
             android:textAppearance="@android:style/TextAppearance.Small"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_marginTop="2dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -86,7 +97,8 @@
             android:layout_height="wrap_content"
             android:text="@string/infosheet_about_h3_internet"
             android:textAppearance="@android:style/TextAppearance.Small"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_marginTop="2dp" />
 
 
         <TextView
@@ -100,7 +112,8 @@
             android:layout_height="wrap_content"
             android:text="@string/infosheet_about_h3_external"
             android:textAppearance="@android:style/TextAppearance.Small"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_marginRight="2dp" />
 
 
         <TextView
@@ -114,7 +127,8 @@
             android:layout_height="wrap_content"
             android:text="@string/infosheet_about_h3_vibrate"
             android:textAppearance="@android:style/TextAppearance.Small"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_marginTop="2dp" />
 
 
         <TextView
@@ -128,7 +142,8 @@
             android:layout_height="wrap_content"
             android:text="@string/infosheet_about_h3_wakelock"
             android:textAppearance="@android:style/TextAppearance.Small"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_marginTop="2dp" />
 
 
         <TextView
