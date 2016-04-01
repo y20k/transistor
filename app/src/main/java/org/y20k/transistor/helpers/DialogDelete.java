@@ -82,7 +82,7 @@ public final class DialogDelete {
                 String stationUriCurrent = null;
                 SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mActivity);
                 int stationIDCurrent = settings.getInt(PREF_STATION_ID_CURRENT, -1);
-                if (stationIDCurrent != -1 && stationIDCurrent > mCollection.getStations().size()) {
+                if (stationIDCurrent != -1) {
                     stationUriCurrent = mCollection.getStations().get(stationIDCurrent).getStreamUri().toString();
                 }
 

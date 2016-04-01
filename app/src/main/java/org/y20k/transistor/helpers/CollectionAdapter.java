@@ -234,6 +234,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
 
             // set playback state
             mStationIDLast = mStationIDCurrent;
+            mStationIDCurrent = -1;
             mPlayback = false;
 
             // inform user
@@ -289,6 +290,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
         mStationIDLast = settings.getInt(PREF_STATION_ID_LAST, -1);
         mPlayback = settings.getBoolean(PREF_PLAYBACK, false);
         Log.v(LOG_TAG, "Loading state.");
+        Log.v(LOG_TAG, "!!! LOAD: current / last " +  mStationIDCurrent + " / " + mStationIDLast);
     }
 
 
@@ -301,6 +303,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
         editor.putBoolean(PREF_PLAYBACK, mPlayback);
         editor.apply();
         Log.v(LOG_TAG, "Saving state.");
+        Log.v(LOG_TAG, "!!! SAVE: current / last " +  mStationIDCurrent + " / " + mStationIDLast);
     }
 
 

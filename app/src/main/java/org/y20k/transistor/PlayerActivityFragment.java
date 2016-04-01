@@ -507,6 +507,7 @@ public final class PlayerActivityFragment extends Fragment {
         // playback stopped
         else {
             mStationIDLast = mStationIDCurrent;
+            mStationIDCurrent = -1;
         }
     }
 
