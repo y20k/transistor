@@ -32,6 +32,10 @@ import org.y20k.transistor.core.Collection;
  */
 public final class DialogDelete {
 
+    /* Define log tag */
+    private static final String LOG_TAG = DialogDelete.class.getSimpleName();
+
+
     /* Keys */
     private static final String ACTION_COLLECTION_CHANGED = "org.y20k.transistor.action.COLLECTION_CHANGED";
     private static final String EXTRA_COLLECTION_CHANGE = "COLLECTION_CHANGE";
@@ -42,6 +46,7 @@ public final class DialogDelete {
     private static final String EXTRA_STATION_OLD_POSITION = "STATION_OLD_POSITION";
     private static final String PREF_STATION_ID_CURRENT = "prefStationIDCurrent";
     private static final int STATION_DELETED = 3;
+
 
     /* Main class variables */
     private final Activity mActivity;
@@ -77,7 +82,7 @@ public final class DialogDelete {
                 String stationUriCurrent = null;
                 SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mActivity);
                 int stationIDCurrent = settings.getInt(PREF_STATION_ID_CURRENT, -1);
-                if (stationIDCurrent != -1) {
+                if (stationIDCurrent != -1 && stationIDCurrent > mCollection.getStations().size()) {
                     stationUriCurrent = mCollection.getStations().get(stationIDCurrent).getStreamUri().toString();
                 }
 
@@ -91,7 +96,7 @@ public final class DialogDelete {
                     i.putExtra(EXTRA_STATION_ID, mStationID);
                     if (stationUriCurrent != null) {
                         i.putExtra(EXTRA_STATION_URI_CURRENT, stationUriCurrent);
-                        i.putExtra(EXTRA_STATION_OLD_POSITION, mStationID);
+//                        i.putExtra(EXTRA_STATION_OLD_POSITION, mStationID);
                     }
                     LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(i);
                     // notify user
