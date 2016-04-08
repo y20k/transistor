@@ -520,7 +520,7 @@ public final class PlayerActivityFragment extends Fragment {
         editor.putInt(PREF_STATION_ID_LAST, mStationIDLast);
         editor.putBoolean(PREF_PLAYBACK, mPlayback);
         editor.apply();
-        Log.v(LOG_TAG, "Saving state.");
+        Log.v(LOG_TAG, "Saving state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + ")");
     }
 
 
@@ -530,7 +530,7 @@ public final class PlayerActivityFragment extends Fragment {
         mStationIDCurrent = settings.getInt(PREF_STATION_ID_CURRENT, -1);
         mStationIDLast = settings.getInt(PREF_STATION_ID_LAST, -1);
         mPlayback = settings.getBoolean(PREF_PLAYBACK, false);
-        Log.v(LOG_TAG, "Loading state.");
+        Log.v(LOG_TAG, "Loading state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + ")");
     }
 
 

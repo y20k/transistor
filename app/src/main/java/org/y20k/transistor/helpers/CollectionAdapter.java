@@ -102,7 +102,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
         mPlayerService = new PlayerService();
 
         // load state
-        loadAppState(mActivity);
+        // loadAppState(mActivity);
 
         // broadcast receiver: player service stopped playback
         BroadcastReceiver playbackStoppedReceiver = new BroadcastReceiver() {
@@ -120,6 +120,9 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     @Override
     public CollectionAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
+        // load state
+        loadAppState(mActivity);
+
         // get view
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_collection, parent, false);
 
@@ -132,9 +135,12 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     @Override
     public void onBindViewHolder(CollectionAdapterViewHolder holder, final int position) {
 
-        if (mTwoPane && mSelectedView == null) {
-            // markViewSelected(holder.getListItemLayout());
-        } else if (mTwoPane) {
+        if (mTwoPane && mStationIDSelected == position) {
+//            markViewSelected(holder.getListItemLayout());
+            holder.getListItemLayout().setSelected(true);
+        } else {
+            holder.getListItemLayout().setSelected(false);
+
             // mSelectedView.setSelected(true);
         }
 
@@ -170,6 +176,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
             @Override
             public void onClick(View view, int pos, boolean isLongClick) {
                 mStationIDSelected = pos;
+                Log.v(LOG_TAG, "!!! sel-pos: " + mStationIDSelected);
                 if (isLongClick && !mTwoPane) {
                     // long click in phone mode
                     handleLongClick(pos);
@@ -179,7 +186,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
                 } else {
                     // click in tablet mode
                     handleSingleClick(pos);
-                    markViewSelected(view);
+                    notifyDataSetChanged();
                 }
             }
         });
@@ -213,7 +220,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
                     .replace(R.id.player_container, playerActivityFragment, PLAYERFRAGMENT_TAG)
                     .commit();
         } else {
-            // add id of station to intent and start activity
+            // add ID of station to intent and start activity
             Intent intent = new Intent(mActivity, PlayerActivity.class);
             intent.setAction(ACTION_SHOW_PLAYER);
             intent.putExtra(EXTRA_STATION_ID, position);
@@ -269,19 +276,6 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     }
 
 
-    /* Sets given view selected */
-    private void markViewSelected(View view) {
-        if (mSelectedView != null) {
-            // set previously selected false
-            mSelectedView.setSelected(false);
-        }
-        // store selected view
-        mSelectedView = view;
-        // set selected view true
-        mSelectedView.setSelected(true);
-    }
-
-
     /* Loads app state from preferences */
     private void loadAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
@@ -289,8 +283,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
         mStationIDCurrent = settings.getInt(PREF_STATION_ID_CURRENT, -1);
         mStationIDLast = settings.getInt(PREF_STATION_ID_LAST, -1);
         mPlayback = settings.getBoolean(PREF_PLAYBACK, false);
-        Log.v(LOG_TAG, "Loading state.");
-        Log.v(LOG_TAG, "!!! LOAD: current / last " +  mStationIDCurrent + " / " + mStationIDLast);
+        Log.v(LOG_TAG, "Loading state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + ")");
     }
 
 
@@ -302,8 +295,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
         editor.putInt(PREF_STATION_ID_LAST, mStationIDLast);
         editor.putBoolean(PREF_PLAYBACK, mPlayback);
         editor.apply();
-        Log.v(LOG_TAG, "Saving state.");
-        Log.v(LOG_TAG, "!!! SAVE: current / last " +  mStationIDCurrent + " / " + mStationIDLast);
+        Log.v(LOG_TAG, "Saving state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + ")");
     }
 
 
