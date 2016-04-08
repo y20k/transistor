@@ -70,6 +70,17 @@ public final class MainActivity extends AppCompatActivity {
         // set layout
         setContentView(R.layout.activity_main);
 
+        // initialize broadcast receivers
+        initializeBroadcastReceivers();
+
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
         // if player_container is present two-pane layout has been loaded
         mContainer = findViewById(R.id.player_container);
         if (mContainer != null) {
@@ -129,7 +140,7 @@ public final class MainActivity extends AppCompatActivity {
         }
 
         // tablet mode: show player fragment in player container
-        if (mTwoPane && savedInstanceState == null && !mCollection.getStations().isEmpty()) {
+        if (mTwoPane && !mCollection.getStations().isEmpty()) {
             playerArgs.putBoolean(ARG_TWO_PANE, mTwoPane);
             PlayerActivityFragment playerActivityFragment = new PlayerActivityFragment();
             playerActivityFragment.setArguments(playerArgs);
@@ -143,15 +154,6 @@ public final class MainActivity extends AppCompatActivity {
 
         saveAppState(this);
 
-        // initialize broadcast receivers
-        initializeBroadcastReceivers();
-
-    }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 
 
