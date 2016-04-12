@@ -60,6 +60,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 
@@ -411,6 +412,7 @@ public final class MainActivityFragment extends Fragment {
                     // permission denied
                     Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_permission_denied) + " READ_EXTERNAL_STORAGE", Toast.LENGTH_LONG).show();
                 }
+                break;
             }
 
             case PERMISSION_REQUEST_STATION_FETCHER_READ_EXTERNAL_STORAGE: {
@@ -421,6 +423,7 @@ public final class MainActivityFragment extends Fragment {
                     // permission denied
                     Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_permission_denied) + " READ_EXTERNAL_STORAGE", Toast.LENGTH_LONG).show();
                 }
+                break;
             }
         }
     }
@@ -589,7 +592,7 @@ public final class MainActivityFragment extends Fragment {
 
     /* Translates milliseconds into minutes and seconds */
     private String getReadableTime (long remainingTime) {
-        String readableTime = String.format("%02d:%02d",
+        String readableTime = String.format(Locale.getDefault(), "%02d:%02d",
                 TimeUnit.MILLISECONDS.toMinutes(remainingTime),
                 TimeUnit.MILLISECONDS.toSeconds(remainingTime) -
                         TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(remainingTime))

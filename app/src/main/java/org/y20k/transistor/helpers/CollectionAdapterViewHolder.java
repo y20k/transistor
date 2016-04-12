@@ -33,11 +33,11 @@ public class CollectionAdapterViewHolder extends RecyclerView.ViewHolder impleme
 
 
     /* Main class variables */
-    private View mListItemLayout;
-    private ImageView mStationImageView;
-    private TextView mStationNameView;
-    private ImageView mPlaybackIndicator;
-    private ImageView mStationMenuView;
+    private final View mListItemLayout;
+    private final ImageView mStationImageView;
+    private final TextView mStationNameView;
+    private final ImageView mPlaybackIndicator;
+    private final ImageView mStationMenuView;
     private ClickListener mClickListener;
 
 

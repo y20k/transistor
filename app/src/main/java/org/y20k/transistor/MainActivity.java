@@ -83,11 +83,7 @@ public final class MainActivity extends AppCompatActivity {
 
         // if player_container is present two-pane layout has been loaded
         mContainer = findViewById(R.id.player_container);
-        if (mContainer != null) {
-            mTwoPane = true;
-        } else {
-            mTwoPane = false;
-        }
+        mTwoPane = mContainer != null;
 
 
         // load collection

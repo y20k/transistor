@@ -113,7 +113,7 @@
             android:text="@string/infosheet_about_h3_external"
             android:textAppearance="@android:style/TextAppearance.Small"
             android:textStyle="bold"
-            android:layout_marginRight="2dp" />
+            android:layout_marginEnd="2dp" />
 
 
         <TextView

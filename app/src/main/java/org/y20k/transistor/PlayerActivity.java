@@ -47,8 +47,8 @@ public final class PlayerActivity extends AppCompatActivity {
         // get intent
         Intent intent = getIntent();
 
-        // CASE: show player
-        if (intent != null && ACTION_SHOW_PLAYER.equals(intent.getAction())) {
+        // CASE: show player in phone mode
+        if (intent != null && ACTION_SHOW_PLAYER.equals(intent.getAction()) && savedInstanceState == null) {
 
             // get id of station from intent
             int stationID;
@@ -66,18 +66,16 @@ public final class PlayerActivity extends AppCompatActivity {
                 startPlayback = false;
             }
 
-            if (savedInstanceState == null) {
-                Bundle args = new Bundle();
-                args.putInt(ARG_STATION_ID, stationID);
-                args.putBoolean(ARG_PLAYBACK, startPlayback);
+            Bundle args = new Bundle();
+            args.putInt(ARG_STATION_ID, stationID);
+            args.putBoolean(ARG_PLAYBACK, startPlayback);
 
-                PlayerActivityFragment playerActivityFragment = new PlayerActivityFragment();
-                playerActivityFragment.setArguments(args);
+            PlayerActivityFragment playerActivityFragment = new PlayerActivityFragment();
+            playerActivityFragment.setArguments(args);
 
-                getFragmentManager().beginTransaction()
-                        .add(R.id.player_container, playerActivityFragment)
-                        .commit();
-            }
+            getFragmentManager().beginTransaction()
+                    .add(R.id.player_container, playerActivityFragment)
+                    .commit();
 
         }
 

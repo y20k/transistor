@@ -60,6 +60,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     private static final String PREF_TWO_PANE = "prefTwoPane";
     private static final String PREF_STATION_ID_CURRENT = "prefStationIDCurrent";
     private static final String PREF_STATION_ID_LAST = "prefStationIDLast";
+    private static final String PREF_STATION_ID_SELECTED = "prefStationIDSelected";
     private static final String PREF_PLAYBACK = "prefPlayback";
     private static final String PLAYERFRAGMENT_TAG = "PFTAG";
 
@@ -69,10 +70,10 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     private final LinkedList<Uri> mStationUris;
     private final LinkedList<Bitmap> mStationImages;
     private final Activity mActivity;
-    private PlayerService mPlayerService;
+    private final PlayerService mPlayerService;
     private Collection mCollection;
-    private CollectionChangedListener mCollectionChangedListener;
-    private View mSelectedView;
+    private final CollectionChangedListener mCollectionChangedListener;
+    private final View mSelectedView;
     private boolean mPlayback;
     private int mStationIDCurrent;
     private int mStationIDLast;
@@ -117,31 +118,38 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     }
 
 
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        // load state
+        loadAppState(mActivity);
+    }
+
+
+
     @Override
     public CollectionAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         // load state
-        loadAppState(mActivity);
+        // loadAppState(mActivity);
 
         // get view
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_collection, parent, false);
 
         // put view into holder and return
-        CollectionAdapterViewHolder vh = new CollectionAdapterViewHolder(v);
-        return vh;
+        return new CollectionAdapterViewHolder(v);
     }
 
 
     @Override
     public void onBindViewHolder(CollectionAdapterViewHolder holder, final int position) {
+        // Problem synopsis: Do not treat position as fixed; only use immediately and call holder.getAdapterPosition() to look it up later
 
         if (mTwoPane && mStationIDSelected == position) {
-//            markViewSelected(holder.getListItemLayout());
             holder.getListItemLayout().setSelected(true);
         } else {
             holder.getListItemLayout().setSelected(false);
-
-            // mSelectedView.setSelected(true);
         }
 
         // set station image
@@ -176,6 +184,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
             @Override
             public void onClick(View view, int pos, boolean isLongClick) {
                 mStationIDSelected = pos;
+                saveAppState(mActivity);
                 Log.v(LOG_TAG, "!!! sel-pos: " + mStationIDSelected);
                 if (isLongClick && !mTwoPane) {
                     // long click in phone mode
@@ -282,6 +291,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
         mTwoPane = settings.getBoolean(PREF_TWO_PANE, false);
         mStationIDCurrent = settings.getInt(PREF_STATION_ID_CURRENT, -1);
         mStationIDLast = settings.getInt(PREF_STATION_ID_LAST, -1);
+        mStationIDSelected = settings.getInt(PREF_STATION_ID_SELECTED, 0);
         mPlayback = settings.getBoolean(PREF_PLAYBACK, false);
         Log.v(LOG_TAG, "Loading state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + ")");
     }
@@ -293,9 +303,10 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt(PREF_STATION_ID_CURRENT, mStationIDCurrent);
         editor.putInt(PREF_STATION_ID_LAST, mStationIDLast);
+        editor.putInt(PREF_STATION_ID_SELECTED, mStationIDSelected);
         editor.putBoolean(PREF_PLAYBACK, mPlayback);
         editor.apply();
-        Log.v(LOG_TAG, "Saving state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + ")");
+        Log.v(LOG_TAG, "Saving state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + " / " + mStationIDSelected +")");
     }
 
 

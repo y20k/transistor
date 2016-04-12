@@ -53,7 +53,7 @@ public final class DialogRename {
     /* Main class variables */
     private final Activity mActivity;
     private final Collection mCollection;
-    private int mStationID;
+    private final int mStationID;
     private String mStationName;
 
 

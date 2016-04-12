@@ -34,7 +34,7 @@ public class StorageHelper {
     private static final String LOG_TAG = StorageHelper.class.getSimpleName();
 
     /* Main class variables */
-    private Activity mActivity;
+    private final Activity mActivity;
 
     /* Constructor */
     public StorageHelper(Activity activity) {

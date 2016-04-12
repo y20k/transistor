@@ -83,11 +83,12 @@ public final class PlayerActivityFragment extends Fragment {
     private static final String ARG_PLAYBACK = "ArgPlayback";
     private static final String PREF_STATION_ID_CURRENT = "prefStationIDCurrent";
     private static final String PREF_STATION_ID_LAST = "prefStationIDLast";
+    private static final String PREF_STATION_ID_SELECTED = "prefStationIDSelected";
     private static final String PREF_PLAYBACK = "prefPlayback";
     private static final int STATION_RENAMED = 2;
     private static final int STATION_DELETED = 3;
     private static final int REQUEST_LOAD_IMAGE = 1;
-    private static final int PERMISSION_REQUEST_READ_EXTERNAL_STORAGE = 1;
+    private static final int PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE = 1;
 
 
     /* Main class variables */
@@ -133,17 +134,24 @@ public final class PlayerActivityFragment extends Fragment {
         mCollection = new Collection(storageHelper.getCollectionDirectory());
 
         Bundle arguments = getArguments();
-        if (arguments != null) {
+        // get station id from arguments
+        if (arguments != null && arguments.containsKey(ARG_STATION_ID)) {
             mStationID = arguments.getInt(ARG_STATION_ID, 0);
-            mTwoPane = arguments.getBoolean(ARG_TWO_PANE, false);
         }
 
-        // set station ID if not in arguments
-        if (mStationID == -1 && mStationIDCurrent == -1) {
-            mStationID = 0;
-        } else if (mStationID == -1 ) {
-            mStationID = mStationIDCurrent;
+        // get tablet or phone mode info from arguments
+        if (arguments != null && arguments.containsKey(ARG_TWO_PANE)) {
+            mTwoPane = arguments.getBoolean(ARG_TWO_PANE, false);
+        } else {
+            mTwoPane = false;
         }
+
+//        // set station ID if not in arguments
+//        if (mStationID == -1 && mStationIDCurrent == -1) {
+//            mStationID = 0;
+//        } else if (mStationID == -1 ) {
+//            mStationID = mStationIDCurrent;
+//        }
 
         // get URL and name for stream
         mStreamUri = mCollection.getStations().get(mStationID).getStreamUri().toString();
@@ -276,7 +284,7 @@ public final class PlayerActivityFragment extends Fragment {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
-            case PERMISSION_REQUEST_READ_EXTERNAL_STORAGE: {
+            case PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission granted - get system picker for images
                     Intent pickImageIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -529,6 +537,7 @@ public final class PlayerActivityFragment extends Fragment {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         mStationIDCurrent = settings.getInt(PREF_STATION_ID_CURRENT, -1);
         mStationIDLast = settings.getInt(PREF_STATION_ID_LAST, -1);
+        mStationID = settings.getInt(PREF_STATION_ID_SELECTED, 0);
         mPlayback = settings.getBoolean(PREF_PLAYBACK, false);
         Log.v(LOG_TAG, "Loading state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + ")");
     }
@@ -555,7 +564,7 @@ public final class PlayerActivityFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                                PERMISSION_REQUEST_READ_EXTERNAL_STORAGE);
+                                PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE);
                     }
                 });
                 snackbar.show();
@@ -563,7 +572,7 @@ public final class PlayerActivityFragment extends Fragment {
             } else {
                 // ask for permission without explanation
                 requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                        PERMISSION_REQUEST_READ_EXTERNAL_STORAGE);
+                        PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE);
             }
         }
     }

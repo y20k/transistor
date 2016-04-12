@@ -53,8 +53,8 @@ public class ShortcutHelper {
 
 
     /* Main class variables */
-    private Activity mActivity;
-    private Collection mCollection;
+    private final Activity mActivity;
+    private final Collection mCollection;
 
 
     /* Constructor */
