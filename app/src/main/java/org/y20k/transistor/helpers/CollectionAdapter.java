@@ -21,7 +21,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
@@ -67,7 +66,6 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
 
     /* Main class variables */
     private final LinkedList<String> mStationNames;
-    private final LinkedList<Uri> mStationUris;
     private final LinkedList<Bitmap> mStationImages;
     private final Activity mActivity;
     private final PlayerService mPlayerService;
@@ -88,11 +86,10 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
 
 
     /* Constructor */
-    public CollectionAdapter(Activity activity, LinkedList<String> stationNames,  LinkedList<Uri> stationUris, LinkedList<Bitmap> stationImage) {
+    public CollectionAdapter(Activity activity, LinkedList<String> stationNames,  LinkedList<Bitmap> stationImage) {
         // set main variables
         mActivity = activity;
         mStationNames = stationNames;
-        mStationUris = stationUris;
         mStationImages = stationImage;
         mCollection = null;
         mCollectionChangedListener = null;
@@ -185,7 +182,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
             public void onClick(View view, int pos, boolean isLongClick) {
                 mStationIDSelected = pos;
                 saveAppState(mActivity);
-                Log.v(LOG_TAG, "!!! sel-pos: " + mStationIDSelected);
+                Log.v(LOG_TAG, "Selected station (ID): " + mStationIDSelected);
                 if (isLongClick && !mTwoPane) {
                     // long click in phone mode
                     handleLongClick(pos);

@@ -74,9 +74,7 @@ public final class PlayerActivityFragment extends Fragment {
     private static final String ACTION_PLAYBACK_STOPPED = "org.y20k.transistor.action.PLAYBACK_STOPPED";
     private static final String ACTION_CREATE_SHORTCUT_REQUESTED = "org.y20k.transistor.action.CREATE_SHORTCUT_REQUESTED";
     private static final String EXTRA_COLLECTION_CHANGE = "COLLECTION_CHANGE";
-    private static final String EXTRA_STATION_NEW_POSITION = "STATION_NEW_POSITION";
     private static final String EXTRA_STATION_NEW_NAME = "STATION_NEW_NAME";
-    private static final String EXTRA_STATION_DELETED = "STATION_DELETED";
     private static final String EXTRA_STATION_ID = "STATION_ID";
     private static final String ARG_STATION_ID = "ArgStationID";
     private static final String ARG_TWO_PANE = "ArgTwoPane";
@@ -145,13 +143,6 @@ public final class PlayerActivityFragment extends Fragment {
         } else {
             mTwoPane = false;
         }
-
-//        // set station ID if not in arguments
-//        if (mStationID == -1 && mStationIDCurrent == -1) {
-//            mStationID = 0;
-//        } else if (mStationID == -1 ) {
-//            mStationID = mStationIDCurrent;
-//        }
 
         // get URL and name for stream
         mStreamUri = mCollection.getStations().get(mStationID).getStreamUri().toString();
@@ -230,7 +221,7 @@ public final class PlayerActivityFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setVisualState();
+        // setVisualState();
     }
 
 
@@ -539,7 +530,7 @@ public final class PlayerActivityFragment extends Fragment {
         mStationIDLast = settings.getInt(PREF_STATION_ID_LAST, -1);
         mStationID = settings.getInt(PREF_STATION_ID_SELECTED, 0);
         mPlayback = settings.getBoolean(PREF_PLAYBACK, false);
-        Log.v(LOG_TAG, "Loading state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + ")");
+        Log.v(LOG_TAG, "Loading state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + " / " + mStationID + ")");
     }
 
 
@@ -632,6 +623,32 @@ public final class PlayerActivityFragment extends Fragment {
                     startActivity(mainActivityStartIntent);
                     // finish player activity
                     mActivity.finish();
+                } else {
+                    // get collection from external storage
+                    StorageHelper storageHelper = new StorageHelper(mActivity);
+                    mCollection = new Collection(storageHelper.getCollectionDirectory());
+
+                    int collectionSize = mCollection.getStations().size();
+
+                    if (mStationID > collectionSize) {
+                        // station at the end of the list was deleted
+                        mStationID = collectionSize - 1;
+                    }
+
+                    if (collectionSize != 0 && mStationID >= 0) {
+                        // get URL and name for stream
+                        mStreamUri = mCollection.getStations().get(mStationID).getStreamUri().toString();
+                        mStationName = mCollection.getStations().get(mStationID).getStationName();
+
+                        mStationNameView.setText(mStationName);
+
+                        // set station image
+                        Bitmap stationImage = createStationImage();
+                        if (stationImage != null) {
+                            mStationImageView.setImageBitmap(stationImage);
+                        }
+                    }
+
                 }
                 break;
         }

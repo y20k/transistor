@@ -34,6 +34,8 @@ import android.view.View;
 import org.y20k.transistor.core.Collection;
 import org.y20k.transistor.helpers.StorageHelper;
 
+import java.io.File;
+
 
 /**
  * MainActivity class
@@ -49,16 +51,19 @@ public final class MainActivity extends AppCompatActivity {
     private static final String ACTION_CHANGE_VIEW_SELECTION = "org.y20k.transistor.action.CHANGE_VIEW_SELECTION";
     private static final String ACTION_COLLECTION_CHANGED = "org.y20k.transistor.action.COLLECTION_CHANGED";
     private static final String EXTRA_STATION_ID = "EXTRA_STATION_ID";
+    private static final String EXTRA_STREAM_URI = "EXTRA_STREAM_URI";
     private static final String EXTRA_PLAYBACK_STATE = "EXTRA_PLAYBACK_STATE";
     private static final String ARG_STATION_ID = "ArgStationID";
     private static final String ARG_TWO_PANE = "ArgTwoPane";
     private static final String ARG_PLAYBACK = "ArgPlayback";
     private static final String PREF_TWO_PANE = "prefTwoPane";
+    private static final String PREF_STATION_ID_SELECTED = "prefStationIDSelected";
     private static final String PLAYERFRAGMENT_TAG = "PFTAG";
 
 
     /* Main class variables */
     private boolean mTwoPane;
+    private File mFolder;
     private Collection mCollection;
     private View mContainer;
 
@@ -80,6 +85,10 @@ public final class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        // get collection folder from external storage
+        StorageHelper storageHelper = new StorageHelper(this);
+        mFolder = storageHelper.getCollectionDirectory();
+
 
         // if player_container is present two-pane layout has been loaded
         mContainer = findViewById(R.id.player_container);
@@ -87,8 +96,7 @@ public final class MainActivity extends AppCompatActivity {
 
 
         // load collection
-        StorageHelper storageHelper = new StorageHelper(this);
-        mCollection = new Collection(storageHelper.getCollectionDirectory());
+        mCollection = new Collection(mFolder);
 
         // get intent
         Intent intent = getIntent();
@@ -103,10 +111,22 @@ public final class MainActivity extends AppCompatActivity {
 
             // get id of station from intent
             if (intent.hasExtra(EXTRA_STATION_ID)) {
+                // get station from notification
                 stationID = intent.getIntExtra(EXTRA_STATION_ID, 0);
-            } else {
+            } else if (intent.hasExtra(EXTRA_STREAM_URI)) {
+                // get station from home screen shortcut
+                stationID = mCollection.findStationID(intent.getStringExtra(EXTRA_STREAM_URI));
+            }
+            else {
+                // default station
                 stationID = 0;
             }
+
+            // save station id as selected station (TODO: put into saveAppState)
+            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putInt(PREF_STATION_ID_SELECTED, stationID);
+            editor.apply();
 
             // get playback action from intent
             if (intent.hasExtra(EXTRA_PLAYBACK_STATE)) {
@@ -205,11 +225,21 @@ public final class MainActivity extends AppCompatActivity {
         BroadcastReceiver collectionChangedReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
+                // load collection
+                mCollection = new Collection(mFolder);
+
                 if (mTwoPane && mCollection.getStations().isEmpty()) {
                     // make room for action call
                     mContainer.setVisibility(View.GONE);
-                } else if (mTwoPane) {
+                } else if (mTwoPane && mCollection.getStations().size() == 1) {
                     mContainer.setVisibility(View.VISIBLE);
+                    Bundle playerArgs = new Bundle();
+                    playerArgs.putBoolean(ARG_TWO_PANE, mTwoPane);
+                    PlayerActivityFragment playerActivityFragment = new PlayerActivityFragment();
+                    playerActivityFragment.setArguments(playerArgs);
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.player_container, playerActivityFragment, PLAYERFRAGMENT_TAG)
+                            .commit();
                 }
             }
         };
