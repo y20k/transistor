@@ -1,7 +1,7 @@
 /**
  * PlayerActivity.java
  * Implements the app's player activity
- * The player activity sets up the now playing view and inflates a menubar menu
+ * The player activity sets up the now playing view for phone  mode and inflates a menubar menu
  *
  * This file is part of
  * TRANSISTOR - Radio App for Android
@@ -48,7 +48,7 @@ public final class PlayerActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         // CASE: show player in phone mode
-        if (intent != null && ACTION_SHOW_PLAYER.equals(intent.getAction()) && savedInstanceState == null) {
+        if (intent != null && ACTION_SHOW_PLAYER.equals(intent.getAction())) {
 
             // get id of station from intent
             int stationID;

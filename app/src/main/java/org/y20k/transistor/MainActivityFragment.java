@@ -83,12 +83,6 @@ public final class MainActivityFragment extends Fragment {
     private static final String ACTION_COLLECTION_CHANGED = "org.y20k.transistor.action.COLLECTION_CHANGED";
     private static final String EXTRA_COLLECTION_CHANGE = "COLLECTION_CHANGE";
     private static final String EXTRA_STATION_URI_CURRENT = "STATION_URI_CURRENT";
-    private static final String EXTRA_STATION_NEW_NAME = "STATION_NEW_NAME";
-    private static final String EXTRA_STATION_NEW_POSITION = "STATION_NEW_POSITION";
-    private static final String EXTRA_STATION_OLD_POSITION = "STATION_OLD_POSITION";
-    private static final String EXTRA_STATION_ADDED = "STATION_ADDED";
-    private static final String EXTRA_STATION_RENAMED = "STATION_RENAMED";
-    private static final String EXTRA_STATION_DELETED = "STATION_DELETED";
     private static final String EXTRA_STATION_ID = "STATION_ID";
     private static final String EXTRA_TIMER_REMAINING = "TIMER_REMAINING";
     private static final String EXTRA_INFOSHEET_TITLE = "INFOSHEET_TITLE";
@@ -116,9 +110,9 @@ public final class MainActivityFragment extends Fragment {
     private CollectionAdapter mCollectionAdapter = null;
     private File mFolder;
     private LinkedList<String> mStationNames;
-    private LinkedList<Uri> mStationUris;
     private LinkedList<Bitmap> mStationImages;
     private View mRootView;
+    private View mActionCallView;
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private Parcelable mListState;
@@ -170,9 +164,8 @@ public final class MainActivityFragment extends Fragment {
 
         // create adapter for collection
         mStationNames = new LinkedList<>();
-        mStationUris = new LinkedList<>();
         mStationImages = new LinkedList<>();
-        mCollectionAdapter = new CollectionAdapter(mActivity, mStationNames, mStationUris, mStationImages);
+        mCollectionAdapter = new CollectionAdapter(mActivity, mStationNames, mStationImages);
 
         // initialize broadcast receivers
         initializeBroadcastReceivers();
@@ -191,7 +184,11 @@ public final class MainActivityFragment extends Fragment {
         // inflate rootview from xml
         mRootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        // get reference to list view from inflated root view
+
+        // get reference to action call view from inflated root view
+        mActionCallView = mRootView.findViewById(R.id.main_actioncall_layout);
+
+        // get reference to recycler list view from inflated root view
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.main_recyclerview_collection);
 
         // use this setting to improve performance if you know that changes
@@ -219,7 +216,7 @@ public final class MainActivityFragment extends Fragment {
         super.onResume();
 
         // handle incoming intent
-        handleNewStationIntent();
+        handleIncomingIntent();
 
         // refresh playback state
         loadAppState(mActivity);
@@ -312,9 +309,6 @@ public final class MainActivityFragment extends Fragment {
             // add name to linked list of names
             mStationNames.add(station.getStationName());
 
-            // add Uri to linked list of Uris
-            mStationUris.add(station.getStreamUri());
-
             // set image for station
             if (station.getStationImageFile().exists()) {
                 // get image from collection
@@ -339,22 +333,19 @@ public final class MainActivityFragment extends Fragment {
     private void refreshStationList() {
 
         // clear and refill mCollection adapter
-        if (!mStationNames.isEmpty() && !mStationUris.isEmpty() && !mStationImages.isEmpty()) {
+        if (!mStationNames.isEmpty() && !mStationImages.isEmpty()) {
             mStationNames.clear();
-            mStationUris.clear();
             mStationImages.clear();
         }
         fillCollectionAdapter();
 
         // show call to action, if necessary
-        View actioncall = mRootView.findViewById(R.id.main_actioncall_layout);
-        View recyclerview = mRootView.findViewById(R.id.main_recyclerview_collection);
         if (mCollectionAdapter.getItemCount() == 0) {
-            actioncall.setVisibility(View.VISIBLE);
-            recyclerview.setVisibility(View.GONE);
+            mActionCallView.setVisibility(View.VISIBLE);
+            mRecyclerView.setVisibility(View.GONE);
         } else {
-            actioncall.setVisibility(View.GONE);
-            recyclerview.setVisibility(View.VISIBLE);
+            mActionCallView.setVisibility(View.GONE);
+            mRecyclerView.setVisibility(View.VISIBLE);
         }
 
         Log.v(LOG_TAG, "Refreshing list of stations");
@@ -362,13 +353,13 @@ public final class MainActivityFragment extends Fragment {
     }
 
 
-    /* handles external taps on streaming links */
-    private void handleNewStationIntent() {
+    /* handles incoming intent */
+    private void handleIncomingIntent() {
 
         // get intent
         Intent intent = mActivity.getIntent();
 
-        // check for intent of tyoe VIEW
+        // handles external taps on streaming links
         if (Intent.ACTION_VIEW.equals(intent.getAction())) {
 
             mNewStationUri = intent.getData();

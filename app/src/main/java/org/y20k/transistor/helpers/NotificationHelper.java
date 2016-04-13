@@ -33,12 +33,15 @@ import org.y20k.transistor.R;
  */
 public final class NotificationHelper {
 
+    /* Define log tag */
+    private static final String LOG_TAG = NotificationHelper.class.getSimpleName();
+
+
     /* Keys */
     private static final int PLAYER_SERVICE_NOTIFICATION_ID = 1;
     private static final String ACTION_STOP = "org.y20k.transistor.action.STOP";
     private static final String ACTION_SHOW_PLAYER = "org.y20k.transistor.action.SHOW_PLAYER";
     private static final String EXTRA_STATION_ID = "EXTRA_STATION_ID";
-    private static final String EXTRA_PLAYBACK_STATE = "EXTRA_PLAYBACK_STATE";
 
 
     /* Main class variables */

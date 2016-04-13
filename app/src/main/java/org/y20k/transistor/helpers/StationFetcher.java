@@ -112,22 +112,16 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
 
         if (station != null && !station.getStationFetchError() && mFolderExists) {
 
-            // get currently playing station
-//            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mActivity);
-//            String stationUriCurrent = mCollection.getStations().get(settings.getInt(PREF_STATION_ID_CURRENT, -1)).getStreamUri().toString();
-
             // add station to collection
             stationAdded = mCollection.add(station);
 
             if (stationAdded) {
                 // get position
-//                int position = mCollection.getStations().indexOf(station);
 
                 // send local broadcast
                 Intent i = new Intent();
                 i.setAction(ACTION_COLLECTION_CHANGED);
                 i.putExtra(EXTRA_COLLECTION_CHANGE, STATION_ADDED);
-//                i.putExtra(EXTRA_STATION_URI_CURRENT, stationUriCurrent);
                 LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(i);
             }
 

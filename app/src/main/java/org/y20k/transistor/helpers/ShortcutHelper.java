@@ -38,18 +38,8 @@ public class ShortcutHelper {
 
     /* Keys */
     private static final String ACTION_SHOW_PLAYER = "org.y20k.transistor.action.SHOW_PLAYER";
-    private static final String EXTRA_STATION_ID = "EXTRA_STATION_ID";
     private static final String EXTRA_PLAYBACK_STATE = "EXTRA_PLAYBACK_STATE";
     private static final String EXTRA_STREAM_URI = "EXTRA_STREAM_URI";
-    private static final String EXTRA_TWOPANE = "EXTRA_TWOPANE";
-
-    private static final String STREAM_URI = "streamUri";
-    private static final String STATION_ID = "stationID";
-    private static final String PREF_STATION_ID_CURRENT = "prefStationIDCurrent";
-    private static final String PREF_STATION_ID_LAST = "prefStationIDLast";
-    private static final String PREF_PLAYBACK = "prefPlayback";
-    private static final String PREF_TWO_PANE = "prefTwoPane";
-    private static final String PLAYERFRAGMENT_TAG = "PFTAG";
 
 
     /* Main class variables */
@@ -107,11 +97,13 @@ public class ShortcutHelper {
             shortcutIcon = imageHelper.createShortcut(192);
         }
 
+        String stationUri = mCollection.getStations().get(stationID).getStreamUri().toString();
+
 
         // create intent to start MainActivity
         Intent shortcutIntent = new Intent(mActivity, MainActivity.class);
         shortcutIntent.setAction(ACTION_SHOW_PLAYER);
-        shortcutIntent.putExtra(EXTRA_STATION_ID, stationID);
+        shortcutIntent.putExtra(EXTRA_STREAM_URI, stationUri);
         shortcutIntent.putExtra(EXTRA_PLAYBACK_STATE, true);
         shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

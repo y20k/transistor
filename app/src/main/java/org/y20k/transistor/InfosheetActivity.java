@@ -1,7 +1,7 @@
 /**
  * InfosheetActivity.java
  * Implements the app's infosheet activity
- * The infosheet activity sets up the infosheet html textview
+ * The infosheet activity sets up infosheet screens for "About" and "How to"
  *
  * This file is part of
  * TRANSISTOR - Radio App for Android
@@ -37,7 +37,6 @@ public final class InfosheetActivity extends AppCompatActivity {
 
         // get activity title from intent
         Intent intent = this.getIntent();
-        String title = intent.getExtras().getString(EXTRA_INFOSHEET_TITLE);
 
         // set activity title
         if (intent.hasExtra(EXTRA_INFOSHEET_TITLE)) {
