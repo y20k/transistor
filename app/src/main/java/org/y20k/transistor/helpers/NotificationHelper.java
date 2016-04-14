@@ -82,7 +82,7 @@ public final class NotificationHelper {
 
         // create content of notification
         notificationText = mContext.getString(R.string.notification_swipe_to_stop);
-        notificationTitle = mContext.getString(R.string.notification_playing) + ": " + mStationName;
+        notificationTitle = mStationName; // mContext.getString(R.string.notification_playing) + ": " + mStationName;
         notificationColor = ContextCompat.getColor(mContext, R.color.transistor_red);
 
         // explicit intent for notification tap
