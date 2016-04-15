@@ -22,6 +22,8 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.NotificationCompat.MediaStyle;
+import android.util.Log;
 
 import org.y20k.transistor.MainActivity;
 import org.y20k.transistor.PlayerService;
@@ -82,7 +84,7 @@ public final class NotificationHelper {
 
         // create content of notification
         notificationText = mContext.getString(R.string.notification_swipe_to_stop);
-        notificationTitle = mContext.getString(R.string.notification_playing) + ": " + mStationName;
+        notificationTitle = mStationName; // mContext.getString(R.string.notification_playing) + ": " + mStationName;
         notificationColor = ContextCompat.getColor(mContext, R.color.transistor_red);
 
         // explicit intent for notification tap
@@ -114,6 +116,13 @@ public final class NotificationHelper {
         builder.setSmallIcon(R.drawable.notification_icon_24dp);
         builder.setContentTitle(notificationTitle);
         builder.setContentText(notificationText);
+        final int maxTitleLength = 25; // TODO: calculate maximum text length for a given screen
+        //builder.setStyle(new MediaStyle().setShowCancelButton(false)); // .setMediaSession(...)
+        if (notificationTitle.length() > maxTitleLength) {
+            builder.setStyle(new NotificationCompat.BigTextStyle().bigText(notificationTitle));
+            //builder.setStyle(new NotificationCompat.BigTextStyle().bigText(notificationTitle.substring(maxTitleLength)));
+            //builder.setContentTitle(notificationTitle.substring(0, maxTitleLength));
+        }
         builder.setColor(notificationColor);
         // builder.setLargeIcon(largeIcon);
         builder.setContentIntent(tapPendingIntent);
