@@ -8,8 +8,8 @@ android {
         applicationId "org.y20k.transistor"
         minSdkVersion 19
         targetSdkVersion 23
-        versionCode 21
-        versionName "2.0.0 (Starman)"
+        versionCode 22
+        versionName "2.0.1 (Starman)"
     }
     buildTypes {
         release {

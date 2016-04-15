@@ -39,10 +39,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
-import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketAddress;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
@@ -78,13 +76,13 @@ public final class PlayerService extends Service implements
     private AudioManager mAudioManager;
     private MediaPlayer mMediaPlayer;
     private String mStreamUri;
+    private int mStationID;
     private boolean mPlayback;
     private int mPlayerInstanceCounter;
     private HeadphoneUnplugReceiver mHeadphoneUnplugReceiver;
     private WifiManager.WifiLock mWifiLock;
     private Socket mProxyConnection = null;
     private boolean mProxyRunning = false;
-    private int mStationId = 0;
 
 
     /* Constructor (default) */
@@ -337,7 +335,8 @@ public final class PlayerService extends Service implements
         Log.v(LOG_TAG, "Starting playback service: " + mStreamUri);
 
         mStreamUri = streamUri;
-        mStationId = stationID;
+        mStationID = stationID;
+        Log.v(LOG_TAG, "!!! startActionPlay -> mStationID: " + mStationID); // TODO remove
 
         // acquire WifiLock
 //        mWifiLock = ((WifiManager) getSystemService(Context.WIFI_SERVICE)).createWifiLock(WifiManager.WIFI_MODE_FULL, "mylock");
@@ -353,7 +352,7 @@ public final class PlayerService extends Service implements
         // put up notification
         NotificationHelper notificationHelper = new NotificationHelper(context);
         notificationHelper.setStationName(stationName);
-        notificationHelper.setStationID(mStationId);
+        notificationHelper.setStationID(mStationID);
         notificationHelper.createNotification();
     }
 
@@ -644,7 +643,8 @@ public final class PlayerService extends Service implements
                         // Update notification
                         NotificationHelper notificationHelper = new NotificationHelper(PlayerService.this);
                         notificationHelper.setStationName(s.substring(SHOUTCAST_STREAM_TITLE_HEADER.length(), s.length() - 1));
-                        notificationHelper.setStationID(mStationId);
+                        Log.v(LOG_TAG, "!!! shoutcastProxyReaderLoop -> mStationID: " + mStationID); // TODO remove
+                        // notificationHelper.setStationID(mStationId);
                         notificationHelper.createNotification();
                     }
                 }

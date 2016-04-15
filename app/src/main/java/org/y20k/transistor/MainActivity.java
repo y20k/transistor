@@ -94,7 +94,6 @@ public final class MainActivity extends AppCompatActivity {
         mContainer = findViewById(R.id.player_container);
         mTwoPane = mContainer != null;
 
-
         // load collection
         mCollection = new Collection(mFolder);
 
@@ -113,6 +112,7 @@ public final class MainActivity extends AppCompatActivity {
             if (intent.hasExtra(EXTRA_STATION_ID)) {
                 // get station from notification
                 stationID = intent.getIntExtra(EXTRA_STATION_ID, 0);
+                Log.v(LOG_TAG, "!!! Ding: " + stationID);
             } else if (intent.hasExtra(EXTRA_STREAM_URI)) {
                 // get station from home screen shortcut
                 stationID = mCollection.findStationID(intent.getStringExtra(EXTRA_STREAM_URI));
@@ -126,6 +126,7 @@ public final class MainActivity extends AppCompatActivity {
             SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
             SharedPreferences.Editor editor = settings.edit();
             editor.putInt(PREF_STATION_ID_SELECTED, stationID);
+            Log.v(LOG_TAG, "!!! Dong: " + stationID);
             editor.apply();
 
             // get playback action from intent
@@ -213,6 +214,7 @@ public final class MainActivity extends AppCompatActivity {
     private void saveAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = settings.edit();
+        // editor.putInt(PREF_STATION_ID_SELECTED, mStationID);
         editor.putBoolean(PREF_TWO_PANE, mTwoPane);
         editor.apply();
         Log.v(LOG_TAG, "Saving state.");
