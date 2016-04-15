@@ -47,31 +47,24 @@ public final class NotificationHelper {
 
 
     /* Main class variables */
-    private final Context mContext;
-    private String mStationName;
-    private int mStationID;
-
-
-    /* Constructor */
-    public NotificationHelper(Context context) {
-        mContext = context;
-    }
+    private static String mStationName;
+    private static int mStationID;
 
 
     /* Setter for name of station */
-    public void setStationName(String stationName) {
+    public static void setStationName(String stationName) {
         mStationName = stationName;
     }
 
 
     /* Setter for name of station */
-    public void setStationID(int stationID) {
+    public static void setStationID(int stationID) {
         mStationID = stationID;
     }
 
 
     /* Construct and put up notification */
-    public void createNotification() {
+    public static void createNotification(final Context context) {
         NotificationCompat.Builder builder;
         Notification notification;
         NotificationManager notificationManager;
@@ -80,26 +73,26 @@ public final class NotificationHelper {
         int notificationColor;
 
         // retrieve notification system service
-        notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         // create content of notification
-        notificationText = mContext.getString(R.string.notification_swipe_to_stop);
+        notificationText = context.getString(R.string.notification_swipe_to_stop);
         notificationTitle = mStationName; // mContext.getString(R.string.notification_playing) + ": " + mStationName;
-        notificationColor = ContextCompat.getColor(mContext, R.color.transistor_red);
+        notificationColor = ContextCompat.getColor(context, R.color.transistor_red);
 
         // explicit intent for notification tap
-        Intent tapIntent = new Intent(mContext, MainActivity.class);
+        Intent tapIntent = new Intent(context, MainActivity.class);
         tapIntent.setAction(ACTION_SHOW_PLAYER);
         tapIntent.putExtra(EXTRA_STATION_ID, mStationID);
 
         // explicit intent for notification swipe
-        Intent swipeIntent = new Intent(mContext, PlayerService.class);
+        Intent swipeIntent = new Intent(context, PlayerService.class);
         swipeIntent.setAction(ACTION_STOP);
 
 
         // artificial back stack for started Activity.
         // -> navigating backward from the Activity leads to Home screen.
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(mContext);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         // backstack: adds back stack for Intent (but not the Intent itself)
         stackBuilder.addParentStack(MainActivity.class);
         // backstack: add explicit intent for notification tap
@@ -109,19 +102,18 @@ public final class NotificationHelper {
         // pending intent wrapper for notification tap
         PendingIntent tapPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
         // pending intent wrapper for notification swipe
-        PendingIntent swipePendingIntent = PendingIntent.getService(mContext, 0, swipeIntent, 0);
+        PendingIntent swipePendingIntent = PendingIntent.getService(context, 0, swipeIntent, 0);
 
         // construct notification in builder
-        builder = new NotificationCompat.Builder(mContext);
+        builder = new NotificationCompat.Builder(context);
         builder.setSmallIcon(R.drawable.notification_icon_24dp);
         builder.setContentTitle(notificationTitle);
         builder.setContentText(notificationText);
         final int maxTitleLength = 25; // TODO: calculate maximum text length for a given screen
+        // Default MediaStyle notification won't scroll the song name. Why Google, whyyyyyyyyy???
         //builder.setStyle(new MediaStyle().setShowCancelButton(false)); // .setMediaSession(...)
         if (notificationTitle.length() > maxTitleLength) {
             builder.setStyle(new NotificationCompat.BigTextStyle().bigText(notificationTitle));
-            //builder.setStyle(new NotificationCompat.BigTextStyle().bigText(notificationTitle.substring(maxTitleLength)));
-            //builder.setContentTitle(notificationTitle.substring(0, maxTitleLength));
         }
         builder.setColor(notificationColor);
         // builder.setLargeIcon(largeIcon);
@@ -131,6 +123,8 @@ public final class NotificationHelper {
 
         // build notification
         notification = builder.build();
+
+        Log.v(LOG_TAG, "!!! ===>>> NotificationHelper: create notification with mStationID = " + mStationID + " <<<=== !!!"); // TODO remove
 
         // display notification
         notificationManager.notify(PLAYER_SERVICE_NOTIFICATION_ID, notification);
