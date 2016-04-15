@@ -27,19 +27,40 @@
             android:minHeight="?android:attr/listPreferredItemHeight"
             android:src="@drawable/ic_notesymbol" />
 
-        <TextView
-            android:id="@+id/player_textview_stationname"
-            android:ellipsize="end"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:id="@+id/player_layout_station_info"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:paddingStart="24dp"
             android:paddingEnd="2dp"
-            android:singleLine="true"
+            android:orientation="vertical"
             android:gravity="center_vertical"
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical"
-            android:text="@string/descr_station_name_example"
-            android:textAppearance="@android:style/TextAppearance.Large.Inverse" />
+            android:layout_gravity="center_vertical" >
+
+            <TextView
+                android:id="@+id/player_textview_stationname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:text="@string/descr_station_name_example"
+                android:textAppearance="@android:style/TextAppearance.Large.Inverse" />
+
+            <TextView
+                android:id="@+id/player_textview_song_metadata"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit ="marquee_forever"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:scrollHorizontally="true"
+                android:text="Sufjan Stevens - They Are Night Zombies!! They Are Neighbors!! They Have Come Back From the Dead!! Ahhhhh!"
+                android:textAppearance="@android:style/TextAppearance.Small.Inverse"
+                android:visibility="gone" />
+
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/player_playback_indicator"
