@@ -767,10 +767,9 @@ public final class MainActivityFragment extends Fragment {
                     saveAppState(mActivity);
 
                     // put up notification
-                    NotificationHelper notificationHelper = new NotificationHelper(mActivity);
-                    notificationHelper.setStationName(mCollection.getStations().get(mStationIDCurrent).getStationName());
-                    notificationHelper.setStationID(mStationIDCurrent);
-                    notificationHelper.createNotification();
+                    NotificationHelper.setStationName(mCollection.getStations().get(mStationIDCurrent).getStationName());
+                    NotificationHelper.setStationID(mStationIDCurrent);
+                    NotificationHelper.createNotification(mActivity);
                 }
 
                 // refresh collection adapter and station list
