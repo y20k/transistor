@@ -208,7 +208,11 @@ public class MetadataHelper {
                 total = 0;
                 String[] metadata = new String(buf, 0, metadataSize, StandardCharsets.UTF_8).split(";");
                 for (String s : metadata) {
-                    if (s.indexOf(SHOUTCAST_STREAM_TITLE_HEADER) == 0 && s.length() >= SHOUTCAST_STREAM_TITLE_HEADER.length() + 1) {
+//                    // removed the +1 in if statement because http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio4fm_mf_p produced a zero character string ==> ""
+//                    if (s.indexOf(SHOUTCAST_STREAM_TITLE_HEADER) == 0 && s.length() >= SHOUTCAST_STREAM_TITLE_HEADER.length() + 1) {
+//                        handleMetadataString(s.substring(SHOUTCAST_STREAM_TITLE_HEADER.length(), s.length() - 1));
+//                    }
+                    if (s.indexOf(SHOUTCAST_STREAM_TITLE_HEADER) == 0 && s.length() >= SHOUTCAST_STREAM_TITLE_HEADER.length()) {
                         handleMetadataString(s.substring(SHOUTCAST_STREAM_TITLE_HEADER.length(), s.length() - 1));
                     }
                 }

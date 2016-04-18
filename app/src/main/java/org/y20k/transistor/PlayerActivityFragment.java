@@ -681,6 +681,8 @@ public final class PlayerActivityFragment extends Fragment {
                 if (mPlayback && intent.hasExtra(EXTRA_METADATA)) {
                     mStationMetadataView.setText(intent.getStringExtra(EXTRA_METADATA));
                     mStationMetadataView.setVisibility(View.VISIBLE);
+
+
                 }
             }
         };
