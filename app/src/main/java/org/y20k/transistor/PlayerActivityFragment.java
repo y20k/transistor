@@ -84,6 +84,7 @@ public final class PlayerActivityFragment extends Fragment {
     private static final String PREF_STATION_ID_CURRENT = "prefStationIDCurrent";
     private static final String PREF_STATION_ID_LAST = "prefStationIDLast";
     private static final String PREF_STATION_ID_SELECTED = "prefStationIDSelected";
+    private static final String PREF_STATION_METADATA = "prefStationMetadata";
     private static final String PREF_PLAYBACK = "prefPlayback";
     private static final int STATION_RENAMED = 2;
     private static final int STATION_DELETED = 3;
@@ -95,6 +96,7 @@ public final class PlayerActivityFragment extends Fragment {
     private Activity mActivity;
     private View mRootView;
     private String mStationName;
+    private String mStationMetadata;
     private String mStreamUri;
     private TextView mStationNameView;
     private TextView mStationMetadataView;
@@ -184,6 +186,14 @@ public final class PlayerActivityFragment extends Fragment {
                 copyStationToClipboard();
             }
         });
+
+        // show metadata
+        if (mPlayback && mStationMetadata != null) {
+            mStationMetadataView.setText(mStationMetadata);
+            mStationMetadataView.setVisibility(View.VISIBLE);
+        } else {
+            mStationMetadataView.setVisibility(View.GONE);
+        }
 
         // show three dots menu in tablet mode
         if (mTwoPane) {
@@ -320,6 +330,8 @@ public final class PlayerActivityFragment extends Fragment {
     private void stopPlayback() {
         // set playback false
         mPlayback = false;
+        // reset metadata
+        mStationMetadata = null;
         // rotate playback button
         changeVisualState(mActivity);
         // stop player
@@ -497,6 +509,9 @@ public final class PlayerActivityFragment extends Fragment {
             mPlaybackButton.setImageResource(R.drawable.smbl_play);
             // change playback indicator
             mPlaybackIndicator.setBackgroundResource(R.drawable.ic_playback_indicator_stopped_24dp);
+            // reset and hide Metadata
+            mStationMetadata = null;
+            mStationMetadataView.setVisibility(View.GONE);
         }
     }
 
@@ -522,6 +537,7 @@ public final class PlayerActivityFragment extends Fragment {
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt(PREF_STATION_ID_CURRENT, mStationIDCurrent);
         editor.putInt(PREF_STATION_ID_LAST, mStationIDLast);
+        editor.putString(PREF_STATION_METADATA, mStationMetadata);
         editor.putBoolean(PREF_PLAYBACK, mPlayback);
         editor.apply();
         Log.v(LOG_TAG, "Saving state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + ")");
@@ -534,6 +550,7 @@ public final class PlayerActivityFragment extends Fragment {
         mStationIDCurrent = settings.getInt(PREF_STATION_ID_CURRENT, -1);
         mStationIDLast = settings.getInt(PREF_STATION_ID_LAST, -1);
         mStationID = settings.getInt(PREF_STATION_ID_SELECTED, 0);
+        mStationMetadata = settings.getString(PREF_STATION_METADATA, null);
         mPlayback = settings.getBoolean(PREF_PLAYBACK, false);
         Log.v(LOG_TAG, "Loading state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + " / " + mStationID + ")");
     }
@@ -661,7 +678,7 @@ public final class PlayerActivityFragment extends Fragment {
         BroadcastReceiver metadataChangedReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if (intent.hasExtra(EXTRA_METADATA)) {
+                if (mPlayback && intent.hasExtra(EXTRA_METADATA)) {
                     mStationMetadataView.setText(intent.getStringExtra(EXTRA_METADATA));
                     mStationMetadataView.setVisibility(View.VISIBLE);
                 }

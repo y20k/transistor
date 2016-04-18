@@ -16,6 +16,8 @@ package org.y20k.transistor.helpers;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
@@ -43,6 +45,7 @@ public class MetadataHelper {
     /* Keys */
     private static final String ACTION_METADATA_CHANGED = "org.y20k.transistor.action.METADATA_CHANGED";
     private static final String EXTRA_METADATA = "METADATA";
+    private static final String PREF_STATION_METADATA = "prefStationMetadata";
     private static final String SHOUTCAST_STREAM_TITLE_HEADER = "StreamTitle='";
 
 
@@ -55,7 +58,8 @@ public class MetadataHelper {
 
 
     /* Constructor */
-    public MetadataHelper (String streamUri) {
+    public MetadataHelper(Context context, String streamUri) {
+        mContext = context;
         mStreamUri = streamUri;
         createShoutcastProxyConnection();
     }
@@ -205,15 +209,27 @@ public class MetadataHelper {
                 String[] metadata = new String(buf, 0, metadataSize, StandardCharsets.UTF_8).split(";");
                 for (String s : metadata) {
                     if (s.indexOf(SHOUTCAST_STREAM_TITLE_HEADER) == 0 && s.length() >= SHOUTCAST_STREAM_TITLE_HEADER.length() + 1) {
-                        // send local broadcast
-                        Intent i = new Intent();
-                        i.setAction(ACTION_METADATA_CHANGED);
-                        i.putExtra(EXTRA_METADATA, s.substring(SHOUTCAST_STREAM_TITLE_HEADER.length(), s.length() - 1));
-                        LocalBroadcastManager.getInstance(mContext).sendBroadcast(i);
+                        handleMetadataString(s.substring(SHOUTCAST_STREAM_TITLE_HEADER.length(), s.length() - 1));
                     }
                 }
             }
         }
+    }
+
+
+    /* Notifies other components and saves metadata */
+    private void handleMetadataString(String metadata) {
+        // send local broadcast
+        Intent i = new Intent();
+        i.setAction(ACTION_METADATA_CHANGED);
+        i.putExtra(EXTRA_METADATA, metadata);
+        LocalBroadcastManager.getInstance(mContext).sendBroadcast(i);
+
+        // save metadata to shared preferences
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString(PREF_STATION_METADATA, metadata);
+        editor.apply();
     }
 
 

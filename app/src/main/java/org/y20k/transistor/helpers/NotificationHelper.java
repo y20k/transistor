@@ -22,8 +22,6 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.NotificationCompat.MediaStyle;
-import android.util.Log;
 
 import org.y20k.transistor.MainActivity;
 import org.y20k.transistor.PlayerService;
@@ -123,8 +121,6 @@ public final class NotificationHelper {
 
         // build notification
         notification = builder.build();
-
-        Log.v(LOG_TAG, "!!! ===>>> NotificationHelper: create notification with mStationID = " + mStationID + " <<<=== !!!"); // TODO remove
 
         // display notification
         notificationManager.notify(PLAYER_SERVICE_NOTIFICATION_ID, notification);

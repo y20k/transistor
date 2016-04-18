@@ -384,7 +384,7 @@ public final class PlayerService extends Service implements
         mMediaPlayer.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK); // needs android.permission.WAKE_LOCK
 
         try {
-            mMetadataHelper = new MetadataHelper(mStreamUri);
+            mMetadataHelper = new MetadataHelper(getApplicationContext(), mStreamUri);
             mMediaPlayer.setDataSource(mMetadataHelper.getShoutcastProxy());
             mMediaPlayer.prepareAsync();
         } catch (IOException e) {
