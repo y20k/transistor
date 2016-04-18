@@ -73,6 +73,8 @@ public final class PlayerActivityFragment extends Fragment {
     private static final String ACTION_COLLECTION_CHANGED = "org.y20k.transistor.action.COLLECTION_CHANGED";
     private static final String ACTION_PLAYBACK_STOPPED = "org.y20k.transistor.action.PLAYBACK_STOPPED";
     private static final String ACTION_CREATE_SHORTCUT_REQUESTED = "org.y20k.transistor.action.CREATE_SHORTCUT_REQUESTED";
+    private static final String ACTION_METADATA_CHANGED = "org.y20k.transistor.action.METADATA_CHANGED";
+    private static final String EXTRA_METADATA = "METADATA";
     private static final String EXTRA_COLLECTION_CHANGE = "COLLECTION_CHANGE";
     private static final String EXTRA_STATION_NEW_NAME = "STATION_NEW_NAME";
     private static final String EXTRA_STATION_ID = "STATION_ID";
@@ -95,6 +97,7 @@ public final class PlayerActivityFragment extends Fragment {
     private String mStationName;
     private String mStreamUri;
     private TextView mStationNameView;
+    private TextView mStationMetadataView;
     private ImageView mStationImageView;
     private ImageButton mStationMenuView;
     private ImageView mPlaybackIndicator;
@@ -151,9 +154,6 @@ public final class PlayerActivityFragment extends Fragment {
         // fragment has options menu
         setHasOptionsMenu(true);
 
-        // initialize broadcast receivers
-        initializeBroadcastReceivers();
-
     }
 
 
@@ -165,6 +165,7 @@ public final class PlayerActivityFragment extends Fragment {
 
         // find views for station name and image and playback indicator
         mStationNameView = (TextView) mRootView.findViewById(R.id.player_textview_stationname);
+        mStationMetadataView = (TextView) mRootView.findViewById(R.id.player_textview_station_metadata);
         mStationImageView = (ImageView) mRootView.findViewById(R.id.player_imageview_station_icon);
         mPlaybackIndicator = (ImageView) mRootView.findViewById(R.id.player_playback_indicator);
         mStationMenuView = (ImageButton) mRootView.findViewById(R.id.player_item_more_button);
@@ -222,6 +223,10 @@ public final class PlayerActivityFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // setVisualState();
+
+        // initialize broadcast receivers
+        initializeBroadcastReceivers();
+
     }
 
 
@@ -569,41 +574,6 @@ public final class PlayerActivityFragment extends Fragment {
     }
 
 
-    /* Initializes broadcast receivers for onCreate */
-    private void initializeBroadcastReceivers() {
-
-        // broadcast receiver: player service stopped playback
-        BroadcastReceiver playbackStoppedReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                if (mPlayback) {
-                    // set playback false
-                    mPlayback = false;
-                    // rotate playback button
-                    changeVisualState(context);
-                }
-                // save state of playback to settings
-                saveAppState(context);
-            }
-        };
-        IntentFilter playbackIntentFilter = new IntentFilter(ACTION_PLAYBACK_STOPPED);
-        LocalBroadcastManager.getInstance(mActivity).registerReceiver(playbackStoppedReceiver, playbackIntentFilter);
-
-        // broadcast receiver: station added, deleted, or changed
-        BroadcastReceiver collectionChangedReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                if (intent != null && intent.hasExtra(EXTRA_COLLECTION_CHANGE)) {
-                    handleCollectionChanges(intent);
-                }
-            }
-        };
-        IntentFilter collectionChangedIntentFilter = new IntentFilter(ACTION_COLLECTION_CHANGED);
-        LocalBroadcastManager.getInstance(mActivity).registerReceiver(collectionChangedReceiver, collectionChangedIntentFilter);
-
-    }
-
-
     /* Handles adding, deleting and renaming of station */
     private void handleCollectionChanges(Intent intent) {
         switch (intent.getIntExtra(EXTRA_COLLECTION_CHANGE, 1)) {
@@ -653,5 +623,54 @@ public final class PlayerActivityFragment extends Fragment {
                 break;
         }
     }
+
+
+    /* Initializes broadcast receivers for onCreate */
+    private void initializeBroadcastReceivers() {
+
+        // RECEIVER: player service stopped playback
+        BroadcastReceiver playbackStoppedReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (mPlayback) {
+                    // set playback false
+                    mPlayback = false;
+                    // rotate playback button
+                    changeVisualState(context);
+                }
+                // save state of playback to settings
+                saveAppState(context);
+            }
+        };
+        IntentFilter playbackIntentFilter = new IntentFilter(ACTION_PLAYBACK_STOPPED);
+        LocalBroadcastManager.getInstance(mActivity).registerReceiver(playbackStoppedReceiver, playbackIntentFilter);
+
+        // RECEIVER: station added, deleted, or changed
+        BroadcastReceiver collectionChangedReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent != null && intent.hasExtra(EXTRA_COLLECTION_CHANGE)) {
+                    handleCollectionChanges(intent);
+                }
+            }
+        };
+        IntentFilter collectionChangedIntentFilter = new IntentFilter(ACTION_COLLECTION_CHANGED);
+        LocalBroadcastManager.getInstance(mActivity).registerReceiver(collectionChangedReceiver, collectionChangedIntentFilter);
+
+        // RECEIVER: station metadata has changed
+        BroadcastReceiver metadataChangedReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent.hasExtra(EXTRA_METADATA)) {
+                    mStationMetadataView.setText(intent.getStringExtra(EXTRA_METADATA));
+                    mStationMetadataView.setVisibility(View.VISIBLE);
+                }
+            }
+        };
+        IntentFilter metadataChangedIntentFilter = new IntentFilter(ACTION_METADATA_CHANGED);
+        LocalBroadcastManager.getInstance(mActivity).registerReceiver(metadataChangedReceiver, metadataChangedIntentFilter);
+
+    }
+
 
 }

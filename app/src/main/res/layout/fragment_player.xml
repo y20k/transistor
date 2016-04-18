@@ -31,6 +31,7 @@
             android:id="@+id/player_layout_station_info"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:paddingStart="24dp"
             android:paddingEnd="2dp"
             android:orientation="vertical"
@@ -47,7 +48,7 @@
                 android:textAppearance="@android:style/TextAppearance.Large.Inverse" />
 
             <TextView
-                android:id="@+id/player_textview_song_metadata"
+                android:id="@+id/player_textview_station_metadata"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
