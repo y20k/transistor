@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    >
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:id="@+id/notification_icon"
+        android:src="@drawable/notification_round_icon"
+        android:contentDescription="@string/app_name"
+        android:background="@android:color/transparent"
+        android:scaleType="center"
+        android:adjustViewBounds="true"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:cropToPadding="false"
+        android:layout_weight="0"
+        android:layout_gravity="center_vertical"
+        />
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    >
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/notification_title"
+                android:gravity="left|center_vertical"
+                android:singleLine="true"
+                android:textColor="@android:color/primary_text_light"
+                android:fadingEdge="horizontal"
+                android:paddingBottom="10dip"
+                android:clickable="true"
+                android:enabled="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:text="@string/notification_playing"
+                android:layout_weight="0.4" />
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/notification_previous"
+                android:src="@android:drawable/ic_media_previous"
+                android:contentDescription="@string/notification_previous"
+                android:layout_weight="0.2"
+                android:background="@android:color/transparent"
+                android:scaleType="center"
+                android:paddingBottom="10dip"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true" />
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/notification_stop"
+                android:src="@android:drawable/ic_media_pause"
+                android:contentDescription="@string/notification_stop"
+                android:layout_weight="0.2"
+                android:background="@android:color/transparent"
+                android:scaleType="center"
+                android:paddingBottom="10dip"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true" />
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/notification_next"
+                android:src="@android:drawable/ic_media_next"
+                android:contentDescription="@string/notification_next"
+                android:layout_weight="0.2"
+                android:background="@android:color/transparent"
+                android:scaleType="center"
+                android:paddingBottom="10dip"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true" />
+
+        </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/notification_swipe_to_stop"
+        android:id="@+id/notification_song_title"
+        android:gravity="left|bottom"
+        android:singleLine="true"
+        android:textColor="@android:color/primary_text_light"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:fadingEdge="horizontal"
+        android:scrollHorizontally="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true" >
+        <requestFocus
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
+    </TextView>
+
+
+</FrameLayout>
+
+</LinearLayout>
