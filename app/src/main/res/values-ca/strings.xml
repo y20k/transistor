@@ -13,7 +13,7 @@
     <string name="menu_add">Afegeix</string>
     <string name="menu_delete">Esborrar</string>
     <string name="menu_rename">Renombra</string>
-    <string name="menu_shortcut">Place on Home screen</string>
+    <string name="menu_shortcut">Lloc a la pantalla d\'inici</string>
 
     <!-- headers -->
     <string name="header_about">Quant a</string>
@@ -28,7 +28,7 @@
     <string name="descr_playback_button">Gran botó de reproducció</string>
     <string name="descr_playback_indicator">Indicador pel funcionament de la reproducció</string>
     <string name="descr_playback_indicator_started">Indicador pel funcionament de la reproducció</string>
-    <string name="descr_timer_indicator_started">Indicator for running sleep timer</string>
+    <string name="descr_timer_indicator_started">Indicador per al funcionament de temporitzador d\'apagat</string>
 
     <!-- dialogs -->
     <string name="dialog_generic_button_okay">D\'acord</string>
@@ -67,18 +67,18 @@
     <string name="toastmessage_add_open_file_started">Obrint fitxer:</string>
     <string name="toastmessage_long_press_playback_stopped">Reproducció aturada (pulsació llarga detectada)</string>
     <string name="toastmessage_long_press_playback_started">Reproducció iniciada (pulsació llarga detectada)</string>
-    <string name="toastmessage_shortcut_created">Shortcut created.</string>
+    <string name="toastmessage_shortcut_created">Accés directe creat.</string>
     <string name="toastmessage_station_copied">Emissora copiada.</string>
-    <string name="toastmessage_timer_activated">Sleep timer activated.</string>
-    <string name="toastmessage_timer_cancelled">Sleep timer cancelled.</string>
+    <string name="toastmessage_timer_activated">Temporitzador d\'apagat activat.</string>
+    <string name="toastmessage_timer_cancelled">Temporitzador d\'apagat cancel·lat.</string>
     <string name="toastmessage_timer_duration_increased">Incrementar la duració (+ 15 min).</string>
-    <string name="toastmessage_timer_start_unable">Please start playback first.</string>
+    <string name="toastmessage_timer_start_unable">Si us plau inicia la reproducció abans.</string>
     <string name="toastalert_rename_unsuccessful">Incapaç de canviar el nom de l\'emissora. Si us plau, escolliu un nom diferent.</string>
     <string name="toastalert_delete_successful">Emissora suprimida.</string>
     <string name="toastalert_no_external_storage">No es pot accedir a l\'emmagatzematge intern.</string>
     <string name="toastalert_headphones_unplugged">Auriculars desendollats. La reproducció s\'ha aturat.</string>
     <string name="toastalert_permission_denied">Permís denegat:</string>
-    <string name="toastalert_stream_not_found">Transistor does not recognize this station. Please delete and add it again to the Home screen.</string>
+    <string name="toastalert_stream_not_found">Transistor no rconeix aquesta emissora. Si us plau, esborra i torna a afegir-la a la pantalla d\'inici.</string>
     <string name="snackbar_request_storage_access">Transistor necessita obtenir permisos de lectura per accedir a les dades del emmagatzematge extern.</string>
     <string name="snackbar_message_timer_set">Comptador de temps d\'espera fixat en</string>
 
@@ -87,15 +87,15 @@
     <string name="notification_playing">Reproduint</string>
 
     <!-- infosheet about -->
-    <string name="infosheet_about_h1_about">About Transistor</string>
-    <string name="infosheet_about_h2_radio">Radio app for Android</string>
-    <string name="infosheet_about_h3_version">Version 2.0 ("Starman")</string>
-    <string name="infosheet_about_p_bare">Transistor is a bare bones app for listening to radio programs over the internet. The app stores stations as files on your device\'s external storage. Look for files of type m3u within /Android/data/org.y20k.transistor/Collection. It currently understands streams encoded in MP3 and OGG.</string>
-    <string name="infosheet_about_p_note">Important note: This is an app of type BYOS ("bring your own station"). It does not feature any kind of built-in search option. You will have to manually add radio stations.</string>
-    <string name="infosheet_about_p_free">Transistor is free software. It is published under the MIT open source license. You can find the code on GitHub. GitHub is also a good place to file bugs or even to contribute, if you are interested.</string>
+    <string name="infosheet_about_h1_about">Sobre Transistor</string>
+    <string name="infosheet_about_h2_radio">Aplicació de ràdio per Android</string>
+    <string name="infosheet_about_h3_version">Versió 2.0 (Starman)</string>
+    <string name="infosheet_about_p_bare">Transistor és una aplicació per escoltar programes de ràdio a través d\'Internet. L\'aplicació emmagatzema les emissores en fitxers dins del emmagatzematge extern. Pots cercar aquests fitxers M3U dins de /Android/data/org.y20k.transistor/Collection. En l\'actualitat pot reproduir fitxers en MP3 i OGG.</string>
+    <string name="infosheet_about_p_note">Nota important: Aquesta és una aplicació de tipus \"BYOS\" (sigles de l\'anglés Bring Your Own Station (porta la teva propia emissora)). No ofereix cap tipus d\'opció de cerca incorporat. Vostè haurà d\'afegir manualment les emissores de ràdio.</string>
+    <string name="infosheet_about_p_free">Transistor és programari lliure. Està publicat sota llicència de codi obert MIT. Pots trobar el codi font a GitHub. GitHub és també un bon lloc per presentar errors i fins i tot contribuir, si vosté està interessat.</string>
     <string name="infosheet_about_p_github">https://github.com/y20k/transistor</string>
     <string name="infosheet_about_p_license">https://opensource.org/licenses/MIT</string>
-    <string name="infosheet_about_h2_permissions">Which Permissions does Transistor need?</string>
+    <string name="infosheet_about_h2_permissions">Quins permisos necessita Transistor?</string>
     <string name="infosheet_about_h3_shortcut">Permission INSTALL_SHORTCUT and UNINSTALL_SHORTCUT</string>
     <string name="infosheet_about_p_shortcut">This permission is needed to install and uninstall radio station shortcuts on the Android Home screen.</string>
     <string name="infosheet_about_h3_internet">Permission INTERNET</string>
