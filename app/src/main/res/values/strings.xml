@@ -86,6 +86,8 @@
     <string name="notification_stop">Stop</string>
     <string name="notification_swipe_to_stop">Swipe to stop</string>
     <string name="notification_playing">Playing</string>
+    <string name="notification_previous">Prev</string>
+    <string name="notification_next">Next</string>
 
     <!-- infosheet about -->
     <string name="infosheet_about_h1_about">About Transistor</string>

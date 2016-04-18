@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
+import android.widget.RemoteViews;
 
 import org.y20k.transistor.MainActivity;
 import org.y20k.transistor.PlayerService;
@@ -98,10 +99,21 @@ public final class NotificationHelper {
         // construct notification in builder
         builder = new NotificationCompat.Builder(context);
         builder.setSmallIcon(R.drawable.notification_icon_24dp);
-        builder.setContentTitle(notificationTitle);
-        builder.setContentText(notificationText);
-        builder.setStyle(new NotificationCompat.BigTextStyle().bigText(notificationText));
-        builder.addAction (R.drawable.ic_stop_black_36dp, context.getString(R.string.notification_stop), stopActionPendingIntent);
+        //builder.setContentTitle(notificationTitle);
+        //builder.setContentText(notificationText);
+        //builder.setStyle(new NotificationCompat.BigTextStyle().bigText(notificationText));
+        //builder.addAction (R.drawable.ic_stop_black_36dp, context.getString(R.string.notification_stop), stopActionPendingIntent);
+        RemoteViews customNtf = new RemoteViews(context.getPackageName(), R.layout.notification);
+        customNtf.setOnClickPendingIntent(R.id.notification_title, tapPendingIntent);
+        customNtf.setOnClickPendingIntent(R.id.notification_icon, tapPendingIntent);
+        customNtf.setOnClickPendingIntent(R.id.notification_stop, stopActionPendingIntent);
+        // TODO: implement prev/next actions
+        //customNtf.setOnClickPendingIntent(R.id.notification_previous, previosStationPendingIntent);
+        //customNtf.setOnClickPendingIntent(R.id.notification_next, nextStationPendingIntent);
+        customNtf.setTextViewText(R.id.notification_title, notificationTitle);
+        customNtf.setTextViewText(R.id.notification_song_title, notificationText);
+
+        builder.setContent(customNtf);
         builder.setOngoing(true);
         builder.setColor(notificationColor);
         builder.setContentIntent(tapPendingIntent);
