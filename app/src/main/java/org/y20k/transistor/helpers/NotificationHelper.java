@@ -46,19 +46,8 @@ public final class NotificationHelper {
 
     /* Main class variables */
     private static String mStationName;
+    private static String mStationMetadata;
     private static int mStationID;
-
-
-    /* Setter for name of station */
-    public static void setStationName(String stationName) {
-        mStationName = stationName;
-    }
-
-
-    /* Setter for name of station */
-    public static void setStationID(int stationID) {
-        mStationID = stationID;
-    }
 
 
     /* Construct and put up notification */
@@ -74,9 +63,13 @@ public final class NotificationHelper {
         notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         // create content of notification
-        notificationText = context.getString(R.string.notification_swipe_to_stop);
-        notificationTitle = mStationName; // mContext.getString(R.string.notification_playing) + ": " + mStationName;
         notificationColor = ContextCompat.getColor(context, R.color.transistor_red);
+        notificationTitle = context.getString(R.string.notification_playing) + ": " + mStationName;
+        if (mStationMetadata != null) {
+            notificationText = mStationMetadata;
+        } else {
+            notificationText = mStationName;
+        }
 
         // explicit intent for notification tap
         Intent tapIntent = new Intent(context, MainActivity.class);
@@ -84,8 +77,8 @@ public final class NotificationHelper {
         tapIntent.putExtra(EXTRA_STATION_ID, mStationID);
 
         // explicit intent for notification swipe
-        Intent swipeIntent = new Intent(context, PlayerService.class);
-        swipeIntent.setAction(ACTION_STOP);
+        Intent stopActionIntent = new Intent(context, PlayerService.class);
+        stopActionIntent.setAction(ACTION_STOP);
 
 
         // artificial back stack for started Activity.
@@ -99,24 +92,19 @@ public final class NotificationHelper {
 
         // pending intent wrapper for notification tap
         PendingIntent tapPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-        // pending intent wrapper for notification swipe
-        PendingIntent swipePendingIntent = PendingIntent.getService(context, 0, swipeIntent, 0);
+        // pending intent wrapper for notification stop action
+        PendingIntent stopActionPendingIntent = PendingIntent.getService(context, 0, stopActionIntent, 0);
 
         // construct notification in builder
         builder = new NotificationCompat.Builder(context);
         builder.setSmallIcon(R.drawable.notification_icon_24dp);
         builder.setContentTitle(notificationTitle);
         builder.setContentText(notificationText);
-        final int maxTitleLength = 25; // TODO: calculate maximum text length for a given screen
-        // Default MediaStyle notification won't scroll the song name. Why Google, whyyyyyyyyy???
-        //builder.setStyle(new MediaStyle().setShowCancelButton(false)); // .setMediaSession(...)
-        if (notificationTitle.length() > maxTitleLength) {
-            builder.setStyle(new NotificationCompat.BigTextStyle().bigText(notificationTitle));
-        }
+        builder.setStyle(new NotificationCompat.BigTextStyle().bigText(notificationText));
+        builder.addAction (R.drawable.ic_stop_black_36dp, context.getString(R.string.notification_stop), stopActionPendingIntent);
+        builder.setOngoing(true);
         builder.setColor(notificationColor);
-        // builder.setLargeIcon(largeIcon);
         builder.setContentIntent(tapPendingIntent);
-        builder.setDeleteIntent(swipePendingIntent);
         builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
 
         // build notification
@@ -125,6 +113,24 @@ public final class NotificationHelper {
         // display notification
         notificationManager.notify(PLAYER_SERVICE_NOTIFICATION_ID, notification);
 
+    }
+
+
+    /* Setter for name of station */
+    public static void setStationName(String stationName) {
+        mStationName = stationName;
+    }
+
+
+    /* Setter for name of station */
+    public static void setStationID(int stationID) {
+        mStationID = stationID;
+    }
+
+
+    /* Setter for metadata of station */
+    public static void setStationMetadata(String stationMetadata) {
+        mStationMetadata = stationMetadata;
     }
 
 }

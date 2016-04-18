@@ -83,6 +83,7 @@
     <string name="snackbar_message_timer_set">Sleep timer set to</string>
 
     <!-- notification -->
+    <string name="notification_stop">Stop</string>
     <string name="notification_swipe_to_stop">Превуците да зауставите</string>
     <string name="notification_playing">Пуштам</string>
 

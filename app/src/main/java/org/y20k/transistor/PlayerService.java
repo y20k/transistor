@@ -100,7 +100,7 @@ public final class PlayerService extends Service implements
             public void onReceive(Context context, Intent intent) {
                 if (intent.hasExtra(EXTRA_METADATA)) {
                     // update notification
-                    NotificationHelper.setStationName(intent.getStringExtra(EXTRA_METADATA));
+                    NotificationHelper.setStationMetadata(intent.getStringExtra(EXTRA_METADATA));
                     NotificationHelper.createNotification(PlayerService.this);
                 }
             }

@@ -172,15 +172,18 @@ public final class PlayerActivityFragment extends Fragment {
         mPlaybackIndicator = (ImageView) mRootView.findViewById(R.id.player_playback_indicator);
         mStationMenuView = (ImageButton) mRootView.findViewById(R.id.player_item_more_button);
 
+        // set station name
+        mStationNameView.setText(mStationName);
+
         // set station image
         Bitmap stationImage = createStationImage();
         if (stationImage != null) {
             mStationImageView.setImageBitmap(stationImage);
         }
 
-        // set text view to station name and add listener for clipboard copy
-        mStationNameView.setText(mStationName);
-        mStationNameView.setOnClickListener(new View.OnClickListener() {
+        // add listener to station info view for clipboard copy
+        View stationInfoView = mRootView.findViewById(R.id.player_layout_station_info);
+        stationInfoView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 copyStationToClipboard();
@@ -421,9 +424,14 @@ public final class PlayerActivityFragment extends Fragment {
     /* Copy station date to system clipboard */
     private void copyStationToClipboard() {
         if (mStreamUri != null && mStationName != null) {
-            // prepare clip
-            String stationData = mStationName + " - " + mStreamUri;
-            ClipData clip = ClipData.newPlainText("simple text",stationData);
+            String clipboardText;
+            if (mStationMetadata != null) {
+                clipboardText = mStationName +  " - " + mStationMetadata + " (" + mStreamUri + ")";
+            } else {
+                clipboardText = mStationName + " (" + mStreamUri + ")";
+            }
+
+            ClipData clip = ClipData.newPlainText("simple text",clipboardText);
 
             // copy clip to clipboard
             ClipboardManager cm = (ClipboardManager) mActivity.getSystemService(Context.CLIPBOARD_SERVICE);

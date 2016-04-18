@@ -83,6 +83,7 @@
     <string name="snackbar_message_timer_set">Temporizador de apagado establecer en</string>
 
     <!-- notification -->
+    <string name="notification_stop">Stop</string>
     <string name="notification_swipe_to_stop">Deslizar para detener</string>
     <string name="notification_playing">Reproduciendo</string>
 

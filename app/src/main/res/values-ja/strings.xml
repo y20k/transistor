@@ -83,6 +83,7 @@
     <string name="snackbar_message_timer_set">スリープタイマーをセットします</string>
 
     <!-- notification -->
+    <string name="notification_stop">Stop</string>
     <string name="notification_swipe_to_stop">スワイプすると停止</string>
     <string name="notification_playing">再生中</string>
 

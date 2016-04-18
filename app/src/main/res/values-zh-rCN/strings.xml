@@ -83,6 +83,7 @@
     <string name="snackbar_message_timer_set">睡眠定时器设为</string>
 
     <!-- notification -->
+    <string name="notification_stop">Stop</string>
     <string name="notification_swipe_to_stop">滑动以停止</string>
     <string name="notification_playing">正在播放</string>
 

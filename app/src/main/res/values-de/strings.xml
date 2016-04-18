@@ -82,7 +82,8 @@
     <string name="snackbar_request_storage_access">Transistor benötigt Lese-Rechte, um auf Dateien auf dem externen Speicher zugreifen zu können.</string>
     <string name="snackbar_message_timer_set">Sleeptimer Countdown</string>
 
-    <!-- notification --> 
+    <!-- notification -->
+    <string name="notification_stop">Stop</string>
     <string name="notification_playing">Playback</string>
     <string name="notification_swipe_to_stop">Ausblenden um Playback zu stoppen</string>
 

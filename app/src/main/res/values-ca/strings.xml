@@ -83,6 +83,7 @@
     <string name="snackbar_message_timer_set">Comptador de temps d\'espera fixat en</string>
 
     <!-- notification -->
+    <string name="notification_stop">Stop</string>
     <string name="notification_swipe_to_stop">Llisca per aturar</string>
     <string name="notification_playing">Reproduint</string>
 
