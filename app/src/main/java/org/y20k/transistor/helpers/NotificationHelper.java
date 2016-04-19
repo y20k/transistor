@@ -41,7 +41,7 @@ public final class NotificationHelper {
     private static final int PLAYER_SERVICE_NOTIFICATION_ID = 1;
     private static final String ACTION_STOP = "org.y20k.transistor.action.STOP";
     private static final String ACTION_SHOW_PLAYER = "org.y20k.transistor.action.SHOW_PLAYER";
-    private static final String EXTRA_STATION_ID = "EXTRA_STATION_ID";
+    private static final String EXTRA_STATION_ID = "STATION_ID";
 
 
     /* Main class variables */

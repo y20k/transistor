@@ -31,8 +31,8 @@ public final class PlayerActivity extends AppCompatActivity {
 
     /* Keys */
     private static final String ACTION_SHOW_PLAYER = "org.y20k.transistor.action.SHOW_PLAYER";
-    private static final String EXTRA_STATION_ID = "EXTRA_STATION_ID";
-    private static final String EXTRA_PLAYBACK_STATE = "EXTRA_PLAYBACK_STATE";
+    private static final String EXTRA_STATION_ID = "STATION_ID";
+    private static final String EXTRA_PLAYBACK_STATE = "PLAYBACK_STATE";
     private static final String ARG_STATION_ID = "ArgStationID";
     private static final String ARG_PLAYBACK = "ArgPlayback";
 

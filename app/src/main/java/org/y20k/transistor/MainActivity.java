@@ -50,9 +50,9 @@ public final class MainActivity extends AppCompatActivity {
     private static final String ACTION_SHOW_PLAYER = "org.y20k.transistor.action.SHOW_PLAYER";
     private static final String ACTION_CHANGE_VIEW_SELECTION = "org.y20k.transistor.action.CHANGE_VIEW_SELECTION";
     private static final String ACTION_COLLECTION_CHANGED = "org.y20k.transistor.action.COLLECTION_CHANGED";
-    private static final String EXTRA_STATION_ID = "EXTRA_STATION_ID";
-    private static final String EXTRA_STREAM_URI = "EXTRA_STREAM_URI";
-    private static final String EXTRA_PLAYBACK_STATE = "EXTRA_PLAYBACK_STATE";
+    private static final String EXTRA_STATION_ID = "STATION_ID";
+    private static final String EXTRA_STREAM_URI = "STREAM_URI";
+    private static final String EXTRA_PLAYBACK_STATE = "PLAYBACK_STATE";
     private static final String ARG_STATION_ID = "ArgStationID";
     private static final String ARG_TWO_PANE = "ArgTwoPane";
     private static final String ARG_PLAYBACK = "ArgPlayback";

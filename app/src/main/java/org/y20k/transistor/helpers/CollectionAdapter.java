@@ -53,7 +53,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     /* Keys */
     private static final String ACTION_PLAYBACK_STOPPED = "org.y20k.transistor.action.PLAYBACK_STOPPED";
     private static final String ACTION_SHOW_PLAYER = "org.y20k.transistor.action.SHOW_PLAYER";
-    private static final String EXTRA_STATION_ID = "EXTRA_STATION_ID";
+    private static final String EXTRA_STATION_ID = "STATION_ID";
     private static final String ARG_STATION_ID = "ArgStationID";
     private static final String ARG_TWO_PANE = "ArgTwoPane";
     private static final String PREF_TWO_PANE = "prefTwoPane";

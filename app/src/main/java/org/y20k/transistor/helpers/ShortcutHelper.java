@@ -38,8 +38,8 @@ public class ShortcutHelper {
 
     /* Keys */
     private static final String ACTION_SHOW_PLAYER = "org.y20k.transistor.action.SHOW_PLAYER";
-    private static final String EXTRA_PLAYBACK_STATE = "EXTRA_PLAYBACK_STATE";
-    private static final String EXTRA_STREAM_URI = "EXTRA_STREAM_URI";
+    private static final String EXTRA_PLAYBACK_STATE = "PLAYBACK_STATE";
+    private static final String EXTRA_STREAM_URI = "STREAM_URI";
 
 
     /* Main class variables */
