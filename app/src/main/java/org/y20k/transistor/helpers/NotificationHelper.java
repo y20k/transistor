@@ -102,6 +102,9 @@ public final class NotificationHelper {
         builder.setContentText(notificationText);
         builder.setStyle(new NotificationCompat.BigTextStyle().bigText(notificationText));
         builder.addAction (R.drawable.ic_stop_black_36dp, context.getString(R.string.notification_stop), stopActionPendingIntent);
+//        builder.setStyle(new Notification.MediaStyle();
+//        builder.setShowActionsInCompactView(0);
+//        builder.setMediaSession(mMediaSession.getSessionToken());
         builder.setOngoing(true);
         builder.setColor(notificationColor);
         builder.setContentIntent(tapPendingIntent);
