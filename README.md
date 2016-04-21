@@ -14,7 +14,7 @@ Transistor is free software. It is published under the [MIT open source license]
 
 Install Transistor
 ------------------
-[<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" width="172">](https://play.google.com/store/apps/details?id=org.y20k.transistor)
+[<img src="https://play.google.com/intl/de_de/badges/images/generic/en_badge_web_generic.png" width="172">](https://play.google.com/store/apps/details?id=org.y20k.transistor)
 
 [<img src="https://upload.wikimedia.org/wikipedia/commons/0/0d/Get_it_on_F-Droid.svg" width="172">](https://f-droid.org/repository/browse/?fdid=org.y20k.transistor)
 
