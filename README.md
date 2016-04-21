@@ -16,7 +16,7 @@ Install Transistor
 ------------------
 [<img src="https://play.google.com/intl/de_de/badges/images/generic/en_badge_web_generic.png" width="192">](https://play.google.com/store/apps/details?id=org.y20k.transistor)
 
-[<img src="https://cloud.githubusercontent.com/assets/9103935/14701970/49decb6a-07a8-11e6-94a8-c67a6b0777cb.png" width="192">](https://f-droid.org/repository/browse/?fdid=org.y20k.transistor)
+[<img src="https://cloud.githubusercontent.com/assets/9103935/14702535/45f6326a-07ab-11e6-9256-469c1dd51c22.png" width="192">](https://f-droid.org/repository/browse/?fdid=org.y20k.transistor)
 
 [... or get a Release APK here on GitHub](https://github.com/y20k/transistor/releases)
 
