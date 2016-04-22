@@ -1,0 +1,139 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+    <!-- activities -->
+    <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
+    <string name="title_activity_player">Reproduciendo ahora</string>
+    <string name="title_activity_infosheet">Hoja de información</string>
+
+    <!-- menu entries -->
+    <string name="menu_about">Acerca de</string>
+    <string name="menu_howto">Cómo utilizar</string>
+    <string name="menu_timer">Temporizador de apagado</string>
+    <string name="menu_icon">Cambiar icono</string>
+    <string name="menu_add">Añadir</string>
+    <string name="menu_delete">Borrar</string>
+    <string name="menu_rename">Renombrar</string>
+    <string name="menu_shortcut">Colocar en la pantalla de inicio</string>
+
+    <!-- headers -->
+    <string name="header_about">Acerca de</string>
+    <string name="header_howto">Cómo utilizar</string>
+
+    <!-- descriptions -->
+    <string name="descr_arrow_actioncall">Flecha apuntando hacia el símbolo de añadir estación</string>
+    <string name="descr_overflow_button">Mostrar las opciones para la estación de radio</string>
+    <string name="descr_station_icon">Icono de estación de radio</string>
+    <string name="descr_station_name">Nombre de estación de radio</string>
+    <string name="descr_station_metadata">Metadata (Artist / Title) of currently playing radio station</string>
+    <string name="descr_station_name_example">Ejemplo FM</string>
+    <string name="descr_station_metadata_example">Artist - Title</string>
+    <string name="descr_playback_button">Botón grande de reproducción</string>
+    <string name="descr_playback_indicator">Indicador para el funcionamiento de la reproducción</string>
+    <string name="descr_playback_indicator_started">Indicador para el funcionamiento de la reproducción</string>
+    <string name="descr_timer_indicator_started">Indicador para el funcionamiento del temporizador de apagado</string>
+
+    <!-- dialogs -->
+    <string name="dialog_generic_button_okay">Aceptar</string>
+    <string name="dialog_generic_button_cancel">Cancelar</string>
+    <string name="dialog_add_station_button">Añadir</string>
+    <string name="dialog_add_station_input_hint">Pegar una URL de streming válida</string>
+    <string name="dialog_add_station_message">Añadir nueva estación</string>
+    <string name="dialog_add_station_howto">Puedes añadir un stream de audio codificado en MP3 y OGG además de streams encapsulados en archivos pls o m3u. Alternativamente puedes añadir nuevas estaciones pulsando en los enlaces de stream (pls o m3u) en tu navegador web.</string>
+    <string name="dialog_delete_station_message">Borrar estación</string>
+    <string name="dialog_button_delete">Borrar</string>
+    <string name="dialog_rename_station_input_hint">Introducir un nuevo nombre</string>
+    <string name="dialog_rename_station_message">Renombrar estación</string>
+    <string name="dialog_button_rename">Renombrar</string>
+
+    <!-- error dialogs -->
+    <string name="dialog_error_title_default">Error</string>
+    <string name="dialog_error_message_default">Un error ha ocurrido</string>
+    <string name="dialog_error_details_button_default">Mostrar detalles</string>
+    <string name="dialog_error_details_default">No hay detalles disponibles</string>
+    <string name="dialog_error_details_write">Estación está probablemente duplicada o si no deberías comprobar tu almacenamiento externo.</string>
+    <string name="dialog_error_title_fetch_download">Descargar asunto</string>
+    <string name="dialog_error_title_fetch_read">Leer asunto</string>
+    <string name="dialog_error_title_fetch_write">Escribir asunto</string>
+    <string name="dialog_error_message_fetch_general_external_storage">Almacenamiento externo:</string>
+    <string name="dialog_error_message_fetch_general_hint_m3u">Consejo: Transistor solo puede procesar MP3 y OGG o URLs que terminan en .m3u o .pls.</string>
+    <string name="dialog_error_message_fetch_general_file_content">Contenido del archivo:</string>
+    <string name="dialog_error_message_fetch_download_station_url">URL de la estación:</string>
+    <string name="dialog_error_message_fetch_download">Transistor intento de todas las maneras pero no pudo traducir al enlace dado.</string>
+    <string name="dialog_error_message_fetch_read">Transistor intento de todas las maneras pero no pudo entender el archivo dado.</string>
+    <string name="dialog_error_message_fetch_read_file_location">Ubicación del archivo:</string>
+    <string name="dialog_error_message_fetch_write">Transistor intento de todas las maneras pero no pudo guardar la estación en el almacenamiento.</string>
+
+    <!-- messages -->
+    <string name="actioncall_message_start_here">Añadir una nueva estación</string>
+    <string name="toastmessage_add_download_started">Descarga comenzada:</string>
+    <string name="toastmessage_add_open_file_started">Abriendo archivo:</string>
+    <string name="toastmessage_long_press_playback_stopped">Reproducción detenida (detectada pulsación larga)</string>
+    <string name="toastmessage_long_press_playback_started">Reproducción empezada (detectada pulsación larga)</string>
+    <string name="toastmessage_shortcut_created">Acceso directo creado.</string>
+    <string name="toastmessage_station_copied">Estación copiada.</string>
+    <string name="toastmessage_timer_activated">Temporizador de apagado activado.</string>
+    <string name="toastmessage_timer_cancelled">Temporizador de apagado cancelado.</string>
+    <string name="toastmessage_timer_duration_increased">Duración incrementada.</string>
+    <string name="toastmessage_timer_start_unable">Por favor inicia primero la reproducción.</string>
+    <string name="toastalert_rename_unsuccessful">No se ha podido renombrar la estación. Por favor elija un nombre diferente.</string>
+    <string name="toastalert_delete_successful">Estación borrada.</string>
+    <string name="toastalert_no_external_storage">No se ha podido acceder al almacenamiento externo.</string>
+    <string name="toastalert_headphones_unplugged">Auriculares desconectados. Reproducción detenida.</string>
+    <string name="toastalert_permission_denied">Permiso denegado:</string>
+    <string name="toastalert_stream_not_found">Transistor no reconoce esta estación. Por favor bórrala y añádela de nuevo a la pantalla de inicio.</string>
+    <string name="snackbar_request_storage_access">Transistor necesita obtener permisos de lectura para acceder a los datos del almacenamiento externo.</string>
+    <string name="snackbar_message_timer_set">Temporizador de apagado establecer en</string>
+
+    <!-- notification -->
+    <string name="notification_stop">Stop</string>
+    <string name="notification_swipe_to_stop">Deslizar para detener</string>
+    <string name="notification_playing">Reproduciendo</string>
+
+    <!-- infosheet about -->
+    <string name="infosheet_about_h1_about">Acerca de Transistor</string>
+    <string name="infosheet_about_h2_radio">Aplicación de radio para Android</string>
+    <string name="infosheet_about_h3_version">Version 2.0 (Starman)</string>
+    <string name="infosheet_about_p_bare">Transistor es una aplicación simple para escuchar programas de radio por internet. La aplicación almacena las estaciones como archivos en el almacenamiento externo de tu dispositivo. Busca los archivos del tipo m3u en /Android/data/org.y20k.transistor/Collection. Actualmente soporta streams codificados en MP3 y OGG.</string>
+    <string name="infosheet_about_p_note">Nota importante: Esta es una aplicación del tipo BYOS (trae tu propia estación). No ofrece ningún tipo de opción de búsqueda integrada. Tienes que añadir manualmente las estaciones de radio.</string>
+    <string name="infosheet_about_p_free">Transistor es software libre. Está publicado bajo la licencia de software libre MIT. Puedes encontrar el código en GitHub. GitHub es también un buen sitio para registrar fallos o incluso contribuir, si estás interesado.</string>
+    <string name="infosheet_about_p_github">https://github.com/y20k/transistor</string>
+    <string name="infosheet_about_p_license">https://opensource.org/licenses/MIT</string>
+    <string name="infosheet_about_h2_permissions">¿Qué permisos necesita Transistor?</string>
+    <string name="infosheet_about_h3_shortcut">Permiso INSTALL_SHORTCUT y UNINSTALL_SHORTCUT</string>
+    <string name="infosheet_about_p_shortcut">Este permiso es necesario para instalar y desinstalar accesos directos a estaciones de radio en la pantalla principal de Android.</string>
+    <string name="infosheet_about_h3_internet">Permiso INTERNET</string>
+    <string name="infosheet_about_p_internet">Transistor streams estaciones de radio a través de internet.</string>
+    <string name="infosheet_about_h3_external">Permiso READ_EXTERNAL_STORAGE</string>
+    <string name="infosheet_about_p_external">Transistor necesita acceder a imágenes, fotos y documentos para poder personalizar los iconos de las estaciones de radio y guardar los archivos localmente de las listas de reproducción.</string>
+    <string name="infosheet_about_h3_vibrate">Permiso VIBRATE</string>
+    <string name="infosheet_about_p_vibrate">Manteniendo pulsada una estación de radio se activará una pequeña vibración.</string>
+    <string name="infosheet_about_h3_wakelock">Permiso WAKE_LOCK</string>
+    <string name="infosheet_about_p_wakelock">During Playback Transistor acquires a so called partial wake lock. That prevents the Android system to stop playback for power saving reasons.</string>
+
+    <!-- infosheet howto -->
+    <string name="infosheet_howto_h1_howto">Cómo utilizar Transistor</string>
+    <string name="infosheet_howto_h2_add">¿Cómo añadir una nueva estación de radio?</string>
+    <string name="infosheet_howto_p_add">La manera más fácil de añadir una nueva estación de radio es buscar en la web enlaces de stream de radio y elegir Transistor como la aplicación por defecto para este tipo de archivos. También puedes pulsar el símbolo (+) en la barra superior y pegar el enlace de stream directamente. Tenga en cuenta: Transistor no dispone de ningún tipo de opción de búsqueda integrado.</string>
+    <string name="infosheet_howto_h2_play">¿Cómo reproducir una estación de radio?</string>
+    <string name="infosheet_howto_p_play">Pulsa el botón grande de reproducción ;).</string>
+    <string name="infosheet_howto_h2_stop">¿Como detener la reproducción?</string>
+    <string name="infosheet_howto_p_stop">Pulsa el botón grande de detener o desenchufa los auriculares o elimina la notificación deslizándola en la pantalla de bloqueo.</string>
+    <string name="infosheet_howto_h2_sleep">¿Cómo iniciar el temporizador de apagado?</string>
+    <string name="infosheet_howto_p_sleep">Al pulsar el símbolo del reloj comienza una cuenta atrás de 15 minutos tras lo cual Transistor detiene la reproducción. Cada pulsación en el reloj añade 15 minutos. La reproducción debe estar en marcha para poder activar el temporizador de apagado.</string>
+    <string name="infosheet_howto_h2_shortcut">¿Cómo colocar un acceso directo a una estación en la pantalla principal?</string>
+    <string name="infosheet_howto_p_shortcut">La opción para colocar un acceso directo a una estación en la pantalla principal se puede acceder desde el menú con los tres puntos de la estación. Pulsando en el acceso directo abrirá Transistor - reproducción comenzará inmediatamente.</string>
+    <string name="infosheet_howto_h2_edit">¿Cómo renombrar o borrar una estación?</string>
+    <string name="infosheet_howto_p_edit">Se puede acceder a las opciones de renombrado y borrado desde la lista de estaciones y desde la pantalla de reproduciendo ahora. Solo pulsa sobre el símbolo de los tres puntos. También puedes manejar la lista de estaciones desde el navegador de archivos (mira la siguiente pregunta).</string>
+    <string name="infosheet_howto_h2_storage">¿Donde almacena Transistor sus estaciones?</string>
+    <string name="infosheet_howto_p_storage">Transistor no guarda la lista de estaciones en una base de datos. En lugar de eso almacena las estaciones como archivos m3u en el almacenamiento externo de tu dispositivo. Eres libre de trastear esos archivos usando el editor de texto de tu dispositivo. Los archivos están almacenados en /Android/data/org.y20k.transistor/Collection.</string>
+    <string name="infosheet_howto_h2_backup">¿Cómo puedo hacer una copia de seguridad de mis estaciones de radio?</string>
+    <string name="infosheet_howto_p_backup">Transistor soporta la característica de hacer copia de seguridad automática de Android 6. Las estaciones de radio estarán siempre respaldadas en tu cuenta de Google y se restaurarán al reinstalar. En dispositivos con versiones antiguas de Android tendrás que guardar y restaurar manualmente la carpeta Collection.</string>
+    <string name="infosheet_howto_h2_settings">¿Por qué Transistor no tiene ninguna configuración?</string>
+    <string name="infosheet_howto_p_settings">No hay nada que configurar ;). Transistor es una aplicación muy simple. Dependiendo de tu punto de vista simple es o estupendo o defectuoso.</string>
+
+    <!-- HTML strings -->
+    <string name="html_about">&lt;!DOCTYPE html&gt; &lt;html&gt; &lt;body&gt; &lt;h1&gt;Acerca de Transistor&lt;/h1&gt; &lt;h2&gt;Aplicación de radio para Android&lt;/h2&gt; &lt;h3&gt;Versión 2.0 (&amp;quot;Starman&amp;quot;)&lt;/h3&gt; &lt;p&gt;Transistor es una aplicación simple para escuchar programas de radio por internet. La aplicación almacena las estaciones como archivos en el almacenamiento externo de tu dispositivo. Busca los archivos del tipo m3u en /Android/data/org.y20k.transistor/Collection. Actualemente soporta streams codificados en MP3 y OGG&lt;/p&gt; &lt;p&gt;Nota importante: Esta es una aplicación del tipo BYOS (&amp;quot;trae tu propia estación&amp;quot;). No ofrece ningún tipo de opción de búsqueda integrado. Tienes que añadir manualmente las estaciones de radio.&lt;/p&gt; &lt;p&gt;Transistor es software libre. Está publicado bajo la licencia de software libre MIT. Puedes encontrar el código en GitHub. GitHub es también un buen sitio para registrar fallos o incluso contribuir, si estás interesado.&lt;/p&gt; &lt;p&gt;https://github.com/y20k/transistor&lt;/p&gt; &lt;p&gt;https://opensource.org/licenses/MIT&lt;/p&gt; &lt;h3&gt;¿Qué permisos necesita Transistor?&lt;/h3&gt; &lt;p&gt;&lt;strong&gt;Permiso INTERNET&lt;/strong&gt;&lt;br /&gt; Transistor streams estaciones de radio a través de internet.&lt;/p&gt; &lt;p&gt;&lt;strong&gt;PERMISO READ_EXTERNAL_STORAGE&lt;/strong&gt;&lt;br /&gt; Transistor necesita acceder a imágenes, fotos y documentos para poder personalizar los iconos de las estaciones de radio y guardar los archivos localmente de las listas de reproducción.&lt;/p&gt; &lt;p&gt;&lt;strong&gt;Permiso VIBRATE&lt;/strong&gt;&lt;br /&gt; Manteniendo pulsada una estación de radio se activará una pequeña vibración.&lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</string>
+
+    <string name="html_howto">&lt;!DOCTYPE html&gt; &lt;html&gt; &lt;body&gt; &lt;h1&gt;¿Cómo utilizar Transistor?&lt;/h1&gt; &lt;h2&gt;¿Cómo añadir una nueva estación de radio?&lt;/h2&gt; &lt;p&gt;La manera más fácil de añadir una nueva estación de radio es buscar en la web enlaces de stream de radio y elegir Transistor como la aplicación por defecto para este tipo de archivos. También puedes pulsar el símbolo (+) en la barra superior y pegar el enlace de stream directamente. Tenga en cuenta: Transistor no dispone de ningún tipo de opción de búsqueda integrado.&lt;/p&gt; &lt;h2&gt;¿Cómo reproducir una estación de radio?&lt;/h2&gt; &lt;p&gt;Da un toque al botón grande de reproducción ;).&lt;/p&gt; &lt;h2&gt;¿Como detener la reproducción?&lt;/h2&gt; &lt;p&gt;Pulsa en el botón grande de detener o desenchufa los auriculares o elimina la notificación deslizándola en la pantalla de bloqueo.&lt;/p&gt; &lt;h2&gt;¿Cómo iniciar el temporizador de apagado?&lt;/h2&gt; &lt;p&gt;Al pulsar el símbolo del reloj comienza una cuenta atrás de 15 minutos tras lo cual Transistor detiene la reproducción. Cada pulsación en el reloj añade 15 minutos. La reproducción debe estar en marcha para poder activar el temporizador de apagado.&lt;/p&gt; &lt;h2&gt;¿Cómo colocar un acceso directo a una estación en la pantalla principal?&lt;/h2&gt; &lt;p&gt;La opción para colocar un acceso directo a una estación en la pantalla principal se puede acceder desde el menú con los tres puntos de la estación. Pulsando en el acceso directo abrirá Transistor - reproducción comenzará inmediatamente.&lt;/p&gt; &lt;h2&gt;¿Cómo renombrar o borrar una estación?&lt;/h2&gt; &lt;p&gt;Se puede acceder a las opciones de renombrado y borrado desde la lista de estaciones y desde la pantalla de reproduciendo ahora. Solo pulsa sobre el símbolo de los tres puntos. También puedes manejar la lista de estaciones desde el navegador de archivos (mira la siguiente pregunta).&lt;/p&gt; &lt;h2&gt;¿Donde almacena Transistor sus estaciones?&lt;/h2&gt; &lt;p&gt;Transistor no guarda la lista de estaciones en una base de datos. En lugar de eso almacena las estaciones como archivos m3u en el almacenamiento externo de tu dispositivo. Eres libre de trastear esos archivos usando el editor de texto de tu dispositivo. Los archivos están almacenados en /Android/data/org.y20k.transistor/Collection.&lt;/p&gt; &lt;h2&gt;¿Cómo puedo hacer una copia de seguridad de mis estaciones de radio?&lt;h2&gt; &lt;p&gt;Transistor soporta la característica de hacer copia de seguridad automática de Android 6. Las estaciones de radio estarán siempre respaldadas en tu cuenta de Google y se restaurarán al reinstalar. En dispositivos con versiones antiguas de Android tendrás que guardar y restaurar manualmente la carpeta &amp;quot;Collection&amp;quot;.&lt;/p&gt; &lt;h2&gt;¿Por qué Transistor no tiene ninguna configuración?&lt;/h2&gt; &lt;p&gt;No hay nada que configurar ;). Transistor es una aplicación muy simple. Dependiendo de tu punto de vista &amp;quot;simple&amp;quot; es o estupendo o defectuoso.&lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</string>
+
+</resources>

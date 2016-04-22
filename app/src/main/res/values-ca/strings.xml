@@ -1,0 +1,140 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+    <!-- activities -->
+    <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
+    <string name="title_activity_player">Reproduint ara</string>
+    <string name="title_activity_infosheet">Full d\'informació</string>
+
+    <!-- menu entries -->
+    <string name="menu_about">Quant a</string>
+    <string name="menu_howto">Com utilitzar</string>
+    <string name="menu_timer">Temporitzador per dormir</string>
+    <string name="menu_icon">Canvia la icona</string>
+    <string name="menu_add">Afegeix</string>
+    <string name="menu_delete">Esborrar</string>
+    <string name="menu_rename">Renombra</string>
+    <string name="menu_shortcut">Lloc a la pantalla d\'inici</string>
+
+    <!-- headers -->
+    <string name="header_about">Quant a</string>
+    <string name="header_howto">Com utilitzar</string>
+
+    <!-- descriptions -->
+    <string name="descr_arrow_actioncall">Fletxa que apunta cap al símbol d\'afegir nova emissora</string>
+    <string name="descr_overflow_button">Mostra les opcions per l\'estació de ràdio</string>
+    <string name="descr_station_icon">Icona de l\'emissora de ràdio</string>
+    <string name="descr_station_name">Nom de l\'emissora de ràdio</string>
+    <string name="descr_station_metadata">Metadata (Artist / Title) of currently playing radio station</string>
+    <string name="descr_station_name_example">Exemple FM</string>
+    <string name="descr_station_metadata_example">Artist - Title</string>
+    <string name="descr_playback_button">Gran botó de reproducció</string>
+    <string name="descr_playback_indicator">Indicador pel funcionament de la reproducció</string>
+    <string name="descr_playback_indicator_started">Indicador pel funcionament de la reproducció</string>
+    <string name="descr_timer_indicator_started">Indicador per al funcionament de temporitzador d\'apagat</string>
+
+    <!-- dialogs -->
+    <string name="dialog_generic_button_okay">D\'acord</string>
+    <string name="dialog_generic_button_cancel">Cancel·la</string>
+    <string name="dialog_add_station_button">Afegeix</string>
+    <string name="dialog_add_station_input_hint">Enganxa una adreça del canal vàlida</string>
+    <string name="dialog_add_station_message">Afegeix nova emissora</string>
+    <string name="dialog_add_station_howto">També podeu afegir una nova emissora prement en les adreces dels canals (.m3u) en el navegador web.</string>
+    <string name="dialog_delete_station_message">Suprimeix emissora de ràdio</string>
+    <string name="dialog_button_delete">Suprimeix</string>
+    <string name="dialog_rename_station_input_hint">Introdueix un nou nom</string>
+    <string name="dialog_rename_station_message">Canvia el nom de l\'emissora</string>
+    <string name="dialog_button_rename">Canvia el nom</string>
+
+    <!-- error dialogs -->
+    <string name="dialog_error_title_default">Error</string>
+    <string name="dialog_error_message_default">S\'ha produït un error</string>
+    <string name="dialog_error_details_button_default">Mostra els detalls</string>
+    <string name="dialog_error_details_default">Detalls no disponibles</string>
+    <string name="dialog_error_details_write">És probable que l\'emissora estigui duplicada o hauries de comprovar al teu emmagatzematge extern.</string>
+    <string name="dialog_error_title_fetch_download">Descarrega publicació</string>
+    <string name="dialog_error_title_fetch_read">Llegir publicació</string>
+    <string name="dialog_error_title_fetch_write">Escriu publicació</string>
+    <string name="dialog_error_message_fetch_general_external_storage">Emmagatzematge extern:</string>
+    <string name="dialog_error_message_fetch_general_hint_m3u">Consell: Transistor només pot processar MP3, OGG o URLs que acaben en .m3u o .pls.</string>
+    <string name="dialog_error_message_fetch_general_file_content">Contingut del fitxer:</string>
+    <string name="dialog_error_message_fetch_download">Transistor ho ha intentat el millor que ha pogut però no acaba d\'entendre l\'enllaç.</string>
+    <string name="dialog_error_message_fetch_download_station_url">URL de l\'emissora:</string>
+    <string name="dialog_error_message_fetch_read">Transistor ho ha intentat el millor que ha pogut però no acaba d\'entendre el fitxer.</string>
+    <string name="dialog_error_message_fetch_read_file_location">Ubicació del fitxer:</string>
+    <string name="dialog_error_message_fetch_write">Transistor ho ha intentat el millor que ha pogut però no pot desar l\'emissora en l\'emmagatzematge.</string>
+
+    <!-- messages -->
+    <string name="actioncall_message_start_here">Afegeix nova emissora</string>
+    <string name="toastmessage_add_download_started">La baixada ha començat:</string>
+    <string name="toastmessage_add_open_file_started">Obrint fitxer:</string>
+    <string name="toastmessage_long_press_playback_stopped">Reproducció aturada (pulsació llarga detectada)</string>
+    <string name="toastmessage_long_press_playback_started">Reproducció iniciada (pulsació llarga detectada)</string>
+    <string name="toastmessage_shortcut_created">Accés directe creat.</string>
+    <string name="toastmessage_station_copied">Emissora copiada.</string>
+    <string name="toastmessage_timer_activated">Temporitzador d\'apagat activat.</string>
+    <string name="toastmessage_timer_cancelled">Temporitzador d\'apagat cancel·lat.</string>
+    <string name="toastmessage_timer_duration_increased">Incrementar la duració (+ 15 min).</string>
+    <string name="toastmessage_timer_start_unable">Si us plau inicia la reproducció abans.</string>
+    <string name="toastalert_rename_unsuccessful">Incapaç de canviar el nom de l\'emissora. Si us plau, escolliu un nom diferent.</string>
+    <string name="toastalert_delete_successful">Emissora suprimida.</string>
+    <string name="toastalert_no_external_storage">No es pot accedir a l\'emmagatzematge intern.</string>
+    <string name="toastalert_headphones_unplugged">Auriculars desendollats. La reproducció s\'ha aturat.</string>
+    <string name="toastalert_permission_denied">Permís denegat:</string>
+    <string name="toastalert_stream_not_found">Transistor no rconeix aquesta emissora. Si us plau, esborra i torna a afegir-la a la pantalla d\'inici.</string>
+    <string name="snackbar_request_storage_access">Transistor necessita obtenir permisos de lectura per accedir a les dades del emmagatzematge extern.</string>
+    <string name="snackbar_message_timer_set">Comptador de temps d\'espera fixat en</string>
+
+    <!-- notification -->
+    <string name="notification_stop">Stop</string>
+    <string name="notification_swipe_to_stop">Llisca per aturar</string>
+    <string name="notification_playing">Reproduint</string>
+
+    <!-- infosheet about -->
+    <string name="infosheet_about_h1_about">Sobre Transistor</string>
+    <string name="infosheet_about_h2_radio">Aplicació de ràdio per Android</string>
+    <string name="infosheet_about_h3_version">Versió 2.0 (Starman)</string>
+    <string name="infosheet_about_p_bare">Transistor és una aplicació per escoltar programes de ràdio a través d\'Internet. L\'aplicació emmagatzema les emissores en fitxers dins del emmagatzematge extern. Pots cercar aquests fitxers M3U dins de /Android/data/org.y20k.transistor/Collection. En l\'actualitat pot reproduir fitxers en MP3 i OGG.</string>
+    <string name="infosheet_about_p_note">Nota important: Aquesta és una aplicació de tipus \"BYOS\" (sigles de l\'anglés Bring Your Own Station (porta la teva propia emissora)). No ofereix cap tipus d\'opció de cerca incorporat. Vostè haurà d\'afegir manualment les emissores de ràdio.</string>
+    <string name="infosheet_about_p_free">Transistor és programari lliure. Està publicat sota llicència de codi obert MIT. Pots trobar el codi font a GitHub. GitHub és també un bon lloc per presentar errors i fins i tot contribuir, si vosté està interessat.</string>
+    <string name="infosheet_about_p_github">https://github.com/y20k/transistor</string>
+    <string name="infosheet_about_p_license">https://opensource.org/licenses/MIT</string>
+    <string name="infosheet_about_h2_permissions">Quins permisos necessita Transistor?</string>
+    <string name="infosheet_about_h3_shortcut">Permission INSTALL_SHORTCUT and UNINSTALL_SHORTCUT</string>
+    <string name="infosheet_about_p_shortcut">This permission is needed to install and uninstall radio station shortcuts on the Android Home screen.</string>
+    <string name="infosheet_about_h3_internet">Permission INTERNET</string>
+    <string name="infosheet_about_p_internet">Transistor streams radio stations over the internet.</string>
+    <string name="infosheet_about_h3_external">Permission READ_EXTERNAL_STORAGE</string>
+    <string name="infosheet_about_p_external">Transistor needs access to images, photos and documents to be able customize radio station icons and to able to open locally saved playlist files.</string>
+    <string name="infosheet_about_h3_vibrate">Permission VIBRATE</string>
+    <string name="infosheet_about_p_vibrate">Tapping and holding a radio station will toggle a tiny vibration.</string>
+    <string name="infosheet_about_h3_wakelock">Permission WAKE_LOCK</string>
+    <string name="infosheet_about_p_wakelock">During Playback Transistor acquires a so called partial wake lock. That prevents the Android system to stop playback for power saving reasons.</string>
+
+    <!-- infosheet howto -->
+    <string name="infosheet_howto_h1_howto">How to use Transistor</string>
+    <string name="infosheet_howto_h2_add">How to add a new radio station?</string>
+    <string name="infosheet_howto_p_add">The easiest way to add a new station is to search the web for streaming links and then choose Transistor as a your default handler for those file types. You can also tap the (+) symbol in the top bar and paste in streaming links directly. Please note: Transistor does not feature any kind of built-in search option.</string>
+    <string name="infosheet_howto_h2_play">How to play back a radio station?</string>
+    <string name="infosheet_howto_p_play">Tap the big Play button ;).</string>
+    <string name="infosheet_howto_h2_stop">How to stop playback?</string>
+    <string name="infosheet_howto_p_stop">Tap the big Stop button or unplug your headphones or swipe off the notification from the lockscreen.</string>
+    <string name="infosheet_howto_h2_sleep">How to start the sleep timer?</string>
+    <string name="infosheet_howto_p_sleep">Tapping the Clock symbol starts a 15 minute countdown after which Transistor stops playback. An additional tap adds 15 minutes to the clock. Playback must be running to be able to activate the sleep timer.</string>
+    <string name="infosheet_howto_h2_shortcut">How to place a station shortcut on the Home screen?</string>
+    <string name="infosheet_howto_p_shortcut">The option to place a shortcut for a station on the Home screen can be accessed from the station\'s three dots menu. A tap on a shortcut will open Transistor - playback will start immediately.</string>
+    <string name="infosheet_howto_h2_edit">How to rename or delete a station?</string>
+    <string name="infosheet_howto_p_edit">The rename and delete options can be accessed both from the station\'s context menu. Just tap on the three dots symbol. You can manage the list of stations also from a file browser (see next question).</string>
+    <string name="infosheet_howto_h2_storage">Where does Transistor store its stations?</string>
+    <string name="infosheet_howto_p_storage">Transistor does not save its list of stations in a database. Instead it stores stations as m3u files on your device\'s external storage. Feel free to tinker with those files using the texteditor of your choice. The files are stored in /Android/data/org.y20k.transistor/Collection.</string>
+    <string name="infosheet_howto_h2_backup">How do I backup and transfer my radio stations?</string>
+    <string name="infosheet_howto_p_backup">Transistor supports Android 6\'s Auto Backup feature. Radio stations are always backed up to your Google account and will be restored at reinstall. On devices running on older versions of Android you must manually save and restore the "Collection" folder.</string>
+    <string name="infosheet_howto_h2_settings">Why does Transistor not have any setting?</string>
+    <string name="infosheet_howto_p_settings">There is nothing to be set ;). Transistor is a very simple app. Depending on your point of view "simple" is either great or lame.</string>
+
+
+    <!-- HTML strings -->
+    <string name="html_about">&lt;!DOCTYPE html&gt; &lt;html&gt; &lt;body&gt; &lt;h1&gt;Quan a Transistor&lt;/h1&gt; &lt;h2&gt;Aplicació de ràdio en línia per Android&lt;/h2&gt; &lt;h3&gt;Versió 1.2.0 (&amp;quot;Starman&amp;quot;)&lt;/h3&gt; &lt;p&gt;Transistor és una aplicació per escoltar programes de ràdio a través d\'Internet. L\'aplicació guarda les estacions en fitxers guardats en el seu dispositiu. Pots cercar els fitxers amb format m3u dins de /Android/data/org.y20k.transistor/files/Collection. Actualment pot transmetre enllaços amb format MP3 i OGG.&lt;/p&gt; &lt;p&gt;Nota important: Aquesta és una aplicació de tipus BYOS (&amp;quot; porta la teva pròpia estació&amp;quot;). No ofereix cap tipus d\'opció de cerca incorporat. Vostè haurà d\'afegir manualment emissores de ràdio.&lt;/p&gt; &lt;p&gt;Transistor és programari lliure. Es publica sota la llicència de codi obert del MIT. Vostè pot trobar el codi font a GitHub. Github és també un bon lloc per presentar errors o fins i tot contribuir, si vostè està interessat.&lt;/p&gt; &lt;p&gt;https://github.com/y20k/transistor&lt;/p&gt; &lt;p&gt;https://opensource.org/licenses/MIT&lt;/p&gt; &lt;h3&gt;Quins permisos necessita Transistor?&lt;/h3&gt; &lt;p&gt;&lt;strong&gt;Permisos d\'accés total a la xarxa.&lt;/strong&gt;&lt;br /&gt; Transistor utilitza el flux de dades per carregar el contingut de les emissores de ràdio a Internet.&lt;/p&gt; &lt;p&gt;&lt;strong&gt;Permisos de lectura del contingut de la targeta SD.&lt;/strong&gt;&lt;br /&gt; Transistor necessita l\'accés a imatges i fotos per poder oferir una millor personalització a les icones de les emissores.&lt;/p&gt; &lt;p&gt;&lt;strong&gt;Permisos de control de la vibració&lt;/strong&gt;&lt;br /&gt; Tocar i mantenint pulsat una emissora de ràdio, farà que s\'activi una petita vibració.&lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</string>
+
+    <string name="html_howto">&lt;!DOCTYPE html&gt; &lt;html&gt; &lt;body&gt; &lt;h1&gt;Com utilitzar Transistor&lt;/h1&gt; &lt;h2&gt;Com afegir una nova emissora?&lt;/h2&gt; &lt;p&gt;La manera més fàcil d\'afegir una nova emissora és la recerca d\'enllaços de transmissió (m3u i pls) i després triar Transistor com el seu gestor per als tipus de fitxers. També pots fer un toc al símbol (+) a la barra superior i enganxar els enllaços m3u directament.&lt;/p&gt; &lt;h2&gt;Com reproduir una emissora&lt;/h2&gt; &lt;p&gt;Selecciona l\'emissora i fes un toc al botó gran de reproducció ;).&lt;/p&gt; &lt;h2&gt;Com puc aturar la reproducció?&lt;/h2&gt; &lt;p&gt;Fes un toc al botó gran d\'aturar o desconnecta els teus auriculars o bé fes llistar la notificació.&lt;/p&gt; &lt;h2&gt;Com posar en marxa el temporitzador d\'apagat?&lt;/h2&gt; &lt;p&gt;En tocar el símbol de rellotge comença un compte enrere de 15 minuts en acabar la reproducció de Transistor es deté. Un toc addicional afegeix 15 minuts per al rellotge. La reproducció ha d\'estar en execució per poder activar el temporitzador d\'apagat.&lt;/p&gt; &lt;h2&gt;Com es fa un accés directe d\'una emissora en la pantalla d\'inici?&lt;/h2&gt; &lt;p&gt;L\'opció de col·locar un accés directe per a una emissora a la pantalla d\'inici es pot accedir des del menú de tres punts de l\'estació. En tocar a un accés directe s\'obrirà Transistor - la reproducció s\'iniciarà immediatament.&lt;/p&gt; &lt;h2&gt;Com canviar el nom o eliminar l\'emissora?&lt;/h2&gt; &lt;p&gt;Les opcions de canviar nom i suprimir emissora les pots trobar tant des de la llista d\'emissores com des de la pantalla de reproducció. Només has de prémer en el símbol del tres punts. Pots administrar la llista d\'emissions també des d\'un explorador d\'arxius (veure la següent pregunta).&lt;/p&gt; &lt;h2&gt;On emmagatzema Transistor les seves emissores?&lt;/h2&gt; &lt;p&gt;Transistor no desa la seva llistat d\'emissores en una base de dades. En lloc d\'emmagatzemar les emissores en bases de dades, Transistor desa les emissores en fitxers dins del seu emmagatzematge extern. Senti\'s lliure de jugar amb aquests fitxers utilitzant un editor de text. Els fitxers s\'emmagatzemen a /Android/data/org.y20k.transistor/files/Collection.&lt;/p&gt; &lt;h2&gt;Com puc fer una còpia de seguretat i transferir les meves emissores?&lt;h2&gt; &lt;p&gt;Transistor es compatible amb la funció de còpia de seguretat d\'Android 6. Les estacions de ràdio sempre es copien al seu compte de Google i es restaura a la reinstal·lació. En els dispositius amb versions anteriors a Android 6 s\'ha de guardar manualment la carpeta &amp;quot;Collection&amp;quot; per poder fer una restauració.&lt;/p&gt; &lt;h2&gt;Per què Transistor no té cap paràmetre?&lt;/h2&gt; &lt;p&gt;No hi ha res a ajustar ;). Transistor és una aplicació molt simple. És una aplicació &amp;quot;senzilla&amp;quot; i fàcil d\'utilitzar.&lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</string>
+
+</resources>

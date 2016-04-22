@@ -1,0 +1,182 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+    <!-- activities -->
+    <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
+    <string name="title_activity_player">Сейчас играет</string>
+    <string name="title_activity_infosheet">Информационная страница</string>
+
+    <!-- menu entries -->
+    <string name="menu_about">О программе</string>
+    <string name="menu_howto">Помощь</string>
+    <string name="menu_timer">Таймер сна</string>
+    <string name="menu_icon">Изменить иконку</string>
+    <string name="menu_add">Добавить</string>
+    <string name="menu_delete">Удалить</string>
+    <string name="menu_rename">Переименовать</string>
+    <string name="menu_shortcut">Поместить на домашний экран</string>
+
+    <!-- headers -->
+    <string name="header_about">О программе</string>
+    <string name="header_howto">Как использовать</string>
+
+    <!-- descriptions -->
+    <string name="descr_arrow_actioncall">Стрелка указывающая на иконку добавления станции</string>
+    <string name="descr_overflow_button">Показать опции радиостанции</string>
+    <string name="descr_station_icon">Иконка радиостанции</string>
+    <string name="descr_station_name">Название радиостанции</string>
+    <string name="descr_station_metadata">Metadata (Artist / Title) of currently playing radio station</string>
+    <string name="descr_station_name_example">Например FM</string>
+    <string name="descr_station_metadata_example">Artist - Title</string>
+    <string name="descr_playback_button">Большая кнопка воспроизведения</string>
+    <string name="descr_playback_indicator">Индикатор воспроизведения</string>
+    <string name="descr_playback_indicator_started">Индикатор воспроизведения</string>
+    <string name="descr_timer_indicator_started">Индикатор запущенного таймера сна</string>
+
+    <!-- dialogs -->
+    <string name="dialog_generic_button_okay">Хорошо</string>
+    <string name="dialog_generic_button_cancel">Отмена</string>
+    <string name="dialog_add_station_button">Добавить</string>
+    <string name="dialog_add_station_input_hint">Вставьте адрес потокового вещания</string>
+    <string name="dialog_add_station_message">Добавить новую станцию</string>
+    <string name="dialog_add_station_howto">Вы можете добавлять аудио потоки закодированные в mp3 или ogg, так же как и встроенные в m3u или pls файлах. Также возможно добавить новую станцию нажав на ссылку на поток (pls или m3u) в вашем веб-браузере.</string>
+    <string name="dialog_delete_station_message">Удалить станцию</string>
+    <string name="dialog_button_delete">Удалить</string>
+    <string name="dialog_rename_station_input_hint">Введите новое имя</string>
+    <string name="dialog_rename_station_message">Переименовать станцию</string>
+    <string name="dialog_button_rename">Переименовать</string>
+
+    <!-- error dialogs -->
+    <string name="dialog_error_title_default">Ошибка</string>
+    <string name="dialog_error_message_default">Произошла ошибка</string>
+    <string name="dialog_error_details_button_default">Показать детали</string>
+    <string name="dialog_error_details_default">Подробности недоступны</string>
+    <string name="dialog_error_details_write">Возможно радиостанция уже существеут или проблема с внешним накопителем.</string>
+    <string name="dialog_error_title_fetch_download">Проблема скачивания</string>
+    <string name="dialog_error_title_fetch_read">Проблема чтения</string>
+    <string name="dialog_error_title_fetch_write">Проблема записи</string>
+    <string name="dialog_error_message_fetch_general_external_storage">Внешнее хранилище:</string>
+    <string name="dialog_error_message_fetch_general_hint_m3u">Подсказка: Transistor может работать только с потоками закодированными в mp3 и ogg, или с адресами оканчивающимися на .m3u или .pls.</string>
+    <string name="dialog_error_message_fetch_general_file_content">Содержание файла:</string>
+    <string name="dialog_error_message_fetch_download">Transistor не может обработать эту ссылку.</string>
+    <string name="dialog_error_message_fetch_download_station_url">Адрес станции:</string>
+    <string name="dialog_error_message_fetch_read">Transistor не может обработать этот файл.</string>
+    <string name="dialog_error_message_fetch_read_file_location">Расположение файла:</string>
+    <string name="dialog_error_message_fetch_write">Transistor не смог сохранить эту станцию в хранилище.</string>
+
+    <!-- messages -->
+    <string name="actioncall_message_start_here">Добавить новую станцию</string>
+    <string name="toastmessage_add_download_started">Скачивается:</string>
+    <string name="toastmessage_add_open_file_started">Открытие файла:</string>
+    <string name="toastmessage_long_press_playback_stopped">Воспроизведение остановлено</string>
+    <string name="toastmessage_long_press_playback_started">Начинаю воспроизведение радиостанции</string>
+    <string name="toastmessage_shortcut_created">Ярлык создан.</string>
+    <string name="toastmessage_station_copied">Станция скопирована.</string>
+    <string name="toastmessage_timer_activated">Таймер сна активирован.</string>
+    <string name="toastmessage_timer_cancelled">Таймер сна отключен.</string>
+    <string name="toastmessage_timer_duration_increased">Время увеличено.</string>
+    <string name="toastmessage_timer_start_unable">Сперва запустите воспроизведение.</string>
+    <string name="toastalert_rename_unsuccessful">Невозможно переименовать станцию. Пожалуйста, выберите другое имя.</string>
+    <string name="toastalert_delete_successful">Станция удалена.</string>
+    <string name="toastalert_no_external_storage">Нет доступа к внешнему накопителю.</string>
+    <string name="toastalert_headphones_unplugged">Наушники отключили. Воспроизведение остановлено.</string>
+    <string name="toastalert_permission_denied">Доступ запрещен:</string>
+    <string name="toastalert_stream_not_found">Transistor не распознал эту станцию. Пожалуйста, удалите и добавьте снова на домашний экран.</string>
+    <string name="snackbar_request_storage_access">Приложению должно быть предоставлено разрешение на чтение данных на внешнем накопителе.</string>
+    <string name="snackbar_message_timer_set">Таймер сна установлен на</string>
+
+    <!-- notification -->
+    <string name="notification_stop">Stop</string>
+    <string name="notification_swipe_to_stop">Смахните, чтобы остановить</string>
+    <string name="notification_playing">Играет</string>
+
+    <!-- infosheet about -->
+    <string name="infosheet_about_h1_about">О программе Transistor</string>
+    <string name="infosheet_about_h2_radio">Приложение интернет радио для Android</string>
+    <string name="infosheet_about_h3_version">Версия 2.0 (\"Starman\")</string>
+    <string name="infosheet_about_p_bare">Transistor простое приложение для прослушивания радиопередач через интернет. Приложение хранит информацию о станциях в файлах на внешнем накопителе вашего устройства. Посмотрите на файлы с расширением m3u в директории /Android/data/org.y20k.transistor/Collection. В настоящее время приложение умеет работать с потоками в форматах MP3 и OGG.</string>
+    <string name="infosheet_about_p_note">Важное примечание: в приложении нет какой-либо функции поиска радиостанций. Вам необходимо вручную добавить их.</string>
+    <string name="infosheet_about_p_free">Transistor свободное приложение. Оно распространяется под лицензией MIT. Вы можете получить исходный код на GitHub. Также на GitHub вы можете сообщить об ошибках или помочь в разработке.</string>
+    <string name="infosheet_about_p_github">https://github.com/y20k/transistor</string>
+    <string name="infosheet_about_p_license">https://opensource.org/licenses/MIT</string>
+    <string name="infosheet_about_h2_permissions">Какие разрешения необходимы Transistor?</string>
+    <string name="infosheet_about_h3_shortcut">INSTALL_SHORTCUT и UNINSTALL_SHORTCUT</string>
+    <string name="infosheet_about_p_shortcut">Эти разрешения необходимы для создания и удаления ярлыков радиостанций на домашнем экране Android\'а.</string>
+    <string name="infosheet_about_h3_internet">INTERNET</string>
+    <string name="infosheet_about_p_internet">Transistor вещает радиостанции через интернет.</string>
+    <string name="infosheet_about_h3_external">READ_EXTERNAL_STORAGE</string>
+    <string name="infosheet_about_p_external">Transistor\'у необходим доступ к изображениям, фотографиям и документам для настройки иконок радиостанций и чтения локально сохранённых плейлистов.</string>
+    <string name="infosheet_about_h3_vibrate">VIBRATE</string>
+    <string name="infosheet_about_p_vibrate">Долгое нажатие на названии радиостанции вызывает небольшую вибрацию.</string>
+    <string name="infosheet_about_h3_wakelock">WAKE_LOCK</string>
+    <string name="infosheet_about_p_wakelock">Во время воспроизведения приложение не даёт устройству полностью \"заснуть\". Это предотвращает остановку воспроизведения когда Android активирует функцию энергосбережения.</string>
+
+    <!-- infosheet howto -->
+    <string name="infosheet_howto_h1_howto">Как использовать Transistor</string>
+    <string name="infosheet_howto_h2_add">Как добавить новую радиостанцию?</string>
+    <string name="infosheet_howto_p_add">Самый простой способ добавить новую станцию - найти ссылку на поток в интернете и затем выбрать Transistor в качестве приложения по умолчанию для этих типов файлов. Вы также можете нажать на символ (+) в верхней части приложения и вставить ссылку вручную. Примите во внимание: Transistor не имеет встроенной функции поиска радиостанций.</string>
+    <string name="infosheet_howto_h2_play">Как воспроизвести радиостанцию?</string>
+    <string name="infosheet_howto_p_play">Нажать большую кнопку «Воспроизведение» ;).</string>
+    <string name="infosheet_howto_h2_stop">Как остановить воспроизведение?</string>
+    <string name="infosheet_howto_p_stop">Нажать большую кнопку «Стоп», отсоединить наушники или смахнуть уведомление с экрана блокировки.</string>
+    <string name="infosheet_howto_h2_sleep">Как запустить таймер сна?</string>
+    <string name="infosheet_howto_p_sleep">Нажатие на иконку часов запускает 15-ти минутный обратный отсчёт, после завершения которого приложение прекратит воспроизведение. Дополнительное нажатие добавляет ещё 15 минут. Активировать таймер сна возможно только при активном воспроизведении.</string>
+    <string name="infosheet_howto_h2_shortcut">Как разместить ярлык радиостанции на домашнем экране?</string>
+    <string name="infosheet_howto_p_shortcut">Опция размещения ярлыка радиостанции на домашнем экране доступна из меню с символом с тремя точками на экране радиостанции. Нажатие на ярлыке откроет Transistor и запустит воспроизведение.</string>
+    <string name="infosheet_howto_h2_edit">Как переименовать или удалить станцию?</string>
+    <string name="infosheet_howto_p_edit">Опции переименования и удаления доступны из контекстного меню станции. Просто нажмите на символ с тремя точками. Вы также можете управлять списком станций через файловый менеджер (см. следующий вопрос).</string>
+    <string name="infosheet_howto_h2_storage">Где Transistor хранит станции?</string>
+    <string name="infosheet_howto_p_storage">Transistor не хранит список станций в базе данных. Вместо этого он сохраняет станции как m3u файлы на внешнем накопителе вашего устройства. Можете свободно изменять эти файлы текстовым редактором. Файлы хранятся в директории /Android/data/org.y20k.transistor/Collection.</string>
+    <string name="infosheet_howto_h2_backup">Как я могу сделать резервную копию моих радиостанций и передать их?</string>
+    <string name="infosheet_howto_p_backup">Transistor поддерживает функцию резервного копирования Android 6. Радиостанции всегда сохраняются в вашем аккаунте Google и могут быть восстановлены при переустановке. На устройствах работающих под более старыми версиями Android вы должны вручную сохранить и восстановить директорию \"Collection\".</string>
+    <string name="infosheet_howto_h2_settings">Почему Transistor не имеет настроек?</string>
+    <string name="infosheet_howto_p_settings">Здесь нечего настраивать ;). Transistor очень простое приложение. В зависимости от вашей точки зрения \"простое\" может означать великолепное или неполноценное.</string>
+
+
+    <!-- HTML strings -->
+    <string name="html_about"><![CDATA[<!DOCTYPE html>
+    <html>
+        <body>
+            <h1>О программе Transistor</h1>
+            <h2>Приложение интернет радио для Android</h2>
+            <h3>Версия 2.0 (&quot;Starman&quot;)</h3>
+            <p>Transistor простое приложение для прослушивания радиопередач через интернет. Приложение хранит станции как файлы на внешнем накопителе вашего устройства. Посмотрите на файлы с расширением m3u в директории /Android/data/org.y20k.transistor/Collection. В настоящее время приложение умеет работать с потоками в форматах MP3 и OGG.</p>
+            <p>Важное примечание: в приложении нет какой-либо функции поиска радиостанций. Вам необходимо вручную добавить их.</p>
+            <p>Transistor свободное приложение. Оно распространяется под лицензией MIT. Вы можете найти исходный код на GitHub. Также на GitHub вы можете сообщить об ошибках или помочь в разработке.</p>
+            <p>https://github.com/y20k/transistor</p>
+            <p>https://opensource.org/licenses/MIT</p>
+            <h3>Какие разрешения необходимы Transistor?</h3>
+            <p><strong>INTERNET</strong><br />
+            Transistor вещает радиостанции через интернет.</p>
+            <p><strong>READ_EXTERNAL_STORAGE</strong><br />
+            Transistor&apos;у необходим доступ к изображениям, фотографиям и документам для настройки иконок радиостанций и чтения локально сохранённых плейлистов.</p>
+            <p><strong>VIBRATE</strong><br />
+            Долгое нажатие на названии радиостанции вызывает небольшую вибрацию.</p>
+        </body>
+    </html>]]></string>
+
+    <string name="html_howto"><![CDATA[<!DOCTYPE html>
+    <html>
+        <body>
+            <h1>Как использовать Transistor</h1>
+            <h2>Как добавить новую радиостанцию?</h2>
+            <p>Самый простой способ добавить новую станцию - найти ссылку на поток (m3u или pls) в интернете и затем выбрать Transistor в качестве приложения по умолчанию для этих типов файлов. Вы также можете нажать на символ (+) в верхней части приложения и вставить ссылку на m3u. Примите во внимание: Transistor не имеет встроенной функции поиска радиостанций.</p>
+            <h2>Как воспроизвести радиостанцию?</h2>
+            <p>Нажать большую кнопку «Воспроизведение» ;).</p>
+            <h2>Как остановить воспроизведение?</h2>
+            <p>Нажать большую кнопку «Стоп», отсоединить наушники или смахнуть уведомление с экрана блокировки.</p>
+            <h2>Как запустить таймер сна?</h2>
+            <p>Нажатие на иконку часов запускает 15-тиминутный обратный отсчёт, после которого приложение прекратит воспроизведение. Дополнительное нажатие добавит ещё 15 минут. Активировать таймер сна возможно только при активном воспроизведении.</p>
+            <h2>Как разместить ярлык радиостанции на домашнем экране?</h2>
+            <p>Опция размещения ярлыка радиостанции на домашнем экране доступна из меню с символом с тремя точками на экране радиостанции. Нажатие на ярлыке откроет Transistor и запустит воспроизведение.</p>
+            <h2>Как переименовать или удалить станцию?</h2>
+            <p>Опции переименования и удаления доступны из списка станций и с экрана воспроизведения. Просто нажмите на символ с тремя точками. Вы также можете управлять списком станций через файловый менеджер (см. следующий вопрос).</p>
+            <h2>Где Transistor хранит станции?</h2>
+            <p>Transistor не хранит список станций в базе данных. Вместо этого он сохраняет станции как m3u файлы на внешнем накопителе вашего устройства. Можете свободно изменять эти файлы текстовым редактором. Файлы хранятся в директории /Android/data/org.y20k.transistor/Collection.</p>
+            <h2>Как я могу сделать резервную копию моих радиостанций и передать их?<h2>
+            <p>Transistor поддерживает функцию резервного копирования Android 6. Радиостанции всегда сохраняются в вашем аккаунте Google и могут быть восстановлены при переустановке. На устройствах работающих под более старыми версиями Android вы должны вручную сохранить и восстановить директорию &quot;Collection&quot;.</p>
+            <h2>Почему Transistor не имеет настроек?</h2>
+            <p>Здесь нечего настраивать ;). Transistor очень простое приложение. В зависимости от вашей точки зрения &quot;простое&quot; может значить великолепное или неполноценное.</p>
+        </body>
+    </html>]]></string>
+
+</resources>
