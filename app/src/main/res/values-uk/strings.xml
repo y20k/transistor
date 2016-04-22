@@ -24,7 +24,9 @@
     <string name="descr_overflow_button">Показ параметрів радіостанції</string>
     <string name="descr_station_icon">Піктограма для радіостанції</string>
     <string name="descr_station_name">Назва радіостанції</string>
+    <string name="descr_station_metadata">Metadata (Artist / Title) of currently playing radio station</string>
     <string name="descr_station_name_example">Приклад FM</string>
+    <string name="descr_station_metadata_example">Artist - Title</string>
     <string name="descr_playback_button">Велика кнопка «грати»</string>
     <string name="descr_playback_indicator">Індикатор активності відтворення</string>
     <string name="descr_playback_indicator_started">Індикатор відтворення активний</string>

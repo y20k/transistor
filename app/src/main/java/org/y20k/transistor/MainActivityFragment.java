@@ -583,12 +583,10 @@ public final class MainActivityFragment extends Fragment {
 
     /* Translates milliseconds into minutes and seconds */
     private String getReadableTime (long remainingTime) {
-        String readableTime = String.format(Locale.getDefault(), "%02d:%02d",
+        return String.format(Locale.getDefault(), "%02d:%02d",
                 TimeUnit.MILLISECONDS.toMinutes(remainingTime),
                 TimeUnit.MILLISECONDS.toSeconds(remainingTime) -
-                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(remainingTime))
-        );
-        return readableTime;
+                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(remainingTime)));
     }
 
 

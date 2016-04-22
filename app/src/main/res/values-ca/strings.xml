@@ -24,7 +24,9 @@
     <string name="descr_overflow_button">Mostra les opcions per l\'estació de ràdio</string>
     <string name="descr_station_icon">Icona de l\'emissora de ràdio</string>
     <string name="descr_station_name">Nom de l\'emissora de ràdio</string>
+    <string name="descr_station_metadata">Metadata (Artist / Title) of currently playing radio station</string>
     <string name="descr_station_name_example">Exemple FM</string>
+    <string name="descr_station_metadata_example">Artist - Title</string>
     <string name="descr_playback_button">Gran botó de reproducció</string>
     <string name="descr_playback_indicator">Indicador pel funcionament de la reproducció</string>
     <string name="descr_playback_indicator_started">Indicador pel funcionament de la reproducció</string>

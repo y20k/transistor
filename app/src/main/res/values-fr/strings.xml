@@ -24,7 +24,9 @@
     <string name="descr_overflow_button">Options d\'affichage pour la station radio</string>
     <string name="descr_station_icon">Logo de la station radio</string>
     <string name="descr_station_name">Nom de la station radio</string>
+    <string name="descr_station_metadata">Metadata (Artist / Title) of currently playing radio station</string>
     <string name="descr_station_name_example">Exemple FM</string>
+    <string name="descr_station_metadata_example">Artist - Title</string>
     <string name="descr_playback_button">Grand bouton de lecture</string>
     <string name="descr_playback_indicator">Indicateur de lecture en cours</string>
     <string name="descr_playback_indicator_started">Indicateur de lecture en cours</string>

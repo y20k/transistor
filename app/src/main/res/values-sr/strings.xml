@@ -24,7 +24,9 @@
     <string name="descr_overflow_button">Прикажи опције за радио станицу</string>
     <string name="descr_station_icon">Икона радио станице</string>
     <string name="descr_station_name">Назив радио станице</string>
+    <string name="descr_station_metadata">Metadata (Artist / Title) of currently playing radio station</string>
     <string name="descr_station_name_example">Пример ФМ</string>
+    <string name="descr_station_metadata_example">Artist - Title</string>
     <string name="descr_playback_button">Дугме за пуштање</string>
     <string name="descr_playback_indicator">Показивач тренутног пуштања</string>
     <string name="descr_playback_indicator_started">Показивач тренутног пуштања</string>

@@ -50,8 +50,8 @@ public class MetadataHelper {
 
 
     /* Main class variables */
-    private Context mContext;
-    private String mStreamUri;
+    private final Context mContext;
+    private final String mStreamUri;
     private String mShoutcastProxy;
     private Socket mProxyConnection = null;
     private boolean mProxyRunning = false;
@@ -83,7 +83,7 @@ public class MetadataHelper {
 
                     try {
                         final ServerSocket proxyServer = new ServerSocket(0, 1, InetAddress.getLocalHost());
-                        shoutcastProxyUri.append("http://localhost:" + String.valueOf(proxyServer.getLocalPort()) + "/");
+                        shoutcastProxyUri.append("http://localhost:").append(String.valueOf(proxyServer.getLocalPort())).append("/");
                         Log.v(LOG_TAG, "createProxyConnection: " + shoutcastProxyUri.toString());
 
                         proxy = proxyServer.accept();
@@ -220,9 +220,9 @@ public class MetadataHelper {
     /* Notifies other components and saves metadata */
     private void handleMetadataString(String metadata) {
 
-        Log.v(LOG_TAG, "Metadata -> " + "+++" + metadata + "+++"); // TODO remove
+        Log.v(LOG_TAG, "Metadata: «" + metadata + "»"); // TODO remove
 
-        if (metadata.length() > 0) {
+        if (metadata != null && metadata.length() > 0) {
             // send local broadcast
             Intent i = new Intent();
             i.setAction(ACTION_METADATA_CHANGED);
@@ -249,7 +249,10 @@ public class MetadataHelper {
             while (mProxyRunning) {
                 Thread.sleep(50); // Wait for thread to finish
             }
-        } catch(Exception e) {}
+        } catch(Exception e) {
+            Log.e(LOG_TAG, "Unable to close proxy connection. Error: " + e);
+        }
+
     }
 
 

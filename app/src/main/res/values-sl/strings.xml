@@ -20,13 +20,15 @@
     <string name="header_howto">Kako uporabljati</string>
 
     <!-- descriptions -->
+    <string name="descr_arrow_actioncall">Puščica, ki kaže k simbolu za dodajanje postaje</string>
+    <string name="descr_overflow_button">Prikaz možnosti za radisjko postajo</string>
     <string name="descr_station_icon">Ikona radijske postaje</string>
     <string name="descr_station_name">Ime radijske postaje</string>
+    <string name="descr_station_metadata">Metadata (Artist / Title) of currently playing radio station</string>
     <string name="descr_station_name_example">Primer FM</string>
+    <string name="descr_station_metadata_example">Artist - Title</string>
     <string name="descr_playback_indicator">Kazalnik za predvajanje v teku</string>
     <string name="descr_playback_button">Velik gumb za predvajanje</string>
-    <string name="descr_overflow_button">Prikaz možnosti za radisjko postajo</string>
-    <string name="descr_arrow_actioncall">Puščica, ki kaže k simbolu za dodajanje postaje</string>
     <string name="descr_playback_indicator_started">Kazalnik za predvajanje v teku</string>
     <string name="descr_timer_indicator_started">Indicator for running sleep timer</string>
 

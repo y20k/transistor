@@ -1,2 +1,182 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+    <!-- activities -->
+    <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
+    <string name="title_activity_player">Now Playing</string>
+    <string name="title_activity_infosheet">Info Sheet</string>
+
+    <!-- menu entries -->
+    <string name="menu_about">About</string>
+    <string name="menu_howto">How to use</string>
+    <string name="menu_timer">Sleep timer</string>
+    <string name="menu_icon">Change icon</string>
+    <string name="menu_add">Add</string>
+    <string name="menu_delete">Delete</string>
+    <string name="menu_rename">Rename</string>
+    <string name="menu_shortcut">Place on Home screen</string>
+
+    <!-- headers -->
+    <string name="header_about">About</string>
+    <string name="header_howto">How to use</string>
+
+    <!-- descriptions -->
+    <string name="descr_arrow_actioncall">Arrow pointing towards the add station symbol</string>
+    <string name="descr_overflow_button">Display options for radio station</string>
+    <string name="descr_station_icon">Icon of radio station</string>
+    <string name="descr_station_name">Name of radio station</string>
+    <string name="descr_station_metadata">Metadata (Artist / Title) of currently playing radio station</string>
+    <string name="descr_station_name_example">Example FM</string>
+    <string name="descr_station_metadata_example">Artist - Title</string>
+    <string name="descr_playback_button">Big playback button</string>
+    <string name="descr_playback_indicator">Indicator for running playback</string>
+    <string name="descr_playback_indicator_started">Indicator for running playback</string>
+    <string name="descr_timer_indicator_started">Indicator for running sleep timer</string>
+
+    <!-- dialogs -->
+    <string name="dialog_generic_button_okay">Okay</string>
+    <string name="dialog_generic_button_cancel">Cancel</string>
+    <string name="dialog_add_station_button">Add</string>
+    <string name="dialog_add_station_input_hint">Paste a valid streaming URL</string>
+    <string name="dialog_add_station_message">Add new station</string>
+    <string name="dialog_add_station_howto">You can add raw audio streams encoded in MP3 and OGG as well as streams encapsulated in pls or m3u files. Alternatively you can add new stations by tapping on streaming links (pls or m3u) in your web browser.</string>
+    <string name="dialog_delete_station_message">Delete station</string>
+    <string name="dialog_button_delete">Delete</string>
+    <string name="dialog_rename_station_input_hint">Enter a new name</string>
+    <string name="dialog_rename_station_message">Rename station</string>
+    <string name="dialog_button_rename">Rename</string>
+
+    <!-- error dialogs -->
+    <string name="dialog_error_title_default">Error</string>
+    <string name="dialog_error_message_default">An error occurred</string>
+    <string name="dialog_error_details_button_default">Show details</string>
+    <string name="dialog_error_details_default">No details available</string>
+    <string name="dialog_error_details_write">Station is probably a duplicate or else you might want to check your external storage.</string>
+    <string name="dialog_error_title_fetch_download">Download Issue</string>
+    <string name="dialog_error_title_fetch_read">Read Issue</string>
+    <string name="dialog_error_title_fetch_write">Write Issue</string>
+    <string name="dialog_error_message_fetch_general_external_storage">External storage:</string>
+    <string name="dialog_error_message_fetch_general_hint_m3u">Hint: Transistor can only process MP3 and OGG encoded streams or URLs ending in .m3u or .pls.</string>
+    <string name="dialog_error_message_fetch_general_file_content">Content of file:</string>
+    <string name="dialog_error_message_fetch_download">Transistor tried hard but could not make sense of given link.</string>
+    <string name="dialog_error_message_fetch_download_station_url">URL of station:</string>
+    <string name="dialog_error_message_fetch_read">Transistor tried hard but could not make sense of given file.</string>
+    <string name="dialog_error_message_fetch_read_file_location">Location of file:</string>
+    <string name="dialog_error_message_fetch_write">Transistor tried hard but could not save given station to storage.</string>
+
+    <!-- messages -->
+    <string name="actioncall_message_start_here">Add a new station</string>
+    <string name="toastmessage_add_download_started">Download started:</string>
+    <string name="toastmessage_add_open_file_started">Opening file:</string>
+    <string name="toastmessage_long_press_playback_stopped">Playback stopped (long press detected)</string>
+    <string name="toastmessage_long_press_playback_started">Playback started (long press detected)</string>
+    <string name="toastmessage_shortcut_created">Shortcut created.</string>
+    <string name="toastmessage_station_copied">Station copied.</string>
+    <string name="toastmessage_timer_activated">Sleep timer activated.</string>
+    <string name="toastmessage_timer_cancelled">Sleep timer cancelled.</string>
+    <string name="toastmessage_timer_duration_increased">Duration increased.</string>
+    <string name="toastmessage_timer_start_unable">Please start playback first.</string>
+    <string name="toastalert_rename_unsuccessful">Unable to rename station. Please choose a different name.</string>
+    <string name="toastalert_delete_successful">Station removed.</string>
+    <string name="toastalert_no_external_storage">Unable to access external storage.</string>
+    <string name="toastalert_headphones_unplugged">Headphones unplugged. Playback stopped.</string>
+    <string name="toastalert_permission_denied">Permission denied:</string>
+    <string name="toastalert_stream_not_found">Transistor does not recognize this station. Please delete and add it again to the Home screen.</string>
+    <string name="snackbar_request_storage_access">Transistor needs to be granted read permissions to be able access data from external storage.</string>
+    <string name="snackbar_message_timer_set">Sleep timer set to</string>
+
+    <!-- notification -->
+    <string name="notification_stop">Stop</string>
+    <string name="notification_swipe_to_stop">Swipe to stop</string>
+    <string name="notification_playing">Playing</string>
+
+    <!-- infosheet about -->
+    <string name="infosheet_about_h1_about">About Transistor</string>
+    <string name="infosheet_about_h2_radio">Radio app for Android</string>
+    <string name="infosheet_about_h3_version">Version 2.0 ("Starman")</string>
+    <string name="infosheet_about_p_bare">Transistor is a bare bones app for listening to radio programs over the internet. The app stores stations as files on your device\'s external storage. Look for files of type m3u within /Android/data/org.y20k.transistor/Collection. It currently understands streams encoded in MP3 and OGG.</string>
+    <string name="infosheet_about_p_note">Important note: This is an app of type BYOS (&quot;bring your own station&quot;). It does not feature any kind of built-in search option. You will have to manually add radio stations.</string>
+    <string name="infosheet_about_p_free">Transistor is free software. It is published under the MIT open source license. You can find the code on GitHub. GitHub is also a good place to file bugs or even to contribute, if you are interested.</string>
+    <string name="infosheet_about_p_github">https://github.com/y20k/transistor</string>
+    <string name="infosheet_about_p_license">https://opensource.org/licenses/MIT</string>
+    <string name="infosheet_about_h2_permissions">Which Permissions does Transistor need?</string>
+    <string name="infosheet_about_h3_shortcut">Permission INSTALL_SHORTCUT and UNINSTALL_SHORTCUT</string>
+    <string name="infosheet_about_p_shortcut">This permission is needed to install and uninstall radio station shortcuts on the Android Home screen.</string>
+    <string name="infosheet_about_h3_internet">Permission INTERNET</string>
+    <string name="infosheet_about_p_internet">Transistor streams radio stations over the internet.</string>
+    <string name="infosheet_about_h3_external">Permission READ_EXTERNAL_STORAGE</string>
+    <string name="infosheet_about_p_external">Transistor needs access to images, photos and documents to be able customize radio station icons and to able to open locally saved playlist files.</string>
+    <string name="infosheet_about_h3_vibrate">Permission VIBRATE</string>
+    <string name="infosheet_about_p_vibrate">Tapping and holding a radio station will toggle a tiny vibration.</string>
+    <string name="infosheet_about_h3_wakelock">Permission WAKE_LOCK</string>
+    <string name="infosheet_about_p_wakelock">During Playback Transistor acquires a so called partial wake lock. That prevents the Android system to stop playback for power saving reasons.</string>
+
+    <!-- infosheet howto -->
+    <string name="infosheet_howto_h1_howto">How to use Transistor</string>
+    <string name="infosheet_howto_h2_add">How to add a new radio station?</string>
+    <string name="infosheet_howto_p_add">The easiest way to add a new station is to search the web for streaming links and then choose Transistor as a your default handler for those file types. You can also tap the (+) symbol in the top bar and paste in streaming links directly. Please note: Transistor does not feature any kind of built-in search option.</string>
+    <string name="infosheet_howto_h2_play">How to play back a radio station?</string>
+    <string name="infosheet_howto_p_play">Tap the big Play button ;).</string>
+    <string name="infosheet_howto_h2_stop">How to stop playback?</string>
+    <string name="infosheet_howto_p_stop">Tap the big Stop button or unplug your headphones or swipe off the notification from the lockscreen.</string>
+    <string name="infosheet_howto_h2_sleep">How to start the sleep timer?</string>
+    <string name="infosheet_howto_p_sleep">Tapping the Clock symbol starts a 15 minute countdown after which Transistor stops playback. An additional tap adds 15 minutes to the clock. Playback must be running to be able to activate the sleep timer.</string>
+    <string name="infosheet_howto_h2_shortcut">How to place a station shortcut on the Home screen?</string>
+    <string name="infosheet_howto_p_shortcut">The option to place a shortcut for a station on the Home screen can be accessed from the station\'s three dots menu. A tap on a shortcut will open Transistor - playback will start immediately.</string>
+    <string name="infosheet_howto_h2_edit">How to rename or delete a station?</string>
+    <string name="infosheet_howto_p_edit">The rename and delete options can be accessed both from the station\'s context menu. Just tap on the three dots symbol. You can manage the list of stations also from a file browser (see next question).</string>
+    <string name="infosheet_howto_h2_storage">Where does Transistor store its stations?</string>
+    <string name="infosheet_howto_p_storage">Transistor does not save its list of stations in a database. Instead it stores stations as m3u files on your device\'s external storage. Feel free to tinker with those files using the texteditor of your choice. The files are stored in /Android/data/org.y20k.transistor/Collection.</string>
+    <string name="infosheet_howto_h2_backup">How do I backup and transfer my radio stations?</string>
+    <string name="infosheet_howto_p_backup">Transistor supports Android 6\'s Auto Backup feature. Radio stations are always backed up to your Google account and will be restored at reinstall. On devices running on older versions of Android you must manually save and restore the &quot;Collection&quot; folder.</string>
+    <string name="infosheet_howto_h2_settings">Why does Transistor not have any setting?</string>
+    <string name="infosheet_howto_p_settings">There is nothing to be set ;). Transistor is a very simple app. Depending on your point of view &quot;simple&quot; is either great or lame.</string>
+
+
+    <!-- HTML strings -->
+    <string name="html_about"><![CDATA[<!DOCTYPE html>
+    <html>
+        <body>
+            <h1>!!!! PLEASE SO NOT TRANSLATE THIS - INSTEAD PLEASE TRANSLATE infosheet about !!!!<h1>
+            <h2>Radio app for Android</h2>
+            <h3>Version 2.0 (&quot;Starman&quot;)</h3>
+            <p>Transistor is a bare bones app for listening to radio programs over the internet. The app stores stations as files on your device\'s external storage. Look for files of type m3u within /Android/data/org.y20k.transistor/Collection. It currently understands streams encoded in MP3 and OGG.</p>
+            <p>Important note: This is an app of type BYOS (&quot;bring your own station&quot;). It does not feature any kind of built-in search option. You will have to manually add radio stations.</p>
+            <p>Transistor is free software. It is published under the MIT open source license. You can find the code on GitHub. GitHub is also a good place to file bugs or even to contribute, if you are interested.</p>
+            <p>https://github.com/y20k/transistor</p>
+            <p>https://opensource.org/licenses/MIT</p>
+            <h3>Which Permissions does Transistor need?</h3>
+            <p><strong>Permission INTERNET</strong><br />
+            Transistor streams radio stations over the internet.</p>
+            <p><strong>Permission READ_EXTERNAL_STORAGE</strong><br />
+            Transistor needs access to images, photos and documents to be able customize radio station icons and to able to open locally saved playlist files.</p>
+            <p><strong>Permission VIBRATE</strong><br />
+            Tapping and holding a radio station will toggle a tiny vibration.</p>
+        </body>
+    </html>]]></string>
+
+    <string name="html_howto"><![CDATA[<!DOCTYPE html>
+    <html>
+        <body>
+            <h1>!!!! PLEASE SO NOT TRANSLATE THIS - INSTEAD PLEASE TRANSLATE infosheet howto !!!!<h1>
+            <h2>How to add a new radio station?</h2>
+            <p>The easiest way to add a new station is to search the web for streaming links and then choose Transistor as a your default handler for those file types. You can also tap the (+) symbol in the top bar and paste in streaming links directly. Please note: Transistor does not feature any kind of built-in search option.</p>
+            <h2>How to play back a radio station?</h2>
+            <p>Tap the big Play button ;).</p>
+            <h2>How to stop playback?</h2>
+            <p>Tap the big Stop button or unplug your headphones or swipe off the notification from the lockscreen.</p>
+            <h2>How to start the sleep timer?</h2>
+            <p>Tapping the Clock symbol starts a 15 minute countdown after which Transistor stops playback. An additional tap adds 15 minutes to the clock. Playback must be running to be able to activate the sleep timer.</p>
+            <h2>How to place a station shortcut on the Home screen?</h2>
+            <p>The option to place a shortcut for a station on the Home screen can be accessed from the station\'s three dots menu. A tap on a shortcut will open Transistor - playback will start immediately.</p>
+            <h2>How to rename or delete a station?</h2>
+            <p>The rename and delete options can be accessed both from the station\'s context menu. Just tap on the three dots symbol. You can manage the list of stations also from a file browser (see next question).</p>
+            <h2>Where does Transistor store its stations?</h2>
+            <p>Transistor does not save its list of stations in a database. Instead it stores stations as m3u files on your device\'s external storage. Feel free to tinker with those files using the texteditor of your choice. The files are stored in /Android/data/org.y20k.transistor/Collection.</p>
+            <h2>How do I backup and transfer my radio stations?<h2>
+            <p>Transistor supports Android 6\'s Auto Backup feature. Radio stations are always backed up to your Google account and will be restored at reinstall. On devices running on older versions of Android you must manually save and restore the &quot;Collection&quot; folder.</p>
+            <h2>Why does Transistor not have any setting?</h2>
+            <p>There is nothing to be set ;). Transistor is a very simple app. Depending on your point of view &quot;simple&quot; is either great or lame.</p>
+        </body>
+    </html>]]></string>
+
+</resources>

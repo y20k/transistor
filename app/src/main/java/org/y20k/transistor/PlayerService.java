@@ -217,8 +217,8 @@ public final class PlayerService extends Service implements
     public void onPrepared(MediaPlayer mp) {
 
         if (mPlayerInstanceCounter == 1) {
-            Log.v(LOG_TAG, "+++ Preparation finished. Starting playback. Player instance count: " + mPlayerInstanceCounter + " +++");
-            Log.v(LOG_TAG, "+++ " + mStreamUri + " +++");
+            Log.v(LOG_TAG, "Preparation finished. Starting playback. Player instance count: " + mPlayerInstanceCounter);
+            Log.v(LOG_TAG, "Playback: " + mStreamUri);
 
             // starting media player
             mp.start();
@@ -354,6 +354,7 @@ public final class PlayerService extends Service implements
         // put up notification
         NotificationHelper.setStationName(stationName);
         NotificationHelper.setStationID(stationID);
+        NotificationHelper.setStationMetadata(null);
         NotificationHelper.createNotification(context);
     }
 
