@@ -1,2 +1,32 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<?xml version='1.0' encoding='UTF-8'?>
+<resources><string name="app_name">Transistor</string> <string name="title_activity_player">Orain erreproduzitzen</string>
+    <string name="title_activity_infosheet">Informazio orria</string>
+
+    <string name="menu_about">Honi buruz</string>
+    <string name="menu_howto">Nola erabili</string>
+    <string name="menu_timer">Itzaltzeko atzera kontaketa</string>
+    <string name="menu_icon">Aldatu ikonoa</string>
+    <string name="menu_add">Gehitu</string>
+    <string name="menu_delete">Ezabatu</string>
+    <string name="menu_rename">Aldatu izena</string>
+    <string name="menu_shortcut">Kokatu hasiera orrian</string>
+
+    <string name="header_about">Honi buruz</string>
+    <string name="header_howto">Nola erabili</string>
+
+    <string name="descr_arrow_actioncall">Gehitu irratia sinbolora begira dagoen gezia</string>
+    <string name="descr_overflow_button">Bistaratu irrati estazioaren aukerak</string>
+    <string name="descr_station_icon">Irrati estazioaren ikonoa</string>
+    <string name="descr_station_name">Irrati estazioaren izena</string>
+    <string name="descr_station_name_example">Adibideko FM</string>
+    <string name="descr_playback_button">Erreproduzitu botoi handia</string>
+    <string name="descr_playback_indicator">Erreprodukzioa martxan adierazlea</string>
+    <string name="descr_playback_indicator_started">Erreprodukzioa martxan adierazlea</string>
+    <string name="descr_timer_indicator_started">Atzera kontaketa martxan adierazlea</string>
+
+    <string name="dialog_generic_button_okay">Ados</string>
+    <string name="dialog_generic_button_cancel">Utzi</string>
+    <string name="dialog_add_station_button">Gehitu</string>
+    <string name="dialog_add_station_input_hint">Itsatsi baliozko jario URL bat</string>
+    <string name="dialog_add_station_message">Gehitu irrati berria</string>
+    </resources>
