@@ -21,15 +21,15 @@
 
         <ImageView
             android:id="@+id/player_imageview_station_icon"
+            android:contentDescription="@string/descr_station_icon"
             android:layout_width="?android:attr/listPreferredItemHeight"
             android:layout_height="?android:attr/listPreferredItemHeight"
-            android:contentDescription="@string/descr_station_icon"
             android:minHeight="?android:attr/listPreferredItemHeight"
             android:src="@drawable/ic_notesymbol" />
 
         <LinearLayout
             android:id="@+id/player_layout_station_info"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:paddingStart="24dp"
@@ -40,6 +40,7 @@
 
             <TextView
                 android:id="@+id/player_textview_stationname"
+                android:contentDescription="@string/descr_station_metadata"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
@@ -49,6 +50,7 @@
 
             <TextView
                 android:id="@+id/player_textview_station_metadata"
+                android:contentDescription="@string/descr_playback_indicator"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
@@ -57,7 +59,7 @@
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:scrollHorizontally="true"
-                android:text="Sufjan Stevens - They Are Night Zombies!! They Are Neighbors!! They Have Come Back From the Dead!! Ahhhhh!"
+                android:text="@string/descr_station_metadata_example"
                 android:textAppearance="@android:style/TextAppearance.Small.Inverse"
                 android:visibility="gone" />
 
@@ -65,9 +67,9 @@
 
         <ImageView
             android:id="@+id/player_playback_indicator"
+            android:contentDescription="@string/descr_playback_indicator"
             android:layout_width="?android:attr/listPreferredItemHeight"
             android:layout_height="?android:attr/listPreferredItemHeight"
-            android:contentDescription="@string/descr_playback_indicator"
             android:minHeight="?android:attr/listPreferredItemHeight"
             android:background="@drawable/ic_playback_indicator_stopped_24dp" />
 
@@ -91,14 +93,15 @@
 
         <ImageButton
             android:id="@+id/player_playback_button"
+            android:contentDescription="@string/descr_playback_button"
             android:adjustViewBounds="true"
             android:background="@drawable/selector_playback_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:padding="32dp"
-            android:contentDescription="@string/descr_playback_button" />
+            android:padding="32dp" />
+
     </RelativeLayout>
 
 </LinearLayout>

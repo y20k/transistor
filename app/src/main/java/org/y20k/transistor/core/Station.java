@@ -17,6 +17,7 @@ package org.y20k.transistor.core;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -165,7 +166,7 @@ public final class Station implements Comparable<Station> {
 
     /* Compares two stations */
     @Override
-    public int compareTo(Station otherStation) {
+    public int compareTo(@NonNull Station otherStation) {
         // return "1" if name if this station is greater than name of given station
         return mStationName.compareToIgnoreCase(otherStation.mStationName);
     }
