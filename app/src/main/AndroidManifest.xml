@@ -2,8 +2,8 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.y20k.transistor"
-    android:versionCode="23"
-    android:versionName="2.0.2 (Starman)">
+    android:versionCode="22"
+    android:versionName="2.0.1 (Starman)">
 
     <uses-sdk
         android:minSdkVersion="19"
