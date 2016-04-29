@@ -139,25 +139,6 @@
     <html>
         <body>
             <h1>!!!! PLEASE SO NOT TRANSLATE THIS - INSTEAD PLEASE TRANSLATE infosheet howto !!!!<h1>
-            <h1>How to use Transistor</h1>
-            <h2>How to add a new radio station?</h2>
-            <p>The easiest way to add a new station is to search the web for streaming links and then choose Transistor as a your default handler for those file types. You can also tap the (+) symbol in the top bar and paste in streaming links directly. Please note: Transistor does not feature any kind of built-in search option.</p>
-            <h2>How to play back a radio station?</h2>
-            <p>Tap the big Play button ;).</p>
-            <h2>How to stop playback?</h2>
-            <p>Tap the big Stop button or unplug your headphones or swipe off the notification from the lockscreen.</p>
-            <h2>How to start the sleep timer?</h2>
-            <p>Tapping the Clock symbol starts a 15 minute countdown after which Transistor stops playback. An additional tap adds 15 minutes to the clock. Playback must be running to be able to activate the sleep timer.</p>
-            <h2>How to place a station shortcut on the Home screen?</h2>
-            <p>The option to place a shortcut for a station on the Home screen can be accessed from the station\'s three dots menu. A tap on a shortcut will open Transistor - playback will start immediately.</p>
-            <h2>How to rename or delete a station?</h2>
-            <p>The rename and delete options can be accessed both from the station\'s context menu. Just tap on the three dots symbol. You can manage the list of stations also from a file browser (see next question).</p>
-            <h2>Where does Transistor store its stations?</h2>
-            <p>Transistor does not save its list of stations in a database. Instead it stores stations as m3u files on your device\'s external storage. Feel free to tinker with those files using the texteditor of your choice. The files are stored in /Android/data/org.y20k.transistor/Collection.</p>
-            <h2>How do I backup and transfer my radio stations?<h2>
-            <p>Transistor supports Android 6\'s Auto Backup feature. Radio stations are always backed up to your Google account and will be restored at reinstall. On devices running on older versions of Android you must manually save and restore the &quot;Collection&quot; folder.</p>
-            <h2>Why does Transistor not have any setting?</h2>
-            <p>There is nothing to be set ;). Transistor is a very simple app. Depending on your point of view &quot;simple&quot; is either great or lame.</p>
         </body>
     </html>]]></string>
 
