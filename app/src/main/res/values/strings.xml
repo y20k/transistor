@@ -106,7 +106,7 @@
     <string name="infosheet_about_h3_external">Permission READ_EXTERNAL_STORAGE</string>
     <string name="infosheet_about_p_external">Transistor needs access to images, photos and documents to be able customize radio station icons and to able to open locally saved playlist files.</string>
     <string name="infosheet_about_h3_vibrate">Permission VIBRATE</string>
-    <string name="infosheet_about_p_vibrate">Tapping and holding a radio station will toggle a tiny vibration.</string>
+    <string name="infosheet_about_p_vibrate">Tapping and holding a radio station will trigger a tiny vibration.</string>
     <string name="infosheet_about_h3_wakelock">Permission WAKE_LOCK</string>
     <string name="infosheet_about_p_wakelock">During Playback Transistor acquires a so called partial wake lock. That prevents the Android system to stop playback for power saving reasons.</string>
 
@@ -127,9 +127,9 @@
     <string name="infosheet_howto_h2_storage">Where does Transistor store its stations?</string>
     <string name="infosheet_howto_p_storage">Transistor does not save its list of stations in a database. Instead it stores stations as m3u files on your device\'s external storage. Feel free to tinker with those files using the texteditor of your choice. The files are stored in /Android/data/org.y20k.transistor/Collection.</string>
     <string name="infosheet_howto_h2_backup">How do I backup and transfer my radio stations?</string>
-    <string name="infosheet_howto_p_backup">Transistor supports Android 6\'s Auto Backup feature. Radio stations are always backed up to your Google account and will be restored at reinstall. On devices running on older versions of Android you must manually save and restore the &quot;Collection&quot; folder.</string>
-    <string name="infosheet_howto_h2_settings">Why does Transistor not have any setting?</string>
-    <string name="infosheet_howto_p_settings">There is nothing to be set ;). Transistor is a very simple app. Depending on your point of view &quot;simple&quot; is either great or lame.</string>
+    <string name="infosheet_howto_p_backup">Transistor has support for the Auto Backup feature in Android 6. Radio stations are always backed up to your Google account and will be restored at reinstall. On devices running on older versions of Android you must manually save and restore the &quot;Collection&quot; folder.</string>
+    <string name="infosheet_howto_h2_settings">Why are there no settings in Transistor?</string>
+    <string name="infosheet_howto_p_settings">There is nothing to set ;). Transistor is a very simple app. Depending on your point of view &quot;simple&quot; is either great or lame.</string>
 
 
     <!-- HTML strings -->
