@@ -24,9 +24,9 @@
     <string name="descr_overflow_button">ラジオ局の表示オプション</string>
     <string name="descr_station_icon">ラジオ局のアイコン</string>
     <string name="descr_station_name">ラジオ局の名前</string>
-    <string name="descr_station_metadata">Metadata (Artist / Title) of currently playing radio station</string>
+    <string name="descr_station_metadata">現在再生中のラジオ局のメタデータ (アーティスト/タイトル)</string>
     <string name="descr_station_name_example">FM の例</string>
-    <string name="descr_station_metadata_example">Artist - Title</string>
+    <string name="descr_station_metadata_example">アーティスト - タイトル</string>
     <string name="descr_playback_button">大きな再生ボタン</string>
     <string name="descr_playback_indicator">再生中のインジケーター</string>
     <string name="descr_playback_indicator_started">再生中のインジケーター</string>
@@ -92,7 +92,7 @@
     <!-- infosheet about -->
     <string name="infosheet_about_h1_about">トランジスターについて</string>
     <string name="infosheet_about_h2_radio">Android 向けラジオアプリ</string>
-    <string name="infosheet_about_h3_version">Version 2.0 ("Starman")</string>
+    <string name="infosheet_about_h3_version">バージョン 2.0 (Starman)</string>
     <string name="infosheet_about_p_bare">トランジスターは、インターネット上のラジオ番組を聴くためのベアボーン アプリです。アプリは、デバイスの外部ストレージ上にファイルとして局を格納します。/Android/data/org.y20k.transistor/Collection 内の m3u のファイルを探します。現在、MP3 と OGG でエンコードされたストリームを認識します。</string>
     <string name="infosheet_about_p_note">重要事項: これは BYOS (自分のラジオ局を持ち歩く) タイプのアプリです。検索機能は何も内蔵していません。ラジオ局を手動で追加する必要があります。</string>
     <string name="infosheet_about_p_free">トランジスターはフリー ソフトウェアです。MIT オープン ソース ライセンスの下で公開されます。コードは GitHub 上で参照することができます。GitHub は、バグの報告、興味があれば貢献することもできる場所です。</string>
@@ -106,7 +106,7 @@
     <string name="infosheet_about_h3_external">アクセス許可 READ_EXTERNAL_STORAGE</string>
     <string name="infosheet_about_p_external">トランジスターは、ラジオ局のアイコンをカスタマイズするために、画像、写真、ドキュメントにアクセスしたり、ローカルに保存されたプレイリスト ファイルを開くことができる必要があります。</string>
     <string name="infosheet_about_h3_vibrate">アクセス許可 VIBRATE</string>
-    <string name="infosheet_about_p_vibrate">ラジオ局を長押しすると、小さな振動を切り替えます。</string>
+    <string name="infosheet_about_p_vibrate">ラジオ局を長押しすると、小さく振動します。</string>
     <string name="infosheet_about_h3_wakelock">アクセス許可 WAKE_LOCK</string>
     <string name="infosheet_about_p_wakelock">再生中、トランジスターはいわゆる部分的なウェイクロックを取得します。省電力のために Android のシステムが再生を停止するのを防止します。</string>
 
@@ -127,13 +127,13 @@
     <string name="infosheet_howto_h2_storage">トランジスターが局を格納する場所は?</string>
     <string name="infosheet_howto_p_storage">トランジスターは、局の一覧をデータベースに保存しません。代わりに、デバイスの外部ストレージに m3u ファイルとして局を保存します。お好みのテキストエディターを使用して、気軽にそれらのファイルを触ってください。ファイルは /Android/data/org.y20k.transistor/Collection に格納されます。</string>
     <string name="infosheet_howto_h2_backup">ラジオ局をバックアップしたり転送する方法は?</string>
-    <string name="infosheet_howto_p_backup">トランジスターは Android 6 の自動バックアップ機能をサポートしています。ラジオ局は、常にあなたの Google アカウントにバックアップされ、再インストールで復元されます。古いバージョンの Android を実行しているデバイスでは、手動で Collection フォルダーに保存し、復元する必要があります。</string>
-    <string name="infosheet_howto_h2_settings">トランジスターはなぜ何も設定がないのですか?</string>
-    <string name="infosheet_howto_p_settings">何も設定するものはありません ;)。トランジスターは非常にシンプルなアプリケーションです。あなたの見方によって、シンプルは偉大にもダメなものにもなります。</string>
+    <string name="infosheet_howto_p_backup">トランジスターは Android 6 の自動バックアップ機能をサポートしています。ラジオ局は、常にあなたの Google アカウントにバックアップされ、再インストール時に復元されます。古いバージョンの Android を実行しているデバイスでは、手動で Collection フォルダーに保存し、復元する必要があります。</string>
+    <string name="infosheet_howto_h2_settings">トランジスターにはなぜ設定がないのですか?</string>
+    <string name="infosheet_howto_p_settings">設定するものは何もありません ;)。トランジスターは非常にシンプルなアプリケーションです。あなたの見方によって、シンプルは偉大にもダメなものにもなります。</string>
 
     <!-- HTML strings -->
-    <string name="html_about">&lt;!DOCTYPE html&gt; &lt;html&gt; &lt;body&gt; &lt;h1&gt;トランジスターについて&lt;/h1&gt; &lt;h2&gt;Android 用ラジオ アプリ&lt;/h2&gt; &lt;h3&gt;バージョン 2.0 (&amp;quot;Starman&amp;quot;)&lt;/h3&gt; &lt;p&gt;トランジスターはインターネット上のラジオ番組を聴くためベアボーン アプリです。アプリは、デバイスの外部ストレージにファイルとして局を格納します。/Android/data/org.y20k.transistor/Collection で、m3u の種類のファイルを探します。現在、MP3 や OGG ファイルでエンコードされたストリームを理解することができます。&lt;/p&gt; &lt;p&gt;重要な注意: これはBYOS (&amp;quot;あなた自身で局を持ち込む&amp;quot;) 形式のアプリです。内蔵の検索オプションの類は機能しません。ラジオ局を手動で追加する必要があります。&lt;/p&gt; &lt;p&gt;トランジスターは、フリー ソフトウェアです。MIT オープンソース ライセンスの下で公開されます。コードは GitHub で見つけることができます。GitHub はまた、バグを報告したり、興味があれば貢献するのに良い場所です。&lt;/p&gt; &lt;p&gt;https://github.com/y20k/transistor&lt;/p&gt; &lt;p&gt;https://opensource.org/licenses/MIT&lt;/p&gt; &lt;h3&gt;トランジスターが必要なアクセス許可は何ですか?&lt;/h3&gt; &lt;p&gt;&lt;strong&gt;INTERNET アクセス許可&lt;/strong&gt;&lt;br /&gt; トランジスターは、インターネット上のラジオ局をストリームします。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;READ_EXTERNAL_STORAGE アクセス許可&lt;/strong&gt;&lt;br /&gt; トランジスターは、ラジオ局アイコンをカスタマイズするため、およびローカルに保存されたプレイリストのファイルを開くために、画像、写真、ドキュメントへのアクセスを必要とします。&lt;/p&gt; &lt;p&gt;&lt;strong&gt;VIBRATE アクセス許可&lt;/strong&gt;&lt;br /&gt; ラジオ局を長押しすると、小さな振動が切り替わります。&lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</string>
+    <string name="html_about">&lt;!DOCTYPE html&gt; &lt;html&gt; &lt;body&gt; &lt;h1&gt;!!!! PLEASE SO NOT TRANSLATE THIS - INSTEAD PLEASE TRANSLATE infosheet_about !!!!&lt;h1&gt; &lt;/body&gt; &lt;/html&gt;</string>
 
-    <string name="html_howto">&lt;!DOCTYPE html&gt; &lt;html&gt; &lt;body&gt; &lt;h1&gt;トランジスターの使用方法&lt;/h1&gt; &lt;h2&gt;新しいラジオ局を追加する方法は?&lt;/h2&gt; &lt;p&gt;新しいステーションを追加する最も簡単な方法は、ストリーミングのリンクを Web で検索して、そのファイルの種類をデフォルトのハンドラーとしてトランジスターを選択します。上部のバーで (+) シンボルをタップして、直接リンクをストリーミングに貼り付けることもできます。注意: トランジスターは内蔵の検索オプションの類は機能しません。&lt;/p&gt; &lt;h2&gt;ラジオ局を再生する方法は?&lt;/h2&gt; &lt;p&gt;大きな再生ボタンをタップします ;)&lt;/p&gt; &lt;h2&gt;再生を停止する方法は?&lt;/h2&gt; &lt;p&gt;大きな停止ボタンをタップ、またはヘッドフォンを外す、またはロック画面から通知をスワイプします。&lt;/p&gt; &lt;h2&gt;スリープ タイマーを開始する方法は?&lt;/h2&gt; &lt;p&gt;時計のマークをタップすると、15 分のカウント ダウンが開始して、その後トランジスターが再生を停止します。さらにタップすると、時計に 15 分追加します。スリープ タイマーをアクティブにするには、再生を実行している必要があります。&lt;/p&gt; &lt;h2&gt;局のショートカットをホーム画面に配置する方法は?&lt;/h2&gt; &lt;p&gt;局のショートカットをホーム画面に配置するオプションは、局の 3 つのドットメニューからアクセスすることができます。ショートカットをタップするとトランジスターが開きます - 再生がすぐに開始されます。&lt;/p&gt; &lt;h2&gt;局の名前を変更または削除する方法は?&lt;/h2&gt; &lt;p&gt;名前の変更と削除のオプションはともにコンテキストメニューからアクセスすることができます。3 つのドットマークをタップしてください。ファイル ブラウザーからも局のリストを管理できます (次の質問を参照してください)。&lt;/p&gt; &lt;h2&gt;トランジスターはどこに局を保存しますか?&lt;/h2&gt; &lt;p&gt;トランジスターは、データベースに局のリストを保存しません。代わりに、デバイスの外部ストレージに m3u ファイルとして局を格納します。お好みのテキストエディターを使用して、気軽にそれらのファイルを触ってください。ファイルは /Android/data/org.y20k.transistor/Collection に保存されます。&lt;/p&gt; &lt;h2&gt;私のラジオ局をバックアップと、転送する方法は?&lt;/h2&gt; &lt;p&gt;トランジスターは Android 6 の自動バックアップ機能をサポートします。ラジオ局は、常にあなたの Google アカウントにバックアップされ、再インストールで復元されます。Android の古いバージョンを実行しているデバイスでは、手動で &amp;quot;Collection&amp;quot; フォルダーを保存し、復元する必要があります。&lt;/p&gt; &lt;h2&gt;なぜトランジスターには設定がないのですか?&lt;/h2&gt; &lt;p&gt;設定するものがないからです ;)。トランジスターは非常にシンプルなアプリです。あなたの見方によって &amp;quot;シンプル&amp;quot;は、偉大にも不自由にもなります。&lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</string>
+    <string name="html_howto">&lt;!DOCTYPE html&gt; &lt;html&gt; &lt;body&gt; &lt;h1&gt;!!!! PLEASE SO NOT TRANSLATE THIS - INSTEAD PLEASE TRANSLATE infosheet_howto !!!!&lt;h1&gt; &lt;/body&gt; &lt;/html&gt;</string>
 
 </resources>
