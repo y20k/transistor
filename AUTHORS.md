@@ -17,6 +17,8 @@ German version: [y20k](https://github.com/y20k)
 
 Japanese version: [naofum](https://github.com/naofum)
 
+Norwegian version: [comradekingu](https://github.com/comradekingu)
+
 Russian version: [Boris Timofeev](https://github.com/btimofeev)
 
 Serbian version: [pejakm](https://github.com/pejakm)
