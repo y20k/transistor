@@ -1,18 +1,25 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources><string name="app_name">Transistor</string> <string name="title_activity_player">Spilles nå</string>
+<resources>
+    <!-- activities -->
+    <string name="app_name">Transistor</string>
+    <string name="title_activity_player">Spilles nå</string>
     <string name="title_activity_infosheet">Infoblad</string>
 
+    <!-- menu entries -->
     <string name="menu_about">Om</string>
     <string name="menu_howto">Bruksanvisning</string>
+    <string name="menu_timer">Tidsavbrudd</string>
     <string name="menu_icon">Endre miniatyrbilde</string>
     <string name="menu_add">Legg til</string>
     <string name="menu_delete">Slett</string>
     <string name="menu_rename">Gi nytt navn</string>
     <string name="menu_shortcut">Plasser på hjemmeskjermen</string>
 
+    <!-- headers -->
     <string name="header_about">Om</string>
     <string name="header_howto">Bruksanvisning</string>
 
+    <!-- descriptions -->
     <string name="descr_arrow_actioncall">Pil som peker mot symbolet for tillegg av stasjon</string>
     <string name="descr_overflow_button">Vis valg for radiostasjon</string>
     <string name="descr_station_icon">Miniatrybilde tilhørende radiostasjon</string>
@@ -23,6 +30,9 @@
     <string name="descr_playback_button">Stor avspillingsknapp</string>
     <string name="descr_playback_indicator">Indikator for avspillingsfremdrift</string>
     <string name="descr_playback_indicator_started">Indikator for avspillingsfremdrift</string>
+    <string name="descr_timer_indicator_started">Aktiv tidsavbruddsindikator</string>
+
+    <!-- dialogs -->
     <string name="dialog_generic_button_okay">Godta</string>
     <string name="dialog_generic_button_cancel">Avbryt</string>
     <string name="dialog_add_station_button">Legg til</string>
@@ -34,7 +44,6 @@
     <string name="dialog_rename_station_input_hint">Skriv inn nytt navn</string>
     <string name="dialog_rename_station_message">Endre navn på stasjon</string>
     <string name="dialog_button_rename">Gi nytt navn</string>
-
     <string name="dialog_error_title_default">Feil</string>
     <string name="dialog_error_message_default">En feil inntraff</string>
     <string name="dialog_error_details_button_default">Vis detaljer</string>
@@ -52,6 +61,7 @@
     <string name="dialog_error_message_fetch_read_file_location">Filens plassering:</string>
     <string name="dialog_error_message_fetch_write">Transistor prøvde hardt, men kunne ikke lagre angitt stasjon til lagringsmedium.</string>
 
+    <!-- messages -->
     <string name="actioncall_message_start_here">Legg il ny stasjon</string>
     <string name="toastmessage_add_download_started">Nedlasting startet:</string>
     <string name="toastmessage_add_open_file_started">Åpner fil:</string>
@@ -59,6 +69,8 @@
     <string name="toastmessage_long_press_playback_started">Avspilling startet (langt trykk enset)</string>
     <string name="toastmessage_shortcut_created">Snarvei opprettet.</string>
     <string name="toastmessage_station_copied">Stasjon kopiert.</string>
+    <string name="toastmessage_timer_activated">Tidsavbrudd aktivert.</string>
+    <string name="toastmessage_timer_cancelled">Tidsavbrudd avbrutt.</string>
     <string name="toastmessage_timer_duration_increased">Varighet økt.</string>
     <string name="toastmessage_timer_start_unable">Start avspilling først.</string>
     <string name="toastalert_rename_unsuccessful">Kunne ikke endre navn på stasjon. Velg et annet navn.</string>
@@ -68,10 +80,14 @@
     <string name="toastalert_permission_denied">Tilgang nektet:</string>
     <string name="toastalert_stream_not_found">Transistor kjenner ikke igjen denne stasjonen. Slett den og legg den til igjen på hjemmeskjermen.</string>
     <string name="snackbar_request_storage_access">Transistor må gis lesetilgang for å kunne nå data på eksternt lagringsmedium.</string>
+    <string name="snackbar_message_timer_set">Tidsavbrudd satt til</string>
+
+    <!-- notification -->
     <string name="notification_stop">Stopp</string>
     <string name="notification_swipe_to_stop">Sveip for å stoppe</string>
     <string name="notification_playing">Spiller av</string>
 
+    <!-- infosheet about -->
     <string name="infosheet_about_h1_about">Om Transistor</string>
     <string name="infosheet_about_h2_radio">Radio-program for Android</string>
     <string name="infosheet_about_h3_version">Versjon 2.0 (Starman)</string>
@@ -90,34 +106,27 @@
     <string name="infosheet_about_h3_vibrate">Tilgang VIBRATE</string>
     <string name="infosheet_about_p_vibrate">Trykk og hold på vilkårlig radiostasjon vil utløse en liten vibrasjon.</string>
     <string name="infosheet_about_h3_wakelock">Tilgang WAKE_LOCK</string>
+    <string name="infosheet_about_p_wakelock">Ved avspilling innhenter Transistor en såkalt delvis oppvåkningslås. Dette forhindrer Android-systemet i å stoppe avspilling for å spare strøm.</string>
+
+    <!-- infosheet howto -->
     <string name="infosheet_howto_h1_howto">Hvordan bruke Transistor</string>
     <string name="infosheet_howto_h2_add">Hvordan legge til en ny radiostasjon?</string>
     <string name="infosheet_howto_h2_settings">Hvorfor har ikke Transistor noen innstillinger?</string>
     <string name="infosheet_howto_p_settings">Det er ikke noe å stille inn ;). Transistor er et veldig simpelt program. Avhengig av ditt ståsted er dette enten flott eller teit.</string>
-
-
     <string name="infosheet_howto_p_add">Den enkleste måten å legge til en ny stasjon er å søke på nettet etter strømningslenker for så å velge Transistor som forvalgt behandler for denne typen filer. Du kan også trykke på (+) symbolet i toppfeltet og lime inn lenker direkte. Merk: Transistor har ingen innebygget søkefunksjon.</string>
     <string name="infosheet_howto_h2_play">Hvordan spille av en radiostasjon?</string>
     <string name="infosheet_howto_p_play">Trykk på den store avspillingsknappen ;).</string>
     <string name="infosheet_howto_h2_stop">Hvordan stanse avspilling?</string>
     <string name="infosheet_howto_p_stop">Trykk på den store stopp-knappen, koble fra hodetelefonene dine, eller sveip merknaden vekk fra låseskjermen.</string>
     <string name="infosheet_howto_h2_shortcut">Hvordan plassere en snarvei til en stasjon på hjemmeskjermen?</string>
+    <string name="infosheet_howto_p_shortcut">Valget for å plassere en snarvei til en radiostasjon på hjemmeskjermen kan nås fra stasjonens ellipse-meny. Ett trykk vil åpne Transistor - avspilling igangsettes omgående.</string>
     <string name="infosheet_howto_h2_edit">Hvordan endre navn på eller slette en stasjon?</string>
     <string name="infosheet_howto_p_edit">Navneendring og sletting finnes i stasjonens kontekst-meny. Trykk på ellipsen. Du kan bruke en filutforsker til å behandle stasjonslisten (se neste spørsmål).</string>
     <string name="infosheet_howto_h2_storage">Hvor lagrer Transistor sine stasjoner?</string>
     <string name="infosheet_howto_p_storage">Transistor lagrer ikke stasjonslisten i en database. Istedenfor lagres stasjoner som m3u-filer på din enhets lagringsmedium. Du kan tukle med disse filene som du vil ved bruk av en tekstbehandler. FIlene lagres i /Android/data/org.y20k.transistor/Collection.</string>
     <string name="infosheet_howto_h2_backup">Hvordan kan jeg sikkerhetskopiere og overføre mine radiostasjoner?</string>
     <string name="infosheet_howto_p_backup">Transistor støtter funksjonen for automatisk sikkerhetskopiering i Android 6. Radiostasjoner blir alltid synkronisert til din Google-konto og blir gjenopprettet ved nye installasjoner. På enheter som kjører eldre versjoner av Android må du manuelt lagre og gjennopprette mappen med din samling.</string>
-    <string name="menu_timer">Tidsavbrudd</string>
-    <string name="descr_timer_indicator_started">Aktiv tidsavbruddsindikator</string>
-
-    <string name="toastmessage_timer_activated">Tidsavbrudd aktivert.</string>
-    <string name="toastmessage_timer_cancelled">Tidsavbrudd avbrutt.</string>
-    <string name="snackbar_message_timer_set">Tidsavbrudd satt til</string>
-
-    <string name="infosheet_about_p_wakelock">Ved avspilling innhenter Transistor en såkalt delvis oppvåkningslås. Dette forhindrer Android-systemet i å stoppe avspilling for å spare strøm.</string>
-
     <string name="infosheet_howto_h2_sleep">Hvordan starte tidsavbrudd?</string>
     <string name="infosheet_howto_p_sleep">Trykk på klokkesymbolet for å igangsette et kvarters nedtelling. Når denne fullføres vil Transistor stoppe all avspilling. Ytterligere trykk utsetter tidsavbruddet med ytterligere 15 minutter. Noe må spilles av for å kunne aktivere tidsavbrudd.</string>
-    <string name="infosheet_howto_p_shortcut">Valget for å plassere en snarvei til en radiostasjon på hjemmeskjermen kan nås fra stasjonens ellipse-meny. Ett trykk vil åpne Transistor - avspilling igangsettes omgående.</string>
-    </resources>
+
+</resources>
