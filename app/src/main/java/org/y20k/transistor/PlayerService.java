@@ -28,6 +28,9 @@ import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.media.session.MediaButtonReceiver;
+import android.support.v4.media.session.MediaSessionCompat;
+import android.support.v4.media.session.PlaybackStateCompat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -68,6 +71,7 @@ public final class PlayerService extends Service implements
     private MetadataHelper mMetadataHelper;
     private AudioManager mAudioManager;
     private MediaPlayer mMediaPlayer;
+    private MediaSessionCompat mSession;
     private String mStreamUri;
     private boolean mPlayback;
     private int mPlayerInstanceCounter;
@@ -83,6 +87,22 @@ public final class PlayerService extends Service implements
     @Override
     public void onCreate() {
         super.onCreate();
+
+        // start a new MediaSession
+        // https://www.youtube.com/watch?v=XQwe30cZffg&feature=youtu.be&t=883
+        // https://www.youtube.com/watch?v=G6pFai3ll9E
+        // https://www.youtube.com/watch?v=FBC1FgWe5X4
+        // https://gist.github.com/ianhanniballake/15dce0b233b4f4b23ef8
+
+        mSession = new MediaSessionCompat(this, LOG_TAG);
+        mSession.setPlaybackState(new PlaybackStateCompat.Builder()
+                .setState(PlaybackStateCompat.STATE_PAUSED, 0, 0)
+                .setActions(PlaybackStateCompat.ACTION_PLAY_PAUSE)
+                .build());
+        mSession.setCallback(new MediaSessionCallback());
+        mSession.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS |
+                MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
+//        mSession.setMetadata();
 
         // set up variables
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
@@ -102,19 +122,21 @@ public final class PlayerService extends Service implements
                     // update notification
                     NotificationHelper.setStationMetadata(intent.getStringExtra(EXTRA_METADATA));
                     NotificationHelper.createNotification(PlayerService.this);
+                    // TODO update media session metadata
                 }
             }
         };
         IntentFilter metadataChangedIntentFilter = new IntentFilter(ACTION_METADATA_CHANGED);
         LocalBroadcastManager.getInstance(this).registerReceiver(metadataChangedReceiver, metadataChangedIntentFilter);
 
-        // TODO Listen for headphone button
-        // Use MediaSession
     }
 
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
+        // listen for media button
+        MediaButtonReceiver.handleIntent(mSession, intent);
 
         // checking for empty intent
         if (intent == null) {
@@ -137,6 +159,12 @@ public final class PlayerService extends Service implements
             // start playback
             preparePlayback();
 
+            // set media session active
+            mSession.setPlaybackState(new PlaybackStateCompat.Builder()
+                    .setState(PlaybackStateCompat.STATE_PLAYING, 0, 1.0f)
+                    .setActions(PlaybackStateCompat.ACTION_PLAY_PAUSE).build());
+            mSession.setActive(true);
+
             // increase counter
             mPlayerInstanceCounter++;
         }
@@ -150,6 +178,12 @@ public final class PlayerService extends Service implements
 
             // stop playback
             finishPlayback();
+
+            // set media session in-active
+            mSession.setPlaybackState(new PlaybackStateCompat.Builder()
+                    .setState(PlaybackStateCompat.STATE_PAUSED, 0, 0.0f)
+                    .setActions(PlaybackStateCompat.ACTION_PLAY_PAUSE).build());
+            mSession.setActive(false);
 
             // reset counter
             mPlayerInstanceCounter = 0;
@@ -387,6 +421,7 @@ public final class PlayerService extends Service implements
         try {
             mMetadataHelper = new MetadataHelper(getApplicationContext(), mStreamUri);
             mMediaPlayer.setDataSource(mMetadataHelper.getShoutcastProxy());
+            // mMediaPlayer.setDataSource(mStreamUri);
             mMediaPlayer.prepareAsync();
         } catch (IOException e) {
             e.printStackTrace();
@@ -403,9 +438,22 @@ public final class PlayerService extends Service implements
             mMediaPlayer.reset();
             mMediaPlayer.release();
             mMediaPlayer = null;
-
-            mMetadataHelper.closeShoutcastProxyConnection();
         }
+
+        if (mMetadataHelper != null) {
+            mMetadataHelper.closeShoutcastProxyConnection();
+            mMetadataHelper = null;
+        }
+
+        if (mSession != null) {
+            mSession.setActive(false);
+            // mSession.release();
+            // mSession = null;
+        }
+
+
+
+
     }
 
 
@@ -490,5 +538,30 @@ public final class PlayerService extends Service implements
     /**
      * End of inner class
      */
+
+
+    /**
+     * Inner class: ***
+     */
+    private final class MediaSessionCallback extends MediaSessionCompat.Callback  {
+
+        @Override
+        public void onPlay() {
+            super.onPlay();
+            // stop playback
+            finishPlayback();
+        }
+
+        @Override
+        public void onPause() {
+            // stop playback
+            finishPlayback();
+        }
+    }
+    /**
+     * End of inner class
+     */
+
+
 
 }

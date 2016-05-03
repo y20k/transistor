@@ -2,8 +2,8 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.y20k.transistor"
-    android:versionCode="22"
-    android:versionName="2.0.1 (Starman)">
+    android:versionCode="23"
+    android:versionName="2.0.2 (Starman)">
 
     <uses-sdk
         android:minSdkVersion="19"
@@ -24,6 +24,12 @@
         android:label="@string/app_name"
         android:theme="@style/TransistorAppTheme">
 
+        <!-- MEDIA BUTTON RECEIVER -->
+        <receiver android:name="android.support.v4.media.session.MediaButtonReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_BUTTON" />
+            </intent-filter>
+        </receiver>
 
         <!-- MAIN ACTIVITY -->
         <activity
@@ -105,13 +111,19 @@
                 <action android:name="org.y20k.transistor.action.PLAY" />
                 <action android:name="org.y20k.transistor.action.STOP" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_BUTTON" />
+            </intent-filter>
         </service>
-
 
         <!-- SLEEP TIMER SERVICE -->
         <service
             android:name=".helpers.SleepTimerService">
         </service>
+
+
+
+
 
     </application>
 

@@ -189,7 +189,8 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
         sb.append(mActivity.getResources().getString(R.string.dialog_error_message_fetch_download_station_url));
         sb.append("\n");
         sb.append(mStationUri);
-        if (!mStationUri.getLastPathSegment().contains("m3u") || !mStationUri.getLastPathSegment().contains("pls") ) {
+        if ((mStationUri.getLastPathSegment() != null && !mStationUri.getLastPathSegment().contains("m3u")) ||
+                (mStationUri.getLastPathSegment() != null && !mStationUri.getLastPathSegment().contains("pls")) ) {
             sb.append("\n\n");
             sb.append(mActivity.getResources().getString(R.string.dialog_error_message_fetch_general_hint_m3u));
         }

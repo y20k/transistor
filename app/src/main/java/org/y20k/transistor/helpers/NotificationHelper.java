@@ -105,6 +105,7 @@ public final class NotificationHelper {
 //        builder.setStyle(new Notification.MediaStyle();
 //        builder.setShowActionsInCompactView(0);
 //        builder.setMediaSession(mMediaSession.getSessionToken());
+        // https://youtu.be/XQwe30cZffg?t=29m25s
         builder.setOngoing(true);
         builder.setColor(notificationColor);
         builder.setContentIntent(tapPendingIntent);
