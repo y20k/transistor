@@ -24,9 +24,9 @@
     <string name="descr_overflow_button">Mostrar las opciones para la estación de radio</string>
     <string name="descr_station_icon">Icono de estación de radio</string>
     <string name="descr_station_name">Nombre de estación de radio</string>
-    <string name="descr_station_metadata">Metadata (Artist / Title) of currently playing radio station</string>
+    <string name="descr_station_metadata">Metadata (Artista / Títulos) de la reproducción de la actual estación de radio</string>
     <string name="descr_station_name_example">Ejemplo FM</string>
-    <string name="descr_station_metadata_example">Artist - Title</string>
+    <string name="descr_station_metadata_example">Artista - Título</string>
     <string name="descr_playback_button">Botón grande de reproducción</string>
     <string name="descr_playback_indicator">Indicador para el funcionamiento de la reproducción</string>
     <string name="descr_playback_indicator_started">Indicador para el funcionamiento de la reproducción</string>
@@ -108,7 +108,7 @@
     <string name="infosheet_about_h3_vibrate">Permiso VIBRATE</string>
     <string name="infosheet_about_p_vibrate">Manteniendo pulsada una estación de radio se activará una pequeña vibración.</string>
     <string name="infosheet_about_h3_wakelock">Permiso WAKE_LOCK</string>
-    <string name="infosheet_about_p_wakelock">During Playback Transistor acquires a so called partial wake lock. That prevents the Android system to stop playback for power saving reasons.</string>
+    <string name="infosheet_about_p_wakelock">Durante la reproducción Transistor obtiene llamadas parciales a wake lock. Esto previene que el sistema Android detenga la reproducción por motivos de ahorro de energía.</string>
 
     <!-- infosheet howto -->
     <string name="infosheet_howto_h1_howto">Cómo utilizar Transistor</string>
@@ -127,8 +127,8 @@
     <string name="infosheet_howto_h2_storage">¿Donde almacena Transistor sus estaciones?</string>
     <string name="infosheet_howto_p_storage">Transistor no guarda la lista de estaciones en una base de datos. En lugar de eso almacena las estaciones como archivos m3u en el almacenamiento externo de tu dispositivo. Eres libre de trastear esos archivos usando el editor de texto de tu dispositivo. Los archivos están almacenados en /Android/data/org.y20k.transistor/Collection.</string>
     <string name="infosheet_howto_h2_backup">¿Cómo puedo hacer una copia de seguridad de mis estaciones de radio?</string>
-    <string name="infosheet_howto_p_backup">Transistor soporta la característica de hacer copia de seguridad automática de Android 6. Las estaciones de radio estarán siempre respaldadas en tu cuenta de Google y se restaurarán al reinstalar. En dispositivos con versiones antiguas de Android tendrás que guardar y restaurar manualmente la carpeta Collection.</string>
-    <string name="infosheet_howto_h2_settings">¿Por qué Transistor no tiene ninguna configuración?</string>
+    <string name="infosheet_howto_p_backup">Transistor tiene soporte para hacer copia de seguridad automática en Android 6. Las estaciones de radio estarán siempre respaldadas en tu cuenta de Google y se restaurarán al reinstalar. En dispositivos con versiones antiguas de Android tendrás que guardar y restaurar manualmente la carpeta Collection.</string>
+    <string name="infosheet_howto_h2_settings">¿Por qué no hay configuraciones en Transistor?</string>
     <string name="infosheet_howto_p_settings">No hay nada que configurar ;). Transistor es una aplicación muy simple. Dependiendo de tu punto de vista simple es o estupendo o defectuoso.</string>
 
     <!-- HTML strings -->
