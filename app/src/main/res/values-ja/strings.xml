@@ -131,9 +131,14 @@
     <string name="infosheet_howto_h2_settings">トランジスターにはなぜ設定がないのですか?</string>
     <string name="infosheet_howto_p_settings">設定するものは何もありません ;)。トランジスターは非常にシンプルなアプリケーションです。あなたの見方によって、シンプルは偉大にもダメなものにもなります。</string>
 
-    <!-- HTML strings -->
-    <string name="html_about">&lt;!DOCTYPE html&gt; &lt;html&gt; &lt;body&gt; &lt;h1&gt;!!!! PLEASE SO NOT TRANSLATE THIS - INSTEAD PLEASE TRANSLATE infosheet_about !!!!&lt;h1&gt; &lt;/body&gt; &lt;/html&gt;</string>
-
-    <string name="html_howto">&lt;!DOCTYPE html&gt; &lt;html&gt; &lt;body&gt; &lt;h1&gt;!!!! PLEASE SO NOT TRANSLATE THIS - INSTEAD PLEASE TRANSLATE infosheet_howto !!!!&lt;h1&gt; &lt;/body&gt; &lt;/html&gt;</string>
+    <!-- 
+    +++ IMPORTANT NOTE +++
+    The HTML strings previously found here were replaced by multiple non-HTML strings 
+    (infosheet_about_... & infosheet_howto_...). This should make translations easier - 
+    see GitHub issue #69 (https://github.com/y20k/transistor/issues/69). If you are 
+    looking for the old HTML strings. They still can be found here in their respective 
+    "values" folders:
+    https://github.com/y20k/transistor/tree/1e51dd8666194353427ca074f2092b6c20cfacd6/app/src/main/res 
+    -->
 
 </resources>

@@ -131,51 +131,14 @@
     <string name="infosheet_howto_h2_settings">Why does Transistor not have any setting?</string>
     <string name="infosheet_howto_p_settings">There is nothing to be set ;). Transistor is a very simple app. Depending on your point of view "simple" is either great or lame.</string>
 
-
-    <!-- HTML strings -->
-    <string name="html_about"><![CDATA[<!DOCTYPE html>
-    <html>
-        <body>
-            <h1>À propos de Transistor</h1> 
-            <h2>Application radio pour Android</h2> 
-            <h3>Version 2.0 (&quot;Starman&quot;)</h3>
-            <p>Transistor est une application minimaliste vous permettant d\'écouter la radio par internet. L\'application stocke les stations en tant que fichiers sur la mémoire externe de votre appareil. Recherchez des fichiers m3u dans /Android/data/org.y20k.transistor/Collection. Transistor gère pour l\'instant les flux encodés en MP3 et OGG.</p> 
-            <p>Transistor est un logiciel libre. Il est publié sous la licence open source MIT. Le code source est disponible sur GitHub. GitHub est aussi l\'endroit idéal pour signaler des bugs, ou même contribuer à l\'application si vous êtes interessés.</p> 
-            <p>https://github.com/y20k/transistor</p> 
-            <p>https://opensource.org/licenses/MIT</p> 
-            <h3>Quelles autorisations sont nécessaires à Transistor ?</h3> 
-            <p><strong>Autorisation INTERNET</strong><br /> 
-            Transistor lit des flux radio par internet.</p> 
-            <p><strong>Autorisation READ_EXTERNAL_STORAGE</strong><br /> 
-            Transistor nécessite l\'accès aux images et aux photos afin de vous permettre de personnaliser les logos des stations radios.</p> 
-            <p><strong>Autorisation VIBRATE</strong><br /> 
-            Appuyer et maintenir une station radio déclenchera une petite vibration.</p> 
-        </body>
-    </html>]]></string>
-
-    <string name="html_howto"><![CDATA[<!DOCTYPE html>
-    <html>
-        <body>
-            <h1>Comment utiliser Transistor</h1> 
-            <h2>Comment ajouter une nouvelle station radio ?</h2> 
-            <p>Le moyen le plus simple pour ajouter une station est de rechercher un lien de diffusion et de choisir Transistor en tant qu\'application par défaut pour ce type de fichiers. Vous pouvez également appuyer sur le symbole (+) dans la barre et directement y coller un lien de diffusion.</p> 
-            <h2>Comment écouter une station radio ?</h2> 
-            <p>Appuyez sur le gros bouton Lecture ;).</p> 
-            <h2>Comment arrêter la lecture ?</h2> 
-            <p>Appuyez sur le gros bouton Arrêter, débranchez vos écouteurs ou faîtes glisser la notification depuis l\'écran de verrouillage.</p>
-            <h2>How to start the sleep timer?</h2>
-            <p>Tapping the Clock symbol starts a 15 minute countdown after which Transistor stops playback. An additional tap adds 15 minutes to the clock. Playback must be running to be able to activate the sleep timer.</p>
-            <h2>How to place a station shortcut on the Home screen?</h2>
-            <p>The option to place a shortcut for a station on the Home screen can be accessed from the station\'s three dots menu. A tap on a shortcut will open Transistor - playback will start immediately.</p>
-            <h2>Comment renommer ou supprimer une station ?</h2>
-            <p>Vous pouvez accéder aux options Renommer et Supprimer à partir de la liste de stations et de l\'écran de lecture. Appuyez simplement sur le symbole composé de trois points. Vous pouvez aussi gérer la liste des stations à partir d\'un navigateur de fichier (voir question suivante).</p> 
-            <h2>Où Transistor stocke-t-il ses stations ?</h2> 
-            <p>Transistor ne sauvegarde pas ses stations dans une base de données, mais dans des fichiers m3u trouvables dans la mémoire externe de votre appareil. Vous êtes libres de modifier ces fichiers grâce à l\'éditeur de texte de votre choix. Les fichiers sont stockés dans /Android/data/org.y20k.transistor/Collection.</p> 
-            <h2>Comment puis-je sauvegarder et restaurer mes stations ?<h2>
-            <p>Transistor supporte la fonction de restauration automatique d\'Android 6. Les stations de radio sont toujours synchronisées sur votre compte Google et seront restaurées en cas de réinstallation. Pour les anciennes versions d\'Android, il vous faudra sauvegarder et restaurer manuellement le dossier &amp;quot;Collection&amp;quot;.</p> 
-            <h2>Pourquoi n\'y a-t-il aucun paramètre dans Transistor ?</h2> 
-            <p>Il n\'y a rien à paramétrer ;). Transistor est une application très simple. &amp;quot;Simple&amp;quot; peut vouloir dire génial ou mauvais, tout dépend de votre point de vue.</p> 
-        </body>
-    </html>]]></string>
+    <!-- 
+    +++ IMPORTANT NOTE +++
+    The HTML strings previously found here were replaced by multiple non-HTML strings 
+    (infosheet_about_... & infosheet_howto_...). This should make translations easier - 
+    see GitHub issue #69 (https://github.com/y20k/transistor/issues/69). If you are 
+    looking for the old HTML strings. They still can be found here in their respective 
+    "values" folders:
+    https://github.com/y20k/transistor/tree/1e51dd8666194353427ca074f2092b6c20cfacd6/app/src/main/res 
+    -->
 
 </resources>

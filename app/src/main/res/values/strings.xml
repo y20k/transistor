@@ -131,20 +131,14 @@
     <string name="infosheet_howto_h2_settings">Why are there no settings in Transistor?</string>
     <string name="infosheet_howto_p_settings">There is nothing to set ;). Transistor is a very simple app. Depending on your point of view &quot;simple&quot; is either great or lame.</string>
 
-
-    <!-- HTML strings -->
-    <string name="html_about"><![CDATA[<!DOCTYPE html>
-    <html>
-        <body>
-            <h1>!!!! PLEASE SO NOT TRANSLATE THIS - INSTEAD PLEASE TRANSLATE infosheet_about !!!!<h1>
-        </body>
-    </html>]]></string>
-
-    <string name="html_howto"><![CDATA[<!DOCTYPE html>
-    <html>
-        <body>
-            <h1>!!!! PLEASE SO NOT TRANSLATE THIS - INSTEAD PLEASE TRANSLATE infosheet_howto !!!!<h1>
-        </body>
-    </html>]]></string>
+    <!-- 
+    +++ IMPORTANT NOTE +++
+    The HTML strings previously found here were replaced by multiple non-HTML strings 
+    (infosheet_about_... & infosheet_howto_...). This should make translations easier - 
+    see GitHub issue #69 (https://github.com/y20k/transistor/issues/69). If you are 
+    looking for the old HTML strings. They still can be found here in their respective 
+    "values" folders:
+    https://github.com/y20k/transistor/tree/1e51dd8666194353427ca074f2092b6c20cfacd6/app/src/main/res 
+    -->
 
 </resources>
