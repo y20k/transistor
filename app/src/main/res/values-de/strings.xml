@@ -8,7 +8,7 @@
     <!-- menu entries -->
     <string name="menu_about">Über Transistor</string>
     <string name="menu_howto">Wie Transistor funktioniert</string>
-    <string name="menu_timer">Sleep timer</string>
+    <string name="menu_timer">Sleeptimer</string>
     <string name="menu_icon">Icon ändern</string>
     <string name="menu_add">Hinzufügen</string>
     <string name="menu_delete">Löschen</string>
@@ -30,7 +30,7 @@
     <string name="descr_playback_button">Großer Play-Knopf</string>
     <string name="descr_playback_indicator">Symbol für Playback Status</string>
     <string name="descr_playback_indicator_started">Symbol für Playback Aktivität</string>
-    <string name="descr_timer_indicator_started">Symbol für Sleep Timer Aktivität</string>
+    <string name="descr_timer_indicator_started">Symbol für Sleeptimer Aktivität</string>
 
     <!-- dialogs -->
     <string name="dialog_generic_button_okay">Bestätigen</string>
@@ -69,7 +69,7 @@
     <string name="toastmessage_add_open_file_started">Öffne Datei:</string>
     <string name="toastmessage_long_press_playback_stopped">Playback gestoppt (Long Press)</string>
     <string name="toastmessage_long_press_playback_started">Playback gestarted (Long Press)</string>
-    <string name="toastmessage_shortcut_created">Shortcut created.</string>
+    <string name="toastmessage_shortcut_created">Station auf Startbildschirm plaziert.</string>
     <string name="toastmessage_station_copied">Station kopiert.</string>
     <string name="toastmessage_timer_activated">Sleeptimer aktiviert.</string>
     <string name="toastmessage_timer_cancelled">Sleeptimer de-aktiviert.</string>
@@ -118,8 +118,8 @@
     <string name="infosheet_howto_p_play">Den großen Play-Knopf drücken ;).</string>
     <string name="infosheet_howto_h2_stop">Wie schalte ich das Radio wieder aus?</string>
     <string name="infosheet_howto_p_stop">Den großen Stop-Knopf drücken oder das Kopfhörerkabel abziehen oder die "Notification" der App ausblenden.</string>
-    <string name="infosheet_howto_h2_sleep">Wie starte ich den Sleep Timer?</string>
-    <string name="infosheet_howto_p_sleep">Über den Knopf mit dem Uhr-Symbol kann ein 15-minütiger Countdown aktiviert werden - wenn der abläuft, stoppt Transistor die Wiedergabe. Wiederholtes Tippen verlängert den Countdown um 15 Minuten. Der Sleep Timer kann nur aktiviert werden, wenn die Wiedergabe einer Station läuft.</string>
+    <string name="infosheet_howto_h2_sleep">Wie starte ich den Sleeptimer?</string>
+    <string name="infosheet_howto_p_sleep">Über den Knopf mit dem Uhr-Symbol kann ein 15-minütiger Countdown aktiviert werden - wenn der abläuft, stoppt Transistor die Wiedergabe. Wiederholtes Tippen verlängert den Countdown um 15 Minuten. Der Sleeptimer kann nur aktiviert werden, wenn die Wiedergabe einer Station läuft.</string>
     <string name="infosheet_howto_h2_shortcut">Wie speichere ich eine Radiostation auf dem Startbildschirm ab?</string>
     <string name="infosheet_howto_p_shortcut">Die Option eine Station auf dem Startbildschirm zu speichern erreicht man über das Drei-Punkte-Menü der jeweiligen Station. Mit den Shortcut dieser Station kann Transistor aufgerufen und die Wiedergabe umgehend gestartet werden.</string>
     <string name="infosheet_howto_h2_edit">Wie kann ich eine Station löschen oder umbenennen?</string>
