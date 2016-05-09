@@ -23,11 +23,15 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.media.MediaBrowserCompat;
+import android.support.v4.media.MediaBrowserServiceCompat;
 import android.support.v4.media.session.MediaButtonReceiver;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
@@ -38,12 +42,13 @@ import org.y20k.transistor.helpers.MetadataHelper;
 import org.y20k.transistor.helpers.NotificationHelper;
 
 import java.io.IOException;
+import java.util.List;
 
 
 /**
  * PlayerService class
  */
-public final class PlayerService extends Service implements
+public final class PlayerService extends MediaBrowserServiceCompat implements
         AudioManager.OnAudioFocusChangeListener,
         MediaPlayer.OnBufferingUpdateListener,
         MediaPlayer.OnCompletionListener,
@@ -88,26 +93,13 @@ public final class PlayerService extends Service implements
     public void onCreate() {
         super.onCreate();
 
-        // start a new MediaSession
-        // https://www.youtube.com/watch?v=XQwe30cZffg&feature=youtu.be&t=883
-        // https://www.youtube.com/watch?v=G6pFai3ll9E
-        // https://www.youtube.com/watch?v=FBC1FgWe5X4
-        // https://gist.github.com/ianhanniballake/15dce0b233b4f4b23ef8
-
-        mSession = new MediaSessionCompat(this, LOG_TAG);
-        mSession.setPlaybackState(new PlaybackStateCompat.Builder()
-                .setState(PlaybackStateCompat.STATE_PAUSED, 0, 0)
-                .setActions(PlaybackStateCompat.ACTION_PLAY_PAUSE)
-                .build());
-        mSession.setCallback(new MediaSessionCallback());
-        mSession.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS |
-                MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
-//        mSession.setMetadata();
-
         // set up variables
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         mMediaPlayer = null;
         mPlayerInstanceCounter = 0;
+        if (mSession == null) {
+            mSession = createMediaSession(this);
+        }
 
         // Listen for headphone unplug
         IntentFilter headphoneUnplugIntentFilter = new IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
@@ -120,6 +112,7 @@ public final class PlayerService extends Service implements
             public void onReceive(Context context, Intent intent) {
                 if (intent.hasExtra(EXTRA_METADATA)) {
                     // update notification
+                    NotificationHelper.setMediaSession(mSession);
                     NotificationHelper.setStationMetadata(intent.getStringExtra(EXTRA_METADATA));
                     NotificationHelper.createNotification(PlayerService.this);
                     // TODO update media session metadata
@@ -156,14 +149,14 @@ public final class PlayerService extends Service implements
                 mStreamUri = intent.getStringExtra(EXTRA_STREAM_URI);
             }
 
-            // start playback
-            preparePlayback();
-
             // set media session active
             mSession.setPlaybackState(new PlaybackStateCompat.Builder()
                     .setState(PlaybackStateCompat.STATE_PLAYING, 0, 1.0f)
                     .setActions(PlaybackStateCompat.ACTION_PLAY_PAUSE).build());
             mSession.setActive(true);
+
+            // start playback
+            preparePlayback();
 
             // increase counter
             mPlayerInstanceCounter++;
@@ -198,6 +191,17 @@ public final class PlayerService extends Service implements
     @Override
     public IBinder onBind(Intent intent) {
         return null;
+    }
+
+    @Nullable
+    @Override
+    public BrowserRoot onGetRoot(@NonNull String clientPackageName, int clientUid, @Nullable Bundle rootHints) {
+        return null;
+    }
+
+    @Override
+    public void onLoadChildren(@NonNull String parentId, @NonNull Result<List<MediaBrowserCompat.MediaItem>> result) {
+
     }
 
 
@@ -378,17 +382,21 @@ public final class PlayerService extends Service implements
 //        mWifiLock = ((WifiManager) getSystemService(Context.WIFI_SERVICE)).createWifiLock(WifiManager.WIFI_MODE_FULL, "mylock");
 //        mWifiLock.acquire();
 
-
         // start player service using intent
         Intent intent = new Intent(context, PlayerService.class);
         intent.setAction(ACTION_PLAY);
         intent.putExtra(EXTRA_STREAM_URI, mStreamUri);
         context.startService(intent);
 
+        if (mSession == null) {
+            mSession = createMediaSession(context);
+        }
+
         // put up notification
         NotificationHelper.setStationName(stationName);
         NotificationHelper.setStationID(stationID);
         NotificationHelper.setStationMetadata(null);
+        NotificationHelper.setMediaSession(mSession); // mSession is null here !
         NotificationHelper.createNotification(context);
     }
 
@@ -509,6 +517,34 @@ public final class PlayerService extends Service implements
     }
 
 
+    /* Creates media session */
+    private MediaSessionCompat createMediaSession(Context context) {
+        // start a new MediaSession
+        // https://www.youtube.com/watch?v=XQwe30cZffg&feature=youtu.be&t=883
+        // https://www.youtube.com/watch?v=G6pFai3ll9E
+        // https://www.youtube.com/watch?v=FBC1FgWe5X4
+        // https://gist.github.com/ianhanniballake/15dce0b233b4f4b23ef8
+
+        // define action for playback state to be used in media session callback
+        PlaybackStateCompat playbackState = new PlaybackStateCompat.Builder()
+                .setState(PlaybackStateCompat.STATE_PAUSED, 0, 0)
+                .setActions(PlaybackStateCompat.ACTION_PLAY_PAUSE)
+                .build();
+
+
+        // create a media session
+        MediaSessionCompat session = new MediaSessionCompat(context, LOG_TAG);
+        setSessionToken(session.getSessionToken());
+        session.setPlaybackState(playbackState);
+        session.setCallback(new MediaSessionCallback());
+        session.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS |
+                MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
+//        mSession.setMetadata();
+
+        return session;
+    }
+
+
     /* Saves state of playback */
     private void saveAppState () {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplication());
@@ -541,22 +577,16 @@ public final class PlayerService extends Service implements
 
 
     /**
-     * Inner class: ***
+     * Inner class: Handles callback from active media session ***
      */
     private final class MediaSessionCallback extends MediaSessionCompat.Callback  {
-
-        @Override
-        public void onPlay() {
-            super.onPlay();
-            // stop playback
-            finishPlayback();
-        }
 
         @Override
         public void onPause() {
             // stop playback
             finishPlayback();
         }
+
     }
     /**
      * End of inner class
