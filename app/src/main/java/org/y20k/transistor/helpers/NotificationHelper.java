@@ -19,9 +19,11 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.media.session.MediaSessionCompat;
+import android.support.v7.app.NotificationCompat;
+import android.util.Log;
 
 import org.y20k.transistor.MainActivity;
 import org.y20k.transistor.PlayerService;
@@ -45,6 +47,7 @@ public final class NotificationHelper {
 
 
     /* Main class variables */
+    private static MediaSessionCompat mSession;
     private static String mStationName;
     private static String mStationMetadata;
     private static int mStationID;
@@ -102,10 +105,15 @@ public final class NotificationHelper {
         builder.setContentText(notificationText);
         builder.setStyle(new NotificationCompat.BigTextStyle().bigText(notificationText));
         builder.addAction (R.drawable.ic_stop_black_36dp, context.getString(R.string.notification_stop), stopActionPendingIntent);
-//        builder.setStyle(new Notification.MediaStyle();
-//        builder.setShowActionsInCompactView(0);
-//        builder.setMediaSession(mMediaSession.getSessionToken());
-        // https://youtu.be/XQwe30cZffg?t=29m25s
+        if (mSession != null) {
+            NotificationCompat.MediaStyle style = new NotificationCompat.MediaStyle().setMediaSession(mSession.getSessionToken())
+                    .setShowActionsInCompactView(0);
+            builder.setStyle(style);
+            Log.v(LOG_TAG, "!!! mSession initialized"); // TODO remove this
+        } else {
+            Log.v(LOG_TAG, "!!! mSession NOT initialized"); // TODO remove this
+        }
+
         builder.setOngoing(true);
         builder.setColor(notificationColor);
         builder.setContentIntent(tapPendingIntent);
@@ -117,6 +125,12 @@ public final class NotificationHelper {
         // display notification
         notificationManager.notify(PLAYER_SERVICE_NOTIFICATION_ID, notification);
 
+    }
+
+
+    /* Setter for current media session */
+    public static void setMediaSession(MediaSessionCompat session) {
+        mSession = session;
     }
 
 
