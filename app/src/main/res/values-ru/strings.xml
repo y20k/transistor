@@ -127,7 +127,7 @@
     <string name="infosheet_howto_h2_storage">Где Transistor хранит станции?</string>
     <string name="infosheet_howto_p_storage">Transistor не хранит список станций в базе данных. Вместо этого он сохраняет станции как m3u файлы на внешнем накопителе вашего устройства. Можете свободно изменять эти файлы текстовым редактором. Файлы хранятся в директории /Android/data/org.y20k.transistor/Collection.</string>
     <string name="infosheet_howto_h2_backup">Как я могу сделать резервную копию моих радиостанций и передать их?</string>
-    <string name="infosheet_howto_p_backup">Transistor поддерживает функцию резервного копирования Android 6. Радиостанции всегда сохраняются в вашем аккаунте Google и могут быть восстановлены при переустановке. На устройствах работающих под более старыми версиями Android вы должны вручную сохранить и восстановить директорию \"Collection\".</string>
+    <string name="infosheet_howto_p_backup">Transistor поддерживает функцию резервного копирования Android 6. Радиостанции всегда сохраняются в вашем Google-аккаунте и могут быть восстановлены при переустановке приложения. На устройствах работающих под более старыми версиями Android вы должны вручную сохранить и восстановить директорию \"Collection\".</string>
     <string name="infosheet_howto_h2_settings">Почему Transistor не имеет настроек?</string>
     <string name="infosheet_howto_p_settings">Здесь нечего настраивать ;). Transistor очень простое приложение. В зависимости от вашей точки зрения \"простое\" может означать великолепное или неполноценное.</string>
 
