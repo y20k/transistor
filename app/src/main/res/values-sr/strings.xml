@@ -8,12 +8,12 @@
     <!-- menu entries -->
     <string name="menu_about">О програму</string>
     <string name="menu_howto">Како се користи</string>
-    <string name="menu_timer">Sleep timer</string>
+    <string name="menu_timer">Тајмер</string>
     <string name="menu_icon">Промени икону</string>
     <string name="menu_add">Додај</string>
     <string name="menu_delete">Обриши</string>
     <string name="menu_rename">Преименуј</string>
-    <string name="menu_shortcut">Place on Home screen</string>
+    <string name="menu_shortcut">Постави на почетни екран</string>
 
     <!-- headers -->
     <string name="header_about">О програму</string>
@@ -24,13 +24,13 @@
     <string name="descr_overflow_button">Прикажи опције за радио станицу</string>
     <string name="descr_station_icon">Икона радио станице</string>
     <string name="descr_station_name">Назив радио станице</string>
-    <string name="descr_station_metadata">Metadata (Artist / Title) of currently playing radio station</string>
+    <string name="descr_station_metadata">Метаподаци (извођач/наслов) текуће радио станице</string>
     <string name="descr_station_name_example">Пример ФМ</string>
-    <string name="descr_station_metadata_example">Artist - Title</string>
+    <string name="descr_station_metadata_example">Извођач — наслов</string>
     <string name="descr_playback_button">Дугме за пуштање</string>
     <string name="descr_playback_indicator">Показивач тренутног пуштања</string>
     <string name="descr_playback_indicator_started">Показивач тренутног пуштања</string>
-    <string name="descr_timer_indicator_started">Indicator for running sleep timer</string>
+    <string name="descr_timer_indicator_started">Индикатор покренутог тајмера</string>
 
     <!-- dialogs -->
     <string name="dialog_generic_button_okay">У реду</string>
@@ -69,20 +69,20 @@
     <string name="toastmessage_add_open_file_started">Отварам фајл:</string>
     <string name="toastmessage_long_press_playback_stopped">Пуштање заустављено (примећен дуги тап)</string>
     <string name="toastmessage_long_press_playback_started">Пуштање почето (примећен дуги тап)</string>
-    <string name="toastmessage_shortcut_created">Shortcut created.</string>
+    <string name="toastmessage_shortcut_created">Пречица направљена.</string>
     <string name="toastmessage_station_copied">Станица копирана.</string>
-    <string name="toastmessage_timer_activated">Sleep timer activated.</string>
-    <string name="toastmessage_timer_cancelled">Sleep timer cancelled.</string>
-    <string name="toastmessage_timer_duration_increased">Duration increased.</string>
-    <string name="toastmessage_timer_start_unable">Please start playback first.</string>
+    <string name="toastmessage_timer_activated">Тајмер активиран.</string>
+    <string name="toastmessage_timer_cancelled">Тајмер отказан.</string>
+    <string name="toastmessage_timer_duration_increased">Трајање повећано.</string>
+    <string name="toastmessage_timer_start_unable">Најпре почните пуштање.</string>
     <string name="toastalert_rename_unsuccessful">Не могох да преименујем станицу. Унесите други назив.</string>
     <string name="toastalert_delete_successful">Станица уклоњена.</string>
     <string name="toastalert_no_external_storage">Не могох да приступим спољашњем складишту.</string>
     <string name="toastalert_headphones_unplugged">Слушалице искључене. Пуштање заустављено.</string>
     <string name="toastalert_permission_denied">Дозвола одбијена:</string>
-    <string name="toastalert_stream_not_found">Transistor does not recognize this station. Please delete and add it again to the Home screen.</string>
+    <string name="toastalert_stream_not_found">Транзистор не препознаје ову станицу. Обришите је и поново додајте на почетни екран.</string>
     <string name="snackbar_request_storage_access">Транзистору треба приступ читања да би могао да приступи подацима са спољашњег складишта.</string>
-    <string name="snackbar_message_timer_set">Sleep timer set to</string>
+    <string name="snackbar_message_timer_set">Тајмер постављен на</string>
 
     <!-- notification -->
     <string name="notification_stop">Stop</string>
@@ -90,46 +90,46 @@
     <string name="notification_playing">Пуштам</string>
 
     <!-- infosheet about -->
-    <string name="infosheet_about_h1_about">About Transistor</string>
-    <string name="infosheet_about_h2_radio">Radio app for Android</string>
-    <string name="infosheet_about_h3_version">Version 2.0 ("Starman")</string>
-    <string name="infosheet_about_p_bare">Transistor is a bare bones app for listening to radio programs over the internet. The app stores stations as files on your device\'s external storage. Look for files of type m3u within /Android/data/org.y20k.transistor/Collection. It currently understands streams encoded in MP3 and OGG.</string>
-    <string name="infosheet_about_p_note">Important note: This is an app of type BYOS (&quot;bring your own station&quot;). It does not feature any kind of built-in search option. You will have to manually add radio stations.</string>
-    <string name="infosheet_about_p_free">Transistor is free software. It is published under the MIT open source license. You can find the code on GitHub. GitHub is also a good place to file bugs or even to contribute, if you are interested.</string>
+    <string name="infosheet_about_h1_about">О Транзистору</string>
+    <string name="infosheet_about_h2_radio">Радио апликација за Андроид</string>
+    <string name="infosheet_about_h3_version">Издање 2.0 (Starman)</string>
+    <string name="infosheet_about_p_bare"/>
+    <string name="infosheet_about_p_note"/>
+    <string name="infosheet_about_p_free"/>
     <string name="infosheet_about_p_github">https://github.com/y20k/transistor</string>
     <string name="infosheet_about_p_license">https://opensource.org/licenses/MIT</string>
-    <string name="infosheet_about_h2_permissions">Which Permissions does Transistor need?</string>
-    <string name="infosheet_about_h3_shortcut">Permission INSTALL_SHORTCUT and UNINSTALL_SHORTCUT</string>
-    <string name="infosheet_about_p_shortcut">This permission is needed to install and uninstall radio station shortcuts on the Android Home screen.</string>
-    <string name="infosheet_about_h3_internet">Permission INTERNET</string>
-    <string name="infosheet_about_p_internet">Transistor streams radio stations over the internet.</string>
-    <string name="infosheet_about_h3_external">Permission READ_EXTERNAL_STORAGE</string>
-    <string name="infosheet_about_p_external">Transistor needs access to images, photos and documents to be able customize radio station icons and to able to open locally saved playlist files.</string>
-    <string name="infosheet_about_h3_vibrate">Permission VIBRATE</string>
-    <string name="infosheet_about_p_vibrate">Tapping and holding a radio station will toggle a tiny vibration.</string>
-    <string name="infosheet_about_h3_wakelock">Permission WAKE_LOCK</string>
-    <string name="infosheet_about_p_wakelock">During Playback Transistor acquires a so called partial wake lock. That prevents the Android system to stop playback for power saving reasons.</string>
+    <string name="infosheet_about_h2_permissions">Које су дозволе потребне Транзистору?</string>
+    <string name="infosheet_about_h3_shortcut">Дозвола INSTALL_SHORTCUT и UNINSTALL_SHORTCUT</string>
+    <string name="infosheet_about_p_shortcut">Ова дозвола је потребна за инсталирање и уклањање пречице радио станице на почетном екрану.</string>
+    <string name="infosheet_about_h3_internet">Дозвола INTERNET</string>
+    <string name="infosheet_about_p_internet">Транзистор пушта токове радио станица са интернета.</string>
+    <string name="infosheet_about_h3_external">Дозвола READ_EXTERNAL_STORAGE</string>
+    <string name="infosheet_about_p_external"/>
+    <string name="infosheet_about_h3_vibrate">Дозвола VIBRATE</string>
+    <string name="infosheet_about_p_vibrate"/>
+    <string name="infosheet_about_h3_wakelock">Дозвола WAKE_LOCK</string>
+    <string name="infosheet_about_p_wakelock"/>
 
     <!-- infosheet howto -->
-    <string name="infosheet_howto_h1_howto">How to use Transistor</string>
-    <string name="infosheet_howto_h2_add">How to add a new radio station?</string>
-    <string name="infosheet_howto_p_add">The easiest way to add a new station is to search the web for streaming links and then choose Transistor as a your default handler for those file types. You can also tap the (+) symbol in the top bar and paste in streaming links directly. Please note: Transistor does not feature any kind of built-in search option.</string>
-    <string name="infosheet_howto_h2_play">How to play back a radio station?</string>
-    <string name="infosheet_howto_p_play">Tap the big Play button ;).</string>
-    <string name="infosheet_howto_h2_stop">How to stop playback?</string>
-    <string name="infosheet_howto_p_stop">Tap the big Stop button or unplug your headphones or swipe off the notification from the lockscreen.</string>
-    <string name="infosheet_howto_h2_sleep">How to start the sleep timer?</string>
-    <string name="infosheet_howto_p_sleep">Tapping the Clock symbol starts a 15 minute countdown after which Transistor stops playback. An additional tap adds 15 minutes to the clock. Playback must be running to be able to activate the sleep timer.</string>
-    <string name="infosheet_howto_h2_shortcut">How to place a station shortcut on the Home screen?</string>
-    <string name="infosheet_howto_p_shortcut">The option to place a shortcut for a station on the Home screen can be accessed from the station\'s three dots menu. A tap on a shortcut will open Transistor - playback will start immediately.</string>
-    <string name="infosheet_howto_h2_edit">How to rename or delete a station?</string>
-    <string name="infosheet_howto_p_edit">The rename and delete options can be accessed both from the station\'s context menu. Just tap on the three dots symbol. You can manage the list of stations also from a file browser (see next question).</string>
-    <string name="infosheet_howto_h2_storage">Where does Transistor store its stations?</string>
-    <string name="infosheet_howto_p_storage">Transistor does not save its list of stations in a database. Instead it stores stations as m3u files on your device\'s external storage. Feel free to tinker with those files using the texteditor of your choice. The files are stored in /Android/data/org.y20k.transistor/Collection.</string>
-    <string name="infosheet_howto_h2_backup">How do I backup and transfer my radio stations?</string>
-    <string name="infosheet_howto_p_backup">Transistor supports Android 6\'s Auto Backup feature. Radio stations are always backed up to your Google account and will be restored at reinstall. On devices running on older versions of Android you must manually save and restore the &quot;Collection&quot; folder.</string>
-    <string name="infosheet_howto_h2_settings">Why does Transistor not have any setting?</string>
-    <string name="infosheet_howto_p_settings">There is nothing to be set ;). Transistor is a very simple app. Depending on your point of view &quot;simple&quot; is either great or lame.</string>
+    <string name="infosheet_howto_h1_howto">Како користити Транзистор</string>
+    <string name="infosheet_howto_h2_add"/>
+    <string name="infosheet_howto_p_add"/>
+    <string name="infosheet_howto_h2_play"/>
+    <string name="infosheet_howto_p_play"/>
+    <string name="infosheet_howto_h2_stop"/>
+    <string name="infosheet_howto_p_stop"/>
+    <string name="infosheet_howto_h2_sleep"/>
+    <string name="infosheet_howto_p_sleep"/>
+    <string name="infosheet_howto_h2_shortcut"/>
+    <string name="infosheet_howto_p_shortcut"/>
+    <string name="infosheet_howto_h2_edit"/>
+    <string name="infosheet_howto_p_edit"/>
+    <string name="infosheet_howto_h2_storage"/>
+    <string name="infosheet_howto_p_storage"/>
+    <string name="infosheet_howto_h2_backup"></string>
+    <string name="infosheet_howto_p_backup"/>
+    <string name="infosheet_howto_h2_settings"/>
+    <string name="infosheet_howto_p_settings"/>
 
     <!-- 
     +++ IMPORTANT NOTE +++
