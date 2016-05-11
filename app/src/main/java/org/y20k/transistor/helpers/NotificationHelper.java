@@ -19,6 +19,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.media.session.MediaSessionCompat;
@@ -48,9 +49,9 @@ public final class NotificationHelper {
 
     /* Main class variables */
     private static MediaSessionCompat mSession;
-    private static String mStationName;
     private static String mStationMetadata;
     private static int mStationID;
+    private static String mStationName;
 
 
     /* Construct and put up notification */
@@ -101,23 +102,24 @@ public final class NotificationHelper {
         // construct notification in builder
         builder = new NotificationCompat.Builder(context);
         builder.setSmallIcon(R.drawable.notification_icon_24dp);
+        builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.background_shortcut_grey));  // TODO replace with actual station icon
         builder.setContentTitle(notificationTitle);
         builder.setContentText(notificationText);
         builder.setStyle(new NotificationCompat.BigTextStyle().bigText(notificationText));
         builder.addAction (R.drawable.ic_stop_black_36dp, context.getString(R.string.notification_stop), stopActionPendingIntent);
-        if (mSession != null) {
-            NotificationCompat.MediaStyle style = new NotificationCompat.MediaStyle().setMediaSession(mSession.getSessionToken())
-                    .setShowActionsInCompactView(0);
-            builder.setStyle(style);
-            Log.v(LOG_TAG, "!!! mSession initialized"); // TODO remove this
-        } else {
-            Log.v(LOG_TAG, "!!! mSession NOT initialized"); // TODO remove this
-        }
-
         builder.setOngoing(true);
         builder.setColor(notificationColor);
         builder.setContentIntent(tapPendingIntent);
         builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+        if (mSession != null) {
+            NotificationCompat.MediaStyle style = new NotificationCompat.MediaStyle();
+            style.setMediaSession(mSession.getSessionToken());
+            style.setShowActionsInCompactView(0);
+            builder.setStyle(style);
+
+        } else {
+            Log.v(LOG_TAG, "mSession NOT initialized"); // TODO remove this
+        }
 
         // build notification
         notification = builder.build();
@@ -126,6 +128,29 @@ public final class NotificationHelper {
         notificationManager.notify(PLAYER_SERVICE_NOTIFICATION_ID, notification);
 
     }
+
+
+//    private Bitmap getStationImage(Context context) {
+//
+//        // create shortcut icon
+//        ImageHelper imageHelper;
+//        Bitmap stationImage;
+//        Bitmap shortcutIcon;
+//        if (mStation.getStationImageFile().exists()) {
+//            // use station image
+//            stationImage = BitmapFactory.decodeFile(mStation.getStationImageFile().toString());
+//            imageHelper = new ImageHelper(stationImage, context);
+//            shortcutIcon = imageHelper.createShortcut(192);
+//        } else {
+//            // use default station image
+//            stationImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_notesymbol);
+//            imageHelper = new ImageHelper(stationImage, context);
+//            shortcutIcon = imageHelper.createShortcut(192);
+//        }
+//
+//        return shortcutIcon;
+//
+//    }
 
 
     /* Setter for current media session */
