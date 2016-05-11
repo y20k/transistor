@@ -15,24 +15,27 @@
 package org.y20k.transistor;
 
 import android.app.NotificationManager;
-import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.PowerManager;
+import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.media.MediaBrowserCompat;
 import android.support.v4.media.MediaBrowserServiceCompat;
+import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaButtonReceiver;
+import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.util.Log;
@@ -77,6 +80,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     private AudioManager mAudioManager;
     private MediaPlayer mMediaPlayer;
     private MediaSessionCompat mSession;
+    private MediaControllerCompat mController;
     private String mStreamUri;
     private boolean mPlayback;
     private int mPlayerInstanceCounter;
@@ -99,6 +103,13 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         mPlayerInstanceCounter = 0;
         if (mSession == null) {
             mSession = createMediaSession(this);
+        }
+
+        try {
+            mController = new MediaControllerCompat(getApplicationContext(), mSession.getSessionToken());
+        } catch (RemoteException e) {
+            Log.v(LOG_TAG, "RemoteException: " + e);
+            e.printStackTrace();
         }
 
         // Listen for headphone unplug
@@ -149,14 +160,12 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
                 mStreamUri = intent.getStringExtra(EXTRA_STREAM_URI);
             }
 
-            // set media session active
-            mSession.setPlaybackState(new PlaybackStateCompat.Builder()
-                    .setState(PlaybackStateCompat.STATE_PLAYING, 0, 1.0f)
-                    .setActions(PlaybackStateCompat.ACTION_PLAY_PAUSE).build());
+            // set media session active and set playback state
+            mSession.setPlaybackState(getPlaybackState());
             mSession.setActive(true);
 
-            // start playback
-            preparePlayback();
+            // update controller
+            mController.getTransportControls().play();
 
             // increase counter
             mPlayerInstanceCounter++;
@@ -169,14 +178,12 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
             // set mPlayback false
             mPlayback = false;
 
-            // stop playback
-            finishPlayback();
-
-            // set media session in-active
-            mSession.setPlaybackState(new PlaybackStateCompat.Builder()
-                    .setState(PlaybackStateCompat.STATE_PAUSED, 0, 0.0f)
-                    .setActions(PlaybackStateCompat.ACTION_PLAY_PAUSE).build());
+            // set media session in-active and set playback state
+            mSession.setPlaybackState(getPlaybackState());
             mSession.setActive(false);
+
+            // update controller
+            mController.getTransportControls().stop();
 
             // reset counter
             mPlayerInstanceCounter = 0;
@@ -459,9 +466,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
             // mSession = null;
         }
 
-
-
-
     }
 
 
@@ -525,24 +529,53 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         // https://www.youtube.com/watch?v=FBC1FgWe5X4
         // https://gist.github.com/ianhanniballake/15dce0b233b4f4b23ef8
 
-        // define action for playback state to be used in media session callback
-        PlaybackStateCompat playbackState = new PlaybackStateCompat.Builder()
-                .setState(PlaybackStateCompat.STATE_PAUSED, 0, 0)
-                .setActions(PlaybackStateCompat.ACTION_PLAY_PAUSE)
-                .build();
-
-
         // create a media session
         MediaSessionCompat session = new MediaSessionCompat(context, LOG_TAG);
-        setSessionToken(session.getSessionToken());
-        session.setPlaybackState(playbackState);
+        session.setPlaybackState(getPlaybackState());
         session.setCallback(new MediaSessionCallback());
+        session.setMetadata(getMetadata(context));
         session.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS |
                 MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
-//        mSession.setMetadata();
+
+        setSessionToken(session.getSessionToken());
 
         return session;
     }
+
+
+    /* Creates playback state depending on mPlaback */
+    private PlaybackStateCompat getPlaybackState() {
+
+        if (mPlayback) {
+            // define action for playback state to be used in media session callback
+            return new PlaybackStateCompat.Builder()
+                    .setState(PlaybackStateCompat.STATE_PLAYING, 0, 0)
+                    .setActions(PlaybackStateCompat.ACTION_STOP | PlaybackStateCompat.ACTION_PAUSE)
+                    .build();
+        } else {
+            // define action for playback state to be used in media session callback
+            return new PlaybackStateCompat.Builder()
+                    .setState(PlaybackStateCompat.STATE_STOPPED, 0, 0)
+                    .setActions(PlaybackStateCompat.ACTION_PLAY)
+                    .build();
+        }
+    }
+
+
+
+    /* TODO finish this method*/
+    private MediaMetadataCompat getMetadata(Context context) {
+
+        MediaMetadataCompat metadata = new MediaMetadataCompat.Builder()
+                .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, "ByteFM")
+                .putString(MediaMetadataCompat.METADATA_KEY_TITLE, "David Bowie - The Man Who Sold The World")
+                .putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, BitmapFactory.decodeResource(context.getResources(), R.drawable.background_shortcut_grey))
+                .build();
+
+        return metadata;
+    }
+
+
 
 
     /* Saves state of playback */
@@ -580,10 +613,21 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
      * Inner class: Handles callback from active media session ***
      */
     private final class MediaSessionCallback extends MediaSessionCompat.Callback  {
+        @Override
+        public void onPlay() {
+            // start playback
+            preparePlayback();
+        }
 
         @Override
         public void onPause() {
-            // stop playback
+            // stop playback on pause signal from Android Wear or headphone button
+            finishPlayback();
+        }
+
+        @Override
+        public void onStop() {
+            // stop playback on stop signal from notification button
             finishPlayback();
         }
 
