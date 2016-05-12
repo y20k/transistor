@@ -19,6 +19,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
@@ -52,6 +53,7 @@ public final class NotificationHelper {
     private static String mStationMetadata;
     private static int mStationID;
     private static String mStationName;
+    private static Bitmap mStationIcon;
 
 
     /* Construct and put up notification */
@@ -101,8 +103,8 @@ public final class NotificationHelper {
 
         // construct notification in builder
         builder = new NotificationCompat.Builder(context);
-        builder.setSmallIcon(R.drawable.notification_icon_24dp);
-        builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.background_shortcut_grey));  // TODO replace with actual station icon
+        builder.setSmallIcon(R.drawable.ic_notification_small_24dp);
+        builder.setLargeIcon(getStationImage(context));
         builder.setContentTitle(notificationTitle);
         builder.setContentText(notificationText);
         builder.setStyle(new NotificationCompat.BigTextStyle().bigText(notificationText));
@@ -130,8 +132,9 @@ public final class NotificationHelper {
     }
 
 
-//    private Bitmap getStationImage(Context context) {
-//
+    /* Get station image for notification's large icon */
+    private static Bitmap getStationImage(Context context) {
+
 //        // create shortcut icon
 //        ImageHelper imageHelper;
 //        Bitmap stationImage;
@@ -147,10 +150,10 @@ public final class NotificationHelper {
 //            imageHelper = new ImageHelper(stationImage, context);
 //            shortcutIcon = imageHelper.createShortcut(192);
 //        }
-//
-//        return shortcutIcon;
-//
-//    }
+
+        return BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_notification_large_bg_128dp);
+
+    }
 
 
     /* Setter for current media session */
@@ -158,18 +161,15 @@ public final class NotificationHelper {
         mSession = session;
     }
 
-
     /* Setter for name of station */
     public static void setStationName(String stationName) {
         mStationName = stationName;
     }
 
-
     /* Setter for name of station */
     public static void setStationID(int stationID) {
         mStationID = stationID;
     }
-
 
     /* Setter for metadata of station */
     public static void setStationMetadata(String stationMetadata) {

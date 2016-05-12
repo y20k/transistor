@@ -40,7 +40,7 @@ public final class ImageHelper {
     private final Activity mActivity;
 
 
-    /* Constructor when given a Bitmap*/
+    /* Constructor when given a Bitmap */
     public ImageHelper(Bitmap inputImage, Activity activity) {
         mInputImage = inputImage;
         mActivity = activity;
@@ -58,7 +58,7 @@ public final class ImageHelper {
     public Bitmap createShortcut(int size) {
 
         // get scaled background bitmap
-        Bitmap background = BitmapFactory.decodeResource(mActivity.getResources(), R.drawable.background_shortcut_grey);
+        Bitmap background = BitmapFactory.decodeResource(mActivity.getResources(), R.drawable.ic_shortcut_bg);
         background = Bitmap.createScaledBitmap(background, size, size, false);
 
         // compose output image

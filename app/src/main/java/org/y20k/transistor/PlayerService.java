@@ -569,7 +569,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         MediaMetadataCompat metadata = new MediaMetadataCompat.Builder()
                 .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, "ByteFM")
                 .putString(MediaMetadataCompat.METADATA_KEY_TITLE, "David Bowie - The Man Who Sold The World")
-                .putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, BitmapFactory.decodeResource(context.getResources(), R.drawable.background_shortcut_grey))
+                .putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_notification_large_bg_128dp))
                 .build();
 
         return metadata;
