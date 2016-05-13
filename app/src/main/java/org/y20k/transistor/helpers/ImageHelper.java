@@ -36,7 +36,7 @@ import java.io.FileNotFoundException;
 public final class ImageHelper {
 
     /* Main class variables */
-    private final Bitmap mInputImage;
+    private static Bitmap mInputImage;
     private final Context mContext;
 
 
@@ -62,7 +62,7 @@ public final class ImageHelper {
         background = Bitmap.createScaledBitmap(background, size, size, false);
 
         // compose images
-        return composeImages(mInputImage, background, size);
+        return composeImages(background, size);
     }
 
 
@@ -74,7 +74,7 @@ public final class ImageHelper {
         background = Bitmap.createScaledBitmap(background, size, size, false);
 
         // compose images
-        return composeImages(mInputImage, background, size);
+        return composeImages(background, size);
     }
 
 
@@ -104,18 +104,18 @@ public final class ImageHelper {
 
 
     /* Composes foreground  bitmap onto background bitmap */
-    private Bitmap composeImages(Bitmap foreground, Bitmap background, int size) {
+    private Bitmap composeImages(Bitmap background, int size) {
 
-        if (foreground == null) {
+        if (mInputImage == null) {
             // set default station image
-            foreground = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_notesymbol);
+            mInputImage = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_notesymbol);
         }
 
         // compose output image
         Bitmap outputImage = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(outputImage);
         canvas.drawBitmap(background, 0, 0, null);
-        canvas.drawBitmap(foreground, createTransformationMatrix(size), null);
+        canvas.drawBitmap(mInputImage, createTransformationMatrix(size), null);
 
         return outputImage;
     }

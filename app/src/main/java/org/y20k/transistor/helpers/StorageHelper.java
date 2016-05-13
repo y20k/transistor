@@ -46,10 +46,12 @@ public class StorageHelper {
         String subDirectory = "Collection";
         File[] storage = mActivity.getExternalFilesDirs(subDirectory);
         for (File file : storage) {
-            String state = EnvironmentCompat.getStorageState(file);
-            if (Environment.MEDIA_MOUNTED.equals(state)) {
-                Log.i(LOG_TAG, "External storage: " + file.toString());
-                return file;
+            if (file != null) {
+                String state = EnvironmentCompat.getStorageState(file);
+                if (Environment.MEDIA_MOUNTED.equals(state)) {
+                    Log.i(LOG_TAG, "External storage: " + file.toString());
+                    return file;
+                }
             }
         }
         Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_no_external_storage), Toast.LENGTH_LONG).show();

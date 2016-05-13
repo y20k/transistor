@@ -22,7 +22,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v4.app.TaskStackBuilder;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
@@ -71,13 +70,13 @@ public final class NotificationHelper {
         NotificationManager notificationManager;
         String notificationText;
         String notificationTitle;
-        int notificationColor;
+        // int notificationColor;
 
         // retrieve notification system service
         notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         // create content of notification
-        notificationColor = ContextCompat.getColor(context, R.color.transistor_red);
+        // notificationColor = ContextCompat.getColor(context, R.color.transistor_grey_dark);
         notificationTitle = context.getString(R.string.notification_playing) + ": " + mStationName;
         if (mStationMetadata != null) {
             notificationText = mStationMetadata;
@@ -116,9 +115,9 @@ public final class NotificationHelper {
         builder.setContentTitle(notificationTitle);
         builder.setContentText(notificationText);
         builder.setStyle(new NotificationCompat.BigTextStyle().bigText(notificationText));
-        builder.addAction (R.drawable.ic_stop_black_36dp, context.getString(R.string.notification_stop), stopActionPendingIntent);
+        builder.addAction (R.drawable.ic_stop_white_36dp, context.getString(R.string.notification_stop), stopActionPendingIntent);
         builder.setOngoing(true);
-        builder.setColor(notificationColor);
+        // builder.setColor(notificationColor);
         builder.setContentIntent(tapPendingIntent);
         builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
         if (mSession != null) {
