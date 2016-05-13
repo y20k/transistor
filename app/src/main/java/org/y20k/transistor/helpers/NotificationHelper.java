@@ -30,6 +30,8 @@ import android.util.Log;
 import org.y20k.transistor.MainActivity;
 import org.y20k.transistor.PlayerService;
 import org.y20k.transistor.R;
+import org.y20k.transistor.core.Collection;
+import org.y20k.transistor.core.Station;
 
 
 /**
@@ -49,14 +51,20 @@ public final class NotificationHelper {
 
 
     /* Main class variables */
+    private static Collection mCollection;
     private static MediaSessionCompat mSession;
     private static String mStationMetadata;
     private static int mStationID;
     private static String mStationName;
-    private static Bitmap mStationIcon;
 
 
-    /* Construct and put up notification */
+    /* Constructor */
+    public NotificationHelper(Collection collection) {
+        mCollection = collection;
+    }
+
+
+    /* Create and put up notification */
     public static void createNotification(final Context context) {
         NotificationCompat.Builder builder;
         Notification notification;
@@ -104,7 +112,7 @@ public final class NotificationHelper {
         // construct notification in builder
         builder = new NotificationCompat.Builder(context);
         builder.setSmallIcon(R.drawable.ic_notification_small_24dp);
-        builder.setLargeIcon(getStationImage(context));
+        builder.setLargeIcon(getStationIcon(context));
         builder.setContentTitle(notificationTitle);
         builder.setContentText(notificationText);
         builder.setStyle(new NotificationCompat.BigTextStyle().bigText(notificationText));
@@ -133,25 +141,26 @@ public final class NotificationHelper {
 
 
     /* Get station image for notification's large icon */
-    private static Bitmap getStationImage(Context context) {
+    private static Bitmap getStationIcon(Context context) {
 
-//        // create shortcut icon
-//        ImageHelper imageHelper;
-//        Bitmap stationImage;
-//        Bitmap shortcutIcon;
-//        if (mStation.getStationImageFile().exists()) {
-//            // use station image
-//            stationImage = BitmapFactory.decodeFile(mStation.getStationImageFile().toString());
-//            imageHelper = new ImageHelper(stationImage, context);
-//            shortcutIcon = imageHelper.createShortcut(192);
-//        } else {
-//            // use default station image
-//            stationImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_notesymbol);
-//            imageHelper = new ImageHelper(stationImage, context);
-//            shortcutIcon = imageHelper.createShortcut(192);
-//        }
+        // get station from collection
+        Station station = mCollection.getStations().get(mStationID);
 
-        return BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_notification_large_bg_128dp);
+        // create station image icon
+        ImageHelper imageHelper;
+        Bitmap stationImage;
+        Bitmap stationIcon;
+
+        if (station.getStationImageFile().exists()) {
+            // use station image
+            stationImage = BitmapFactory.decodeFile(station.getStationImageFile().toString());
+        } else {
+            stationImage = null;
+        }
+        imageHelper = new ImageHelper(stationImage, context);
+        stationIcon = imageHelper.createStationIcon(512);
+
+        return stationIcon;
 
     }
 

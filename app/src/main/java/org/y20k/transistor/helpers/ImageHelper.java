@@ -14,7 +14,7 @@
 
 package org.y20k.transistor.helpers;
 
-import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -37,19 +37,19 @@ public final class ImageHelper {
 
     /* Main class variables */
     private final Bitmap mInputImage;
-    private final Activity mActivity;
+    private final Context mContext;
 
 
     /* Constructor when given a Bitmap */
-    public ImageHelper(Bitmap inputImage, Activity activity) {
+    public ImageHelper(Bitmap inputImage, Context context) {
         mInputImage = inputImage;
-        mActivity = activity;
+        mContext = context;
     }
 
 
     /* Constructor when given an Uri */
-    public ImageHelper(Uri inputImageUri, Activity activity) {
-        mActivity = activity;
+    public ImageHelper(Uri inputImageUri, Context context) {
+        mContext = context;
         mInputImage = decodeSampledBitmapFromUri(inputImageUri, 72, 72);
     }
 
@@ -58,17 +58,25 @@ public final class ImageHelper {
     public Bitmap createShortcut(int size) {
 
         // get scaled background bitmap
-        Bitmap background = BitmapFactory.decodeResource(mActivity.getResources(), R.drawable.ic_shortcut_bg);
+        Bitmap background = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_shortcut_bg);
         background = Bitmap.createScaledBitmap(background, size, size, false);
 
-        // compose output image
-        Bitmap outputImage = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(outputImage);
-        canvas.drawBitmap(background, 0, 0, null);
-        canvas.drawBitmap(mInputImage, createTransformationMatrix(size), null);
-
-        return outputImage;
+        // compose images
+        return composeImages(mInputImage, background, size);
     }
+
+
+    /* Creates station icon for notification */
+    public Bitmap createStationIcon(int size) {
+
+        // get scaled background bitmap
+        Bitmap background = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_notification_large_bg_128dp);
+        background = Bitmap.createScaledBitmap(background, size, size, false);
+
+        // compose images
+        return composeImages(mInputImage, background, size);
+    }
+
 
 
     /* Creates station image on a circular background */
@@ -95,16 +103,34 @@ public final class ImageHelper {
     }
 
 
+    /* Composes foreground  bitmap onto background bitmap */
+    private Bitmap composeImages(Bitmap foreground, Bitmap background, int size) {
+
+        if (foreground == null) {
+            // set default station image
+            foreground = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_notesymbol);
+        }
+
+        // compose output image
+        Bitmap outputImage = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(outputImage);
+        canvas.drawBitmap(background, 0, 0, null);
+        canvas.drawBitmap(foreground, createTransformationMatrix(size), null);
+
+        return outputImage;
+    }
+
+
     /* Setter for color of background */
     private Paint createBackground(int color) {
 
         // get background color value in the form 0xAARRGGBB
         int backgroundColor;
         try {
-            backgroundColor = ContextCompat.getColor(mActivity, color);
+            backgroundColor = ContextCompat.getColor(mContext, color);
         } catch (Exception e) {
             // set default background color white
-            backgroundColor = ContextCompat.getColor(mActivity, R.color.transistor_white);
+            backgroundColor = ContextCompat.getColor(mContext, R.color.transistor_white);
             e.printStackTrace();
         }
 
@@ -159,7 +185,7 @@ public final class ImageHelper {
         ParcelFileDescriptor parcelFileDescriptor =  null;
 
         try {
-            parcelFileDescriptor = mActivity.getContentResolver().openFileDescriptor(imageUri, "r");
+            parcelFileDescriptor = mContext.getContentResolver().openFileDescriptor(imageUri, "r");
         } catch (FileNotFoundException e) {
             // TODO handle error
             e.printStackTrace();

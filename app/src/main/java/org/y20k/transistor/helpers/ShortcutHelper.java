@@ -88,17 +88,13 @@ public class ShortcutHelper {
         if (station.getStationImageFile().exists()) {
             // use station image
             stationImage = BitmapFactory.decodeFile(station.getStationImageFile().toString());
-            imageHelper = new ImageHelper(stationImage, mActivity);
-            shortcutIcon = imageHelper.createShortcut(192);
         } else {
-            // use default station image
-            stationImage = BitmapFactory.decodeResource(mActivity.getResources(), R.drawable.ic_notesymbol);
-            imageHelper = new ImageHelper(stationImage, mActivity);
-            shortcutIcon = imageHelper.createShortcut(192);
+            stationImage = null;
         }
+        imageHelper = new ImageHelper(stationImage, mActivity);
+        shortcutIcon = imageHelper.createShortcut(192);
 
         String stationUri = mCollection.getStations().get(stationID).getStreamUri().toString();
-
 
         // create intent to start MainActivity
         Intent shortcutIntent = new Intent(mActivity, MainActivity.class);

@@ -14,6 +14,7 @@
 
 package org.y20k.transistor;
 
+import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -41,8 +42,10 @@ import android.support.v4.media.session.PlaybackStateCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import org.y20k.transistor.core.Collection;
 import org.y20k.transistor.helpers.MetadataHelper;
 import org.y20k.transistor.helpers.NotificationHelper;
+import org.y20k.transistor.helpers.StorageHelper;
 
 import java.io.IOException;
 import java.util.List;
@@ -81,7 +84,10 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     private MediaPlayer mMediaPlayer;
     private MediaSessionCompat mSession;
     private MediaControllerCompat mController;
+    private NotificationHelper mNotificationHelper;
     private String mStreamUri;
+    private String mStationName;
+    private int mStationID;
     private boolean mPlayback;
     private int mPlayerInstanceCounter;
     private HeadphoneUnplugReceiver mHeadphoneUnplugReceiver;
@@ -122,11 +128,12 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (intent.hasExtra(EXTRA_METADATA)) {
-                    // update notification
-                    NotificationHelper.setMediaSession(mSession);
-                    NotificationHelper.setStationMetadata(intent.getStringExtra(EXTRA_METADATA));
-                    NotificationHelper.createNotification(PlayerService.this);
+
+                    mNotificationHelper.setMediaSession(mSession);
+                    mNotificationHelper.setStationMetadata(intent.getStringExtra(EXTRA_METADATA));
+                    mNotificationHelper.createNotification(PlayerService.this);
                     // TODO update media session metadata
+
                 }
             }
         };
@@ -383,11 +390,27 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     public void startActionPlay(Context context, String streamUri, String stationName, int stationID) {
         Log.v(LOG_TAG, "Starting playback service: " + mStreamUri);
 
+        Collection collection = new Collection(new StorageHelper((Activity)context).getCollectionDirectory());
+
         mStreamUri = streamUri;
+        mStationName = stationName;
+        mStationID = stationID;
 
         // acquire WifiLock
 //        mWifiLock = ((WifiManager) getSystemService(Context.WIFI_SERVICE)).createWifiLock(WifiManager.WIFI_MODE_FULL, "mylock");
 //        mWifiLock.acquire();
+
+        if (mSession == null) {
+            mSession = createMediaSession(context);
+        }
+
+        // put up notification
+        mNotificationHelper = new NotificationHelper(collection);
+        mNotificationHelper.setStationName(stationName);
+        mNotificationHelper.setStationID(stationID);
+        mNotificationHelper.setStationMetadata(null);
+        mNotificationHelper.setMediaSession(mSession); // mSession is null here !
+        mNotificationHelper.createNotification(context);
 
         // start player service using intent
         Intent intent = new Intent(context, PlayerService.class);
@@ -395,16 +418,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         intent.putExtra(EXTRA_STREAM_URI, mStreamUri);
         context.startService(intent);
 
-        if (mSession == null) {
-            mSession = createMediaSession(context);
-        }
-
-        // put up notification
-        NotificationHelper.setStationName(stationName);
-        NotificationHelper.setStationID(stationID);
-        NotificationHelper.setStationMetadata(null);
-        NotificationHelper.setMediaSession(mSession); // mSession is null here !
-        NotificationHelper.createNotification(context);
     }
 
 
@@ -562,12 +575,11 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     }
 
 
-
     /* TODO finish this method*/
     private MediaMetadataCompat getMetadata(Context context) {
 
         MediaMetadataCompat metadata = new MediaMetadataCompat.Builder()
-                .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, "ByteFM")
+                .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, mStationName)
                 .putString(MediaMetadataCompat.METADATA_KEY_TITLE, "David Bowie - The Man Who Sold The World")
                 .putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_notification_large_bg_128dp))
                 .build();
