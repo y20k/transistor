@@ -33,13 +33,16 @@ public class StorageHelper {
     /* Define log tag */
     private static final String LOG_TAG = StorageHelper.class.getSimpleName();
 
+
     /* Main class variables */
     private final Activity mActivity;
+
 
     /* Constructor */
     public StorageHelper(Activity activity) {
         mActivity = activity;
     }
+
 
     /* Return a write-able sub-directory from external storage  */
     public File getCollectionDirectory() {

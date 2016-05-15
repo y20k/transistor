@@ -36,18 +36,6 @@ public final class DialogDelete {
     private static final String LOG_TAG = DialogDelete.class.getSimpleName();
 
 
-    /* Keys */
-    private static final String ACTION_COLLECTION_CHANGED = "org.y20k.transistor.action.COLLECTION_CHANGED";
-    private static final String EXTRA_COLLECTION_CHANGE = "COLLECTION_CHANGE";
-    private static final String EXTRA_STATION_ID = "STATION_ID";
-    private static final String EXTRA_STATION_URI_CURRENT = "STATION_URI_CURRENT";
-    private static final String EXTRA_STATION_NEW_NAME = "STATION_NEW_NAME";
-    private static final String EXTRA_STATION_NEW_POSITION = "STATION_NEW_POSITION";
-    private static final String EXTRA_STATION_OLD_POSITION = "STATION_OLD_POSITION";
-    private static final String PREF_STATION_ID_CURRENT = "prefStationIDCurrent";
-    private static final int STATION_DELETED = 3;
-
-
     /* Main class variables */
     private final Activity mActivity;
     private final Collection mCollection;
@@ -81,7 +69,7 @@ public final class DialogDelete {
                 // get currently playing station before deleting
                 String stationUriCurrent = null;
                 SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mActivity);
-                int stationIDCurrent = settings.getInt(PREF_STATION_ID_CURRENT, -1);
+                int stationIDCurrent = settings.getInt(TransistorKeys.PREF_STATION_ID_CURRENT, -1);
                 if (stationIDCurrent != -1) {
                     stationUriCurrent = mCollection.getStations().get(stationIDCurrent).getStreamUri().toString();
                 }
@@ -91,11 +79,11 @@ public final class DialogDelete {
                 if (success) {
                     // send local broadcast
                     Intent i = new Intent();
-                    i.setAction(ACTION_COLLECTION_CHANGED);
-                    i.putExtra(EXTRA_COLLECTION_CHANGE, STATION_DELETED);
-                    i.putExtra(EXTRA_STATION_ID, mStationID);
+                    i.setAction(TransistorKeys.ACTION_COLLECTION_CHANGED);
+                    i.putExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, TransistorKeys.STATION_DELETED);
+                    i.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
                     if (stationUriCurrent != null) {
-                        i.putExtra(EXTRA_STATION_URI_CURRENT, stationUriCurrent);
+                        i.putExtra(TransistorKeys.EXTRA_STATION_URI_CURRENT, stationUriCurrent);
 //                        i.putExtra(EXTRA_STATION_OLD_POSITION, mStationID);
                     }
                     LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(i);

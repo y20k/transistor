@@ -42,13 +42,6 @@ public final class NotificationHelper {
     private static final String LOG_TAG = NotificationHelper.class.getSimpleName();
 
 
-    /* Keys */
-    private static final int PLAYER_SERVICE_NOTIFICATION_ID = 1;
-    private static final String ACTION_STOP = "org.y20k.transistor.action.STOP";
-    private static final String ACTION_SHOW_PLAYER = "org.y20k.transistor.action.SHOW_PLAYER";
-    private static final String EXTRA_STATION_ID = "STATION_ID";
-
-
     /* Main class variables */
     private static Collection mCollection;
     private static MediaSessionCompat mSession;
@@ -86,12 +79,12 @@ public final class NotificationHelper {
 
         // explicit intent for notification tap
         Intent tapIntent = new Intent(context, MainActivity.class);
-        tapIntent.setAction(ACTION_SHOW_PLAYER);
-        tapIntent.putExtra(EXTRA_STATION_ID, mStationID);
+        tapIntent.setAction(TransistorKeys.ACTION_SHOW_PLAYER);
+        tapIntent.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
 
         // explicit intent for notification swipe
         Intent stopActionIntent = new Intent(context, PlayerService.class);
-        stopActionIntent.setAction(ACTION_STOP);
+        stopActionIntent.setAction(TransistorKeys.ACTION_STOP);
 
 
         // artificial back stack for started Activity.
@@ -134,7 +127,7 @@ public final class NotificationHelper {
         notification = builder.build();
 
         // display notification
-        notificationManager.notify(PLAYER_SERVICE_NOTIFICATION_ID, notification);
+        notificationManager.notify(TransistorKeys.PLAYER_SERVICE_NOTIFICATION_ID, notification);
 
     }
 

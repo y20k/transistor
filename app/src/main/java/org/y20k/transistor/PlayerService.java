@@ -46,6 +46,7 @@ import org.y20k.transistor.core.Collection;
 import org.y20k.transistor.helpers.MetadataHelper;
 import org.y20k.transistor.helpers.NotificationHelper;
 import org.y20k.transistor.helpers.StorageHelper;
+import org.y20k.transistor.helpers.TransistorKeys;
 
 import java.io.IOException;
 import java.util.List;
@@ -64,18 +65,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
 
     /* Define log tag */
     private static final String LOG_TAG = PlayerService.class.getSimpleName();
-
-
-    /* Keys */
-    private static final String ACTION_PLAY = "org.y20k.transistor.action.PLAY";
-    private static final String ACTION_STOP = "org.y20k.transistor.action.STOP";
-    private static final String ACTION_PLAYBACK_STARTED = "org.y20k.transistor.action.PLAYBACK_STARTED";
-    private static final String ACTION_PLAYBACK_STOPPED = "org.y20k.transistor.action.PLAYBACK_STOPPED";
-    private static final String ACTION_METADATA_CHANGED = "org.y20k.transistor.action.METADATA_CHANGED";
-    private static final String EXTRA_METADATA = "METADATA";
-    private static final String EXTRA_STREAM_URI = "STREAM_URI";
-    private static final String PREF_PLAYBACK = "prefPlayback";
-    private static final int PLAYER_SERVICE_NOTIFICATION_ID = 1;
 
 
     /* Main class variables */
@@ -127,17 +116,17 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         BroadcastReceiver metadataChangedReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if (intent.hasExtra(EXTRA_METADATA)) {
+                if (intent.hasExtra(TransistorKeys.EXTRA_METADATA)) {
 
                     mNotificationHelper.setMediaSession(mSession);
-                    mNotificationHelper.setStationMetadata(intent.getStringExtra(EXTRA_METADATA));
+                    mNotificationHelper.setStationMetadata(intent.getStringExtra(TransistorKeys.EXTRA_METADATA));
                     mNotificationHelper.createNotification(PlayerService.this);
                     // TODO update media session metadata
 
                 }
             }
         };
-        IntentFilter metadataChangedIntentFilter = new IntentFilter(ACTION_METADATA_CHANGED);
+        IntentFilter metadataChangedIntentFilter = new IntentFilter(TransistorKeys.ACTION_METADATA_CHANGED);
         LocalBroadcastManager.getInstance(this).registerReceiver(metadataChangedReceiver, metadataChangedIntentFilter);
 
     }
@@ -156,15 +145,15 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         }
 
         // ACTION PLAY
-        else if (intent.getAction().equals(ACTION_PLAY)) {
+        else if (intent.getAction().equals(TransistorKeys.ACTION_PLAY)) {
             Log.v(LOG_TAG, "Service received command: PLAY");
 
             // set mPlayback true
             mPlayback = true;
 
             // get URL of station from intent
-            if (intent.hasExtra(EXTRA_STREAM_URI)) {
-                mStreamUri = intent.getStringExtra(EXTRA_STREAM_URI);
+            if (intent.hasExtra(TransistorKeys.EXTRA_STREAM_URI)) {
+                mStreamUri = intent.getStringExtra(TransistorKeys.EXTRA_STREAM_URI);
             }
 
             // set media session active and set playback state
@@ -179,7 +168,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         }
 
         // ACTION STOP
-        else if (intent.getAction().equals(ACTION_STOP)) {
+        else if (intent.getAction().equals(TransistorKeys.ACTION_STOP)) {
             Log.v(LOG_TAG, "Service received command: STOP");
 
             // set mPlayback false
@@ -381,7 +370,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
 
         // retrieve notification system service and cancel notification
         NotificationManager notificationManager = (NotificationManager) getApplication().getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancel(PLAYER_SERVICE_NOTIFICATION_ID);
+        notificationManager.cancel(TransistorKeys.PLAYER_SERVICE_NOTIFICATION_ID);
 
     }
 
@@ -414,8 +403,8 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
 
         // start player service using intent
         Intent intent = new Intent(context, PlayerService.class);
-        intent.setAction(ACTION_PLAY);
-        intent.putExtra(EXTRA_STREAM_URI, mStreamUri);
+        intent.setAction(TransistorKeys.ACTION_PLAY);
+        intent.putExtra(TransistorKeys.EXTRA_STREAM_URI, mStreamUri);
         context.startService(intent);
 
     }
@@ -430,7 +419,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
 
         // stop player service using intent
         Intent intent = new Intent(context, PlayerService.class);
-        intent.setAction(ACTION_STOP);
+        intent.setAction(TransistorKeys.ACTION_STOP);
         context.startService(intent);
     }
 
@@ -500,7 +489,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
 
         // send local broadcast (needed by MainActivityFragment)
         Intent i = new Intent();
-        i.setAction(ACTION_PLAYBACK_STARTED);
+        i.setAction(TransistorKeys.ACTION_PLAYBACK_STARTED);
         LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(i);
     }
 
@@ -516,12 +505,12 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
 
         // send local broadcast (needed by PlayerActivityFragment and MainActivityFragment)
         Intent i = new Intent();
-        i.setAction(ACTION_PLAYBACK_STOPPED);
+        i.setAction(TransistorKeys.ACTION_PLAYBACK_STOPPED);
         LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(i);
 
         // retrieve notification system service and cancel notification
         NotificationManager notificationManager = (NotificationManager) getApplication().getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancel(PLAYER_SERVICE_NOTIFICATION_ID);
+        notificationManager.cancel(TransistorKeys.PLAYER_SERVICE_NOTIFICATION_ID);
     }
 
 
@@ -594,7 +583,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     private void saveAppState () {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplication());
         SharedPreferences.Editor editor = settings.edit();
-        editor.putBoolean(PREF_PLAYBACK, mPlayback);
+        editor.putBoolean(TransistorKeys.PREF_PLAYBACK, mPlayback);
         editor.apply();
         Log.v(LOG_TAG, "Saving state.");
     }

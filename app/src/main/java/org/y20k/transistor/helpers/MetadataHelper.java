@@ -42,13 +42,6 @@ public class MetadataHelper {
     private static final String LOG_TAG = MetadataHelper.class.getSimpleName();
 
 
-    /* Keys */
-    private static final String ACTION_METADATA_CHANGED = "org.y20k.transistor.action.METADATA_CHANGED";
-    private static final String EXTRA_METADATA = "METADATA";
-    private static final String PREF_STATION_METADATA = "prefStationMetadata";
-    private static final String SHOUTCAST_STREAM_TITLE_HEADER = "StreamTitle='";
-
-
     /* Main class variables */
     private final Context mContext;
     private final String mStreamUri;
@@ -208,8 +201,8 @@ public class MetadataHelper {
                 total = 0;
                 String[] metadata = new String(buf, 0, metadataSize, StandardCharsets.UTF_8).split(";");
                 for (String s : metadata) {
-                    if (s.indexOf(SHOUTCAST_STREAM_TITLE_HEADER) == 0 && s.length() >= SHOUTCAST_STREAM_TITLE_HEADER.length() + 1) {
-                        handleMetadataString(s.substring(SHOUTCAST_STREAM_TITLE_HEADER.length(), s.length() - 1));
+                    if (s.indexOf(TransistorKeys.SHOUTCAST_STREAM_TITLE_HEADER) == 0 && s.length() >= TransistorKeys.SHOUTCAST_STREAM_TITLE_HEADER.length() + 1) {
+                        handleMetadataString(s.substring(TransistorKeys.SHOUTCAST_STREAM_TITLE_HEADER.length(), s.length() - 1));
                     }
                 }
             }
@@ -225,14 +218,14 @@ public class MetadataHelper {
         if (metadata != null && metadata.length() > 0) {
             // send local broadcast
             Intent i = new Intent();
-            i.setAction(ACTION_METADATA_CHANGED);
-            i.putExtra(EXTRA_METADATA, metadata);
+            i.setAction(TransistorKeys.ACTION_METADATA_CHANGED);
+            i.putExtra(TransistorKeys.EXTRA_METADATA, metadata);
             LocalBroadcastManager.getInstance(mContext).sendBroadcast(i);
 
             // save metadata to shared preferences
             SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext);
             SharedPreferences.Editor editor = settings.edit();
-            editor.putString(PREF_STATION_METADATA, metadata);
+            editor.putString(TransistorKeys.PREF_STATION_METADATA, metadata);
             editor.apply();
         }
     }

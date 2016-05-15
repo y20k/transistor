@@ -37,16 +37,6 @@ public class SleepTimerService  extends Service {
     private static final String LOG_TAG = SleepTimerService.class.getSimpleName();
 
 
-    /* Keys */
-    private static final String ACTION_STOP = "org.y20k.transistor.action.STOP";
-    private static final String ACTION_TIMER_START = "org.y20k.transistor.action.TIMER_START";
-    private static final String ACTION_TIMER_STOP = "org.y20k.transistor.action.TIMER_STOP";
-    private static final String ACTION_TIMER_RUNNING = "org.y20k.transistor.action.TIMER_RUNNING";
-    private static final String EXTRA_TIMER_DURATION = "TIMER_DURATION";
-    private static final String EXTRA_TIMER_REMAINING = "TIMER_REMAINING";
-    private static final String PREF_TIMER_RUNNING = "prefTimerRunning";
-
-
     /* Main class variables */
     private CountDownTimer mSleepTimer;
     private long mTimerRemaining;
@@ -79,12 +69,12 @@ public class SleepTimerService  extends Service {
         }
 
         // ACTION TIMER START
-        else if (intent.getAction().equals(ACTION_TIMER_START)) {
+        else if (intent.getAction().equals(TransistorKeys.ACTION_TIMER_START)) {
             Log.v(LOG_TAG, "Service received command: START");
 
-            if (intent.hasExtra(EXTRA_TIMER_DURATION)) {
+            if (intent.hasExtra(TransistorKeys.EXTRA_TIMER_DURATION)) {
                 // get duration from intent
-                long duration = intent.getLongExtra(EXTRA_TIMER_DURATION, 0);
+                long duration = intent.getLongExtra(TransistorKeys.EXTRA_TIMER_DURATION, 0);
 
                 // set remaining time
                 if (mTimerRemaining > 0) {
@@ -106,7 +96,7 @@ public class SleepTimerService  extends Service {
         }
 
         // ACTION TIMER STOP
-        else if (intent.getAction().equals(ACTION_TIMER_STOP)) {
+        else if (intent.getAction().equals(TransistorKeys.ACTION_TIMER_STOP)) {
             Log.v(LOG_TAG, "Service received command: STOP");
 
             // set remaining time
@@ -141,8 +131,8 @@ public class SleepTimerService  extends Service {
 
         // start sleep timer service using intent
         Intent intent = new Intent(context, SleepTimerService.class);
-        intent.setAction(ACTION_TIMER_START);
-        intent.putExtra(EXTRA_TIMER_DURATION, duration);
+        intent.setAction(TransistorKeys.ACTION_TIMER_START);
+        intent.putExtra(TransistorKeys.EXTRA_TIMER_DURATION, duration);
         context.startService(intent);
     }
 
@@ -153,7 +143,7 @@ public class SleepTimerService  extends Service {
 
         // stop sleep timer service using intent
         Intent intent = new Intent(context, SleepTimerService.class);
-        intent.setAction(ACTION_TIMER_STOP);
+        intent.setAction(TransistorKeys.ACTION_TIMER_STOP);
         context.startService(intent);
     }
 
@@ -174,8 +164,8 @@ public class SleepTimerService  extends Service {
 
                 // send local broadcast (needed by PlayerActivityFragment)
                 Intent i = new Intent();
-                i.setAction(ACTION_TIMER_RUNNING);
-                i.putExtra(EXTRA_TIMER_REMAINING, mTimerRemaining);
+                i.setAction(TransistorKeys.ACTION_TIMER_RUNNING);
+                i.putExtra(TransistorKeys.EXTRA_TIMER_REMAINING, mTimerRemaining);
                 LocalBroadcastManager.getInstance(getApplication()).sendBroadcast(i);
 
                 Log.v(LOG_TAG, "Sleep timer. Remaining time: " + mTimerRemaining);
@@ -187,13 +177,13 @@ public class SleepTimerService  extends Service {
 
                 // stop playback
                 Intent intent = new Intent(getApplication(), PlayerService.class);
-                intent.setAction(ACTION_STOP);
+                intent.setAction(TransistorKeys.ACTION_STOP);
                 startService(intent);
 
                 // send local broadcast (needed by PlayerActivityFragment)
                 Intent i = new Intent();
-                i.setAction(ACTION_TIMER_RUNNING);
-                i.putExtra(EXTRA_TIMER_REMAINING, mTimerRemaining);
+                i.setAction(TransistorKeys.ACTION_TIMER_RUNNING);
+                i.putExtra(TransistorKeys.EXTRA_TIMER_REMAINING, mTimerRemaining);
                 LocalBroadcastManager.getInstance(getApplication()).sendBroadcast(i);
 
                 Log.v(LOG_TAG, "Sleep timer finished. Sweet dreams, dear user.");
@@ -207,7 +197,7 @@ public class SleepTimerService  extends Service {
     private void saveTimerState (boolean running) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplication());
         SharedPreferences.Editor editor = settings.edit();
-        editor.putBoolean(PREF_TIMER_RUNNING, running);
+        editor.putBoolean(TransistorKeys.PREF_TIMER_RUNNING, running);
         editor.apply();
         Log.v(LOG_TAG, "Saving state.");
     }

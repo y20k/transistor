@@ -54,6 +54,7 @@ import org.y20k.transistor.helpers.DialogDelete;
 import org.y20k.transistor.helpers.DialogRename;
 import org.y20k.transistor.helpers.ImageHelper;
 import org.y20k.transistor.helpers.StorageHelper;
+import org.y20k.transistor.helpers.TransistorKeys;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -67,29 +68,6 @@ public final class PlayerActivityFragment extends Fragment {
 
     /* Define log tag */
     private static final String LOG_TAG = PlayerActivityFragment.class.getSimpleName();
-
-
-    /* Keys */
-    private static final String ACTION_COLLECTION_CHANGED = "org.y20k.transistor.action.COLLECTION_CHANGED";
-    private static final String ACTION_PLAYBACK_STOPPED = "org.y20k.transistor.action.PLAYBACK_STOPPED";
-    private static final String ACTION_CREATE_SHORTCUT_REQUESTED = "org.y20k.transistor.action.CREATE_SHORTCUT_REQUESTED";
-    private static final String ACTION_METADATA_CHANGED = "org.y20k.transistor.action.METADATA_CHANGED";
-    private static final String EXTRA_METADATA = "METADATA";
-    private static final String EXTRA_COLLECTION_CHANGE = "COLLECTION_CHANGE";
-    private static final String EXTRA_STATION_NEW_NAME = "STATION_NEW_NAME";
-    private static final String EXTRA_STATION_ID = "STATION_ID";
-    private static final String ARG_STATION_ID = "ArgStationID";
-    private static final String ARG_TWO_PANE = "ArgTwoPane";
-    private static final String ARG_PLAYBACK = "ArgPlayback";
-    private static final String PREF_STATION_ID_CURRENT = "prefStationIDCurrent";
-    private static final String PREF_STATION_ID_LAST = "prefStationIDLast";
-    private static final String PREF_STATION_ID_SELECTED = "prefStationIDSelected";
-    private static final String PREF_STATION_METADATA = "prefStationMetadata";
-    private static final String PREF_PLAYBACK = "prefPlayback";
-    private static final int STATION_RENAMED = 2;
-    private static final int STATION_DELETED = 3;
-    private static final int REQUEST_LOAD_IMAGE = 1;
-    private static final int PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE = 1;
 
 
     /* Main class variables */
@@ -138,13 +116,13 @@ public final class PlayerActivityFragment extends Fragment {
 
         Bundle arguments = getArguments();
         // get station id from arguments
-        if (arguments != null && arguments.containsKey(ARG_STATION_ID)) {
-            mStationID = arguments.getInt(ARG_STATION_ID, 0);
+        if (arguments != null && arguments.containsKey(TransistorKeys.ARG_STATION_ID)) {
+            mStationID = arguments.getInt(TransistorKeys.ARG_STATION_ID, 0);
         }
 
         // get tablet or phone mode info from arguments
-        if (arguments != null && arguments.containsKey(ARG_TWO_PANE)) {
-            mTwoPane = arguments.getBoolean(ARG_TWO_PANE, false);
+        if (arguments != null && arguments.containsKey(TransistorKeys.ARG_TWO_PANE)) {
+            mTwoPane = arguments.getBoolean(TransistorKeys.ARG_TWO_PANE, false);
         } else {
             mTwoPane = false;
         }
@@ -254,7 +232,7 @@ public final class PlayerActivityFragment extends Fragment {
 
         // check if activity started from shortcut
         Bundle arguments = getArguments();
-        if (arguments != null && arguments.getBoolean(ARG_PLAYBACK)) {
+        if (arguments != null && arguments.getBoolean(TransistorKeys.ARG_PLAYBACK)) {
             // check if this station is not already playing
             if (!mPlayback || mStationIDCurrent != mStationID) {
                 // start playback
@@ -264,7 +242,7 @@ public final class PlayerActivityFragment extends Fragment {
                 mStationIDCurrent = mStationID;
                 saveAppState(mActivity);
                 // clear playback state argument
-                getArguments().putBoolean(ARG_PLAYBACK, false);
+                getArguments().putBoolean(TransistorKeys.ARG_PLAYBACK, false);
             }
 
         }
@@ -293,11 +271,11 @@ public final class PlayerActivityFragment extends Fragment {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
-            case PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE: {
+            case TransistorKeys.PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission granted - get system picker for images
                     Intent pickImageIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(pickImageIntent, REQUEST_LOAD_IMAGE);
+                    startActivityForResult(pickImageIntent, TransistorKeys.REQUEST_LOAD_IMAGE);
                 } else {
                     // permission denied
                     Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_permission_denied) + " READ_EXTERNAL_STORAGE", Toast.LENGTH_LONG).show();
@@ -310,7 +288,7 @@ public final class PlayerActivityFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_LOAD_IMAGE && resultCode == Activity.RESULT_OK && null != data) {
+        if (requestCode == TransistorKeys.REQUEST_LOAD_IMAGE && resultCode == Activity.RESULT_OK && null != data) {
             // retrieve selected image from image picker
             processNewImage(data.getData());
         }
@@ -390,8 +368,8 @@ public final class PlayerActivityFragment extends Fragment {
             case R.id.menu_shortcut: {
                 // send local broadcast (needed by MainActivityFragment)
                 Intent shortcutIntent = new Intent();
-                shortcutIntent.setAction(ACTION_CREATE_SHORTCUT_REQUESTED);
-                shortcutIntent.putExtra(EXTRA_STATION_ID, mStationID);
+                shortcutIntent.setAction(TransistorKeys.ACTION_CREATE_SHORTCUT_REQUESTED);
+                shortcutIntent.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
                 LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(shortcutIntent);
                 return true;
             }
@@ -543,10 +521,10 @@ public final class PlayerActivityFragment extends Fragment {
     private void saveAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putInt(PREF_STATION_ID_CURRENT, mStationIDCurrent);
-        editor.putInt(PREF_STATION_ID_LAST, mStationIDLast);
-        editor.putString(PREF_STATION_METADATA, mStationMetadata);
-        editor.putBoolean(PREF_PLAYBACK, mPlayback);
+        editor.putInt(TransistorKeys.PREF_STATION_ID_CURRENT, mStationIDCurrent);
+        editor.putInt(TransistorKeys.PREF_STATION_ID_LAST, mStationIDLast);
+        editor.putString(TransistorKeys.PREF_STATION_METADATA, mStationMetadata);
+        editor.putBoolean(TransistorKeys.PREF_PLAYBACK, mPlayback);
         editor.apply();
         Log.v(LOG_TAG, "Saving state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + ")");
     }
@@ -555,11 +533,11 @@ public final class PlayerActivityFragment extends Fragment {
     /* Loads app state from preferences */
     private void loadAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-        mStationIDCurrent = settings.getInt(PREF_STATION_ID_CURRENT, -1);
-        mStationIDLast = settings.getInt(PREF_STATION_ID_LAST, -1);
-        mStationID = settings.getInt(PREF_STATION_ID_SELECTED, 0);
-        mStationMetadata = settings.getString(PREF_STATION_METADATA, null);
-        mPlayback = settings.getBoolean(PREF_PLAYBACK, false);
+        mStationIDCurrent = settings.getInt(TransistorKeys.PREF_STATION_ID_CURRENT, -1);
+        mStationIDLast = settings.getInt(TransistorKeys.PREF_STATION_ID_LAST, -1);
+        mStationID = settings.getInt(TransistorKeys.PREF_STATION_ID_SELECTED, 0);
+        mStationMetadata = settings.getString(TransistorKeys.PREF_STATION_METADATA, null);
+        mPlayback = settings.getBoolean(TransistorKeys.PREF_PLAYBACK, false);
         Log.v(LOG_TAG, "Loading state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + " / " + mStationID + ")");
     }
 
@@ -574,7 +552,7 @@ public final class PlayerActivityFragment extends Fragment {
 
             // get system picker for images
             Intent pickImageIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(pickImageIntent, REQUEST_LOAD_IMAGE);
+            startActivityForResult(pickImageIntent, TransistorKeys.REQUEST_LOAD_IMAGE);
         }
         // permission to read external storage granted
         else {
@@ -585,7 +563,7 @@ public final class PlayerActivityFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                                PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE);
+                                TransistorKeys.PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE);
                     }
                 });
                 snackbar.show();
@@ -593,7 +571,7 @@ public final class PlayerActivityFragment extends Fragment {
             } else {
                 // ask for permission without explanation
                 requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                        PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE);
+                        TransistorKeys.PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE);
             }
         }
     }
@@ -601,17 +579,17 @@ public final class PlayerActivityFragment extends Fragment {
 
     /* Handles adding, deleting and renaming of station */
     private void handleCollectionChanges(Intent intent) {
-        switch (intent.getIntExtra(EXTRA_COLLECTION_CHANGE, 1)) {
+        switch (intent.getIntExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, 1)) {
             // CASE: station was renamed
-            case STATION_RENAMED:
-                if (intent.hasExtra(EXTRA_STATION_NEW_NAME)) {
-                    mStationName = intent.getStringExtra(EXTRA_STATION_NEW_NAME);
+            case TransistorKeys.STATION_RENAMED:
+                if (intent.hasExtra(TransistorKeys.EXTRA_STATION_NEW_NAME)) {
+                    mStationName = intent.getStringExtra(TransistorKeys.EXTRA_STATION_NEW_NAME);
                     mStationNameView.setText(mStationName);
                 }
                 break;
 
             // CASE: station was deleted
-            case STATION_DELETED:
+            case TransistorKeys.STATION_DELETED:
                 if (!mTwoPane && mVisibility) {
                     // start main activity
                     Intent mainActivityStartIntent = new Intent(mActivity, MainActivity.class);
@@ -667,34 +645,34 @@ public final class PlayerActivityFragment extends Fragment {
                 saveAppState(context);
             }
         };
-        IntentFilter playbackIntentFilter = new IntentFilter(ACTION_PLAYBACK_STOPPED);
+        IntentFilter playbackIntentFilter = new IntentFilter(TransistorKeys.ACTION_PLAYBACK_STOPPED);
         LocalBroadcastManager.getInstance(mActivity).registerReceiver(playbackStoppedReceiver, playbackIntentFilter);
 
         // RECEIVER: station added, deleted, or changed
         BroadcastReceiver collectionChangedReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if (intent != null && intent.hasExtra(EXTRA_COLLECTION_CHANGE)) {
+                if (intent != null && intent.hasExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE)) {
                     handleCollectionChanges(intent);
                 }
             }
         };
-        IntentFilter collectionChangedIntentFilter = new IntentFilter(ACTION_COLLECTION_CHANGED);
+        IntentFilter collectionChangedIntentFilter = new IntentFilter(TransistorKeys.ACTION_COLLECTION_CHANGED);
         LocalBroadcastManager.getInstance(mActivity).registerReceiver(collectionChangedReceiver, collectionChangedIntentFilter);
 
         // RECEIVER: station metadata has changed
         BroadcastReceiver metadataChangedReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if (mPlayback && intent.hasExtra(EXTRA_METADATA)) {
-                    mStationMetadataView.setText(intent.getStringExtra(EXTRA_METADATA));
+                if (mPlayback && intent.hasExtra(TransistorKeys.EXTRA_METADATA)) {
+                    mStationMetadataView.setText(intent.getStringExtra(TransistorKeys.EXTRA_METADATA));
                     mStationMetadataView.setVisibility(View.VISIBLE);
 
 
                 }
             }
         };
-        IntentFilter metadataChangedIntentFilter = new IntentFilter(ACTION_METADATA_CHANGED);
+        IntentFilter metadataChangedIntentFilter = new IntentFilter(TransistorKeys.ACTION_METADATA_CHANGED);
         LocalBroadcastManager.getInstance(mActivity).registerReceiver(metadataChangedReceiver, metadataChangedIntentFilter);
 
     }

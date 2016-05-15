@@ -18,17 +18,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import org.y20k.transistor.helpers.TransistorKeys;
+
 
 /**
  * InfosheetActivity class
  */
 public final class InfosheetActivity extends AppCompatActivity {
-
-    /* Keys */
-    private static final String EXTRA_INFOSHEET_TITLE = "INFOSHEET_TITLE";
-    private static final String EXTRA_INFOSHEET_CONTENT = "INFOSHEET_CONTENT";
-    private static final int INFOSHEET_CONTENT_ABOUT = 1;
-    private static final int INFOSHEET_CONTENT_HOWTO = 2;
 
 
     @Override
@@ -39,14 +35,14 @@ public final class InfosheetActivity extends AppCompatActivity {
         Intent intent = this.getIntent();
 
         // set activity title
-        if (intent.hasExtra(EXTRA_INFOSHEET_TITLE)) {
-            this.setTitle(intent.getStringExtra(EXTRA_INFOSHEET_TITLE));
+        if (intent.hasExtra(TransistorKeys.EXTRA_INFOSHEET_TITLE)) {
+            this.setTitle(intent.getStringExtra(TransistorKeys.EXTRA_INFOSHEET_TITLE));
         }
 
         // set activity view
-        if (intent.hasExtra(EXTRA_INFOSHEET_CONTENT) && intent.getIntExtra(EXTRA_INFOSHEET_CONTENT, -1) == INFOSHEET_CONTENT_ABOUT) {
+        if (intent.hasExtra(TransistorKeys.EXTRA_INFOSHEET_CONTENT) && intent.getIntExtra(TransistorKeys.EXTRA_INFOSHEET_CONTENT, -1) == TransistorKeys.INFOSHEET_CONTENT_ABOUT) {
             setContentView(R.layout.fragment_infosheet_about);
-        } else if (intent.hasExtra(EXTRA_INFOSHEET_CONTENT) && intent.getIntExtra(EXTRA_INFOSHEET_CONTENT, -1) == INFOSHEET_CONTENT_HOWTO) {
+        } else if (intent.hasExtra(TransistorKeys.EXTRA_INFOSHEET_CONTENT) && intent.getIntExtra(TransistorKeys.EXTRA_INFOSHEET_CONTENT, -1) == TransistorKeys.INFOSHEET_CONTENT_HOWTO) {
             setContentView(R.layout.fragment_infosheet_howto);
         }
 

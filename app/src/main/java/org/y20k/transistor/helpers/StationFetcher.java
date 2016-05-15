@@ -40,13 +40,6 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
     private static final String LOG_TAG = StationFetcher.class.getSimpleName();
 
 
-    /* Keys */
-    private static final String ACTION_COLLECTION_CHANGED = "org.y20k.transistor.action.COLLECTION_CHANGED";
-    private static final String EXTRA_COLLECTION_CHANGE = "COLLECTION_CHANGE";
-    private static final String EXTRA_STATION_URI_CURRENT = "STATION_URI_CURRENT";
-    private static final String PREF_STATION_ID_CURRENT = "prefStationIDCurrent";
-    private static final int STATION_ADDED = 1;
-
     /* Main class variables */
     private final Activity mActivity;
     private Collection mCollection;
@@ -120,8 +113,8 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
 
                 // send local broadcast
                 Intent i = new Intent();
-                i.setAction(ACTION_COLLECTION_CHANGED);
-                i.putExtra(EXTRA_COLLECTION_CHANGE, STATION_ADDED);
+                i.setAction(TransistorKeys.ACTION_COLLECTION_CHANGED);
+                i.putExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, TransistorKeys.STATION_ADDED);
                 LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(i);
             }
 

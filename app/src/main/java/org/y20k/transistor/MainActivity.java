@@ -33,6 +33,7 @@ import android.view.View;
 
 import org.y20k.transistor.core.Collection;
 import org.y20k.transistor.helpers.StorageHelper;
+import org.y20k.transistor.helpers.TransistorKeys;
 
 import java.io.File;
 
@@ -44,21 +45,6 @@ public final class MainActivity extends AppCompatActivity {
 
     /* Define log tag */
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
-
-
-    /* Keys */
-    private static final String ACTION_SHOW_PLAYER = "org.y20k.transistor.action.SHOW_PLAYER";
-    private static final String ACTION_CHANGE_VIEW_SELECTION = "org.y20k.transistor.action.CHANGE_VIEW_SELECTION";
-    private static final String ACTION_COLLECTION_CHANGED = "org.y20k.transistor.action.COLLECTION_CHANGED";
-    private static final String EXTRA_STATION_ID = "STATION_ID";
-    private static final String EXTRA_STREAM_URI = "STREAM_URI";
-    private static final String EXTRA_PLAYBACK_STATE = "PLAYBACK_STATE";
-    private static final String ARG_STATION_ID = "ArgStationID";
-    private static final String ARG_TWO_PANE = "ArgTwoPane";
-    private static final String ARG_PLAYBACK = "ArgPlayback";
-    private static final String PREF_TWO_PANE = "prefTwoPane";
-    private static final String PREF_STATION_ID_SELECTED = "prefStationIDSelected";
-    private static final String PLAYERFRAGMENT_TAG = "PFTAG";
 
 
     /* Main class variables */
@@ -92,7 +78,13 @@ public final class MainActivity extends AppCompatActivity {
 
         // if player_container is present two-pane layout has been loaded
         mContainer = findViewById(R.id.player_container);
-        mTwoPane = mContainer != null;
+
+        if (mContainer != null) {
+            mTwoPane = true;
+            Log.v(LOG_TAG, "Large screen detected. Choosing two pane layout.");
+        } else {
+            Log.v(LOG_TAG, "Small screen detected. Choosing single pane layout.");
+        }
 
         // load collection
         mCollection = new Collection(mFolder);
@@ -106,15 +98,15 @@ public final class MainActivity extends AppCompatActivity {
         boolean startPlayback;
 
         // CASE: player should be launched (e.g. from shortcut or notification)
-        if (intent != null && ACTION_SHOW_PLAYER.equals(intent.getAction())) {
+        if (intent != null && TransistorKeys.ACTION_SHOW_PLAYER.equals(intent.getAction())) {
 
             // get id of station from intent
-            if (intent.hasExtra(EXTRA_STATION_ID)) {
+            if (intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)) {
                 // get station from notification
-                stationID = intent.getIntExtra(EXTRA_STATION_ID, 0);
-            } else if (intent.hasExtra(EXTRA_STREAM_URI)) {
+                stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
+            } else if (intent.hasExtra(TransistorKeys.EXTRA_STREAM_URI)) {
                 // get station from home screen shortcut
-                stationID = mCollection.findStationID(intent.getStringExtra(EXTRA_STREAM_URI));
+                stationID = mCollection.findStationID(intent.getStringExtra(TransistorKeys.EXTRA_STREAM_URI));
             }
             else {
                 // default station
@@ -124,12 +116,12 @@ public final class MainActivity extends AppCompatActivity {
             // save station id as selected station (TODO: put into saveAppState)
             SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
             SharedPreferences.Editor editor = settings.edit();
-            editor.putInt(PREF_STATION_ID_SELECTED, stationID);
+            editor.putInt(TransistorKeys.PREF_STATION_ID_SELECTED, stationID);
             editor.apply();
 
             // get playback action from intent
-            if (intent.hasExtra(EXTRA_PLAYBACK_STATE)) {
-                startPlayback = intent.getBooleanExtra(EXTRA_PLAYBACK_STATE, false);
+            if (intent.hasExtra(TransistorKeys.EXTRA_PLAYBACK_STATE)) {
+                startPlayback = intent.getBooleanExtra(TransistorKeys.EXTRA_PLAYBACK_STATE, false);
             } else {
                 startPlayback = false;
             }
@@ -137,30 +129,30 @@ public final class MainActivity extends AppCompatActivity {
             // prepare arguments and intent
             if (mTwoPane) {
                 // prepare args for player fragment
-                playerArgs.putInt(ARG_STATION_ID, stationID);
-                playerArgs.putBoolean(ARG_PLAYBACK, startPlayback);
+                playerArgs.putInt(TransistorKeys.ARG_STATION_ID, stationID);
+                playerArgs.putBoolean(TransistorKeys.ARG_PLAYBACK, startPlayback);
                 // notify main activity fragment
                 Intent changeSelectionIntent = new Intent();
-                changeSelectionIntent.setAction(ACTION_CHANGE_VIEW_SELECTION);
-                changeSelectionIntent.putExtra(EXTRA_STATION_ID, stationID);
+                changeSelectionIntent.setAction(TransistorKeys.ACTION_CHANGE_VIEW_SELECTION);
+                changeSelectionIntent.putExtra(TransistorKeys.EXTRA_STATION_ID, stationID);
                 LocalBroadcastManager.getInstance(getApplication()).sendBroadcast(changeSelectionIntent);
             } else {
                 // start player activity - on phone
                 Intent playerIntent = new Intent(this, PlayerActivity.class);
-                playerIntent.setAction(ACTION_SHOW_PLAYER);
-                playerIntent.putExtra(EXTRA_STATION_ID, stationID);
-                playerIntent.putExtra(EXTRA_PLAYBACK_STATE, startPlayback);
+                playerIntent.setAction(TransistorKeys.ACTION_SHOW_PLAYER);
+                playerIntent.putExtra(TransistorKeys.EXTRA_STATION_ID, stationID);
+                playerIntent.putExtra(TransistorKeys.EXTRA_PLAYBACK_STATE, startPlayback);
                 startActivity(playerIntent);
             }
         }
 
         // tablet mode: show player fragment in player container
         if (mTwoPane && !mCollection.getStations().isEmpty()) {
-            playerArgs.putBoolean(ARG_TWO_PANE, mTwoPane);
+            playerArgs.putBoolean(TransistorKeys.ARG_TWO_PANE, mTwoPane);
             PlayerActivityFragment playerActivityFragment = new PlayerActivityFragment();
             playerActivityFragment.setArguments(playerArgs);
             getFragmentManager().beginTransaction()
-                    .replace(R.id.player_container, playerActivityFragment, PLAYERFRAGMENT_TAG)
+                    .replace(R.id.player_container, playerActivityFragment, TransistorKeys.PLAYERFRAGMENT_TAG)
                     .commit();
         } else if (mTwoPane) {
             // make room for action call
@@ -213,7 +205,7 @@ public final class MainActivity extends AppCompatActivity {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = settings.edit();
         // editor.putInt(PREF_STATION_ID_SELECTED, mStationID);
-        editor.putBoolean(PREF_TWO_PANE, mTwoPane);
+        editor.putBoolean(TransistorKeys.PREF_TWO_PANE, mTwoPane);
         editor.apply();
         Log.v(LOG_TAG, "Saving state.");
     }
@@ -234,16 +226,16 @@ public final class MainActivity extends AppCompatActivity {
                 } else if (mTwoPane && mCollection.getStations().size() == 1) {
                     mContainer.setVisibility(View.VISIBLE);
                     Bundle playerArgs = new Bundle();
-                    playerArgs.putBoolean(ARG_TWO_PANE, mTwoPane);
+                    playerArgs.putBoolean(TransistorKeys.ARG_TWO_PANE, mTwoPane);
                     PlayerActivityFragment playerActivityFragment = new PlayerActivityFragment();
                     playerActivityFragment.setArguments(playerArgs);
                     getFragmentManager().beginTransaction()
-                            .replace(R.id.player_container, playerActivityFragment, PLAYERFRAGMENT_TAG)
+                            .replace(R.id.player_container, playerActivityFragment, TransistorKeys.PLAYERFRAGMENT_TAG)
                             .commit();
                 }
             }
         };
-        IntentFilter collectionChangedIntentFilter = new IntentFilter(ACTION_COLLECTION_CHANGED);
+        IntentFilter collectionChangedIntentFilter = new IntentFilter(TransistorKeys.ACTION_COLLECTION_CHANGED);
         LocalBroadcastManager.getInstance(this).registerReceiver(collectionChangedReceiver, collectionChangedIntentFilter);
     }
 

@@ -19,6 +19,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 
+import org.y20k.transistor.helpers.TransistorKeys;
+
 
 /**
  * PlayerActivity class
@@ -27,14 +29,6 @@ public final class PlayerActivity extends AppCompatActivity {
 
     /* Define log tag */
     private static final String LOG_TAG = PlayerActivity.class.getSimpleName();
-
-
-    /* Keys */
-    private static final String ACTION_SHOW_PLAYER = "org.y20k.transistor.action.SHOW_PLAYER";
-    private static final String EXTRA_STATION_ID = "STATION_ID";
-    private static final String EXTRA_PLAYBACK_STATE = "PLAYBACK_STATE";
-    private static final String ARG_STATION_ID = "ArgStationID";
-    private static final String ARG_PLAYBACK = "ArgPlayback";
 
 
     @Override
@@ -48,27 +42,27 @@ public final class PlayerActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         // CASE: show player in phone mode
-        if (intent != null && ACTION_SHOW_PLAYER.equals(intent.getAction())) {
+        if (intent != null && TransistorKeys.ACTION_SHOW_PLAYER.equals(intent.getAction())) {
 
             // get id of station from intent
             int stationID;
-            if (intent.hasExtra(EXTRA_STATION_ID)) {
-                stationID = intent.getIntExtra(EXTRA_STATION_ID, 0);
+            if (intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)) {
+                stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
             } else {
                 stationID = 0;
             }
 
             // get playback action from intent
             boolean startPlayback;
-            if (intent.hasExtra(EXTRA_PLAYBACK_STATE)) {
-                startPlayback = intent.getBooleanExtra(EXTRA_PLAYBACK_STATE, false);
+            if (intent.hasExtra(TransistorKeys.EXTRA_PLAYBACK_STATE)) {
+                startPlayback = intent.getBooleanExtra(TransistorKeys.EXTRA_PLAYBACK_STATE, false);
             } else {
                 startPlayback = false;
             }
 
             Bundle args = new Bundle();
-            args.putInt(ARG_STATION_ID, stationID);
-            args.putBoolean(ARG_PLAYBACK, startPlayback);
+            args.putInt(TransistorKeys.ARG_STATION_ID, stationID);
+            args.putBoolean(TransistorKeys.ARG_PLAYBACK, startPlayback);
 
             PlayerActivityFragment playerActivityFragment = new PlayerActivityFragment();
             playerActivityFragment.setArguments(args);

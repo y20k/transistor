@@ -36,12 +36,6 @@ public class ShortcutHelper {
     private static final String LOG_TAG = ShortcutHelper.class.getSimpleName();
 
 
-    /* Keys */
-    private static final String ACTION_SHOW_PLAYER = "org.y20k.transistor.action.SHOW_PLAYER";
-    private static final String EXTRA_PLAYBACK_STATE = "PLAYBACK_STATE";
-    private static final String EXTRA_STREAM_URI = "STREAM_URI";
-
-
     /* Main class variables */
     private final Activity mActivity;
     private final Collection mCollection;
@@ -98,9 +92,9 @@ public class ShortcutHelper {
 
         // create intent to start MainActivity
         Intent shortcutIntent = new Intent(mActivity, MainActivity.class);
-        shortcutIntent.setAction(ACTION_SHOW_PLAYER);
-        shortcutIntent.putExtra(EXTRA_STREAM_URI, stationUri);
-        shortcutIntent.putExtra(EXTRA_PLAYBACK_STATE, true);
+        shortcutIntent.setAction(TransistorKeys.ACTION_SHOW_PLAYER);
+        shortcutIntent.putExtra(TransistorKeys.EXTRA_STREAM_URI, stationUri);
+        shortcutIntent.putExtra(TransistorKeys.EXTRA_PLAYBACK_STATE, true);
         shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
