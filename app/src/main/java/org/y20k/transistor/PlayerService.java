@@ -73,7 +73,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     private MediaPlayer mMediaPlayer;
     private MediaSessionCompat mSession;
     private MediaControllerCompat mController;
-    private NotificationHelper mNotificationHelper;
     private String mStreamUri;
     private String mStationName;
     private int mStationID;
@@ -97,7 +96,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         mMediaPlayer = null;
         mPlayerInstanceCounter = 0;
         if (mSession == null) {
-            mSession = createMediaSession(this);
+            mSession = createMediaSession(this, null);
         }
 
         try {
@@ -118,10 +117,13 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
             public void onReceive(Context context, Intent intent) {
                 if (intent.hasExtra(TransistorKeys.EXTRA_METADATA)) {
 
-                    mNotificationHelper.setMediaSession(mSession);
-                    mNotificationHelper.setStationMetadata(intent.getStringExtra(TransistorKeys.EXTRA_METADATA));
-                    mNotificationHelper.createNotification(PlayerService.this);
                     // TODO update media session metadata
+                    mSession.setMetadata(getMetadata(context, intent.getStringExtra(TransistorKeys.EXTRA_METADATA)));
+
+                    NotificationHelper.setMediaSession(mSession);
+                    NotificationHelper.setStationMetadata(intent.getStringExtra(TransistorKeys.EXTRA_METADATA));
+                    NotificationHelper.createNotification(PlayerService.this);
+
 
                 }
             }
@@ -390,16 +392,16 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
 //        mWifiLock.acquire();
 
         if (mSession == null) {
-            mSession = createMediaSession(context);
+            mSession = createMediaSession(context, stationName);
         }
 
         // put up notification
-        mNotificationHelper = new NotificationHelper(collection);
-        mNotificationHelper.setStationName(stationName);
-        mNotificationHelper.setStationID(stationID);
-        mNotificationHelper.setStationMetadata(null);
-        mNotificationHelper.setMediaSession(mSession); // mSession is null here !
-        mNotificationHelper.createNotification(context);
+        new NotificationHelper(collection);
+        NotificationHelper.setStationName(stationName);
+        NotificationHelper.setStationID(stationID);
+        NotificationHelper.setStationMetadata(null);
+        NotificationHelper.setMediaSession(mSession); // mSession is null here !
+        NotificationHelper.createNotification(context);
 
         // start player service using intent
         Intent intent = new Intent(context, PlayerService.class);
@@ -524,7 +526,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
 
 
     /* Creates media session */
-    private MediaSessionCompat createMediaSession(Context context) {
+    private MediaSessionCompat createMediaSession(Context context, String stationNAme) {
         // start a new MediaSession
         // https://www.youtube.com/watch?v=XQwe30cZffg&feature=youtu.be&t=883
         // https://www.youtube.com/watch?v=G6pFai3ll9E
@@ -535,7 +537,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         MediaSessionCompat session = new MediaSessionCompat(context, LOG_TAG);
         session.setPlaybackState(getPlaybackState());
         session.setCallback(new MediaSessionCallback());
-        session.setMetadata(getMetadata(context));
+        session.setMetadata(getMetadata(context, null));
         session.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS |
                 MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
 
@@ -565,11 +567,13 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
 
 
     /* TODO finish this method*/
-    private MediaMetadataCompat getMetadata(Context context) {
+    private MediaMetadataCompat getMetadata(Context context, String metaData) {
+
+        Log.v(LOG_TAG, "!!! " + mStationName);
 
         MediaMetadataCompat metadata = new MediaMetadataCompat.Builder()
                 .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, mStationName)
-                .putString(MediaMetadataCompat.METADATA_KEY_TITLE, "David Bowie - The Man Who Sold The World")
+                .putString(MediaMetadataCompat.METADATA_KEY_TITLE, metaData)
                 .putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_notification_large_bg_128dp))
                 .build();
 

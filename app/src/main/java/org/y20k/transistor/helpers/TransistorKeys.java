@@ -40,6 +40,7 @@ public class TransistorKeys {
     public static final String EXTRA_INFOSHEET_CONTENT = "INFOSHEET_CONTENT";
     public static final String EXTRA_METADATA = "METADATA";
     public static final String EXTRA_PLAYBACK_STATE = "PLAYBACK_STATE";
+    public static final String EXTRA_STATION = "STATION";
     public static final String EXTRA_STATION_ID = "STATION_ID";
     public static final String EXTRA_STATION_NEW_NAME = "STATION_NEW_NAME";
     public static final String EXTRA_STATION_URI_CURRENT = "STATION_URI_CURRENT";
@@ -48,6 +49,7 @@ public class TransistorKeys {
     public static final String EXTRA_TIMER_REMAINING = "TIMER_REMAINING";
 
     /* ARGS */
+    public static final String ARG_STATION = "ArgStation";
     public static final String ARG_STATION_ID = "ArgStationID";
     public static final String ARG_TWO_PANE = "ArgTwoPane";
     public static final String ARG_PLAYBACK = "ArgPlayback";

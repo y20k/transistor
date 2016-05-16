@@ -50,6 +50,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.y20k.transistor.core.Collection;
+import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.DialogDelete;
 import org.y20k.transistor.helpers.DialogRename;
 import org.y20k.transistor.helpers.ImageHelper;
@@ -88,6 +89,7 @@ public final class PlayerActivityFragment extends Fragment {
     private boolean mPlayback;
     private boolean mTwoPane;
     private boolean mVisibility;
+    private Station mStation;
     private Collection mCollection;
     private PlayerService mPlayerService;
 
@@ -120,6 +122,12 @@ public final class PlayerActivityFragment extends Fragment {
             mStationID = arguments.getInt(TransistorKeys.ARG_STATION_ID, 0);
         }
 
+        // get station object from arguments
+        if (arguments != null && arguments.containsKey(TransistorKeys.ARG_STATION)) {
+            mStation = arguments.getParcelable(TransistorKeys.ARG_STATION);
+        }
+
+
         // get tablet or phone mode info from arguments
         if (arguments != null && arguments.containsKey(TransistorKeys.ARG_TWO_PANE)) {
             mTwoPane = arguments.getBoolean(TransistorKeys.ARG_TWO_PANE, false);
@@ -128,8 +136,10 @@ public final class PlayerActivityFragment extends Fragment {
         }
 
         // get URL and name for stream
-        mStreamUri = mCollection.getStations().get(mStationID).getStreamUri().toString();
-        mStationName = mCollection.getStations().get(mStationID).getStationName();
+        mStreamUri = mStation.getStreamUri().toString();
+        mStationName = mStation.getStationName();
+//        mStreamUri = mCollection.getStations().get(mStationID).getStreamUri().toString();
+//        mStationName = mCollection.getStations().get(mStationID).getStationName();
 
         // fragment has options menu
         setHasOptionsMenu(true);
@@ -158,6 +168,7 @@ public final class PlayerActivityFragment extends Fragment {
         if (stationImage != null) {
             mStationImageView.setImageBitmap(stationImage);
         }
+
 
         // add listener to station info view for clipboard copy
         View stationInfoView = mRootView.findViewById(R.id.player_layout_station_info);
@@ -386,9 +397,9 @@ public final class PlayerActivityFragment extends Fragment {
     private Bitmap createStationImage () {
         Bitmap stationImageSmall;
         ImageHelper imageHelper;
-        if (!mCollection.getStations().isEmpty() && mCollection.getStations().get(mStationID).getStationImageFile().exists()) {
+        if (mStation != null &&  mStation.getStationImageFile().exists()) {
             // get image from collection
-            stationImageSmall = BitmapFactory.decodeFile(mCollection.getStations().get(mStationID).getStationImageFile().toString());
+            stationImageSmall = BitmapFactory.decodeFile(mStation.getStationImageFile().toString());
         } else {
             // get default image
             stationImageSmall = BitmapFactory.decodeResource(getResources(), R.drawable.ic_notesymbol);

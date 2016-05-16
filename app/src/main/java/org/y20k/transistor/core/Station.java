@@ -17,6 +17,8 @@ package org.y20k.transistor.core;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -42,7 +44,7 @@ import java.util.regex.Pattern;
 /**
  * Station class
  */
-public final class Station implements Comparable<Station> {
+public final class Station implements Comparable<Station>, Parcelable {
 
     /* Define log tag */
     private static final String LOG_TAG = Station.class.getSimpleName();
@@ -164,19 +166,28 @@ public final class Station implements Comparable<Station> {
     }
 
 
-    /* Compares two stations */
-    @Override
-    public int compareTo(@NonNull Station otherStation) {
-        // return "1" if name if this station is greater than name of given station
-        return mStationName.compareToIgnoreCase(otherStation.mStationName);
+    // TODO Describe
+    protected Station(Parcel in) {
+        mStationImage = in.readParcelable(Bitmap.class.getClassLoader());
+        mStationImageFile = new File (in.readString());
+        mStationName = in.readString();
+        mStationPlaylistFile = new File (in.readString());
+        mStreamUri = in.readParcelable(Uri.class.getClassLoader());
+        mPlaylistFileContent = in.readString();
+        mStationFetchError = in.readByte() != 0;
     }
 
+    public static final Creator<Station> CREATOR = new Creator<Station>() {
+        @Override
+        public Station createFromParcel(Parcel in) {
+            return new Station(in);
+        }
 
-    /* Custom toString method */
-    @Override
-    public String toString() {
-        return "Station [mStationName=" + mStationName + ", mStationPlaylistFile=\" + mStationPlaylistFile + \", mStreamUri=" + mStreamUri + "]";
-    }
+        @Override
+        public Station[] newArray(int size) {
+            return new Station[size];
+        }
+    };
 
 
     /* Construct string representation of m3u mStationPlaylistFile */
@@ -559,6 +570,37 @@ public final class Station implements Comparable<Station> {
     /* Setter for URL of station */
     public void setStreamUri(Uri newStreamUri) {
         mStreamUri = newStreamUri;
+    }
+
+
+    @Override
+    public int compareTo(@NonNull Station otherStation) {
+        // Compares two stations: returns "1" if name if this station is greater than name of given station
+        return mStationName.compareToIgnoreCase(otherStation.mStationName);
+    }
+
+
+    @Override
+    public String toString() {
+        return "Station [mStationName=" + mStationName + ", mStationPlaylistFile=\" + mStationPlaylistFile + \", mStreamUri=" + mStreamUri + "]";
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(mStationImage, flags);
+        dest.writeString(mStationImageFile.toString());
+        dest.writeString(mStationName);
+        dest.writeString(mStationPlaylistFile.toString());
+        dest.writeParcelable(mStreamUri, flags);
+        dest.writeString(mPlaylistFileContent);
+        dest.writeByte((byte) (mStationFetchError ? 1 : 0));
     }
 
 

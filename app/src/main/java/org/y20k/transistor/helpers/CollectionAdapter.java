@@ -216,6 +216,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
             Intent intent = new Intent(mActivity, PlayerActivity.class);
             intent.setAction(TransistorKeys.ACTION_SHOW_PLAYER);
             intent.putExtra(TransistorKeys.EXTRA_STATION_ID, position);
+            intent.putExtra(TransistorKeys.EXTRA_STATION, mCollection.getStations().get(position));
             mActivity.startActivity(intent);
         }
     }

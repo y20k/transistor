@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 
+import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.TransistorKeys;
 
 
@@ -52,6 +53,14 @@ public final class PlayerActivity extends AppCompatActivity {
                 stationID = 0;
             }
 
+            // get station object from intent
+            Station station;
+            if (intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)) {
+                station = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
+            } else {
+                station = null;
+            }
+
             // get playback action from intent
             boolean startPlayback;
             if (intent.hasExtra(TransistorKeys.EXTRA_PLAYBACK_STATE)) {
@@ -61,6 +70,7 @@ public final class PlayerActivity extends AppCompatActivity {
             }
 
             Bundle args = new Bundle();
+            args.putParcelable(TransistorKeys.ARG_STATION, station);
             args.putInt(TransistorKeys.ARG_STATION_ID, stationID);
             args.putBoolean(TransistorKeys.ARG_PLAYBACK, startPlayback);
 
