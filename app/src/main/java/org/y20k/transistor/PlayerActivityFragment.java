@@ -112,22 +112,15 @@ public final class PlayerActivityFragment extends Fragment {
         // load playback state from preferences
         loadAppState(mActivity);
 
-        // get collection from external storage
-        StorageHelper storageHelper = new StorageHelper(mActivity);
-        mCollection = new Collection(storageHelper.getCollectionDirectory());
-
         Bundle arguments = getArguments();
         // get station id from arguments
         if (arguments != null && arguments.containsKey(TransistorKeys.ARG_STATION_ID)) {
             mStationID = arguments.getInt(TransistorKeys.ARG_STATION_ID, 0);
         }
-
-        // get station object from arguments
-        if (arguments != null && arguments.containsKey(TransistorKeys.ARG_STATION)) {
-            mStation = arguments.getParcelable(TransistorKeys.ARG_STATION);
+        // get collection from arguments
+        if (arguments != null && arguments.containsKey(TransistorKeys.ARG_COLLECTION)) {
+            mCollection = arguments.getParcelable(TransistorKeys.ARG_COLLECTION);
         }
-
-
         // get tablet or phone mode info from arguments
         if (arguments != null && arguments.containsKey(TransistorKeys.ARG_TWO_PANE)) {
             mTwoPane = arguments.getBoolean(TransistorKeys.ARG_TWO_PANE, false);
@@ -135,11 +128,10 @@ public final class PlayerActivityFragment extends Fragment {
             mTwoPane = false;
         }
 
-        // get URL and name for stream
+        // get Station and URL and name for stream
+        mStation = mCollection.getStations().get(mStationID);
         mStreamUri = mStation.getStreamUri().toString();
         mStationName = mStation.getStationName();
-//        mStreamUri = mCollection.getStations().get(mStationID).getStreamUri().toString();
-//        mStationName = mCollection.getStations().get(mStationID).getStationName();
 
         // fragment has options menu
         setHasOptionsMenu(true);
@@ -440,7 +432,7 @@ public final class PlayerActivityFragment extends Fragment {
 
         if (newImage != null) {
             // write image to storage
-            File stationImageFile = mCollection.getStations().get(mStationID).getStationImageFile();
+            File stationImageFile = mStation.getStationImageFile();
             try (FileOutputStream out = new FileOutputStream(stationImageFile)) {
                 newImage.compress(Bitmap.CompressFormat.PNG, 100, out);
             } catch (IOException e) {

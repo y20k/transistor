@@ -15,19 +15,21 @@
 package org.y20k.transistor.core;
 
 import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 
 
 /**
  * Collection class
  */
-public final class Collection {
+public final class Collection implements Parcelable {
 
     /* Define log tag */
     private static final String LOG_TAG = Collection.class.getSimpleName();
@@ -35,7 +37,7 @@ public final class Collection {
 
     /* Main class variables */
     private final File mFolder;
-    private final LinkedList<Station> mStations;
+    private ArrayList<Station> mStations = null;
     private int mStationIndexChanged;
 
 
@@ -63,7 +65,7 @@ public final class Collection {
         }
 
         // create new array list of mStations
-        mStations = new LinkedList<>();
+        mStations = new ArrayList<>();
 
         // create array of Files from mFolder
         File[] listOfFiles = mFolder.listFiles();
@@ -87,7 +89,34 @@ public final class Collection {
         // default value for mStationIndexChanged
         mStationIndexChanged = -1;
 
+        // log creation of object
+        Log.v(LOG_TAG, "Collection created by default constructor");
     }
+
+
+    /* Constructor used by CREATOR */
+    protected Collection(Parcel in) {
+        mFolder = new File(in.readString());
+        mStations = new ArrayList<Station>();
+        in.readList(mStations,getClass().getClassLoader());
+        mStationIndexChanged = in.readInt();
+
+        // log re-creation of object
+        Log.v(LOG_TAG, "Collection re-created from Parcel");
+    }
+
+    /* CREATOR for Collection object used to do parcel related operations */
+    public static final Creator<Collection> CREATOR = new Creator<Collection>() {
+        @Override
+        public Collection createFromParcel(Parcel in) {
+            return new Collection(in);
+        }
+
+        @Override
+        public Collection[] newArray(int size) {
+            return new Collection[size];
+        }
+    };
 
 
     /* add station to collection */
@@ -220,7 +249,7 @@ public final class Collection {
 
 
     /* Getter for mStations */
-    public LinkedList<Station> getStations() {
+    public ArrayList<Station> getStations() {
         return mStations;
     }
 
@@ -266,5 +295,17 @@ public final class Collection {
         }
         Log.v(LOG_TAG, newStation.getStationName() + " has a unique stream URL: " + newStation.getStreamUri());
         return true;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mFolder.toString());
+        dest.writeList(mStations);
+        dest.writeInt(mStationIndexChanged);
     }
 }

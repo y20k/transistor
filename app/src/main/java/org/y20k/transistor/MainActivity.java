@@ -75,7 +75,6 @@ public final class MainActivity extends AppCompatActivity {
         StorageHelper storageHelper = new StorageHelper(this);
         mFolder = storageHelper.getCollectionDirectory();
 
-
         // if player_container is present two-pane layout has been loaded
         mContainer = findViewById(R.id.player_container);
 
@@ -91,6 +90,7 @@ public final class MainActivity extends AppCompatActivity {
 
         // get intent
         Intent intent = getIntent();
+        intent.putExtra(TransistorKeys.EXTRA_COLLECTION, mCollection);
 
         // prepare bundle
         Bundle playerArgs = new Bundle();
@@ -130,6 +130,7 @@ public final class MainActivity extends AppCompatActivity {
             if (mTwoPane) {
                 // prepare args for player fragment
                 playerArgs.putInt(TransistorKeys.ARG_STATION_ID, stationID);
+                playerArgs.putParcelable(TransistorKeys.ARG_COLLECTION, mCollection);
                 playerArgs.putBoolean(TransistorKeys.ARG_PLAYBACK, startPlayback);
                 // notify main activity fragment
                 Intent changeSelectionIntent = new Intent();
@@ -141,6 +142,7 @@ public final class MainActivity extends AppCompatActivity {
                 Intent playerIntent = new Intent(this, PlayerActivity.class);
                 playerIntent.setAction(TransistorKeys.ACTION_SHOW_PLAYER);
                 playerIntent.putExtra(TransistorKeys.EXTRA_STATION_ID, stationID);
+                playerIntent.putExtra(TransistorKeys.EXTRA_COLLECTION, mCollection);
                 playerIntent.putExtra(TransistorKeys.EXTRA_PLAYBACK_STATE, startPlayback);
                 startActivity(playerIntent);
             }
@@ -157,6 +159,9 @@ public final class MainActivity extends AppCompatActivity {
         } else if (mTwoPane) {
             // make room for action call
             mContainer.setVisibility(View.GONE);
+        } else {
+            // hand over collection to fragment
+            intent.putExtra(TransistorKeys.EXTRA_COLLECTION, mCollection);
         }
 
         saveAppState(this);
@@ -174,7 +179,7 @@ public final class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu items for use in the action bar
+        // inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main_actionbar, menu);
         return super.onCreateOptionsMenu(menu);

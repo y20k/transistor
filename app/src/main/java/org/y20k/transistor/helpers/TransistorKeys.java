@@ -35,6 +35,7 @@ public class TransistorKeys {
     public static final String ACTION_TIMER_STOP = "org.y20k.transistor.action.TIMER_STOP";
 
     /* EXTRAS */
+    public static final String EXTRA_COLLECTION = "COLLECTION";
     public static final String EXTRA_COLLECTION_CHANGE = "COLLECTION_CHANGE";
     public static final String EXTRA_INFOSHEET_TITLE = "INFOSHEET_TITLE";
     public static final String EXTRA_INFOSHEET_CONTENT = "INFOSHEET_CONTENT";
@@ -49,6 +50,7 @@ public class TransistorKeys {
     public static final String EXTRA_TIMER_REMAINING = "TIMER_REMAINING";
 
     /* ARGS */
+    public static final String ARG_COLLECTION = "ArgCollection";
     public static final String ARG_STATION = "ArgStation";
     public static final String ARG_STATION_ID = "ArgStationID";
     public static final String ARG_TWO_PANE = "ArgTwoPane";

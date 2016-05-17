@@ -166,7 +166,7 @@ public final class Station implements Comparable<Station>, Parcelable {
     }
 
 
-    // TODO Describe
+    /* Constructor used by CREATOR */
     protected Station(Parcel in) {
         mStationImage = in.readParcelable(Bitmap.class.getClassLoader());
         mStationImageFile = new File (in.readString());
@@ -177,6 +177,8 @@ public final class Station implements Comparable<Station>, Parcelable {
         mStationFetchError = in.readByte() != 0;
     }
 
+
+    /* CREATOR for Collection object used to do parcel related operations */
     public static final Creator<Station> CREATOR = new Creator<Station>() {
         @Override
         public Station createFromParcel(Parcel in) {

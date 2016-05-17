@@ -60,7 +60,7 @@ import org.y20k.transistor.helpers.TransistorKeys;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
@@ -80,8 +80,8 @@ public final class MainActivityFragment extends Fragment {
     private Collection mCollection;
     private CollectionAdapter mCollectionAdapter = null;
     private File mFolder;
-    private LinkedList<String> mStationNames;
-    private LinkedList<Bitmap> mStationImages;
+    private ArrayList<String> mStationNames;
+    private ArrayList<Bitmap> mStationImages;
     private View mRootView;
     private View mActionCallView;
     private RecyclerView mRecyclerView;
@@ -134,8 +134,8 @@ public final class MainActivityFragment extends Fragment {
         setHasOptionsMenu(true);
 
         // create adapter for collection
-        mStationNames = new LinkedList<>();
-        mStationImages = new LinkedList<>();
+        mStationNames = new ArrayList<>();
+        mStationImages = new ArrayList<>();
         mCollectionAdapter = new CollectionAdapter(mActivity, mStationNames, mStationImages);
 
         // initialize broadcast receivers
@@ -272,8 +272,12 @@ public final class MainActivityFragment extends Fragment {
         ImageHelper imageHelper;
 
         // create collection
-        Log.v(LOG_TAG, "Create collection of stations (folder:" + mFolder.toString() + ").");
-        mCollection = new Collection(mFolder);
+        Intent intent = mActivity.getIntent();
+        if (intent.hasExtra(TransistorKeys.EXTRA_COLLECTION)) {
+            mCollection = intent.getParcelableExtra(TransistorKeys.EXTRA_COLLECTION);
+        } else {
+            mCollection = new Collection(mFolder);
+        }
 
         // put stations into collection adapter
         for (Station station : mCollection.getStations()) {
@@ -336,7 +340,7 @@ public final class MainActivityFragment extends Fragment {
             mNewStationUri = intent.getData();
 
             // clear the intent
-            intent.setAction("");
+            // intent.setAction("");
 
             // check for null and type "http"
             if (mNewStationUri != null && mNewStationUri.getScheme().startsWith("http")) {

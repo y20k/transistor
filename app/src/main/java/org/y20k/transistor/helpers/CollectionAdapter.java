@@ -38,7 +38,7 @@ import org.y20k.transistor.PlayerService;
 import org.y20k.transistor.R;
 import org.y20k.transistor.core.Collection;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 
 /**
@@ -51,8 +51,8 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
 
 
     /* Main class variables */
-    private final LinkedList<String> mStationNames;
-    private final LinkedList<Bitmap> mStationImages;
+    private final ArrayList<String> mStationNames;
+    private final ArrayList<Bitmap> mStationImages;
     private final Activity mActivity;
     private final PlayerService mPlayerService;
     private Collection mCollection;
@@ -72,7 +72,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
 
 
     /* Constructor */
-    public CollectionAdapter(Activity activity, LinkedList<String> stationNames,  LinkedList<Bitmap> stationImage) {
+    public CollectionAdapter(Activity activity, ArrayList<String> stationNames,  ArrayList<Bitmap> stationImage) {
         // set main variables
         mActivity = activity;
         mStationNames = stationNames;
@@ -204,6 +204,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
         if (mTwoPane) {
             Bundle args = new Bundle();
             args.putInt(TransistorKeys.ARG_STATION_ID, position);
+            args.putParcelable(TransistorKeys.ARG_COLLECTION, mCollection);
             args.putBoolean(TransistorKeys.ARG_TWO_PANE, mTwoPane);
 
             PlayerActivityFragment playerActivityFragment = new PlayerActivityFragment();
@@ -216,7 +217,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
             Intent intent = new Intent(mActivity, PlayerActivity.class);
             intent.setAction(TransistorKeys.ACTION_SHOW_PLAYER);
             intent.putExtra(TransistorKeys.EXTRA_STATION_ID, position);
-            intent.putExtra(TransistorKeys.EXTRA_STATION, mCollection.getStations().get(position));
+            intent.putExtra(TransistorKeys.EXTRA_COLLECTION, mCollection);
             mActivity.startActivity(intent);
         }
     }

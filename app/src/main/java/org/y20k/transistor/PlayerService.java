@@ -569,7 +569,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     /* TODO finish this method*/
     private MediaMetadataCompat getMetadata(Context context, String metaData) {
 
-        Log.v(LOG_TAG, "!!! " + mStationName);
+        Log.v(LOG_TAG, "!!! Name of Station (getMetadata): " + mStationName); // TODO: remove this
 
         MediaMetadataCompat metadata = new MediaMetadataCompat.Builder()
                 .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, mStationName)
