@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import org.y20k.transistor.R;
+import org.y20k.transistor.core.Collection;
 
 
 /**
@@ -32,11 +33,13 @@ public final class DialogAddStation {
 
     /* Main class variables */
     private final Activity mActivity;
+    private Collection mCollection;
 
 
     /* Constructor */
-    public DialogAddStation(Activity activity) {
+    public DialogAddStation(Activity activity, Collection collection) {
         mActivity = activity;
+        mCollection = collection;
     }
 
 
@@ -62,7 +65,7 @@ public final class DialogAddStation {
                     final String input = inputField.getText().toString();
 
                     // download and add new station
-                    StationFetcher stationFetcher = new StationFetcher(Uri.parse(input.trim()), mActivity);
+                    StationFetcher stationFetcher = new StationFetcher(mActivity, mCollection, Uri.parse(input.trim()));
                     stationFetcher.execute();
                 }
             }

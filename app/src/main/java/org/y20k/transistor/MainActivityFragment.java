@@ -54,7 +54,6 @@ import org.y20k.transistor.helpers.NotificationHelper;
 import org.y20k.transistor.helpers.ShortcutHelper;
 import org.y20k.transistor.helpers.SleepTimerService;
 import org.y20k.transistor.helpers.StationFetcher;
-import org.y20k.transistor.helpers.StorageHelper;
 import org.y20k.transistor.helpers.TransistorKeys;
 
 import java.io.File;
@@ -107,6 +106,9 @@ public final class MainActivityFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // fragment has options menu
+        setHasOptionsMenu(true);
+
         // get activity and application contexts
         mActivity = getActivity();
         mApplication = mActivity.getApplication();
@@ -126,17 +128,16 @@ public final class MainActivityFragment extends Fragment {
         // initialize temporary station image id
         mTempStationImageID = -1;
 
-        // get collection folder from external storage
-        StorageHelper storageHelper = new StorageHelper(mActivity);
-        mFolder = storageHelper.getCollectionDirectory();
-
-        // fragment has options menu
-        setHasOptionsMenu(true);
+        // get collection
+        Intent intent = mActivity.getIntent();
+        if (intent.hasExtra(TransistorKeys.EXTRA_COLLECTION)) {
+            mCollection = intent.getParcelableExtra(TransistorKeys.EXTRA_COLLECTION);
+        }
 
         // create adapter for collection
         mStationNames = new ArrayList<>();
         mStationImages = new ArrayList<>();
-        mCollectionAdapter = new CollectionAdapter(mActivity, mStationNames, mStationImages);
+        mCollectionAdapter = new CollectionAdapter(mActivity, mCollection, mStationNames, mStationImages);
 
         // initialize broadcast receivers
         initializeBroadcastReceivers();
@@ -221,7 +222,7 @@ public final class MainActivityFragment extends Fragment {
             // CASE ADD
             case R.id.menu_add:
 
-                DialogAddStation dialog = new DialogAddStation(mActivity);
+                DialogAddStation dialog = new DialogAddStation(mActivity, mCollection);
                 dialog.show();
                 return true;
 
@@ -270,14 +271,6 @@ public final class MainActivityFragment extends Fragment {
         Bitmap stationImage;
         Bitmap stationImageSmall;
         ImageHelper imageHelper;
-
-        // create collection
-        Intent intent = mActivity.getIntent();
-        if (intent.hasExtra(TransistorKeys.EXTRA_COLLECTION)) {
-            mCollection = intent.getParcelableExtra(TransistorKeys.EXTRA_COLLECTION);
-        } else {
-            mCollection = new Collection(mFolder);
-        }
 
         // put stations into collection adapter
         for (Station station : mCollection.getStations()) {
@@ -340,7 +333,7 @@ public final class MainActivityFragment extends Fragment {
             mNewStationUri = intent.getData();
 
             // clear the intent
-            // intent.setAction("");
+            intent.setAction("");
 
             // check for null and type "http"
             if (mNewStationUri != null && mNewStationUri.getScheme().startsWith("http")) {
@@ -592,13 +585,13 @@ public final class MainActivityFragment extends Fragment {
     /* Fetch new station with given Uri */
     private void fetchNewStation(Uri stationUri) {
         // download and add new station
-        StationFetcher stationFetcher = new StationFetcher(stationUri, mActivity);
+        StationFetcher stationFetcher = new StationFetcher(mActivity, mCollection, stationUri);
         stationFetcher.execute();
 
-        // send local broadcast
-        Intent i = new Intent();
-        i.setAction(TransistorKeys.ACTION_COLLECTION_CHANGED);
-        LocalBroadcastManager.getInstance(mActivity).sendBroadcast(i);
+//        // send local broadcast
+//        Intent i = new Intent();
+//        i.setAction(TransistorKeys.ACTION_COLLECTION_CHANGED);
+//        LocalBroadcastManager.getInstance(mActivity).sendBroadcast(i);
     }
 
 
@@ -724,9 +717,11 @@ public final class MainActivityFragment extends Fragment {
 
             // CASE: station was added
             case TransistorKeys.STATION_ADDED:
-                // refresh collection
+                if (intent.hasExtra(TransistorKeys.EXTRA_COLLECTION)) {
+                    mCollection = intent.getParcelableExtra(TransistorKeys.EXTRA_COLLECTION);
+                }
+                // refresh collection adapter and station list
                 mCollectionAdapter.refresh();
-                // refresh station list
                 refreshStationList();
                 break;
 
@@ -749,7 +744,6 @@ public final class MainActivityFragment extends Fragment {
                 // refresh collection adapter and station list
                 mCollectionAdapter.refresh();
                 refreshStationList();
-
                 break;
 
             // CASE: station was deleted

@@ -120,7 +120,7 @@ public final class NotificationHelper {
             builder.setStyle(style);
 
         } else {
-            Log.v(LOG_TAG, "mSession NOT initialized"); // TODO remove this
+            Log.e(LOG_TAG, "MediaSession not initialized");
         }
 
         // build notification

@@ -14,13 +14,13 @@
 
 package org.y20k.transistor;
 
-import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -43,9 +43,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 import org.y20k.transistor.core.Collection;
+import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.MetadataHelper;
 import org.y20k.transistor.helpers.NotificationHelper;
-import org.y20k.transistor.helpers.StorageHelper;
 import org.y20k.transistor.helpers.TransistorKeys;
 
 import java.io.IOException;
@@ -68,6 +68,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
 
 
     /* Main class variables */
+    private Station mStation;
     private MetadataHelper mMetadataHelper;
     private AudioManager mAudioManager;
     private MediaPlayer mMediaPlayer;
@@ -96,7 +97,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         mMediaPlayer = null;
         mPlayerInstanceCounter = 0;
         if (mSession == null) {
-            mSession = createMediaSession(this, null);
+            mSession = createMediaSession(this);
         }
 
         try {
@@ -115,10 +116,13 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         BroadcastReceiver metadataChangedReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if (intent.hasExtra(TransistorKeys.EXTRA_METADATA)) {
+                if (intent.hasExtra(TransistorKeys.EXTRA_METADATA) && intent.hasExtra(TransistorKeys.EXTRA_STATION)) {
+
+                    Station station = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
+                    String metaData = intent.getStringExtra(TransistorKeys.EXTRA_METADATA);
 
                     // TODO update media session metadata
-                    mSession.setMetadata(getMetadata(context, intent.getStringExtra(TransistorKeys.EXTRA_METADATA)));
+                    mSession.setMetadata(getMetadata(context, station, metaData));
 
                     NotificationHelper.setMediaSession(mSession);
                     NotificationHelper.setStationMetadata(intent.getStringExtra(TransistorKeys.EXTRA_METADATA));
@@ -154,8 +158,9 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
             mPlayback = true;
 
             // get URL of station from intent
-            if (intent.hasExtra(TransistorKeys.EXTRA_STREAM_URI)) {
-                mStreamUri = intent.getStringExtra(TransistorKeys.EXTRA_STREAM_URI);
+            if (intent.hasExtra(TransistorKeys.EXTRA_STATION)) {
+                mStation = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
+                mStreamUri = mStation.getStreamUri().toString();
             }
 
             // set media session active and set playback state
@@ -378,13 +383,11 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
 
 
     /* Method to start the player */
-    public void startActionPlay(Context context, String streamUri, String stationName, int stationID) {
-        Log.v(LOG_TAG, "Starting playback service: " + mStreamUri);
+    public void startActionPlay(Context context, Collection collection, int stationID) {
 
-        Collection collection = new Collection(new StorageHelper((Activity)context).getCollectionDirectory());
-
-        mStreamUri = streamUri;
-        mStationName = stationName;
+        mStation = collection.getStations().get(stationID);
+        mStreamUri = mStation.getStreamUri().toString();
+        mStationName = mStation.getStationName();
         mStationID = stationID;
 
         // acquire WifiLock
@@ -392,21 +395,22 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
 //        mWifiLock.acquire();
 
         if (mSession == null) {
-            mSession = createMediaSession(context, stationName);
+            mSession = createMediaSession(context);
         }
 
         // put up notification
         new NotificationHelper(collection);
-        NotificationHelper.setStationName(stationName);
+        NotificationHelper.setStationName(mStation.getStationName());
         NotificationHelper.setStationID(stationID);
         NotificationHelper.setStationMetadata(null);
         NotificationHelper.setMediaSession(mSession); // mSession is null here !
         NotificationHelper.createNotification(context);
 
         // start player service using intent
+        Log.v(LOG_TAG, "Starting playback service: " + mStation.toString());
         Intent intent = new Intent(context, PlayerService.class);
         intent.setAction(TransistorKeys.ACTION_PLAY);
-        intent.putExtra(TransistorKeys.EXTRA_STREAM_URI, mStreamUri);
+        intent.putExtra(TransistorKeys.EXTRA_STATION, mStation);
         context.startService(intent);
 
     }
@@ -423,6 +427,9 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         Intent intent = new Intent(context, PlayerService.class);
         intent.setAction(TransistorKeys.ACTION_STOP);
         context.startService(intent);
+
+        releaseMediaPlayer();
+
     }
 
 
@@ -438,7 +445,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         mMediaPlayer.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK); // needs android.permission.WAKE_LOCK
 
         try {
-            mMetadataHelper = new MetadataHelper(getApplicationContext(), mStreamUri);
+            mMetadataHelper = new MetadataHelper(getApplicationContext(), mStation);
             mMediaPlayer.setDataSource(mMetadataHelper.getShoutcastProxy());
             // mMediaPlayer.setDataSource(mStreamUri);
             mMediaPlayer.prepareAsync();
@@ -526,21 +533,16 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
 
 
     /* Creates media session */
-    private MediaSessionCompat createMediaSession(Context context, String stationNAme) {
-        // start a new MediaSession
-        // https://www.youtube.com/watch?v=XQwe30cZffg&feature=youtu.be&t=883
-        // https://www.youtube.com/watch?v=G6pFai3ll9E
-        // https://www.youtube.com/watch?v=FBC1FgWe5X4
-        // https://gist.github.com/ianhanniballake/15dce0b233b4f4b23ef8
-
+    private MediaSessionCompat createMediaSession(Context context) {
         // create a media session
         MediaSessionCompat session = new MediaSessionCompat(context, LOG_TAG);
-        session.setPlaybackState(getPlaybackState());
-        session.setCallback(new MediaSessionCallback());
-        session.setMetadata(getMetadata(context, null));
         session.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS |
                 MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
-
+        session.setPlaybackState(getPlaybackState());
+        session.setCallback(new MediaSessionCallback());
+        if (mStation != null) {
+            session.setMetadata(getMetadata(context, mStation, null));
+        }
         setSessionToken(session.getSessionToken());
 
         return session;
@@ -566,21 +568,22 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     }
 
 
-    /* TODO finish this method*/
-    private MediaMetadataCompat getMetadata(Context context, String metaData) {
+    /* Creates the metadata needed for MediaSession */
+    private MediaMetadataCompat getMetadata(Context context, Station station, String metaData) {
+        Bitmap stationImage;
+        if (station.getStationImageFile() != null && station.getStationImageFile().exists()) {
+            // use station image
+            stationImage = BitmapFactory.decodeFile(station.getStationImageFile().toString());
+        } else {
+            stationImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_notesymbol);
+        }
 
-        Log.v(LOG_TAG, "!!! Name of Station (getMetadata): " + mStationName); // TODO: remove this
-
-        MediaMetadataCompat metadata = new MediaMetadataCompat.Builder()
-                .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, mStationName)
+        return new MediaMetadataCompat.Builder()
+                .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, station.getStationName())
                 .putString(MediaMetadataCompat.METADATA_KEY_TITLE, metaData)
-                .putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_notification_large_bg_128dp))
+                .putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, stationImage)
                 .build();
-
-        return metadata;
     }
-
-
 
 
     /* Saves state of playback */

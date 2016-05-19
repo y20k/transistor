@@ -37,6 +37,7 @@ import org.y20k.transistor.PlayerActivityFragment;
 import org.y20k.transistor.PlayerService;
 import org.y20k.transistor.R;
 import org.y20k.transistor.core.Collection;
+import org.y20k.transistor.core.Station;
 
 import java.util.ArrayList;
 
@@ -72,12 +73,12 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
 
 
     /* Constructor */
-    public CollectionAdapter(Activity activity, ArrayList<String> stationNames,  ArrayList<Bitmap> stationImage) {
+    public CollectionAdapter(Activity activity, Collection collection, ArrayList<String> stationNames,  ArrayList<Bitmap> stationImage) {
         // set main variables
         mActivity = activity;
+        mCollection = collection;
         mStationNames = stationNames;
         mStationImages = stationImage;
-        mCollection = null;
         mCollectionChangedListener = null;
         mSelectedView = null;
         mStationIDSelected = 0;
@@ -86,7 +87,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
         mPlayerService = new PlayerService();
 
         // load state
-        // loadAppState(mActivity);
+        loadAppState(mActivity); // TODO necessary?
 
         // broadcast receiver: player service stopped playback
         BroadcastReceiver playbackStoppedReceiver = new BroadcastReceiver() {
@@ -115,7 +116,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     public CollectionAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         // load state
-        // loadAppState(mActivity);
+        // loadAppState(mActivity); // TODO remove ?
 
         // get view
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_collection, parent, false);
@@ -242,9 +243,8 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
             Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_long_press_playback_stopped), Toast.LENGTH_LONG).show();
         } else {
             // start playback service
-            String stationName = mCollection.getStations().get(position).getStationName();
-            String streamUri = mCollection.getStations().get(position).getStreamUri().toString();
-            mPlayerService.startActionPlay(mActivity, streamUri, stationName, position);
+            Station station = mCollection.getStations().get(position);
+            mPlayerService.startActionPlay(mActivity, mCollection, position);
 
             // set playback state
             mStationIDLast = mStationIDCurrent;

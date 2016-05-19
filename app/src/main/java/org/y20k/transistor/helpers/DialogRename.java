@@ -93,6 +93,7 @@ public final class DialogRename {
                     i.putExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, TransistorKeys.STATION_RENAMED);
                     i.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
                     i.putExtra(TransistorKeys.EXTRA_STATION_NEW_NAME, mStationName);
+                    i.putExtra(TransistorKeys.EXTRA_COLLECTION, mCollection);
                     if (stationUriCurrent != null) {
                         i.putExtra(TransistorKeys.EXTRA_STATION_URI_CURRENT, stationUriCurrent);
 

@@ -82,6 +82,7 @@ public final class DialogDelete {
                     i.setAction(TransistorKeys.ACTION_COLLECTION_CHANGED);
                     i.putExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, TransistorKeys.STATION_DELETED);
                     i.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
+                    i.putExtra(TransistorKeys.EXTRA_COLLECTION, mCollection);
                     if (stationUriCurrent != null) {
                         i.putExtra(TransistorKeys.EXTRA_STATION_URI_CURRENT, stationUriCurrent);
 //                        i.putExtra(EXTRA_STATION_OLD_POSITION, mStationID);

@@ -21,6 +21,8 @@ import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import org.y20k.transistor.core.Station;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -43,6 +45,7 @@ public class MetadataHelper {
 
 
     /* Main class variables */
+    private Station mStation;
     private final Context mContext;
     private final String mStreamUri;
     private String mShoutcastProxy;
@@ -51,9 +54,11 @@ public class MetadataHelper {
 
 
     /* Constructor */
-    public MetadataHelper(Context context, String streamUri) {
+    public MetadataHelper(Context context, Station station) {
         mContext = context;
-        mStreamUri = streamUri;
+        mStation = station;
+        mStreamUri = station.getStreamUri().toString();
+        handleMetadataString(station.getStationName());
         createShoutcastProxyConnection();
     }
 
@@ -220,6 +225,7 @@ public class MetadataHelper {
             Intent i = new Intent();
             i.setAction(TransistorKeys.ACTION_METADATA_CHANGED);
             i.putExtra(TransistorKeys.EXTRA_METADATA, metadata);
+            i.putExtra(TransistorKeys.EXTRA_STATION, mStation);
             LocalBroadcastManager.getInstance(mContext).sendBroadcast(i);
 
             // save metadata to shared preferences

@@ -54,7 +54,6 @@ import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.DialogDelete;
 import org.y20k.transistor.helpers.DialogRename;
 import org.y20k.transistor.helpers.ImageHelper;
-import org.y20k.transistor.helpers.StorageHelper;
 import org.y20k.transistor.helpers.TransistorKeys;
 
 import java.io.File;
@@ -112,26 +111,28 @@ public final class PlayerActivityFragment extends Fragment {
         // load playback state from preferences
         loadAppState(mActivity);
 
+        // get data from arguments
         Bundle arguments = getArguments();
-        // get station id from arguments
-        if (arguments != null && arguments.containsKey(TransistorKeys.ARG_STATION_ID)) {
-            mStationID = arguments.getInt(TransistorKeys.ARG_STATION_ID, 0);
+        if (arguments != null) {
+            // get station id from arguments
+            if (arguments.containsKey(TransistorKeys.ARG_STATION_ID)) {
+                mStationID = arguments.getInt(TransistorKeys.ARG_STATION_ID, 0);
+            }
+            // get collection from arguments
+            if (arguments.containsKey(TransistorKeys.ARG_COLLECTION)) {
+                mCollection = arguments.getParcelable(TransistorKeys.ARG_COLLECTION);
+            }
+            // get tablet or phone mode info from arguments
+            if (arguments.containsKey(TransistorKeys.ARG_TWO_PANE)) {
+                mTwoPane = arguments.getBoolean(TransistorKeys.ARG_TWO_PANE, false);
+            } else {
+                mTwoPane = false;
+            }
+            // get station object and its name and Uri
+            mStation = mCollection.getStations().get(mStationID);
+            mStationName = mStation.getStationName();
+            mStreamUri = mStation.getStreamUri().toString();
         }
-        // get collection from arguments
-        if (arguments != null && arguments.containsKey(TransistorKeys.ARG_COLLECTION)) {
-            mCollection = arguments.getParcelable(TransistorKeys.ARG_COLLECTION);
-        }
-        // get tablet or phone mode info from arguments
-        if (arguments != null && arguments.containsKey(TransistorKeys.ARG_TWO_PANE)) {
-            mTwoPane = arguments.getBoolean(TransistorKeys.ARG_TWO_PANE, false);
-        } else {
-            mTwoPane = false;
-        }
-
-        // get Station and URL and name for stream
-        mStation = mCollection.getStations().get(mStationID);
-        mStreamUri = mStation.getStreamUri().toString();
-        mStationName = mStation.getStationName();
 
         // fragment has options menu
         setHasOptionsMenu(true);
@@ -237,8 +238,14 @@ public final class PlayerActivityFragment extends Fragment {
         Bundle arguments = getArguments();
         if (arguments != null && arguments.getBoolean(TransistorKeys.ARG_PLAYBACK)) {
             // check if this station is not already playing
-            if (!mPlayback || mStationIDCurrent != mStationID) {
+            if (mStationIDCurrent == mStationID && mPlayback) {
+                // do nothing
+            } else {
+                // hide metadata
+                mStationMetadata = null;
+                mStationMetadataView.setVisibility(View.GONE);
                 // start playback
+                mPlayback = true;
                 startPlayback();
                 // save state
                 mStationIDLast = mStationIDCurrent;
@@ -300,13 +307,16 @@ public final class PlayerActivityFragment extends Fragment {
 
     /* Starts player service */
     private void startPlayback() {
+//        if (mPlayback) {
+//            mPlayerService.startActionStop(mActivity);
+//        }
         // set playback true
         mPlayback = true;
         // rotate playback button
         changeVisualState(mActivity);
         // start player
         Log.v(LOG_TAG, "Starting player service.");
-        mPlayerService.startActionPlay(mActivity, mStreamUri, mStationName, mStationID);
+        mPlayerService.startActionPlay(mActivity, mCollection, mStationID);
     }
 
 
@@ -498,10 +508,15 @@ public final class PlayerActivityFragment extends Fragment {
             mPlaybackButton.setImageResource(R.drawable.smbl_play);
             // change playback indicator
             mPlaybackIndicator.setBackgroundResource(R.drawable.ic_playback_indicator_stopped_24dp);
-            // reset and hide Metadata
+            // reset metadata
             mStationMetadata = null;
+        }
+
+        if (mStationMetadata == null || mStationMetadata.equals(mStation.getStationName())) {
+            // hide metadata view
             mStationMetadataView.setVisibility(View.GONE);
         }
+
     }
 
 
@@ -589,6 +604,10 @@ public final class PlayerActivityFragment extends Fragment {
                     mStationName = intent.getStringExtra(TransistorKeys.EXTRA_STATION_NEW_NAME);
                     mStationNameView.setText(mStationName);
                 }
+                // get updated collection from intent
+                if (intent.hasExtra(TransistorKeys.EXTRA_COLLECTION)) {
+                    mCollection = intent.getParcelableExtra(TransistorKeys.EXTRA_COLLECTION);
+                }
                 break;
 
             // CASE: station was deleted
@@ -599,10 +618,12 @@ public final class PlayerActivityFragment extends Fragment {
                     startActivity(mainActivityStartIntent);
                     // finish player activity
                     mActivity.finish();
-                } else {
+                } else if (mTwoPane) {
+
                     // get collection from external storage
-                    StorageHelper storageHelper = new StorageHelper(mActivity);
-                    mCollection = new Collection(storageHelper.getCollectionDirectory());
+                    if (intent.hasExtra(TransistorKeys.EXTRA_COLLECTION)) {
+                        mCollection = intent.getParcelableExtra(TransistorKeys.EXTRA_COLLECTION);
+                    }
 
                     int collectionSize = mCollection.getStations().size();
 
@@ -668,10 +689,11 @@ public final class PlayerActivityFragment extends Fragment {
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (mPlayback && intent.hasExtra(TransistorKeys.EXTRA_METADATA)) {
-                    mStationMetadataView.setText(intent.getStringExtra(TransistorKeys.EXTRA_METADATA));
-                    mStationMetadataView.setVisibility(View.VISIBLE);
-
-
+                    String metaData = intent.getStringExtra(TransistorKeys.EXTRA_METADATA);
+                    if (!metaData.equals(mStation.getStationName())) {
+                        mStationMetadataView.setText(metaData);
+                        mStationMetadataView.setVisibility(View.VISIBLE);
+                    }
                 }
             }
         };

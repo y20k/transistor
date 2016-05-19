@@ -51,21 +51,13 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
 
 
     /* Constructor */
-    public StationFetcher(Uri stationUri, Activity activity) {
+    public StationFetcher(Activity activity, Collection collection, Uri stationUri) {
         mActivity = activity;
         mStationUri = stationUri;
         mStationUriScheme = stationUri.getScheme();
-
-        // get collection folder from external storage
-        StorageHelper storageHelper = new StorageHelper(mActivity);
-        mFolder = storageHelper.getCollectionDirectory();
-
-        // set mFolderExists
-        assert mFolder != null;
+        mCollection = collection;
+        mFolder = mCollection.getFolder();
         mFolderExists = mFolder.exists();
-
-        // load collection
-        mCollection = new Collection(mFolder);
 
         // notify user
         if (stationUri != null && mStationUriScheme != null && mStationUriScheme.startsWith("http")) {
@@ -115,6 +107,7 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
                 Intent i = new Intent();
                 i.setAction(TransistorKeys.ACTION_COLLECTION_CHANGED);
                 i.putExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, TransistorKeys.STATION_ADDED);
+                i.putExtra(TransistorKeys.EXTRA_COLLECTION, mCollection);
                 LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(i);
             }
 
