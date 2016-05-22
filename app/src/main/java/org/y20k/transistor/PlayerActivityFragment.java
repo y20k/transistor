@@ -90,7 +90,6 @@ public final class PlayerActivityFragment extends Fragment {
     private boolean mVisibility;
     private Station mStation;
     private Collection mCollection;
-    private PlayerService mPlayerService;
 
 
     /* Constructor (default) */
@@ -104,9 +103,6 @@ public final class PlayerActivityFragment extends Fragment {
 
         // get activity
         mActivity = getActivity();
-
-        // initiate playback service
-        mPlayerService = new PlayerService();
 
         // load playback state from preferences
         loadAppState(mActivity);
@@ -316,7 +312,7 @@ public final class PlayerActivityFragment extends Fragment {
         changeVisualState(mActivity);
         // start player
         Log.v(LOG_TAG, "Starting player service.");
-        mPlayerService.startActionPlay(mActivity, mCollection, mStationID);
+        PlayerService.startActionPlay(mActivity, mCollection, mStationID);
     }
 
 
@@ -330,7 +326,7 @@ public final class PlayerActivityFragment extends Fragment {
         changeVisualState(mActivity);
         // stop player
         Log.v(LOG_TAG, "Stopping player service.");
-        mPlayerService.startActionStop(mActivity);
+        PlayerService.startActionStop(mActivity);
     }
 
 
@@ -371,7 +367,7 @@ public final class PlayerActivityFragment extends Fragment {
             // CASE DELETE
             case R.id.menu_delete:
                 // stop playback
-                mPlayerService.startActionStop(mActivity);
+                PlayerService.startActionStop(mActivity);
                 // construct and run delete dialog
                 DialogDelete dialogDelete = new DialogDelete(mActivity, mCollection, mStationID);
                 dialogDelete.show();
@@ -701,6 +697,5 @@ public final class PlayerActivityFragment extends Fragment {
         LocalBroadcastManager.getInstance(mActivity).registerReceiver(metadataChangedReceiver, metadataChangedIntentFilter);
 
     }
-
 
 }

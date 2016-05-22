@@ -75,8 +75,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     private MediaSessionCompat mSession;
     private MediaControllerCompat mController;
     private String mStreamUri;
-    private String mStationName;
-    private int mStationID;
     private boolean mPlayback;
     private int mPlayerInstanceCounter;
     private HeadphoneUnplugReceiver mHeadphoneUnplugReceiver;
@@ -147,6 +145,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         // checking for empty intent
         if (intent == null) {
             Log.v(LOG_TAG, "Null-Intent received. Stopping self.");
+            stopForeground(true); // Remove notification
             stopSelf();
         }
 
@@ -157,11 +156,21 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
             // set mPlayback true
             mPlayback = true;
 
+            if (mSession == null) {
+                mSession = createMediaSession(this);
+            }
+
             // get URL of station from intent
             if (intent.hasExtra(TransistorKeys.EXTRA_STATION)) {
                 mStation = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
                 mStreamUri = mStation.getStreamUri().toString();
+                NotificationHelper.setStationName(mStation.getStationName());
+                NotificationHelper.setStationID(intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0));
             }
+            // put up notification
+            NotificationHelper.setStationMetadata(null);
+            NotificationHelper.setMediaSession(mSession);
+            NotificationHelper.createNotification(this);
 
             // set media session active and set playback state
             mSession.setPlaybackState(getPlaybackState());
@@ -190,6 +199,11 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
 
             // reset counter
             mPlayerInstanceCounter = 0;
+
+            // Remove notification
+            stopForeground(true);
+
+            releaseMediaPlayer();
         }
 
         // default return value for media playback
@@ -375,49 +389,33 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         // unregister receivers
         this.unregisterReceiver(mHeadphoneUnplugReceiver);
 
-        // retrieve notification system service and cancel notification
-        NotificationManager notificationManager = (NotificationManager) getApplication().getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancel(TransistorKeys.PLAYER_SERVICE_NOTIFICATION_ID);
-
+        // cancel notification
+        stopForeground(true);
     }
 
 
     /* Method to start the player */
-    public void startActionPlay(Context context, Collection collection, int stationID) {
+    public static void startActionPlay(Context context, Collection collection, int stationID) {
 
-        mStation = collection.getStations().get(stationID);
-        mStreamUri = mStation.getStreamUri().toString();
-        mStationName = mStation.getStationName();
-        mStationID = stationID;
+        Station station = collection.getStations().get(stationID);
+        NotificationHelper.initialize(collection);
 
         // acquire WifiLock
 //        mWifiLock = ((WifiManager) getSystemService(Context.WIFI_SERVICE)).createWifiLock(WifiManager.WIFI_MODE_FULL, "mylock");
 //        mWifiLock.acquire();
 
-        if (mSession == null) {
-            mSession = createMediaSession(context);
-        }
-
-        // put up notification
-        new NotificationHelper(collection);
-        NotificationHelper.setStationName(mStation.getStationName());
-        NotificationHelper.setStationID(stationID);
-        NotificationHelper.setStationMetadata(null);
-        NotificationHelper.setMediaSession(mSession); // mSession is null here !
-        NotificationHelper.createNotification(context);
-
         // start player service using intent
-        Log.v(LOG_TAG, "Starting playback service: " + mStation.toString());
+        Log.v(LOG_TAG, "Starting playback service: " + station.toString());
         Intent intent = new Intent(context, PlayerService.class);
         intent.setAction(TransistorKeys.ACTION_PLAY);
-        intent.putExtra(TransistorKeys.EXTRA_STATION, mStation);
+        intent.putExtra(TransistorKeys.EXTRA_STATION, station);
+        intent.putExtra(TransistorKeys.EXTRA_STATION_ID, stationID);
         context.startService(intent);
-
     }
 
 
     /* Method to stop the player */
-    public void startActionStop(Context context) {
+    public static void startActionStop(Context context) {
         Log.v(LOG_TAG, "Stopping playback service.");
 
         // release WifiLock
@@ -427,9 +425,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         Intent intent = new Intent(context, PlayerService.class);
         intent.setAction(TransistorKeys.ACTION_STOP);
         context.startService(intent);
-
-        releaseMediaPlayer();
-
     }
 
 
@@ -517,9 +512,8 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         i.setAction(TransistorKeys.ACTION_PLAYBACK_STOPPED);
         LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(i);
 
-        // retrieve notification system service and cancel notification
-        NotificationManager notificationManager = (NotificationManager) getApplication().getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancel(TransistorKeys.PLAYER_SERVICE_NOTIFICATION_ID);
+        // cancel notification
+        stopForeground(true);
     }
 
 
