@@ -106,17 +106,17 @@
     <string name="infosheet_about_h3_external">Дозвола READ_EXTERNAL_STORAGE</string>
     <string name="infosheet_about_p_external"/>
     <string name="infosheet_about_h3_vibrate">Дозвола VIBRATE</string>
-    <string name="infosheet_about_p_vibrate"/>
+    <string name="infosheet_about_p_vibrate">Тап и држање радио станице ће окинути лагану вибрацију.</string>
     <string name="infosheet_about_h3_wakelock">Дозвола WAKE_LOCK</string>
     <string name="infosheet_about_p_wakelock"/>
 
     <!-- infosheet howto -->
     <string name="infosheet_howto_h1_howto">Како користити Транзистор</string>
-    <string name="infosheet_howto_h2_add"/>
+    <string name="infosheet_howto_h2_add">Како додати нову радио станицу?</string>
     <string name="infosheet_howto_p_add"/>
-    <string name="infosheet_howto_h2_play"/>
-    <string name="infosheet_howto_p_play"/>
-    <string name="infosheet_howto_h2_stop"/>
+    <string name="infosheet_howto_h2_play">Како пустити радио станицу?</string>
+    <string name="infosheet_howto_p_play">Тапните велико Пусти дугме ;).</string>
+    <string name="infosheet_howto_h2_stop">Како зауставити пуштање?</string>
     <string name="infosheet_howto_p_stop"/>
     <string name="infosheet_howto_h2_sleep"/>
     <string name="infosheet_howto_p_sleep"/>
@@ -126,7 +126,7 @@
     <string name="infosheet_howto_p_edit"/>
     <string name="infosheet_howto_h2_storage"/>
     <string name="infosheet_howto_p_storage"/>
-    <string name="infosheet_howto_h2_backup"></string>
+    <string name="infosheet_howto_h2_backup"/>
     <string name="infosheet_howto_p_backup"/>
     <string name="infosheet_howto_h2_settings"/>
     <string name="infosheet_howto_p_settings"/>
