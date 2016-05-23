@@ -127,7 +127,7 @@
     <string name="infosheet_howto_h2_storage">On emmagatzema Transistor les seves emissores?</string>
     <string name="infosheet_howto_p_storage">Transistor no desa la seva llista d\'emissores en una base de dades. En lloc d\'emmagatzemar les emissores en bases de dades, Transistor desa les emissores en fitxers dins del seu emmagatzematge extern. Senti\'s lliure de jugar amb aquests fitxers utilitzant un editor de text. Els fitxers s\'emmagatzemen a /Android/data/org.y20k.transistor/Collection.</string>
     <string name="infosheet_howto_h2_backup">Com puc fer una còpia de seguretat i transferir les meves emissores?</string>
-    <string name="infosheet_howto_p_backup">Transistor és compatible amb la funció de còpia de seguretat d\'Android 6. Les estacions de ràdio sempre es copien al seu compte de Google i es restaura a la reinstal·lació. En els dispositius amb versions anteriors a Android 6 s\'ha de guardar manualment la carpeta \"Collection\" per poder fer una restauració.</string>
+    <string name="infosheet_howto_p_backup">Transistor és compatible amb la funció de còpia de seguretat d\'Android 6. Les estacions de ràdio sempre es copien al seu compte de Google i es restaura a la reinstal·lació. En els dispositius amb versions anteriors a Android 6 s\'ha de guardar manualment la carpeta \"Collection\".</string>
     <string name="infosheet_howto_h2_settings">Per què Transistor no té cap paràmetre?</string>
     <string name="infosheet_howto_p_settings">No hi ha res a ajustar :). Transistor és una aplicació molt simple. És una aplicació senzilla i fàcil d\'utilitzar.</string>
 
