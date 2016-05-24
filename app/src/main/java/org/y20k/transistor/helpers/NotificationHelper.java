@@ -15,7 +15,6 @@
 package org.y20k.transistor.helpers;
 
 import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
@@ -51,10 +50,14 @@ public final class NotificationHelper {
     private static Service mLastUsedService;
     private static Collection mCollection;
 
+
+    /* Initializes the NotificationHelper */
     public static void initialize(Collection collection) {
         mCollection = collection;
     }
 
+
+    /* Updates the notification */
     public static void updateNotification() {
         if (mLastUsedService == null) {
             Log.i(LOG_TAG, "PlayerService not started yet, cannot create notification");
@@ -63,21 +66,22 @@ public final class NotificationHelper {
         createNotification(mLastUsedService);
     }
 
+
     /* Create and put up notification */
-    public static void createNotification(final Service context) {
+    public static void createNotification(final Service service) {
         NotificationCompat.Builder builder;
         Notification notification;
-        NotificationManager notificationManager;
+        // NotificationManager notificationManager;
         String notificationText;
         String notificationTitle;
         // int notificationColor;
 
         // retrieve notification system service
-        notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        // notificationManager = (NotificationManager) service.getSystemService(Context.NOTIFICATION_SERVICE);
 
         // create content of notification
         // notificationColor = ContextCompat.getColor(context, R.color.transistor_grey_dark);
-        notificationTitle = context.getString(R.string.notification_playing) + ": " + mStationName;
+        notificationTitle = service.getString(R.string.notification_playing) + ": " + mStationName;
         if (mStationMetadata != null) {
             notificationText = mStationMetadata;
         } else {
@@ -85,18 +89,18 @@ public final class NotificationHelper {
         }
 
         // explicit intent for notification tap
-        Intent tapIntent = new Intent(context, MainActivity.class);
+        Intent tapIntent = new Intent(service, MainActivity.class);
         tapIntent.setAction(TransistorKeys.ACTION_SHOW_PLAYER);
         tapIntent.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
 
         // explicit intent for notification swipe
-        Intent stopActionIntent = new Intent(context, PlayerService.class);
+        Intent stopActionIntent = new Intent(service, PlayerService.class);
         stopActionIntent.setAction(TransistorKeys.ACTION_STOP);
 
 
         // artificial back stack for started Activity.
         // -> navigating backward from the Activity leads to Home screen.
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(service);
         // backstack: adds back stack for Intent (but not the Intent itself)
         stackBuilder.addParentStack(MainActivity.class);
         // backstack: add explicit intent for notification tap
@@ -106,16 +110,16 @@ public final class NotificationHelper {
         // pending intent wrapper for notification tap
         PendingIntent tapPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
         // pending intent wrapper for notification stop action
-        PendingIntent stopActionPendingIntent = PendingIntent.getService(context, 0, stopActionIntent, 0);
+        PendingIntent stopActionPendingIntent = PendingIntent.getService(service, 0, stopActionIntent, 0);
 
         // construct notification in builder
-        builder = new NotificationCompat.Builder(context);
+        builder = new NotificationCompat.Builder(service);
         builder.setSmallIcon(R.drawable.ic_notification_small_24dp);
-        builder.setLargeIcon(getStationIcon(context, mStationID));
+        builder.setLargeIcon(getStationIcon(service, mStationID));
         builder.setContentTitle(notificationTitle);
         builder.setContentText(notificationText);
         builder.setStyle(new NotificationCompat.BigTextStyle().bigText(notificationText));
-        builder.addAction (R.drawable.ic_stop_white_36dp, context.getString(R.string.notification_stop), stopActionPendingIntent);
+        builder.addAction (R.drawable.ic_stop_white_36dp, service.getString(R.string.notification_stop), stopActionPendingIntent);
         builder.setOngoing(true);
         // builder.setColor(notificationColor);
         builder.setContentIntent(tapPendingIntent);
@@ -136,10 +140,10 @@ public final class NotificationHelper {
         // display notification
         // System will never kill a service which has a foreground notification,
         // but it will kill a service without notification, so you open few other apps and get a notification and no music
-        context.startForeground(TransistorKeys.PLAYER_SERVICE_NOTIFICATION_ID, notification);
+        service.startForeground(TransistorKeys.PLAYER_SERVICE_NOTIFICATION_ID, notification);
 
-        if (mLastUsedService != context) {
-            mLastUsedService = context;
+        if (mLastUsedService != service) {
+            mLastUsedService = service;
         }
     }
 
@@ -174,15 +178,18 @@ public final class NotificationHelper {
         mSession = session;
     }
 
+
     /* Setter for name of station */
     public static void setStationName(String stationName) {
         mStationName = stationName;
     }
 
+
     /* Setter for name of station */
     public static void setStationID(int stationID) {
         mStationID = stationID;
     }
+
 
     /* Setter for metadata of station */
     public static void setStationMetadata(String stationMetadata) {

@@ -18,7 +18,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.Application;
 import android.app.Fragment;
-import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -752,10 +751,7 @@ public final class MainActivityFragment extends Fragment {
                     mPlayback = false;
                     saveAppState(mActivity);
 
-                    PlayerService playerService = new PlayerService();
-                    playerService.startActionStop(mActivity);
-
-                    playerService.stopForeground(true);
+                    PlayerService.startActionStop(mActivity);
 
                 } else if (mPlayback && intent.hasExtra(TransistorKeys.EXTRA_STATION_URI_CURRENT)) {
                     mStationIDCurrent = mCollection.findStationID(intent.getStringExtra(TransistorKeys.EXTRA_STATION_URI_CURRENT));

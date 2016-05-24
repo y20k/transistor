@@ -20,11 +20,10 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.AppCompatDrawableManager;
 
 import org.y20k.transistor.R;
 
@@ -115,7 +114,7 @@ public final class ImageHelper {
     }
 
 
-    /* Composes foreground  bitmap onto background bitmap */
+    /* Composes foreground bitmap onto background bitmap */
     private Bitmap composeImages(Bitmap background, int size) {
 
         // compose output image
@@ -247,12 +246,16 @@ public final class ImageHelper {
 
     /* Return a bitmap for a given resource id of a vector drawable */
     private Bitmap getBitmap(int ressource) {
-        Drawable drawable = AppCompatDrawableManager.get().getDrawable(mContext, ressource);
-        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        drawable.draw(canvas);
-        return bitmap;
+        VectorDrawableCompat drawable = VectorDrawableCompat.create(mContext.getResources(), ressource, null);
+        if (drawable != null) {
+            Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bitmap);
+            drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+            drawable.draw(canvas);
+            return bitmap;
+        } else {
+            return null;
+        }
     }
 
 
