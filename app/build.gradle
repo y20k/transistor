@@ -10,6 +10,7 @@ android {
         targetSdkVersion 23
         versionCode 23
         versionName "2.0.2 (Starman)"
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {

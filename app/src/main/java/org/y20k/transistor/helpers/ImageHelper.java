@@ -20,9 +20,11 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatDrawableManager;
 
 import org.y20k.transistor.R;
 
@@ -35,6 +37,10 @@ import java.io.FileNotFoundException;
  */
 public final class ImageHelper {
 
+    /* Define log tag */
+    private static final String LOG_TAG = ImageHelper.class.getSimpleName();
+
+
     /* Main class variables */
     private static Bitmap mInputImage;
     private final Context mContext;
@@ -42,8 +48,14 @@ public final class ImageHelper {
 
     /* Constructor when given a Bitmap */
     public ImageHelper(Bitmap inputImage, Context context) {
-        mInputImage = inputImage;
         mContext = context;
+
+        if (inputImage != null) {
+            mInputImage = inputImage;
+        } else {
+            // set default station image
+            mInputImage = getBitmap(R.drawable.ic_notesymbol_36dp);
+        }
     }
 
 
@@ -58,7 +70,7 @@ public final class ImageHelper {
     public Bitmap createShortcut(int size) {
 
         // get scaled background bitmap
-        Bitmap background = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_shortcut_bg);
+        Bitmap background = getBitmap(R.drawable.ic_shortcut_bg_48dp);
         background = Bitmap.createScaledBitmap(background, size, size, false);
 
         // compose images
@@ -70,7 +82,7 @@ public final class ImageHelper {
     public Bitmap createStationIcon(int size) {
 
         // get scaled background bitmap
-        Bitmap background = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_notification_large_bg_128dp);
+        Bitmap background = getBitmap(R.drawable.ic_notification_large_bg_128dp);
         background = Bitmap.createScaledBitmap(background, size, size, false);
 
         // compose images
@@ -105,11 +117,6 @@ public final class ImageHelper {
 
     /* Composes foreground  bitmap onto background bitmap */
     private Bitmap composeImages(Bitmap background, int size) {
-
-        if (mInputImage == null) {
-            // set default station image
-            mInputImage = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_notesymbol);
-        }
 
         // compose output image
         Bitmap outputImage = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
@@ -235,6 +242,17 @@ public final class ImageHelper {
             }
         }
         return inSampleSize;
+    }
+
+
+    /* Return a bitmap for a given resource id of a vector drawable */
+    private Bitmap getBitmap(int ressource) {
+        Drawable drawable = AppCompatDrawableManager.get().getDrawable(mContext, ressource);
+        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+        return bitmap;
     }
 
 

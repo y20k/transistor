@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center_vertical"
     android:foreground="?android:attr/selectableItemBackground"
     android:background="@drawable/selector_list_item"
@@ -12,14 +14,14 @@
     android:layout_marginBottom="1px"
     android:minHeight="?android:attr/listPreferredItemHeight"
     android:orientation="horizontal"
-    android:descendantFocusability="blocksDescendants" >
+    android:descendantFocusability="blocksDescendants">
 
     <ImageView
         android:id="@+id/list_item_station_icon"
         android:contentDescription="@string/descr_station_icon"
         android:layout_width="?android:attr/listPreferredItemHeight"
         android:layout_height="?android:attr/listPreferredItemHeight"
-        android:src="@drawable/ic_notesymbol" />
+        app:srcCompat="@drawable/ic_notesymbol_36dp" />
 
     <TextView
         android:id="@+id/list_item_textview"
@@ -40,7 +42,7 @@
         android:contentDescription="@string/descr_playback_indicator_started"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_playback_indicator_small_started_24dp"
+        app:srcCompat="@drawable/ic_playback_indicator_small_started_24dp"
         android:visibility="gone" />
 
     <ImageButton
