@@ -404,7 +404,7 @@ public final class PlayerActivityFragment extends Fragment {
             stationImageSmall = BitmapFactory.decodeFile(mStation.getStationImageFile().toString());
         } else {
             // get default image
-            stationImageSmall = BitmapFactory.decodeResource(getResources(), R.drawable.ic_notesymbol);
+            stationImageSmall = null;
         }
         imageHelper = new ImageHelper(stationImageSmall, mActivity);
 

@@ -575,7 +575,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
             // use station image
             stationImage = BitmapFactory.decodeFile(station.getStationImageFile().toString());
         } else {
-            stationImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_notesymbol);
+            stationImage = null;
         }
 
         return new MediaMetadataCompat.Builder()

@@ -282,8 +282,7 @@ public final class MainActivityFragment extends Fragment {
                 // get image from collection
                 stationImageSmall = BitmapFactory.decodeFile(station.getStationImageFile().toString());
             } else {
-                // get default image
-                stationImageSmall = BitmapFactory.decodeResource(mActivity.getResources(), R.drawable.ic_notesymbol);
+                stationImageSmall = null;
             }
             imageHelper = new ImageHelper(stationImageSmall, mActivity);
             stationImage = imageHelper.createCircularFramedImage(192, R.color.transistor_grey_lighter);
