@@ -734,10 +734,10 @@ public final class MainActivityFragment extends Fragment {
                     saveAppState(mActivity);
 
                     // put up notification
-                    NotificationHelper notificationHelper = new NotificationHelper(mCollection);
-                    notificationHelper.setStationName(mCollection.getStations().get(mStationIDCurrent).getStationName());
-                    notificationHelper.setStationID(mStationIDCurrent);
-                    notificationHelper.createNotification(mActivity);
+                    NotificationHelper.initialize(mCollection);
+                    NotificationHelper.setStationName(mCollection.getStations().get(mStationIDCurrent).getStationName());
+                    NotificationHelper.setStationID(mStationIDCurrent);
+                    NotificationHelper.updateNotification();
                 }
 
                 // refresh collection adapter and station list
@@ -755,8 +755,7 @@ public final class MainActivityFragment extends Fragment {
                     PlayerService playerService = new PlayerService();
                     playerService.startActionStop(mActivity);
 
-                    NotificationManager notificationManager = (NotificationManager) mActivity.getSystemService(Context.NOTIFICATION_SERVICE);
-                    notificationManager.cancel(TransistorKeys.PLAYER_SERVICE_NOTIFICATION_ID);
+                    playerService.stopForeground(true);
 
                 } else if (mPlayback && intent.hasExtra(TransistorKeys.EXTRA_STATION_URI_CURRENT)) {
                     mStationIDCurrent = mCollection.findStationID(intent.getStringExtra(TransistorKeys.EXTRA_STATION_URI_CURRENT));

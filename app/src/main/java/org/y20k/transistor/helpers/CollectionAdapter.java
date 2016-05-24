@@ -55,7 +55,6 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     private final ArrayList<String> mStationNames;
     private final ArrayList<Bitmap> mStationImages;
     private final Activity mActivity;
-    private final PlayerService mPlayerService;
     private Collection mCollection;
     private final CollectionChangedListener mCollectionChangedListener;
     private final View mSelectedView;
@@ -82,9 +81,6 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
         mCollectionChangedListener = null;
         mSelectedView = null;
         mStationIDSelected = 0;
-
-        // initiate player service
-        mPlayerService = new PlayerService();
 
         // load state
         loadAppState(mActivity); // TODO necessary?
@@ -232,7 +228,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
 
         if (mPlayback && position == mStationIDCurrent ) {
             // stop playback service
-            mPlayerService.startActionStop(mActivity);
+            PlayerService.startActionStop(mActivity);
 
             // set playback state
             mStationIDLast = mStationIDCurrent;
@@ -244,7 +240,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
         } else {
             // start playback service
             Station station = mCollection.getStations().get(position);
-            mPlayerService.startActionPlay(mActivity, mCollection, position);
+            PlayerService.startActionPlay(mActivity, mCollection, position);
 
             // set playback state
             mStationIDLast = mStationIDCurrent;

@@ -17,6 +17,7 @@ package org.y20k.transistor.helpers;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -43,21 +44,27 @@ public final class NotificationHelper {
 
 
     /* Main class variables */
-    private static Collection mCollection;
     private static MediaSessionCompat mSession;
     private static String mStationMetadata;
     private static int mStationID;
     private static String mStationName;
+    private static Service mLastUsedService;
+    private static Collection mCollection;
 
-
-    /* Constructor */
-    public NotificationHelper(Collection collection) {
+    public static void initialize(Collection collection) {
         mCollection = collection;
     }
 
+    public static void updateNotification() {
+        if (mLastUsedService == null) {
+            Log.i(LOG_TAG, "PlayerService not started yet, cannot create notification");
+            return;
+        }
+        createNotification(mLastUsedService);
+    }
 
     /* Create and put up notification */
-    public static void createNotification(final Context context) {
+    public static void createNotification(final Service context) {
         NotificationCompat.Builder builder;
         Notification notification;
         NotificationManager notificationManager;
@@ -104,7 +111,7 @@ public final class NotificationHelper {
         // construct notification in builder
         builder = new NotificationCompat.Builder(context);
         builder.setSmallIcon(R.drawable.ic_notification_small_24dp);
-        builder.setLargeIcon(getStationIcon(context));
+        builder.setLargeIcon(getStationIcon(context, mStationID));
         builder.setContentTitle(notificationTitle);
         builder.setContentText(notificationText);
         builder.setStyle(new NotificationCompat.BigTextStyle().bigText(notificationText));
@@ -127,17 +134,23 @@ public final class NotificationHelper {
         notification = builder.build();
 
         // display notification
-        notificationManager.notify(TransistorKeys.PLAYER_SERVICE_NOTIFICATION_ID, notification);
+        // System will never kill a service which has a foreground notification,
+        // but it will kill a service without notification, so you open few other apps and get a notification and no music
+        context.startForeground(TransistorKeys.PLAYER_SERVICE_NOTIFICATION_ID, notification);
 
+        if (mLastUsedService != context) {
+            mLastUsedService = context;
+        }
     }
 
 
     /* Get station image for notification's large icon */
-    private static Bitmap getStationIcon(Context context) {
+    private static Bitmap getStationIcon(Context context, int stationID) {
+        if (mCollection == null) {
+            return null;
+        }
 
-        // get station from collection
-        Station station = mCollection.getStations().get(mStationID);
-
+        Station station = mCollection.getStations().get(stationID);
         // create station image icon
         ImageHelper imageHelper;
         Bitmap stationImage;
@@ -153,7 +166,6 @@ public final class NotificationHelper {
         stationIcon = imageHelper.createStationIcon(512);
 
         return stationIcon;
-
     }
 
 
