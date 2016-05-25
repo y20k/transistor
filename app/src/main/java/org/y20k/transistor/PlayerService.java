@@ -14,7 +14,6 @@
 
 package org.y20k.transistor;
 
-import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -74,6 +73,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     private MediaPlayer mMediaPlayer;
     private MediaSessionCompat mSession;
     private MediaControllerCompat mController;
+    private int mStationID;
     private String mStreamUri;
     private boolean mPlayback;
     private int mPlayerInstanceCounter;
@@ -105,7 +105,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
             e.printStackTrace();
         }
 
-        // Listen for headphone unplug
+        // listen for headphone unplug
         IntentFilter headphoneUnplugIntentFilter = new IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
         mHeadphoneUnplugReceiver = new HeadphoneUnplugReceiver();
         registerReceiver(mHeadphoneUnplugReceiver, headphoneUnplugIntentFilter);
@@ -139,9 +139,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        // listen for media button
-        MediaButtonReceiver.handleIntent(mSession, intent);
-
         // checking for empty intent
         if (intent == null) {
             Log.v(LOG_TAG, "Null-Intent received. Stopping self.");
@@ -153,58 +150,29 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         else if (intent.getAction().equals(TransistorKeys.ACTION_PLAY)) {
             Log.v(LOG_TAG, "Service received command: PLAY");
 
-            // set mPlayback true
-            mPlayback = true;
-
-            if (mSession == null) {
-                mSession = createMediaSession(this);
-            }
-
             // get URL of station from intent
             if (intent.hasExtra(TransistorKeys.EXTRA_STATION)) {
                 mStation = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
                 mStreamUri = mStation.getStreamUri().toString();
-                NotificationHelper.setStationName(mStation.getStationName());
-                NotificationHelper.setStationID(intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0));
             }
-            // put up notification
-            NotificationHelper.setStationMetadata(null);
-            NotificationHelper.setMediaSession(mSession);
-            NotificationHelper.createNotification(this);
+            if (intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)) {
+                mStationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
+            }
 
-            // set media session active and set playback state
-            mSession.setPlaybackState(getPlaybackState());
-            mSession.setActive(true);
-
-            // update controller
+            // update controller - start playback
             mController.getTransportControls().play();
-
-            // increase counter
-            mPlayerInstanceCounter++;
         }
 
         // ACTION STOP
         else if (intent.getAction().equals(TransistorKeys.ACTION_STOP)) {
             Log.v(LOG_TAG, "Service received command: STOP");
 
-            // set mPlayback false
-            mPlayback = false;
-
-            // set media session in-active and set playback state
-            mSession.setPlaybackState(getPlaybackState());
-            mSession.setActive(false);
-
-            // update controller
+            // update controller - stop playback
             mController.getTransportControls().stop();
-
-            // reset counter
-            mPlayerInstanceCounter = 0;
-
-            // Remove notification
-            stopForeground(true);
-
-            releaseMediaPlayer();
         }
+
+        // listen for media button
+        MediaButtonReceiver.handleIntent(mSession, intent);
 
         // default return value for media playback
         return START_STICKY;
@@ -245,12 +213,12 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
                 break;
             // loss of audio focus of unknown duration
             case AudioManager.AUDIOFOCUS_LOSS:
-                finishPlayback();
+                stopPlayback();
                 break;
             // transient loss of audio focus
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
                 if (!mPlayback && mMediaPlayer != null && mMediaPlayer.isPlaying()) {
-                    finishPlayback();
+                    stopPlayback();
                 }
                 else if (mPlayback && mMediaPlayer != null && mMediaPlayer.isPlaying()) {
                     mMediaPlayer.pause();
@@ -428,6 +396,78 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     }
 
 
+    /* Starts playback */
+    private void startPlayback() {
+
+        // save state
+        mPlayback = true;
+        saveAppState();
+
+        // send local broadcast (needed by MainActivityFragment)
+        Intent i = new Intent();
+        i.setAction(TransistorKeys.ACTION_PLAYBACK_STARTED);
+        LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(i);
+
+        // set up MediaSession
+        if (mSession == null) {
+            mSession = createMediaSession(this);
+        }
+        mSession.setPlaybackState(getPlaybackState());
+        mSession.setActive(true);
+
+        // increase counter
+        mPlayerInstanceCounter++;
+
+        // stop running player - request focus and initialize media player
+        if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
+            releaseMediaPlayer();
+        }
+        if (mStreamUri != null && requestFocus()) {
+            initializeMediaPlayer();
+        }
+
+        // put up notification
+        if (mStation != null && mStationID > -1) {
+            NotificationHelper.setStationName(mStation.getStationName());
+            NotificationHelper.setStationID(mStationID);
+        }
+        NotificationHelper.setStationMetadata(null);
+        NotificationHelper.setMediaSession(mSession);
+        NotificationHelper.createNotification(this);
+
+
+
+    }
+
+
+    /* Stops playback */
+    private void stopPlayback() {
+
+        // save state
+        mPlayback = false;
+        saveAppState();
+
+        // send local broadcast (needed by PlayerActivityFragment and MainActivityFragment)
+        Intent i = new Intent();
+        i.setAction(TransistorKeys.ACTION_PLAYBACK_STOPPED);
+        LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(i);
+
+        // set media session in-active and set playback state
+        mSession.setPlaybackState(getPlaybackState());
+        mSession.setActive(false);
+
+        // reset counter
+        mPlayerInstanceCounter = 0;
+
+        // release player
+        releaseMediaPlayer();
+
+        // cancel notification
+        stopForeground(true);
+
+    }
+
+
     /* Set up the media player */
     private void initializeMediaPlayer() {
         mMediaPlayer = new MediaPlayer();
@@ -472,48 +512,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
             // mSession = null;
         }
 
-    }
-
-
-    /* Prepare playback */
-    private void preparePlayback() {
-        // stop running player
-        if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
-            releaseMediaPlayer();
-        }
-
-        // request focus and initialize media player
-        if (mStreamUri != null && requestFocus()) {
-            initializeMediaPlayer();
-        }
-
-        // save state
-        mPlayback = true;
-        saveAppState();
-
-        // send local broadcast (needed by MainActivityFragment)
-        Intent i = new Intent();
-        i.setAction(TransistorKeys.ACTION_PLAYBACK_STARTED);
-        LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(i);
-    }
-
-
-    /* Finish playback */
-    private void finishPlayback() {
-        // release player
-        releaseMediaPlayer();
-
-        // save state
-        mPlayback = false;
-        saveAppState();
-
-        // send local broadcast (needed by PlayerActivityFragment and MainActivityFragment)
-        Intent i = new Intent();
-        i.setAction(TransistorKeys.ACTION_PLAYBACK_STOPPED);
-        LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(i);
-
-        // cancel notification
-        stopForeground(true);
     }
 
 
@@ -600,7 +598,8 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
             if (mPlayback && AudioManager.ACTION_AUDIO_BECOMING_NOISY.equals(intent.getAction())) {
                 Log.v(LOG_TAG, "Headphones unplugged. Stopping playback.");
                 // stop playback
-                finishPlayback();
+                // finishPlayback();
+                startActionStop(context);
                 // notify user
                 Toast.makeText(context, context.getString(R.string.toastalert_headphones_unplugged), Toast.LENGTH_LONG).show();
             }
@@ -618,19 +617,19 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         @Override
         public void onPlay() {
             // start playback
-            preparePlayback();
+            startPlayback();
         }
 
         @Override
         public void onPause() {
             // stop playback on pause signal from Android Wear or headphone button
-            finishPlayback();
+            stopPlayback();
         }
 
         @Override
         public void onStop() {
             // stop playback on stop signal from notification button
-            finishPlayback();
+            stopPlayback();
         }
 
     }

@@ -749,10 +749,8 @@ public final class MainActivityFragment extends Fragment {
                 // keep track of playback state
                 if (mPlayback && intent.hasExtra(TransistorKeys.EXTRA_STATION_ID) && mStationIDCurrent == intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, -1)) {
                     mPlayback = false;
-                    saveAppState(mActivity);
-
                     PlayerService.startActionStop(mActivity);
-
+                    saveAppState(mActivity);
                 } else if (mPlayback && intent.hasExtra(TransistorKeys.EXTRA_STATION_URI_CURRENT)) {
                     mStationIDCurrent = mCollection.findStationID(intent.getStringExtra(TransistorKeys.EXTRA_STATION_URI_CURRENT));
                     saveAppState(mActivity);

@@ -101,6 +101,9 @@ public final class PlayerActivityFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // set fragment visibility
+        mVisibility = false;
+
         // get activity
         mActivity = getActivity();
 
@@ -158,7 +161,6 @@ public final class PlayerActivityFragment extends Fragment {
             mStationImageView.setImageBitmap(stationImage);
         }
 
-
         // add listener to station info view for clipboard copy
         View stationInfoView = mRootView.findViewById(R.id.player_layout_station_info);
         stationInfoView.setOnClickListener(new View.OnClickListener() {
@@ -213,8 +215,6 @@ public final class PlayerActivityFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // setVisualState();
-
         // initialize broadcast receivers
         initializeBroadcastReceivers();
 
@@ -233,6 +233,7 @@ public final class PlayerActivityFragment extends Fragment {
         // check if activity started from shortcut
         Bundle arguments = getArguments();
         if (arguments != null && arguments.getBoolean(TransistorKeys.ARG_PLAYBACK)) {
+            Log.v(LOG_TAG,"!!! arg playback received");
             // check if this station is not already playing
             if (mStationIDCurrent == mStationID && mPlayback) {
                 // do nothing
@@ -243,10 +244,6 @@ public final class PlayerActivityFragment extends Fragment {
                 // start playback
                 mPlayback = true;
                 startPlayback();
-                // save state
-                mStationIDLast = mStationIDCurrent;
-                mStationIDCurrent = mStationID;
-                saveAppState(mActivity);
                 // clear playback state argument
                 getArguments().putBoolean(TransistorKeys.ARG_PLAYBACK, false);
             }
@@ -255,6 +252,7 @@ public final class PlayerActivityFragment extends Fragment {
 
         // set up button symbol and playback indicator
         setVisualState();
+        setupMetadataView();
 
     }
 
@@ -303,13 +301,18 @@ public final class PlayerActivityFragment extends Fragment {
 
     /* Starts player service */
     private void startPlayback() {
-//        if (mPlayback) {
-//            mPlayerService.startActionStop(mActivity);
-//        }
         // set playback true
         mPlayback = true;
+
         // rotate playback button
         changeVisualState(mActivity);
+        setupMetadataView();
+
+        // save state of playback to settings
+        mStationIDLast = mStationIDCurrent;
+        mStationIDCurrent = mStationID;
+        saveAppState(mActivity);
+
         // start player
         Log.v(LOG_TAG, "Starting player service.");
         PlayerService.startActionPlay(mActivity, mCollection, mStationID);
@@ -320,10 +323,16 @@ public final class PlayerActivityFragment extends Fragment {
     private void stopPlayback() {
         // set playback false
         mPlayback = false;
+
         // reset metadata
         mStationMetadata = null;
+
         // rotate playback button
         changeVisualState(mActivity);
+
+        // save state of playback to settings
+        saveAppState(mActivity);
+
         // stop player
         Log.v(LOG_TAG, "Stopping player service.");
         PlayerService.startActionStop(mActivity);
@@ -340,9 +349,6 @@ public final class PlayerActivityFragment extends Fragment {
         else {
             stopPlayback();
         }
-        // update and save currently and last played station
-        setStationState();
-        saveAppState(mActivity);
     }
 
 
@@ -504,15 +510,23 @@ public final class PlayerActivityFragment extends Fragment {
             mPlaybackButton.setImageResource(R.drawable.smbl_play);
             // change playback indicator
             mPlaybackIndicator.setBackgroundResource(R.drawable.ic_playback_indicator_stopped_24dp);
-            // reset metadata
+            // reset metadata and hide metadataview
             mStationMetadata = null;
+            setupMetadataView();
         }
 
+    }
+
+
+    /* Activates or hides the Metadata view */
+    private void setupMetadataView() {
         if (mStationMetadata == null || mStationMetadata.equals(mStation.getStationName())) {
             // hide metadata view
             mStationMetadataView.setVisibility(View.GONE);
+        } else {
+            // activate metadata view
+            mStationMetadataView.setVisibility(View.VISIBLE);
         }
-
     }
 
 
@@ -655,18 +669,49 @@ public final class PlayerActivityFragment extends Fragment {
         BroadcastReceiver playbackStoppedReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if (mPlayback) {
+                loadAppState(context);
+                if (mVisibility && mPlayback) {
                     // set playback false
                     mPlayback = false;
+
+                    // reset metadata
+                    mStationMetadata = null;
+
                     // rotate playback button
                     changeVisualState(context);
+
+                    // save state of playback to settings
+                    Log.v(LOG_TAG, "playbackStoppedReceiver: saving state");
+                    saveAppState(context);
                 }
-                // save state of playback to settings
-                saveAppState(context);
             }
         };
         IntentFilter playbackIntentFilter = new IntentFilter(TransistorKeys.ACTION_PLAYBACK_STOPPED);
         LocalBroadcastManager.getInstance(mActivity).registerReceiver(playbackStoppedReceiver, playbackIntentFilter);
+
+        // RECEIVER: player service started playback
+        BroadcastReceiver playbackStartedReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                loadAppState(context);
+                if (mVisibility && !mPlayback) {
+                    // set playback true
+                    mPlayback = true;
+
+                    // rotate playback button
+                    changeVisualState(context);
+                    setupMetadataView();
+
+                    // save state of playback to settings
+                    mStationIDLast = mStationIDCurrent;
+                    mStationIDCurrent = mStationID;
+                    Log.v(LOG_TAG, "playbackStartedReceiver: saving state");
+                    saveAppState(context);
+                }
+            }
+        };
+        IntentFilter playbackStartedIntentFilter = new IntentFilter(TransistorKeys.ACTION_PLAYBACK_STARTED);
+        LocalBroadcastManager.getInstance(mActivity).registerReceiver(playbackStartedReceiver, playbackStartedIntentFilter);
 
         // RECEIVER: station added, deleted, or changed
         BroadcastReceiver collectionChangedReceiver = new BroadcastReceiver() {
@@ -686,10 +731,8 @@ public final class PlayerActivityFragment extends Fragment {
             public void onReceive(Context context, Intent intent) {
                 if (mPlayback && intent.hasExtra(TransistorKeys.EXTRA_METADATA)) {
                     String metaData = intent.getStringExtra(TransistorKeys.EXTRA_METADATA);
-                    if (!metaData.equals(mStation.getStationName())) {
-                        mStationMetadataView.setText(metaData);
-                        mStationMetadataView.setVisibility(View.VISIBLE);
-                    }
+                    mStationMetadataView.setText(metaData);
+                    setupMetadataView();
                 }
             }
         };

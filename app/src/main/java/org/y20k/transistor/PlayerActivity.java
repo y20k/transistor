@@ -16,6 +16,7 @@ package org.y20k.transistor;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 
@@ -65,9 +66,26 @@ public final class PlayerActivity extends AppCompatActivity {
             boolean startPlayback;
             if (intent.hasExtra(TransistorKeys.EXTRA_PLAYBACK_STATE)) {
                 startPlayback = intent.getBooleanExtra(TransistorKeys.EXTRA_PLAYBACK_STATE, false);
+
+                // Get a support ActionBar corresponding to this toolbar
+                ActionBar ab = getSupportActionBar();
+
+                // Enable the Up button
+                ab.setDisplayHomeAsUpEnabled(true);
+
+//                // artificial back stack.
+//                TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+//                stackBuilder.addParentStack(MainActivity.class);
+//                stackBuilder.addNextIntent(new Intent(this, MainActivity.class));
+
+
             } else {
                 startPlayback = false;
             }
+
+
+
+
 
             // create bundle for player activity fragment
             Bundle args = new Bundle();
@@ -93,6 +111,5 @@ public final class PlayerActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_player_actionbar, menu);
         return super.onCreateOptionsMenu(menu);
     }
-
 
 }

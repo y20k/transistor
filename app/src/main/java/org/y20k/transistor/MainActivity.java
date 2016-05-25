@@ -198,6 +198,12 @@ public final class MainActivity extends AppCompatActivity {
             playerArgs.putInt(TransistorKeys.ARG_STATION_ID, stationID);
             playerArgs.putParcelable(TransistorKeys.ARG_COLLECTION, mCollection);
             playerArgs.putBoolean(TransistorKeys.ARG_PLAYBACK, startPlayback);
+            // show player fragment
+            PlayerActivityFragment playerActivityFragment = new PlayerActivityFragment();
+            playerActivityFragment.setArguments(playerArgs);
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.player_container, playerActivityFragment, TransistorKeys.PLAYERFRAGMENT_TAG)
+                    .commit();
             // notify main activity fragment
             Intent changeSelectionIntent = new Intent();
             changeSelectionIntent.setAction(TransistorKeys.ACTION_CHANGE_VIEW_SELECTION);
@@ -212,6 +218,9 @@ public final class MainActivity extends AppCompatActivity {
             playerIntent.putExtra(TransistorKeys.EXTRA_PLAYBACK_STATE, startPlayback);
             startActivity(playerIntent);
         }
+
+        // remove ACTION_SHOW_PLAYER action from intent
+        getIntent().setAction("");
     }
 
 
