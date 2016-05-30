@@ -73,31 +73,44 @@ public final class DialogRename {
         builder.setPositiveButton(R.string.dialog_button_rename, new DialogInterface.OnClickListener() {
             // listen for click on delete button
             public void onClick(DialogInterface arg0, int arg1) {
-                // get new station name
-                mStationName = inputField.getText().toString();
 
-                // get Uri of currently playing station first
+                // TODO rename station shortcut
+
+                // get ID and Uri of currently playing station
                 SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mActivity);
-                int stationIDCurrent = settings.getInt(TransistorKeys.PREF_STATION_ID_CURRENT, -1);
-                String stationUriCurrent = null;
-                if (stationIDCurrent != -1) {
-                    stationUriCurrent = mCollection.getStations().get(stationIDCurrent).getStreamUri().toString();
+                int stationIDPlaying = settings.getInt(TransistorKeys.PREF_STATION_ID_CURRENTLY_PLAYING, -1);
+                String stationUriPlaying = null;
+                if (stationIDPlaying != -1) {
+                    stationUriPlaying = mCollection.getStations().get(stationIDPlaying).getStreamUri().toString();
                 }
 
+                // set flag if currently playing station is about to be renamed
+                boolean stationCurrentlyPlayingRenamed = false;
+                if (mStationID == stationIDPlaying) {
+                    stationCurrentlyPlayingRenamed = true;
+                }
+
+                // get new station name from text input
+                mStationName = inputField.getText().toString();
+
                 // rename station
+                mStationName = inputField.getText().toString();
                 boolean success = mCollection.rename(mStationID, mStationName);
                 if (success) {
+                    // get updated station id for currently playing station
+                    if (stationUriPlaying != null) {
+                        stationIDPlaying = mCollection.findStationID(stationUriPlaying);
+                    }
                     // send local broadcast
                     Intent i = new Intent();
                     i.setAction(TransistorKeys.ACTION_COLLECTION_CHANGED);
                     i.putExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, TransistorKeys.STATION_RENAMED);
+                    i.putExtra(TransistorKeys.EXTRA_COLLECTION, mCollection);
                     i.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
                     i.putExtra(TransistorKeys.EXTRA_STATION_NEW_NAME, mStationName);
+                    i.putExtra(TransistorKeys.EXTRA_STATION_ID_CURRENTLY_PLAYING, stationIDPlaying);
+                    i.putExtra(TransistorKeys.EXTRA_STATION_CURRENTLY_PLAYING_RENAMED, stationCurrentlyPlayingRenamed);
                     i.putExtra(TransistorKeys.EXTRA_COLLECTION, mCollection);
-                    if (stationUriCurrent != null) {
-                        i.putExtra(TransistorKeys.EXTRA_STATION_URI_CURRENT, stationUriCurrent);
-
-                    }
                     LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(i);
                 } else {
                     // rename operation unsuccessful, notify user
@@ -127,5 +140,3 @@ public final class DialogRename {
     }
 
 }
-
-

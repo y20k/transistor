@@ -242,6 +242,12 @@ public final class MainActivity extends AppCompatActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
 
+                // get collection from intent
+                if (intent.hasExtra(TransistorKeys.EXTRA_COLLECTION)) {
+                    mCollection = intent.getParcelableExtra(TransistorKeys.EXTRA_COLLECTION);
+                }
+
+                // show/hide player layout container
                 if (mTwoPane && mCollection.getStations().isEmpty()) {
                     // make room for action call
                     mContainer.setVisibility(View.GONE);

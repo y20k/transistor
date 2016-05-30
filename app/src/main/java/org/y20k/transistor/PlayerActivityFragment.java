@@ -233,7 +233,6 @@ public final class PlayerActivityFragment extends Fragment {
         // check if activity started from shortcut
         Bundle arguments = getArguments();
         if (arguments != null && arguments.getBoolean(TransistorKeys.ARG_PLAYBACK)) {
-            Log.v(LOG_TAG,"!!! arg playback received");
             // check if this station is not already playing
             if (mStationIDCurrent == mStationID && mPlayback) {
                 // do nothing
@@ -549,7 +548,7 @@ public final class PlayerActivityFragment extends Fragment {
     private void saveAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putInt(TransistorKeys.PREF_STATION_ID_CURRENT, mStationIDCurrent);
+        editor.putInt(TransistorKeys.PREF_STATION_ID_CURRENTLY_PLAYING, mStationIDCurrent);
         editor.putInt(TransistorKeys.PREF_STATION_ID_LAST, mStationIDLast);
         editor.putString(TransistorKeys.PREF_STATION_METADATA, mStationMetadata);
         editor.putBoolean(TransistorKeys.PREF_PLAYBACK, mPlayback);
@@ -561,7 +560,7 @@ public final class PlayerActivityFragment extends Fragment {
     /* Loads app state from preferences */
     private void loadAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-        mStationIDCurrent = settings.getInt(TransistorKeys.PREF_STATION_ID_CURRENT, -1);
+        mStationIDCurrent = settings.getInt(TransistorKeys.PREF_STATION_ID_CURRENTLY_PLAYING, -1);
         mStationIDLast = settings.getInt(TransistorKeys.PREF_STATION_ID_LAST, -1);
         mStationID = settings.getInt(TransistorKeys.PREF_STATION_ID_SELECTED, 0);
         mStationMetadata = settings.getString(TransistorKeys.PREF_STATION_METADATA, null);
@@ -628,6 +627,7 @@ public final class PlayerActivityFragment extends Fragment {
                     startActivity(mainActivityStartIntent);
                     // finish player activity
                     mActivity.finish();
+
                 } else if (mTwoPane) {
 
                     // get collection from external storage
@@ -681,7 +681,6 @@ public final class PlayerActivityFragment extends Fragment {
                     changeVisualState(context);
 
                     // save state of playback to settings
-                    Log.v(LOG_TAG, "playbackStoppedReceiver: saving state");
                     saveAppState(context);
                 }
             }
@@ -705,7 +704,6 @@ public final class PlayerActivityFragment extends Fragment {
                     // save state of playback to settings
                     mStationIDLast = mStationIDCurrent;
                     mStationIDCurrent = mStationID;
-                    Log.v(LOG_TAG, "playbackStartedReceiver: saving state");
                     saveAppState(context);
                 }
             }

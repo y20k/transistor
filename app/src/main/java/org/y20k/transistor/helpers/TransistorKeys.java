@@ -44,7 +44,11 @@ public class TransistorKeys {
     public static final String EXTRA_STATION = "STATION";
     public static final String EXTRA_STATION_ID = "STATION_ID";
     public static final String EXTRA_STATION_NEW_NAME = "STATION_NEW_NAME";
-    public static final String EXTRA_STATION_URI_CURRENT = "STATION_URI_CURRENT";
+    public static final String EXTRA_STATION_URI = "STATION_URI";
+    public static final String EXTRA_STATION_ID_CURRENTLY_PLAYING = "EXTRA_STATION_ID_CURRENTLY_PLAYING";
+    public static final String EXTRA_STATION_URI_CURRENTLY_PLAYING = "STATION_URI_CURRENTLY_PLAYING";
+    public static final String EXTRA_STATION_CURRENTLY_PLAYING_DELETED = "STATION_CURRENTLY_PLAYING_DELETED";
+    public static final String EXTRA_STATION_CURRENTLY_PLAYING_RENAMED = "STATION_CURRENTLY_PLAYING_RENAMED";
     public static final String EXTRA_STREAM_URI = "STREAM_URI";
     public static final String EXTRA_TIMER_DURATION = "TIMER_DURATION";
     public static final String EXTRA_TIMER_REMAINING = "TIMER_REMAINING";
@@ -58,7 +62,7 @@ public class TransistorKeys {
 
     /* PREFS */
     public static final String PREF_PLAYBACK = "prefPlayback";
-    public static final String PREF_STATION_ID_CURRENT = "prefStationIDCurrent";
+    public static final String PREF_STATION_ID_CURRENTLY_PLAYING = "prefStationIDCurrentlyPlaying";
     public static final String PREF_STATION_ID_LAST = "prefStationIDLast";
     public static final String PREF_STATION_ID_SELECTED = "prefStationIDSelected";
     public static final String PREF_STATION_METADATA = "prefStationMetadata";

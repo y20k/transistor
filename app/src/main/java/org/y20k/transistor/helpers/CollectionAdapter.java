@@ -98,14 +98,12 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     }
 
 
-
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
         // load state
         loadAppState(mActivity);
     }
-
 
 
     @Override
@@ -195,6 +193,27 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     }
 
 
+    /* Insert new item to RecyclerView on position */
+    public void add(int position, Station station) {
+        mStationNames.add(position, station.getStationName());
+        mStationImages.add(position, station.getStationImage());
+        notifyItemInserted(position);
+    }
+
+    /* Insert new item to RecyclerView on position */
+    public void change(int position, String stationName) {
+        mStationNames.set(position, stationName);
+        notifyItemChanged(position);
+    }
+
+    /* Remove RecyclerView item containing a specified Data object */
+    public void remove(int stationID) {
+        mStationNames.remove(stationID);
+        mStationImages.remove(stationID);
+        notifyItemRemoved(stationID);
+    }
+
+
     /* Handles click on list item */
     private void handleSingleClick(int position) {
 
@@ -270,7 +289,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     private void loadAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         mTwoPane = settings.getBoolean(TransistorKeys.PREF_TWO_PANE, false);
-        mStationIDCurrent = settings.getInt(TransistorKeys.PREF_STATION_ID_CURRENT, -1);
+        mStationIDCurrent = settings.getInt(TransistorKeys.PREF_STATION_ID_CURRENTLY_PLAYING, -1);
         mStationIDLast = settings.getInt(TransistorKeys.PREF_STATION_ID_LAST, -1);
         mStationIDSelected = settings.getInt(TransistorKeys.PREF_STATION_ID_SELECTED, 0);
         mPlayback = settings.getBoolean(TransistorKeys.PREF_PLAYBACK, false);
@@ -282,7 +301,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     private void saveAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putInt(TransistorKeys.PREF_STATION_ID_CURRENT, mStationIDCurrent);
+        editor.putInt(TransistorKeys.PREF_STATION_ID_CURRENTLY_PLAYING, mStationIDCurrent);
         editor.putInt(TransistorKeys.PREF_STATION_ID_LAST, mStationIDLast);
         editor.putInt(TransistorKeys.PREF_STATION_ID_SELECTED, mStationIDSelected);
         editor.putBoolean(TransistorKeys.PREF_PLAYBACK, mPlayback);

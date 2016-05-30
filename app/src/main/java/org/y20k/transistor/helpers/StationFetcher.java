@@ -16,8 +16,10 @@ package org.y20k.transistor.helpers;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
@@ -97,17 +99,27 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
 
         if (station != null && !station.getStationFetchError() && mFolderExists) {
 
+            // get ID and Uri of currently playing station before adding new station
+            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mActivity);
+            int stationIDPlaying = settings.getInt(TransistorKeys.PREF_STATION_ID_CURRENTLY_PLAYING, -1);
+            String stationUriPlaying = null;
+            if (stationIDPlaying != -1) {
+                stationUriPlaying = mCollection.getStations().get(stationIDPlaying).getStreamUri().toString();
+            }
+
             // add station to collection
             stationAdded = mCollection.add(station);
-
             if (stationAdded) {
-                // get position
-
+                // get updated station id for currently playing station
+                if (stationUriPlaying != null) {
+                    stationIDPlaying = mCollection.findStationID(stationUriPlaying);
+                }
                 // send local broadcast
                 Intent i = new Intent();
                 i.setAction(TransistorKeys.ACTION_COLLECTION_CHANGED);
                 i.putExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, TransistorKeys.STATION_ADDED);
                 i.putExtra(TransistorKeys.EXTRA_COLLECTION, mCollection);
+                i.putExtra(TransistorKeys.EXTRA_STATION_ID_CURRENTLY_PLAYING, stationIDPlaying);
                 LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(i);
             }
 

@@ -44,8 +44,6 @@ public final class StationContextMenu extends DialogFragment {
     }
 
 
-
-
     /* Initializer for main class variables */
     public void initialize(Activity activity, Collection collection, View view, int stationID) {
         mActivity = activity;

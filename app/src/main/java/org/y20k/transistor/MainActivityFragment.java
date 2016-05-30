@@ -47,7 +47,7 @@ import android.widget.Toast;
 import org.y20k.transistor.core.Collection;
 import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.CollectionAdapter;
-import org.y20k.transistor.helpers.DialogAddStation;
+import org.y20k.transistor.helpers.DialogAdd;
 import org.y20k.transistor.helpers.ImageHelper;
 import org.y20k.transistor.helpers.NotificationHelper;
 import org.y20k.transistor.helpers.ShortcutHelper;
@@ -221,7 +221,7 @@ public final class MainActivityFragment extends Fragment {
             // CASE ADD
             case R.id.menu_add:
 
-                DialogAddStation dialog = new DialogAddStation(mActivity, mCollection);
+                DialogAdd dialog = new DialogAdd(mActivity, mCollection);
                 dialog.show();
                 return true;
 
@@ -480,7 +480,7 @@ public final class MainActivityFragment extends Fragment {
         // CASE: A station is playing, Sleep timer is running
         else if (mPlayback) {
             startSleepTimer(duration);
-            Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_timer_duration_increased) + " [+" + getReadableTime(duration) +"]", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_timer_duration_increased) + " [+" + getReadableTime(duration) + "]", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -548,7 +548,7 @@ public final class MainActivityFragment extends Fragment {
 
 
     /* Translates milliseconds into minutes and seconds */
-    private String getReadableTime (long remainingTime) {
+    private String getReadableTime(long remainingTime) {
         return String.format(Locale.getDefault(), "%02d:%02d",
                 TimeUnit.MILLISECONDS.toMinutes(remainingTime),
                 TimeUnit.MILLISECONDS.toSeconds(remainingTime) -
@@ -559,7 +559,7 @@ public final class MainActivityFragment extends Fragment {
     /* Loads app state from preferences */
     private void loadAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-        mStationIDCurrent = settings.getInt(TransistorKeys.PREF_STATION_ID_CURRENT, -1);
+        mStationIDCurrent = settings.getInt(TransistorKeys.PREF_STATION_ID_CURRENTLY_PLAYING, -1);
         mStationIDLast = settings.getInt(TransistorKeys.PREF_STATION_ID_LAST, -1);
         mPlayback = settings.getBoolean(TransistorKeys.PREF_PLAYBACK, false);
         mSleepTimerRunning = settings.getBoolean(TransistorKeys.PREF_TIMER_RUNNING, false);
@@ -571,7 +571,7 @@ public final class MainActivityFragment extends Fragment {
     private void saveAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putInt(TransistorKeys.PREF_STATION_ID_CURRENT, mStationIDCurrent);
+        editor.putInt(TransistorKeys.PREF_STATION_ID_CURRENTLY_PLAYING, mStationIDCurrent);
         editor.putInt(TransistorKeys.PREF_STATION_ID_LAST, mStationIDLast);
         editor.putBoolean(TransistorKeys.PREF_PLAYBACK, mPlayback);
         editor.putBoolean(TransistorKeys.PREF_TIMER_RUNNING, mSleepTimerRunning);
@@ -628,6 +628,7 @@ public final class MainActivityFragment extends Fragment {
             public void onReceive(Context context, Intent intent) {
                 if (intent != null && intent.hasExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE)) {
                     handleCollectionChanges(intent);
+                    // handleCollectionChangesNew(intent); // un-comment to test new animations
                 }
             }
         };
@@ -715,53 +716,164 @@ public final class MainActivityFragment extends Fragment {
 
             // CASE: station was added
             case TransistorKeys.STATION_ADDED:
+                // get updated collection
                 if (intent.hasExtra(TransistorKeys.EXTRA_COLLECTION)) {
                     mCollection = intent.getParcelableExtra(TransistorKeys.EXTRA_COLLECTION);
+                    mCollectionAdapter.setCollection(mCollection);
                 }
+                // get id of currently playing station
+                if (intent.hasExtra(TransistorKeys.EXTRA_STATION_ID_CURRENTLY_PLAYING)) {
+                    mStationIDCurrent = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID_CURRENTLY_PLAYING, -1);
+                }
+
+                // save app state
+                saveAppState(mActivity);
+                
                 // refresh collection adapter and station list
                 mCollectionAdapter.refresh();
                 refreshStationList();
+
                 break;
 
             // CASE: station was renamed
             case TransistorKeys.STATION_RENAMED:
+                // get flag for deletion of currently playing station
+                boolean stationCurrentlyPlayingRenamed = false;
+                if (intent.hasExtra(TransistorKeys.EXTRA_STATION_CURRENTLY_PLAYING_RENAMED)) {
+                    stationCurrentlyPlayingRenamed = intent.getBooleanExtra(TransistorKeys.EXTRA_STATION_CURRENTLY_PLAYING_RENAMED, false);
+                }
+
+                // get id of currently playing station
+                if (intent.hasExtra(TransistorKeys.EXTRA_STATION_ID_CURRENTLY_PLAYING)) {
+                    mStationIDCurrent = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID_CURRENTLY_PLAYING, -1);
+                }
+
+                // get updated collection
+                if (intent.hasExtra(TransistorKeys.EXTRA_COLLECTION)) {
+                    mCollection = intent.getParcelableExtra(TransistorKeys.EXTRA_COLLECTION);
+                    mCollectionAdapter.setCollection(mCollection);
+                }
+
                 // keep track of playback state
-                if (mPlayback && intent.hasExtra(TransistorKeys.EXTRA_STATION_ID) && intent.hasExtra(TransistorKeys.EXTRA_STATION_URI_CURRENT)) {
-
-                    // retrieve and save ID of currently playing station from Uri
-                    mStationIDCurrent = mCollection.findStationID(intent.getStringExtra(TransistorKeys.EXTRA_STATION_URI_CURRENT));
-                    saveAppState(mActivity);
-
+                if (stationCurrentlyPlayingRenamed && intent.hasExtra(TransistorKeys.EXTRA_STATION_NEW_NAME)) {
                     // put up notification
                     NotificationHelper.initialize(mCollection);
-                    NotificationHelper.setStationName(mCollection.getStations().get(mStationIDCurrent).getStationName());
+                    NotificationHelper.setStationName(intent.getStringExtra(TransistorKeys.EXTRA_STATION_NEW_NAME));
                     NotificationHelper.setStationID(mStationIDCurrent);
                     NotificationHelper.updateNotification();
                 }
 
+                // save app state
+                saveAppState(mActivity);
+
                 // refresh collection adapter and station list
                 mCollectionAdapter.refresh();
                 refreshStationList();
+
                 break;
 
             // CASE: station was deleted
             case TransistorKeys.STATION_DELETED:
-                // keep track of playback state
-                if (mPlayback && intent.hasExtra(TransistorKeys.EXTRA_STATION_ID) && mStationIDCurrent == intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, -1)) {
+                // get flag for deletion of currently playing station
+                boolean stationCurrentlyPlayingDeleted = false;
+                if (intent.hasExtra(TransistorKeys.EXTRA_STATION_CURRENTLY_PLAYING_DELETED)) {
+                    stationCurrentlyPlayingDeleted = intent.getBooleanExtra(TransistorKeys.EXTRA_STATION_CURRENTLY_PLAYING_DELETED, false);
+                }
+
+                // get id of currently playing station
+                if (intent.hasExtra(TransistorKeys.EXTRA_STATION_ID_CURRENTLY_PLAYING)) {
+                    mStationIDCurrent = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID_CURRENTLY_PLAYING, -1);
+                }
+
+                // get updated collection
+                if (intent.hasExtra(TransistorKeys.EXTRA_COLLECTION)) {
+                    mCollection = intent.getParcelableExtra(TransistorKeys.EXTRA_COLLECTION);
+                    mCollectionAdapter.setCollection(mCollection);
+                }
+
+                // stop playback if necessary
+                if (stationCurrentlyPlayingDeleted) {
                     mPlayback = false;
                     PlayerService.startActionStop(mActivity);
-                    saveAppState(mActivity);
-                } else if (mPlayback && intent.hasExtra(TransistorKeys.EXTRA_STATION_URI_CURRENT)) {
-                    mStationIDCurrent = mCollection.findStationID(intent.getStringExtra(TransistorKeys.EXTRA_STATION_URI_CURRENT));
-                    saveAppState(mActivity);
                 }
+
+                // save app state
+                saveAppState(mActivity);
 
                 // refresh collection adapter and station list
                 mCollectionAdapter.refresh();
                 refreshStationList();
+
                 break;
 
             // TODO station was renamed in PlayerActivityFragment (playback indicator in list)
+
+        }
+
+
+
+    }
+
+
+    /* Handles adding, deleting and renaming of station (New experimental version - unfinished) */
+    private void handleCollectionChangesNew(Intent intent) {
+
+        // load app state
+        loadAppState(mActivity);
+
+        // get updated collection from intent
+        if (intent.hasExtra(TransistorKeys.EXTRA_COLLECTION)) {
+            mCollection = intent.getParcelableExtra(TransistorKeys.EXTRA_COLLECTION);
+        }
+
+        switch (intent.getIntExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, 1)) {
+
+            // CASE: station was added
+            case TransistorKeys.STATION_ADDED:
+                if (intent.hasExtra(TransistorKeys.EXTRA_STATION_ID) && intent.hasExtra(TransistorKeys.EXTRA_STATION)) {
+                    int stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
+                    Station station = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
+                    mCollectionAdapter.add(stationID, station);
+                    mCollectionAdapter.setCollection(mCollection);
+                    // mCollectionAdapter.refresh();
+                }
+                // mLayoutManager.addView(1);
+                break;
+
+            // CASE: station was renamed
+            case TransistorKeys.STATION_RENAMED:
+
+                if (intent.hasExtra(TransistorKeys.EXTRA_STATION_ID) && intent.hasExtra(TransistorKeys.EXTRA_STATION_NEW_NAME)) {
+                    int stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
+                    String newStationName = intent.getStringExtra(TransistorKeys.EXTRA_STATION_NEW_NAME);
+                    mCollectionAdapter.change(stationID, newStationName);
+                    mCollectionAdapter.setCollection(mCollection);
+                    // mCollectionAdapter.refresh();
+
+                    int stationIndexChanged = mCollection.getStationIndexChanged();
+                    if (stationIndexChanged != -1) {
+                        // position of station has changed
+                        View stationImageView = mLayoutManager.getChildAt(stationID);
+                        mLayoutManager.removeViewAt(stationID);
+                        mLayoutManager.addView(stationImageView, stationIndexChanged);
+                    }
+
+                }
+
+                break;
+
+            // CASE: station was deleted
+            case TransistorKeys.STATION_DELETED:
+
+                if (intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)) {
+                    int stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
+                    mCollectionAdapter.remove(stationID);
+                    mCollectionAdapter.setCollection(mCollection);
+                    mCollectionAdapter.refresh();
+                    mLayoutManager.removeViewAt(stationID);
+                }
+
+                break;
 
         }
 

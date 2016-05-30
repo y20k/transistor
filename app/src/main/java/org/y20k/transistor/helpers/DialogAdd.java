@@ -1,7 +1,7 @@
 /**
- * DialogAddStation.java
- * Implements the DialogAddStation class
- * A DialogAddStation asks the user for a stream URL of a radio station
+ * DialogAdd.java
+ * Implements the DialogAdd class
+ * A DialogAdd asks the user for a stream URL of a radio station
  *
  * This file is part of
  * TRANSISTOR - Radio App for Android
@@ -27,9 +27,9 @@ import org.y20k.transistor.core.Collection;
 
 
 /**
- * DialogAddStation class
+ * DialogAdd class
  */
-public final class DialogAddStation {
+public final class DialogAdd {
 
     /* Main class variables */
     private final Activity mActivity;
@@ -37,7 +37,7 @@ public final class DialogAddStation {
 
 
     /* Constructor */
-    public DialogAddStation(Activity activity, Collection collection) {
+    public DialogAdd(Activity activity, Collection collection) {
         mActivity = activity;
         mCollection = collection;
     }
