@@ -50,7 +50,7 @@
         android:contentDescription="@string/descr_overflow_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_more_vert_black_24dp"
+        app:srcCompat="@drawable/ic_more_vert_black_24dp"
         android:background="@android:color/transparent"
         android:paddingStart="8dp"
         android:paddingTop="4dp"
