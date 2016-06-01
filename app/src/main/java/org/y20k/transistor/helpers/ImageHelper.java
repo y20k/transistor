@@ -193,7 +193,6 @@ public final class ImageHelper {
         try {
             parcelFileDescriptor = mContext.getContentResolver().openFileDescriptor(imageUri, "r");
         } catch (FileNotFoundException e) {
-            // TODO handle error
             e.printStackTrace();
         }
 
@@ -245,8 +244,8 @@ public final class ImageHelper {
 
 
     /* Return a bitmap for a given resource id of a vector drawable */
-    private Bitmap getBitmap(int ressource) {
-        VectorDrawableCompat drawable = VectorDrawableCompat.create(mContext.getResources(), ressource, null);
+    private Bitmap getBitmap(int resource) {
+        VectorDrawableCompat drawable = VectorDrawableCompat.create(mContext.getResources(), resource, null);
         if (drawable != null) {
             Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
             Canvas canvas = new Canvas(bitmap);

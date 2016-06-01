@@ -27,6 +27,7 @@
     <string name="descr_station_metadata">Metadata (Artist / Title) of currently playing radio station</string>
     <string name="descr_station_name_example">示例 FM</string>
     <string name="descr_station_metadata_example">Artist - Title</string>
+    <string name="descr_station_metadata_loading">Loading additional information</string>
     <string name="descr_playback_button">大播放按钮</string>
     <string name="descr_playback_indicator">播放中指示器</string>
     <string name="descr_playback_indicator_started">播放中指示器</string>

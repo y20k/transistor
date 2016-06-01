@@ -251,7 +251,6 @@ public final class PlayerActivityFragment extends Fragment {
 
         // set up button symbol and playback indicator
         setVisualState();
-        setupMetadataView();
 
     }
 
@@ -305,7 +304,6 @@ public final class PlayerActivityFragment extends Fragment {
 
         // rotate playback button
         changeVisualState(mActivity);
-        setupMetadataView();
 
         // save state of playback to settings
         mStationIDLast = mStationIDCurrent;
@@ -315,6 +313,7 @@ public final class PlayerActivityFragment extends Fragment {
         // start player
         Log.v(LOG_TAG, "Starting player service.");
         PlayerService.startActionPlay(mActivity, mCollection, mStationID);
+
     }
 
 
@@ -502,6 +501,8 @@ public final class PlayerActivityFragment extends Fragment {
             mPlaybackButton.setImageResource(R.drawable.smbl_stop);
             // change playback indicator
             mPlaybackIndicator.setBackgroundResource(R.drawable.ic_playback_indicator_started_24dp);
+            // show metadataview
+            mStationMetadataView.setVisibility(View.VISIBLE);
         }
         // playback stopped
         else {
@@ -509,23 +510,11 @@ public final class PlayerActivityFragment extends Fragment {
             mPlaybackButton.setImageResource(R.drawable.smbl_play);
             // change playback indicator
             mPlaybackIndicator.setBackgroundResource(R.drawable.ic_playback_indicator_stopped_24dp);
-            // reset metadata and hide metadataview
-            mStationMetadata = null;
-            setupMetadataView();
-        }
-
-    }
-
-
-    /* Activates or hides the Metadata view */
-    private void setupMetadataView() {
-        if (mStationMetadata == null || mStationMetadata.equals(mStation.getStationName())) {
-            // hide metadata view
+            // hide metadataview
             mStationMetadataView.setVisibility(View.GONE);
-        } else {
-            // activate metadata view
-            mStationMetadataView.setVisibility(View.VISIBLE);
+            // mStationMetadata = null;
         }
+
     }
 
 
@@ -669,16 +658,18 @@ public final class PlayerActivityFragment extends Fragment {
         BroadcastReceiver playbackStoppedReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                loadAppState(context);
+                // loadAppState(context);
                 if (mVisibility && mPlayback) {
                     // set playback false
                     mPlayback = false;
 
                     // reset metadata
-                    mStationMetadata = null;
+                    // mStationMetadata = null;
 
                     // rotate playback button
-                    changeVisualState(context);
+                    if (intent.hasExtra(TransistorKeys.EXTRA_STATION_ID) && mStationID == intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, -1)) {
+                        changeVisualState(context);
+                    }
 
                     // save state of playback to settings
                     saveAppState(context);
@@ -692,14 +683,15 @@ public final class PlayerActivityFragment extends Fragment {
         BroadcastReceiver playbackStartedReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                loadAppState(context);
+                // loadAppState(context);
                 if (mVisibility && !mPlayback) {
                     // set playback true
                     mPlayback = true;
 
                     // rotate playback button
-                    changeVisualState(context);
-                    setupMetadataView();
+                    if (intent.hasExtra(TransistorKeys.EXTRA_STATION_ID) && mStationID == intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, -1)) {
+                        changeVisualState(context);
+                    }
 
                     // save state of playback to settings
                     mStationIDLast = mStationIDCurrent;
@@ -730,7 +722,6 @@ public final class PlayerActivityFragment extends Fragment {
                 if (mPlayback && intent.hasExtra(TransistorKeys.EXTRA_METADATA)) {
                     String metaData = intent.getStringExtra(TransistorKeys.EXTRA_METADATA);
                     mStationMetadataView.setText(metaData);
-                    setupMetadataView();
                 }
             }
         };

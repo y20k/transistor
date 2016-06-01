@@ -97,7 +97,7 @@ public final class Collection implements Parcelable {
     /* Constructor used by CREATOR */
     protected Collection(Parcel in) {
         mFolder = new File(in.readString());
-        mStations = new ArrayList<Station>();
+        mStations = new ArrayList<>();
         in.readList(mStations,getClass().getClassLoader());
         mStationIndexChanged = in.readInt();
 

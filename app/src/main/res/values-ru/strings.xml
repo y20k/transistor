@@ -27,6 +27,7 @@
     <string name="descr_station_metadata">Метаданные (Артист / Заголовок) проигрываемой радиостанции</string>
     <string name="descr_station_name_example">Например FM</string>
     <string name="descr_station_metadata_example">Артист - Заголовок</string>
+    <string name="descr_station_metadata_loading">Loading additional information</string>
     <string name="descr_playback_button">Большая кнопка воспроизведения</string>
     <string name="descr_playback_indicator">Индикатор воспроизведения</string>
     <string name="descr_playback_indicator_started">Индикатор воспроизведения</string>

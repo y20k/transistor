@@ -119,13 +119,13 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
                     Station station = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
                     String metaData = intent.getStringExtra(TransistorKeys.EXTRA_METADATA);
 
-                    // TODO update media session metadata
+                    // update media session metadata
                     mSession.setMetadata(getMetadata(context, station, metaData));
 
+                    // update notification
                     NotificationHelper.setMediaSession(mSession);
                     NotificationHelper.setStationMetadata(intent.getStringExtra(TransistorKeys.EXTRA_METADATA));
                     NotificationHelper.createNotification(PlayerService.this);
-
 
                 }
             }
@@ -406,6 +406,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         // send local broadcast (needed by MainActivityFragment)
         Intent i = new Intent();
         i.setAction(TransistorKeys.ACTION_PLAYBACK_STARTED);
+        i.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
         LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(i);
 
         // set up MediaSession
@@ -450,6 +451,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         // send local broadcast (needed by PlayerActivityFragment and MainActivityFragment)
         Intent i = new Intent();
         i.setAction(TransistorKeys.ACTION_PLAYBACK_STOPPED);
+        i.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
         LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(i);
 
         // set media session in-active and set playback state
@@ -541,7 +543,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     }
 
 
-    /* Creates playback state depending on mPlaback */
+    /* Creates playback state depending on mPlayback */
     private PlaybackStateCompat getPlaybackState() {
 
         if (mPlayback) {
@@ -569,10 +571,16 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         } else {
             stationImage = null;
         }
+        // use name of app as album title
+        String albumTitle = context.getResources().getString(R.string.app_name);
+
+        // log metadata change
+        Log.i(LOG_TAG, "New Metadata available. Artist: " + station.getStationName() + ", Title: " +  metaData + ", Album: " +  albumTitle);
 
         return new MediaMetadataCompat.Builder()
                 .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, station.getStationName())
                 .putString(MediaMetadataCompat.METADATA_KEY_TITLE, metaData)
+                .putString(MediaMetadataCompat.METADATA_KEY_ALBUM, albumTitle)
                 .putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, stationImage)
                 .build();
     }
@@ -588,6 +596,16 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     }
 
 
+    /* Loads app state from preferences */
+    private void loadAppState(Context context) {
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
+        mStationID = settings.getInt(TransistorKeys.PREF_STATION_ID_SELECTED, 0);
+        mPlayback = settings.getBoolean(TransistorKeys.PREF_PLAYBACK, false);
+        Log.v(LOG_TAG, "Loading state.");
+    }
+
+
+
     /**
      * Inner class: Receiver for headphone unplug-signal
      */
@@ -598,7 +616,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
             if (mPlayback && AudioManager.ACTION_AUDIO_BECOMING_NOISY.equals(intent.getAction())) {
                 Log.v(LOG_TAG, "Headphones unplugged. Stopping playback.");
                 // stop playback
-                // finishPlayback();
                 startActionStop(context);
                 // notify user
                 Toast.makeText(context, context.getString(R.string.toastalert_headphones_unplugged), Toast.LENGTH_LONG).show();
@@ -617,6 +634,9 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         @Override
         public void onPlay() {
             // start playback
+            if (mStationID == -1) {
+                loadAppState(getApplicationContext());
+            }
             startPlayback();
         }
 

@@ -27,6 +27,7 @@
     <string name="descr_station_metadata">Метаподаци (извођач/наслов) текуће радио станице</string>
     <string name="descr_station_name_example">Пример ФМ</string>
     <string name="descr_station_metadata_example">Извођач — наслов</string>
+    <string name="descr_station_metadata_loading">Loading additional information</string>
     <string name="descr_playback_button">Дугме за пуштање</string>
     <string name="descr_playback_indicator">Показивач тренутног пуштања</string>
     <string name="descr_playback_indicator_started">Показивач тренутног пуштања</string>

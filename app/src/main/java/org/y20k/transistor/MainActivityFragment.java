@@ -728,7 +728,7 @@ public final class MainActivityFragment extends Fragment {
 
                 // save app state
                 saveAppState(mActivity);
-                
+
                 // refresh collection adapter and station list
                 mCollectionAdapter.refresh();
                 refreshStationList();
@@ -810,12 +810,10 @@ public final class MainActivityFragment extends Fragment {
 
         }
 
-
-
     }
 
 
-    /* Handles adding, deleting and renaming of station (New experimental version - unfinished) */
+    /* Handles adding, deleting and renaming of station (experimental version - unfinished) */
     private void handleCollectionChangesNew(Intent intent) {
 
         // load app state

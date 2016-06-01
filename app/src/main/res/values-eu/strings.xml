@@ -27,6 +27,7 @@
     <string name="descr_station_metadata">Metadata (Artist / Title) of currently playing radio station</string>
     <string name="descr_station_name_example">Adibideko FM</string>
     <string name="descr_station_metadata_example">Artist - Title</string>
+    <string name="descr_station_metadata_loading">Loading additional information</string>
     <string name="descr_playback_button">Erreproduzitu botoi handia</string>
     <string name="descr_playback_indicator">Erreprodukzioa martxan adierazlea</string>
     <string name="descr_playback_indicator_started">Erreprodukzioa martxan adierazlea</string>

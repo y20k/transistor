@@ -80,7 +80,7 @@ public final class NotificationHelper {
         // notificationManager = (NotificationManager) service.getSystemService(Context.NOTIFICATION_SERVICE);
 
         // create content of notification
-        // notificationColor = ContextCompat.getColor(context, R.color.transistor_grey_dark);
+        // notificationColor = ContextCompat.getColor(service, R.color.transistor_red_dark);
         notificationTitle = service.getString(R.string.notification_playing) + ": " + mStationName;
         if (mStationMetadata != null) {
             notificationText = mStationMetadata;

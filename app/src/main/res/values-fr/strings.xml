@@ -27,6 +27,7 @@
     <string name="descr_station_metadata">Métadonnées (Artiste / Titre) de la station radio en lecture</string>
     <string name="descr_station_name_example">Exemple FM</string>
     <string name="descr_station_metadata_example">Artiste - Titre</string>
+    <string name="descr_station_metadata_loading">Loading additional information</string>
     <string name="descr_playback_button">Grand bouton de lecture</string>
     <string name="descr_playback_indicator">Indicateur de lecture en cours</string>
     <string name="descr_playback_indicator_started">Indicateur de lecture en cours</string>

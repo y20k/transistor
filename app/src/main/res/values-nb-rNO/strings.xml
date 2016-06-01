@@ -27,6 +27,7 @@
     <string name="descr_station_metadata">Metadata (Artist / Låt) for radiostasjonen som spilles</string>
     <string name="descr_station_name_example">Eksempel FM</string>
     <string name="descr_station_metadata_example">Artist - Tittel</string>
+    <string name="descr_station_metadata_loading">Loading additional information</string>
     <string name="descr_playback_button">Stor avspillingsknapp</string>
     <string name="descr_playback_indicator">Indikator for avspillingsfremdrift</string>
     <string name="descr_playback_indicator_started">Indikator for avspillingsfremdrift</string>

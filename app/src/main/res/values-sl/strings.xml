@@ -27,6 +27,7 @@
     <string name="descr_station_metadata">Metadata (Artist / Title) of currently playing radio station</string>
     <string name="descr_station_name_example">Primer FM</string>
     <string name="descr_station_metadata_example">Artist - Title</string>
+    <string name="descr_station_metadata_loading">Loading additional information</string>
     <string name="descr_playback_indicator">Kazalnik za predvajanje v teku</string>
     <string name="descr_playback_button">Velik gumb za predvajanje</string>
     <string name="descr_playback_indicator_started">Kazalnik za predvajanje v teku</string>

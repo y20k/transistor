@@ -8,8 +8,8 @@ android {
         applicationId "org.y20k.transistor"
         minSdkVersion 19
         targetSdkVersion 23
-        versionCode 23
-        versionName "2.0.2 (Starman)"
+        versionCode 24
+        versionName "2.0.3 (Starman)"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {

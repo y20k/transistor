@@ -27,6 +27,7 @@
     <string name="descr_station_metadata">現在再生中のラジオ局のメタデータ (アーティスト/タイトル)</string>
     <string name="descr_station_name_example">FM の例</string>
     <string name="descr_station_metadata_example">アーティスト - タイトル</string>
+    <string name="descr_station_metadata_loading">Loading additional information</string>
     <string name="descr_playback_button">大きな再生ボタン</string>
     <string name="descr_playback_indicator">再生中のインジケーター</string>
     <string name="descr_playback_indicator_started">再生中のインジケーター</string>
