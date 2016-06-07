@@ -50,7 +50,7 @@ public final class Station implements Comparable<Station>, Parcelable {
     private static final String LOG_TAG = Station.class.getSimpleName();
 
     /* Supported audio file content types */
-    private static final String[] CONTENT_TYPES_MPEG = {"audio/mpeg"};
+    private static final String[] CONTENT_TYPES_MPEG = {"audio/mpeg", "audio/aacp"};
     private static final String[] CONTENT_TYPES_OGG = {"audio/ogg", "application/ogg"};
 
     /* Supported playlist content types */
