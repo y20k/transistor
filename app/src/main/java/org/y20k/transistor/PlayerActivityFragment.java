@@ -113,13 +113,17 @@ public final class PlayerActivityFragment extends Fragment {
         // get data from arguments
         Bundle arguments = getArguments();
         if (arguments != null) {
+            // get collection from arguments
+            if (arguments.containsKey(TransistorKeys.ARG_COLLECTION)) {
+                mCollection = arguments.getParcelable(TransistorKeys.ARG_COLLECTION);
+            }
             // get station id from arguments
             if (arguments.containsKey(TransistorKeys.ARG_STATION_ID)) {
                 mStationID = arguments.getInt(TransistorKeys.ARG_STATION_ID, 0);
             }
-            // get collection from arguments
-            if (arguments.containsKey(TransistorKeys.ARG_COLLECTION)) {
-                mCollection = arguments.getParcelable(TransistorKeys.ARG_COLLECTION);
+            if (mCollection != null && mStationID > mCollection.getStations().size()) {
+                mStationID = mCollection.getStations().size();
+                Log.e(LOG_TAG, "Error: station has invalid ID.");
             }
             // get tablet or phone mode info from arguments
             if (arguments.containsKey(TransistorKeys.ARG_TWO_PANE)) {
@@ -128,9 +132,14 @@ public final class PlayerActivityFragment extends Fragment {
                 mTwoPane = false;
             }
             // get station object and its name and Uri
-            mStation = mCollection.getStations().get(mStationID);
-            mStationName = mStation.getStationName();
-            mStreamUri = mStation.getStreamUri().toString();
+            if (mCollection != null && mCollection.getStations().size() > 0) {
+                mStation = mCollection.getStations().get(mStationID);
+                mStationName = mStation.getStationName();
+                mStreamUri = mStation.getStreamUri().toString();
+            } else {
+                mStationName = mActivity.getString(R.string.descr_station_name_example);
+                Log.e(LOG_TAG, "Error: collection is empty.");
+            }
         }
 
         // fragment has options menu

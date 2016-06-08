@@ -19,6 +19,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -95,9 +96,11 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
     protected void onPostExecute(Station station) {
 
         boolean stationAdded = false;
+        Bundle fetchResults = station.getStationFetchResults();
 
 
-        if (station != null && !station.getStationFetchError() && mFolderExists) {
+        // station was successfully fetched
+        if (station != null && fetchResults != null && !fetchResults.getBoolean(TransistorKeys.RESULT_FETCH_ERROR) && mFolderExists) {
 
             // get ID and Uri of currently playing station before adding new station
             SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mActivity);
@@ -126,7 +129,8 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
 
         }
 
-        if (station == null || station.getStationFetchError() || !mFolderExists || !stationAdded) {
+        // an error occured
+        if (station == null || (fetchResults != null && fetchResults.getBoolean(TransistorKeys.RESULT_FETCH_ERROR)) || !mFolderExists || !stationAdded) {
 
             String errorTitle;
             String errorMessage;
@@ -136,12 +140,12 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
                 // construct error message for "http"
                 errorTitle = mActivity.getResources().getString(R.string.dialog_error_title_fetch_download);
                 errorMessage = mActivity.getResources().getString(R.string.dialog_error_message_fetch_download);
-                errorDetails = buildDownloadErrorDetails(station);
+                errorDetails = buildDownloadErrorDetails(fetchResults);
             } else if (mStationUriScheme != null && mStationUriScheme.startsWith("file")) {
                 // construct error message for "file"
                 errorTitle = mActivity.getResources().getString(R.string.dialog_error_title_fetch_read);
                 errorMessage = mActivity.getResources().getString(R.string.dialog_error_message_fetch_read);
-                errorDetails = buildReadErrorDetails(station);
+                errorDetails = buildReadErrorDetails(fetchResults);
             } else if (!stationAdded  && mStationUriScheme != null) {
                 // construct error message for write error
                 errorTitle = mActivity.getResources().getString(R.string.dialog_error_title_fetch_write);
@@ -176,7 +180,11 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
 
 
     /* Builds more detailed download error string */
-    private String buildDownloadErrorDetails(Station station) {
+    private String buildDownloadErrorDetails(Bundle fetchResults) {
+
+        String fileContent = fetchResults.getString(TransistorKeys.RESULT_FILE_CONTENT);
+        String playListType = fetchResults.getString(TransistorKeys.RESULT_PLAYLIST_TYPE);
+        String streamType = fetchResults.getString(TransistorKeys.RESULT_STREAM_TYPE);
 
         // construct details string
         StringBuilder sb = new StringBuilder("");
@@ -187,31 +195,41 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
         sb.append(mActivity.getResources().getString(R.string.dialog_error_message_fetch_download_station_url));
         sb.append("\n");
         sb.append(mStationUri);
+
         if ((mStationUri.getLastPathSegment() != null && !mStationUri.getLastPathSegment().contains("m3u")) ||
                 (mStationUri.getLastPathSegment() != null && !mStationUri.getLastPathSegment().contains("pls")) ) {
             sb.append("\n\n");
             sb.append(mActivity.getResources().getString(R.string.dialog_error_message_fetch_general_hint_m3u));
         }
 
-        if (station != null && station.getStationFetchError()) {
-            String remoteFileContent = station.getPlaylistFileContent();
-            if (remoteFileContent != null) {
-                sb.append("\n\n");
-                sb.append(mActivity.getResources().getString(R.string.dialog_error_message_fetch_general_file_content));
-                sb.append("\n");
-                sb.append(remoteFileContent);
-            } else {
-                Log.v(LOG_TAG, "no remoteFileContent");
-            }
-
+        if (playListType != null) {
+            sb.append("\n\n");
+            sb.append(mActivity.getResources().getString(R.string.dialog_error_message_fetch_general_playlist_type));
+            sb.append("\n");
+            sb.append(playListType);
         }
+
+        if (streamType != null) {
+            sb.append("\n\n");
+            sb.append(mActivity.getResources().getString(R.string.dialog_error_message_fetch_general_stream_type));
+            sb.append("\n");
+            sb.append(streamType);
+        }
+
+        if (fileContent != null) {
+            sb.append("\n\n");
+            sb.append(mActivity.getResources().getString(R.string.dialog_error_message_fetch_general_file_content));
+            sb.append("\n");
+            sb.append(fileContent);
+        }
+
         return sb.toString();
 
     }
 
 
     /* Builds more detailed read error string */
-    private String buildReadErrorDetails(Station station) {
+    private String buildReadErrorDetails(Bundle fetchResults) {
 
         // construct details string
         StringBuilder sb = new StringBuilder("");
@@ -227,15 +245,15 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
             sb.append(mActivity.getResources().getString(R.string.dialog_error_message_fetch_general_hint_m3u));
         }
 
-        if (station != null && station.getStationFetchError()) {
-            String remoteFileContent = station.getPlaylistFileContent();
-            if (remoteFileContent != null) {
+        if (fetchResults != null && fetchResults.getBoolean(TransistorKeys.RESULT_FETCH_ERROR)) {
+            String fileContent = fetchResults.getString(TransistorKeys.RESULT_FILE_CONTENT);
+            if (fileContent != null) {
                 sb.append("\n\n");
                 sb.append(mActivity.getResources().getString(R.string.dialog_error_message_fetch_general_file_content));
                 sb.append("\n");
-                sb.append(remoteFileContent);
+                sb.append(fileContent);
             } else {
-                Log.v(LOG_TAG, "no remoteFileContent");
+                Log.v(LOG_TAG, "no content in local file");
             }
 
         }

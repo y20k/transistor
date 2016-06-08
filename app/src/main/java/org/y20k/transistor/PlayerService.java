@@ -236,7 +236,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
 
     @Override
     public void onCompletion(MediaPlayer mp) {
-        Log.v(LOG_TAG, "Resuming playback after completion / signal loss. Player instance count: " + mPlayerInstanceCounter);
+        Log.i(LOG_TAG, "Resuming playback after completion / signal loss. Player instance count: " + mPlayerInstanceCounter);
         mMediaPlayer.reset();
         mPlayerInstanceCounter++;
         initializeMediaPlayer();

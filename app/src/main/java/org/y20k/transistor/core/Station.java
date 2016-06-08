@@ -17,10 +17,13 @@ package org.y20k.transistor.core;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.util.Log;
+
+import org.y20k.transistor.helpers.TransistorKeys;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -68,7 +71,7 @@ public final class Station implements Comparable<Station>, Parcelable {
     private File mStationPlaylistFile;
     private Uri mStreamUri;
     private String mPlaylistFileContent;
-    private boolean mStationFetchError;
+    private Bundle mStationFetchResults;
 
 
     /* Constructor when given file from the Collection folder */
@@ -93,16 +96,23 @@ public final class Station implements Comparable<Station>, Parcelable {
     /* Constructor when given folder and remote location */
     public Station(File folder, URL fileLocation) {
 
+        // create results bundle
+        mStationFetchResults = new Bundle();
+
         // determine content type of remote file
         ContentType contentType = getContentType(fileLocation);
         Log.v(LOG_TAG, "Content type of given file is " + contentType);
+
 
         // content type is raw audio file
         if (isAudioFile(contentType)) {
             // use raw audio file for station data
             mStreamUri = Uri.parse(fileLocation.toString().trim());
             mStationName = getStationName(fileLocation);
-            setStationFetchError(false);
+            // save results
+            mStationFetchResults.putString(TransistorKeys.RESULT_PLAYLIST_TYPE, "none");
+            mStationFetchResults.putString(TransistorKeys.RESULT_STREAM_TYPE, contentType.toString());
+            mStationFetchResults.putBoolean(TransistorKeys.RESULT_FETCH_ERROR, false);
         }
 
         // content type is playlist
@@ -111,18 +121,24 @@ public final class Station implements Comparable<Station>, Parcelable {
             mPlaylistFileContent = downloadPlaylistFile(fileLocation);
 
             // parse result of downloadPlaylistFile
-            if (parse(mPlaylistFileContent) && streamUriIsAudioFile()) {
+            if (parse(mPlaylistFileContent) && mStreamUri != null) {
                 mStationName = getStationName(fileLocation);
-                setStationFetchError(false);
+                // save results
+                mStationFetchResults.putString(TransistorKeys.RESULT_PLAYLIST_TYPE, contentType.toString());
+                mStationFetchResults.putString(TransistorKeys.RESULT_STREAM_TYPE, getContentType(mStreamUri).toString());
+                mStationFetchResults.putString(TransistorKeys.RESULT_FILE_CONTENT, mPlaylistFileContent);
+                mStationFetchResults.putBoolean(TransistorKeys.RESULT_FETCH_ERROR, true);
+
             } else {
-                mPlaylistFileContent = mPlaylistFileContent + "\n[File probably does not contain a valid streaming URL.]";
-                setStationFetchError(true);
+                // save error flag and file content in results
+                mStationFetchResults.putString(TransistorKeys.RESULT_FILE_CONTENT, "\n[File probably does not contain a valid streaming URL.]");
+                mStationFetchResults.putBoolean(TransistorKeys.RESULT_FETCH_ERROR, true);
             }
 
         // content type is none of the above
         } else {
-            // set error flag and return
-            setStationFetchError(true);
+            // save error flag in results and return
+            mStationFetchResults.putBoolean(TransistorKeys.RESULT_FETCH_ERROR, true);
             return;
         }
 
@@ -140,9 +156,11 @@ public final class Station implements Comparable<Station>, Parcelable {
     /* Constructor when given folder and file on sd card */
     public Station(File folder, Uri fileLocation) {
 
-        File localFile = new File(fileLocation.getPath());
+        // create results bundle
+        mStationFetchResults = new Bundle();
 
         // read local file and put result into mPlaylistFileContent
+        File localFile = new File(fileLocation.getPath());
         if (localFile.exists()) {
             mPlaylistFileContent = readPlaylistFile(localFile);
         } else {
@@ -150,11 +168,17 @@ public final class Station implements Comparable<Station>, Parcelable {
         }
 
         // parse the raw content of playlist file (mPlaylistFileContent)
-        if (parse(mPlaylistFileContent) && streamUriIsAudioFile()) {
-            mStationFetchError = false;
+        if (parse(mPlaylistFileContent) &&  mStreamUri != null) {
+            // save results
+            mStationFetchResults.putString(TransistorKeys.RESULT_PLAYLIST_TYPE, "local");
+            mStationFetchResults.putString(TransistorKeys.RESULT_STREAM_TYPE, getContentType(mStreamUri).toString());
+            mStationFetchResults.putString(TransistorKeys.RESULT_FILE_CONTENT, mPlaylistFileContent);
+            mStationFetchResults.putBoolean(TransistorKeys.RESULT_FETCH_ERROR, false);
+
         } else {
-            mPlaylistFileContent = mPlaylistFileContent + "\n[File probably does not contain a valid streaming URL.]";
-            mStationFetchError = true;
+            // save error flag and file content in results
+            mStationFetchResults.putString(TransistorKeys.RESULT_FILE_CONTENT, "\n[File probably does not contain a valid streaming URL.]");
+            mStationFetchResults.putBoolean(TransistorKeys.RESULT_FETCH_ERROR, true);
         }
 
         // set Transistor's playlist file object
@@ -174,7 +198,7 @@ public final class Station implements Comparable<Station>, Parcelable {
         mStationPlaylistFile = new File (in.readString());
         mStreamUri = in.readParcelable(Uri.class.getClassLoader());
         mPlaylistFileContent = in.readString();
-        mStationFetchError = in.readByte() != 0;
+        mStationFetchResults = in.readBundle(Bundle.class.getClassLoader());
     }
 
 
@@ -273,6 +297,23 @@ public final class Station implements Comparable<Station>, Parcelable {
     }
 
 
+    /* Returns content type for given Uri */
+    private ContentType getContentType(Uri streamUri) {
+        if (streamUri == null) {
+            return null;
+        }
+        try {
+            // determine content type of remote file
+            URL streamURL = new URL(streamUri.toString());
+            return getContentType(streamURL);
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
     /* Returns content type for given URL */
     private ContentType getContentType(URL fileLocation) {
         try {
@@ -328,28 +369,6 @@ public final class Station implements Comparable<Station>, Parcelable {
         return false;
     }
 
-
-    /* Checks if stream URI of station is valid audio file */
-    private boolean streamUriIsAudioFile () {
-
-        if (mStreamUri == null) {
-            return false;
-        }
-
-        try {
-            // determine content type of remote file
-            URL streamURL = new URL(mStreamUri.toString());
-            ContentType contentType = getContentType(streamURL);
-            Log.v(LOG_TAG, "Content type of URL within playlist: " + contentType);
-
-            return isAudioFile(contentType);
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-            return false;
-        }
-
-    }
 
 
     /* Determines name of station based on the location URL */
@@ -492,8 +511,8 @@ public final class Station implements Comparable<Station>, Parcelable {
 
 
     /* Getter for download error flag */
-    public boolean getStationFetchError() {
-        return mStationFetchError;
+    public Bundle getStationFetchResults() {
+        return mStationFetchResults;
     }
 
 
@@ -506,12 +525,6 @@ public final class Station implements Comparable<Station>, Parcelable {
     /* Getter for file object representing station image */
     public File getStationImageFile() {
         return mStationImageFile;
-    }
-
-
-    /* Getter for raw content of a playlist file */
-    public String getPlaylistFileContent() {
-        return mPlaylistFileContent;
     }
 
 
@@ -548,12 +561,6 @@ public final class Station implements Comparable<Station>, Parcelable {
             String fileLocation = folder.toString() + "/" + stationNameCleaned + ".png";
             mStationImageFile = new File(fileLocation);
         }
-    }
-
-
-    /* Setter for download error flag */
-    private void setStationFetchError(boolean stationFetchError) {
-        mStationFetchError = stationFetchError;
     }
 
 
@@ -602,7 +609,7 @@ public final class Station implements Comparable<Station>, Parcelable {
         dest.writeString(mStationPlaylistFile.toString());
         dest.writeParcelable(mStreamUri, flags);
         dest.writeString(mPlaylistFileContent);
-        dest.writeByte((byte) (mStationFetchError ? 1 : 0));
+        dest.writeBundle(mStationFetchResults);
     }
 
 

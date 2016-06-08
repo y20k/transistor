@@ -69,6 +69,12 @@ public class TransistorKeys {
     public static final String PREF_TIMER_RUNNING = "prefTimerRunning";
     public static final String PREF_TWO_PANE = "prefTwoPane";
 
+    /* RESULTS */
+    public static final String RESULT_FETCH_ERROR = "FETCH_ERROR";
+    public static final String RESULT_PLAYLIST_TYPE = "PLAYLIST_TYPE";
+    public static final String RESULT_STREAM_TYPE = "STREAM_TYPE";
+    public static final String RESULT_FILE_CONTENT = "FILE_CONTENT";
+
     /* MISC */
     public static final int INFOSHEET_CONTENT_ABOUT = 1;
     public static final int INFOSHEET_CONTENT_HOWTO = 2;
