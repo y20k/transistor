@@ -142,4 +142,6 @@
     https://github.com/y20k/transistor/tree/1e51dd8666194353427ca074f2092b6c20cfacd6/app/src/main/res 
     -->
 
-</resources>
+<string name="dialog_error_message_fetch_general_playlist_type">ファイルの MIME タイプ:</string>
+    <string name="dialog_error_message_fetch_general_stream_type">ストリームの MIME タイプ:</string>
+    </resources>
