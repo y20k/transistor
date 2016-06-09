@@ -86,6 +86,7 @@ public final class PlayerActivityFragment extends Fragment {
     private int mStationIDCurrent;
     private int mStationIDLast;
     private boolean mPlayback;
+    private boolean mStationLoading;
     private boolean mTwoPane;
     private boolean mVisibility;
     private Station mStation;
@@ -103,6 +104,9 @@ public final class PlayerActivityFragment extends Fragment {
 
         // set fragment visibility
         mVisibility = false;
+
+        // set loading status
+        mStationLoading = false;
 
         // get activity
         mActivity = getActivity();
@@ -311,6 +315,9 @@ public final class PlayerActivityFragment extends Fragment {
         // set playback true
         mPlayback = true;
 
+        // set station loading status
+        mStationLoading = true;
+
         // rotate playback button
         changeVisualState(mActivity);
 
@@ -509,8 +516,13 @@ public final class PlayerActivityFragment extends Fragment {
             // change playback button image to stop
             mPlaybackButton.setImageResource(R.drawable.smbl_stop);
             // change playback indicator
-            mPlaybackIndicator.setBackgroundResource(R.drawable.ic_playback_indicator_started_24dp);
+            if (mStationLoading) {
+                mPlaybackIndicator.setBackgroundResource(R.drawable.ic_playback_indicator_loading_24dp);
+            } else {
+                mPlaybackIndicator.setBackgroundResource(R.drawable.ic_playback_indicator_started_24dp);
+            }
             // show metadataview
+            mStationMetadataView.setText("Loading stream ..."); // TODO create string
             mStationMetadataView.setVisibility(View.VISIBLE);
         }
         // playback stopped
@@ -550,6 +562,7 @@ public final class PlayerActivityFragment extends Fragment {
         editor.putInt(TransistorKeys.PREF_STATION_ID_LAST, mStationIDLast);
         editor.putString(TransistorKeys.PREF_STATION_METADATA, mStationMetadata);
         editor.putBoolean(TransistorKeys.PREF_PLAYBACK, mPlayback);
+        editor.putBoolean(TransistorKeys.PREF_STATION_LOADING, mStationLoading);
         editor.apply();
         Log.v(LOG_TAG, "Saving state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + ")");
     }
@@ -563,6 +576,7 @@ public final class PlayerActivityFragment extends Fragment {
         mStationID = settings.getInt(TransistorKeys.PREF_STATION_ID_SELECTED, 0);
         mStationMetadata = settings.getString(TransistorKeys.PREF_STATION_METADATA, null);
         mPlayback = settings.getBoolean(TransistorKeys.PREF_PLAYBACK, false);
+        mStationLoading = settings.getBoolean(TransistorKeys.PREF_STATION_LOADING, false);
         Log.v(LOG_TAG, "Loading state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + " / " + mStationID + ")");
     }
 
@@ -663,8 +677,8 @@ public final class PlayerActivityFragment extends Fragment {
     /* Initializes broadcast receivers for onCreate */
     private void initializeBroadcastReceivers() {
 
-        // RECEIVER: player service stopped playback
-        BroadcastReceiver playbackStoppedReceiver = new BroadcastReceiver() {
+        // RECEIVER: player service is stopping playback
+        BroadcastReceiver playbackStoppingReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 // loadAppState(context);
@@ -685,11 +699,11 @@ public final class PlayerActivityFragment extends Fragment {
                 }
             }
         };
-        IntentFilter playbackIntentFilter = new IntentFilter(TransistorKeys.ACTION_PLAYBACK_STOPPED);
-        LocalBroadcastManager.getInstance(mActivity).registerReceiver(playbackStoppedReceiver, playbackIntentFilter);
+        IntentFilter playbackStoppingIntentFilter = new IntentFilter(TransistorKeys.ACTION_PLAYBACK_STOPPING);
+        LocalBroadcastManager.getInstance(mActivity).registerReceiver(playbackStoppingReceiver, playbackStoppingIntentFilter);
 
-        // RECEIVER: player service started playback
-        BroadcastReceiver playbackStartedReceiver = new BroadcastReceiver() {
+        // RECEIVER: player service is preparing playback
+        BroadcastReceiver playbackStartingReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 // loadAppState(context);
@@ -705,6 +719,28 @@ public final class PlayerActivityFragment extends Fragment {
                     // save state of playback to settings
                     mStationIDLast = mStationIDCurrent;
                     mStationIDCurrent = mStationID;
+                    saveAppState(context);
+
+                }
+            }
+        };
+        IntentFilter playbackStartingIntentFilter = new IntentFilter(TransistorKeys.ACTION_PLAYBACK_STARTING);
+        LocalBroadcastManager.getInstance(mActivity).registerReceiver(playbackStartingReceiver, playbackStartingIntentFilter);
+
+        // RECEIVER: player service has started playback
+        BroadcastReceiver playbackStartedReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (mVisibility && mPlayback) {
+                    // update loading status and playback indicator
+                    mStationLoading = false;
+                    mPlaybackIndicator.setBackgroundResource(R.drawable.ic_playback_indicator_started_24dp);
+                    // set metadata
+                    if (mStationMetadata != null) {
+                        mStationMetadataView.setText(mStationMetadata);
+                    } else {
+                        mStationMetadataView.setText(mStationName);
+                    }
                     saveAppState(context);
                 }
             }

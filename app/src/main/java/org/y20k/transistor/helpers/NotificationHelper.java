@@ -118,6 +118,7 @@ public final class NotificationHelper {
         builder.setLargeIcon(getStationIcon(service, mStationID));
         builder.setContentTitle(notificationTitle);
         builder.setContentText(notificationText);
+        builder.setShowWhen(false);
         builder.setStyle(new NotificationCompat.BigTextStyle().bigText(notificationText));
         builder.addAction (R.drawable.ic_stop_white_36dp, service.getString(R.string.notification_stop), stopActionPendingIntent);
         builder.setOngoing(true);

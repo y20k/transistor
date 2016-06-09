@@ -595,8 +595,8 @@ public final class MainActivityFragment extends Fragment {
 
     /* Initializes broadcast receivers for onCreate */
     private void initializeBroadcastReceivers() {
-        // RECEIVER: player service stopped playback
-        BroadcastReceiver playbackStoppedReceiver = new BroadcastReceiver() {
+        // RECEIVER: player service is stopping playback
+        BroadcastReceiver playbackStoppingReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (mSleepTimerRunning && mSleepTimerService != null) {
@@ -607,11 +607,11 @@ public final class MainActivityFragment extends Fragment {
                 mPlayback = false;
             }
         };
-        IntentFilter playbackStoppedIntentFilter = new IntentFilter(TransistorKeys.ACTION_PLAYBACK_STOPPED);
-        LocalBroadcastManager.getInstance(mApplication).registerReceiver(playbackStoppedReceiver, playbackStoppedIntentFilter);
+        IntentFilter playbackStoppingIntentFilter = new IntentFilter(TransistorKeys.ACTION_PLAYBACK_STOPPING);
+        LocalBroadcastManager.getInstance(mApplication).registerReceiver(playbackStoppingReceiver, playbackStoppingIntentFilter);
 
-        // RECEIVER: player service started playback
-        BroadcastReceiver playbackStartedReceiver = new BroadcastReceiver() {
+        // RECEIVER: player service is preparing playback
+        BroadcastReceiver playbackStartingReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 mCollectionAdapter.refresh();
@@ -619,8 +619,25 @@ public final class MainActivityFragment extends Fragment {
                 mPlayback = true;
             }
         };
-        IntentFilter playbackStartedIntentFilter = new IntentFilter(TransistorKeys.ACTION_PLAYBACK_STARTED);
+        IntentFilter playbackStartingIntentFilter = new IntentFilter(TransistorKeys.ACTION_PLAYBACK_STARTING);
+        LocalBroadcastManager.getInstance(mApplication).registerReceiver(playbackStartingReceiver, playbackStartingIntentFilter);
+
+
+        // RECEIVER: player service has started playback
+        BroadcastReceiver playbackStartedReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                mCollectionAdapter.refresh();
+                refreshStationList();
+                SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putBoolean(TransistorKeys.PREF_STATION_LOADING, false);
+                editor.apply();
+            }
+        };
+        IntentFilter playbackStartedIntentFilter = new IntentFilter(TransistorKeys.ACTION_PLAYBACK_STARTING);
         LocalBroadcastManager.getInstance(mApplication).registerReceiver(playbackStartedReceiver, playbackStartedIntentFilter);
+
 
         // RECEIVER: station added, deleted, or changed
         BroadcastReceiver collectionChangedReceiver = new BroadcastReceiver() {

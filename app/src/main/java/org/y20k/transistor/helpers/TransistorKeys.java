@@ -22,8 +22,9 @@ public class TransistorKeys {
     /* ACTIONS */
     public static final String ACTION_PLAY = "org.y20k.transistor.action.PLAY";
     public static final String ACTION_STOP = "org.y20k.transistor.action.STOP";
+    public static final String ACTION_PLAYBACK_STARTING = "org.y20k.transistor.action.PLAYBACK_STARTING";
     public static final String ACTION_PLAYBACK_STARTED = "org.y20k.transistor.action.PLAYBACK_STARTED";
-    public static final String ACTION_PLAYBACK_STOPPED = "org.y20k.transistor.action.PLAYBACK_STOPPED";
+    public static final String ACTION_PLAYBACK_STOPPING = "org.y20k.transistor.action.PLAYBACK_STOPPING";
     public static final String ACTION_CREATE_SHORTCUT_REQUESTED = "org.y20k.transistor.action.CREATE_SHORTCUT_REQUESTED";
     public static final String ACTION_CHANGE_VIEW_SELECTION = "org.y20k.transistor.action.CHANGE_VIEW_SELECTION";
     public static final String ACTION_COLLECTION_CHANGED = "org.y20k.transistor.action.COLLECTION_CHANGED";
@@ -62,6 +63,7 @@ public class TransistorKeys {
 
     /* PREFS */
     public static final String PREF_PLAYBACK = "prefPlayback";
+    public static final String PREF_STATION_LOADING = "prefStationLoading";
     public static final String PREF_STATION_ID_CURRENTLY_PLAYING = "prefStationIDCurrentlyPlaying";
     public static final String PREF_STATION_ID_LAST = "prefStationIDLast";
     public static final String PREF_STATION_ID_SELECTED = "prefStationIDSelected";

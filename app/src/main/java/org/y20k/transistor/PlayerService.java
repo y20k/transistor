@@ -250,6 +250,11 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
             Log.v(LOG_TAG, "Preparation finished. Starting playback. Player instance count: " + mPlayerInstanceCounter);
             Log.v(LOG_TAG, "Playback: " + mStreamUri);
 
+            // send local broadcast: buffering finished
+            Intent i = new Intent();
+            i.setAction(TransistorKeys.ACTION_PLAYBACK_STARTED);
+            LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(i);
+
             // starting media player
             mp.start();
 
@@ -405,7 +410,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
 
         // send local broadcast (needed by MainActivityFragment)
         Intent i = new Intent();
-        i.setAction(TransistorKeys.ACTION_PLAYBACK_STARTED);
+        i.setAction(TransistorKeys.ACTION_PLAYBACK_STARTING);
         i.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
         LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(i);
 
@@ -450,7 +455,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
 
         // send local broadcast (needed by PlayerActivityFragment and MainActivityFragment)
         Intent i = new Intent();
-        i.setAction(TransistorKeys.ACTION_PLAYBACK_STOPPED);
+        i.setAction(TransistorKeys.ACTION_PLAYBACK_STOPPING);
         i.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
         LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(i);
 
@@ -489,6 +494,8 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
     }
 
 

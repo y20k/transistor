@@ -59,6 +59,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     private final CollectionChangedListener mCollectionChangedListener;
     private final View mSelectedView;
     private boolean mPlayback;
+    private boolean mStationLoading;
     private int mStationIDCurrent;
     private int mStationIDLast;
     private int mStationIDSelected;
@@ -85,15 +86,15 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
         // load state
         loadAppState(mActivity); // TODO necessary?
 
-        // broadcast receiver: player service stopped playback
-        BroadcastReceiver playbackStoppedReceiver = new BroadcastReceiver() {
+        // broadcast receiver: player service is stopping playback
+        BroadcastReceiver playbackStoppingReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 loadAppState(mActivity);
             }
         };
-        IntentFilter playbackStoppedIntentFilter = new IntentFilter(TransistorKeys.ACTION_PLAYBACK_STOPPED);
-        LocalBroadcastManager.getInstance(mActivity.getApplication()).registerReceiver(playbackStoppedReceiver, playbackStoppedIntentFilter);
+        IntentFilter playbackStoppingIntentFilter = new IntentFilter(TransistorKeys.ACTION_PLAYBACK_STOPPING);
+        LocalBroadcastManager.getInstance(mActivity.getApplication()).registerReceiver(playbackStoppingReceiver, playbackStoppingIntentFilter);
 
     }
 
@@ -138,6 +139,11 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
 
         // set playback indicator - in phone view only
         if (!mTwoPane && mPlayback && mStationIDCurrent == position) {
+            if (mStationLoading) {
+                holder.getPlaybackIndicator().setBackgroundResource(R.drawable.ic_playback_indicator_small_loading_24dp);
+            } else {
+                holder.getPlaybackIndicator().setBackgroundResource(R.drawable.ic_playback_indicator_small_started_24dp);
+            }
             holder.getPlaybackIndicator().setVisibility(View.VISIBLE);
         } else {
             holder.getPlaybackIndicator().setVisibility(View.GONE);
@@ -293,7 +299,8 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
         mStationIDLast = settings.getInt(TransistorKeys.PREF_STATION_ID_LAST, -1);
         mStationIDSelected = settings.getInt(TransistorKeys.PREF_STATION_ID_SELECTED, 0);
         mPlayback = settings.getBoolean(TransistorKeys.PREF_PLAYBACK, false);
-        Log.v(LOG_TAG, "Loading state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + ")");
+        mStationLoading = settings.getBoolean(TransistorKeys.PREF_STATION_LOADING, false);
+        Log.v(LOG_TAG, "Loading state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback  + " / " + mStationLoading + ")");
     }
 
 
@@ -305,8 +312,9 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
         editor.putInt(TransistorKeys.PREF_STATION_ID_LAST, mStationIDLast);
         editor.putInt(TransistorKeys.PREF_STATION_ID_SELECTED, mStationIDSelected);
         editor.putBoolean(TransistorKeys.PREF_PLAYBACK, mPlayback);
+        editor.putBoolean(TransistorKeys.PREF_STATION_LOADING, mStationLoading);
         editor.apply();
-        Log.v(LOG_TAG, "Saving state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + " / " + mStationIDSelected +")");
+        Log.v(LOG_TAG, "Saving state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback  + " / " + mStationLoading + " / " + mStationIDSelected +")");
     }
 
 
