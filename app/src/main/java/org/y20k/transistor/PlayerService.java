@@ -76,6 +76,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     private int mStationID;
     private String mStreamUri;
     private boolean mPlayback;
+    private boolean mStationLoading;
     private int mPlayerInstanceCounter;
     private HeadphoneUnplugReceiver mHeadphoneUnplugReceiver;
 //    private WifiManager.WifiLock mWifiLock;
@@ -250,13 +251,18 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
             Log.v(LOG_TAG, "Preparation finished. Starting playback. Player instance count: " + mPlayerInstanceCounter);
             Log.v(LOG_TAG, "Playback: " + mStreamUri);
 
-            // send local broadcast: buffering finished
-            Intent i = new Intent();
-            i.setAction(TransistorKeys.ACTION_PLAYBACK_STARTED);
-            LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(i);
-
             // starting media player
             mp.start();
+
+            // send local broadcast: buffering finished
+            Intent i = new Intent();
+            i.setAction(TransistorKeys.ACTION_PLAYBACK_STATE_CHANGED);
+            i.putExtra(TransistorKeys.EXTRA_PLAYBACK_STATE_CHANGE, TransistorKeys.PLAYBACK_STARTED);
+            LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(i);
+
+            // save state
+            mStationLoading = false;
+            saveAppState();
 
             // decrease counter
             mPlayerInstanceCounter--;
@@ -406,11 +412,13 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
 
         // save state
         mPlayback = true;
+        mStationLoading = true;
         saveAppState();
 
-        // send local broadcast (needed by MainActivityFragment)
+        // send local broadcast
         Intent i = new Intent();
-        i.setAction(TransistorKeys.ACTION_PLAYBACK_STARTING);
+        i.setAction(TransistorKeys.ACTION_PLAYBACK_STATE_CHANGED);
+        i.putExtra(TransistorKeys.EXTRA_PLAYBACK_STATE_CHANGE, TransistorKeys.PLAYBACK_LOADING_STATION);
         i.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
         LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(i);
 
@@ -451,11 +459,13 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
 
         // save state
         mPlayback = false;
+        mStationLoading = false;
         saveAppState();
 
-        // send local broadcast (needed by PlayerActivityFragment and MainActivityFragment)
+        // send local broadcast
         Intent i = new Intent();
-        i.setAction(TransistorKeys.ACTION_PLAYBACK_STOPPING);
+        i.setAction(TransistorKeys.ACTION_PLAYBACK_STATE_CHANGED);
+        i.putExtra(TransistorKeys.EXTRA_PLAYBACK_STATE_CHANGE, TransistorKeys.PLAYBACK_STOPPED);
         i.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
         LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(i);
 
@@ -598,6 +608,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplication());
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean(TransistorKeys.PREF_PLAYBACK, mPlayback);
+        editor.putBoolean(TransistorKeys.PREF_STATION_LOADING, mStationLoading);
         editor.apply();
         Log.v(LOG_TAG, "Saving state.");
     }
@@ -608,9 +619,9 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         mStationID = settings.getInt(TransistorKeys.PREF_STATION_ID_SELECTED, 0);
         mPlayback = settings.getBoolean(TransistorKeys.PREF_PLAYBACK, false);
+        mStationLoading = settings.getBoolean(TransistorKeys.PREF_STATION_LOADING, false);
         Log.v(LOG_TAG, "Loading state.");
     }
-
 
 
     /**

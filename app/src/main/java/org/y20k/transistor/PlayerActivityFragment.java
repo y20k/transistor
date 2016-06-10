@@ -82,6 +82,9 @@ public final class PlayerActivityFragment extends Fragment {
     private ImageButton mStationMenuView;
     private ImageView mPlaybackIndicator;
     private ImageButton mPlaybackButton;
+    private BroadcastReceiver mPlaybackStateChangedReceiver;
+    private BroadcastReceiver mCollectionChangedReceiver;
+    private BroadcastReceiver mMetadataChangedReceiver;
     private int mStationID;
     private int mStationIDCurrent;
     private int mStationIDLast;
@@ -229,7 +232,7 @@ public final class PlayerActivityFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // initialize broadcast receivers
-        initializeBroadcastReceivers();
+        // initializeBroadcastReceivers();
 
     }
 
@@ -240,6 +243,9 @@ public final class PlayerActivityFragment extends Fragment {
         // set fragment visibility
         mVisibility = true;
 
+        // initialize broadcast receivers
+        initializeBroadcastReceivers();
+
         // refresh playback state
         loadAppState(mActivity);
 
@@ -247,7 +253,7 @@ public final class PlayerActivityFragment extends Fragment {
         Bundle arguments = getArguments();
         if (arguments != null && arguments.getBoolean(TransistorKeys.ARG_PLAYBACK)) {
             // check if this station is not already playing
-            if (mStationIDCurrent == mStationID && mPlayback) {
+            if (mStationIDCurrent == mStationID && mPlayback && !mStationLoading) {
                 // do nothing
             } else {
                 // hide metadata
@@ -273,6 +279,10 @@ public final class PlayerActivityFragment extends Fragment {
         super.onPause();
         // set fragment visibility
         mVisibility = false;
+
+        // unregister broadcast receivers
+        unregisterBroadcastReceivers();
+
     }
 
 
@@ -518,11 +528,11 @@ public final class PlayerActivityFragment extends Fragment {
             // change playback indicator
             if (mStationLoading) {
                 mPlaybackIndicator.setBackgroundResource(R.drawable.ic_playback_indicator_loading_24dp);
+                mStationMetadataView.setText(R.string.descr_station_stream_loading);
             } else {
                 mPlaybackIndicator.setBackgroundResource(R.drawable.ic_playback_indicator_started_24dp);
             }
             // show metadataview
-            mStationMetadataView.setText("Loading stream ..."); // TODO create string
             mStationMetadataView.setVisibility(View.VISIBLE);
         }
         // playback stopped
@@ -564,7 +574,7 @@ public final class PlayerActivityFragment extends Fragment {
         editor.putBoolean(TransistorKeys.PREF_PLAYBACK, mPlayback);
         editor.putBoolean(TransistorKeys.PREF_STATION_LOADING, mStationLoading);
         editor.apply();
-        Log.v(LOG_TAG, "Saving state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + ")");
+        Log.v(LOG_TAG, "Saving state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + " / " + mStationLoading + " / " + mStationMetadata + ")");
     }
 
 
@@ -577,7 +587,7 @@ public final class PlayerActivityFragment extends Fragment {
         mStationMetadata = settings.getString(TransistorKeys.PREF_STATION_METADATA, null);
         mPlayback = settings.getBoolean(TransistorKeys.PREF_PLAYBACK, false);
         mStationLoading = settings.getBoolean(TransistorKeys.PREF_STATION_LOADING, false);
-        Log.v(LOG_TAG, "Loading state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + " / " + mStationID + ")");
+        Log.v(LOG_TAG, "Loading state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + " / " + mStationLoading + " / " + mStationMetadata + " / " + mStationID + ")");
     }
 
 
@@ -667,7 +677,6 @@ public final class PlayerActivityFragment extends Fragment {
                             mStationImageView.setImageBitmap(stationImage);
                         }
                     }
-
                 }
                 break;
         }
@@ -677,60 +686,78 @@ public final class PlayerActivityFragment extends Fragment {
     /* Initializes broadcast receivers for onCreate */
     private void initializeBroadcastReceivers() {
 
-        // RECEIVER: player service is stopping playback
-        BroadcastReceiver playbackStoppingReceiver = new BroadcastReceiver() {
+        // RECEIVER: state of playback has changed
+        mPlaybackStateChangedReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                // loadAppState(context);
-                if (mVisibility && mPlayback) {
-                    // set playback false
-                    mPlayback = false;
-
-                    // reset metadata
-                    // mStationMetadata = null;
-
-                    // rotate playback button
-                    if (intent.hasExtra(TransistorKeys.EXTRA_STATION_ID) && mStationID == intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, -1)) {
-                        changeVisualState(context);
-                    }
-
-                    // save state of playback to settings
-                    saveAppState(context);
+                if (intent.hasExtra(TransistorKeys.EXTRA_PLAYBACK_STATE_CHANGE)) {
+                    handlePlaybackStateChanged(intent);
                 }
             }
         };
-        IntentFilter playbackStoppingIntentFilter = new IntentFilter(TransistorKeys.ACTION_PLAYBACK_STOPPING);
-        LocalBroadcastManager.getInstance(mActivity).registerReceiver(playbackStoppingReceiver, playbackStoppingIntentFilter);
+        IntentFilter playbackStateChangedIntentFilter = new IntentFilter(TransistorKeys.ACTION_PLAYBACK_STATE_CHANGED);
+        LocalBroadcastManager.getInstance(mActivity).registerReceiver(mPlaybackStateChangedReceiver, playbackStateChangedIntentFilter);
 
-        // RECEIVER: player service is preparing playback
-        BroadcastReceiver playbackStartingReceiver = new BroadcastReceiver() {
+        // RECEIVER: station added, deleted, or changed
+        mCollectionChangedReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                // loadAppState(context);
+                if (intent != null && intent.hasExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE)) {
+                    handleCollectionChanges(intent);
+                }
+            }
+        };
+        IntentFilter collectionChangedIntentFilter = new IntentFilter(TransistorKeys.ACTION_COLLECTION_CHANGED);
+        LocalBroadcastManager.getInstance(mActivity).registerReceiver(mCollectionChangedReceiver, collectionChangedIntentFilter);
+
+        // RECEIVER: station metadata has changed
+        mMetadataChangedReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (mPlayback && intent.hasExtra(TransistorKeys.EXTRA_METADATA)) {
+                    mStationMetadata = intent.getStringExtra(TransistorKeys.EXTRA_METADATA);
+                    mStationMetadataView.setText(mStationMetadata);
+                }
+            }
+        };
+        IntentFilter metadataChangedIntentFilter = new IntentFilter(TransistorKeys.ACTION_METADATA_CHANGED);
+        LocalBroadcastManager.getInstance(mActivity).registerReceiver(mMetadataChangedReceiver, metadataChangedIntentFilter);
+
+    }
+
+
+    /* Unregisters broadcast receivers */
+    private void unregisterBroadcastReceivers() {
+        LocalBroadcastManager.getInstance(mActivity).unregisterReceiver(mPlaybackStateChangedReceiver);
+        LocalBroadcastManager.getInstance(mActivity).unregisterReceiver(mCollectionChangedReceiver);
+        LocalBroadcastManager.getInstance(mActivity).unregisterReceiver(mMetadataChangedReceiver);
+    }
+
+
+    /* Handles changes in state of playback, eg. start, stop, loading stream */
+    private void handlePlaybackStateChanged(Intent intent) {
+
+        switch (intent.getIntExtra(TransistorKeys.EXTRA_PLAYBACK_STATE_CHANGE, 1)) {
+
+            // CASE: player is preparing stream
+            case TransistorKeys.PLAYBACK_LOADING_STATION:
                 if (mVisibility && !mPlayback) {
                     // set playback true
                     mPlayback = true;
-
                     // rotate playback button
                     if (intent.hasExtra(TransistorKeys.EXTRA_STATION_ID) && mStationID == intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, -1)) {
-                        changeVisualState(context);
+                        changeVisualState(mActivity);
                     }
-
-                    // save state of playback to settings
+                    // update playback state
                     mStationIDLast = mStationIDCurrent;
                     mStationIDCurrent = mStationID;
-                    saveAppState(context);
-
+                    // save state of playback to settings
+                    saveAppState(mActivity);
                 }
-            }
-        };
-        IntentFilter playbackStartingIntentFilter = new IntentFilter(TransistorKeys.ACTION_PLAYBACK_STARTING);
-        LocalBroadcastManager.getInstance(mActivity).registerReceiver(playbackStartingReceiver, playbackStartingIntentFilter);
+                break;
 
-        // RECEIVER: player service has started playback
-        BroadcastReceiver playbackStartedReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
+            // CASE: playback has started
+            case TransistorKeys.PLAYBACK_STARTED:
                 if (mVisibility && mPlayback) {
                     // update loading status and playback indicator
                     mStationLoading = false;
@@ -741,38 +768,25 @@ public final class PlayerActivityFragment extends Fragment {
                     } else {
                         mStationMetadataView.setText(mStationName);
                     }
-                    saveAppState(context);
+                    // save state of playback to settings
+                    saveAppState(mActivity);
                 }
-            }
-        };
-        IntentFilter playbackStartedIntentFilter = new IntentFilter(TransistorKeys.ACTION_PLAYBACK_STARTED);
-        LocalBroadcastManager.getInstance(mActivity).registerReceiver(playbackStartedReceiver, playbackStartedIntentFilter);
+                break;
 
-        // RECEIVER: station added, deleted, or changed
-        BroadcastReceiver collectionChangedReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                if (intent != null && intent.hasExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE)) {
-                    handleCollectionChanges(intent);
+            // CASE: playback was stopped
+            case TransistorKeys.PLAYBACK_STOPPED:
+                if (mVisibility && mPlayback) {
+                    // set playback false
+                    mPlayback = false;
+                    // rotate playback button
+                    if (intent.hasExtra(TransistorKeys.EXTRA_STATION_ID) && mStationID == intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, -1)) {
+                        changeVisualState(mActivity);
+                    }
+                    // save state of playback to settings
+                    saveAppState(mActivity);
                 }
-            }
-        };
-        IntentFilter collectionChangedIntentFilter = new IntentFilter(TransistorKeys.ACTION_COLLECTION_CHANGED);
-        LocalBroadcastManager.getInstance(mActivity).registerReceiver(collectionChangedReceiver, collectionChangedIntentFilter);
-
-        // RECEIVER: station metadata has changed
-        BroadcastReceiver metadataChangedReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                if (mPlayback && intent.hasExtra(TransistorKeys.EXTRA_METADATA)) {
-                    String metaData = intent.getStringExtra(TransistorKeys.EXTRA_METADATA);
-                    mStationMetadataView.setText(metaData);
-                }
-            }
-        };
-        IntentFilter metadataChangedIntentFilter = new IntentFilter(TransistorKeys.ACTION_METADATA_CHANGED);
-        LocalBroadcastManager.getInstance(mActivity).registerReceiver(metadataChangedReceiver, metadataChangedIntentFilter);
-
+                break;
+        }
     }
 
 }

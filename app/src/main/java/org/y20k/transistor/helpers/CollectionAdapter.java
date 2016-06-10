@@ -93,7 +93,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
                 loadAppState(mActivity);
             }
         };
-        IntentFilter playbackStoppingIntentFilter = new IntentFilter(TransistorKeys.ACTION_PLAYBACK_STOPPING);
+        IntentFilter playbackStoppingIntentFilter = new IntentFilter(TransistorKeys.ACTION_PLAYBACK_STATE_CHANGED);
         LocalBroadcastManager.getInstance(mActivity.getApplication()).registerReceiver(playbackStoppingReceiver, playbackStoppingIntentFilter);
 
     }
@@ -347,5 +347,28 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     /* Getter for ID of currently selected station */
     public int getStationIDSelected() {
         return mStationIDSelected;
+    }
+
+
+    /* Handles changes in state of playback, eg. start, stop, loading stream */
+    private void handlePlaybackStateChanged(Intent intent) {
+
+        // load app state
+        loadAppState(mActivity);
+
+        switch (intent.getIntExtra(TransistorKeys.EXTRA_PLAYBACK_STATE_CHANGE, 1)) {
+
+            // CASE: player is preparing stream
+            case TransistorKeys.PLAYBACK_LOADING_STATION:
+                break;
+
+            // CASE: playback has started
+            case TransistorKeys.PLAYBACK_STARTED:
+                break;
+
+            // CASE: playback was stopped
+            case TransistorKeys.PLAYBACK_STOPPED:
+                break;
+        }
     }
 }

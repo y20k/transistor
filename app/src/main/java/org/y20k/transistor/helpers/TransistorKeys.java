@@ -22,9 +22,10 @@ public class TransistorKeys {
     /* ACTIONS */
     public static final String ACTION_PLAY = "org.y20k.transistor.action.PLAY";
     public static final String ACTION_STOP = "org.y20k.transistor.action.STOP";
-    public static final String ACTION_PLAYBACK_STARTING = "org.y20k.transistor.action.PLAYBACK_STARTING";
-    public static final String ACTION_PLAYBACK_STARTED = "org.y20k.transistor.action.PLAYBACK_STARTED";
-    public static final String ACTION_PLAYBACK_STOPPING = "org.y20k.transistor.action.PLAYBACK_STOPPING";
+    public static final String ACTION_PLAYBACK_STATE_CHANGED = "org.y20k.transistor.action.PLAYBACK_STATE_CHANGED";
+//    public static final String ACTION_PLAYBACK_STARTING = "org.y20k.transistor.action.PLAYBACK_STARTING";
+//    public static final String ACTION_PLAYBACK_STARTED = "org.y20k.transistor.action.PLAYBACK_STARTED";
+//    public static final String ACTION_PLAYBACK_STOPPING = "org.y20k.transistor.action.PLAYBACK_STOPPING";
     public static final String ACTION_CREATE_SHORTCUT_REQUESTED = "org.y20k.transistor.action.CREATE_SHORTCUT_REQUESTED";
     public static final String ACTION_CHANGE_VIEW_SELECTION = "org.y20k.transistor.action.CHANGE_VIEW_SELECTION";
     public static final String ACTION_COLLECTION_CHANGED = "org.y20k.transistor.action.COLLECTION_CHANGED";
@@ -41,6 +42,7 @@ public class TransistorKeys {
     public static final String EXTRA_INFOSHEET_TITLE = "INFOSHEET_TITLE";
     public static final String EXTRA_INFOSHEET_CONTENT = "INFOSHEET_CONTENT";
     public static final String EXTRA_METADATA = "METADATA";
+    public static final String EXTRA_PLAYBACK_STATE_CHANGE = "PLAYBACK_STATE_CHANGE";
     public static final String EXTRA_PLAYBACK_STATE = "PLAYBACK_STATE";
     public static final String EXTRA_STATION = "STATION";
     public static final String EXTRA_STATION_ID = "STATION_ID";
@@ -88,6 +90,9 @@ public class TransistorKeys {
     public static final int STATION_ADDED = 1;
     public static final int STATION_RENAMED = 2;
     public static final int STATION_DELETED = 3;
+    public static final int PLAYBACK_LOADING_STATION = 1;
+    public static final int PLAYBACK_STARTED = 2;
+    public static final int PLAYBACK_STOPPED = 3;
     public static final String INSTANCE_LIST_STATE = "instanceListState";
     public static final String PLAYERFRAGMENT_TAG = "PFTAG";
     public static final String SHOUTCAST_STREAM_TITLE_HEADER = "StreamTitle='";

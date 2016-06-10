@@ -27,7 +27,7 @@
     <string name="descr_station_metadata">Metadata (Artist / Title) of currently playing radio station</string>
     <string name="descr_station_name_example">Primer FM</string>
     <string name="descr_station_metadata_example">Artist - Title</string>
-    <string name="descr_station_metadata_loading">Loading additional information</string>
+    <string name="descr_station_stream_loading">Loading stream …</string>
     <string name="descr_playback_indicator">Kazalnik za predvajanje v teku</string>
     <string name="descr_playback_button">Velik gumb za predvajanje</string>
     <string name="descr_playback_indicator_started">Kazalnik za predvajanje v teku</string>
@@ -57,6 +57,8 @@
     <string name="dialog_error_title_fetch_write">Write Issue</string>
     <string name="dialog_error_message_fetch_general_external_storage">Zunanja shramba:</string>
     <string name="dialog_error_message_fetch_general_hint_m3u">Namig: aplikacija Transistor lahko obdela le medijske tokove kodirane v formatu MP3 ali OGG, oziroma medijske povezave s končnicami .m3u ali .pls.</string>
+    <string name="dialog_error_message_fetch_general_playlist_type">MIME type of file:</string>
+    <string name="dialog_error_message_fetch_general_stream_type">MIME type of stream:</string>
     <string name="dialog_error_message_fetch_general_file_content">Vsebina oddaljene datoteke:</string>
     <string name="dialog_error_message_fetch_download">Aplikacji Transistor ni uspelo pridobiti ustreznih podatkov iz vnešene povezave.</string>
     <string name="dialog_error_message_fetch_download_station_url">URL postaje:</string>

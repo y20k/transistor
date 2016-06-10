@@ -27,7 +27,7 @@
     <string name="descr_station_metadata">Metadata (Artista / Títulos) de la reproducción de la actual estación de radio</string>
     <string name="descr_station_name_example">Ejemplo FM</string>
     <string name="descr_station_metadata_example">Artista - Título</string>
-    <string name="descr_station_metadata_loading">Loading additional information</string>
+    <string name="descr_station_stream_loading">Loading stream …</string>
     <string name="descr_playback_button">Botón grande de reproducción</string>
     <string name="descr_playback_indicator">Indicador para el funcionamiento de la reproducción</string>
     <string name="descr_playback_indicator_started">Indicador para el funcionamiento de la reproducción</string>
@@ -57,6 +57,8 @@
     <string name="dialog_error_title_fetch_write">Escribir asunto</string>
     <string name="dialog_error_message_fetch_general_external_storage">Almacenamiento externo:</string>
     <string name="dialog_error_message_fetch_general_hint_m3u">Consejo: Transistor solo puede procesar MP3 y OGG o URLs que terminan en .m3u o .pls.</string>
+    <string name="dialog_error_message_fetch_general_playlist_type">MIME type of file:</string>
+    <string name="dialog_error_message_fetch_general_stream_type">MIME type of stream:</string>
     <string name="dialog_error_message_fetch_general_file_content">Contenido del archivo:</string>
     <string name="dialog_error_message_fetch_download_station_url">URL de la estación:</string>
     <string name="dialog_error_message_fetch_download">Transistor intento de todas las maneras pero no pudo traducir al enlace dado.</string>

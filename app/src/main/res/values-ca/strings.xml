@@ -27,7 +27,7 @@
     <string name="descr_station_metadata">Metadata (Artist / Title) of currently playing radio station</string>
     <string name="descr_station_name_example">Exemple FM</string>
     <string name="descr_station_metadata_example">Artist - Title</string>
-    <string name="descr_station_metadata_loading">Loading additional information</string>
+    <string name="descr_station_stream_loading">Loading stream …</string>
     <string name="descr_playback_button">Gran botó de reproducció</string>
     <string name="descr_playback_indicator">Indicador pel funcionament de la reproducció</string>
     <string name="descr_playback_indicator_started">Indicador pel funcionament de la reproducció</string>
@@ -57,6 +57,8 @@
     <string name="dialog_error_title_fetch_write">Escriu publicació</string>
     <string name="dialog_error_message_fetch_general_external_storage">Emmagatzematge extern:</string>
     <string name="dialog_error_message_fetch_general_hint_m3u">Consell: Transistor només pot processar MP3, OGG o URLs que acaben en .m3u o .pls.</string>
+    <string name="dialog_error_message_fetch_general_playlist_type">MIME type of file:</string>
+    <string name="dialog_error_message_fetch_general_stream_type">MIME type of stream:</string>
     <string name="dialog_error_message_fetch_general_file_content">Contingut del fitxer:</string>
     <string name="dialog_error_message_fetch_download">Transistor ho ha intentat el millor que ha pogut però no acaba d\'entendre l\'enllaç.</string>
     <string name="dialog_error_message_fetch_download_station_url">URL de l\'emissora:</string>

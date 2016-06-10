@@ -27,7 +27,7 @@
     <string name="descr_station_metadata">Metadata (Artist / Title) of currently playing radio station</string>
     <string name="descr_station_name_example">Example FM</string>
     <string name="descr_station_metadata_example">Artist - Title</string>
-    <string name="descr_station_metadata_loading">Loading additional information</string>
+    <string name="descr_station_stream_loading">Loading stream …</string>
     <string name="descr_playback_button">Big playback button</string>
     <string name="descr_playback_indicator">Indicator for running playback</string>
     <string name="descr_playback_indicator_started">Indicator for running playback</string>

@@ -60,7 +60,7 @@
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:scrollHorizontally="true"
-                android:text="@string/descr_station_metadata_loading"
+                android:text="@string/descr_station_stream_loading"
                 android:textAppearance="@android:style/TextAppearance.Small.Inverse"
                 android:visibility="gone" />
 

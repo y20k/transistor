@@ -27,7 +27,7 @@
     <string name="descr_station_metadata">現在再生中のラジオ局のメタデータ (アーティスト/タイトル)</string>
     <string name="descr_station_name_example">FM の例</string>
     <string name="descr_station_metadata_example">アーティスト - タイトル</string>
-    <string name="descr_station_metadata_loading">Loading additional information</string>
+    <string name="descr_station_stream_loading">Loading stream …</string>
     <string name="descr_playback_button">大きな再生ボタン</string>
     <string name="descr_playback_indicator">再生中のインジケーター</string>
     <string name="descr_playback_indicator_started">再生中のインジケーター</string>
@@ -57,6 +57,8 @@
     <string name="dialog_error_title_fetch_write">問題を書き込む</string>
     <string name="dialog_error_message_fetch_general_external_storage">外部ストレージ:</string>
     <string name="dialog_error_message_fetch_general_hint_m3u">ヒント: トランジスターは MP3 と OGG でエンコードされたストリームや .m3u または .pls で終わる Url のみ処理することができます。</string>
+    <string name="dialog_error_message_fetch_general_playlist_type">ファイルの MIME タイプ:</string>
+    <string name="dialog_error_message_fetch_general_stream_type">ストリームの MIME タイプ:</string>
     <string name="dialog_error_message_fetch_general_file_content">リモート ファイルのコンテンツ:</string>
     <string name="dialog_error_message_fetch_download">トランジスターの努力にもかかわらず、リンクが意味をなさない可能性があります。</string>
     <string name="dialog_error_message_fetch_download_station_url">放送局の URL:</string>
@@ -142,6 +144,4 @@
     https://github.com/y20k/transistor/tree/1e51dd8666194353427ca074f2092b6c20cfacd6/app/src/main/res 
     -->
 
-<string name="dialog_error_message_fetch_general_playlist_type">ファイルの MIME タイプ:</string>
-    <string name="dialog_error_message_fetch_general_stream_type">ストリームの MIME タイプ:</string>
-    </resources>
+</resources>

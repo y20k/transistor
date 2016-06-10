@@ -27,7 +27,7 @@
     <string name="descr_station_metadata">Metadata (Artist / Title) of currently playing radio station</string>
     <string name="descr_station_name_example">示例 FM</string>
     <string name="descr_station_metadata_example">Artist - Title</string>
-    <string name="descr_station_metadata_loading">Loading additional information</string>
+    <string name="descr_station_stream_loading">Loading stream …</string>
     <string name="descr_playback_button">大播放按钮</string>
     <string name="descr_playback_indicator">播放中指示器</string>
     <string name="descr_playback_indicator_started">播放中指示器</string>
@@ -40,6 +40,8 @@
     <string name="dialog_add_station_input_hint">请输入一个有效的流媒体网址</string>
     <string name="dialog_add_station_message">添加新电台</string>
     <string name="dialog_add_station_howto">您可以添加 MP3 和 OGG 编码的原始音频流，以及封装在 pls 或 m3u 文件中的这些流。您也可以在您的网页浏览器中点击流链接（pls 或 m3u）添加新电台。</string>
+    <string name="dialog_error_message_fetch_general_playlist_type">MIME type of file:</string>
+    <string name="dialog_error_message_fetch_general_stream_type">MIME type of stream:</string>
     <string name="dialog_delete_station_message">删除电台</string>
     <string name="dialog_button_delete">删除</string>
     <string name="dialog_rename_station_input_hint">请输入新名称</string>

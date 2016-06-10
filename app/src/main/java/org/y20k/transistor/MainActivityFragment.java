@@ -85,6 +85,12 @@ public final class MainActivityFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private Parcelable mListState;
+    private BroadcastReceiver mPlaybackStateChangedReceiver;
+    private BroadcastReceiver mCollectionChangedReceiver;
+    private BroadcastReceiver mImageChangeRequestReceiver;
+    private BroadcastReceiver mSleepTimerStartedReceiver;
+    private BroadcastReceiver mShortcutCreationRequestReceiver;
+    private BroadcastReceiver mChangeViewSelectionReceiver;
     private int mStationIDCurrent;
     private int mStationIDLast;
     private int mTempStationImageID;
@@ -138,8 +144,8 @@ public final class MainActivityFragment extends Fragment {
         mStationImages = new ArrayList<>();
         mCollectionAdapter = new CollectionAdapter(mActivity, mCollection, mStationNames, mStationImages);
 
-        // initialize broadcast receivers
-        initializeBroadcastReceivers();
+//        // initialize broadcast receivers
+//        initializeBroadcastReceivers();
 
     }
 
@@ -186,6 +192,9 @@ public final class MainActivityFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
+        // initialize broadcast receivers
+        initializeBroadcastReceivers();
+
         // handle incoming intent
         handleIncomingIntent();
 
@@ -196,6 +205,14 @@ public final class MainActivityFragment extends Fragment {
         if (mSleepTimerRunning) {
             showSleepTimerNotification(-1);
         }
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        // unregister broadcast receivers
+        unregisterBroadcastReceivers();
     }
 
 
@@ -595,52 +612,21 @@ public final class MainActivityFragment extends Fragment {
 
     /* Initializes broadcast receivers for onCreate */
     private void initializeBroadcastReceivers() {
-        // RECEIVER: player service is stopping playback
-        BroadcastReceiver playbackStoppingReceiver = new BroadcastReceiver() {
+
+        // RECEIVER: state of playback has changed
+        mPlaybackStateChangedReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if (mSleepTimerRunning && mSleepTimerService != null) {
-                    stopSleepTimer();
+                if (intent.hasExtra(TransistorKeys.EXTRA_PLAYBACK_STATE_CHANGE)) {
+                    handlePlaybackStateChanged(intent);
                 }
-                mCollectionAdapter.refresh();
-                refreshStationList();
-                mPlayback = false;
             }
         };
-        IntentFilter playbackStoppingIntentFilter = new IntentFilter(TransistorKeys.ACTION_PLAYBACK_STOPPING);
-        LocalBroadcastManager.getInstance(mApplication).registerReceiver(playbackStoppingReceiver, playbackStoppingIntentFilter);
-
-        // RECEIVER: player service is preparing playback
-        BroadcastReceiver playbackStartingReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                mCollectionAdapter.refresh();
-                refreshStationList();
-                mPlayback = true;
-            }
-        };
-        IntentFilter playbackStartingIntentFilter = new IntentFilter(TransistorKeys.ACTION_PLAYBACK_STARTING);
-        LocalBroadcastManager.getInstance(mApplication).registerReceiver(playbackStartingReceiver, playbackStartingIntentFilter);
-
-
-        // RECEIVER: player service has started playback
-        BroadcastReceiver playbackStartedReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                mCollectionAdapter.refresh();
-                refreshStationList();
-                SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-                SharedPreferences.Editor editor = settings.edit();
-                editor.putBoolean(TransistorKeys.PREF_STATION_LOADING, false);
-                editor.apply();
-            }
-        };
-        IntentFilter playbackStartedIntentFilter = new IntentFilter(TransistorKeys.ACTION_PLAYBACK_STARTING);
-        LocalBroadcastManager.getInstance(mApplication).registerReceiver(playbackStartedReceiver, playbackStartedIntentFilter);
-
+        IntentFilter playbackStateChangedIntentFilter = new IntentFilter(TransistorKeys.ACTION_PLAYBACK_STATE_CHANGED);
+        LocalBroadcastManager.getInstance(mActivity).registerReceiver(mPlaybackStateChangedReceiver, playbackStateChangedIntentFilter);
 
         // RECEIVER: station added, deleted, or changed
-        BroadcastReceiver collectionChangedReceiver = new BroadcastReceiver() {
+        mCollectionChangedReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (intent != null && intent.hasExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE)) {
@@ -650,10 +636,10 @@ public final class MainActivityFragment extends Fragment {
             }
         };
         IntentFilter collectionChangedIntentFilter = new IntentFilter(TransistorKeys.ACTION_COLLECTION_CHANGED);
-        LocalBroadcastManager.getInstance(mApplication).registerReceiver(collectionChangedReceiver, collectionChangedIntentFilter);
+        LocalBroadcastManager.getInstance(mApplication).registerReceiver(mCollectionChangedReceiver, collectionChangedIntentFilter);
 
         // RECEIVER: listen for request to change station image
-        BroadcastReceiver imageChangeRequestReceiver = new BroadcastReceiver() {
+        mImageChangeRequestReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 // get station id and save it
@@ -663,10 +649,10 @@ public final class MainActivityFragment extends Fragment {
             }
         };
         IntentFilter imageChangeRequestIntentFilter = new IntentFilter(TransistorKeys.ACTION_IMAGE_CHANGE_REQUESTED);
-        LocalBroadcastManager.getInstance(mApplication).registerReceiver(imageChangeRequestReceiver, imageChangeRequestIntentFilter);
+        LocalBroadcastManager.getInstance(mApplication).registerReceiver(mImageChangeRequestReceiver, imageChangeRequestIntentFilter);
 
         // RECEIVER: sleep timer service sends updates
-        BroadcastReceiver sleepTimerStartedReceiver = new BroadcastReceiver() {
+        mSleepTimerStartedReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 // get duration from intent
@@ -687,10 +673,10 @@ public final class MainActivityFragment extends Fragment {
             }
         };
         IntentFilter sleepTimerIntentFilter = new IntentFilter(TransistorKeys.ACTION_TIMER_RUNNING);
-        LocalBroadcastManager.getInstance(mActivity).registerReceiver(sleepTimerStartedReceiver, sleepTimerIntentFilter);
+        LocalBroadcastManager.getInstance(mActivity).registerReceiver(mSleepTimerStartedReceiver, sleepTimerIntentFilter);
 
         // RECEIVER: handles request for shortcut being created
-        BroadcastReceiver shortcutCreationRequestReceiver = new BroadcastReceiver() {
+        mShortcutCreationRequestReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 // get station id and save it
@@ -702,11 +688,11 @@ public final class MainActivityFragment extends Fragment {
             }
         };
         IntentFilter shortcutCreationRequestIntentFilter = new IntentFilter(TransistorKeys.ACTION_CREATE_SHORTCUT_REQUESTED);
-        LocalBroadcastManager.getInstance(mApplication).registerReceiver(shortcutCreationRequestReceiver, shortcutCreationRequestIntentFilter);
+        LocalBroadcastManager.getInstance(mApplication).registerReceiver(mShortcutCreationRequestReceiver, shortcutCreationRequestIntentFilter);
 
 
         // RECEIVER: (re-)sets the selection if needed
-        BroadcastReceiver changeViewSelectionReceiver = new BroadcastReceiver() {
+        mChangeViewSelectionReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 // reset previous selection
@@ -719,9 +705,21 @@ public final class MainActivityFragment extends Fragment {
             }
         };
         IntentFilter changeViewSelectionIntentFilter = new IntentFilter(TransistorKeys.ACTION_CHANGE_VIEW_SELECTION);
-        LocalBroadcastManager.getInstance(mApplication).registerReceiver(changeViewSelectionReceiver, changeViewSelectionIntentFilter);
+        LocalBroadcastManager.getInstance(mApplication).registerReceiver(mChangeViewSelectionReceiver, changeViewSelectionIntentFilter);
 
     }
+
+
+    /* Unregisters broadcast receivers */
+    private void unregisterBroadcastReceivers() {
+        LocalBroadcastManager.getInstance(mActivity).unregisterReceiver(mPlaybackStateChangedReceiver);
+        LocalBroadcastManager.getInstance(mActivity).unregisterReceiver(mCollectionChangedReceiver);
+        LocalBroadcastManager.getInstance(mActivity).unregisterReceiver(mImageChangeRequestReceiver);
+        LocalBroadcastManager.getInstance(mActivity).unregisterReceiver(mSleepTimerStartedReceiver);
+        LocalBroadcastManager.getInstance(mActivity).unregisterReceiver(mShortcutCreationRequestReceiver);
+        LocalBroadcastManager.getInstance(mActivity).unregisterReceiver(mChangeViewSelectionReceiver);
+    }
+
 
 
     /* Handles adding, deleting and renaming of station */
@@ -892,6 +890,44 @@ public final class MainActivityFragment extends Fragment {
 
         }
 
+    }
+
+
+    /* Handles changes in state of playback, eg. start, stop, loading stream */
+    private void handlePlaybackStateChanged(Intent intent) {
+
+        // load app state
+        loadAppState(mActivity);
+
+        switch (intent.getIntExtra(TransistorKeys.EXTRA_PLAYBACK_STATE_CHANGE, 1)) {
+
+            // CASE: player is preparing stream
+            case TransistorKeys.PLAYBACK_LOADING_STATION:
+                mCollectionAdapter.refresh();
+                refreshStationList();
+                mPlayback = true;
+                break;
+
+            // CASE: playback has started
+            case TransistorKeys.PLAYBACK_STARTED:
+                mCollectionAdapter.refresh();
+                refreshStationList();
+//                SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mActivity);
+//                SharedPreferences.Editor editor = settings.edit();
+//                editor.putBoolean(TransistorKeys.PREF_STATION_LOADING, false);
+//                editor.apply();
+                break;
+
+            // CASE: playback was stopped
+            case TransistorKeys.PLAYBACK_STOPPED:
+                if (mSleepTimerRunning && mSleepTimerService != null) {
+                    stopSleepTimer();
+                }
+                mCollectionAdapter.refresh();
+                refreshStationList();
+                mPlayback = false;
+                break;
+        }
     }
 
 }
