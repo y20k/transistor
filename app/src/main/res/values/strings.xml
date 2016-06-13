@@ -74,6 +74,7 @@
     <string name="toastmessage_long_press_playback_started">Playback started (long press detected)</string>
     <string name="toastmessage_shortcut_created">Shortcut created.</string>
     <string name="toastmessage_station_copied">Station copied.</string>
+    <string name="toastmessage_stream_may_not_work">Unsupported audio format detected. Playback of stream may not work properly.</string>
     <string name="toastmessage_timer_activated">Sleep timer activated.</string>
     <string name="toastmessage_timer_cancelled">Sleep timer cancelled.</string>
     <string name="toastmessage_timer_duration_increased">Duration increased.</string>

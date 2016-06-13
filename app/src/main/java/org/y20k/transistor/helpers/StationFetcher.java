@@ -63,11 +63,14 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
         mFolderExists = mFolder.exists();
 
         // notify user
+        String stationUriString = stationUri.toString();
+        if (stationUriString.length() >= 48) {
+            stationUriString = stationUriString.substring(0,45) + "...";
+        }
         if (stationUri != null && mStationUriScheme != null && mStationUriScheme.startsWith("http")) {
-            Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_add_download_started) + " " + stationUri.toString(), Toast.LENGTH_LONG).show();
+            Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_add_download_started) + " " + stationUriString, Toast.LENGTH_LONG).show();
         } else if (stationUri != null && mStationUriScheme != null && mStationUriScheme.startsWith("file")) {
-            // notify user
-            Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_add_open_file_started) + " " + stationUri.toString(), Toast.LENGTH_LONG).show();
+            Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_add_open_file_started) + " " + stationUriString, Toast.LENGTH_LONG).show();
         }
 
     }
@@ -126,6 +129,10 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
                 LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(i);
             }
 
+            // inform user that aac might not work properly
+            if (fetchResults.containsKey(TransistorKeys.RESULT_STREAM_TYPE) && fetchResults.getString(TransistorKeys.RESULT_STREAM_TYPE) != null && fetchResults.getString(TransistorKeys.RESULT_STREAM_TYPE).contains("aac")) {
+                Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_stream_may_not_work), Toast.LENGTH_LONG).show();
+            }
 
         }
 

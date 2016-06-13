@@ -74,6 +74,7 @@
     <string name="toastmessage_long_press_playback_started">Lecture démarrée (appui long détecté)</string>
     <string name="toastmessage_shortcut_created">Raccourci créé.</string>
     <string name="toastmessage_station_copied">Station copiée.</string>
+    <string name="toastmessage_stream_may_not_work">Unsupported audio format detected. Playback of stream may not work properly.</string>
     <string name="toastmessage_timer_activated">Minuteur de veille activé.</string>
     <string name="toastmessage_timer_cancelled">Minuteur de veille annulé.</string>
     <string name="toastmessage_timer_duration_increased">Durée augmentée.</string>

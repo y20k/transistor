@@ -74,6 +74,7 @@
     <string name="toastmessage_long_press_playback_started">Reproducció iniciada (pulsació llarga detectada)</string>
     <string name="toastmessage_shortcut_created">Accés directe creat.</string>
     <string name="toastmessage_station_copied">Emissora copiada.</string>
+    <string name="toastmessage_stream_may_not_work">Unsupported audio format detected. Playback of stream may not work properly.</string>
     <string name="toastmessage_timer_activated">Temporitzador d\'apagat activat.</string>
     <string name="toastmessage_timer_cancelled">Temporitzador d\'apagat cancel·lat.</string>
     <string name="toastmessage_timer_duration_increased">Incrementar la duració (+ 15 min).</string>

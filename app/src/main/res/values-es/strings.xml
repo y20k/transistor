@@ -74,6 +74,7 @@
     <string name="toastmessage_long_press_playback_started">Reproducción empezada (detectada pulsación larga)</string>
     <string name="toastmessage_shortcut_created">Acceso directo creado.</string>
     <string name="toastmessage_station_copied">Estación copiada.</string>
+    <string name="toastmessage_stream_may_not_work">Unsupported audio format detected. Playback of stream may not work properly.</string>
     <string name="toastmessage_timer_activated">Temporizador de apagado activado.</string>
     <string name="toastmessage_timer_cancelled">Temporizador de apagado cancelado.</string>
     <string name="toastmessage_timer_duration_increased">Duración incrementada.</string>

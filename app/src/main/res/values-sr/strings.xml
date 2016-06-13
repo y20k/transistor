@@ -74,6 +74,7 @@
     <string name="toastmessage_long_press_playback_started">Пуштање почето (примећен дуги тап)</string>
     <string name="toastmessage_shortcut_created">Пречица направљена.</string>
     <string name="toastmessage_station_copied">Станица копирана.</string>
+    <string name="toastmessage_stream_may_not_work">Unsupported audio format detected. Playback of stream may not work properly.</string>
     <string name="toastmessage_timer_activated">Тајмер активиран.</string>
     <string name="toastmessage_timer_cancelled">Тајмер отказан.</string>
     <string name="toastmessage_timer_duration_increased">Трајање повећано.</string>

@@ -53,8 +53,9 @@ public final class Station implements Comparable<Station>, Parcelable {
     private static final String LOG_TAG = Station.class.getSimpleName();
 
     /* Supported audio file content types */
-    private static final String[] CONTENT_TYPES_MPEG = {"audio/mpeg", "audio/aacp"};
+    private static final String[] CONTENT_TYPES_MPEG = {"audio/mpeg"};
     private static final String[] CONTENT_TYPES_OGG = {"audio/ogg", "application/ogg"};
+    private static final String[] CONTENT_TYPES_AAC = {"audio/aac", "audio/aacp"};
 
     /* Supported playlist content types */
     private static final String[] CONTENT_TYPES_PLS = {"audio/x-scpls"};
@@ -127,7 +128,7 @@ public final class Station implements Comparable<Station>, Parcelable {
                 mStationFetchResults.putString(TransistorKeys.RESULT_PLAYLIST_TYPE, contentType.toString());
                 mStationFetchResults.putString(TransistorKeys.RESULT_STREAM_TYPE, getContentType(mStreamUri).toString());
                 mStationFetchResults.putString(TransistorKeys.RESULT_FILE_CONTENT, mPlaylistFileContent);
-                mStationFetchResults.putBoolean(TransistorKeys.RESULT_FETCH_ERROR, true);
+                mStationFetchResults.putBoolean(TransistorKeys.RESULT_FETCH_ERROR, false);
 
             } else {
                 // save error flag and file content in results
@@ -360,7 +361,7 @@ public final class Station implements Comparable<Station>, Parcelable {
     /* Determines if given content type is an audio file */
     private boolean isAudioFile(ContentType contentType) {
         if (contentType != null) {
-            for (String[] array : new String[][]{CONTENT_TYPES_MPEG, CONTENT_TYPES_OGG}) {
+            for (String[] array : new String[][]{CONTENT_TYPES_MPEG, CONTENT_TYPES_OGG, CONTENT_TYPES_AAC}) {
                 if (Arrays.asList(array).contains(contentType.type)) {
                     return true;
                 }

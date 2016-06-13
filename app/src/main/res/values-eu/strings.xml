@@ -74,6 +74,7 @@
     <string name="toastmessage_long_press_playback_started">Erreprodukzioa hasi da (sakatze luzea atzeman da)</string>
     <string name="toastmessage_shortcut_created">Lasterbidea sortu da.</string>
     <string name="toastmessage_station_copied">Estazioa kopiatu da.</string>
+    <string name="toastmessage_stream_may_not_work">Unsupported audio format detected. Playback of stream may not work properly.</string>
     <string name="toastmessage_timer_activated">Itzaltzeko atzera kontaketa gaitu da.</string>
     <string name="toastmessage_timer_cancelled">Itzaltzeko atzera kontaketa eten da.</string>
     <string name="toastmessage_timer_duration_increased">Iraupena luzatu da.</string>

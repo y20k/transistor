@@ -74,6 +74,7 @@
     <string name="toastmessage_long_press_playback_started">再生を開始しました (長押しを検出しました)</string>
     <string name="toastmessage_shortcut_created">ショートカットを作成しました。</string>
     <string name="toastmessage_station_copied">放送局をコピーしました。</string>
+    <string name="toastmessage_stream_may_not_work">Unsupported audio format detected. Playback of stream may not work properly.</string>
     <string name="toastmessage_timer_activated">スリープタイマーを有効にしました。</string>
     <string name="toastmessage_timer_cancelled">スリープタイマーを取り消しました。</string>
     <string name="toastmessage_timer_duration_increased">時間を追加しました。</string>

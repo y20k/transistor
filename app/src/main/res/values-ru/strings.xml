@@ -74,6 +74,7 @@
     <string name="toastmessage_long_press_playback_started">Начинаю воспроизведение радиостанции</string>
     <string name="toastmessage_shortcut_created">Ярлык создан.</string>
     <string name="toastmessage_station_copied">Станция скопирована.</string>
+    <string name="toastmessage_stream_may_not_work">Unsupported audio format detected. Playback of stream may not work properly.</string>
     <string name="toastmessage_timer_activated">Таймер сна активирован.</string>
     <string name="toastmessage_timer_cancelled">Таймер сна отключен.</string>
     <string name="toastmessage_timer_duration_increased">Время увеличено.</string>

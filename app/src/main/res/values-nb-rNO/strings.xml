@@ -74,6 +74,7 @@
     <string name="toastmessage_long_press_playback_started">Avspilling startet (langt trykk enset)</string>
     <string name="toastmessage_shortcut_created">Snarvei opprettet.</string>
     <string name="toastmessage_station_copied">Stasjon kopiert.</string>
+    <string name="toastmessage_stream_may_not_work">Unsupported audio format detected. Playback of stream may not work properly.</string>
     <string name="toastmessage_timer_activated">Tidsavbrudd aktivert.</string>
     <string name="toastmessage_timer_cancelled">Tidsavbrudd avbrutt.</string>
     <string name="toastmessage_timer_duration_increased">Varighet økt.</string>
