@@ -238,7 +238,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     @Override
     public void onCompletion(MediaPlayer mp) {
         Log.i(LOG_TAG, "Resuming playback after completion / signal loss. Player instance count: " + mPlayerInstanceCounter);
-        mMediaPlayer.reset();
+        mp.reset();
         mPlayerInstanceCounter++;
         initializeMediaPlayer();
     }
@@ -288,6 +288,12 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     @Override
     public boolean onError(MediaPlayer mp, int what, int extra) {
 
+        // restart playback on error
+        Log.i(LOG_TAG, "Trying to resume playback after error. Player instance count: " + mPlayerInstanceCounter);
+        mp.reset();
+        mPlayerInstanceCounter++;
+        initializeMediaPlayer();
+
         switch (what) {
             case MediaPlayer.MEDIA_ERROR_UNKNOWN:
                 Log.e(LOG_TAG, "Unknown media playback error");
@@ -317,8 +323,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
                 Log.e(LOG_TAG, "Other case of media playback error");
                 break;
         }
-
-        mp.reset();
 
         return true;
     }
