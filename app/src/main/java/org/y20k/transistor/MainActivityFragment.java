@@ -144,8 +144,8 @@ public final class MainActivityFragment extends Fragment {
         mStationImages = new ArrayList<>();
         mCollectionAdapter = new CollectionAdapter(mActivity, mCollection, mStationNames, mStationImages);
 
-//        // initialize broadcast receivers
-//        initializeBroadcastReceivers();
+        // initialize broadcast receivers
+        initializeBroadcastReceivers();
 
     }
 
@@ -192,9 +192,6 @@ public final class MainActivityFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        // initialize broadcast receivers
-        initializeBroadcastReceivers();
-
         // handle incoming intent
         handleIncomingIntent();
 
@@ -209,19 +206,18 @@ public final class MainActivityFragment extends Fragment {
 
 
     @Override
-    public void onPause() {
-        super.onPause();
-        // unregister broadcast receivers
-        unregisterBroadcastReceivers();
-    }
-
-
-    @Override
     public void onStart() {
         super.onStart();
         // fill collection adapter with stations
         refreshStationList();
 
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterBroadcastReceivers();
     }
 
 

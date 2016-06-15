@@ -68,8 +68,8 @@
 
     <!-- messages -->
     <string name="actioncall_message_start_here">Додати нову станцію</string>
-    <string name="toastmessage_add_download_started">Завантаження розпочато:</string>
-    <string name="toastmessage_add_open_file_started">Відкриття файлу:</string>
+    <string name="toastmessage_add_download_started">Завантаження розпочато.</string>
+    <string name="toastmessage_add_open_file_started">Відкриття файлу.</string>
     <string name="toastmessage_long_press_playback_stopped">Відтворення зупинено</string>
     <string name="toastmessage_long_press_playback_started">Відтворення розпочато</string>
     <string name="toastmessage_shortcut_created">Посилання створено.</string>

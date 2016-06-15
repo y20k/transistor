@@ -67,16 +67,13 @@ public final class PlayerActivity extends AppCompatActivity {
             if (intent.hasExtra(TransistorKeys.EXTRA_PLAYBACK_STATE)) {
                 startPlayback = intent.getBooleanExtra(TransistorKeys.EXTRA_PLAYBACK_STATE, false);
 
-                // Get a support ActionBar corresponding to this toolbar
-                ActionBar ab = getSupportActionBar();
+                // get a support ActionBar corresponding to this toolbar
+                ActionBar actionBar = getSupportActionBar();
 
-                // Enable the Up button
-                ab.setDisplayHomeAsUpEnabled(true);
-
-//                // artificial back stack.
-//                TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-//                stackBuilder.addParentStack(MainActivity.class);
-//                stackBuilder.addNextIntent(new Intent(this, MainActivity.class));
+                // enable the Up button
+                if (actionBar != null ) {
+                    actionBar.setDisplayHomeAsUpEnabled(true);
+                }
 
 
             } else {

@@ -68,8 +68,8 @@
 
     <!-- messages -->
     <string name="actioncall_message_start_here">Afegeix nova emissora</string>
-    <string name="toastmessage_add_download_started">La baixada ha començat:</string>
-    <string name="toastmessage_add_open_file_started">Obrint fitxer:</string>
+    <string name="toastmessage_add_download_started">La baixada ha començat.</string>
+    <string name="toastmessage_add_open_file_started">Obrint fitxer.</string>
     <string name="toastmessage_long_press_playback_stopped">Reproducció aturada (pulsació llarga detectada)</string>
     <string name="toastmessage_long_press_playback_started">Reproducció iniciada (pulsació llarga detectada)</string>
     <string name="toastmessage_shortcut_created">Accés directe creat.</string>

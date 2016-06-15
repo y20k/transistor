@@ -232,7 +232,7 @@ public final class PlayerActivityFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // initialize broadcast receivers
-        // initializeBroadcastReceivers();
+         initializeBroadcastReceivers();
 
     }
 
@@ -242,9 +242,6 @@ public final class PlayerActivityFragment extends Fragment {
         super.onResume();
         // set fragment visibility
         mVisibility = true;
-
-        // initialize broadcast receivers
-        initializeBroadcastReceivers();
 
         // refresh playback state
         loadAppState(mActivity);
@@ -279,10 +276,13 @@ public final class PlayerActivityFragment extends Fragment {
         super.onPause();
         // set fragment visibility
         mVisibility = false;
+    }
 
-        // unregister broadcast receivers
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
         unregisterBroadcastReceivers();
-
     }
 
 

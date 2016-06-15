@@ -68,8 +68,8 @@
 
     <!-- messages -->
     <string name="actioncall_message_start_here">Add a new station</string>
-    <string name="toastmessage_add_download_started">Download started:</string>
-    <string name="toastmessage_add_open_file_started">Opening file:</string>
+    <string name="toastmessage_add_download_started">Download started.</string>
+    <string name="toastmessage_add_open_file_started">Opening file.</string>
     <string name="toastmessage_long_press_playback_stopped">Playback stopped (long press detected)</string>
     <string name="toastmessage_long_press_playback_started">Playback started (long press detected)</string>
     <string name="toastmessage_shortcut_created">Shortcut created.</string>

@@ -62,15 +62,10 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
         mFolder = mCollection.getFolder();
         mFolderExists = mFolder.exists();
 
-        // notify user
-        String stationUriString = stationUri.toString();
-        if (stationUriString.length() >= 48) {
-            stationUriString = stationUriString.substring(0,45) + "...";
-        }
         if (stationUri != null && mStationUriScheme != null && mStationUriScheme.startsWith("http")) {
-            Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_add_download_started) + " " + stationUriString, Toast.LENGTH_LONG).show();
+            Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_add_download_started), Toast.LENGTH_LONG).show();
         } else if (stationUri != null && mStationUriScheme != null && mStationUriScheme.startsWith("file")) {
-            Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_add_open_file_started) + " " + stationUriString, Toast.LENGTH_LONG).show();
+            Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_add_open_file_started), Toast.LENGTH_LONG).show();
         }
 
     }
@@ -130,13 +125,13 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
             }
 
             // inform user that aac might not work properly
-            if (fetchResults.containsKey(TransistorKeys.RESULT_STREAM_TYPE) && fetchResults.getString(TransistorKeys.RESULT_STREAM_TYPE) != null && fetchResults.getString(TransistorKeys.RESULT_STREAM_TYPE).contains("aac")) {
+            if (fetchResults.containsKey(TransistorKeys.RESULT_STREAM_TYPE) && fetchResults.getParcelable(TransistorKeys.RESULT_STREAM_TYPE) != null && fetchResults.getParcelable(TransistorKeys.RESULT_STREAM_TYPE).toString().contains("aac")) {
                 Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_stream_may_not_work), Toast.LENGTH_LONG).show();
             }
 
         }
 
-        // an error occured
+        // an error occurred
         if (station == null || (fetchResults != null && fetchResults.getBoolean(TransistorKeys.RESULT_FETCH_ERROR)) || !mFolderExists || !stationAdded) {
 
             String errorTitle;
@@ -190,8 +185,18 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
     private String buildDownloadErrorDetails(Bundle fetchResults) {
 
         String fileContent = fetchResults.getString(TransistorKeys.RESULT_FILE_CONTENT);
-        String playListType = fetchResults.getString(TransistorKeys.RESULT_PLAYLIST_TYPE);
-        String streamType = fetchResults.getString(TransistorKeys.RESULT_STREAM_TYPE);
+        String playListType;
+        String streamType;
+        if (fetchResults.containsKey(TransistorKeys.RESULT_PLAYLIST_TYPE) && fetchResults.getParcelable(TransistorKeys.RESULT_PLAYLIST_TYPE) != null) {
+            playListType = fetchResults.getParcelable(TransistorKeys.RESULT_PLAYLIST_TYPE).toString();
+        } else {
+            playListType = "unknown";
+        }
+        if (fetchResults.containsKey(TransistorKeys.RESULT_STREAM_TYPE) && fetchResults.getParcelable(TransistorKeys.RESULT_STREAM_TYPE) != null) {
+            streamType = fetchResults.getParcelable(TransistorKeys.RESULT_STREAM_TYPE).toString();
+        } else {
+            streamType = "unknown";
+        }
 
         // construct details string
         StringBuilder sb = new StringBuilder("");

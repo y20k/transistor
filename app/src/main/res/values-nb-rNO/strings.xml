@@ -68,8 +68,8 @@
 
     <!-- messages -->
     <string name="actioncall_message_start_here">Legg il ny stasjon</string>
-    <string name="toastmessage_add_download_started">Nedlasting startet:</string>
-    <string name="toastmessage_add_open_file_started">Åpner fil:</string>
+    <string name="toastmessage_add_download_started">Nedlasting startet.</string>
+    <string name="toastmessage_add_open_file_started">Åpner fil.</string>
     <string name="toastmessage_long_press_playback_stopped">Avspilling stoppet (enset langt trykk)</string>
     <string name="toastmessage_long_press_playback_started">Avspilling startet (langt trykk enset)</string>
     <string name="toastmessage_shortcut_created">Snarvei opprettet.</string>

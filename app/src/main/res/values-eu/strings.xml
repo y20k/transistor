@@ -68,8 +68,8 @@
 
     <!-- messages -->
     <string name="actioncall_message_start_here">Gehitu estazio berria</string>
-    <string name="toastmessage_add_download_started">Deskarga hasi da:</string>
-    <string name="toastmessage_add_open_file_started">Fitxategia irekitzen:</string>
+    <string name="toastmessage_add_download_started">Deskarga hasi da.</string>
+    <string name="toastmessage_add_open_file_started">Fitxategia irekitzen.</string>
     <string name="toastmessage_long_press_playback_stopped">Erreprodukzioa gelditu da (sakatze luzea atzeman da)</string>
     <string name="toastmessage_long_press_playback_started">Erreprodukzioa hasi da (sakatze luzea atzeman da)</string>
     <string name="toastmessage_shortcut_created">Lasterbidea sortu da.</string>

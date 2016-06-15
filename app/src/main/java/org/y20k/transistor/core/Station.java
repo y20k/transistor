@@ -111,8 +111,7 @@ public final class Station implements Comparable<Station>, Parcelable {
             mStreamUri = Uri.parse(fileLocation.toString().trim());
             mStationName = getStationName(fileLocation);
             // save results
-            mStationFetchResults.putString(TransistorKeys.RESULT_PLAYLIST_TYPE, "none");
-            mStationFetchResults.putString(TransistorKeys.RESULT_STREAM_TYPE, contentType.toString());
+            mStationFetchResults.putParcelable(TransistorKeys.RESULT_STREAM_TYPE, contentType);
             mStationFetchResults.putBoolean(TransistorKeys.RESULT_FETCH_ERROR, false);
         }
 
@@ -125,18 +124,26 @@ public final class Station implements Comparable<Station>, Parcelable {
             if (parse(mPlaylistFileContent) && mStreamUri != null) {
                 mStationName = getStationName(fileLocation);
                 // save results
-                mStationFetchResults.putString(TransistorKeys.RESULT_PLAYLIST_TYPE, contentType.toString());
-                mStationFetchResults.putString(TransistorKeys.RESULT_STREAM_TYPE, getContentType(mStreamUri).toString());
+                mStationFetchResults.putParcelable(TransistorKeys.RESULT_PLAYLIST_TYPE, contentType);
+                mStationFetchResults.putParcelable(TransistorKeys.RESULT_STREAM_TYPE, getContentType(mStreamUri));
                 mStationFetchResults.putString(TransistorKeys.RESULT_FILE_CONTENT, mPlaylistFileContent);
                 mStationFetchResults.putBoolean(TransistorKeys.RESULT_FETCH_ERROR, false);
 
             } else {
                 // save error flag and file content in results
+                mStationFetchResults.putParcelable(TransistorKeys.RESULT_PLAYLIST_TYPE, contentType);
                 mStationFetchResults.putString(TransistorKeys.RESULT_FILE_CONTENT, "\n[File probably does not contain a valid streaming URL.]");
                 mStationFetchResults.putBoolean(TransistorKeys.RESULT_FETCH_ERROR, true);
             }
 
         // content type is none of the above
+        } else if (contentType != null) {
+            // save results and return
+            mStationFetchResults.putParcelable(TransistorKeys.RESULT_STREAM_TYPE, contentType);
+            mStationFetchResults.putBoolean(TransistorKeys.RESULT_FETCH_ERROR, true);
+            return;
+
+        // no content type
         } else {
             // save error flag in results and return
             mStationFetchResults.putBoolean(TransistorKeys.RESULT_FETCH_ERROR, true);
@@ -171,7 +178,6 @@ public final class Station implements Comparable<Station>, Parcelable {
         // parse the raw content of playlist file (mPlaylistFileContent)
         if (parse(mPlaylistFileContent) &&  mStreamUri != null) {
             // save results
-            mStationFetchResults.putString(TransistorKeys.RESULT_PLAYLIST_TYPE, "local");
             mStationFetchResults.putString(TransistorKeys.RESULT_STREAM_TYPE, getContentType(mStreamUri).toString());
             mStationFetchResults.putString(TransistorKeys.RESULT_FILE_CONTENT, mPlaylistFileContent);
             mStationFetchResults.putBoolean(TransistorKeys.RESULT_FETCH_ERROR, false);
@@ -618,14 +624,51 @@ public final class Station implements Comparable<Station>, Parcelable {
      * Container class representing the content-type and charset string
      * received from the response header of an HTTP server.
      */
-    private class ContentType {
+    public class ContentType implements Parcelable {
         String type;
         String charset;
+
+
+        /* Constructor (default) */
+        public ContentType() {
+        }
+
+        /* Constructor used by CREATOR */
+        protected ContentType(Parcel in) {
+            type = in.readString();
+            charset = in.readString();
+        }
+
+        /* CREATOR for ContentType object used to do parcel related operations */
+        public final Creator<ContentType> CREATOR = new Creator<ContentType>() {
+            @Override
+            public ContentType createFromParcel(Parcel in) {
+                return new ContentType(in);
+            }
+
+            @Override
+            public ContentType[] newArray(int size) {
+                return new ContentType[size];
+            }
+        };
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(type);
+            dest.writeString(charset);
+        }
 
         @Override
         public String toString() {
             return "ContentType{type='" + type + "'" + ", charset='" + charset + "'}";
         }
+
+
     }
 
 }

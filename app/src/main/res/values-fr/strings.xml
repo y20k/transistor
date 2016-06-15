@@ -68,8 +68,8 @@
 
     <!-- messages -->
     <string name="actioncall_message_start_here">Ajouter une station</string>
-    <string name="toastmessage_add_download_started">Téléchargement démarré :</string>
-    <string name="toastmessage_add_open_file_started">Ouverture du fichier :</string>
+    <string name="toastmessage_add_download_started">Téléchargement démarré.</string>
+    <string name="toastmessage_add_open_file_started">Ouverture du fichier.</string>
     <string name="toastmessage_long_press_playback_stopped">Lecture arrêtée (appui long détecté)</string>
     <string name="toastmessage_long_press_playback_started">Lecture démarrée (appui long détecté)</string>
     <string name="toastmessage_shortcut_created">Raccourci créé.</string>

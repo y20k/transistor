@@ -53,6 +53,7 @@ public final class MainActivity extends AppCompatActivity {
     private File mFolder;
     private Collection mCollection;
     private View mContainer;
+    private BroadcastReceiver mCollectionChangedReceiver;
 
 
     @Override
@@ -71,11 +72,11 @@ public final class MainActivity extends AppCompatActivity {
             mIntent.putExtra(TransistorKeys.EXTRA_COLLECTION, mCollection);
         }
 
-        // initialize broadcast receivers
-        initializeBroadcastReceivers();
-
         // set layout
         setContentView(R.layout.activity_main);
+
+        // initialize broadcast receivers
+        initializeBroadcastReceivers();
 
     }
 
@@ -83,6 +84,7 @@ public final class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
 
         // if player_container is present two-pane layout has been loaded
         mContainer = findViewById(R.id.player_container);
@@ -119,6 +121,13 @@ public final class MainActivity extends AppCompatActivity {
 
         saveAppState(this);
 
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterBroadcastReceivers();
     }
 
 
@@ -235,10 +244,16 @@ public final class MainActivity extends AppCompatActivity {
     }
 
 
+    /* Unregisters broadcast receivers */
+    private void unregisterBroadcastReceivers() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mCollectionChangedReceiver);
+    }
+
+
     /* Initializes broadcast receivers for onCreate */
     private void initializeBroadcastReceivers() {
         // RECEIVER: station added, deleted, or changed
-        BroadcastReceiver collectionChangedReceiver = new BroadcastReceiver() {
+        mCollectionChangedReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
 
@@ -264,7 +279,7 @@ public final class MainActivity extends AppCompatActivity {
             }
         };
         IntentFilter collectionChangedIntentFilter = new IntentFilter(TransistorKeys.ACTION_COLLECTION_CHANGED);
-        LocalBroadcastManager.getInstance(this).registerReceiver(collectionChangedReceiver, collectionChangedIntentFilter);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mCollectionChangedReceiver, collectionChangedIntentFilter);
     }
 
 }

@@ -68,8 +68,8 @@
 
     <!-- messages -->
     <string name="actioncall_message_start_here">添加新电台</string>
-    <string name="toastmessage_add_download_started">下载开始：</string>
-    <string name="toastmessage_add_open_file_started">打开文件：</string>
+    <string name="toastmessage_add_download_started">下载开始.</string>
+    <string name="toastmessage_add_open_file_started">打开文件.</string>
     <string name="toastmessage_long_press_playback_stopped">播放已停止（长按删除）</string>
     <string name="toastmessage_long_press_playback_started">播放已开始（长按删除）</string>
     <string name="toastmessage_shortcut_created">捷径已创建。</string>

@@ -68,8 +68,8 @@
 
     <!-- messages -->
     <string name="actioncall_message_start_here">Añadir una nueva estación</string>
-    <string name="toastmessage_add_download_started">Descarga comenzada:</string>
-    <string name="toastmessage_add_open_file_started">Abriendo archivo:</string>
+    <string name="toastmessage_add_download_started">Descarga comenzada.</string>
+    <string name="toastmessage_add_open_file_started">Abriendo archivo.</string>
     <string name="toastmessage_long_press_playback_stopped">Reproducción detenida (detectada pulsación larga)</string>
     <string name="toastmessage_long_press_playback_started">Reproducción empezada (detectada pulsación larga)</string>
     <string name="toastmessage_shortcut_created">Acceso directo creado.</string>

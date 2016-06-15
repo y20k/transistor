@@ -68,8 +68,8 @@
 
     <!-- messages -->
     <string name="actioncall_message_start_here">Додајте нову станицу</string>
-    <string name="toastmessage_add_download_started">Преузимање започето:</string>
-    <string name="toastmessage_add_open_file_started">Отварам фајл:</string>
+    <string name="toastmessage_add_download_started">Преузимање започето.</string>
+    <string name="toastmessage_add_open_file_started">Отварам фајл.</string>
     <string name="toastmessage_long_press_playback_stopped">Пуштање заустављено (примећен дуги тап)</string>
     <string name="toastmessage_long_press_playback_started">Пуштање почето (примећен дуги тап)</string>
     <string name="toastmessage_shortcut_created">Пречица направљена.</string>
