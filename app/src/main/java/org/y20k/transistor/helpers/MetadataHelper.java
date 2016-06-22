@@ -45,7 +45,7 @@ public class MetadataHelper {
 
 
     /* Main class variables */
-    private Station mStation;
+    private final Station mStation;
     private final Context mContext;
     private final String mStreamUri;
     private String mShoutcastProxy;

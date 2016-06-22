@@ -1,7 +1,7 @@
 /**
  * PlayerActivity.java
  * Implements the app's player activity
- * The player activity sets up the now playing view for phone  mode and inflates a menubar menu
+ * The player activity sets up the now playing view for phone  mode and inflates a menu bar menu
  *
  * This file is part of
  * TRANSISTOR - Radio App for Android
@@ -20,7 +20,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 
-import org.y20k.transistor.core.Collection;
+import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.TransistorKeys;
 
 
@@ -46,47 +46,38 @@ public final class PlayerActivity extends AppCompatActivity {
         // CASE: show player in phone mode
         if (intent != null && TransistorKeys.ACTION_SHOW_PLAYER.equals(intent.getAction())) {
 
+            // get station from intent
+            Station station;
+            if (intent.hasExtra(TransistorKeys.EXTRA_STATION)) {
+                station = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
+            } else {
+                station = null;
+            }
+
             // get id of station from intent
-            int stationID;
+            int stationID = 0;
             if (intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)) {
                 stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
-            } else {
-                stationID = 0;
             }
 
-            // get collection object from intent
-            Collection collection;
-            if (intent.hasExtra(TransistorKeys.EXTRA_COLLECTION)) {
-                collection = intent.getParcelableExtra(TransistorKeys.EXTRA_COLLECTION);
-            } else {
-                collection = null;
-            }
-
-            // get playback action from intent
+            // get playback action from intent (if started from shortcut)
             boolean startPlayback;
             if (intent.hasExtra(TransistorKeys.EXTRA_PLAYBACK_STATE)) {
                 startPlayback = intent.getBooleanExtra(TransistorKeys.EXTRA_PLAYBACK_STATE, false);
 
-                // get a support ActionBar corresponding to this toolbar
-                ActionBar actionBar = getSupportActionBar();
-
                 // enable the Up button
+                ActionBar actionBar = getSupportActionBar();
                 if (actionBar != null ) {
                     actionBar.setDisplayHomeAsUpEnabled(true);
                 }
-
 
             } else {
                 startPlayback = false;
             }
 
-
-
-
-
             // create bundle for player activity fragment
             Bundle args = new Bundle();
-            args.putParcelable(TransistorKeys.ARG_COLLECTION, collection);
+            args.putParcelable(TransistorKeys.ARG_STATION, station);
             args.putInt(TransistorKeys.ARG_STATION_ID, stationID);
             args.putBoolean(TransistorKeys.ARG_PLAYBACK, startPlayback);
 

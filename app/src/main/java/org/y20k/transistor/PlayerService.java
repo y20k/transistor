@@ -41,7 +41,6 @@ import android.support.v4.media.session.PlaybackStateCompat;
 import android.util.Log;
 import android.widget.Toast;
 
-import org.y20k.transistor.core.Collection;
 import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.MetadataHelper;
 import org.y20k.transistor.helpers.NotificationHelper;
@@ -67,13 +66,15 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
 
 
     /* Main class variables */
-    private Station mStation;
+    private static Station mStation;
     private MetadataHelper mMetadataHelper;
     private AudioManager mAudioManager;
     private MediaPlayer mMediaPlayer;
     private MediaSessionCompat mSession;
     private MediaControllerCompat mController;
     private int mStationID;
+    private int mStationIDCurrent;
+    private int mStationIDLast;
     private String mStreamUri;
     private boolean mPlayback;
     private boolean mStationLoading;
@@ -90,6 +91,9 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     @Override
     public void onCreate() {
         super.onCreate();
+
+        // load app state
+        loadAppState(getApplication());
 
         // set up variables
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
@@ -154,11 +158,12 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
             // get URL of station from intent
             if (intent.hasExtra(TransistorKeys.EXTRA_STATION)) {
                 mStation = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
+                mStationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
                 mStreamUri = mStation.getStreamUri().toString();
             }
-            if (intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)) {
-                mStationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
-            }
+//            if (intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)) {
+//                mStationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
+//            }
 
             // update controller - start playback
             mController.getTransportControls().play();
@@ -258,6 +263,8 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
             Intent i = new Intent();
             i.setAction(TransistorKeys.ACTION_PLAYBACK_STATE_CHANGED);
             i.putExtra(TransistorKeys.EXTRA_PLAYBACK_STATE_CHANGE, TransistorKeys.PLAYBACK_STARTED);
+            i.putExtra(TransistorKeys.EXTRA_STATION, mStation);
+            i.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
             LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(i);
 
             // save state
@@ -377,10 +384,11 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
 
 
     /* Method to start the player */
-    public static void startActionPlay(Context context, Collection collection, int stationID) {
+    public static void startActionPlay(Context context, Station station, int stationID) {
 
-        Station station = collection.getStations().get(stationID);
-        NotificationHelper.initialize(collection);
+        // put up notification
+        station.setPlaybackState(true);
+        NotificationHelper.initialize(station, stationID);
 
         // acquire WifiLock
 //        mWifiLock = ((WifiManager) getSystemService(Context.WIFI_SERVICE)).createWifiLock(WifiManager.WIFI_MODE_FULL, "mylock");
@@ -410,18 +418,27 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     }
 
 
+    /* Getter for current station */
+    public static Station getStation() {
+        return mStation;
+    }
+
+
     /* Starts playback */
     private void startPlayback() {
 
         // save state
         mPlayback = true;
         mStationLoading = true;
+        mStationIDLast = mStationIDCurrent;
+        mStationIDCurrent = mStationID;
         saveAppState();
 
         // send local broadcast
         Intent i = new Intent();
         i.setAction(TransistorKeys.ACTION_PLAYBACK_STATE_CHANGED);
         i.putExtra(TransistorKeys.EXTRA_PLAYBACK_STATE_CHANGE, TransistorKeys.PLAYBACK_LOADING_STATION);
+        i.putExtra(TransistorKeys.EXTRA_STATION, mStation);
         i.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
         LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(i);
 
@@ -444,15 +461,9 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         }
 
         // put up notification
-        if (mStation != null && mStationID > -1) {
-            NotificationHelper.setStationName(mStation.getStationName());
-            NotificationHelper.setStationID(mStationID);
-        }
         NotificationHelper.setStationMetadata(null);
         NotificationHelper.setMediaSession(mSession);
         NotificationHelper.createNotification(this);
-
-
 
     }
 
@@ -463,12 +474,15 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         // save state
         mPlayback = false;
         mStationLoading = false;
+        mStationIDLast = mStationID;
+        mStationIDCurrent = -1;
         saveAppState();
 
         // send local broadcast
         Intent i = new Intent();
         i.setAction(TransistorKeys.ACTION_PLAYBACK_STATE_CHANGED);
         i.putExtra(TransistorKeys.EXTRA_PLAYBACK_STATE_CHANGE, TransistorKeys.PLAYBACK_STOPPED);
+        i.putExtra(TransistorKeys.EXTRA_STATION, mStation);
         i.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
         LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(i);
 
@@ -508,7 +522,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
             e.printStackTrace();
         }
 
-
     }
 
 
@@ -530,8 +543,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
 
         if (mSession != null) {
             mSession.setActive(false);
-            // mSession.release();
-            // mSession = null;
         }
 
     }
@@ -610,6 +621,8 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     private void saveAppState () {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplication());
         SharedPreferences.Editor editor = settings.edit();
+        editor.putInt(TransistorKeys.PREF_STATION_ID_CURRENTLY_PLAYING, mStationIDCurrent);
+        editor.putInt(TransistorKeys.PREF_STATION_ID_LAST, mStationIDLast);
         editor.putBoolean(TransistorKeys.PREF_PLAYBACK, mPlayback);
         editor.putBoolean(TransistorKeys.PREF_STATION_LOADING, mStationLoading);
         editor.apply();
@@ -620,9 +633,8 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     /* Loads app state from preferences */
     private void loadAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-        mStationID = settings.getInt(TransistorKeys.PREF_STATION_ID_SELECTED, 0);
-        mPlayback = settings.getBoolean(TransistorKeys.PREF_PLAYBACK, false);
-        mStationLoading = settings.getBoolean(TransistorKeys.PREF_STATION_LOADING, false);
+        mStationIDCurrent = settings.getInt(TransistorKeys.PREF_STATION_ID_CURRENTLY_PLAYING, -1);
+        mStationIDLast = settings.getInt(TransistorKeys.PREF_STATION_ID_LAST, -1);
         Log.v(LOG_TAG, "Loading state.");
     }
 
@@ -655,9 +667,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         @Override
         public void onPlay() {
             // start playback
-            if (mStationID == -1) {
-                loadAppState(getApplicationContext());
-            }
             startPlayback();
         }
 

@@ -23,7 +23,6 @@ import android.widget.Toast;
 
 import org.y20k.transistor.MainActivity;
 import org.y20k.transistor.R;
-import org.y20k.transistor.core.Collection;
 import org.y20k.transistor.core.Station;
 
 
@@ -38,20 +37,18 @@ public class ShortcutHelper {
 
     /* Main class variables */
     private final Activity mActivity;
-    private final Collection mCollection;
 
 
     /* Constructor */
-    public ShortcutHelper(Activity activity, Collection collection) {
+    public ShortcutHelper(Activity activity) {
         mActivity = activity;
-        mCollection = collection;
     }
 
 
     /* Places shortcut on Home screen */
-    public void placeShortcut(int stationID) {
+    public void placeShortcut(Station station) {
         // create and launch intent to put shortcut on Home screen
-        Intent addIntent = createShortcutIntent(stationID);
+        Intent addIntent = createShortcutIntent(station);
         addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
         mActivity.getApplicationContext().sendBroadcast(addIntent);
 
@@ -61,19 +58,16 @@ public class ShortcutHelper {
 
 
     /* Removes shortcut for given station from Home screen */
-    public void removeShortcut(int stationID) {
+    public void removeShortcut(Station station) {
         // create and launch intent to remove shortcut on Home screen
-        Intent removeIntent = createShortcutIntent(stationID);
+        Intent removeIntent = createShortcutIntent(station);
         removeIntent.setAction("com.android.launcher.action.UNINSTALL_SHORTCUT");
         mActivity.getApplicationContext().sendBroadcast(removeIntent);
     }
 
 
     /* Creates Intent for a station shortcut */
-    private Intent createShortcutIntent (int stationID) {
-
-        // get station
-        Station station = mCollection.getStations().get(stationID);
+    private Intent createShortcutIntent (Station station) {
 
         // create shortcut icon
         ImageHelper imageHelper;
@@ -88,7 +82,7 @@ public class ShortcutHelper {
         imageHelper = new ImageHelper(stationImage, mActivity);
         shortcutIcon = imageHelper.createShortcut(192);
 
-        String stationUri = mCollection.getStations().get(stationID).getStreamUri().toString();
+        String stationUri = station.getStreamUri().toString();
 
         // create intent to start MainActivity
         Intent shortcutIntent = new Intent(mActivity, MainActivity.class);

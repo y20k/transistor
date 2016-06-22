@@ -29,7 +29,6 @@ import android.util.Log;
 import org.y20k.transistor.MainActivity;
 import org.y20k.transistor.PlayerService;
 import org.y20k.transistor.R;
-import org.y20k.transistor.core.Collection;
 import org.y20k.transistor.core.Station;
 
 
@@ -48,12 +47,14 @@ public final class NotificationHelper {
     private static int mStationID;
     private static String mStationName;
     private static Service mLastUsedService;
-    private static Collection mCollection;
+    private static Station mStation;
 
 
     /* Initializes the NotificationHelper */
-    public static void initialize(Collection collection) {
-        mCollection = collection;
+    public static void initialize(Station station, int stationID) {
+        mStation = station;
+        mStationID = stationID;
+        mStationName = station.getStationName();
     }
 
 
@@ -91,6 +92,7 @@ public final class NotificationHelper {
         // explicit intent for notification tap
         Intent tapIntent = new Intent(service, MainActivity.class);
         tapIntent.setAction(TransistorKeys.ACTION_SHOW_PLAYER);
+        tapIntent.putExtra(TransistorKeys.EXTRA_STATION, mStation);
         tapIntent.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
 
         // explicit intent for notification swipe
@@ -115,7 +117,7 @@ public final class NotificationHelper {
         // construct notification in builder
         builder = new NotificationCompat.Builder(service);
         builder.setSmallIcon(R.drawable.ic_notification_small_24dp);
-        builder.setLargeIcon(getStationIcon(service, mStationID));
+        builder.setLargeIcon(getStationIcon(service));
         builder.setContentTitle(notificationTitle);
         builder.setContentText(notificationText);
         builder.setShowWhen(false);
@@ -150,20 +152,19 @@ public final class NotificationHelper {
 
 
     /* Get station image for notification's large icon */
-    private static Bitmap getStationIcon(Context context, int stationID) {
-        if (mCollection == null) {
+    private static Bitmap getStationIcon(Context context) {
+        if (mStation == null) {
             return null;
         }
 
-        Station station = mCollection.getStations().get(stationID);
         // create station image icon
         ImageHelper imageHelper;
         Bitmap stationImage;
         Bitmap stationIcon;
 
-        if (station.getStationImageFile().exists()) {
+        if (mStation.getStationImageFile().exists()) {
             // use station image
-            stationImage = BitmapFactory.decodeFile(station.getStationImageFile().toString());
+            stationImage = BitmapFactory.decodeFile(mStation.getStationImageFile().toString());
         } else {
             stationImage = null;
         }
@@ -178,19 +179,6 @@ public final class NotificationHelper {
     public static void setMediaSession(MediaSessionCompat session) {
         mSession = session;
     }
-
-
-    /* Setter for name of station */
-    public static void setStationName(String stationName) {
-        mStationName = stationName;
-    }
-
-
-    /* Setter for name of station */
-    public static void setStationID(int stationID) {
-        mStationID = stationID;
-    }
-
 
     /* Setter for metadata of station */
     public static void setStationMetadata(String stationMetadata) {

@@ -1,7 +1,7 @@
 /**
  * MainActivity.java
  * Implements the app's main activity
- * The main activity sets up the main view end inflates a menubar menu
+ * The main activity sets up the main view end inflates a menu bar menu
  *
  * This file is part of
  * TRANSISTOR - Radio App for Android
@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -31,7 +32,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 
-import org.y20k.transistor.core.Collection;
+import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.StorageHelper;
 import org.y20k.transistor.helpers.TransistorKeys;
 
@@ -50,8 +51,7 @@ public final class MainActivity extends AppCompatActivity {
     /* Main class variables */
     private boolean mTwoPane;
     private Intent mIntent;
-    private File mFolder;
-    private Collection mCollection;
+    private File mCollectionFolder;
     private View mContainer;
     private BroadcastReceiver mCollectionChangedReceiver;
 
@@ -60,31 +60,24 @@ public final class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // get collection folder from external storage and load collection
+        // get collection folder
         StorageHelper storageHelper = new StorageHelper(this);
-        mFolder = storageHelper.getCollectionDirectory();
-        mCollection = new Collection(mFolder);
+        mCollectionFolder = storageHelper.getCollectionDirectory();
 
         // get intent add collection
         mIntent = getIntent();
-
-        if (mIntent != null) {
-            mIntent.putExtra(TransistorKeys.EXTRA_COLLECTION, mCollection);
-        }
 
         // set layout
         setContentView(R.layout.activity_main);
 
         // initialize broadcast receivers
         initializeBroadcastReceivers();
-
     }
 
 
     @Override
     protected void onResume() {
         super.onResume();
-
 
         // if player_container is present two-pane layout has been loaded
         mContainer = findViewById(R.id.player_container);
@@ -102,17 +95,16 @@ public final class MainActivity extends AppCompatActivity {
         }
 
         // tablet mode: show player fragment in player container
-        if (mTwoPane && !mCollection.getStations().isEmpty()) {
+        if (mTwoPane && mCollectionFolder.listFiles().length > 0) {
             // prepare bundle
             Bundle playerArgs = new Bundle();
-            playerArgs.putParcelable(TransistorKeys.ARG_COLLECTION, mCollection);
             playerArgs.putBoolean(TransistorKeys.ARG_TWO_PANE, mTwoPane);
 
             // show fragment
             PlayerActivityFragment playerActivityFragment = new PlayerActivityFragment();
             playerActivityFragment.setArguments(playerArgs);
             getFragmentManager().beginTransaction()
-                    .replace(R.id.player_container, playerActivityFragment, TransistorKeys.PLAYERFRAGMENT_TAG)
+                    .replace(R.id.player_container, playerActivityFragment, TransistorKeys.PLAYER_FRAGMENT_TAG)
                     .commit();
         } else if (mTwoPane) {
             // make room for action call
@@ -172,58 +164,55 @@ public final class MainActivity extends AppCompatActivity {
 
         // prepare bundle
         Bundle playerArgs = new Bundle();
-        int stationID;
+        Station station = null;
         boolean startPlayback;
 
         // get id of station from intent
-        if (mIntent.hasExtra(TransistorKeys.EXTRA_STATION_ID)) {
+        if (mIntent.hasExtra(TransistorKeys.EXTRA_STATION)) {
             // get station from notification
-            stationID = mIntent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
+            station = mIntent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
         } else if (mIntent.hasExtra(TransistorKeys.EXTRA_STREAM_URI)) {
             // get station from home screen shortcut
-            stationID = mCollection.findStationID(mIntent.getStringExtra(TransistorKeys.EXTRA_STREAM_URI));
-        }
-        else {
-            // default station
-            stationID = 0;
+            CollectionAdapter collectionAdapter = new CollectionAdapter(this, mCollectionFolder);
+            station = collectionAdapter.findStation(Uri.parse(mIntent.getStringExtra(TransistorKeys.EXTRA_STREAM_URI)));
         }
 
         // save station id as selected station (TODO: put into saveAppState)
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putInt(TransistorKeys.PREF_STATION_ID_SELECTED, stationID);
-        editor.apply();
+//        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+//        SharedPreferences.Editor editor = settings.edit();
+//        editor.putInt(TransistorKeys.PREF_STATION_ID_SELECTED, stationID);
+//        editor.apply();
 
         // get playback action from intent
         if (mIntent.hasExtra(TransistorKeys.EXTRA_PLAYBACK_STATE)) {
             startPlayback = mIntent.getBooleanExtra(TransistorKeys.EXTRA_PLAYBACK_STATE, false);
+            station.setPlaybackState(mIntent.getBooleanExtra(TransistorKeys.EXTRA_PLAYBACK_STATE, false)); // TODO remove
         } else {
             startPlayback = false;
+            station.setPlaybackState(false); // TODO remove
         }
 
         // prepare arguments and intent
         if (mTwoPane) {
             // prepare args for player fragment
-            playerArgs.putInt(TransistorKeys.ARG_STATION_ID, stationID);
-            playerArgs.putParcelable(TransistorKeys.ARG_COLLECTION, mCollection);
+            playerArgs.putParcelable(TransistorKeys.ARG_STATION, station);
             playerArgs.putBoolean(TransistorKeys.ARG_PLAYBACK, startPlayback);
             // show player fragment
             PlayerActivityFragment playerActivityFragment = new PlayerActivityFragment();
             playerActivityFragment.setArguments(playerArgs);
             getFragmentManager().beginTransaction()
-                    .replace(R.id.player_container, playerActivityFragment, TransistorKeys.PLAYERFRAGMENT_TAG)
+                    .replace(R.id.player_container, playerActivityFragment, TransistorKeys.PLAYER_FRAGMENT_TAG)
                     .commit();
             // notify main activity fragment
             Intent changeSelectionIntent = new Intent();
             changeSelectionIntent.setAction(TransistorKeys.ACTION_CHANGE_VIEW_SELECTION);
-            changeSelectionIntent.putExtra(TransistorKeys.EXTRA_STATION_ID, stationID);
+            changeSelectionIntent.putExtra(TransistorKeys.EXTRA_STATION, station);
             LocalBroadcastManager.getInstance(getApplication()).sendBroadcast(changeSelectionIntent);
         } else {
             // start player activity - on phone
             Intent playerIntent = new Intent(this, PlayerActivity.class);
             playerIntent.setAction(TransistorKeys.ACTION_SHOW_PLAYER);
-            playerIntent.putExtra(TransistorKeys.EXTRA_STATION_ID, stationID);
-            playerIntent.putExtra(TransistorKeys.EXTRA_COLLECTION, mCollection);
+            playerIntent.putExtra(TransistorKeys.EXTRA_STATION, station);
             playerIntent.putExtra(TransistorKeys.EXTRA_PLAYBACK_STATE, startPlayback);
             startActivity(playerIntent);
         }
@@ -240,7 +229,7 @@ public final class MainActivity extends AppCompatActivity {
         // editor.putInt(PREF_STATION_ID_SELECTED, mStationID);
         editor.putBoolean(TransistorKeys.PREF_TWO_PANE, mTwoPane);
         editor.apply();
-        Log.v(LOG_TAG, "Saving state.");
+        Log.v(LOG_TAG, "Saving state. Two Pane = " + mTwoPane);
     }
 
 
@@ -257,23 +246,18 @@ public final class MainActivity extends AppCompatActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
 
-                // get collection from intent
-                if (intent.hasExtra(TransistorKeys.EXTRA_COLLECTION)) {
-                    mCollection = intent.getParcelableExtra(TransistorKeys.EXTRA_COLLECTION);
-                }
-
                 // show/hide player layout container
-                if (mTwoPane && mCollection.getStations().isEmpty()) {
+                if (mTwoPane && mCollectionFolder.listFiles().length == 0) {
                     // make room for action call
                     mContainer.setVisibility(View.GONE);
-                } else if (mTwoPane && mCollection.getStations().size() == 1) {
+                } else if (mTwoPane && mCollectionFolder.listFiles().length == 1) {
                     mContainer.setVisibility(View.VISIBLE);
                     Bundle playerArgs = new Bundle();
                     playerArgs.putBoolean(TransistorKeys.ARG_TWO_PANE, mTwoPane);
                     PlayerActivityFragment playerActivityFragment = new PlayerActivityFragment();
                     playerActivityFragment.setArguments(playerArgs);
                     getFragmentManager().beginTransaction()
-                            .replace(R.id.player_container, playerActivityFragment, TransistorKeys.PLAYERFRAGMENT_TAG)
+                            .replace(R.id.player_container, playerActivityFragment, TransistorKeys.PLAYER_FRAGMENT_TAG)
                             .commit();
                 }
             }

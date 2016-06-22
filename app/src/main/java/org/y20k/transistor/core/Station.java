@@ -72,15 +72,14 @@ public final class Station implements Comparable<Station>, Parcelable {
     private File mStationPlaylistFile;
     private Uri mStreamUri;
     private String mPlaylistFileContent;
+    private boolean mPlayback;
     private Bundle mStationFetchResults;
 
 
     /* Constructor when given file from the Collection folder */
     public Station(File file) {
-        // set mStationPlaylistFile and filename
+        // read and parse playlist file
         mStationPlaylistFile = file;
-
-        // read and parse mStationPlaylistFile
         if (mStationPlaylistFile.exists()) {
             parse(readPlaylistFile(mStationPlaylistFile));
         }
@@ -91,6 +90,8 @@ public final class Station implements Comparable<Station>, Parcelable {
             setStationImageFile(folder);
         }
 
+        // set playback state
+        mPlayback = false;
     }
 
 
@@ -158,6 +159,10 @@ public final class Station implements Comparable<Station>, Parcelable {
 
         // set Transistor's image file object
         setStationImageFile(folder);
+
+        // set playback state
+        mPlayback = false;
+
     }
 
 
@@ -178,7 +183,7 @@ public final class Station implements Comparable<Station>, Parcelable {
         // parse the raw content of playlist file (mPlaylistFileContent)
         if (parse(mPlaylistFileContent) &&  mStreamUri != null) {
             // save results
-            mStationFetchResults.putString(TransistorKeys.RESULT_STREAM_TYPE, getContentType(mStreamUri).toString());
+            mStationFetchResults.putParcelable(TransistorKeys.RESULT_STREAM_TYPE, getContentType(mStreamUri));
             mStationFetchResults.putString(TransistorKeys.RESULT_FILE_CONTENT, mPlaylistFileContent);
             mStationFetchResults.putBoolean(TransistorKeys.RESULT_FETCH_ERROR, false);
 
@@ -194,6 +199,9 @@ public final class Station implements Comparable<Station>, Parcelable {
         // set Transistor's image file object
         setStationImageFile(folder);
 
+        // set playback state
+        mPlayback = false;
+
     }
 
 
@@ -206,6 +214,7 @@ public final class Station implements Comparable<Station>, Parcelable {
         mStreamUri = in.readParcelable(Uri.class.getClassLoader());
         mPlaylistFileContent = in.readString();
         mStationFetchResults = in.readBundle(Bundle.class.getClassLoader());
+        mPlayback = in.readByte() != 0; // true if byte != 0
     }
 
 
@@ -547,6 +556,18 @@ public final class Station implements Comparable<Station>, Parcelable {
     }
 
 
+    /* Getter for playback state */
+    public boolean getPlaybackState() {
+        return mPlayback;
+    }
+
+
+    /* Getter for URL of stream */
+    public Uri getStreamUri() {
+        return mStreamUri;
+    }
+
+
     /* Setter for playlist file object of station */
     public void setStationPlaylistFile(File folder) {
         if (mStationName != null) {
@@ -577,9 +598,9 @@ public final class Station implements Comparable<Station>, Parcelable {
     }
 
 
-    /* Getter for URL of stream */
-    public Uri getStreamUri() {
-        return mStreamUri;
+    /* Setter for playback state */
+    public void setPlaybackState(boolean playback) {
+        mPlayback = playback;
     }
 
 
@@ -598,7 +619,7 @@ public final class Station implements Comparable<Station>, Parcelable {
 
     @Override
     public String toString() {
-        return "Station [mStationName=" + mStationName + ", mStationPlaylistFile=\" + mStationPlaylistFile + \", mStreamUri=" + mStreamUri + "]";
+        return "Station [Name=" + mStationName + ", Playlist = " + mStationPlaylistFile + ", Uri=" + mStreamUri + "]";
     }
 
 
@@ -617,6 +638,7 @@ public final class Station implements Comparable<Station>, Parcelable {
         dest.writeParcelable(mStreamUri, flags);
         dest.writeString(mPlaylistFileContent);
         dest.writeBundle(mStationFetchResults);
+        dest.writeByte((byte) (mPlayback ? 1 : 0));  // if mPlayback == true, byte == 1
     }
 
 

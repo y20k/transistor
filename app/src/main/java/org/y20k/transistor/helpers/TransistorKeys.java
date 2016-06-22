@@ -26,7 +26,7 @@ public class TransistorKeys {
 //    public static final String ACTION_PLAYBACK_STARTING = "org.y20k.transistor.action.PLAYBACK_STARTING";
 //    public static final String ACTION_PLAYBACK_STARTED = "org.y20k.transistor.action.PLAYBACK_STARTED";
 //    public static final String ACTION_PLAYBACK_STOPPING = "org.y20k.transistor.action.PLAYBACK_STOPPING";
-    public static final String ACTION_CREATE_SHORTCUT_REQUESTED = "org.y20k.transistor.action.CREATE_SHORTCUT_REQUESTED";
+//    public static final String ACTION_CREATE_SHORTCUT_REQUESTED = "org.y20k.transistor.action.CREATE_SHORTCUT_REQUESTED";
     public static final String ACTION_CHANGE_VIEW_SELECTION = "org.y20k.transistor.action.CHANGE_VIEW_SELECTION";
     public static final String ACTION_COLLECTION_CHANGED = "org.y20k.transistor.action.COLLECTION_CHANGED";
     public static final String ACTION_IMAGE_CHANGE_REQUESTED = "org.y20k.transistor.action.IMAGE_CHANGE_REQUESTED";
@@ -37,7 +37,6 @@ public class TransistorKeys {
     public static final String ACTION_TIMER_STOP = "org.y20k.transistor.action.TIMER_STOP";
 
     /* EXTRAS */
-    public static final String EXTRA_COLLECTION = "COLLECTION";
     public static final String EXTRA_COLLECTION_CHANGE = "COLLECTION_CHANGE";
     public static final String EXTRA_INFOSHEET_TITLE = "INFOSHEET_TITLE";
     public static final String EXTRA_INFOSHEET_CONTENT = "INFOSHEET_CONTENT";
@@ -47,17 +46,17 @@ public class TransistorKeys {
     public static final String EXTRA_STATION = "STATION";
     public static final String EXTRA_STATION_ID = "STATION_ID";
     public static final String EXTRA_STATION_NEW_NAME = "STATION_NEW_NAME";
-    public static final String EXTRA_STATION_URI = "STATION_URI";
-    public static final String EXTRA_STATION_ID_CURRENTLY_PLAYING = "EXTRA_STATION_ID_CURRENTLY_PLAYING";
-    public static final String EXTRA_STATION_URI_CURRENTLY_PLAYING = "STATION_URI_CURRENTLY_PLAYING";
-    public static final String EXTRA_STATION_CURRENTLY_PLAYING_DELETED = "STATION_CURRENTLY_PLAYING_DELETED";
-    public static final String EXTRA_STATION_CURRENTLY_PLAYING_RENAMED = "STATION_CURRENTLY_PLAYING_RENAMED";
+//    public static final String EXTRA_STATION_URI = "STATION_URI";
+//    public static final String EXTRA_STATION_ID_CURRENTLY_PLAYING = "EXTRA_STATION_ID_CURRENTLY_PLAYING";
+//    public static final String EXTRA_STATION_URI_CURRENTLY_PLAYING = "STATION_URI_CURRENTLY_PLAYING";
+//    public static final String EXTRA_STATION_CURRENTLY_PLAYING_DELETED = "STATION_CURRENTLY_PLAYING_DELETED";
+//    public static final String EXTRA_STATION_CURRENTLY_PLAYING_RENAMED = "STATION_CURRENTLY_PLAYING_RENAMED";
     public static final String EXTRA_STREAM_URI = "STREAM_URI";
     public static final String EXTRA_TIMER_DURATION = "TIMER_DURATION";
     public static final String EXTRA_TIMER_REMAINING = "TIMER_REMAINING";
 
     /* ARGS */
-    public static final String ARG_COLLECTION = "ArgCollection";
+//    public static final String ARG_COLLECTION = "ArgCollection";
     public static final String ARG_STATION = "ArgStation";
     public static final String ARG_STATION_ID = "ArgStationID";
     public static final String ARG_TWO_PANE = "ArgTwoPane";
@@ -94,7 +93,7 @@ public class TransistorKeys {
     public static final int PLAYBACK_STARTED = 2;
     public static final int PLAYBACK_STOPPED = 3;
     public static final String INSTANCE_LIST_STATE = "instanceListState";
-    public static final String PLAYERFRAGMENT_TAG = "PFTAG";
+    public static final String PLAYER_FRAGMENT_TAG = "PFTAG";
     public static final String SHOUTCAST_STREAM_TITLE_HEADER = "StreamTitle='";
 
 }

@@ -18,13 +18,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
-import android.widget.Toast;
 
 import org.y20k.transistor.R;
-import org.y20k.transistor.core.Collection;
+import org.y20k.transistor.core.Station;
 
 
 /**
@@ -38,15 +35,15 @@ public final class DialogDelete {
 
     /* Main class variables */
     private final Activity mActivity;
-    private final Collection mCollection;
+    private final Station mStation;
     private final int mStationID;
 
 
     /* Constructor */
-    public DialogDelete(Activity activity, Collection collection, int stationID) {
+    public DialogDelete(Activity activity, Station station, int stationID) {
         mActivity = activity;
+        mStation = station;
         mStationID = stationID;
-        mCollection = collection;
     }
 
 
@@ -63,42 +60,16 @@ public final class DialogDelete {
             public void onClick(DialogInterface arg0, int arg1) {
 
                 // delete station shortcut
-                ShortcutHelper shortcutHelper = new ShortcutHelper(mActivity, mCollection);
-                shortcutHelper.removeShortcut(mStationID);
+                ShortcutHelper shortcutHelper = new ShortcutHelper(mActivity);
+                shortcutHelper.removeShortcut(mStation);
 
-                // get ID and Uri of currently playing station
-                SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mActivity);
-                int stationIDPlaying = settings.getInt(TransistorKeys.PREF_STATION_ID_CURRENTLY_PLAYING, -1);
-                String stationUriPlaying = null;
-                if (stationIDPlaying != -1) {
-                    stationUriPlaying = mCollection.getStations().get(stationIDPlaying).getStreamUri().toString();
-                }
-
-                // set flag if currently playing station is about to be deleted
-                boolean stationCurrentlyPlayingDeleted = false;
-                if (mStationID == stationIDPlaying) {
-                    stationCurrentlyPlayingDeleted = true;
-                }
-
-
-                // delete station entry
-                boolean success = mCollection.delete(mStationID);
-                if (success) {
-                    // get updated station id for currently playing station
-                    if (stationUriPlaying != null) {
-                        stationIDPlaying = mCollection.findStationID(stationUriPlaying);
-                    }
-                    // send local broadcast
-                    Intent i = new Intent();
-                    i.setAction(TransistorKeys.ACTION_COLLECTION_CHANGED);
-                    i.putExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, TransistorKeys.STATION_DELETED);
-                    i.putExtra(TransistorKeys.EXTRA_COLLECTION, mCollection);
-                    i.putExtra(TransistorKeys.EXTRA_STATION_ID_CURRENTLY_PLAYING, stationIDPlaying);
-                    i.putExtra(TransistorKeys.EXTRA_STATION_CURRENTLY_PLAYING_DELETED, stationCurrentlyPlayingDeleted);
-                    LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(i);
-                    // notify user
-                    Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_delete_successful), Toast.LENGTH_LONG).show();
-                }
+                // send local broadcast
+                Intent i = new Intent();
+                i.setAction(TransistorKeys.ACTION_COLLECTION_CHANGED);
+                i.putExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, TransistorKeys.STATION_DELETED);
+                i.putExtra(TransistorKeys.EXTRA_STATION, mStation);
+                i.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
+                LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(i);
 
             }
         });

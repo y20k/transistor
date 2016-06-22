@@ -18,16 +18,13 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import org.y20k.transistor.R;
-import org.y20k.transistor.core.Collection;
+import org.y20k.transistor.core.Station;
 
 
 /**
@@ -41,17 +38,15 @@ public final class DialogRename {
 
     /* Main class variables */
     private final Activity mActivity;
-    private final Collection mCollection;
     private final int mStationID;
-    private String mStationName;
+    private final Station mStation;
 
 
     /* Constructor */
-    public DialogRename(Activity activity, Collection collection, String stationName, int stationID) {
+    public DialogRename(Activity activity, Station station, int stationID) {
         mActivity = activity;
-        mStationName = stationName;
+        mStation = station;
         mStationID = stationID;
-        mCollection = collection;
     }
 
 
@@ -64,7 +59,7 @@ public final class DialogRename {
         // get input field
         View view = inflater.inflate(R.layout.dialog_rename_station, null);
         final EditText inputField = (EditText) view.findViewById(R.id.dialog_rename_station_input);
-        inputField.setText(mStationName);
+        inputField.setText(mStation.getStationName());
 
         // set dialog view
         builder.setView(view);
@@ -74,48 +69,20 @@ public final class DialogRename {
             // listen for click on delete button
             public void onClick(DialogInterface arg0, int arg1) {
 
-                // TODO rename station shortcut
-
-                // get ID and Uri of currently playing station
-                SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mActivity);
-                int stationIDPlaying = settings.getInt(TransistorKeys.PREF_STATION_ID_CURRENTLY_PLAYING, -1);
-                String stationUriPlaying = null;
-                if (stationIDPlaying != -1) {
-                    stationUriPlaying = mCollection.getStations().get(stationIDPlaying).getStreamUri().toString();
-                }
-
-                // set flag if currently playing station is about to be renamed
-                boolean stationCurrentlyPlayingRenamed = false;
-                if (mStationID == stationIDPlaying) {
-                    stationCurrentlyPlayingRenamed = true;
-                }
-
-                // get new station name from text input
-                mStationName = inputField.getText().toString();
+                // rename station shortcut
+                // TODO implement
 
                 // rename station
-                mStationName = inputField.getText().toString();
-                boolean success = mCollection.rename(mStationID, mStationName);
-                if (success) {
-                    // get updated station id for currently playing station
-                    if (stationUriPlaying != null) {
-                        stationIDPlaying = mCollection.findStationID(stationUriPlaying);
-                    }
-                    // send local broadcast
-                    Intent i = new Intent();
-                    i.setAction(TransistorKeys.ACTION_COLLECTION_CHANGED);
-                    i.putExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, TransistorKeys.STATION_RENAMED);
-                    i.putExtra(TransistorKeys.EXTRA_COLLECTION, mCollection);
-                    i.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
-                    i.putExtra(TransistorKeys.EXTRA_STATION_NEW_NAME, mStationName);
-                    i.putExtra(TransistorKeys.EXTRA_STATION_ID_CURRENTLY_PLAYING, stationIDPlaying);
-                    i.putExtra(TransistorKeys.EXTRA_STATION_CURRENTLY_PLAYING_RENAMED, stationCurrentlyPlayingRenamed);
-                    i.putExtra(TransistorKeys.EXTRA_COLLECTION, mCollection);
-                    LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(i);
-                } else {
-                    // rename operation unsuccessful, notify user
-                    Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_rename_unsuccessful), Toast.LENGTH_LONG).show();
-                }
+                String stationNewName = inputField.getText().toString();
+
+                // send local broadcast
+                Intent i = new Intent();
+                i.setAction(TransistorKeys.ACTION_COLLECTION_CHANGED);
+                i.putExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, TransistorKeys.STATION_RENAMED);
+                i.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
+                i.putExtra(TransistorKeys.EXTRA_STATION, mStation);
+                i.putExtra(TransistorKeys.EXTRA_STATION_NEW_NAME, stationNewName);
+                LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(i);
 
             }
         });
@@ -130,13 +97,6 @@ public final class DialogRename {
 
         // display rename dialog
         builder.show();
-    }
-
-
-
-    /* Getter for name of station */
-    public String getStationName() {
-        return mStationName;
     }
 
 }

@@ -2,12 +2,12 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.y20k.transistor"
-    android:versionCode="25"
-    android:versionName="2.0.4 (Starman)">
+    android:versionCode="26"
+    android:versionName="2.1.0 (Moonage Daydream)">
 
     <uses-sdk
         android:minSdkVersion="19"
-        android:targetSdkVersion="23" />
+        android:targetSdkVersion="24" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />

@@ -96,7 +96,7 @@
     <!-- infosheet about -->
     <string name="infosheet_about_h1_about">О Транзистору</string>
     <string name="infosheet_about_h2_radio">Радио апликација за Андроид</string>
-    <string name="infosheet_about_h3_version">Издање 2.0 (Starman)</string>
+    <string name="infosheet_about_h3_version">Издање 2.1 (Moonage Daydream)</string>
     <string name="infosheet_about_p_bare"/>
     <string name="infosheet_about_p_note"/>
     <string name="infosheet_about_p_free"/>

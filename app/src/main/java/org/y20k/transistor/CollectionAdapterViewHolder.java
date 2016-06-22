@@ -12,15 +12,13 @@
  */
 
 
-package org.y20k.transistor.helpers;
+package org.y20k.transistor;
 
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import org.y20k.transistor.R;
 
 
 /**
@@ -74,7 +72,6 @@ public class CollectionAdapterViewHolder extends RecyclerView.ViewHolder impleme
         mClickListener.onClick(v, getAdapterPosition(), true);
         return true;
     }
-
 
     /* Getter for parent list item layout */
     public View getListItemLayout() {

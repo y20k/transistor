@@ -16,17 +16,14 @@ package org.y20k.transistor.helpers;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
 import org.y20k.transistor.R;
-import org.y20k.transistor.core.Collection;
 import org.y20k.transistor.core.Station;
 
 import java.io.File;
@@ -45,7 +42,6 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
 
     /* Main class variables */
     private final Activity mActivity;
-    private Collection mCollection;
     private final File mFolder;
     private final Uri mStationUri;
     private final String mStationUriScheme;
@@ -54,12 +50,11 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
 
 
     /* Constructor */
-    public StationFetcher(Activity activity, Collection collection, Uri stationUri) {
+    public StationFetcher(Activity activity, File folder, Uri stationUri) {
         mActivity = activity;
         mStationUri = stationUri;
         mStationUriScheme = stationUri.getScheme();
-        mCollection = collection;
-        mFolder = mCollection.getFolder();
+        mFolder = folder;
         mFolderExists = mFolder.exists();
 
         if (stationUri != null && mStationUriScheme != null && mStationUriScheme.startsWith("http")) {
@@ -93,46 +88,31 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
     @Override
     protected void onPostExecute(Station station) {
 
-        boolean stationAdded = false;
-        Bundle fetchResults = station.getStationFetchResults();
-
+        Bundle fetchResults = null;
+        if (station != null) {
+            fetchResults = station.getStationFetchResults();
+        }
 
         // station was successfully fetched
         if (station != null && fetchResults != null && !fetchResults.getBoolean(TransistorKeys.RESULT_FETCH_ERROR) && mFolderExists) {
 
-            // get ID and Uri of currently playing station before adding new station
-            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mActivity);
-            int stationIDPlaying = settings.getInt(TransistorKeys.PREF_STATION_ID_CURRENTLY_PLAYING, -1);
-            String stationUriPlaying = null;
-            if (stationIDPlaying != -1) {
-                stationUriPlaying = mCollection.getStations().get(stationIDPlaying).getStreamUri().toString();
-            }
-
-            // add station to collection
-            stationAdded = mCollection.add(station);
-            if (stationAdded) {
-                // get updated station id for currently playing station
-                if (stationUriPlaying != null) {
-                    stationIDPlaying = mCollection.findStationID(stationUriPlaying);
-                }
-                // send local broadcast
-                Intent i = new Intent();
-                i.setAction(TransistorKeys.ACTION_COLLECTION_CHANGED);
-                i.putExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, TransistorKeys.STATION_ADDED);
-                i.putExtra(TransistorKeys.EXTRA_COLLECTION, mCollection);
-                i.putExtra(TransistorKeys.EXTRA_STATION_ID_CURRENTLY_PLAYING, stationIDPlaying);
-                LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(i);
-            }
+            // send local broadcast - adapter will save station
+            Intent i = new Intent();
+            i.setAction(TransistorKeys.ACTION_COLLECTION_CHANGED);
+            i.putExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, TransistorKeys.STATION_ADDED);
+            i.putExtra(TransistorKeys.EXTRA_STATION, station);
+            LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(i);
 
             // inform user that aac might not work properly
             if (fetchResults.containsKey(TransistorKeys.RESULT_STREAM_TYPE) && fetchResults.getParcelable(TransistorKeys.RESULT_STREAM_TYPE) != null && fetchResults.getParcelable(TransistorKeys.RESULT_STREAM_TYPE).toString().contains("aac")) {
                 Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_stream_may_not_work), Toast.LENGTH_LONG).show();
             }
 
+            Log.v(LOG_TAG, "Station was successfully fetched: " + station.getStreamUri().toString());
         }
 
         // an error occurred
-        if (station == null || (fetchResults != null && fetchResults.getBoolean(TransistorKeys.RESULT_FETCH_ERROR)) || !mFolderExists || !stationAdded) {
+        if (station == null || (fetchResults != null && fetchResults.getBoolean(TransistorKeys.RESULT_FETCH_ERROR)) || !mFolderExists) {
 
             String errorTitle;
             String errorMessage;
@@ -148,8 +128,8 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
                 errorTitle = mActivity.getResources().getString(R.string.dialog_error_title_fetch_read);
                 errorMessage = mActivity.getResources().getString(R.string.dialog_error_message_fetch_read);
                 errorDetails = buildReadErrorDetails(fetchResults);
-            } else if (!stationAdded  && mStationUriScheme != null) {
-                // construct error message for write error
+            } else if (!mFolderExists) {
+                // construct error message for write error // TODO check if station was added
                 errorTitle = mActivity.getResources().getString(R.string.dialog_error_title_fetch_write);
                 errorMessage = mActivity.getResources().getString(R.string.dialog_error_message_fetch_write);
                 errorDetails = mActivity.getResources().getString(R.string.dialog_error_details_write);
@@ -163,6 +143,8 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
             // show error dialog
             DialogError dialogError = new DialogError(mActivity, errorTitle, errorMessage, errorDetails);
             dialogError.show();
+
+            Log.v(LOG_TAG,"An error occured.\n" + station.toString() + fetchResults.toString() + mFolderExists);
         }
 
     }
@@ -204,7 +186,11 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
         sb.append("\n");
         sb.append(mFolder);
         sb.append("\n\n");
-        sb.append(mActivity.getResources().getString(R.string.dialog_error_message_fetch_download_station_url));
+        if (mStationUri.getScheme().startsWith("file")) {
+            sb.append(mActivity.getResources().getString(R.string.dialog_error_message_fetch_read_file_location));
+        } else {
+            sb.append(mActivity.getResources().getString(R.string.dialog_error_message_fetch_download_station_url));
+        }
         sb.append("\n");
         sb.append(mStationUri);
 

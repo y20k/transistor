@@ -14,7 +14,6 @@
 
 package org.y20k.transistor;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.Application;
 import android.app.Fragment;
@@ -25,14 +24,12 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -44,21 +41,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import org.y20k.transistor.core.Collection;
 import org.y20k.transistor.core.Station;
-import org.y20k.transistor.helpers.CollectionAdapter;
 import org.y20k.transistor.helpers.DialogAdd;
 import org.y20k.transistor.helpers.ImageHelper;
 import org.y20k.transistor.helpers.NotificationHelper;
-import org.y20k.transistor.helpers.ShortcutHelper;
+import org.y20k.transistor.helpers.PermissionHelper;
 import org.y20k.transistor.helpers.SleepTimerService;
 import org.y20k.transistor.helpers.StationFetcher;
+import org.y20k.transistor.helpers.StorageHelper;
 import org.y20k.transistor.helpers.TransistorKeys;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
@@ -75,25 +70,22 @@ public final class MainActivityFragment extends Fragment {
     /* Main class variables */
     private Application mApplication;
     private Activity mActivity;
-    private Collection mCollection;
     private CollectionAdapter mCollectionAdapter = null;
     private File mFolder;
-    private ArrayList<String> mStationNames;
-    private ArrayList<Bitmap> mStationImages;
     private View mRootView;
     private View mActionCallView;
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private Parcelable mListState;
-    private BroadcastReceiver mPlaybackStateChangedReceiver;
     private BroadcastReceiver mCollectionChangedReceiver;
     private BroadcastReceiver mImageChangeRequestReceiver;
     private BroadcastReceiver mSleepTimerStartedReceiver;
-    private BroadcastReceiver mShortcutCreationRequestReceiver;
-    private BroadcastReceiver mChangeViewSelectionReceiver;
+    private BroadcastReceiver mPlaybackStateChangedReceiver;
+    private int mStationIDSelected;
     private int mStationIDCurrent;
     private int mStationIDLast;
-    private int mTempStationImageID;
+    private int mTempStationID;
+    private Station mTempStation;
     private Uri mNewStationUri;
     private boolean mPlayback;
     private SleepTimerService mSleepTimerService;
@@ -124,25 +116,24 @@ public final class MainActivityFragment extends Fragment {
         // initiate sleep timer service
         mSleepTimerService = new SleepTimerService();
 
-        // load playback state
-        loadAppState(mActivity);
-
         // set list state null
         mListState = null;
 
+        // initialize id of currently selected station
+        mStationIDSelected = 0;
+
         // initialize temporary station image id
-        mTempStationImageID = -1;
+        mTempStationID = -1;
 
-        // get collection
-        Intent intent = mActivity.getIntent();
-        if (intent.hasExtra(TransistorKeys.EXTRA_COLLECTION)) {
-            mCollection = intent.getParcelableExtra(TransistorKeys.EXTRA_COLLECTION);
-        }
+        // load playback state
+        loadAppState(mActivity);
 
-        // create adapter for collection
-        mStationNames = new ArrayList<>();
-        mStationImages = new ArrayList<>();
-        mCollectionAdapter = new CollectionAdapter(mActivity, mCollection, mStationNames, mStationImages);
+        // get collection folder
+        StorageHelper storageHelper = new StorageHelper(mActivity);
+        mFolder = storageHelper.getCollectionDirectory();
+
+        // create collection adapter
+        mCollectionAdapter = new CollectionAdapter(mActivity, mFolder);
 
         // initialize broadcast receivers
         initializeBroadcastReceivers();
@@ -152,15 +143,13 @@ public final class MainActivityFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         // get list state from saved instance
         if (savedInstanceState != null) {
             mListState = savedInstanceState.getParcelable(TransistorKeys.INSTANCE_LIST_STATE);
         }
 
-        // inflate rootview from xml
+        // inflate root view from xml
         mRootView = inflater.inflate(R.layout.fragment_main, container, false);
-
 
         // get reference to action call view from inflated root view
         mActionCallView = mRootView.findViewById(R.id.main_actioncall_layout);
@@ -176,13 +165,13 @@ public final class MainActivityFragment extends Fragment {
         // set animator
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(mActivity);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // attach adapter to list view
         mRecyclerView.setAdapter(mCollectionAdapter);
+
 
         return mRootView;
     }
@@ -192,25 +181,22 @@ public final class MainActivityFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
+
+        mCollectionAdapter.setStationIDSelected(mStationIDSelected);
+
         // handle incoming intent
         handleIncomingIntent();
 
         // refresh playback state
         loadAppState(mActivity);
 
+        // show call to action, if necessary
+        toggleActionCall();
+
         // show notification bar if timer is running
         if (mSleepTimerRunning) {
             showSleepTimerNotification(-1);
         }
-    }
-
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        // fill collection adapter with stations
-        refreshStationList();
-
     }
 
 
@@ -234,7 +220,7 @@ public final class MainActivityFragment extends Fragment {
             // CASE ADD
             case R.id.menu_add:
 
-                DialogAdd dialog = new DialogAdd(mActivity, mCollection);
+                DialogAdd dialog = new DialogAdd(mActivity, mFolder);
                 dialog.show();
                 return true;
 
@@ -277,61 +263,6 @@ public final class MainActivityFragment extends Fragment {
     }
 
 
-    /* Fills collection adapter */
-    private void fillCollectionAdapter() {
-
-        Bitmap stationImage;
-        Bitmap stationImageSmall;
-        ImageHelper imageHelper;
-
-        // put stations into collection adapter
-        for (Station station : mCollection.getStations()) {
-            // add name to linked list of names
-            mStationNames.add(station.getStationName());
-
-            // set image for station
-            if (station.getStationImageFile().exists()) {
-                // get image from collection
-                stationImageSmall = BitmapFactory.decodeFile(station.getStationImageFile().toString());
-            } else {
-                stationImageSmall = null;
-            }
-            imageHelper = new ImageHelper(stationImageSmall, mActivity);
-            stationImage = imageHelper.createCircularFramedImage(192, R.color.transistor_grey_lighter);
-
-            // add image to linked list of images
-            mStationImages.add(stationImage);
-        }
-        mCollectionAdapter.setCollection(mCollection);
-        mCollectionAdapter.notifyDataSetChanged();
-
-    }
-
-
-    /* (Re-)fills collection adapter with stations */
-    private void refreshStationList() {
-
-        // clear and refill mCollection adapter
-        if (!mStationNames.isEmpty() && !mStationImages.isEmpty()) {
-            mStationNames.clear();
-            mStationImages.clear();
-        }
-        fillCollectionAdapter();
-
-        // show call to action, if necessary
-        if (mCollectionAdapter.getItemCount() == 0) {
-            mActionCallView.setVisibility(View.VISIBLE);
-            mRecyclerView.setVisibility(View.GONE);
-        } else {
-            mActionCallView.setVisibility(View.GONE);
-            mRecyclerView.setVisibility(View.VISIBLE);
-        }
-
-        Log.v(LOG_TAG, "Refreshing list of stations");
-
-    }
-
-
     /* handles incoming intent */
     private void handleIncomingIntent() {
 
@@ -353,7 +284,8 @@ public final class MainActivityFragment extends Fragment {
 
             } else if (mNewStationUri != null && mNewStationUri.getScheme().startsWith("file")) {
                 // check for read permission
-                if (requestPermissionReadExternalStorage(TransistorKeys.PERMISSION_REQUEST_STATION_FETCHER_READ_EXTERNAL_STORAGE)) {
+                PermissionHelper permissionHelper = new PermissionHelper(mActivity, mRootView);
+                if (permissionHelper.requestReadExternalStorage(TransistorKeys.PERMISSION_REQUEST_STATION_FETCHER_READ_EXTERNAL_STORAGE)) {
                     // read and add new station
                     fetchNewStation(mNewStationUri);
                 }
@@ -402,76 +334,52 @@ public final class MainActivityFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Uri newImageUri = data.getData();
         if (requestCode == TransistorKeys.REQUEST_LOAD_IMAGE && resultCode == Activity.RESULT_OK && null != data) {
             // retrieve selected image from image picker
-            processNewImage(data.getData());
+            ImageHelper imageHelper = new ImageHelper(newImageUri, mActivity);
+            Bitmap newImage = imageHelper.getInputImage();
+
+            if (newImage != null && mTempStationID != -1) {
+                // write image to storage
+                File stationImageFile = mTempStation.getStationImageFile();
+                try (FileOutputStream out = new FileOutputStream(stationImageFile)) {
+                    newImage.compress(Bitmap.CompressFormat.PNG, 100, out);
+                } catch (IOException e) {
+                    Log.e(LOG_TAG, "Unable to save: " + newImage.toString());
+                }
+                // update adapter
+                mCollectionAdapter.setNewImageFile(mTempStationID, mTempStation.getStationImageFile());
+
+            } else {
+                Log.e(LOG_TAG, "Unable to get image from media picker: " + newImageUri.toString());
+            }
+
         }
     }
 
 
-    /* Processes new image and saves it to storage */
-    private void processNewImage(Uri newImageUri) {
-
-        ImageHelper imageHelper = new ImageHelper(newImageUri, mActivity);
-        Bitmap newImage = imageHelper.getInputImage();
-
-        if (newImage != null) {
-            // write image to storage
-            File stationImageFile = mCollection.getStations().get(mTempStationImageID).getStationImageFile();
-            try (FileOutputStream out = new FileOutputStream(stationImageFile)) {
-                newImage.compress(Bitmap.CompressFormat.PNG, 100, out);
-            } catch (IOException e) {
-                Log.e(LOG_TAG, "Unable to save: " + newImage.toString());
-            }
+    /* Show or hide call to action view if necessary */
+    public void toggleActionCall() {
+        // show call to action, if necessary
+        if (mCollectionAdapter.getItemCount() == 0) {
+            mActionCallView.setVisibility(View.VISIBLE);
+            mRecyclerView.setVisibility(View.GONE);
         } else {
-            Log.e(LOG_TAG, "Unable to get image from media picker: " + newImageUri.toString());
+            mActionCallView.setVisibility(View.GONE);
+            mRecyclerView.setVisibility(View.VISIBLE);
         }
     }
 
 
     /* Check permissions and start image picker */
-    private void selectFromImagePicker() {
-
+    public void selectFromImagePicker() {
         // request read permissions
-        if (requestPermissionReadExternalStorage(TransistorKeys.PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE)) {
+        PermissionHelper permissionHelper = new PermissionHelper(mActivity, mRootView);
+        if (permissionHelper.requestReadExternalStorage(TransistorKeys.PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE)) {
             // get system picker for images
             Intent pickImageIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             mActivity.startActivityForResult(pickImageIntent, TransistorKeys.REQUEST_LOAD_IMAGE);
-        }
-    }
-
-
-    /* Request Read Permissions */
-    private boolean requestPermissionReadExternalStorage(final int requestType) {
-
-        // permission to read external storage granted
-        if (ActivityCompat.checkSelfPermission(mActivity,
-                Manifest.permission.READ_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_GRANTED) {
-            return true;
-        }
-
-        // permission to read external storage not granted
-        else {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                // ask for permission and explain why
-                Snackbar snackbar = Snackbar.make(mRootView, mActivity.getString(R.string.snackbar_request_storage_access), Snackbar.LENGTH_INDEFINITE);
-                snackbar.setAction(R.string.dialog_generic_button_okay, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, requestType);
-                    }
-                });
-                snackbar.show();
-
-                return false;
-
-            } else {
-                // ask for permission without explanation
-                ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, requestType);
-
-                return false;
-            }
         }
     }
 
@@ -572,11 +480,12 @@ public final class MainActivityFragment extends Fragment {
     /* Loads app state from preferences */
     private void loadAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
+        mStationIDSelected = settings.getInt(TransistorKeys.PREF_STATION_ID_SELECTED, 0);
         mStationIDCurrent = settings.getInt(TransistorKeys.PREF_STATION_ID_CURRENTLY_PLAYING, -1);
         mStationIDLast = settings.getInt(TransistorKeys.PREF_STATION_ID_LAST, -1);
         mPlayback = settings.getBoolean(TransistorKeys.PREF_PLAYBACK, false);
         mSleepTimerRunning = settings.getBoolean(TransistorKeys.PREF_TIMER_RUNNING, false);
-        Log.v(LOG_TAG, "Loading state.");
+        Log.v(LOG_TAG, "Loading state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + ")");
     }
 
 
@@ -589,20 +498,15 @@ public final class MainActivityFragment extends Fragment {
         editor.putBoolean(TransistorKeys.PREF_PLAYBACK, mPlayback);
         editor.putBoolean(TransistorKeys.PREF_TIMER_RUNNING, mSleepTimerRunning);
         editor.apply();
-        Log.v(LOG_TAG, "Saving state.");
+        Log.v(LOG_TAG, "Saving state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + ")");
     }
 
 
     /* Fetch new station with given Uri */
     private void fetchNewStation(Uri stationUri) {
         // download and add new station
-        StationFetcher stationFetcher = new StationFetcher(mActivity, mCollection, stationUri);
+        StationFetcher stationFetcher = new StationFetcher(mActivity, mFolder, stationUri);
         stationFetcher.execute();
-
-//        // send local broadcast
-//        Intent i = new Intent();
-//        i.setAction(TransistorKeys.ACTION_COLLECTION_CHANGED);
-//        LocalBroadcastManager.getInstance(mActivity).sendBroadcast(i);
     }
 
 
@@ -614,7 +518,7 @@ public final class MainActivityFragment extends Fragment {
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (intent.hasExtra(TransistorKeys.EXTRA_PLAYBACK_STATE_CHANGE)) {
-                    handlePlaybackStateChanged(intent);
+                    handlePlaybackStateChanges(intent);
                 }
             }
         };
@@ -627,7 +531,7 @@ public final class MainActivityFragment extends Fragment {
             public void onReceive(Context context, Intent intent) {
                 if (intent != null && intent.hasExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE)) {
                     handleCollectionChanges(intent);
-                    // handleCollectionChangesNew(intent); // un-comment to test new animations
+
                 }
             }
         };
@@ -638,10 +542,13 @@ public final class MainActivityFragment extends Fragment {
         mImageChangeRequestReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                // get station id and save it
-                mTempStationImageID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, -1);
-                // start image picker
-                selectFromImagePicker();
+                if (intent.hasExtra(TransistorKeys.EXTRA_STATION) && intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)) {
+                    // get station and id from intent
+                    mTempStation = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
+                    mTempStationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, -1);
+                    // start image picker
+                    selectFromImagePicker();
+                }
             }
         };
         IntentFilter imageChangeRequestIntentFilter = new IntentFilter(TransistorKeys.ACTION_IMAGE_CHANGE_REQUESTED);
@@ -663,7 +570,6 @@ public final class MainActivityFragment extends Fragment {
                     mPlayback = false;
                     mSleepTimerRunning = false;
                     saveAppState(mActivity);
-                    refreshStationList();
                 }
 
             }
@@ -671,38 +577,23 @@ public final class MainActivityFragment extends Fragment {
         IntentFilter sleepTimerIntentFilter = new IntentFilter(TransistorKeys.ACTION_TIMER_RUNNING);
         LocalBroadcastManager.getInstance(mActivity).registerReceiver(mSleepTimerStartedReceiver, sleepTimerIntentFilter);
 
-        // RECEIVER: handles request for shortcut being created
-        mShortcutCreationRequestReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                // get station id and save it
-                int stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, -1);
-
-                // create shortcut
-                ShortcutHelper shortcutHelper = new ShortcutHelper(mActivity, mCollection);
-                shortcutHelper.placeShortcut(stationID);
-            }
-        };
-        IntentFilter shortcutCreationRequestIntentFilter = new IntentFilter(TransistorKeys.ACTION_CREATE_SHORTCUT_REQUESTED);
-        LocalBroadcastManager.getInstance(mApplication).registerReceiver(mShortcutCreationRequestReceiver, shortcutCreationRequestIntentFilter);
-
-
-        // RECEIVER: (re-)sets the selection if needed
-        mChangeViewSelectionReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                // reset previous selection
-                mCollectionAdapter.resetSelection();
-                if (intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)) {
-                    // set new id selected
-                    mCollectionAdapter.setStationIDSelected(intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0));
-                    mCollectionAdapter.notifyDataSetChanged();
-                }
-            }
-        };
-        IntentFilter changeViewSelectionIntentFilter = new IntentFilter(TransistorKeys.ACTION_CHANGE_VIEW_SELECTION);
-        LocalBroadcastManager.getInstance(mApplication).registerReceiver(mChangeViewSelectionReceiver, changeViewSelectionIntentFilter);
-
+//        // RECEIVER: (re-)sets the selection if needed
+//        mChangeViewSelectionReceiver = new BroadcastReceiver() {
+//            @Override
+//            public void onReceive(Context context, Intent intent) {
+//                // reset previous selection
+//                mCollectionAdapter.resetSelection();
+//                if (intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)) {
+//                    // set new id selected
+//                    mCollectionAdapter.setStationIDSelected(intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0));
+//                    mCollectionAdapter.notifyDataSetChanged();
+//                }
+//            }
+//        };
+//        IntentFilter changeViewSelectionIntentFilter = new IntentFilter(TransistorKeys.ACTION_CHANGE_VIEW_SELECTION);
+//        LocalBroadcastManager.getInstance(mApplication).registerReceiver(mChangeViewSelectionReceiver, changeViewSelectionIntentFilter);
+//
+//    }
     }
 
 
@@ -712,218 +603,105 @@ public final class MainActivityFragment extends Fragment {
         LocalBroadcastManager.getInstance(mActivity).unregisterReceiver(mCollectionChangedReceiver);
         LocalBroadcastManager.getInstance(mActivity).unregisterReceiver(mImageChangeRequestReceiver);
         LocalBroadcastManager.getInstance(mActivity).unregisterReceiver(mSleepTimerStartedReceiver);
-        LocalBroadcastManager.getInstance(mActivity).unregisterReceiver(mShortcutCreationRequestReceiver);
-        LocalBroadcastManager.getInstance(mActivity).unregisterReceiver(mChangeViewSelectionReceiver);
+//        LocalBroadcastManager.getInstance(mActivity).unregisterReceiver(mChangeViewSelectionReceiver);
     }
-
-
-
-    /* Handles adding, deleting and renaming of station */
-    private void handleCollectionChanges(Intent intent) {
-        // load app state
-        loadAppState(mActivity);
-
-        switch (intent.getIntExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, 1)) {
-
-            // CASE: station was added
-            case TransistorKeys.STATION_ADDED:
-                // get updated collection
-                if (intent.hasExtra(TransistorKeys.EXTRA_COLLECTION)) {
-                    mCollection = intent.getParcelableExtra(TransistorKeys.EXTRA_COLLECTION);
-                    mCollectionAdapter.setCollection(mCollection);
-                }
-                // get id of currently playing station
-                if (intent.hasExtra(TransistorKeys.EXTRA_STATION_ID_CURRENTLY_PLAYING)) {
-                    mStationIDCurrent = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID_CURRENTLY_PLAYING, -1);
-                }
-
-                // save app state
-                saveAppState(mActivity);
-
-                // refresh collection adapter and station list
-                mCollectionAdapter.refresh();
-                refreshStationList();
-
-                break;
-
-            // CASE: station was renamed
-            case TransistorKeys.STATION_RENAMED:
-                // get flag for deletion of currently playing station
-                boolean stationCurrentlyPlayingRenamed = false;
-                if (intent.hasExtra(TransistorKeys.EXTRA_STATION_CURRENTLY_PLAYING_RENAMED)) {
-                    stationCurrentlyPlayingRenamed = intent.getBooleanExtra(TransistorKeys.EXTRA_STATION_CURRENTLY_PLAYING_RENAMED, false);
-                }
-
-                // get id of currently playing station
-                if (intent.hasExtra(TransistorKeys.EXTRA_STATION_ID_CURRENTLY_PLAYING)) {
-                    mStationIDCurrent = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID_CURRENTLY_PLAYING, -1);
-                }
-
-                // get updated collection
-                if (intent.hasExtra(TransistorKeys.EXTRA_COLLECTION)) {
-                    mCollection = intent.getParcelableExtra(TransistorKeys.EXTRA_COLLECTION);
-                    mCollectionAdapter.setCollection(mCollection);
-                }
-
-                // keep track of playback state
-                if (stationCurrentlyPlayingRenamed && intent.hasExtra(TransistorKeys.EXTRA_STATION_NEW_NAME)) {
-                    // put up notification
-                    NotificationHelper.initialize(mCollection);
-                    NotificationHelper.setStationName(intent.getStringExtra(TransistorKeys.EXTRA_STATION_NEW_NAME));
-                    NotificationHelper.setStationID(mStationIDCurrent);
-                    NotificationHelper.updateNotification();
-                }
-
-                // save app state
-                saveAppState(mActivity);
-
-                // refresh collection adapter and station list
-                mCollectionAdapter.refresh();
-                refreshStationList();
-
-                break;
-
-            // CASE: station was deleted
-            case TransistorKeys.STATION_DELETED:
-                // get flag for deletion of currently playing station
-                boolean stationCurrentlyPlayingDeleted = false;
-                if (intent.hasExtra(TransistorKeys.EXTRA_STATION_CURRENTLY_PLAYING_DELETED)) {
-                    stationCurrentlyPlayingDeleted = intent.getBooleanExtra(TransistorKeys.EXTRA_STATION_CURRENTLY_PLAYING_DELETED, false);
-                }
-
-                // get id of currently playing station
-                if (intent.hasExtra(TransistorKeys.EXTRA_STATION_ID_CURRENTLY_PLAYING)) {
-                    mStationIDCurrent = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID_CURRENTLY_PLAYING, -1);
-                }
-
-                // get updated collection
-                if (intent.hasExtra(TransistorKeys.EXTRA_COLLECTION)) {
-                    mCollection = intent.getParcelableExtra(TransistorKeys.EXTRA_COLLECTION);
-                    mCollectionAdapter.setCollection(mCollection);
-                }
-
-                // stop playback if necessary
-                if (stationCurrentlyPlayingDeleted) {
-                    mPlayback = false;
-                    PlayerService.startActionStop(mActivity);
-                }
-
-                // save app state
-                saveAppState(mActivity);
-
-                // refresh collection adapter and station list
-                mCollectionAdapter.refresh();
-                refreshStationList();
-
-                break;
-
-            // TODO station was renamed in PlayerActivityFragment (playback indicator in list)
-
-        }
-
-    }
-
-
-    /* Handles adding, deleting and renaming of station (experimental version - unfinished) */
-    private void handleCollectionChangesNew(Intent intent) {
-
-        // load app state
-        loadAppState(mActivity);
-
-        // get updated collection from intent
-        if (intent.hasExtra(TransistorKeys.EXTRA_COLLECTION)) {
-            mCollection = intent.getParcelableExtra(TransistorKeys.EXTRA_COLLECTION);
-        }
-
-        switch (intent.getIntExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, 1)) {
-
-            // CASE: station was added
-            case TransistorKeys.STATION_ADDED:
-                if (intent.hasExtra(TransistorKeys.EXTRA_STATION_ID) && intent.hasExtra(TransistorKeys.EXTRA_STATION)) {
-                    int stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
-                    Station station = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
-                    mCollectionAdapter.add(stationID, station);
-                    mCollectionAdapter.setCollection(mCollection);
-                    // mCollectionAdapter.refresh();
-                }
-                // mLayoutManager.addView(1);
-                break;
-
-            // CASE: station was renamed
-            case TransistorKeys.STATION_RENAMED:
-
-                if (intent.hasExtra(TransistorKeys.EXTRA_STATION_ID) && intent.hasExtra(TransistorKeys.EXTRA_STATION_NEW_NAME)) {
-                    int stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
-                    String newStationName = intent.getStringExtra(TransistorKeys.EXTRA_STATION_NEW_NAME);
-                    mCollectionAdapter.change(stationID, newStationName);
-                    mCollectionAdapter.setCollection(mCollection);
-                    // mCollectionAdapter.refresh();
-
-                    int stationIndexChanged = mCollection.getStationIndexChanged();
-                    if (stationIndexChanged != -1) {
-                        // position of station has changed
-                        View stationImageView = mLayoutManager.getChildAt(stationID);
-                        mLayoutManager.removeViewAt(stationID);
-                        mLayoutManager.addView(stationImageView, stationIndexChanged);
-                    }
-
-                }
-
-                break;
-
-            // CASE: station was deleted
-            case TransistorKeys.STATION_DELETED:
-
-                if (intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)) {
-                    int stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
-                    mCollectionAdapter.remove(stationID);
-                    mCollectionAdapter.setCollection(mCollection);
-                    mCollectionAdapter.refresh();
-                    mLayoutManager.removeViewAt(stationID);
-                }
-
-                break;
-
-        }
-
-    }
-
 
     /* Handles changes in state of playback, eg. start, stop, loading stream */
-    private void handlePlaybackStateChanged(Intent intent) {
-
-        // load app state
-        loadAppState(mActivity);
-
+    private void handlePlaybackStateChanges(Intent intent) {
         switch (intent.getIntExtra(TransistorKeys.EXTRA_PLAYBACK_STATE_CHANGE, 1)) {
-
-            // CASE: player is preparing stream
-            case TransistorKeys.PLAYBACK_LOADING_STATION:
-                mCollectionAdapter.refresh();
-                refreshStationList();
-                mPlayback = true;
-                break;
-
-            // CASE: playback has started
-            case TransistorKeys.PLAYBACK_STARTED:
-                mCollectionAdapter.refresh();
-                refreshStationList();
-//                SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mActivity);
-//                SharedPreferences.Editor editor = settings.edit();
-//                editor.putBoolean(TransistorKeys.PREF_STATION_LOADING, false);
-//                editor.apply();
-                break;
-
             // CASE: playback was stopped
             case TransistorKeys.PLAYBACK_STOPPED:
+                // load app state
+                loadAppState(mActivity);
+                // stop sleep timer
                 if (mSleepTimerRunning && mSleepTimerService != null) {
                     stopSleepTimer();
                 }
-                mCollectionAdapter.refresh();
-                refreshStationList();
                 mPlayback = false;
                 break;
         }
     }
+
+
+    /* Handles adding, deleting and renaming of station */
+    private void handleCollectionChanges(Intent intent) {
+
+        // load app state
+        loadAppState(mActivity);
+
+        int newStationPosition;
+
+        switch (intent.getIntExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, 1)) {
+
+            // CASE: station was added
+            case TransistorKeys.STATION_ADDED:
+                if (intent.hasExtra(TransistorKeys.EXTRA_STATION)) {
+
+                    // get station from intent
+                    Station station = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
+
+                    // add station to adapter, scroll to new position and update adapter
+                    newStationPosition = mCollectionAdapter.add(station);
+                    mLayoutManager.scrollToPosition(newStationPosition);
+                    mCollectionAdapter.setStationIDSelected(newStationPosition);
+                    mCollectionAdapter.notifyDataSetChanged(); // TODO Remove?
+                }
+                break;
+
+            // CASE: station was renamed
+            case TransistorKeys.STATION_RENAMED:
+                if (intent.hasExtra(TransistorKeys.EXTRA_STATION_NEW_NAME) && intent.hasExtra(TransistorKeys.EXTRA_STATION) && intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)) {                    // get station and station ID from intent
+
+                    // get new name, station and station ID from intent
+                    String newStationName = intent.getStringExtra(TransistorKeys.EXTRA_STATION_NEW_NAME);
+                    Station station = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
+                    int stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
+
+                    // update view
+                    // mRecyclerView
+
+                    // change station within in adapter, scroll to new position and update adapter
+                    newStationPosition = mCollectionAdapter.rename(newStationName, station, stationID);
+                    mLayoutManager.scrollToPosition(newStationPosition);
+                    mCollectionAdapter.setStationIDSelected(newStationPosition);
+                    mCollectionAdapter.notifyDataSetChanged(); // TODO Remove?
+
+                    // update notification
+                    if (station.getPlaybackState()) {
+                        NotificationHelper.initialize(station, stationID);
+                        NotificationHelper.updateNotification();
+                    }
+                }
+                break;
+
+            // CASE: station was deleted
+            case TransistorKeys.STATION_DELETED:
+                if (intent.hasExtra(TransistorKeys.EXTRA_STATION) && intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)) {
+
+                    // get station and station ID from intent
+                    Station station = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
+                    int stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
+
+                    // remove view
+                    mLayoutManager.removeViewAt(stationID);
+
+                    // remove station from adapter and update
+                    newStationPosition = mCollectionAdapter.delete(station, stationID);
+                    if (newStationPosition != -1) {
+                        mCollectionAdapter.setStationIDSelected(newStationPosition);
+                        mLayoutManager.scrollToPosition(newStationPosition);
+                    } else {
+                        // show call to action
+                        toggleActionCall();
+                    }
+                    mCollectionAdapter.notifyDataSetChanged(); // TODO Remove?
+                }
+                break;
+        }
+
+    }
+
+
+
 
 }

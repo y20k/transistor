@@ -23,7 +23,7 @@ import android.view.View;
 import android.widget.PopupMenu;
 
 import org.y20k.transistor.R;
-import org.y20k.transistor.core.Collection;
+import org.y20k.transistor.core.Station;
 
 
 /**
@@ -34,9 +34,9 @@ public final class StationContextMenu extends DialogFragment {
 
     /* Main class variables */
     private View mView;
-    private int mStationID;
     private Activity mActivity;
-    private Collection mCollection;
+    private Station mStation;
+    private int mStationID;
 
 
     /* Constructor (default) */
@@ -45,10 +45,10 @@ public final class StationContextMenu extends DialogFragment {
 
 
     /* Initializer for main class variables */
-    public void initialize(Activity activity, Collection collection, View view, int stationID) {
+    public void initialize(Activity activity, View view, Station station, int stationID) {
         mActivity = activity;
-        mCollection = collection;
         mView = view;
+        mStation = station;
         mStationID = stationID;
     }
 
@@ -66,38 +66,33 @@ public final class StationContextMenu extends DialogFragment {
 
                     // CASE ICON
                     case R.id.menu_icon:
-
                         // send local broadcast (needed by MainActivityFragment)
                         Intent iconIntent = new Intent();
                         iconIntent.setAction(TransistorKeys.ACTION_IMAGE_CHANGE_REQUESTED);
-                        iconIntent.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
+                        iconIntent.putExtra(TransistorKeys.EXTRA_STATION, mStation);
+                        iconIntent.putExtra(TransistorKeys.EXTRA_STATION, mStationID);
                         LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(iconIntent);
-
                         return true;
 
                     // CASE RENAME
                     case R.id.menu_rename:
-                        // get name of station
-                        String stationName = mCollection.getStations().get(mStationID).getStationName();
                         // construct and run rename dialog
-                        DialogRename dialogRename = new DialogRename(mActivity, mCollection, stationName, mStationID);
+                        DialogRename dialogRename = new DialogRename(mActivity, mStation, mStationID);
                         dialogRename.show();
                         return true;
 
                     // CASE DELETE
                     case R.id.menu_delete:
                         // construct and run delete dialog
-                        DialogDelete dialogDelete = new DialogDelete(mActivity, mCollection, mStationID);
+                        DialogDelete dialogDelete = new DialogDelete(mActivity, mStation, mStationID);
                         dialogDelete.show();
                         return true;
 
                     // CASE SHORTCUT
                     case R.id.menu_shortcut: {
-                        // send local broadcast (needed by MainActivityFragment)
-                        Intent shortcutIntent = new Intent();
-                        shortcutIntent.setAction(TransistorKeys.ACTION_CREATE_SHORTCUT_REQUESTED);
-                        shortcutIntent.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
-                        LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(shortcutIntent);
+                        // create shortcut
+                        ShortcutHelper shortcutHelper = new ShortcutHelper(mActivity);
+                        shortcutHelper.placeShortcut(mStation);
                         return true;
                     }
 

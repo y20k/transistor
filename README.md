@@ -4,7 +4,7 @@ README
 Transistor - Radio app for Android
 ----------------------------------
 
-**Version 2.0.x ("Starman")**
+**Version 2.1.x ("Moonage Daydream")**
 
 Transistor is a bare bones app for listening to radio programs over the internet. The app stores stations as files on your device's external storage. It currently understands streams encoded in MP3 and OGG.
 
