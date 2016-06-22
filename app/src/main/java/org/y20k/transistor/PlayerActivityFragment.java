@@ -527,7 +527,7 @@ public final class PlayerActivityFragment extends Fragment {
     private void setVisualState() {
 
         // this station is running
-        if (mPlayback && mStation.getPlaybackState()) {
+        if (mPlayback && mStation != null && mStation.getPlaybackState()) {
             // change playback button image to stop
             mPlaybackButton.setImageResource(R.drawable.smbl_stop);
             // change playback indicator

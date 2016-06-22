@@ -12,6 +12,9 @@
         <!-- Tint NavigationBar on v21 -->
         <item name="android:navigationBarColor">@color/transistor_red_dark</item>
 
+        <!-- Default window background used for resizing on v24) -->
+        <item name="android:windowBackgroundFallback">@color/transistor_red_dark</item>
+
     </style>
 
 </resources>

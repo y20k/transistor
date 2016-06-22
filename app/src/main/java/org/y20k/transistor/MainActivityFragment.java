@@ -87,9 +87,10 @@ public final class MainActivityFragment extends Fragment {
     private int mTempStationID;
     private Station mTempStation;
     private Uri mNewStationUri;
+    private boolean mTwoPane;
     private boolean mPlayback;
-    private SleepTimerService mSleepTimerService;
     private boolean mSleepTimerRunning;
+    private SleepTimerService mSleepTimerService;
     private String mSleepTimerNotificationMessage;
     private Snackbar mSleepTimerNotification;
 
@@ -124,6 +125,9 @@ public final class MainActivityFragment extends Fragment {
 
         // initialize temporary station image id
         mTempStationID = -1;
+
+        // initialize two pane
+        mTwoPane = false;
 
         // load playback state
         loadAppState(mActivity);
@@ -181,14 +185,15 @@ public final class MainActivityFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
+        // refresh app state
+        loadAppState(mActivity);
 
+        // update collection adapter
+        mCollectionAdapter.setTwoPane(mTwoPane);
         mCollectionAdapter.setStationIDSelected(mStationIDSelected);
 
         // handle incoming intent
         handleIncomingIntent();
-
-        // refresh playback state
-        loadAppState(mActivity);
 
         // show call to action, if necessary
         toggleActionCall();
@@ -484,6 +489,7 @@ public final class MainActivityFragment extends Fragment {
         mStationIDCurrent = settings.getInt(TransistorKeys.PREF_STATION_ID_CURRENTLY_PLAYING, -1);
         mStationIDLast = settings.getInt(TransistorKeys.PREF_STATION_ID_LAST, -1);
         mPlayback = settings.getBoolean(TransistorKeys.PREF_PLAYBACK, false);
+        mTwoPane = settings.getBoolean(TransistorKeys.PREF_TWO_PANE, false);
         mSleepTimerRunning = settings.getBoolean(TransistorKeys.PREF_TIMER_RUNNING, false);
         Log.v(LOG_TAG, "Loading state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + ")");
     }

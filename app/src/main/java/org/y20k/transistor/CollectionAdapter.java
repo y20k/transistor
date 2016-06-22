@@ -370,6 +370,13 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
 
 
     /* Setter for ID of currently selected station */
+    public void setTwoPane(boolean twoPane) {
+        mTwoPane = twoPane;
+    }
+
+
+
+    /* Setter for ID of currently selected station */
     public void setStationIDSelected(int stationIDSelected) {
         mStationIDSelected = stationIDSelected;
         saveAppState(mActivity);
