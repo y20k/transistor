@@ -426,6 +426,8 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
             // return new index
             return mStationList.indexOf(station);
         } else {
+            // notify user and log failure to add
+            Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_add_duplicate_station), Toast.LENGTH_LONG).show();
             Log.e(LOG_TAG, "Unable to add station to collection: Duplicate name and/or stream URL.");
             return -1;
         }

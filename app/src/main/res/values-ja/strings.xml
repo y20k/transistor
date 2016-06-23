@@ -79,6 +79,7 @@
     <string name="toastmessage_timer_cancelled">スリープタイマーを取り消しました。</string>
     <string name="toastmessage_timer_duration_increased">時間を追加しました。</string>
     <string name="toastmessage_timer_start_unable">まず再生を開始してください。</string>
+    <string name="toastalert_add_duplicate_station">Error: Duplicate station.</string>
     <string name="toastalert_rename_unsuccessful">放送局の名前を変更できません。別の名前を選択してください。</string>
     <string name="toastalert_delete_successful">放送局を削除しました。</string>
     <string name="toastalert_no_external_storage">外部ストレージにアクセスできません。</string>

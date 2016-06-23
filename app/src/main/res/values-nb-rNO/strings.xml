@@ -79,6 +79,7 @@
     <string name="toastmessage_timer_cancelled">Tidsavbrudd avbrutt.</string>
     <string name="toastmessage_timer_duration_increased">Varighet økt.</string>
     <string name="toastmessage_timer_start_unable">Start avspilling først.</string>
+    <string name="toastalert_add_duplicate_station">Error: Duplicate station.</string>
     <string name="toastalert_rename_unsuccessful">Kunne ikke endre navn på stasjon. Velg et annet navn.</string>
     <string name="toastalert_delete_successful">Stasjon fjernet.</string>
     <string name="toastalert_no_external_storage">Fikk ikke tilgang til eksternt lagringsmedium.</string>

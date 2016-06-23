@@ -79,6 +79,7 @@
     <string name="toastmessage_timer_cancelled">Itzaltzeko atzera kontaketa eten da.</string>
     <string name="toastmessage_timer_duration_increased">Iraupena luzatu da.</string>
     <string name="toastmessage_timer_start_unable">Aurretik hasi erreprodukzioa.</string>
+    <string name="toastalert_add_duplicate_station">Error: Duplicate station.</string>
     <string name="toastalert_rename_unsuccessful">"Ezin  izan zaio izena aldatu estazioari. Aukeratu beste izen bat."</string>
     <string name="toastalert_delete_successful">Estazioa kendu da.</string>
     <string name="toastalert_no_external_storage">Unable to access external storage.</string>

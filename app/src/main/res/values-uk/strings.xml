@@ -79,6 +79,7 @@
     <string name="toastmessage_timer_cancelled">Таймер сну вимкнено.</string>
     <string name="toastmessage_timer_duration_increased">Тривалість збільшено.</string>
     <string name="toastmessage_timer_start_unable">Будь ласка, спершу розпочніть список відтворення.</string>
+    <string name="toastalert_add_duplicate_station">Error: Duplicate station.</string>
     <string name="toastalert_rename_unsuccessful">Не вдалося перейменувати станцію. Будь ласка, оберіть іншу назву.</string>
     <string name="toastalert_delete_successful">Станцію вилучено.</string>
     <string name="toastalert_no_external_storage">Не вдалося отримати доступ до зовнішнього сховища.</string>
