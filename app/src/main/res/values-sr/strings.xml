@@ -79,7 +79,6 @@
     <string name="toastmessage_timer_cancelled">Тајмер отказан.</string>
     <string name="toastmessage_timer_duration_increased">Трајање повећано.</string>
     <string name="toastmessage_timer_start_unable">Најпре почните пуштање.</string>
-    <string name="toastalert_add_duplicate_station">Error: Duplicate station.</string>
     <string name="toastalert_rename_unsuccessful">Не могох да преименујем станицу. Унесите други назив.</string>
     <string name="toastalert_delete_successful">Станица уклоњена.</string>
     <string name="toastalert_no_external_storage">Не могох да приступим спољашњем складишту.</string>

@@ -79,7 +79,6 @@
     <string name="toastmessage_timer_cancelled">Temporizador de apagado cancelado.</string>
     <string name="toastmessage_timer_duration_increased">Duración incrementada.</string>
     <string name="toastmessage_timer_start_unable">Por favor inicia primero la reproducción.</string>
-    <string name="toastalert_add_duplicate_station">Error: Duplicate station.</string>
     <string name="toastalert_rename_unsuccessful">No se ha podido renombrar la estación. Por favor elija un nombre diferente.</string>
     <string name="toastalert_delete_successful">Estación borrada.</string>
     <string name="toastalert_no_external_storage">No se ha podido acceder al almacenamiento externo.</string>

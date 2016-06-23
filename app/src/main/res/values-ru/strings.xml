@@ -79,7 +79,6 @@
     <string name="toastmessage_timer_cancelled">Таймер сна отключен.</string>
     <string name="toastmessage_timer_duration_increased">Время увеличено.</string>
     <string name="toastmessage_timer_start_unable">Сперва запустите воспроизведение.</string>
-    <string name="toastalert_add_duplicate_station">Error: Duplicate station.</string>
     <string name="toastalert_rename_unsuccessful">Невозможно переименовать станцию. Пожалуйста, выберите другое имя.</string>
     <string name="toastalert_delete_successful">Станция удалена.</string>
     <string name="toastalert_no_external_storage">Нет доступа к внешнему накопителю.</string>

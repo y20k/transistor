@@ -37,6 +37,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import org.y20k.transistor.core.Station;
+import org.y20k.transistor.helpers.DialogError;
 import org.y20k.transistor.helpers.ImageHelper;
 import org.y20k.transistor.helpers.StationContextMenu;
 import org.y20k.transistor.helpers.TransistorKeys;
@@ -427,7 +428,11 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
             return mStationList.indexOf(station);
         } else {
             // notify user and log failure to add
-            Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_add_duplicate_station), Toast.LENGTH_LONG).show();
+            String errorTitle = mActivity.getResources().getString(R.string.dialog_error_title_fetch_write);
+            String errorMessage = mActivity.getResources().getString(R.string.dialog_error_message_fetch_write);
+            String errorDetails = mActivity.getResources().getString(R.string.dialog_error_details_write);
+            DialogError dialogError = new DialogError(mActivity, errorTitle, errorMessage, errorDetails);
+            dialogError.show();
             Log.e(LOG_TAG, "Unable to add station to collection: Duplicate name and/or stream URL.");
             return -1;
         }

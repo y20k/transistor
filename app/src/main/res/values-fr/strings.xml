@@ -79,7 +79,6 @@
     <string name="toastmessage_timer_cancelled">Minuteur de veille annulé.</string>
     <string name="toastmessage_timer_duration_increased">Durée augmentée.</string>
     <string name="toastmessage_timer_start_unable">Veuillez d\'abord démarrer la lecture.</string>
-    <string name="toastalert_add_duplicate_station">Error: Duplicate station.</string>
     <string name="toastalert_rename_unsuccessful">Impossible de renommer la station. Veuillez choisir un nom différent.</string>
     <string name="toastalert_delete_successful">Station supprimée.</string>
     <string name="toastalert_no_external_storage">Impossible d\'accéder au stockage externe.</string>

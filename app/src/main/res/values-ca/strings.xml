@@ -79,7 +79,6 @@
     <string name="toastmessage_timer_cancelled">Temporitzador d\'apagat cancel·lat.</string>
     <string name="toastmessage_timer_duration_increased">Incrementar la duració (+ 15 min).</string>
     <string name="toastmessage_timer_start_unable">Si us plau inicia la reproducció abans.</string>
-    <string name="toastalert_add_duplicate_station">Error: Duplicate station.</string>
     <string name="toastalert_rename_unsuccessful">Incapaç de canviar el nom de l\'emissora. Si us plau, escolliu un nom diferent.</string>
     <string name="toastalert_delete_successful">Emissora suprimida.</string>
     <string name="toastalert_no_external_storage">No es pot accedir a l\'emmagatzematge intern.</string>
