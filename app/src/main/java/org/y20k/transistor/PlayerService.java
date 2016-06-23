@@ -442,13 +442,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         i.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
         LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(i);
 
-        // set up MediaSession
-        if (mSession == null) {
-            mSession = createMediaSession(this);
-        }
-        mSession.setPlaybackState(getPlaybackState());
-        mSession.setActive(true);
-
         // increase counter
         mPlayerInstanceCounter++;
 
@@ -459,6 +452,13 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         if (mStreamUri != null && requestFocus()) {
             initializeMediaPlayer();
         }
+
+        // set up MediaSession
+        if (mSession == null) {
+            mSession = createMediaSession(this);
+        }
+        mSession.setPlaybackState(getPlaybackState());
+        mSession.setActive(true);
 
         // put up notification
         NotificationHelper.setStationMetadata(null);
@@ -485,6 +485,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         i.putExtra(TransistorKeys.EXTRA_STATION, mStation);
         i.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
         LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(i);
+
 
         // set media session in-active and set playback state
         mSession.setPlaybackState(getPlaybackState());
@@ -674,6 +675,9 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         public void onPause() {
             // stop playback on pause signal from Android Wear or headphone button
             stopPlayback();
+
+            // keep media session active, if paused by a remote control
+            mSession.setActive(true);
         }
 
         @Override

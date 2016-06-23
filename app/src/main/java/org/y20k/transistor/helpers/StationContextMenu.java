@@ -70,7 +70,7 @@ public final class StationContextMenu extends DialogFragment {
                         Intent iconIntent = new Intent();
                         iconIntent.setAction(TransistorKeys.ACTION_IMAGE_CHANGE_REQUESTED);
                         iconIntent.putExtra(TransistorKeys.EXTRA_STATION, mStation);
-                        iconIntent.putExtra(TransistorKeys.EXTRA_STATION, mStationID);
+                        iconIntent.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
                         LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(iconIntent);
                         return true;
 

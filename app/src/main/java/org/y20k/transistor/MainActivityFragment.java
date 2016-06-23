@@ -190,6 +190,7 @@ public final class MainActivityFragment extends Fragment {
 
         // update collection adapter
         mCollectionAdapter.setTwoPane(mTwoPane);
+        mCollectionAdapter.refresh();
         mCollectionAdapter.setStationIDSelected(mStationIDSelected);
 
         // handle incoming intent
@@ -339,9 +340,12 @@ public final class MainActivityFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        // retrieve selected image Uri from image picker
         Uri newImageUri = data.getData();
+
         if (requestCode == TransistorKeys.REQUEST_LOAD_IMAGE && resultCode == Activity.RESULT_OK && null != data) {
-            // retrieve selected image from image picker
+
             ImageHelper imageHelper = new ImageHelper(newImageUri, mActivity);
             Bitmap newImage = imageHelper.getInputImage();
 
@@ -354,7 +358,7 @@ public final class MainActivityFragment extends Fragment {
                     Log.e(LOG_TAG, "Unable to save: " + newImage.toString());
                 }
                 // update adapter
-                mCollectionAdapter.setNewImageFile(mTempStationID, mTempStation.getStationImageFile());
+                mCollectionAdapter.notifyItemChanged(mTempStationID);
 
             } else {
                 Log.e(LOG_TAG, "Unable to get image from media picker: " + newImageUri.toString());

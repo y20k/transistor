@@ -321,9 +321,30 @@ public final class PlayerActivityFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        // retrieve selected image Uri from image picker
+        Uri newImageUri = data.getData();
+
         if (requestCode == TransistorKeys.REQUEST_LOAD_IMAGE && resultCode == Activity.RESULT_OK && null != data) {
-            // retrieve selected image from image picker
-            processNewImage(data.getData());
+
+            ImageHelper imageHelper = new ImageHelper(newImageUri, mActivity);
+            Bitmap newImage = imageHelper.getInputImage();
+
+            if (newImage != null) {
+                // write image to storage
+                File stationImageFile = mStation.getStationImageFile();
+                try (FileOutputStream out = new FileOutputStream(stationImageFile)) {
+                    newImage.compress(Bitmap.CompressFormat.PNG, 100, out);
+                } catch (IOException e) {
+                    Log.e(LOG_TAG, "Unable to save: " + newImage.toString());
+                }
+                // change mStationImageView
+                Bitmap stationImage = imageHelper.createCircularFramedImage(192, R.color.transistor_grey_lighter);
+                mStationImageView.setImageBitmap(stationImage);
+            } else {
+                Log.e(LOG_TAG, "Unable to get image from media picker: " + newImageUri.toString());
+            }
+
         }
     }
 
@@ -465,29 +486,6 @@ public final class PlayerActivityFragment extends Fragment {
     }
 
 
-    /* Processes new image and saves it to storage */
-    private void processNewImage(Uri newImageUri) {
-
-        ImageHelper imageHelper = new ImageHelper(newImageUri, mActivity);
-        Bitmap newImage = imageHelper.getInputImage();
-
-        if (newImage != null) {
-            // write image to storage
-            File stationImageFile = mStation.getStationImageFile();
-            try (FileOutputStream out = new FileOutputStream(stationImageFile)) {
-                newImage.compress(Bitmap.CompressFormat.PNG, 100, out);
-            } catch (IOException e) {
-                Log.e(LOG_TAG, "Unable to save: " + newImage.toString());
-            }
-            // change mStationImageView
-            Bitmap stationImage = imageHelper.createCircularFramedImage(192, R.color.transistor_grey_lighter);
-            mStationImageView.setImageBitmap(stationImage);
-        } else {
-            Log.e(LOG_TAG, "Unable to get image from media picker: " + newImageUri.toString());
-        }
-    }
-
-
     /* Animate button and then set visual state */
     private void changeVisualState(Context context) {
         // get rotate animation from xml
@@ -527,6 +525,7 @@ public final class PlayerActivityFragment extends Fragment {
     private void setVisualState() {
 
         // this station is running
+//        if (mPlayback && mStationID == mStationIDCurrent) {
         if (mPlayback && mStation != null && mStation.getPlaybackState()) {
             // change playback button image to stop
             mPlaybackButton.setImageResource(R.drawable.smbl_stop);
@@ -554,30 +553,15 @@ public final class PlayerActivityFragment extends Fragment {
     }
 
 
-    /* set state of currently playing station */
-    private void setStationState() {
-        // playback started
-        if (mPlayback) {
-            mStationIDLast = mStationIDCurrent;
-            mStationIDCurrent = mStationID;
-        }
-        // playback stopped
-        else {
-            mStationIDLast = mStationIDCurrent;
-            mStationIDCurrent = -1;
-        }
-    }
-
-
     /* Saves app state to SharedPreferences */
     private void saveAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putInt(TransistorKeys.PREF_STATION_ID_CURRENTLY_PLAYING, mStationIDCurrent);
-        editor.putInt(TransistorKeys.PREF_STATION_ID_LAST, mStationIDLast);
+//        editor.putInt(TransistorKeys.PREF_STATION_ID_CURRENTLY_PLAYING, mStationIDCurrent);
+//        editor.putInt(TransistorKeys.PREF_STATION_ID_LAST, mStationIDLast);
         editor.putString(TransistorKeys.PREF_STATION_METADATA, mStationMetadata);
-        editor.putBoolean(TransistorKeys.PREF_PLAYBACK, mPlayback);
-        editor.putBoolean(TransistorKeys.PREF_STATION_LOADING, mStationLoading);
+//        editor.putBoolean(TransistorKeys.PREF_PLAYBACK, mPlayback);
+//        editor.putBoolean(TransistorKeys.PREF_STATION_LOADING, mStationLoading);
         editor.apply();
         Log.v(LOG_TAG, "Saving state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + " / " + mStationLoading + " / " + mStationMetadata + ")");
     }
@@ -707,7 +691,7 @@ public final class PlayerActivityFragment extends Fragment {
                     // set playback false
                     mPlayback = false;
                     // rotate playback button
-                    if (intent.hasExtra(TransistorKeys.EXTRA_STATION_ID) && mStation.equals(intent.getParcelableExtra(TransistorKeys.EXTRA_STATION))) {
+                    if (intent.hasExtra(TransistorKeys.EXTRA_STATION_ID) && mStationID == intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, -1)) {
                         mStation.setPlaybackState(false);
                         changeVisualState(mActivity);
                     }

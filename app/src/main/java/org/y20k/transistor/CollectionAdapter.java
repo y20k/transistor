@@ -158,7 +158,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
         holder.getStationNameView().setText(station.getStationName());
 
         // set playback indicator - in phone view only
-        if (!mTwoPane && mPlayback && station.getPlaybackState()) {
+        if (!mTwoPane && mPlayback && (station.getPlaybackState() || mStationIDCurrent == position)) {
             if (mStationLoading) {
                 holder.getPlaybackIndicator().setBackgroundResource(R.drawable.ic_playback_indicator_small_loading_24dp);
             } else {
@@ -353,11 +353,11 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     private void saveAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putInt(TransistorKeys.PREF_STATION_ID_CURRENTLY_PLAYING, mStationIDCurrent);
-        editor.putInt(TransistorKeys.PREF_STATION_ID_LAST, mStationIDLast);
+//        editor.putInt(TransistorKeys.PREF_STATION_ID_CURRENTLY_PLAYING, mStationIDCurrent);
+//        editor.putInt(TransistorKeys.PREF_STATION_ID_LAST, mStationIDLast);
         editor.putInt(TransistorKeys.PREF_STATION_ID_SELECTED, mStationIDSelected);
-        editor.putBoolean(TransistorKeys.PREF_PLAYBACK, mPlayback);
-        editor.putBoolean(TransistorKeys.PREF_STATION_LOADING, mStationLoading);
+//        editor.putBoolean(TransistorKeys.PREF_PLAYBACK, mPlayback);
+//        editor.putBoolean(TransistorKeys.PREF_STATION_LOADING, mStationLoading);
         editor.apply();
         Log.v(LOG_TAG, "Saving state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback  + " / " + mStationLoading + " / " + mStationIDSelected +")");
     }
@@ -370,19 +370,24 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
 
 
     /* Setter for ID of currently selected station */
-    public void setTwoPane(boolean twoPane) {
-        mTwoPane = twoPane;
-    }
-
-
-
-    /* Setter for ID of currently selected station */
     public void setStationIDSelected(int stationIDSelected) {
         mStationIDSelected = stationIDSelected;
         saveAppState(mActivity);
         if (mTwoPane) {
             handleSingleClick(stationIDSelected);
         }
+    }
+
+
+    /* Setter for two pane flag */
+    public void setTwoPane(boolean twoPane) {
+        mTwoPane = twoPane;
+    }
+
+
+    /* Reloads app state */
+    public void refresh() {
+        loadAppState(mActivity);
     }
 
 
