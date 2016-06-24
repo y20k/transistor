@@ -59,10 +59,6 @@ public final class DialogDelete {
             // listen for click on delete button
             public void onClick(DialogInterface arg0, int arg1) {
 
-                // delete station shortcut
-                ShortcutHelper shortcutHelper = new ShortcutHelper(mActivity);
-                shortcutHelper.removeShortcut(mStation);
-
                 // send local broadcast
                 Intent i = new Intent();
                 i.setAction(TransistorKeys.ACTION_COLLECTION_CHANGED);

@@ -39,6 +39,7 @@ import android.widget.Toast;
 import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.DialogError;
 import org.y20k.transistor.helpers.ImageHelper;
+import org.y20k.transistor.helpers.ShortcutHelper;
 import org.y20k.transistor.helpers.StationContextMenu;
 import org.y20k.transistor.helpers.TransistorKeys;
 
@@ -506,6 +507,10 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
             mStationList.removeItemAt(stationID);
             Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_delete_successful), Toast.LENGTH_LONG).show();
         }
+
+        // delete station shortcut
+        ShortcutHelper shortcutHelper = new ShortcutHelper(mActivity);
+        shortcutHelper.removeShortcut(station);
 
         if (mTwoPane) {
             // determine ID of next station to display in two pane mode
