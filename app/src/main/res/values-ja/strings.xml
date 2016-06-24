@@ -84,6 +84,7 @@
     <string name="toastalert_no_external_storage">外部ストレージにアクセスできません。</string>
     <string name="toastalert_headphones_unplugged">ヘッドフォンのプラグを外しました。再生を停止します。</string>
     <string name="toastalert_permission_denied">アクセスが拒否されました:</string>
+    <string name="toastalert_station_not_found">Unable to find station.</string>
     <string name="toastalert_stream_not_found">トランジスターはこの局を認識しません。削除して、もう一度ホーム画面に追加してください。</string>
     <string name="snackbar_request_storage_access">トランジスターは、外部ストレージからデータをアクセスできるように、読み取りアクセス許可を付与する必要があります。</string>
     <string name="snackbar_message_timer_set">スリープタイマーをセットします</string>

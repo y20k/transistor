@@ -84,6 +84,7 @@
     <string name="toastalert_no_external_storage">Не вдалося отримати доступ до зовнішнього сховища.</string>
     <string name="toastalert_headphones_unplugged">Навушники відключені. Відтворення призупинено.</string>
     <string name="toastalert_permission_denied">Доступ не надано:</string>
+    <string name="toastalert_station_not_found">Unable to find station.</string>
     <string name="toastalert_stream_not_found">Transistor does not recognize this station. Please delete and add it again to the Home screen.</string>
     <string name="snackbar_request_storage_access">Transistor потребує доступу для читання даних зі зовнішнього сховища.</string>
     <string name="snackbar_message_timer_set">Таймер сну встановлено на</string>

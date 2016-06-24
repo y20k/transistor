@@ -84,6 +84,7 @@
     <string name="toastalert_no_external_storage">Impossible d\'accéder au stockage externe.</string>
     <string name="toastalert_headphones_unplugged">Casque débranché. Lecture arrêtée.</string>
     <string name="toastalert_permission_denied">Autorisation refusée :</string>
+    <string name="toastalert_station_not_found">Unable to find station.</string>
     <string name="toastalert_stream_not_found">Transistor ne reconnaît pas cette station. Veuillez la supprimer et l\'ajouter à nouveau à l\'écran d\'accueil.</string>
     <string name="snackbar_request_storage_access">Transistor requiert d\'accorder l\'autorisation afin d\'accéder aux données du stockage externe.</string>
     <string name="snackbar_message_timer_set">Minuteur de veille réglé à</string>

@@ -84,6 +84,7 @@
     <string name="toastalert_no_external_storage">No se ha podido acceder al almacenamiento externo.</string>
     <string name="toastalert_headphones_unplugged">Auriculares desconectados. Reproducción detenida.</string>
     <string name="toastalert_permission_denied">Permiso denegado:</string>
+    <string name="toastalert_station_not_found">Unable to find station.</string>
     <string name="toastalert_stream_not_found">Transistor no reconoce esta estación. Por favor bórrala y añádela de nuevo a la pantalla de inicio.</string>
     <string name="snackbar_request_storage_access">Transistor necesita obtener permisos de lectura para acceder a los datos del almacenamiento externo.</string>
     <string name="snackbar_message_timer_set">Temporizador de apagado establecer en</string>

@@ -31,6 +31,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.Toast;
 
 import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.StorageHelper;
@@ -177,44 +178,42 @@ public final class MainActivity extends AppCompatActivity {
             station = collectionAdapter.findStation(Uri.parse(mIntent.getStringExtra(TransistorKeys.EXTRA_STREAM_URI)));
         }
 
-        // save station id as selected station (TODO: put into saveAppState)
-//        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
-//        SharedPreferences.Editor editor = settings.edit();
-//        editor.putInt(TransistorKeys.PREF_STATION_ID_SELECTED, stationID);
-//        editor.apply();
+        if (station != null) {
+            // get playback action from intent
+            if (mIntent.hasExtra(TransistorKeys.EXTRA_PLAYBACK_STATE)) {
+                startPlayback = mIntent.getBooleanExtra(TransistorKeys.EXTRA_PLAYBACK_STATE, false);
+                station.setPlaybackState(mIntent.getBooleanExtra(TransistorKeys.EXTRA_PLAYBACK_STATE, false)); // TODO remove
+            } else {
+                startPlayback = false;
+                station.setPlaybackState(false); // TODO remove
+            }
 
-        // get playback action from intent
-        if (mIntent.hasExtra(TransistorKeys.EXTRA_PLAYBACK_STATE)) {
-            startPlayback = mIntent.getBooleanExtra(TransistorKeys.EXTRA_PLAYBACK_STATE, false);
-            station.setPlaybackState(mIntent.getBooleanExtra(TransistorKeys.EXTRA_PLAYBACK_STATE, false)); // TODO remove
+            // prepare arguments and intent
+            if (mTwoPane) {
+                // prepare args for player fragment
+                playerArgs.putParcelable(TransistorKeys.ARG_STATION, station);
+                playerArgs.putBoolean(TransistorKeys.ARG_PLAYBACK, startPlayback);
+                // show player fragment
+                PlayerActivityFragment playerActivityFragment = new PlayerActivityFragment();
+                playerActivityFragment.setArguments(playerArgs);
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.player_container, playerActivityFragment, TransistorKeys.PLAYER_FRAGMENT_TAG)
+                        .commit();
+                // notify main activity fragment
+                Intent changeSelectionIntent = new Intent();
+                changeSelectionIntent.setAction(TransistorKeys.ACTION_CHANGE_VIEW_SELECTION);
+                changeSelectionIntent.putExtra(TransistorKeys.EXTRA_STATION, station);
+                LocalBroadcastManager.getInstance(getApplication()).sendBroadcast(changeSelectionIntent);
+            } else {
+                // start player activity - on phone
+                Intent playerIntent = new Intent(this, PlayerActivity.class);
+                playerIntent.setAction(TransistorKeys.ACTION_SHOW_PLAYER);
+                playerIntent.putExtra(TransistorKeys.EXTRA_STATION, station);
+                playerIntent.putExtra(TransistorKeys.EXTRA_PLAYBACK_STATE, startPlayback);
+                startActivity(playerIntent);
+            }
         } else {
-            startPlayback = false;
-            station.setPlaybackState(false); // TODO remove
-        }
-
-        // prepare arguments and intent
-        if (mTwoPane) {
-            // prepare args for player fragment
-            playerArgs.putParcelable(TransistorKeys.ARG_STATION, station);
-            playerArgs.putBoolean(TransistorKeys.ARG_PLAYBACK, startPlayback);
-            // show player fragment
-            PlayerActivityFragment playerActivityFragment = new PlayerActivityFragment();
-            playerActivityFragment.setArguments(playerArgs);
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.player_container, playerActivityFragment, TransistorKeys.PLAYER_FRAGMENT_TAG)
-                    .commit();
-            // notify main activity fragment
-            Intent changeSelectionIntent = new Intent();
-            changeSelectionIntent.setAction(TransistorKeys.ACTION_CHANGE_VIEW_SELECTION);
-            changeSelectionIntent.putExtra(TransistorKeys.EXTRA_STATION, station);
-            LocalBroadcastManager.getInstance(getApplication()).sendBroadcast(changeSelectionIntent);
-        } else {
-            // start player activity - on phone
-            Intent playerIntent = new Intent(this, PlayerActivity.class);
-            playerIntent.setAction(TransistorKeys.ACTION_SHOW_PLAYER);
-            playerIntent.putExtra(TransistorKeys.EXTRA_STATION, station);
-            playerIntent.putExtra(TransistorKeys.EXTRA_PLAYBACK_STATE, startPlayback);
-            startActivity(playerIntent);
+            Toast.makeText(this, getString(R.string.toastalert_station_not_found), Toast.LENGTH_LONG).show();
         }
 
         // remove ACTION_SHOW_PLAYER action from intent

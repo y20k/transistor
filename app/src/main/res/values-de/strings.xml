@@ -84,6 +84,7 @@
     <string name="toastalert_no_external_storage">Zugriff auf den externen Speicher verweigert.</string>
     <string name="toastalert_headphones_unplugged">Kopfhörer entfernt. Playback gestoppt.</string>
     <string name="toastalert_permission_denied">Fehlende Berechtigung:</string>
+    <string name="toastalert_station_not_found">Station kann nicht gefunden werden.</string>
     <string name="toastalert_stream_not_found">Transistor kann mit dieser Station nichts anfangen. Bitte löschen und erneut hinzufügen.</string>
     <string name="snackbar_request_storage_access">Transistor benötigt Lese-Rechte, um auf Dateien auf dem externen Speicher zugreifen zu können.</string>
     <string name="snackbar_message_timer_set">Sleeptimer Countdown</string>

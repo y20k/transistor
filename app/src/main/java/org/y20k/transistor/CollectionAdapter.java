@@ -99,7 +99,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
         loadCollection();
 
         // load state
-        loadAppState(mActivity);
+        // loadAppState(mActivity);
 
     }
 
@@ -403,12 +403,15 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
             }
         }
 
-        // return a default if nothing was found
-        if (mStationList.size() > 0){
-            return mStationList.get(0);
-        } else {
-            return null;
-        }
+        // return null if nothing was found
+        return null;
+
+//        // return a default if nothing was found
+//        if (mStationList.size() > 0){
+//            return mStationList.get(0);
+//        } else {
+//            return null;
+//        }
     }
 
 
@@ -560,7 +563,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
                 // CASE: playback was stopped
                 case TransistorKeys.PLAYBACK_STOPPED:
                     mPlayback = false;
-                    mStationList.get(stationID).setPlaybackState(true);
+                    mStationList.get(stationID).setPlaybackState(false);
 
                     notifyDataSetChanged();
                     break;

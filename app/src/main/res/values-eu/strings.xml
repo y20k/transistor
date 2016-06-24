@@ -84,6 +84,7 @@
     <string name="toastalert_no_external_storage">Unable to access external storage.</string>
     <string name="toastalert_headphones_unplugged">Headphones unplugged. Playback stopped.</string>
     <string name="toastalert_permission_denied">Baimena ukatu da:</string>
+    <string name="toastalert_station_not_found">Unable to find station.</string>
     <string name="toastalert_stream_not_found">Transistor does not recognize this station. Please delete and add it again to the Home screen.</string>
     <string name="snackbar_request_storage_access">Transistor needs to be granted read permissions to be able access data from external storage.</string>
     <string name="snackbar_message_timer_set">Sleep timer set to</string>

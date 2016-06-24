@@ -652,6 +652,11 @@ public final class MainActivityFragment extends Fragment {
 
                     // add station to adapter, scroll to new position and update adapter
                     newStationPosition = mCollectionAdapter.add(station);
+
+                    if (mCollectionAdapter.getItemCount() > 0) {
+                        toggleActionCall();
+                    }
+
                     mLayoutManager.scrollToPosition(newStationPosition);
                     mCollectionAdapter.setStationIDSelected(newStationPosition);
                     mCollectionAdapter.notifyDataSetChanged(); // TODO Remove?
@@ -692,12 +697,10 @@ public final class MainActivityFragment extends Fragment {
                     Station station = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
                     int stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
 
-                    // remove view
-                    mLayoutManager.removeViewAt(stationID);
-
                     // remove station from adapter and update
                     newStationPosition = mCollectionAdapter.delete(station, stationID);
-                    if (newStationPosition != -1) {
+
+                    if (newStationPosition < 0 || mCollectionAdapter.getItemCount() > 0) {
                         mCollectionAdapter.setStationIDSelected(newStationPosition);
                         mLayoutManager.scrollToPosition(newStationPosition);
                     } else {

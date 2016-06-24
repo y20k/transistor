@@ -84,6 +84,7 @@
     <string name="toastalert_no_external_storage">Nimam dostopa do zunanjega pomnilnika.</string>
     <string name="toastalert_headphones_unplugged">Prenos je bil ustavljen zaradi odstranitve slušalk.</string>
     <string name="toastalert_permission_denied">Permission denied:</string>
+    <string name="toastalert_station_not_found">Unable to find station.</string>
     <string name="toastalert_stream_not_found">Transistor does not recognize this station. Please delete and add it again to the Home screen.</string>
     <string name="snackbar_request_storage_access">Za dodajanje nove ikone radijski postaji potrebuje Transistor dostop do vaših slik in fotografij.</string>
     <string name="snackbar_message_timer_set">Sleep timer set to</string>

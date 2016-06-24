@@ -84,6 +84,7 @@
     <string name="toastalert_no_external_storage">无法访问外部存储。</string>
     <string name="toastalert_headphones_unplugged">耳机已拔出。播放停止。</string>
     <string name="toastalert_permission_denied">权限被拒绝：</string>
+    <string name="toastalert_station_not_found">Unable to find station.</string>
     <string name="toastalert_stream_not_found">Transistor 无法识别此电台。请删除它并重新添加到首页。</string>
     <string name="snackbar_request_storage_access">Transistor 需要被授权读取以从外部存储访问数据。</string>
     <string name="snackbar_message_timer_set">睡眠定时器设为</string>

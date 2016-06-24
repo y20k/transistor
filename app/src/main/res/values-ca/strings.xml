@@ -84,6 +84,7 @@
     <string name="toastalert_no_external_storage">No es pot accedir a l\'emmagatzematge intern.</string>
     <string name="toastalert_headphones_unplugged">Auriculars desendollats. La reproducció s\'ha aturat.</string>
     <string name="toastalert_permission_denied">Permís denegat:</string>
+    <string name="toastalert_station_not_found">Unable to find station.</string>
     <string name="toastalert_stream_not_found">Transistor no rconeix aquesta emissora. Si us plau, esborra i torna a afegir-la a la pantalla d\'inici.</string>
     <string name="snackbar_request_storage_access">Transistor necessita obtenir permisos de lectura per accedir a les dades del emmagatzematge extern.</string>
     <string name="snackbar_message_timer_set">Comptador de temps d\'espera fixat en</string>

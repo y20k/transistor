@@ -84,6 +84,7 @@
     <string name="toastalert_no_external_storage">Нет доступа к внешнему накопителю.</string>
     <string name="toastalert_headphones_unplugged">Наушники отключили. Воспроизведение остановлено.</string>
     <string name="toastalert_permission_denied">Доступ запрещен:</string>
+    <string name="toastalert_station_not_found">Unable to find station.</string>
     <string name="toastalert_stream_not_found">Transistor не распознал эту станцию. Пожалуйста, удалите и добавьте снова на домашний экран.</string>
     <string name="snackbar_request_storage_access">Приложению должно быть предоставлено разрешение на чтение данных на внешнем накопителе.</string>
     <string name="snackbar_message_timer_set">Таймер сна установлен на</string>
