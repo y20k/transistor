@@ -93,6 +93,9 @@ public class TransistorKeys {
     public static final int PLAYBACK_STARTED = 2;
     public static final int PLAYBACK_STOPPED = 3;
     public static final String INSTANCE_LIST_STATE = "instanceListState";
+    public static final String INSTANCE_STATION = "instanceStation";
+    public static final String INSTANCE_STATION_ID = "instanceStationID";
+    public static final String INSTANCE_PLAYBACK = "instancePlayback";
     public static final String PLAYER_FRAGMENT_TAG = "PFTAG";
     public static final String SHOUTCAST_STREAM_TITLE_HEADER = "StreamTitle='";
 

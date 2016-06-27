@@ -14,7 +14,7 @@
 
 package org.y20k.transistor.helpers;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -36,12 +36,12 @@ public class ShortcutHelper {
 
 
     /* Main class variables */
-    private final Activity mActivity;
+    private final Context mContext;
 
 
     /* Constructor */
-    public ShortcutHelper(Activity activity) {
-        mActivity = activity;
+    public ShortcutHelper(Context context) {
+        mContext = context;
     }
 
 
@@ -50,10 +50,10 @@ public class ShortcutHelper {
         // create and launch intent to put shortcut on Home screen
         Intent addIntent = createShortcutIntent(station);
         addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
-        mActivity.getApplicationContext().sendBroadcast(addIntent);
+        mContext.getApplicationContext().sendBroadcast(addIntent);
 
         // notify user
-        Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_shortcut_created), Toast.LENGTH_LONG).show();
+        Toast.makeText(mContext, mContext.getString(R.string.toastmessage_shortcut_created), Toast.LENGTH_LONG).show();
     }
 
 
@@ -62,7 +62,7 @@ public class ShortcutHelper {
         // create and launch intent to remove shortcut on Home screen
         Intent removeIntent = createShortcutIntent(station);
         removeIntent.setAction("com.android.launcher.action.UNINSTALL_SHORTCUT");
-        mActivity.getApplicationContext().sendBroadcast(removeIntent);
+        mContext.getApplicationContext().sendBroadcast(removeIntent);
     }
 
 
@@ -79,20 +79,20 @@ public class ShortcutHelper {
         } else {
             stationImage = null;
         }
-        imageHelper = new ImageHelper(stationImage, mActivity);
+        imageHelper = new ImageHelper(stationImage, mContext);
         shortcutIcon = imageHelper.createShortcut(192);
 
         String stationUri = station.getStreamUri().toString();
 
         // create intent to start MainActivity
-        Intent shortcutIntent = new Intent(mActivity, MainActivity.class);
+        Intent shortcutIntent = new Intent(mContext, MainActivity.class);
         shortcutIntent.setAction(TransistorKeys.ACTION_SHOW_PLAYER);
         shortcutIntent.putExtra(TransistorKeys.EXTRA_STREAM_URI, stationUri);
         shortcutIntent.putExtra(TransistorKeys.EXTRA_PLAYBACK_STATE, true);
         shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
-        Log.v(LOG_TAG, "Intent for Home screen shortcut: " + shortcutIntent.toString() + " Activity: " + mActivity);
+        Log.v(LOG_TAG, "Intent for Home screen shortcut: " + shortcutIntent.toString() + " Activity: " + mContext);
 
         // create and launch intent put shortcut on Home screen
         Intent addIntent = new Intent();

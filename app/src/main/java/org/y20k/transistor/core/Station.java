@@ -215,6 +215,7 @@ public final class Station implements Comparable<Station>, Parcelable {
         mPlaylistFileContent = in.readString();
         mStationFetchResults = in.readBundle(Bundle.class.getClassLoader());
         mPlayback = in.readByte() != 0; // true if byte != 0
+        Log.v(LOG_TAG, "Station re-created from parcel. State of playback is: " + mPlayback);
     }
 
 

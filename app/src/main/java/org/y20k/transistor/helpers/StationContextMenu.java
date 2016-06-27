@@ -91,7 +91,8 @@ public final class StationContextMenu extends DialogFragment {
                     // CASE SHORTCUT
                     case R.id.menu_shortcut: {
                         // create shortcut
-                        ShortcutHelper shortcutHelper = new ShortcutHelper(mActivity);
+//                        ShortcutHelper shortcutHelper = new ShortcutHelper(mActivity);
+                        ShortcutHelper shortcutHelper = new ShortcutHelper(mActivity.getApplication().getApplicationContext());
                         shortcutHelper.placeShortcut(mStation);
                         return true;
                     }

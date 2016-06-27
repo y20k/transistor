@@ -99,8 +99,8 @@ public final class PlayerActivityFragment extends Fragment {
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreate(Bundle savedInstance) {
+        super.onCreate(savedInstance);
 
         // set fragment visibility
         mVisibility = false;
@@ -114,6 +114,7 @@ public final class PlayerActivityFragment extends Fragment {
         // load playback state from preferences
         loadAppState(mActivity);
 
+
         // get data from arguments
         Bundle arguments = getArguments();
         if (arguments != null) {
@@ -121,13 +122,16 @@ public final class PlayerActivityFragment extends Fragment {
             // get station from arguments
             if (arguments.containsKey(TransistorKeys.ARG_STATION)) {
                 mStation = arguments.getParcelable(TransistorKeys.ARG_STATION);
+                arguments.remove(TransistorKeys.ARG_STATION);
             }
 
             // get station ID from arguments
             if (arguments.containsKey(TransistorKeys.ARG_STATION_ID)) {
                 mStationID = arguments.getInt(TransistorKeys.ARG_STATION_ID);
+                arguments.remove(TransistorKeys.ARG_STATION_ID);
             } else {
                 mStationID = 0;
+                Log.e(LOG_TAG, "Error: station is null. Choosing default ID for station");
             }
 
             // get station name and Uri
@@ -136,7 +140,7 @@ public final class PlayerActivityFragment extends Fragment {
                 mStreamUri = mStation.getStreamUri().toString();
             } else {
                 mStationName = mActivity.getString(R.string.descr_station_name_example);
-                Log.e(LOG_TAG, "Error: station is null.");
+                Log.e(LOG_TAG, "Error: station is null. Displaying default station name");
             }
 
             // get tablet or phone mode info from arguments
@@ -155,7 +159,7 @@ public final class PlayerActivityFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance) {
 
         // inflate root view from xml
         mRootView = inflater.inflate(R.layout.fragment_player, container, false);
@@ -349,6 +353,16 @@ public final class PlayerActivityFragment extends Fragment {
     }
 
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        // save current station
+        outState.putParcelable(TransistorKeys.INSTANCE_STATION, mStation);
+        outState.putInt(TransistorKeys.INSTANCE_STATION_ID, mStationID);
+        outState.putBoolean(TransistorKeys.INSTANCE_PLAYBACK, mPlayback);
+    }
+
+
     /* Starts player service */
     private void startPlayback() {
         // set playback true
@@ -432,7 +446,7 @@ public final class PlayerActivityFragment extends Fragment {
             // CASE SHORTCUT
             case R.id.menu_shortcut: {
                 // create shortcut
-                ShortcutHelper shortcutHelper = new ShortcutHelper(mActivity);
+                ShortcutHelper shortcutHelper = new ShortcutHelper(mActivity.getApplication().getApplicationContext());
                 shortcutHelper.placeShortcut(mStation);
                 return true;
             }
@@ -563,7 +577,7 @@ public final class PlayerActivityFragment extends Fragment {
 //        editor.putBoolean(TransistorKeys.PREF_PLAYBACK, mPlayback);
 //        editor.putBoolean(TransistorKeys.PREF_STATION_LOADING, mStationLoading);
         editor.apply();
-        Log.v(LOG_TAG, "Saving state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + " / " + mStationLoading + " / " + mStationMetadata + ")");
+        Log.v(LOG_TAG, "Saving state ("+ mStationMetadata + ")");
     }
 
 
@@ -670,7 +684,7 @@ public final class PlayerActivityFragment extends Fragment {
 
             // CASE: playback has started
             case TransistorKeys.PLAYBACK_STARTED:
-                if (mVisibility && mPlayback && mStation.getStreamUri().equals(station.getStreamUri())) {
+                if (mVisibility && mPlayback && mStation != null && mStation.getStreamUri().equals(station.getStreamUri())) {
                     // update loading status and playback indicator
                     mStationLoading = false;
                     mPlaybackIndicator.setBackgroundResource(R.drawable.ic_playback_indicator_started_24dp);
@@ -687,7 +701,7 @@ public final class PlayerActivityFragment extends Fragment {
 
             // CASE: playback was stopped
             case TransistorKeys.PLAYBACK_STOPPED:
-                if (mVisibility && mPlayback && mPlayback && mStation.getStreamUri().equals(station.getStreamUri())) {
+                if (mVisibility && mPlayback && mPlayback && mStation != null && mStation.getStreamUri().equals(station.getStreamUri())) {
                     // set playback false
                     mPlayback = false;
                     // rotate playback button

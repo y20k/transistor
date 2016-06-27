@@ -80,15 +80,8 @@ public final class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        // if player_container is present two-pane layout has been loaded
-        mContainer = findViewById(R.id.player_container);
-
-        if (mContainer != null) {
-            mTwoPane = true;
-            Log.v(LOG_TAG, "Large screen detected. Choosing two pane layout.");
-        } else {
-            Log.v(LOG_TAG, "Small screen detected. Choosing single pane layout.");
-        }
+        // check if two pane mode can be used
+        mTwoPane = detectTwoPane();
 
         // special case: player should be launched (e.g. from shortcut or notification)
         if (mIntent != null && TransistorKeys.ACTION_SHOW_PLAYER.equals(mIntent.getAction())) {
@@ -96,17 +89,9 @@ public final class MainActivity extends AppCompatActivity {
         }
 
         // tablet mode: show player fragment in player container
-        if (mTwoPane && mCollectionFolder.listFiles().length > 0) {
-            // prepare bundle
-            Bundle playerArgs = new Bundle();
-            playerArgs.putBoolean(TransistorKeys.ARG_TWO_PANE, mTwoPane);
-
-            // show fragment
-            PlayerActivityFragment playerActivityFragment = new PlayerActivityFragment();
-            playerActivityFragment.setArguments(playerArgs);
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.player_container, playerActivityFragment, TransistorKeys.PLAYER_FRAGMENT_TAG)
-                    .commit();
+        if (mTwoPane && mCollectionFolder.listFiles().length > 1) {
+            // hide right pane
+            mContainer.setVisibility(View.VISIBLE);
         } else if (mTwoPane) {
             // make room for action call
             mContainer.setVisibility(View.GONE);
@@ -123,6 +108,12 @@ public final class MainActivity extends AppCompatActivity {
         unregisterBroadcastReceivers();
     }
 
+    @Override
+    public void onMultiWindowModeChanged(boolean isInMultiWindowMode) {
+        super.onMultiWindowModeChanged(isInMultiWindowMode);
+        // check if two pane mode can be used
+        mTwoPane = detectTwoPane();
+    }
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -160,6 +151,21 @@ public final class MainActivity extends AppCompatActivity {
     }
 
 
+    /* Checks if two-pane mode can be used */
+    private boolean detectTwoPane() {
+        mContainer = findViewById(R.id.player_container);
+
+        // if player_container is present two-pane layout can be used
+        if (mContainer != null) {
+            Log.v(LOG_TAG, "Large screen detected. Choosing two pane layout.");
+            return true;
+        } else {
+            Log.v(LOG_TAG, "Small screen detected. Choosing single pane layout.");
+            return false;
+        }
+    }
+
+
     /* Directly launch the player */
     private void launchPlayer() {
 
@@ -189,7 +195,7 @@ public final class MainActivity extends AppCompatActivity {
             }
 
             // prepare arguments and intent
-            if (mTwoPane) {
+            if (mTwoPane && station != null) {
                 // prepare args for player fragment
                 playerArgs.putParcelable(TransistorKeys.ARG_STATION, station);
                 playerArgs.putBoolean(TransistorKeys.ARG_PLAYBACK, startPlayback);
@@ -244,20 +250,13 @@ public final class MainActivity extends AppCompatActivity {
         mCollectionChangedReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-
                 // show/hide player layout container
-                if (mTwoPane && mCollectionFolder.listFiles().length == 0) {
-                    // make room for action call
+                if (mTwoPane && mCollectionFolder.listFiles().length == 1) {
+                    // make room for action call - hide player container
                     mContainer.setVisibility(View.GONE);
-                } else if (mTwoPane && mCollectionFolder.listFiles().length == 1) {
+                } else if (mTwoPane) {
+                    // show player container
                     mContainer.setVisibility(View.VISIBLE);
-                    Bundle playerArgs = new Bundle();
-                    playerArgs.putBoolean(TransistorKeys.ARG_TWO_PANE, mTwoPane);
-                    PlayerActivityFragment playerActivityFragment = new PlayerActivityFragment();
-                    playerActivityFragment.setArguments(playerArgs);
-                    getFragmentManager().beginTransaction()
-                            .replace(R.id.player_container, playerActivityFragment, TransistorKeys.PLAYER_FRAGMENT_TAG)
-                            .commit();
                 }
             }
         };

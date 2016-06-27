@@ -191,7 +191,9 @@ public final class MainActivityFragment extends Fragment {
         // update collection adapter
         mCollectionAdapter.setTwoPane(mTwoPane);
         mCollectionAdapter.refresh();
-        mCollectionAdapter.setStationIDSelected(mStationIDSelected);
+        if (mCollectionAdapter.getItemCount() > 0) {
+            mCollectionAdapter.setStationIDSelected(mStationIDSelected);
+        }
 
         // handle incoming intent
         handleIncomingIntent();
@@ -587,23 +589,6 @@ public final class MainActivityFragment extends Fragment {
         IntentFilter sleepTimerIntentFilter = new IntentFilter(TransistorKeys.ACTION_TIMER_RUNNING);
         LocalBroadcastManager.getInstance(mActivity).registerReceiver(mSleepTimerStartedReceiver, sleepTimerIntentFilter);
 
-//        // RECEIVER: (re-)sets the selection if needed
-//        mChangeViewSelectionReceiver = new BroadcastReceiver() {
-//            @Override
-//            public void onReceive(Context context, Intent intent) {
-//                // reset previous selection
-//                mCollectionAdapter.resetSelection();
-//                if (intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)) {
-//                    // set new id selected
-//                    mCollectionAdapter.setStationIDSelected(intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0));
-//                    mCollectionAdapter.notifyDataSetChanged();
-//                }
-//            }
-//        };
-//        IntentFilter changeViewSelectionIntentFilter = new IntentFilter(TransistorKeys.ACTION_CHANGE_VIEW_SELECTION);
-//        LocalBroadcastManager.getInstance(mApplication).registerReceiver(mChangeViewSelectionReceiver, changeViewSelectionIntentFilter);
-//
-//    }
     }
 
 
@@ -613,7 +598,6 @@ public final class MainActivityFragment extends Fragment {
         LocalBroadcastManager.getInstance(mActivity).unregisterReceiver(mCollectionChangedReceiver);
         LocalBroadcastManager.getInstance(mActivity).unregisterReceiver(mImageChangeRequestReceiver);
         LocalBroadcastManager.getInstance(mActivity).unregisterReceiver(mSleepTimerStartedReceiver);
-//        LocalBroadcastManager.getInstance(mActivity).unregisterReceiver(mChangeViewSelectionReceiver);
     }
 
     /* Handles changes in state of playback, eg. start, stop, loading stream */
@@ -699,13 +683,13 @@ public final class MainActivityFragment extends Fragment {
 
                     // remove station from adapter and update
                     newStationPosition = mCollectionAdapter.delete(station, stationID);
-
-                    if (newStationPosition < 0 || mCollectionAdapter.getItemCount() > 0) {
-                        mCollectionAdapter.setStationIDSelected(newStationPosition);
-                        mLayoutManager.scrollToPosition(newStationPosition);
-                    } else {
+                    if (newStationPosition == -1 || mCollectionAdapter.getItemCount() == 0) {
                         // show call to action
                         toggleActionCall();
+                    } else {
+                        // scroll to new position
+                        mCollectionAdapter.setStationIDSelected(newStationPosition);
+                        mLayoutManager.scrollToPosition(newStationPosition);
                     }
                     mCollectionAdapter.notifyDataSetChanged(); // TODO Remove?
                 }

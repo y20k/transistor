@@ -375,7 +375,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     public void setStationIDSelected(int stationIDSelected) {
         mStationIDSelected = stationIDSelected;
         saveAppState(mActivity);
-        if (mTwoPane) {
+        if (mTwoPane && stationIDSelected >= 0) {
             handleSingleClick(stationIDSelected);
         }
     }
@@ -518,16 +518,18 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
                 stationID--;
             }
 
-            // show next station
-            Bundle args = new Bundle();
-            args.putParcelable(TransistorKeys.ARG_STATION, mStationList.get(stationID));
-            args.putInt(TransistorKeys.ARG_STATION_ID, stationID);
-            args.putBoolean(TransistorKeys.ARG_TWO_PANE, mTwoPane);
-            PlayerActivityFragment playerActivityFragment = new PlayerActivityFragment();
-            playerActivityFragment.setArguments(args);
-            mActivity.getFragmentManager().beginTransaction()
-                    .replace(R.id.player_container, playerActivityFragment, TransistorKeys.PLAYER_FRAGMENT_TAG)
-                    .commit();
+            if (stationID >= 0) {
+                // show next station
+                Bundle args = new Bundle();
+                args.putParcelable(TransistorKeys.ARG_STATION, mStationList.get(stationID));
+                args.putInt(TransistorKeys.ARG_STATION_ID, stationID);
+                args.putBoolean(TransistorKeys.ARG_TWO_PANE, mTwoPane);
+                PlayerActivityFragment playerActivityFragment = new PlayerActivityFragment();
+                playerActivityFragment.setArguments(args);
+                mActivity.getFragmentManager().beginTransaction()
+                        .replace(R.id.player_container, playerActivityFragment, TransistorKeys.PLAYER_FRAGMENT_TAG)
+                        .commit();
+            }
         }
 
         // return ID of next station

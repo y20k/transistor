@@ -619,7 +619,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
 
 
     /* Saves state of playback */
-    private void saveAppState () {
+    private void saveAppState() {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplication());
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt(TransistorKeys.PREF_STATION_ID_CURRENTLY_PLAYING, mStationIDCurrent);
@@ -627,7 +627,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         editor.putBoolean(TransistorKeys.PREF_PLAYBACK, mPlayback);
         editor.putBoolean(TransistorKeys.PREF_STATION_LOADING, mStationLoading);
         editor.apply();
-        Log.v(LOG_TAG, "Saving state.");
+        Log.v(LOG_TAG, "Saving state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + " / " + mStationLoading + " / " + ")");
     }
 
 
@@ -636,7 +636,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         mStationIDCurrent = settings.getInt(TransistorKeys.PREF_STATION_ID_CURRENTLY_PLAYING, -1);
         mStationIDLast = settings.getInt(TransistorKeys.PREF_STATION_ID_LAST, -1);
-        Log.v(LOG_TAG, "Loading state.");
+        Log.v(LOG_TAG, "Loading state ("+  mStationIDCurrent + " / " + mStationIDLast + ")");
     }
 
 
