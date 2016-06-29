@@ -218,7 +218,7 @@ public class MetadataHelper {
     /* Notifies other components and saves metadata */
     private void handleMetadataString(String metadata) {
 
-        Log.v(LOG_TAG, "Metadata: «" + metadata + "»"); // TODO remove
+        Log.v(LOG_TAG, "Metadata: «" + metadata + "»");
 
         if (metadata != null && metadata.length() > 0) {
             // send local broadcast

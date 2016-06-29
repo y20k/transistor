@@ -264,10 +264,10 @@ public final class MainActivityFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
         // save list view position
         mListState = mLayoutManager.onSaveInstanceState();
         outState.putParcelable(TransistorKeys.INSTANCE_LIST_STATE, mListState);
+        super.onSaveInstanceState(outState);
     }
 
 
@@ -305,6 +305,7 @@ public final class MainActivityFragment extends Fragment {
             }
 
         }
+
     }
 
 
@@ -344,9 +345,12 @@ public final class MainActivityFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         // retrieve selected image Uri from image picker
-        Uri newImageUri = data.getData();
+        Uri newImageUri = null;
+        if (null != data) {
+            newImageUri = data.getData();
+        }
 
-        if (requestCode == TransistorKeys.REQUEST_LOAD_IMAGE && resultCode == Activity.RESULT_OK && null != data) {
+        if (requestCode == TransistorKeys.REQUEST_LOAD_IMAGE && resultCode == Activity.RESULT_OK && newImageUri != null) {
 
             ImageHelper imageHelper = new ImageHelper(newImageUri, mActivity);
             Bitmap newImage = imageHelper.getInputImage();
@@ -363,9 +367,11 @@ public final class MainActivityFragment extends Fragment {
                 mCollectionAdapter.notifyItemChanged(mTempStationID);
 
             } else {
-                Log.e(LOG_TAG, "Unable to get image from media picker: " + newImageUri.toString());
+                Log.e(LOG_TAG, "Unable to get image from media picker. Uri was:  " + newImageUri.toString());
             }
 
+        } else {
+            Log.e(LOG_TAG, "Unable to get image from media picker. Did not receive an Uri");
         }
     }
 
@@ -397,6 +403,10 @@ public final class MainActivityFragment extends Fragment {
 
     /* Handles tap timer icon in actionbar */
     private void handleMenuSleepTimerClick() {
+        // load app state
+        loadAppState(mActivity);
+
+        // set duration
         long duration = 900000; // equals 15 minutes
 
         // CASE: No station is playing, no timer is running
@@ -543,7 +553,6 @@ public final class MainActivityFragment extends Fragment {
             public void onReceive(Context context, Intent intent) {
                 if (intent != null && intent.hasExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE)) {
                     handleCollectionChanges(intent);
-
                 }
             }
         };
@@ -611,7 +620,6 @@ public final class MainActivityFragment extends Fragment {
                 if (mSleepTimerRunning && mSleepTimerService != null) {
                     stopSleepTimer();
                 }
-                mPlayback = false;
                 break;
         }
     }

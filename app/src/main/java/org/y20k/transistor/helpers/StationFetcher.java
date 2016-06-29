@@ -129,7 +129,7 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
                 errorMessage = mActivity.getResources().getString(R.string.dialog_error_message_fetch_read);
                 errorDetails = buildReadErrorDetails(fetchResults);
             } else if (!mFolderExists) {
-                // construct error message for write error // TODO check if station was added
+                // construct error message for write error
                 errorTitle = mActivity.getResources().getString(R.string.dialog_error_title_fetch_write);
                 errorMessage = mActivity.getResources().getString(R.string.dialog_error_message_fetch_write);
                 errorDetails = mActivity.getResources().getString(R.string.dialog_error_details_write);
@@ -144,7 +144,7 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
             DialogError dialogError = new DialogError(mActivity, errorTitle, errorMessage, errorDetails);
             dialogError.show();
 
-            Log.v(LOG_TAG,"An error occured.\n" + station.toString() + fetchResults.toString() + mFolderExists);
+            Log.v(LOG_TAG,"An error occurred.\n" + station.toString() + fetchResults.toString() + mFolderExists);
         }
 
     }

@@ -188,10 +188,10 @@ public final class MainActivity extends AppCompatActivity {
             // get playback action from intent
             if (mIntent.hasExtra(TransistorKeys.EXTRA_PLAYBACK_STATE)) {
                 startPlayback = mIntent.getBooleanExtra(TransistorKeys.EXTRA_PLAYBACK_STATE, false);
-                station.setPlaybackState(mIntent.getBooleanExtra(TransistorKeys.EXTRA_PLAYBACK_STATE, false)); // TODO remove
+                station.setPlaybackState(mIntent.getBooleanExtra(TransistorKeys.EXTRA_PLAYBACK_STATE, false));
             } else {
                 startPlayback = false;
-                station.setPlaybackState(false); // TODO remove
+                station.setPlaybackState(false);
             }
 
             // prepare arguments and intent

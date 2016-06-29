@@ -118,9 +118,6 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     @Override
     public CollectionAdapterViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
 
-        // load state
-        // loadAppState(mActivity); // TODO remove ?
-
         // get view
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_collection, parent, false);
 
@@ -407,18 +404,12 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
         // return null if nothing was found
         return null;
 
-//        // return a default if nothing was found
-//        if (mStationList.size() > 0){
-//            return mStationList.get(0);
-//        } else {
-//            return null;
-//        }
     }
 
 
     /* Add station to collection */
     public int add(Station station) {
-        if (station.getStationName() != null && station.getStreamUri() != null && !station.getStationPlaylistFile().exists()) {
+        if (station.getStationName() != null && station.getStreamUri() != null) {
             // add station to list of stations
             mStationList.add(station);
 
@@ -543,10 +534,9 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
         // load app state
         loadAppState(mActivity);
 
-        if (intent.hasExtra(TransistorKeys.EXTRA_PLAYBACK_STATE_CHANGE) && intent.hasExtra(TransistorKeys.EXTRA_STATION) && intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)){
+        if (intent.hasExtra(TransistorKeys.EXTRA_PLAYBACK_STATE_CHANGE) && intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)){
 
-            // get station from intent
-            Station station = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
+            // get station ID from intent
             int stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
             switch (intent.getIntExtra(TransistorKeys.EXTRA_PLAYBACK_STATE_CHANGE, 1)) {
 
