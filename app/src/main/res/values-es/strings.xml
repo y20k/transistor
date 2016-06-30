@@ -98,7 +98,7 @@
     <string name="infosheet_about_h1_about">Acerca de Transistor</string>
     <string name="infosheet_about_h2_radio">Aplicación de radio para Android</string>
     <string name="infosheet_about_h3_version">Versión 2.1 (Moonage Daydream)</string>
-    <string name="infosheet_about_p_bare">Transistor es una aplicación simple para escuchar programas de radio por internet. La aplicación almacena las estaciones como archivos en el almacenamiento externo de tu dispositivo. Busca los archivos del tipo m3u en /Android/data/org.y20k.transistor/Collection. Actualmente soporta streams codificados en MP3 y OGG.</string>
+    <string name="infosheet_about_p_bare">Transistor es una aplicación simple para escuchar programas de radio por internet. La aplicación almacena las estaciones como archivos en el almacenamiento externo de tu dispositivo. Busca los archivos del tipo m3u en /Android/data/org.y20k.transistor/files/Collection. Actualmente soporta streams codificados en MP3 y OGG.</string>
     <string name="infosheet_about_p_note">Nota importante: Esta es una aplicación del tipo BYOS (trae tu propia estación). No ofrece ningún tipo de opción de búsqueda integrada. Tienes que añadir manualmente las estaciones de radio.</string>
     <string name="infosheet_about_p_free">Transistor es software libre. Está publicado bajo la licencia de software libre MIT. Puedes encontrar el código en GitHub. GitHub es también un buen sitio para registrar fallos o incluso contribuir, si estás interesado.</string>
     <string name="infosheet_about_p_github">https://github.com/y20k/transistor</string>
@@ -130,7 +130,7 @@
     <string name="infosheet_howto_h2_edit">¿Cómo renombrar o borrar una estación?</string>
     <string name="infosheet_howto_p_edit">Se puede acceder a las opciones de renombrado y borrado desde la lista de estaciones y desde la pantalla de reproduciendo ahora. Solo pulsa sobre el símbolo de los tres puntos. También puedes manejar la lista de estaciones desde el navegador de archivos (mira la siguiente pregunta).</string>
     <string name="infosheet_howto_h2_storage">¿Donde almacena Transistor sus estaciones?</string>
-    <string name="infosheet_howto_p_storage">Transistor no guarda la lista de estaciones en una base de datos. En lugar de eso almacena las estaciones como archivos m3u en el almacenamiento externo de tu dispositivo. Eres libre de trastear esos archivos usando el editor de texto de tu dispositivo. Los archivos están almacenados en /Android/data/org.y20k.transistor/Collection.</string>
+    <string name="infosheet_howto_p_storage">Transistor no guarda la lista de estaciones en una base de datos. En lugar de eso almacena las estaciones como archivos m3u en el almacenamiento externo de tu dispositivo. Eres libre de trastear esos archivos usando el editor de texto de tu dispositivo. Los archivos están almacenados en /Android/data/org.y20k.transistor/files/Collection.</string>
     <string name="infosheet_howto_h2_backup">¿Cómo puedo hacer una copia de seguridad de mis estaciones de radio?</string>
     <string name="infosheet_howto_p_backup">Transistor tiene soporte para hacer copia de seguridad automática en Android 6. Las estaciones de radio estarán siempre respaldadas en tu cuenta de Google y se restaurarán al reinstalar. En dispositivos con versiones antiguas de Android tendrás que guardar y restaurar manualmente la carpeta Collection.</string>
     <string name="infosheet_howto_h2_settings">¿Por qué no hay configuraciones en Transistor?</string>

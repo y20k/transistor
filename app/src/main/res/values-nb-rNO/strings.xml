@@ -98,7 +98,7 @@
     <string name="infosheet_about_h1_about">Om Transistor</string>
     <string name="infosheet_about_h2_radio">Radio-program for Android</string>
     <string name="infosheet_about_h3_version">Versjon 2.1 (Moonage Daydream)</string>
-    <string name="infosheet_about_p_bare">Transistor er et helt enkelt program for å lytte til radioprogrammer over Internett. Dette programmet lagrer stasjoner som filer på din enhets eksterne lagringsmedium. Se etter filer av typen m3u i /Android/data/org.y20k.transistor/Collection. Den forstår foreløpig strømmer kodet i MP3 og OGG.</string>
+    <string name="infosheet_about_p_bare">Transistor er et helt enkelt program for å lytte til radioprogrammer over Internett. Dette programmet lagrer stasjoner som filer på din enhets eksterne lagringsmedium. Se etter filer av typen m3u i /Android/data/org.y20k.transistor/files/Collection. Den forstår foreløpig strømmer kodet i MP3 og OGG.</string>
     <string name="infosheet_about_p_note">Viktig melding: Dette er et program der du må lage din egen radiostasjon. Det finnes ingen innebygd søkefunksjon, og du må legge inn radiostasjoner selv.</string>
     <string name="infosheet_about_p_free">Transistor er fri programvare. Det er lisensiert MIT. Du finner koden på Github, der du også kan melde fra om feil, eller bidra, hvis du er interessert.</string>
     <string name="infosheet_about_p_github">https://github.com/y20k/transistor</string>
@@ -130,7 +130,7 @@
     <string name="infosheet_howto_h2_edit">Hvordan endre navn på eller slette en stasjon?</string>
     <string name="infosheet_howto_p_edit">Navneendring og sletting finnes i stasjonens kontekst-meny. Trykk på ellipsen. Du kan bruke en filutforsker til å behandle stasjonslisten (se neste spørsmål).</string>
     <string name="infosheet_howto_h2_storage">Hvor lagrer Transistor sine stasjoner?</string>
-    <string name="infosheet_howto_p_storage">Transistor lagrer ikke stasjonslisten i en database. Istedenfor lagres stasjoner som m3u-filer på din enhets lagringsmedium. Du kan tukle med disse filene som du vil ved bruk av en tekstbehandler. FIlene lagres i /Android/data/org.y20k.transistor/Collection.</string>
+    <string name="infosheet_howto_p_storage">Transistor lagrer ikke stasjonslisten i en database. Istedenfor lagres stasjoner som m3u-filer på din enhets lagringsmedium. Du kan tukle med disse filene som du vil ved bruk av en tekstbehandler. FIlene lagres i /Android/data/org.y20k.transistor/files/Collection.</string>
     <string name="infosheet_howto_h2_backup">Hvordan kan jeg sikkerhetskopiere og overføre mine radiostasjoner?</string>
     <string name="infosheet_howto_p_backup">Transistor støtter funksjonen for automatisk sikkerhetskopiering i Android 6. Radiostasjoner blir alltid synkronisert til din Google-konto og blir gjenopprettet ved nye installasjoner. På enheter som kjører eldre versjoner av Android må du manuelt lagre og gjennopprette mappen med din samling.</string>
     <string name="infosheet_howto_h2_sleep">Hvordan starte tidsavbrudd?</string>
