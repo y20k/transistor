@@ -24,10 +24,10 @@
     <string name="descr_overflow_button">Bistaratu irrati estazioaren aukerak</string>
     <string name="descr_station_icon">Irrati estazioaren ikonoa</string>
     <string name="descr_station_name">Irrati estazioaren izena</string>
-    <string name="descr_station_metadata">Metadata (Artist / Title) of currently playing radio station</string>
+    <string name="descr_station_metadata">Orain jotzen ari den irratiaren metadatuak (Artista / Titulua)</string>
     <string name="descr_station_name_example">Adibideko FM</string>
-    <string name="descr_station_metadata_example">Artist - Title</string>
-    <string name="descr_station_stream_loading">Loading stream …</string>
+    <string name="descr_station_metadata_example">Artista - Titulua</string>
+    <string name="descr_station_stream_loading">Jarioa kargatzen …</string>
     <string name="descr_playback_button">Erreproduzitu botoi handia</string>
     <string name="descr_playback_indicator">Erreprodukzioa martxan adierazlea</string>
     <string name="descr_playback_indicator_started">Erreprodukzioa martxan adierazlea</string>
@@ -56,15 +56,15 @@
     <string name="dialog_error_title_fetch_read">Irakurtze arazoa</string>
     <string name="dialog_error_title_fetch_write">Idazte arazoa</string>
     <string name="dialog_error_message_fetch_general_external_storage">Kanpo biltegiratzea:</string>
-    <string name="dialog_error_message_fetch_general_hint_m3u">Hint: Transistor can only process MP3 and OGG encoded streams or URLs ending in .m3u or .pls.</string>
-    <string name="dialog_error_message_fetch_general_playlist_type">MIME type of file:</string>
-    <string name="dialog_error_message_fetch_general_stream_type">MIME type of stream:</string>
+    <string name="dialog_error_message_fetch_general_hint_m3u">Oharra: Transistor MP3 and OGG formatuetan kodetutako jarioak edo .m3u or .pls luzapenetan bukatutako URLak besterik ezin ditzake prozesatu.</string>
+    <string name="dialog_error_message_fetch_general_playlist_type">MIME fitxategi mota:</string>
+    <string name="dialog_error_message_fetch_general_stream_type">MIME jario mota:</string>
     <string name="dialog_error_message_fetch_general_file_content">Fitxategiaren edukia:</string>
     <string name="dialog_error_message_fetch_download">Transistor saiatu da, baina ez du lotura ulertzen.</string>
     <string name="dialog_error_message_fetch_download_station_url">Estazioaren URLa:</string>
     <string name="dialog_error_message_fetch_read">Transistor saiatu da, baina ez du fitxategia ulertzen.</string>
     <string name="dialog_error_message_fetch_read_file_location">Fitxategiaren kokalekua:</string>
-    <string name="dialog_error_message_fetch_write">Transistor tried hard but could not save given station to storage.</string>
+    <string name="dialog_error_message_fetch_write">Ezin izan da irratia biltegiratzera gorde</string>
 
     <!-- messages -->
     <string name="actioncall_message_start_here">Gehitu estazio berria</string>
@@ -74,32 +74,32 @@
     <string name="toastmessage_long_press_playback_started">Erreprodukzioa hasi da (sakatze luzea atzeman da)</string>
     <string name="toastmessage_shortcut_created">Lasterbidea sortu da.</string>
     <string name="toastmessage_station_copied">Estazioa kopiatu da.</string>
-    <string name="toastmessage_stream_may_not_work">Unsupported audio format detected. Playback of stream may not work properly.</string>
+    <string name="toastmessage_stream_may_not_work">Onartu gabeko audio formatua atzeman da. Jarioaren erreprodukzioa agian ez da behar bezalakoa izango.</string>
     <string name="toastmessage_timer_activated">Itzaltzeko atzera kontaketa gaitu da.</string>
     <string name="toastmessage_timer_cancelled">Itzaltzeko atzera kontaketa eten da.</string>
     <string name="toastmessage_timer_duration_increased">Iraupena luzatu da.</string>
     <string name="toastmessage_timer_start_unable">Aurretik hasi erreprodukzioa.</string>
     <string name="toastalert_rename_unsuccessful">"Ezin  izan zaio izena aldatu estazioari. Aukeratu beste izen bat."</string>
     <string name="toastalert_delete_successful">Estazioa kendu da.</string>
-    <string name="toastalert_no_external_storage">Unable to access external storage.</string>
-    <string name="toastalert_headphones_unplugged">Headphones unplugged. Playback stopped.</string>
+    <string name="toastalert_no_external_storage">Ezin izan da kanpo biltegia atzitu.</string>
+    <string name="toastalert_headphones_unplugged">Aurikularrak deskonektatuta. Erreprodukzioa gelditu da.</string>
     <string name="toastalert_permission_denied">Baimena ukatu da:</string>
-    <string name="toastalert_station_not_found">Unable to find station.</string>
-    <string name="toastalert_stream_not_found">Transistor does not recognize this station. Please delete and add it again to the Home screen.</string>
-    <string name="snackbar_request_storage_access">Transistor needs to be granted read permissions to be able access data from external storage.</string>
-    <string name="snackbar_message_timer_set">Sleep timer set to</string>
+    <string name="toastalert_station_not_found">Ezin izan da irratia aurkitu.</string>
+    <string name="toastalert_stream_not_found">Transistorrek ez du irrati hau ulertzen. Ezabatu eta berriro gehitu hasiera pantailara.</string>
+    <string name="snackbar_request_storage_access">Transistorrek irakurketa baimenak behar ditu kanpo biltegiko datuak atzitzeko.</string>
+    <string name="snackbar_message_timer_set">"Itzaltzeko atzera-kontaketa  ezarri da"</string>
 
     <!-- notification -->
     <string name="notification_stop">Stop</string>
-    <string name="notification_swipe_to_stop">Swipe to stop</string>
-    <string name="notification_playing">Playing</string>
+    <string name="notification_swipe_to_stop">Pasatu hatza gelditzeko</string>
+    <string name="notification_playing">Erreprodukzioan</string>
 
     <!-- infosheet about -->
-    <string name="infosheet_about_h1_about">About Transistor</string>
-    <string name="infosheet_about_h2_radio">Radio app for Android</string>
-    <string name="infosheet_about_h3_version">Version 2.1 ("Moonage Daydream")</string>
+    <string name="infosheet_about_h1_about">Transistorri buruz</string>
+    <string name="infosheet_about_h2_radio">Android irrati aplikazioa</string>
+    <string name="infosheet_about_h3_version">2.1 bertsioa (Moonage Daydream)</string>
     <string name="infosheet_about_p_bare">Transistor is a bare bones app for listening to radio programs over the internet. The app stores stations as files on your device\'s external storage. Look for files of type m3u within /Android/data/org.y20k.transistor/files/Collection. It currently understands streams encoded in MP3 and OGG.</string>
-    <string name="infosheet_about_p_note">Important note: This is an app of type BYOS (&quot;bring your own station&quot;). It does not feature any kind of built-in search option. You will have to manually add radio stations.</string>
+    <string name="infosheet_about_p_note">Important note: This is an app of type BYOS ("bring your own station"). It does not feature any kind of built-in search option. You will have to manually add radio stations.</string>
     <string name="infosheet_about_p_free">Transistor is free software. It is published under the MIT open source license. You can find the code on GitHub. GitHub is also a good place to file bugs or even to contribute, if you are interested.</string>
     <string name="infosheet_about_p_github">https://github.com/y20k/transistor</string>
     <string name="infosheet_about_p_license">https://opensource.org/licenses/MIT</string>
@@ -132,9 +132,9 @@
     <string name="infosheet_howto_h2_storage">Where does Transistor store its stations?</string>
     <string name="infosheet_howto_p_storage">Transistor does not save its list of stations in a database. Instead it stores stations as m3u files on your device\'s external storage. Feel free to tinker with those files using the texteditor of your choice. The files are stored in /Android/data/org.y20k.transistor/files/Collection.</string>
     <string name="infosheet_howto_h2_backup">How do I backup and transfer my radio stations?</string>
-    <string name="infosheet_howto_p_backup">Transistor has support for the Auto Backup feature in Android 6. Radio stations are always backed up to your Google account and will be restored at reinstall. On devices running on older versions of Android you must manually save and restore the &quot;Collection&quot; folder.</string>
+    <string name="infosheet_howto_p_backup">Transistor has support for the Auto Backup feature in Android 6. Radio stations are always backed up to your Google account and will be restored at reinstall. On devices running on older versions of Android you must manually save and restore the "Collection" folder.</string>
     <string name="infosheet_howto_h2_settings">Why are there no settings in Transistor?</string>
-    <string name="infosheet_howto_p_settings">There is nothing to set ;). Transistor is a very simple app. Depending on your point of view &quot;simple&quot; is either great or lame.</string>
+    <string name="infosheet_howto_p_settings">There is nothing to set ;). Transistor is a very simple app. Depending on your point of view "simple" is either great or lame.</string>
 
     <!-- 
     +++ IMPORTANT NOTE +++
