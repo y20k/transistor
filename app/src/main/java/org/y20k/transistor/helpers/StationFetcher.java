@@ -143,8 +143,6 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
             // show error dialog
             DialogError dialogError = new DialogError(mActivity, errorTitle, errorMessage, errorDetails);
             dialogError.show();
-
-            Log.v(LOG_TAG,"An error occurred.\n" + station.toString() + fetchResults.toString() + mFolderExists);
         }
 
     }

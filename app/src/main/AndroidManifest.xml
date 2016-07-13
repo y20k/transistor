@@ -2,8 +2,8 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.y20k.transistor"
-    android:versionCode="26"
-    android:versionName="2.1.0 (Moonage Daydream)">
+    android:versionCode="27"
+    android:versionName="2.1.1 (Moonage Daydream)">
 
     <uses-sdk
         android:minSdkVersion="19"
