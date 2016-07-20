@@ -86,7 +86,7 @@
     <string name="toastmessage_shortcut_created">Acceso directo creado.</string>
     <string name="toastmessage_copied_to_clipboard_url">Stream URL copied to clipboard.</string>
     <string name="toastmessage_copied_to_clipboard_metadata">Metadata copied to clipboard.</string>
-    <string name="toastmessage_station_copied">Estación copiada.</string>
+    <string name="toastmessage_station_copied">Estación copiada al portapapeles.</string>
     <string name="toastmessage_stream_may_not_work">Detectado formato de audio no soportado. La reproducción del stream quizás no funcione correctamente.</string>
     <string name="toastmessage_timer_activated">Temporizador de apagado activado.</string>
     <string name="toastmessage_timer_cancelled">Temporizador de apagado cancelado.</string>
