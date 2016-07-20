@@ -58,7 +58,6 @@ public class MetadataHelper {
         mContext = context;
         mStation = station;
         mStreamUri = station.getStreamUri().toString();
-        handleMetadataString(station.getStationName());
         createShoutcastProxyConnection();
     }
 

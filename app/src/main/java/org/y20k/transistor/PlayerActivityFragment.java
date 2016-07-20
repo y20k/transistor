@@ -33,6 +33,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.media.MediaBrowserCompat;
+import android.support.v4.media.session.MediaControllerCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -50,6 +52,7 @@ import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.DialogDelete;
 import org.y20k.transistor.helpers.DialogRename;
 import org.y20k.transistor.helpers.ImageHelper;
+import org.y20k.transistor.helpers.NotificationHelper;
 import org.y20k.transistor.helpers.PermissionHelper;
 import org.y20k.transistor.helpers.ShortcutHelper;
 import org.y20k.transistor.helpers.TransistorKeys;
@@ -83,6 +86,8 @@ public final class PlayerActivityFragment extends Fragment {
     private BroadcastReceiver mPlaybackStateChangedReceiver;
     private BroadcastReceiver mCollectionChangedReceiver;
     private BroadcastReceiver mMetadataChangedReceiver;
+    private MediaBrowserCompat mBrowser;
+    private MediaControllerCompat mController;
     private int mStationID;
     private int mStationIDCurrent;
     private int mStationIDLast;
@@ -91,7 +96,6 @@ public final class PlayerActivityFragment extends Fragment {
     private boolean mTwoPane;
     private boolean mVisibility;
     private Station mStation;
-
 
     /* Constructor (default) */
     public PlayerActivityFragment() {
@@ -113,7 +117,6 @@ public final class PlayerActivityFragment extends Fragment {
 
         // load playback state from preferences
         loadAppState(mActivity);
-
 
         // get data from arguments
         Bundle arguments = getArguments();
@@ -375,9 +378,13 @@ public final class PlayerActivityFragment extends Fragment {
         // rotate playback button
         changeVisualState(mActivity);
 
-        // start player
+        // start player service using intent
+        Intent intent = new Intent(mActivity, PlayerService.class);
+        intent.setAction(TransistorKeys.ACTION_PLAY);
+        intent.putExtra(TransistorKeys.EXTRA_STATION, mStation);
+        intent.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
+        mActivity.startService(intent);
         Log.v(LOG_TAG, "Starting player service.");
-        PlayerService.startActionPlay(mActivity, mStation, mStationID);
 
     }
 
@@ -397,9 +404,11 @@ public final class PlayerActivityFragment extends Fragment {
         // save state of playback to settings
         saveAppState(mActivity);
 
-        // stop player
+        // stop player service using intent
+        Intent intent = new Intent(mActivity, PlayerService.class);
+        intent.setAction(TransistorKeys.ACTION_STOP);
+        mActivity.startService(intent);
         Log.v(LOG_TAG, "Stopping player service.");
-        PlayerService.startActionStop(mActivity);
     }
 
 
@@ -436,8 +445,11 @@ public final class PlayerActivityFragment extends Fragment {
 
             // CASE DELETE
             case R.id.menu_delete:
-                // stop playback
-                PlayerService.startActionStop(mActivity);
+                // stop player service using intent
+                Intent intent = new Intent(mActivity, PlayerService.class);
+                intent.setAction(TransistorKeys.ACTION_STOP);
+                mActivity.startService(intent);
+                Log.v(LOG_TAG, "Stopping player service.");
                 // construct and run delete dialog
                 DialogDelete dialogDelete = new DialogDelete(mActivity, mStation, mStationID);
                 dialogDelete.show();
@@ -668,7 +680,7 @@ public final class PlayerActivityFragment extends Fragment {
 
             // CASE: player is preparing stream
             case TransistorKeys.PLAYBACK_LOADING_STATION:
-                if (mVisibility && !mPlayback && mStation.getStreamUri().equals(station.getStreamUri())) {
+                if (mVisibility && !mPlayback && mStation != null && mStation.getStreamUri().equals(station.getStreamUri())) {
                     // set playback true
                     mPlayback = true;
                     mStation.setPlaybackState(true);
@@ -701,8 +713,8 @@ public final class PlayerActivityFragment extends Fragment {
 
             // CASE: playback was stopped
             case TransistorKeys.PLAYBACK_STOPPED:
-                if (mVisibility && mPlayback && mPlayback && mStation != null && mStation.getStreamUri().equals(station.getStreamUri())) {
-                    // set playback false
+                if (mVisibility && mPlayback && mStation != null && mStation.getStreamUri().equals(station.getStreamUri())) {
+                    // set playback falseMediaB
                     mPlayback = false;
                     // rotate playback button
                     if (intent.hasExtra(TransistorKeys.EXTRA_STATION_ID) && mStationID == intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, -1)) {
@@ -722,14 +734,29 @@ public final class PlayerActivityFragment extends Fragment {
         switch (intent.getIntExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, 1)) {
             // CASE: station was renamed
             case TransistorKeys.STATION_RENAMED:
-                if (intent.hasExtra(TransistorKeys.EXTRA_STATION)) {
+                if (intent.hasExtra(TransistorKeys.EXTRA_STATION_NEW_NAME) && intent.hasExtra(TransistorKeys.EXTRA_STATION) && intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)) {
                     Station station = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
+                    int stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
                     mStationNameView.setText(station.getStationName());
+                    if (mPlayback) {
+                        NotificationHelper.update(station, stationID, null, null);
+                    }
                 }
                 break;
 
             // CASE: station was deleted
             case TransistorKeys.STATION_DELETED:
+                if (mPlayback) {
+                    // stop player service using intent
+                    Intent i = new Intent(mActivity, PlayerService.class);
+                    i.setAction(TransistorKeys.ACTION_STOP);
+                    mActivity.startService(i);
+                    Log.v(LOG_TAG, "Stopping player service.");
+                    // stop notification
+                    NotificationHelper.stop();
+                    // TODO save state
+                }
+
                 if (!mTwoPane && mVisibility) {
                     // start main activity
                     Intent mainActivityStartIntent = new Intent(mActivity, MainActivity.class);

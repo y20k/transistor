@@ -58,7 +58,7 @@ This permission is needed to install and uninstall radio station shortcuts on th
 Transistor streams radio stations over the internet.
 
 ### Permission "READ_EXTERNAL_STORAGE"
-Transistor needs access to images, photos and documents to be able customize radio station icons and to able to open locally saved playlist files.
+Transistor needs access to images, photos and documents to be able to customize radio station icons and to able to open locally saved playlist files.
             
 ### Permission "VIBRATE"
 Tapping and holding a radio station will toggle a tiny vibration.

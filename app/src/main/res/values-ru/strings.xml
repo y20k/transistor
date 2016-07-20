@@ -90,6 +90,7 @@
     <string name="snackbar_message_timer_set">Таймер сна установлен на</string>
 
     <!-- notification -->
+    <string name="notification_play">Play</string>
     <string name="notification_stop">Stop</string>
     <string name="notification_swipe_to_stop">Смахните, чтобы остановить</string>
     <string name="notification_playing">Играет</string>

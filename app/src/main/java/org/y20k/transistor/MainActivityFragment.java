@@ -72,6 +72,7 @@ public final class MainActivityFragment extends Fragment {
     private Activity mActivity;
     private CollectionAdapter mCollectionAdapter = null;
     private File mFolder;
+    private int mFolderSize;
     private View mRootView;
     private View mActionCallView;
     private RecyclerView mRecyclerView;
@@ -135,6 +136,7 @@ public final class MainActivityFragment extends Fragment {
         // get collection folder
         StorageHelper storageHelper = new StorageHelper(mActivity);
         mFolder = storageHelper.getCollectionDirectory();
+        mFolderSize = mFolder.listFiles().length;
 
         // create collection adapter
         mCollectionAdapter = new CollectionAdapter(mActivity, mFolder);
@@ -197,6 +199,14 @@ public final class MainActivityFragment extends Fragment {
 
         // handle incoming intent
         handleIncomingIntent();
+
+        // check if folder content has been changed
+        int folderSize = mFolder.listFiles().length;
+        if (mFolderSize != mFolder.listFiles().length) {
+            mFolderSize = folderSize;
+            mCollectionAdapter = new CollectionAdapter(mActivity, mFolder);
+            mRecyclerView.setAdapter(mCollectionAdapter);
+        }
 
         // show call to action, if necessary
         toggleActionCall();
@@ -657,15 +667,17 @@ public final class MainActivityFragment extends Fragment {
 
             // CASE: station was renamed
             case TransistorKeys.STATION_RENAMED:
-                if (intent.hasExtra(TransistorKeys.EXTRA_STATION_NEW_NAME) && intent.hasExtra(TransistorKeys.EXTRA_STATION) && intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)) {                    // get station and station ID from intent
+                if (intent.hasExtra(TransistorKeys.EXTRA_STATION_NEW_NAME) && intent.hasExtra(TransistorKeys.EXTRA_STATION) && intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)) {
 
                     // get new name, station and station ID from intent
                     String newStationName = intent.getStringExtra(TransistorKeys.EXTRA_STATION_NEW_NAME);
                     Station station = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
                     int stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
 
-                    // update view
-                    // mRecyclerView
+                    // update notification
+                    if (station.getPlaybackState()) {
+                        NotificationHelper.update(station, stationID, null, null);
+                    }
 
                     // change station within in adapter, scroll to new position and update adapter
                     newStationPosition = mCollectionAdapter.rename(newStationName, station, stationID);
@@ -673,11 +685,7 @@ public final class MainActivityFragment extends Fragment {
                     mCollectionAdapter.setStationIDSelected(newStationPosition);
                     mCollectionAdapter.notifyDataSetChanged(); // TODO Remove?
 
-                    // update notification
-                    if (station.getPlaybackState()) {
-                        NotificationHelper.initialize(station, stationID);
-                        NotificationHelper.updateNotification();
-                    }
+
                 }
                 break;
 
@@ -688,6 +696,17 @@ public final class MainActivityFragment extends Fragment {
                     // get station and station ID from intent
                     Station station = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
                     int stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
+
+                    if (station.getPlaybackState()) {
+                        // stop player service using intent
+                        Intent i = new Intent(mActivity, PlayerService.class);
+                        i.setAction(TransistorKeys.ACTION_STOP);
+                        mActivity.startService(i);
+                        Log.v(LOG_TAG, "Stopping player service.");
+                        // stop notification
+                        NotificationHelper.stop();
+                        // TODO save state
+                    }
 
                     // remove station from adapter and update
                     newStationPosition = mCollectionAdapter.delete(station, stationID);

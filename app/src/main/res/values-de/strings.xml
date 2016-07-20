@@ -90,6 +90,7 @@
     <string name="snackbar_message_timer_set">Sleeptimer Countdown</string>
 
     <!-- notification -->
+    <string name="notification_play">Wiedergabe</string>
     <string name="notification_stop">Stop</string>
     <string name="notification_playing">Playback</string>
     <string name="notification_swipe_to_stop">Ausblenden um Playback zu stoppen</string>

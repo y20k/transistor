@@ -2,8 +2,8 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.y20k.transistor"
-    android:versionCode="27"
-    android:versionName="2.1.1 (Moonage Daydream)">
+    android:versionCode="28"
+    android:versionName="2.1.2 (Moonage Daydream)">
 
     <uses-sdk
         android:minSdkVersion="19"
@@ -109,6 +109,9 @@
         <service
             android:name=".PlayerService"
             android:exported="false">
+            <intent-filter>
+                <action android:name="android.media.browse.MediaBrowserService" />
+            </intent-filter>
             <intent-filter>
                 <action android:name="org.y20k.transistor.action.PLAY" />
                 <action android:name="org.y20k.transistor.action.STOP" />

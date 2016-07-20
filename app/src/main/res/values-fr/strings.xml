@@ -90,6 +90,7 @@
     <string name="snackbar_message_timer_set">Minuteur de veille réglé à</string>
 
     <!-- notification -->
+    <string name="notification_play">Play</string>
     <string name="notification_stop">Arrêter</string>
     <string name="notification_swipe_to_stop">Glissez pour arrêter</string>
     <string name="notification_playing">Lecture en cours</string>

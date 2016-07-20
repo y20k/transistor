@@ -292,8 +292,11 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
         loadAppState(mActivity);
 
         if (mPlayback && mStationList.get(position).getPlaybackState()) {
-            // stop playback service
-            PlayerService.startActionStop(mActivity);
+            // stop player service using intent
+            Intent intent = new Intent(mActivity, PlayerService.class);
+            intent.setAction(TransistorKeys.ACTION_STOP);
+            mActivity.startService(intent);
+            Log.v(LOG_TAG, "Stopping player service.");
 
             // keep track of playback state
             mStationIDLast = position;
@@ -306,8 +309,13 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
             // inform user
             Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_long_press_playback_stopped), Toast.LENGTH_LONG).show();
         } else {
-            // start playback service
-            PlayerService.startActionPlay(mActivity, mStationList.get(position), position);
+            // start player service using intent
+            Intent intent = new Intent(mActivity, PlayerService.class);
+            intent.setAction(TransistorKeys.ACTION_PLAY);
+            intent.putExtra(TransistorKeys.EXTRA_STATION, mStationList.get(position));
+            intent.putExtra(TransistorKeys.EXTRA_STATION_ID, position);
+            mActivity.startService(intent);
+            Log.v(LOG_TAG, "Starting player service.");
 
             // keep track of playback state
             mStationIDLast = mStationIDCurrent;

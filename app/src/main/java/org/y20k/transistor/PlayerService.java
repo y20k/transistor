@@ -70,8 +70,8 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     private MetadataHelper mMetadataHelper;
     private AudioManager mAudioManager;
     private MediaPlayer mMediaPlayer;
-    private MediaSessionCompat mSession;
-    private MediaControllerCompat mController;
+    private static MediaSessionCompat mSession;
+    private static MediaControllerCompat mController;
     private int mStationID;
     private int mStationIDCurrent;
     private int mStationIDLast;
@@ -87,7 +87,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     public PlayerService() {
     }
 
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -99,21 +98,14 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         mMediaPlayer = null;
         mPlayerInstanceCounter = 0;
-        if (mSession == null) {
-            mSession = createMediaSession(this);
-        }
+        mSession = createMediaSession(this);
 
         try {
             mController = new MediaControllerCompat(getApplicationContext(), mSession.getSessionToken());
         } catch (RemoteException e) {
-            Log.v(LOG_TAG, "RemoteException: " + e);
+            Log.e(LOG_TAG, "RemoteException: " + e);
             e.printStackTrace();
         }
-
-        // listen for headphone unplug
-        IntentFilter headphoneUnplugIntentFilter = new IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
-        mHeadphoneUnplugReceiver = new HeadphoneUnplugReceiver();
-        registerReceiver(mHeadphoneUnplugReceiver, headphoneUnplugIntentFilter);
 
         // RECEIVER: station metadata has changed
         BroadcastReceiver metadataChangedReceiver = new BroadcastReceiver() {
@@ -128,10 +120,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
                     mSession.setMetadata(getMetadata(context, station, metaData));
 
                     // update notification
-                    NotificationHelper.setMediaSession(mSession);
-                    NotificationHelper.setStationMetadata(intent.getStringExtra(TransistorKeys.EXTRA_METADATA));
-                    NotificationHelper.createNotification(PlayerService.this);
-
+                    NotificationHelper.update(mStation, mStationID, metaData, mSession);
                 }
             }
         };
@@ -161,9 +150,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
                 mStationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
                 mStreamUri = mStation.getStreamUri().toString();
             }
-//            if (intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)) {
-//                mStationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
-//            }
 
             // update controller - start playback
             mController.getTransportControls().play();
@@ -194,12 +180,13 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     @Nullable
     @Override
     public BrowserRoot onGetRoot(@NonNull String clientPackageName, int clientUid, @Nullable Bundle rootHints) {
-        return null;
+        return new BrowserRoot(getString(R.string.app_name), null);
+
     }
 
     @Override
-    public void onLoadChildren(@NonNull String parentId, @NonNull Result<List<MediaBrowserCompat.MediaItem>> result) {
-
+    public void onLoadChildren(@NonNull String rootId, @NonNull Result<List<MediaBrowserCompat.MediaItem>> result) {
+        result.sendResult(null);
     }
 
 
@@ -256,7 +243,10 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
             Log.v(LOG_TAG, "Preparation finished. Starting playback. Player instance count: " + mPlayerInstanceCounter);
             Log.v(LOG_TAG, "Playback: " + mStreamUri);
 
-            // starting media player
+            // update notification
+            NotificationHelper.update(mStation, mStationID, mStation.getStationName(), mSession);
+
+            // start media player
             mp.start();
 
             // send local broadcast: buffering finished
@@ -375,6 +365,9 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         mPlayback = false;
         saveAppState();
 
+        // release media session
+        mSession.release();
+
         // unregister receivers
         this.unregisterReceiver(mHeadphoneUnplugReceiver);
 
@@ -382,40 +375,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         stopForeground(true);
     }
 
-
-    /* Method to start the player */
-    public static void startActionPlay(Context context, Station station, int stationID) {
-
-        // put up notification
-        station.setPlaybackState(true);
-        NotificationHelper.initialize(station, stationID);
-
-        // acquire WifiLock
-//        mWifiLock = ((WifiManager) getSystemService(Context.WIFI_SERVICE)).createWifiLock(WifiManager.WIFI_MODE_FULL, "mylock");
-//        mWifiLock.acquire();
-
-        // start player service using intent
-        Log.v(LOG_TAG, "Starting playback service: " + station.toString());
-        Intent intent = new Intent(context, PlayerService.class);
-        intent.setAction(TransistorKeys.ACTION_PLAY);
-        intent.putExtra(TransistorKeys.EXTRA_STATION, station);
-        intent.putExtra(TransistorKeys.EXTRA_STATION_ID, stationID);
-        context.startService(intent);
-    }
-
-
-    /* Method to stop the player */
-    public static void startActionStop(Context context) {
-        Log.v(LOG_TAG, "Stopping playback service.");
-
-        // release WifiLock
-//        mWifiLock.release();
-
-        // stop player service using intent
-        Intent intent = new Intent(context, PlayerService.class);
-        intent.setAction(TransistorKeys.ACTION_STOP);
-        context.startService(intent);
-    }
 
 
     /* Getter for current station */
@@ -428,11 +387,17 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     private void startPlayback() {
 
         // save state
+        mStation.setPlaybackState(true);
         mPlayback = true;
         mStationLoading = true;
         mStationIDLast = mStationIDCurrent;
         mStationIDCurrent = mStationID;
         saveAppState();
+
+        // register headphone unplug receiver
+        IntentFilter headphoneUnplugIntentFilter = new IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
+        mHeadphoneUnplugReceiver = new HeadphoneUnplugReceiver();
+        registerReceiver(mHeadphoneUnplugReceiver, headphoneUnplugIntentFilter);
 
         // send local broadcast
         Intent i = new Intent();
@@ -448,22 +413,19 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         // stop running player - request focus and initialize media player
         if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
             releaseMediaPlayer();
+            NotificationHelper.stop();
         }
         if (mStreamUri != null && requestFocus()) {
             initializeMediaPlayer();
-        }
 
-        // set up MediaSession
-        if (mSession == null) {
-            mSession = createMediaSession(this);
-        }
-        mSession.setPlaybackState(getPlaybackState());
-        mSession.setActive(true);
+            // update MediaSession
+            mSession.setPlaybackState(getPlaybackState());
+            mSession.setActive(true);
 
-        // put up notification
-        NotificationHelper.setStationMetadata(null);
-        NotificationHelper.setMediaSession(mSession);
-        NotificationHelper.createNotification(this);
+            // put up notification
+            NotificationHelper.show(this, mSession, mStation, mStationID, this.getString(R.string.descr_station_stream_loading));
+
+        }
 
     }
 
@@ -472,11 +434,17 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     private void stopPlayback() {
 
         // save state
+        mStation.setPlaybackState(false);
         mPlayback = false;
         mStationLoading = false;
         mStationIDLast = mStationID;
         mStationIDCurrent = -1;
         saveAppState();
+
+        // un-register headphone unplug receiver
+        if (mHeadphoneUnplugReceiver != null) {
+            unregisterReceiver(mHeadphoneUnplugReceiver);
+        }
 
         // send local broadcast
         Intent i = new Intent();
@@ -486,19 +454,20 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         i.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
         LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(i);
 
+        // reset counter
+        mPlayerInstanceCounter = 0;
+
+        // release player
+        if (giveUpAudioFocus()) {
+            releaseMediaPlayer();
+        }
 
         // set media session in-active and set playback state
         mSession.setPlaybackState(getPlaybackState());
         mSession.setActive(false);
 
-        // reset counter
-        mPlayerInstanceCounter = 0;
-
-        // release player
-        releaseMediaPlayer();
-
-        // cancel notification
-        stopForeground(true);
+        // update notification
+        NotificationHelper.update(mStation, mStationID, mStation.getStationName(), mSession);
 
     }
 
@@ -558,12 +527,18 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     }
 
 
+    /* Give up audio focus */
+    private boolean giveUpAudioFocus() {
+        int result = mAudioManager.abandonAudioFocus(this);
+        return result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED;
+    }
+
+
     /* Creates media session */
     private MediaSessionCompat createMediaSession(Context context) {
         // create a media session
         MediaSessionCompat session = new MediaSessionCompat(context, LOG_TAG);
-        session.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS |
-                MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
+        session.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS | MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
         session.setPlaybackState(getPlaybackState());
         session.setCallback(new MediaSessionCallback());
         if (mStation != null) {
@@ -650,7 +625,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
             if (mPlayback && AudioManager.ACTION_AUDIO_BECOMING_NOISY.equals(intent.getAction())) {
                 Log.v(LOG_TAG, "Headphones unplugged. Stopping playback.");
                 // stop playback
-                startActionStop(context);
+                stopPlayback();
                 // notify user
                 Toast.makeText(context, context.getString(R.string.toastalert_headphones_unplugged), Toast.LENGTH_LONG).show();
             }

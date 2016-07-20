@@ -15,6 +15,7 @@
 package org.y20k.transistor.helpers;
 
 import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
@@ -24,7 +25,6 @@ import android.graphics.BitmapFactory;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v7.app.NotificationCompat;
-import android.util.Log;
 
 import org.y20k.transistor.MainActivity;
 import org.y20k.transistor.PlayerService;
@@ -42,118 +42,132 @@ public final class NotificationHelper {
 
 
     /* Main class variables */
+    private static Notification mNotification;
+    private static Service mService;
     private static MediaSessionCompat mSession;
     private static String mStationMetadata;
-    private static int mStationID;
-    private static String mStationName;
-    private static Service mLastUsedService;
-    private static Station mStation;
 
 
-    /* Initializes the NotificationHelper */
-    public static void initialize(Station station, int stationID) {
-        mStation = station;
-        mStationID = stationID;
-        mStationName = station.getStationName();
+    /* Create and put up notification */
+    public static void show(final Service service, MediaSessionCompat session, Station station, int stationID, String stationMetadata) {
+        // save service and session
+        mService = service;
+        mSession = session;
+        mStationMetadata = stationMetadata;
+
+        // build notification
+        mNotification = getNotificationBuilder(station, stationID, mStationMetadata).build(); // TODO: change -> Station object contains metadata, too
+
+        // display notification
+        service.startForeground(TransistorKeys.PLAYER_SERVICE_NOTIFICATION_ID, mNotification);
     }
 
 
     /* Updates the notification */
-    public static void updateNotification() {
-        if (mLastUsedService == null) {
-            Log.i(LOG_TAG, "PlayerService not started yet, cannot create notification");
-            return;
+    public static void update(Station station, int stationID, String stationMetadata, MediaSessionCompat session) {
+
+        // session can be null on update
+        if (session != null) {
+            mSession = session;
         }
-        createNotification(mLastUsedService);
+
+        // metadata can be null on update
+        if (stationMetadata != null) {
+            mStationMetadata = stationMetadata;
+        }
+
+        // build notification
+        mNotification = getNotificationBuilder(station, stationID, mStationMetadata).build();
+
+        // display updated notification
+        NotificationManager notificationManager = (NotificationManager) (NotificationManager) mService.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(TransistorKeys.PLAYER_SERVICE_NOTIFICATION_ID, mNotification);
+
+        if (!station.getPlaybackState()) {
+            // make notification swipe-able
+            mService.stopForeground(false);
+        }
+
     }
 
 
-    /* Create and put up notification */
-    public static void createNotification(final Service service) {
-        NotificationCompat.Builder builder;
-        Notification notification;
-        // NotificationManager notificationManager;
-        String notificationText;
-        String notificationTitle;
-        // int notificationColor;
+    /* Stop displaying notification */
+    public static void stop() {
+        mService.stopForeground(true);
+    }
 
-        // retrieve notification system service
-        // notificationManager = (NotificationManager) service.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        // create content of notification
-        // notificationColor = ContextCompat.getColor(service, R.color.transistor_red_dark);
-        notificationTitle = service.getString(R.string.notification_playing) + ": " + mStationName;
-        if (mStationMetadata != null) {
-            notificationText = mStationMetadata;
-        } else {
-            notificationText = mStationName;
-        }
+    /* Creates a notification builder */
+    private static NotificationCompat.Builder getNotificationBuilder(Station station, int stationID, String stationMetadata) {
 
         // explicit intent for notification tap
-        Intent tapIntent = new Intent(service, MainActivity.class);
+        Intent tapIntent = new Intent(mService, MainActivity.class);
         tapIntent.setAction(TransistorKeys.ACTION_SHOW_PLAYER);
-        tapIntent.putExtra(TransistorKeys.EXTRA_STATION, mStation);
-        tapIntent.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
+        tapIntent.putExtra(TransistorKeys.EXTRA_STATION, station);
+        tapIntent.putExtra(TransistorKeys.EXTRA_STATION_ID, stationID);
 
-        // explicit intent for notification swipe
-        Intent stopActionIntent = new Intent(service, PlayerService.class);
+        // explicit intent for stopping playback
+        Intent stopActionIntent = new Intent(mService, PlayerService.class);
         stopActionIntent.setAction(TransistorKeys.ACTION_STOP);
 
+        // explicit intent for starting playback
+        Intent playActionIntent = new Intent(mService, PlayerService.class);
+        playActionIntent.setAction(TransistorKeys.ACTION_PLAY);
+
+        // explicit intent for swiping notification
+        Intent swipeActionIntent = new Intent(mService, PlayerService.class);
+        swipeActionIntent.setAction(TransistorKeys.ACTION_SWIPE);;
 
         // artificial back stack for started Activity.
         // -> navigating backward from the Activity leads to Home screen.
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(service);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(mService);
         // backstack: adds back stack for Intent (but not the Intent itself)
         stackBuilder.addParentStack(MainActivity.class);
         // backstack: add explicit intent for notification tap
         stackBuilder.addNextIntent(tapIntent);
 
-
         // pending intent wrapper for notification tap
         PendingIntent tapPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
         // pending intent wrapper for notification stop action
-        PendingIntent stopActionPendingIntent = PendingIntent.getService(service, 0, stopActionIntent, 0);
+        PendingIntent stopActionPendingIntent = PendingIntent.getService(mService, 0, stopActionIntent, 0);
+        // pending intent wrapper for notification start action
+        PendingIntent playActionPendingIntent = PendingIntent.getService(mService, 0, playActionIntent, 0);
+        // pending intent wrapper for notification swipe action
+        PendingIntent swipeActionPendingIntent = PendingIntent.getService(mService, 0, swipeActionIntent, 0);
+
+        // create media style
+        NotificationCompat.MediaStyle style = new NotificationCompat.MediaStyle();
+        style.setMediaSession(mSession.getSessionToken());
+        style.setShowActionsInCompactView(0);
+        style.setShowCancelButton(true); // pre-Lollipop workaround
+        style.setCancelButtonIntent(swipeActionPendingIntent);
 
         // construct notification in builder
-        builder = new NotificationCompat.Builder(service);
-        builder.setSmallIcon(R.drawable.ic_notification_small_24dp);
-        builder.setLargeIcon(getStationIcon(service));
-        builder.setContentTitle(notificationTitle);
-        builder.setContentText(notificationText);
-        builder.setShowWhen(false);
-        builder.setStyle(new NotificationCompat.BigTextStyle().bigText(notificationText));
-        builder.addAction (R.drawable.ic_stop_white_36dp, service.getString(R.string.notification_stop), stopActionPendingIntent);
-        builder.setOngoing(true);
-        // builder.setColor(notificationColor);
-        builder.setContentIntent(tapPendingIntent);
+        NotificationCompat.Builder builder;
+        builder = new NotificationCompat.Builder(mService);
         builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
-        if (mSession != null) {
-            NotificationCompat.MediaStyle style = new NotificationCompat.MediaStyle();
-            style.setMediaSession(mSession.getSessionToken());
-            style.setShowActionsInCompactView(0);
-            builder.setStyle(style);
+        builder.setSmallIcon(R.drawable.ic_notification_small_24dp);
+        builder.setLargeIcon(getStationIcon(mService, station));
+        builder.setContentTitle(mService.getString(R.string.notification_playing) + ": " + station.getStationName());
+        builder.setContentText(stationMetadata);
+        builder.setShowWhen(false);
+        builder.setStyle(style);
+        builder.setContentIntent(tapPendingIntent);
+        builder.setDeleteIntent(swipeActionPendingIntent);
 
+        if (station.getPlaybackState()) {
+            builder.addAction(R.drawable.ic_stop_white_36dp, mService.getString(R.string.notification_stop), stopActionPendingIntent);
         } else {
-            Log.e(LOG_TAG, "MediaSession not initialized");
+            builder.addAction(R.drawable.ic_play_arrow_white_36dp, mService.getString(R.string.notification_play), playActionPendingIntent);
         }
 
-        // build notification
-        notification = builder.build();
-
-        // display notification
-        // System will never kill a service which has a foreground notification,
-        // but it will kill a service without notification, so you open few other apps and get a notification and no music
-        service.startForeground(TransistorKeys.PLAYER_SERVICE_NOTIFICATION_ID, notification);
-
-        if (mLastUsedService != service) {
-            mLastUsedService = service;
-        }
+        return builder;
     }
 
 
     /* Get station image for notification's large icon */
-    private static Bitmap getStationIcon(Context context) {
-        if (mStation == null) {
+    private static Bitmap getStationIcon(Context context, Station station) {
+        if (station == null) {
             return null;
         }
 
@@ -162,9 +176,9 @@ public final class NotificationHelper {
         Bitmap stationImage;
         Bitmap stationIcon;
 
-        if (mStation.getStationImageFile().exists()) {
+        if (station.getStationImageFile().exists()) {
             // use station image
-            stationImage = BitmapFactory.decodeFile(mStation.getStationImageFile().toString());
+            stationImage = BitmapFactory.decodeFile(station.getStationImageFile().toString());
         } else {
             stationImage = null;
         }
@@ -172,17 +186,6 @@ public final class NotificationHelper {
         stationIcon = imageHelper.createStationIcon(512);
 
         return stationIcon;
-    }
-
-
-    /* Setter for current media session */
-    public static void setMediaSession(MediaSessionCompat session) {
-        mSession = session;
-    }
-
-    /* Setter for metadata of station */
-    public static void setStationMetadata(String stationMetadata) {
-        mStationMetadata = stationMetadata;
     }
 
 }

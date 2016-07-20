@@ -8,8 +8,8 @@ android {
         applicationId "org.y20k.transistor"
         minSdkVersion 19
         targetSdkVersion 24
-        versionCode 27
-        versionName "2.1.1 (Moonage Daydream)"
+        versionCode 28
+        versionName "2.1.2 (Moonage Daydream)"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
@@ -22,6 +22,6 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:24.0.0'
-    compile 'com.android.support:design:24.0.0'
+    compile 'com.android.support:appcompat-v7:24.1.0'
+    compile 'com.android.support:design:24.1.0'
 }

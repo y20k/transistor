@@ -90,6 +90,7 @@
     <string name="snackbar_message_timer_set">Sleep timer set to</string>
 
     <!-- notification -->
+    <string name="notification_play">Play</string>
     <string name="notification_stop">Stop</string>
     <string name="notification_swipe_to_stop">Swipe to stop</string>
     <string name="notification_playing">Playing</string>
@@ -109,7 +110,7 @@
     <string name="infosheet_about_h3_internet">Permission INTERNET</string>
     <string name="infosheet_about_p_internet">Transistor streams radio stations over the internet.</string>
     <string name="infosheet_about_h3_external">Permission READ_EXTERNAL_STORAGE</string>
-    <string name="infosheet_about_p_external">Transistor needs access to images, photos and documents to be able customize radio station icons and to able to open locally saved playlist files.</string>
+    <string name="infosheet_about_p_external">Transistor needs access to images, photos and documents to be able to customize radio station icons and to able to open locally saved playlist files.</string>
     <string name="infosheet_about_h3_vibrate">Permission VIBRATE</string>
     <string name="infosheet_about_p_vibrate">Tapping and holding a radio station will trigger a tiny vibration.</string>
     <string name="infosheet_about_h3_wakelock">Permission WAKE_LOCK</string>
