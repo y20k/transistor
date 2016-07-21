@@ -86,7 +86,7 @@
     <string name="toastmessage_shortcut_created">ショートカットを作成しました。</string>
     <string name="toastmessage_copied_to_clipboard_url">Stream URL copied to clipboard.</string>
     <string name="toastmessage_copied_to_clipboard_metadata">Metadata copied to clipboard.</string>
-    <string name="toastmessage_station_copied">放送局をコピーしました。</string>
+    <string name="toastmessage_station_copied">放送局をクリップボードにコピーしました。</string>
     <string name="toastmessage_stream_may_not_work">サポートされていないオーディオ形式が検出されました。ストリームの再生が正しく動作しない場合があります。</string>
     <string name="toastmessage_timer_activated">スリープタイマーを有効にしました。</string>
     <string name="toastmessage_timer_cancelled">スリープタイマーを取り消しました。</string>
