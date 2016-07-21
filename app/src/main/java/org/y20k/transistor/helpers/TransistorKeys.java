@@ -22,7 +22,7 @@ public class TransistorKeys {
     /* ACTIONS */
     public static final String ACTION_PLAY = "org.y20k.transistor.action.PLAY";
     public static final String ACTION_STOP = "org.y20k.transistor.action.STOP";
-    public static final String ACTION_SWIPE = "org.y20k.transistor.action.SWIPE";
+    public static final String ACTION_DISMISS = "org.y20k.transistor.action.DISMISS";
     public static final String ACTION_PLAYBACK_STATE_CHANGED = "org.y20k.transistor.action.PLAYBACK_STATE_CHANGED";
 //    public static final String ACTION_PLAYBACK_STARTING = "org.y20k.transistor.action.PLAYBACK_STARTING";
 //    public static final String ACTION_PLAYBACK_STARTED = "org.y20k.transistor.action.PLAYBACK_STARTED";

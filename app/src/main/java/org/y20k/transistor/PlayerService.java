@@ -159,6 +159,14 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         else if (intent.getAction().equals(TransistorKeys.ACTION_STOP)) {
             Log.v(LOG_TAG, "Service received command: STOP");
 
+            // update controller - pause playback
+            mController.getTransportControls().pause();
+        }
+
+        // ACTION DISMISS
+        else if (intent.getAction().equals(TransistorKeys.ACTION_DISMISS)) {
+            Log.v(LOG_TAG, "Service received command: DISMISS");
+
             // update controller - stop playback
             mController.getTransportControls().stop();
         }
@@ -206,12 +214,12 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
                 break;
             // loss of audio focus of unknown duration
             case AudioManager.AUDIOFOCUS_LOSS:
-                stopPlayback();
+                stopPlayback(false);
                 break;
             // transient loss of audio focus
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
                 if (!mPlayback && mMediaPlayer != null && mMediaPlayer.isPlaying()) {
-                    stopPlayback();
+                    stopPlayback(false);
                 }
                 else if (mPlayback && mMediaPlayer != null && mMediaPlayer.isPlaying()) {
                     mMediaPlayer.pause();
@@ -317,7 +325,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
 
 
         // stop playback
-        stopPlayback();
+        stopPlayback(true);
         // TODO try to reconnect to stream - limited to three attempts
 
         return true;
@@ -365,11 +373,15 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         mPlayback = false;
         saveAppState();
 
+        // unregister receivers
+        try {
+            this.unregisterReceiver(mHeadphoneUnplugReceiver);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         // release media session
         mSession.release();
-
-        // unregister receivers
-        this.unregisterReceiver(mHeadphoneUnplugReceiver);
 
         // cancel notification
         stopForeground(true);
@@ -431,7 +443,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
 
 
     /* Stops playback */
-    private void stopPlayback() {
+    private void stopPlayback(boolean dismissNotification) {
 
         // save state
         mStation.setPlaybackState(false);
@@ -440,11 +452,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         mStationIDLast = mStationID;
         mStationIDCurrent = -1;
         saveAppState();
-
-        // un-register headphone unplug receiver
-        if (mHeadphoneUnplugReceiver != null) {
-            unregisterReceiver(mHeadphoneUnplugReceiver);
-        }
 
         // send local broadcast
         Intent i = new Intent();
@@ -462,12 +469,21 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
             releaseMediaPlayer();
         }
 
-        // set media session in-active and set playback state
+        // update playback state
         mSession.setPlaybackState(getPlaybackState());
-        mSession.setActive(false);
 
-        // update notification
-        NotificationHelper.update(mStation, mStationID, mStation.getStationName(), mSession);
+
+        if (dismissNotification) {
+            // dismiss notification
+            NotificationHelper.stop();
+            // set media session in-active
+            mSession.setActive(false);
+        } else {
+            // update notification
+            NotificationHelper.update(mStation, mStationID, mStation.getStationName(), mSession);
+            // keep media session active
+            mSession.setActive(true);
+        }
 
     }
 
@@ -625,7 +641,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
             if (mPlayback && AudioManager.ACTION_AUDIO_BECOMING_NOISY.equals(intent.getAction())) {
                 Log.v(LOG_TAG, "Headphones unplugged. Stopping playback.");
                 // stop playback
-                stopPlayback();
+                stopPlayback(false);
                 // notify user
                 Toast.makeText(context, context.getString(R.string.toastalert_headphones_unplugged), Toast.LENGTH_LONG).show();
             }
@@ -649,16 +665,13 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         @Override
         public void onPause() {
             // stop playback on pause signal from Android Wear or headphone button
-            stopPlayback();
-
-            // keep media session active, if paused by a remote control
-            mSession.setActive(true);
+            stopPlayback(false);
         }
 
         @Override
         public void onStop() {
-            // stop playback on stop signal from notification button
-            stopPlayback();
+            // stop playback and dismiss notification on stop signal
+            stopPlayback(true);
         }
 
     }

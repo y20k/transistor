@@ -257,6 +257,12 @@ public final class PlayerActivityFragment extends Fragment {
         // get station from arguments
         if (args != null && args.containsKey(TransistorKeys.ARG_STATION)) {
             mStation = args.getParcelable(TransistorKeys.ARG_STATION);
+            mPlayback = mStation.getPlaybackState();
+        }
+
+        // set playback state
+        if (mStation != null) {
+            mPlayback = mStation.getPlaybackState();
         }
 
         // check if activity started from shortcut
@@ -446,10 +452,10 @@ public final class PlayerActivityFragment extends Fragment {
             // CASE DELETE
             case R.id.menu_delete:
                 // stop player service using intent
-                Intent intent = new Intent(mActivity, PlayerService.class);
-                intent.setAction(TransistorKeys.ACTION_STOP);
-                mActivity.startService(intent);
-                Log.v(LOG_TAG, "Stopping player service.");
+//                Intent intent = new Intent(mActivity, PlayerService.class);
+//                intent.setAction(TransistorKeys.ACTION_STOP);
+//                mActivity.startService(intent);
+//                Log.v(LOG_TAG, "Stopping player service.");
                 // construct and run delete dialog
                 DialogDelete dialogDelete = new DialogDelete(mActivity, mStation, mStationID);
                 dialogDelete.show();
@@ -747,14 +753,11 @@ public final class PlayerActivityFragment extends Fragment {
             // CASE: station was deleted
             case TransistorKeys.STATION_DELETED:
                 if (mPlayback) {
-                    // stop player service using intent
+                    // stop player service and notification using intent
                     Intent i = new Intent(mActivity, PlayerService.class);
-                    i.setAction(TransistorKeys.ACTION_STOP);
+                    i.setAction(TransistorKeys.ACTION_DISMISS);
                     mActivity.startService(i);
                     Log.v(LOG_TAG, "Stopping player service.");
-                    // stop notification
-                    NotificationHelper.stop();
-                    // TODO save state
                 }
 
                 if (!mTwoPane && mVisibility) {
@@ -762,7 +765,7 @@ public final class PlayerActivityFragment extends Fragment {
                     Intent mainActivityStartIntent = new Intent(mActivity, MainActivity.class);
                     startActivity(mainActivityStartIntent);
                     // finish player activity
-                    mActivity.finish();
+                    // mActivity.finish();
                 }
                 // two pane behaviour is handles by the adapter
                 break;

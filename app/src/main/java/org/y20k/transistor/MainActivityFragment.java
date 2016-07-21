@@ -698,14 +698,11 @@ public final class MainActivityFragment extends Fragment {
                     int stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
 
                     if (station.getPlaybackState()) {
-                        // stop player service using intent
+                        // stop player service and notification using intent
                         Intent i = new Intent(mActivity, PlayerService.class);
-                        i.setAction(TransistorKeys.ACTION_STOP);
+                        i.setAction(TransistorKeys.ACTION_DISMISS);
                         mActivity.startService(i);
                         Log.v(LOG_TAG, "Stopping player service.");
-                        // stop notification
-                        NotificationHelper.stop();
-                        // TODO save state
                     }
 
                     // remove station from adapter and update
