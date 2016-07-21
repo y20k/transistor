@@ -27,7 +27,7 @@
     <string name="descr_station_metadata">現在再生中のラジオ局のメタデータ (アーティスト/タイトル)</string>
     <string name="descr_station_name_example">FM の例</string>
     <string name="descr_station_metadata_example">アーティスト - タイトル</string>
-    <string name="descr_station_stream_loading">Loading stream …</string>
+    <string name="descr_station_stream_loading">ストリームのロード中 …</string>
     <string name="descr_playback_button">大きな再生ボタン</string>
     <string name="descr_playback_indicator">再生中のインジケーター</string>
     <string name="descr_playback_indicator_started">再生中のインジケーター</string>
@@ -74,7 +74,7 @@
     <string name="toastmessage_long_press_playback_started">再生を開始しました (長押しを検出しました)</string>
     <string name="toastmessage_shortcut_created">ショートカットを作成しました。</string>
     <string name="toastmessage_station_copied">放送局をコピーしました。</string>
-    <string name="toastmessage_stream_may_not_work">Unsupported audio format detected. Playback of stream may not work properly.</string>
+    <string name="toastmessage_stream_may_not_work">サポートされていないオーディオ形式が検出されました。ストリームの再生が正しく動作しない場合があります。</string>
     <string name="toastmessage_timer_activated">スリープタイマーを有効にしました。</string>
     <string name="toastmessage_timer_cancelled">スリープタイマーを取り消しました。</string>
     <string name="toastmessage_timer_duration_increased">時間を追加しました。</string>
@@ -84,13 +84,13 @@
     <string name="toastalert_no_external_storage">外部ストレージにアクセスできません。</string>
     <string name="toastalert_headphones_unplugged">ヘッドフォンのプラグを外しました。再生を停止します。</string>
     <string name="toastalert_permission_denied">アクセスが拒否されました:</string>
-    <string name="toastalert_station_not_found">Unable to find station.</string>
+    <string name="toastalert_station_not_found">局を見つけることができません。</string>
     <string name="toastalert_stream_not_found">トランジスターはこの局を認識しません。削除して、もう一度ホーム画面に追加してください。</string>
     <string name="snackbar_request_storage_access">トランジスターは、外部ストレージからデータをアクセスできるように、読み取りアクセス許可を付与する必要があります。</string>
     <string name="snackbar_message_timer_set">スリープタイマーをセットします</string>
 
     <!-- notification -->
-    <string name="notification_play">Play</string>
+    <string name="notification_play">再生</string>
     <string name="notification_stop">Stop</string>
     <string name="notification_swipe_to_stop">スワイプすると停止</string>
     <string name="notification_playing">再生中</string>
