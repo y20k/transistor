@@ -115,6 +115,7 @@
             <intent-filter>
                 <action android:name="org.y20k.transistor.action.PLAY" />
                 <action android:name="org.y20k.transistor.action.STOP" />
+                <action android:name="org.y20k.transistor.action.DISMISS" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.MEDIA_BUTTON" />

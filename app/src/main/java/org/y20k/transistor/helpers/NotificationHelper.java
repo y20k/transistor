@@ -56,6 +56,7 @@ public final class NotificationHelper {
         mStationMetadata = stationMetadata;
 
         // build notification
+        station.setPlaybackState(true);
         mNotification = getNotificationBuilder(station, stationID, mStationMetadata).build(); // TODO: change -> Station object contains metadata, too
 
         // display notification
@@ -116,7 +117,7 @@ public final class NotificationHelper {
 
         // explicit intent for swiping notification
         Intent swipeActionIntent = new Intent(mService, PlayerService.class);
-        swipeActionIntent.setAction(TransistorKeys.ACTION_SWIPE);;
+        swipeActionIntent.setAction(TransistorKeys.ACTION_DISMISS);
 
         // artificial back stack for started Activity.
         // -> navigating backward from the Activity leads to Home screen.

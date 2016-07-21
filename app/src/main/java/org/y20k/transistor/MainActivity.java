@@ -174,7 +174,7 @@ public final class MainActivity extends AppCompatActivity {
         Station station = null;
         boolean startPlayback;
 
-        // get id of station from intent
+        // get station from intent
         if (mIntent.hasExtra(TransistorKeys.EXTRA_STATION)) {
             // get station from notification
             station = mIntent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
@@ -188,14 +188,12 @@ public final class MainActivity extends AppCompatActivity {
             // get playback action from intent
             if (mIntent.hasExtra(TransistorKeys.EXTRA_PLAYBACK_STATE)) {
                 startPlayback = mIntent.getBooleanExtra(TransistorKeys.EXTRA_PLAYBACK_STATE, false);
-                station.setPlaybackState(mIntent.getBooleanExtra(TransistorKeys.EXTRA_PLAYBACK_STATE, false));
             } else {
                 startPlayback = false;
-                station.setPlaybackState(false);
             }
 
             // prepare arguments and intent
-            if (mTwoPane && station != null) {
+            if (mTwoPane) {
                 // prepare args for player fragment
                 playerArgs.putParcelable(TransistorKeys.ARG_STATION, station);
                 playerArgs.putBoolean(TransistorKeys.ARG_PLAYBACK, startPlayback);
