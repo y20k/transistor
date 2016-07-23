@@ -407,9 +407,6 @@ public final class PlayerActivityFragment extends Fragment {
         // rotate playback button
         changeVisualState(mActivity);
 
-        // save state of playback to settings
-        saveAppState(mActivity);
-
         // stop player service using intent
         Intent intent = new Intent(mActivity, PlayerService.class);
         intent.setAction(TransistorKeys.ACTION_STOP);
@@ -585,18 +582,13 @@ public final class PlayerActivityFragment extends Fragment {
     }
 
 
-    /* Saves app state to SharedPreferences */
-    private void saveAppState(Context context) {
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = settings.edit();
-//        editor.putInt(TransistorKeys.PREF_STATION_ID_CURRENTLY_PLAYING, mStationIDCurrent);
-//        editor.putInt(TransistorKeys.PREF_STATION_ID_LAST, mStationIDLast);
-        editor.putString(TransistorKeys.PREF_STATION_METADATA, mStationMetadata);
-//        editor.putBoolean(TransistorKeys.PREF_PLAYBACK, mPlayback);
-//        editor.putBoolean(TransistorKeys.PREF_STATION_LOADING, mStationLoading);
-        editor.apply();
-        Log.v(LOG_TAG, "Saving state ("+ mStationMetadata + ")");
-    }
+//    /* Saves app state to SharedPreferences */
+//    private void saveAppState(Context context) {
+//        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
+//        SharedPreferences.Editor editor = settings.edit();
+//        editor.apply();
+//        Log.v(LOG_TAG, "Saving state.");
+//    }
 
 
     /* Loads app state from preferences */
@@ -695,14 +687,13 @@ public final class PlayerActivityFragment extends Fragment {
                     // update playback state
                     mStationIDLast = mStationIDCurrent;
                     mStationIDCurrent = mStationID;
-                    // save state of playback to settings
-                    saveAppState(mActivity);
                 }
                 break;
 
             // CASE: playback has started
             case TransistorKeys.PLAYBACK_STARTED:
                 if (mVisibility && mPlayback && mStation != null && mStation.getStreamUri().equals(station.getStreamUri())) {
+                    loadAppState(mActivity);
                     // update loading status and playback indicator
                     mStationLoading = false;
                     mPlaybackIndicator.setBackgroundResource(R.drawable.ic_playback_indicator_started_24dp);
@@ -712,8 +703,6 @@ public final class PlayerActivityFragment extends Fragment {
                     } else {
                         mStationMetadataView.setText(mStationName);
                     }
-                    // save state of playback to settings
-                    saveAppState(mActivity);
                 }
                 break;
 
@@ -727,8 +716,6 @@ public final class PlayerActivityFragment extends Fragment {
                         mStation.setPlaybackState(false);
                         changeVisualState(mActivity);
                     }
-                    // save state of playback to settings
-                    saveAppState(mActivity);
                 }
                 break;
         }

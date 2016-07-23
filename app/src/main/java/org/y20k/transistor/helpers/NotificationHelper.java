@@ -81,7 +81,7 @@ public final class NotificationHelper {
         mNotification = getNotificationBuilder(station, stationID, mStationMetadata).build();
 
         // display updated notification
-        NotificationManager notificationManager = (NotificationManager) (NotificationManager) mService.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) mService.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(TransistorKeys.PLAYER_SERVICE_NOTIFICATION_ID, mNotification);
 
         if (!station.getPlaybackState()) {
@@ -149,7 +149,7 @@ public final class NotificationHelper {
         builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
         builder.setSmallIcon(R.drawable.ic_notification_small_24dp);
         builder.setLargeIcon(getStationIcon(mService, station));
-        builder.setContentTitle(mService.getString(R.string.notification_playing) + ": " + station.getStationName());
+        builder.setContentTitle(station.getStationName());
         builder.setContentText(stationMetadata);
         builder.setShowWhen(false);
         builder.setStyle(style);

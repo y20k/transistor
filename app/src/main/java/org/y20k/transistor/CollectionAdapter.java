@@ -360,11 +360,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     private void saveAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = settings.edit();
-//        editor.putInt(TransistorKeys.PREF_STATION_ID_CURRENTLY_PLAYING, mStationIDCurrent);
-//        editor.putInt(TransistorKeys.PREF_STATION_ID_LAST, mStationIDLast);
         editor.putInt(TransistorKeys.PREF_STATION_ID_SELECTED, mStationIDSelected);
-//        editor.putBoolean(TransistorKeys.PREF_PLAYBACK, mPlayback);
-//        editor.putBoolean(TransistorKeys.PREF_STATION_LOADING, mStationLoading);
         editor.apply();
         Log.v(LOG_TAG, "Saving state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback  + " / " + mStationLoading + " / " + mStationIDSelected +")");
     }
