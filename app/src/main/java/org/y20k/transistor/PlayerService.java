@@ -75,9 +75,11 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     private int mStationID;
     private int mStationIDCurrent;
     private int mStationIDLast;
+    private String mStationMetadata;
     private String mStreamUri;
     private boolean mPlayback;
     private boolean mStationLoading;
+    private boolean mStationMetadataReceived;
     private int mPlayerInstanceCounter;
     private HeadphoneUnplugReceiver mHeadphoneUnplugReceiver;
 //    private WifiManager.WifiLock mWifiLock;
@@ -98,6 +100,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         mMediaPlayer = null;
         mPlayerInstanceCounter = 0;
+        mStationMetadataReceived = false;
         mSession = createMediaSession(this);
 
         try {
@@ -114,13 +117,19 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
                 if (intent.hasExtra(TransistorKeys.EXTRA_METADATA) && intent.hasExtra(TransistorKeys.EXTRA_STATION)) {
 
                     Station station = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
-                    String metaData = intent.getStringExtra(TransistorKeys.EXTRA_METADATA);
+                    mStationMetadata = intent.getStringExtra(TransistorKeys.EXTRA_METADATA);
+                    saveAppState();
+
+                    if (!mStationMetadataReceived && station.equals(mStation)) {
+                        // race between onPrepared and MetadataHelper has been won by the latter
+                        mStationMetadataReceived = true;
+                    }
 
                     // update media session metadata
-                    mSession.setMetadata(getMetadata(context, station, metaData));
+                    mSession.setMetadata(getMetadata(context, station, mStationMetadata));
 
                     // update notification
-                    NotificationHelper.update(mStation, mStationID, metaData, mSession);
+                    NotificationHelper.update(mStation, mStationID, mStationMetadata, mSession);
                 }
             }
         };
@@ -251,8 +260,12 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
             Log.v(LOG_TAG, "Preparation finished. Starting playback. Player instance count: " + mPlayerInstanceCounter);
             Log.v(LOG_TAG, "Playback: " + mStreamUri);
 
-            // update notification
-            NotificationHelper.update(mStation, mStationID, mStation.getStationName(), mSession);
+            // check for race between onPrepared ans MetadataHelper
+            if (!mStationMetadataReceived) {
+                // update notification
+                NotificationHelper.update(mStation, mStationID, mStation.getStationName(), mSession);
+                Log.v(LOG_TAG, "!!!! NOT RECEIVED");
+            }
 
             // start media player
             mp.start();
@@ -398,7 +411,9 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     /* Starts playback */
     private void startPlayback() {
 
-        // save state
+        // set and save state
+        mStationMetadata = mStation.getStationName();
+        mStationMetadataReceived = false;
         mStation.setPlaybackState(true);
         mPlayback = true;
         mStationLoading = true;
@@ -432,6 +447,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
 
             // update MediaSession
             mSession.setPlaybackState(getPlaybackState());
+            mSession.setMetadata(getMetadata(getApplicationContext(), mStation, mStationMetadata));
             mSession.setActive(true);
 
             // put up notification
@@ -445,7 +461,9 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     /* Stops playback */
     private void stopPlayback(boolean dismissNotification) {
 
-        // save state
+        // set and save state
+        mStationMetadata = mStation.getStationName();
+        mStationMetadataReceived = false;
         mStation.setPlaybackState(false);
         mPlayback = false;
         mStationLoading = false;
@@ -617,6 +635,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         editor.putInt(TransistorKeys.PREF_STATION_ID_LAST, mStationIDLast);
         editor.putBoolean(TransistorKeys.PREF_PLAYBACK, mPlayback);
         editor.putBoolean(TransistorKeys.PREF_STATION_LOADING, mStationLoading);
+        editor.putString(TransistorKeys.PREF_STATION_METADATA, mStationMetadata);
         editor.apply();
         Log.v(LOG_TAG, "Saving state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + " / " + mStationLoading + " / " + ")");
     }
