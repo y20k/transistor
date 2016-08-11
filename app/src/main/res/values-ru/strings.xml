@@ -86,7 +86,7 @@
     <string name="toastmessage_shortcut_created">Ярлык создан.</string>
     <string name="toastmessage_copied_to_clipboard_url">Stream URL copied to clipboard.</string>
     <string name="toastmessage_copied_to_clipboard_metadata">Metadata copied to clipboard.</string>
-    <string name="toastmessage_station_copied">Станция скопирована.</string>
+    <string name="toastmessage_station_copied">Станция скопирована в буфер обмена.</string>
     <string name="toastmessage_stream_may_not_work">"Обнаружен неподдерживаемый аудиоформат.  Воспроизведение потока может не работать должным образом."</string>
     <string name="toastmessage_timer_activated">Таймер сна активирован.</string>
     <string name="toastmessage_timer_cancelled">Таймер сна отключен.</string>
