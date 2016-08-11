@@ -27,7 +27,7 @@
     <string name="descr_station_metadata">Метаданные (Артист / Заголовок) проигрываемой радиостанции</string>
     <string name="descr_station_name_example">Например FM</string>
     <string name="descr_station_metadata_example">Артист - Заголовок</string>
-    <string name="descr_station_stream_loading">Loading stream …</string>
+    <string name="descr_station_stream_loading">Загрузка потока …</string>
     <string name="descr_playback_button">Большая кнопка воспроизведения</string>
     <string name="descr_playback_indicator">Индикатор воспроизведения</string>
     <string name="descr_playback_indicator_started">Индикатор воспроизведения</string>
@@ -57,8 +57,8 @@
     <string name="dialog_error_title_fetch_write">Проблема записи</string>
     <string name="dialog_error_message_fetch_general_external_storage">Внешнее хранилище:</string>
     <string name="dialog_error_message_fetch_general_hint_m3u">Подсказка: Transistor может работать только с потоками закодированными в mp3 и ogg, или с адресами оканчивающимися на .m3u или .pls.</string>
-    <string name="dialog_error_message_fetch_general_playlist_type">MIME type of file:</string>
-    <string name="dialog_error_message_fetch_general_stream_type">MIME type of stream:</string>
+    <string name="dialog_error_message_fetch_general_playlist_type">MIME тип файла:</string>
+    <string name="dialog_error_message_fetch_general_stream_type">MIME тип потока:</string>
     <string name="dialog_error_message_fetch_general_file_content">Содержание файла:</string>
     <string name="dialog_error_message_fetch_download">Transistor не может обработать эту ссылку.</string>
     <string name="dialog_error_message_fetch_download_station_url">Адрес станции:</string>
@@ -74,7 +74,7 @@
     <string name="toastmessage_long_press_playback_started">Начинаю воспроизведение радиостанции</string>
     <string name="toastmessage_shortcut_created">Ярлык создан.</string>
     <string name="toastmessage_station_copied">Станция скопирована.</string>
-    <string name="toastmessage_stream_may_not_work">Unsupported audio format detected. Playback of stream may not work properly.</string>
+    <string name="toastmessage_stream_may_not_work">"Обнаружен неподдерживаемый аудиоформат.  Воспроизведение потока может не работать должным образом."</string>
     <string name="toastmessage_timer_activated">Таймер сна активирован.</string>
     <string name="toastmessage_timer_cancelled">Таймер сна отключен.</string>
     <string name="toastmessage_timer_duration_increased">Время увеличено.</string>
@@ -84,14 +84,14 @@
     <string name="toastalert_no_external_storage">Нет доступа к внешнему накопителю.</string>
     <string name="toastalert_headphones_unplugged">Наушники отключили. Воспроизведение остановлено.</string>
     <string name="toastalert_permission_denied">Доступ запрещен:</string>
-    <string name="toastalert_station_not_found">Unable to find station.</string>
+    <string name="toastalert_station_not_found">Невозможно найти станцию.</string>
     <string name="toastalert_stream_not_found">Transistor не распознал эту станцию. Пожалуйста, удалите и добавьте снова на домашний экран.</string>
     <string name="snackbar_request_storage_access">Приложению должно быть предоставлено разрешение на чтение данных на внешнем накопителе.</string>
     <string name="snackbar_message_timer_set">Таймер сна установлен на</string>
 
     <!-- notification -->
-    <string name="notification_play">Play</string>
-    <string name="notification_stop">Stop</string>
+    <string name="notification_play">Воспроизвести</string>
+    <string name="notification_stop">Остановить</string>
     <string name="notification_swipe_to_stop">Смахните, чтобы остановить</string>
     <string name="notification_playing">Играет</string>
 
