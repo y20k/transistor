@@ -90,8 +90,8 @@
     <string name="snackbar_message_timer_set">Тајмер постављен на</string>
 
     <!-- notification -->
-    <string name="notification_play">Play</string>
-    <string name="notification_stop">Stop</string>
+    <string name="notification_play">Пусти</string>
+    <string name="notification_stop">Заустави</string>
     <string name="notification_swipe_to_stop">Превуците да зауставите</string>
     <string name="notification_playing">Пуштам</string>
 
@@ -100,8 +100,8 @@
     <string name="infosheet_about_h2_radio">Радио апликација за Андроид</string>
     <string name="infosheet_about_h3_version">Издање 2.1 (Moonage Daydream)</string>
     <string name="infosheet_about_p_bare"/>
-    <string name="infosheet_about_p_note"/>
-    <string name="infosheet_about_p_free"/>
+    <string name="infosheet_about_p_note">Важна напомена: ово је апликација типа ДСС (донесите своју станицу). Нема функције уграђене претраге. Станице морате ручно да додајете.</string>
+    <string name="infosheet_about_p_free">Транзистор је слободан софтвер. Објављен је под МИТ лиценцом. Изворни кôд можете да нађете на Гитхабу, где такође можете да пријављујете грешке или помогнете програмирање, ако сте заинтересовани.</string>
     <string name="infosheet_about_p_github">https://github.com/y20k/transistor</string>
     <string name="infosheet_about_p_license">https://opensource.org/licenses/MIT</string>
     <string name="infosheet_about_h2_permissions">Које су дозволе потребне Транзистору?</string>
@@ -123,19 +123,19 @@
     <string name="infosheet_howto_h2_play">Како пустити радио станицу?</string>
     <string name="infosheet_howto_p_play">Тапните велико Пусти дугме ;).</string>
     <string name="infosheet_howto_h2_stop">Како зауставити пуштање?</string>
-    <string name="infosheet_howto_p_stop"/>
-    <string name="infosheet_howto_h2_sleep"/>
+    <string name="infosheet_howto_p_stop">Тапните велико Стоп дугме, ископчајте ваше слушалице или превуците обавештење са закључаног екрана.</string>
+    <string name="infosheet_howto_h2_sleep">Како покренути тајмер спавања?</string>
     <string name="infosheet_howto_p_sleep"/>
-    <string name="infosheet_howto_h2_shortcut"/>
+    <string name="infosheet_howto_h2_shortcut">Како поставити пречицу станице на почетни екран?</string>
     <string name="infosheet_howto_p_shortcut"/>
-    <string name="infosheet_howto_h2_edit"/>
+    <string name="infosheet_howto_h2_edit">Како преименовати или обрисати станицу?</string>
     <string name="infosheet_howto_p_edit"/>
-    <string name="infosheet_howto_h2_storage"/>
-    <string name="infosheet_howto_p_storage"/>
-    <string name="infosheet_howto_h2_backup"/>
+    <string name="infosheet_howto_h2_storage">Где Транзистор смешта станице?</string>
+    <string name="infosheet_howto_p_storage">Транзистор не смешта списак станица у базу података, већ их уписује као m3u фајлове на спољашњем складишту вашег уређаја. Слободно их отворите било којим уређивачем текста. Фајлови се налазе у /Android/data/org.y20k.transistor/files/Collection.</string>
+    <string name="infosheet_howto_h2_backup">Како да направим резерву и пренесем своје радио станице?</string>
     <string name="infosheet_howto_p_backup"/>
-    <string name="infosheet_howto_h2_settings"/>
-    <string name="infosheet_howto_p_settings"/>
+    <string name="infosheet_howto_h2_settings">Зашто нема поставки у Транзистору?</string>
+    <string name="infosheet_howto_p_settings">Нема шта да се подешава ;). Транзистор је једноставна апликација. У зависности од ваше тачке гледишта, или је сјајна или безвезе.</string>
 
     <!-- 
     +++ IMPORTANT NOTE +++
