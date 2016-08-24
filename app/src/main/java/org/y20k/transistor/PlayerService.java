@@ -264,7 +264,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
             if (!mStationMetadataReceived) {
                 // update notification
                 NotificationHelper.update(mStation, mStationID, mStation.getStationName(), mSession);
-                Log.v(LOG_TAG, "!!!! NOT RECEIVED");
             }
 
             // start media player
@@ -678,7 +677,9 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         @Override
         public void onPlay() {
             // start playback
-            startPlayback();
+            if (mStation != null) {
+                startPlayback();
+            }
         }
 
         @Override

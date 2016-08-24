@@ -134,7 +134,7 @@ public final class PlayerActivityFragment extends Fragment {
                 arguments.remove(TransistorKeys.ARG_STATION_ID);
             } else {
                 mStationID = 0;
-                Log.e(LOG_TAG, "Error: station is null. Choosing default ID for station");
+                Log.e(LOG_TAG, "Error: did not receive id of station. Choosing default ID for station");
             }
 
             // get station name and Uri
@@ -143,7 +143,7 @@ public final class PlayerActivityFragment extends Fragment {
                 mStreamUri = mStation.getStreamUri().toString();
             } else {
                 mStationName = mActivity.getString(R.string.descr_station_name_example);
-                Log.e(LOG_TAG, "Error: station is null. Displaying default station name");
+                Log.e(LOG_TAG, "Error: did not receive station. Displaying default station name");
             }
 
             // get tablet or phone mode info from arguments
@@ -257,13 +257,10 @@ public final class PlayerActivityFragment extends Fragment {
         // get station from arguments
         if (args != null && args.containsKey(TransistorKeys.ARG_STATION)) {
             mStation = args.getParcelable(TransistorKeys.ARG_STATION);
+            // get playback state from station
             mPlayback = mStation.getPlaybackState();
         }
 
-        // set playback state
-        if (mStation != null) {
-            mPlayback = mStation.getPlaybackState();
-        }
 
         // check if activity started from shortcut
         if (args != null && args.getBoolean(TransistorKeys.ARG_PLAYBACK)) {

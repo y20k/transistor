@@ -20,7 +20,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -31,9 +30,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.widget.Toast;
 
-import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.StorageHelper;
 import org.y20k.transistor.helpers.TransistorKeys;
 
@@ -83,11 +80,6 @@ public final class MainActivity extends AppCompatActivity {
         // check if two pane mode can be used
         mTwoPane = detectTwoPane();
 
-        // special case: player should be launched (e.g. from shortcut or notification)
-        if (mIntent != null && TransistorKeys.ACTION_SHOW_PLAYER.equals(mIntent.getAction())) {
-            launchPlayer();
-        }
-
         // tablet mode: show player fragment in player container
         if (mTwoPane && mCollectionFolder.listFiles().length > 1) {
             // hide right pane
@@ -98,7 +90,6 @@ public final class MainActivity extends AppCompatActivity {
         }
 
         saveAppState(this);
-
     }
 
 
@@ -108,12 +99,14 @@ public final class MainActivity extends AppCompatActivity {
         unregisterBroadcastReceivers();
     }
 
+
     @Override
     public void onMultiWindowModeChanged(boolean isInMultiWindowMode) {
         super.onMultiWindowModeChanged(isInMultiWindowMode);
         // check if two pane mode can be used
         mTwoPane = detectTwoPane();
     }
+
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -163,65 +156,6 @@ public final class MainActivity extends AppCompatActivity {
             Log.v(LOG_TAG, "Small screen detected. Choosing single pane layout.");
             return false;
         }
-    }
-
-
-    /* Directly launch the player */
-    private void launchPlayer() {
-
-        // prepare bundle
-        Bundle playerArgs = new Bundle();
-        Station station = null;
-        boolean startPlayback;
-
-        // get station from intent
-        if (mIntent.hasExtra(TransistorKeys.EXTRA_STATION)) {
-            // get station from notification
-            station = mIntent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
-        } else if (mIntent.hasExtra(TransistorKeys.EXTRA_STREAM_URI)) {
-            // get station from home screen shortcut
-            CollectionAdapter collectionAdapter = new CollectionAdapter(this, mCollectionFolder);
-            station = collectionAdapter.findStation(Uri.parse(mIntent.getStringExtra(TransistorKeys.EXTRA_STREAM_URI)));
-        }
-
-        if (station != null) {
-            // get playback action from intent
-            if (mIntent.hasExtra(TransistorKeys.EXTRA_PLAYBACK_STATE)) {
-                startPlayback = mIntent.getBooleanExtra(TransistorKeys.EXTRA_PLAYBACK_STATE, false);
-            } else {
-                startPlayback = false;
-            }
-
-            // prepare arguments and intent
-            if (mTwoPane) {
-                // prepare args for player fragment
-                playerArgs.putParcelable(TransistorKeys.ARG_STATION, station);
-                playerArgs.putBoolean(TransistorKeys.ARG_PLAYBACK, startPlayback);
-                // show player fragment
-                PlayerActivityFragment playerActivityFragment = new PlayerActivityFragment();
-                playerActivityFragment.setArguments(playerArgs);
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.player_container, playerActivityFragment, TransistorKeys.PLAYER_FRAGMENT_TAG)
-                        .commit();
-                // notify main activity fragment
-                Intent changeSelectionIntent = new Intent();
-                changeSelectionIntent.setAction(TransistorKeys.ACTION_CHANGE_VIEW_SELECTION);
-                changeSelectionIntent.putExtra(TransistorKeys.EXTRA_STATION, station);
-                LocalBroadcastManager.getInstance(getApplication()).sendBroadcast(changeSelectionIntent);
-            } else {
-                // start player activity - on phone
-                Intent playerIntent = new Intent(this, PlayerActivity.class);
-                playerIntent.setAction(TransistorKeys.ACTION_SHOW_PLAYER);
-                playerIntent.putExtra(TransistorKeys.EXTRA_STATION, station);
-                playerIntent.putExtra(TransistorKeys.EXTRA_PLAYBACK_STATE, startPlayback);
-                startActivity(playerIntent);
-            }
-        } else {
-            Toast.makeText(this, getString(R.string.toastalert_station_not_found), Toast.LENGTH_LONG).show();
-        }
-
-        // remove ACTION_SHOW_PLAYER action from intent
-        getIntent().setAction("");
     }
 
 

@@ -54,7 +54,7 @@ import java.io.IOException;
 public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAdapterViewHolder> {
 
     /* Define log tag */
-    private final String LOG_TAG = CollectionAdapter.class.getSimpleName();
+    private static final String LOG_TAG = CollectionAdapter.class.getSimpleName();
 
 
     /* Main class variables */
@@ -67,7 +67,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     private int mStationIDLast;
     private int mStationIDSelected;
     private boolean mTwoPane;
-    private final SortedList<Station> mStationList;
+    private SortedList<Station> mStationList;
 
 
     /* Constructor */
@@ -373,11 +373,22 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
 
 
     /* Setter for ID of currently selected station */
-    public void setStationIDSelected(int stationIDSelected) {
+    public void setStationIDSelected(int stationIDSelected, boolean playbackState, boolean startPlayback) {
         mStationIDSelected = stationIDSelected;
         saveAppState(mActivity);
-        if (mTwoPane && stationIDSelected >= 0) {
-            handleSingleClick(stationIDSelected);
+        mStationList.get(stationIDSelected).setPlaybackState(playbackState);
+        if (mTwoPane && mStationIDSelected >= 0) {
+            handleSingleClick(mStationIDSelected);
+        }
+
+        if (startPlayback) {
+            // start player service using intent
+            Intent intent = new Intent(mActivity, PlayerService.class);
+            intent.setAction(TransistorKeys.ACTION_PLAY);
+            intent.putExtra(TransistorKeys.EXTRA_STATION, mStationList.get(stationIDSelected));
+            intent.putExtra(TransistorKeys.EXTRA_STATION_ID, stationIDSelected);
+            mActivity.startService(intent);
+            Log.v(LOG_TAG, "Starting player service.");
         }
     }
 
@@ -407,7 +418,18 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
 
         // return null if nothing was found
         return null;
+    }
 
+
+    /* Getter for ID of given station */
+    public int getStationID (Station station) {
+        return mStationList.indexOf(station);
+    }
+
+
+    /* Getter for station of given ID */
+    public Station getStation (int stationID) {
+        return mStationList.get(stationID);
     }
 
 
@@ -546,7 +568,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
 
                 // CASE: player is preparing stream
                 case TransistorKeys.PLAYBACK_LOADING_STATION:
-                    if (mStationIDLast != -1) {
+                    if (mStationIDLast > -1 && mStationIDLast < mStationList.size()) {
                         mStationList.get(mStationIDLast).setPlaybackState(false);
                     }
                     mStationLoading = true;
@@ -558,6 +580,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
                 // CASE: playback has started
                 case TransistorKeys.PLAYBACK_STARTED:
                     mStationLoading = false;
+                    mStationList.get(stationID).setPlaybackState(true);
                     notifyDataSetChanged();
                     break;
 
@@ -565,7 +588,6 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
                 case TransistorKeys.PLAYBACK_STOPPED:
                     mPlayback = false;
                     mStationList.get(stationID).setPlaybackState(false);
-
                     notifyDataSetChanged();
                     break;
             }

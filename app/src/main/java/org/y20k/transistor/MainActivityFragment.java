@@ -139,7 +139,9 @@ public final class MainActivityFragment extends Fragment {
         mFolderSize = mFolder.listFiles().length;
 
         // create collection adapter
-        mCollectionAdapter = new CollectionAdapter(mActivity, mFolder);
+        if (mCollectionAdapter == null) {
+            mCollectionAdapter = new CollectionAdapter(mActivity, mFolder);
+        }
 
         // initialize broadcast receivers
         initializeBroadcastReceivers();
@@ -194,11 +196,16 @@ public final class MainActivityFragment extends Fragment {
         mCollectionAdapter.setTwoPane(mTwoPane);
         mCollectionAdapter.refresh();
         if (mCollectionAdapter.getItemCount() > 0) {
-            mCollectionAdapter.setStationIDSelected(mStationIDSelected);
+            mCollectionAdapter.setStationIDSelected(mStationIDSelected, mPlayback, false);
         }
 
-        // handle incoming intent
-        handleIncomingIntent();
+        // handles the activity's intent
+        Intent intent = mActivity.getIntent();
+        if (Intent.ACTION_VIEW.equals(intent.getAction())) {
+            handleStreamingLink(intent);
+        } else if (TransistorKeys.ACTION_SHOW_PLAYER.equals(intent.getAction())) {
+            handleShowPlayer(intent);
+        }
 
         // check if folder content has been changed
         int folderSize = mFolder.listFiles().length;
@@ -278,44 +285,6 @@ public final class MainActivityFragment extends Fragment {
         mListState = mLayoutManager.onSaveInstanceState();
         outState.putParcelable(TransistorKeys.INSTANCE_LIST_STATE, mListState);
         super.onSaveInstanceState(outState);
-    }
-
-
-    /* handles incoming intent */
-    private void handleIncomingIntent() {
-
-        // get intent
-        Intent intent = mActivity.getIntent();
-
-        // handles external taps on streaming links
-        if (Intent.ACTION_VIEW.equals(intent.getAction())) {
-
-            mNewStationUri = intent.getData();
-
-            // clear the intent
-            intent.setAction("");
-
-            // check for null and type "http"
-            if (mNewStationUri != null && mNewStationUri.getScheme().startsWith("http")) {
-                // download and add new station
-                fetchNewStation(mNewStationUri);
-
-            } else if (mNewStationUri != null && mNewStationUri.getScheme().startsWith("file")) {
-                // check for read permission
-                PermissionHelper permissionHelper = new PermissionHelper(mActivity, mRootView);
-                if (permissionHelper.requestReadExternalStorage(TransistorKeys.PERMISSION_REQUEST_STATION_FETCHER_READ_EXTERNAL_STORAGE)) {
-                    // read and add new station
-                    fetchNewStation(mNewStationUri);
-                }
-            }
-
-            // unsuccessful - log failure
-            else {
-                Log.v(LOG_TAG, "Received an empty intent");
-            }
-
-        }
-
     }
 
 
@@ -407,6 +376,77 @@ public final class MainActivityFragment extends Fragment {
             // get system picker for images
             Intent pickImageIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             mActivity.startActivityForResult(pickImageIntent, TransistorKeys.REQUEST_LOAD_IMAGE);
+        }
+    }
+
+
+    /* Handles tap on streaming link */
+    private void handleStreamingLink(Intent intent) {
+        mNewStationUri = intent.getData();
+
+        // clear the intent
+        intent.setAction("");
+
+        // check for null and type "http"
+        if (mNewStationUri != null && mNewStationUri.getScheme().startsWith("http")) {
+            // download and add new station
+            fetchNewStation(mNewStationUri);
+        } else if (mNewStationUri != null && mNewStationUri.getScheme().startsWith("file")) {
+            // check for read permission
+            PermissionHelper permissionHelper = new PermissionHelper(mActivity, mRootView);
+            if (permissionHelper.requestReadExternalStorage(TransistorKeys.PERMISSION_REQUEST_STATION_FETCHER_READ_EXTERNAL_STORAGE)) {
+                // read and add new station
+                fetchNewStation(mNewStationUri);
+            }
+        }
+        // unsuccessful - log failure
+        else {
+            Log.v(LOG_TAG, "Received an empty intent");
+        }
+    }
+
+
+    /* Handles intent to show player from notification or from shortcut */
+    private void handleShowPlayer(Intent intent) {
+        // get station from intent
+        Station station = null;
+        if (intent.hasExtra(TransistorKeys.EXTRA_STATION)) {
+            // get station from notification
+            station = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
+        } else if (intent.hasExtra(TransistorKeys.EXTRA_STREAM_URI)) {
+            // get Uri of station from home screen shortcut
+            station = mCollectionAdapter.findStation(Uri.parse(intent.getStringExtra(TransistorKeys.EXTRA_STREAM_URI)));
+        } else if (intent.hasExtra(TransistorKeys.EXTRA_LAST_STATION) && intent.getBooleanExtra(TransistorKeys.EXTRA_LAST_STATION, false)) {
+            // try to get last station
+            loadAppState(mActivity);
+            if (mStationIDLast > -1 && mStationIDLast < mCollectionAdapter.getItemCount()) {
+                station = mCollectionAdapter.getStation(mStationIDLast);
+            }
+        }
+
+        if (station == null) {
+            Toast.makeText(mActivity, getString(R.string.toastalert_station_not_found), Toast.LENGTH_LONG).show();
+        }
+
+        // get playback action from intent
+        boolean startPlayback;
+        if (intent.hasExtra(TransistorKeys.EXTRA_PLAYBACK_STATE)) {
+            startPlayback = intent.getBooleanExtra(TransistorKeys.EXTRA_PLAYBACK_STATE, false);
+        } else {
+            startPlayback = false;
+        }
+
+        // prepare arguments or intent
+        if (mTwoPane && station != null) {
+            mStationIDSelected = mCollectionAdapter.getStationID(station);
+            mCollectionAdapter.setStationIDSelected(mStationIDSelected, station.getPlaybackState(), startPlayback);
+        } else if (station != null) {
+            // start player activity - on phone
+            Intent playerIntent = new Intent(mActivity, PlayerActivity.class);
+            playerIntent.setAction(TransistorKeys.ACTION_SHOW_PLAYER);
+            playerIntent.putExtra(TransistorKeys.EXTRA_STATION, station);
+            playerIntent.putExtra(TransistorKeys.EXTRA_PLAYBACK_STATE, startPlayback);
+            startActivity(playerIntent);
         }
     }
 
@@ -660,7 +700,7 @@ public final class MainActivityFragment extends Fragment {
                     }
 
                     mLayoutManager.scrollToPosition(newStationPosition);
-                    mCollectionAdapter.setStationIDSelected(newStationPosition);
+                    mCollectionAdapter.setStationIDSelected(newStationPosition, mPlayback, false);
                     mCollectionAdapter.notifyDataSetChanged(); // TODO Remove?
                 }
                 break;
@@ -682,7 +722,7 @@ public final class MainActivityFragment extends Fragment {
                     // change station within in adapter, scroll to new position and update adapter
                     newStationPosition = mCollectionAdapter.rename(newStationName, station, stationID);
                     mLayoutManager.scrollToPosition(newStationPosition);
-                    mCollectionAdapter.setStationIDSelected(newStationPosition);
+                    mCollectionAdapter.setStationIDSelected(newStationPosition, mPlayback, false);
                     mCollectionAdapter.notifyDataSetChanged(); // TODO Remove?
 
 
@@ -712,7 +752,7 @@ public final class MainActivityFragment extends Fragment {
                         toggleActionCall();
                     } else {
                         // scroll to new position
-                        mCollectionAdapter.setStationIDSelected(newStationPosition);
+                        mCollectionAdapter.setStationIDSelected(newStationPosition, mPlayback, false);
                         mLayoutManager.scrollToPosition(newStationPosition);
                     }
                     mCollectionAdapter.notifyDataSetChanged(); // TODO Remove?

@@ -127,10 +127,6 @@
             android:name=".helpers.SleepTimerService">
         </service>
 
-
-
-
-
     </application>
 
 </manifest>

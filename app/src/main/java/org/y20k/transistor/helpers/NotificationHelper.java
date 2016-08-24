@@ -102,10 +102,10 @@ public final class NotificationHelper {
     private static NotificationCompat.Builder getNotificationBuilder(Station station, int stationID, String stationMetadata) {
 
         // explicit intent for notification tap
-        Intent tapIntent = new Intent(mService, MainActivity.class);
-        tapIntent.setAction(TransistorKeys.ACTION_SHOW_PLAYER);
-        tapIntent.putExtra(TransistorKeys.EXTRA_STATION, station);
-        tapIntent.putExtra(TransistorKeys.EXTRA_STATION_ID, stationID);
+        Intent tapActionIntent = new Intent(mService, MainActivity.class);
+        tapActionIntent.setAction(TransistorKeys.ACTION_SHOW_PLAYER);
+        tapActionIntent.putExtra(TransistorKeys.EXTRA_STATION, station);
+        tapActionIntent.putExtra(TransistorKeys.EXTRA_STATION_ID, stationID);
 
         // explicit intent for stopping playback
         Intent stopActionIntent = new Intent(mService, PlayerService.class);
@@ -122,13 +122,14 @@ public final class NotificationHelper {
         // artificial back stack for started Activity.
         // -> navigating backward from the Activity leads to Home screen.
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(mService);
-        // backstack: adds back stack for Intent (but not the Intent itself)
-        stackBuilder.addParentStack(MainActivity.class);
+//        // backstack: adds back stack for Intent (but not the Intent itself)
+//        stackBuilder.addParentStack(MainActivity.class);
         // backstack: add explicit intent for notification tap
-        stackBuilder.addNextIntent(tapIntent);
+        stackBuilder.addNextIntent(tapActionIntent);
 
         // pending intent wrapper for notification tap
-        PendingIntent tapPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent tapActionPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+//        PendingIntent tapActionPendingIntent = PendingIntent.getService(mService, 0, tapActionIntent, 0);
         // pending intent wrapper for notification stop action
         PendingIntent stopActionPendingIntent = PendingIntent.getService(mService, 0, stopActionIntent, 0);
         // pending intent wrapper for notification start action
@@ -153,7 +154,7 @@ public final class NotificationHelper {
         builder.setContentText(stationMetadata);
         builder.setShowWhen(false);
         builder.setStyle(style);
-        builder.setContentIntent(tapPendingIntent);
+        builder.setContentIntent(tapActionPendingIntent);
         builder.setDeleteIntent(swipeActionPendingIntent);
 
         if (station.getPlaybackState()) {
