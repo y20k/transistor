@@ -30,7 +30,6 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.util.SortedList;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.util.SortedListAdapterCallback;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +38,7 @@ import android.widget.Toast;
 import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.DialogError;
 import org.y20k.transistor.helpers.ImageHelper;
+import org.y20k.transistor.helpers.LogHelper;
 import org.y20k.transistor.helpers.ShortcutHelper;
 import org.y20k.transistor.helpers.StationContextMenu;
 import org.y20k.transistor.helpers.TransistorKeys;
@@ -188,7 +188,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
             public void onClick(View view, int pos, boolean isLongClick) {
                 mStationIDSelected = pos;
                 saveAppState(mActivity);
-                Log.v(LOG_TAG, "Selected station (ID): " + mStationIDSelected);
+                LogHelper.v(LOG_TAG, "Selected station (ID): " + mStationIDSelected);
                 if (isLongClick && !mTwoPane) {
                     // long click in phone mode
                     handleLongClick(pos);
@@ -223,19 +223,19 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
 
         // create folder if necessary
         if (!mFolder.exists()) {
-            Log.v(LOG_TAG, "Creating mFolder new folder: " + mFolder.toString());
+            LogHelper.v(LOG_TAG, "Creating mFolder new folder: " + mFolder.toString());
             mFolder.mkdir();
         }
 
         // create nomedia file to prevent media scanning
         File nomedia = new File(mFolder, ".nomedia");
         if (!nomedia.exists()) {
-            Log.v(LOG_TAG, "Creating .nomedia file in folder: " + mFolder.toString());
+            LogHelper.v(LOG_TAG, "Creating .nomedia file in folder: " + mFolder.toString());
 
             try (FileOutputStream noMediaOutStream = new FileOutputStream(nomedia)) {
                 noMediaOutStream.write(0);
             } catch (IOException e) {
-                Log.e(LOG_TAG, "Unable to write .nomedia file in folder: " + mFolder.toString());
+                LogHelper.e(LOG_TAG, "Unable to write .nomedia file in folder: " + mFolder.toString());
             }
         }
 
@@ -296,7 +296,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
             Intent intent = new Intent(mActivity, PlayerService.class);
             intent.setAction(TransistorKeys.ACTION_STOP);
             mActivity.startService(intent);
-            Log.v(LOG_TAG, "Stopping player service.");
+            LogHelper.v(LOG_TAG, "Stopping player service.");
 
             // keep track of playback state
             mStationIDLast = position;
@@ -315,7 +315,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
             intent.putExtra(TransistorKeys.EXTRA_STATION, mStationList.get(position));
             intent.putExtra(TransistorKeys.EXTRA_STATION_ID, position);
             mActivity.startService(intent);
-            Log.v(LOG_TAG, "Starting player service.");
+            LogHelper.v(LOG_TAG, "Starting player service.");
 
             // keep track of playback state
             mStationIDLast = mStationIDCurrent;
@@ -352,7 +352,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
         mStationIDSelected = settings.getInt(TransistorKeys.PREF_STATION_ID_SELECTED, 0);
         mPlayback = settings.getBoolean(TransistorKeys.PREF_PLAYBACK, false);
         mStationLoading = settings.getBoolean(TransistorKeys.PREF_STATION_LOADING, false);
-        Log.v(LOG_TAG, "Loading state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback  + " / " + mStationLoading + ")");
+        LogHelper.v(LOG_TAG, "Loading state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback  + " / " + mStationLoading + ")");
     }
 
 
@@ -362,7 +362,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt(TransistorKeys.PREF_STATION_ID_SELECTED, mStationIDSelected);
         editor.apply();
-        Log.v(LOG_TAG, "Saving state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback  + " / " + mStationLoading + " / " + mStationIDSelected +")");
+        LogHelper.v(LOG_TAG, "Saving state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback  + " / " + mStationLoading + " / " + mStationIDSelected +")");
     }
 
 
@@ -388,7 +388,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
             intent.putExtra(TransistorKeys.EXTRA_STATION, mStationList.get(stationIDSelected));
             intent.putExtra(TransistorKeys.EXTRA_STATION_ID, stationIDSelected);
             mActivity.startService(intent);
-            Log.v(LOG_TAG, "Starting player service.");
+            LogHelper.v(LOG_TAG, "Starting player service.");
         }
     }
 
@@ -454,7 +454,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
             String errorDetails = mActivity.getResources().getString(R.string.dialog_error_details_write);
             DialogError dialogError = new DialogError(mActivity, errorTitle, errorMessage, errorDetails);
             dialogError.show();
-            Log.e(LOG_TAG, "Unable to add station to collection: Duplicate name and/or stream URL.");
+            LogHelper.e(LOG_TAG, "Unable to add station to collection: Duplicate name and/or stream URL.");
             return -1;
         }
     }

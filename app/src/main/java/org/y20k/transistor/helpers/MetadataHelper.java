@@ -19,7 +19,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
 import org.y20k.transistor.core.Station;
 
@@ -81,7 +80,7 @@ public class MetadataHelper {
                     try {
                         final ServerSocket proxyServer = new ServerSocket(0, 1, InetAddress.getLocalHost());
                         shoutcastProxyUri.append("http://localhost:").append(String.valueOf(proxyServer.getLocalPort())).append("/");
-                        Log.v(LOG_TAG, "createProxyConnection: " + shoutcastProxyUri.toString());
+                        LogHelper.v(LOG_TAG, "createProxyConnection: " + shoutcastProxyUri.toString());
 
                         proxy = proxyServer.accept();
                         mProxyConnection = proxy;
@@ -117,7 +116,7 @@ public class MetadataHelper {
             mShoutcastProxy = shoutcastProxyUri.toString();
 
         } catch (Exception e) {
-            Log.e(LOG_TAG, "createProxyConnection: cannot create new listening socket on localhost: " + e.toString());
+            LogHelper.e(LOG_TAG, "createProxyConnection: cannot create new listening socket on localhost: " + e.toString());
             mProxyRunning = false;
             mShoutcastProxy = "";
         }
@@ -156,7 +155,7 @@ public class MetadataHelper {
         int metadataSize = 0;
         final int metadataOffset = connection.getHeaderFieldInt("icy-metaint", 0);
         int bitRate = Math.max(connection.getHeaderFieldInt("icy-br", 128), 32);
-        Log.v(LOG_TAG, "createProxyConnection: connected, icy-metaint " + metadataOffset + " icy-br " + bitRate);
+        LogHelper.v(LOG_TAG, "createProxyConnection: connected, icy-metaint " + metadataOffset + " icy-br " + bitRate);
         while (true) {
             count = Math.min(in.available(), buf.length);
             if (count <= 0) {
@@ -217,7 +216,7 @@ public class MetadataHelper {
     /* Notifies other components and saves metadata */
     private void handleMetadataString(String metadata) {
 
-        Log.v(LOG_TAG, "Metadata: «" + metadata + "»");
+        LogHelper.v(LOG_TAG, "Metadata: «" + metadata + "»");
 
         if (metadata != null && metadata.length() > 0) {
             // send local broadcast
@@ -248,7 +247,7 @@ public class MetadataHelper {
                 Thread.sleep(50); // Wait for thread to finish
             }
         } catch(Exception e) {
-            Log.e(LOG_TAG, "Unable to close proxy connection. Error: " + e);
+            LogHelper.e(LOG_TAG, "Unable to close proxy connection. Error: " + e);
         }
 
     }

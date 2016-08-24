@@ -26,11 +26,11 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 
+import org.y20k.transistor.helpers.LogHelper;
 import org.y20k.transistor.helpers.StorageHelper;
 import org.y20k.transistor.helpers.TransistorKeys;
 
@@ -150,10 +150,10 @@ public final class MainActivity extends AppCompatActivity {
 
         // if player_container is present two-pane layout can be used
         if (mContainer != null) {
-            Log.v(LOG_TAG, "Large screen detected. Choosing two pane layout.");
+            LogHelper.v(LOG_TAG, "Large screen detected. Choosing two pane layout.");
             return true;
         } else {
-            Log.v(LOG_TAG, "Small screen detected. Choosing single pane layout.");
+            LogHelper.v(LOG_TAG, "Small screen detected. Choosing single pane layout.");
             return false;
         }
     }
@@ -166,7 +166,7 @@ public final class MainActivity extends AppCompatActivity {
         // editor.putInt(PREF_STATION_ID_SELECTED, mStationID);
         editor.putBoolean(TransistorKeys.PREF_TWO_PANE, mTwoPane);
         editor.apply();
-        Log.v(LOG_TAG, "Saving state. Two Pane = " + mTwoPane);
+        LogHelper.v(LOG_TAG, "Saving state. Two Pane = " + mTwoPane);
     }
 
 

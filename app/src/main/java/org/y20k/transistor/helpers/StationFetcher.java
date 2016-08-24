@@ -20,7 +20,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.widget.Toast;
 
 import org.y20k.transistor.R;
@@ -108,7 +107,7 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
                 Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_stream_may_not_work), Toast.LENGTH_LONG).show();
             }
 
-            Log.v(LOG_TAG, "Station was successfully fetched: " + station.getStreamUri().toString());
+            LogHelper.v(LOG_TAG, "Station was successfully fetched: " + station.getStreamUri().toString());
         }
 
         // an error occurred
@@ -249,7 +248,7 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
                 sb.append("\n");
                 sb.append(fileContent);
             } else {
-                Log.v(LOG_TAG, "no content in local file");
+                LogHelper.v(LOG_TAG, "no content in local file");
             }
 
         }

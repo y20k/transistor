@@ -38,10 +38,10 @@ import android.support.v4.media.session.MediaButtonReceiver;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
-import android.util.Log;
 import android.widget.Toast;
 
 import org.y20k.transistor.core.Station;
+import org.y20k.transistor.helpers.LogHelper;
 import org.y20k.transistor.helpers.MetadataHelper;
 import org.y20k.transistor.helpers.NotificationHelper;
 import org.y20k.transistor.helpers.TransistorKeys;
@@ -106,7 +106,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         try {
             mController = new MediaControllerCompat(getApplicationContext(), mSession.getSessionToken());
         } catch (RemoteException e) {
-            Log.e(LOG_TAG, "RemoteException: " + e);
+            LogHelper.e(LOG_TAG, "RemoteException: " + e);
             e.printStackTrace();
         }
 
@@ -144,14 +144,14 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
 
         // checking for empty intent
         if (intent == null) {
-            Log.v(LOG_TAG, "Null-Intent received. Stopping self.");
+            LogHelper.v(LOG_TAG, "Null-Intent received. Stopping self.");
             stopForeground(true); // Remove notification
             stopSelf();
         }
 
         // ACTION PLAY
         else if (intent.getAction().equals(TransistorKeys.ACTION_PLAY)) {
-            Log.v(LOG_TAG, "Service received command: PLAY");
+            LogHelper.v(LOG_TAG, "Service received command: PLAY");
 
             // get URL of station from intent
             if (intent.hasExtra(TransistorKeys.EXTRA_STATION)) {
@@ -166,7 +166,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
 
         // ACTION STOP
         else if (intent.getAction().equals(TransistorKeys.ACTION_STOP)) {
-            Log.v(LOG_TAG, "Service received command: STOP");
+            LogHelper.v(LOG_TAG, "Service received command: STOP");
 
             // update controller - pause playback
             mController.getTransportControls().pause();
@@ -174,7 +174,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
 
         // ACTION DISMISS
         else if (intent.getAction().equals(TransistorKeys.ACTION_DISMISS)) {
-            Log.v(LOG_TAG, "Service received command: DISMISS");
+            LogHelper.v(LOG_TAG, "Service received command: DISMISS");
 
             // update controller - stop playback
             mController.getTransportControls().stop();
@@ -246,7 +246,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
 
     @Override
     public void onCompletion(MediaPlayer mp) {
-        Log.i(LOG_TAG, "Resuming playback after completion / signal loss. Player instance count: " + mPlayerInstanceCounter);
+        LogHelper.i(LOG_TAG, "Resuming playback after completion / signal loss. Player instance count: " + mPlayerInstanceCounter);
         mp.reset();
         mPlayerInstanceCounter++;
         initializeMediaPlayer();
@@ -257,8 +257,8 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     public void onPrepared(MediaPlayer mp) {
 
         if (mPlayerInstanceCounter == 1) {
-            Log.v(LOG_TAG, "Preparation finished. Starting playback. Player instance count: " + mPlayerInstanceCounter);
-            Log.v(LOG_TAG, "Playback: " + mStreamUri);
+            LogHelper.v(LOG_TAG, "Preparation finished. Starting playback. Player instance count: " + mPlayerInstanceCounter);
+            LogHelper.v(LOG_TAG, "Playback: " + mStreamUri);
 
             // check for race between onPrepared ans MetadataHelper
             if (!mStationMetadataReceived) {
@@ -285,7 +285,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
             mPlayerInstanceCounter--;
 
         } else {
-            Log.v(LOG_TAG, "Stopping and re-initializing media player. Player instance count: " + mPlayerInstanceCounter);
+            LogHelper.v(LOG_TAG, "Stopping and re-initializing media player. Player instance count: " + mPlayerInstanceCounter);
 
             // release media player
             releaseMediaPlayer();
@@ -307,31 +307,31 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
 
         switch (what) {
             case MediaPlayer.MEDIA_ERROR_UNKNOWN:
-                Log.e(LOG_TAG, "Unknown media playback error");
+                LogHelper.e(LOG_TAG, "Unknown media playback error");
                 break;
             case MediaPlayer.MEDIA_ERROR_SERVER_DIED:
-                Log.e(LOG_TAG, "Connection to server lost");
+                LogHelper.e(LOG_TAG, "Connection to server lost");
                 break;
             default:
-                Log.e(LOG_TAG, "Generic audio playback error");
+                LogHelper.e(LOG_TAG, "Generic audio playback error");
                 break;
         }
 
         switch (extra) {
             case MediaPlayer.MEDIA_ERROR_IO:
-                Log.e(LOG_TAG, "IO media error.");
+                LogHelper.e(LOG_TAG, "IO media error.");
                 break;
             case MediaPlayer.MEDIA_ERROR_MALFORMED:
-                Log.e(LOG_TAG, "Malformed media.");
+                LogHelper.e(LOG_TAG, "Malformed media.");
                 break;
             case MediaPlayer.MEDIA_ERROR_UNSUPPORTED:
-                Log.e(LOG_TAG, "Unsupported content type");
+                LogHelper.e(LOG_TAG, "Unsupported content type");
                 break;
             case MediaPlayer.MEDIA_ERROR_TIMED_OUT:
-                Log.e(LOG_TAG, "Media timeout");
+                LogHelper.e(LOG_TAG, "Media timeout");
                 break;
             default:
-                Log.e(LOG_TAG, "Other case of media playback error");
+                LogHelper.e(LOG_TAG, "Other case of media playback error");
                 break;
         }
 
@@ -349,19 +349,19 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
 
         switch (what){
             case MediaPlayer.MEDIA_INFO_UNKNOWN:
-                Log.i(LOG_TAG, "Unknown media info");
+                LogHelper.i(LOG_TAG, "Unknown media info");
                 break;
             case MediaPlayer.MEDIA_INFO_BUFFERING_START:
-                Log.i(LOG_TAG, "Buffering started");
+                LogHelper.i(LOG_TAG, "Buffering started");
                 break;
             case MediaPlayer.MEDIA_INFO_BUFFERING_END:
-                Log.i(LOG_TAG, "Buffering finished");
+                LogHelper.i(LOG_TAG, "Buffering finished");
                 break;
             case MediaPlayer.MEDIA_INFO_METADATA_UPDATE: // case never selected
-                Log.i(LOG_TAG, "New metadata available");
+                LogHelper.i(LOG_TAG, "New metadata available");
                 break;
             default:
-                Log.i(LOG_TAG, "other case of media info");
+                LogHelper.i(LOG_TAG, "other case of media info");
                 break;
         }
 
@@ -371,7 +371,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
 
     @Override
     public void onBufferingUpdate(MediaPlayer mp, int percent) {
-        Log.v(LOG_TAG, "Buffering: " + percent);
+        LogHelper.v(LOG_TAG, "Buffering: " + percent);
     }
 
 
@@ -379,7 +379,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     public void onDestroy() {
         super.onDestroy();
 
-        Log.v(LOG_TAG, "onDestroy called.");
+        LogHelper.v(LOG_TAG, "onDestroy called.");
 
         // save state
         mPlayback = false;
@@ -615,7 +615,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         String albumTitle = context.getResources().getString(R.string.app_name);
 
         // log metadata change
-        Log.i(LOG_TAG, "New Metadata available. Artist: " + station.getStationName() + ", Title: " +  metaData + ", Album: " +  albumTitle);
+        LogHelper.i(LOG_TAG, "New Metadata available. Artist: " + station.getStationName() + ", Title: " +  metaData + ", Album: " +  albumTitle);
 
         return new MediaMetadataCompat.Builder()
                 .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, station.getStationName())
@@ -636,7 +636,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         editor.putBoolean(TransistorKeys.PREF_STATION_LOADING, mStationLoading);
         editor.putString(TransistorKeys.PREF_STATION_METADATA, mStationMetadata);
         editor.apply();
-        Log.v(LOG_TAG, "Saving state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + " / " + mStationLoading + " / " + ")");
+        LogHelper.v(LOG_TAG, "Saving state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + " / " + mStationLoading + " / " + ")");
     }
 
 
@@ -645,7 +645,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         mStationIDCurrent = settings.getInt(TransistorKeys.PREF_STATION_ID_CURRENTLY_PLAYING, -1);
         mStationIDLast = settings.getInt(TransistorKeys.PREF_STATION_ID_LAST, -1);
-        Log.v(LOG_TAG, "Loading state ("+  mStationIDCurrent + " / " + mStationIDLast + ")");
+        LogHelper.v(LOG_TAG, "Loading state ("+  mStationIDCurrent + " / " + mStationIDLast + ")");
     }
 
 
@@ -657,7 +657,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         @Override
         public void onReceive(Context context, Intent intent) {
             if (mPlayback && AudioManager.ACTION_AUDIO_BECOMING_NOISY.equals(intent.getAction())) {
-                Log.v(LOG_TAG, "Headphones unplugged. Stopping playback.");
+                LogHelper.v(LOG_TAG, "Headphones unplugged. Stopping playback.");
                 // stop playback
                 stopPlayback(false);
                 // notify user

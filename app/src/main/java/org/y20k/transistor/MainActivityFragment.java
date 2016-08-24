@@ -34,7 +34,6 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,6 +43,7 @@ import android.widget.Toast;
 import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.DialogAdd;
 import org.y20k.transistor.helpers.ImageHelper;
+import org.y20k.transistor.helpers.LogHelper;
 import org.y20k.transistor.helpers.NotificationHelper;
 import org.y20k.transistor.helpers.PermissionHelper;
 import org.y20k.transistor.helpers.SleepTimerService;
@@ -340,17 +340,17 @@ public final class MainActivityFragment extends Fragment {
                 try (FileOutputStream out = new FileOutputStream(stationImageFile)) {
                     newImage.compress(Bitmap.CompressFormat.PNG, 100, out);
                 } catch (IOException e) {
-                    Log.e(LOG_TAG, "Unable to save: " + newImage.toString());
+                    LogHelper.e(LOG_TAG, "Unable to save: " + newImage.toString());
                 }
                 // update adapter
                 mCollectionAdapter.notifyItemChanged(mTempStationID);
 
             } else {
-                Log.e(LOG_TAG, "Unable to get image from media picker. Uri was:  " + newImageUri.toString());
+                LogHelper.e(LOG_TAG, "Unable to get image from media picker. Uri was:  " + newImageUri.toString());
             }
 
         } else {
-            Log.e(LOG_TAG, "Unable to get image from media picker. Did not receive an Uri");
+            LogHelper.e(LOG_TAG, "Unable to get image from media picker. Did not receive an Uri");
         }
     }
 
@@ -401,7 +401,7 @@ public final class MainActivityFragment extends Fragment {
         }
         // unsuccessful - log failure
         else {
-            Log.v(LOG_TAG, "Received an empty intent");
+            LogHelper.v(LOG_TAG, "Received an empty intent");
         }
     }
 
@@ -489,7 +489,7 @@ public final class MainActivityFragment extends Fragment {
         // show timer notification
         showSleepTimerNotification(duration);
         mSleepTimerRunning = true;
-        Log.v(LOG_TAG, "Starting timer service and notification.");
+        LogHelper.v(LOG_TAG, "Starting timer service and notification.");
     }
 
 
@@ -504,7 +504,7 @@ public final class MainActivityFragment extends Fragment {
             mSleepTimerNotification.dismiss();
         }
         mSleepTimerRunning = false;
-        Log.v(LOG_TAG, "Stopping timer service and notification.");
+        LogHelper.v(LOG_TAG, "Stopping timer service and notification.");
         Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_timer_cancelled), Toast.LENGTH_SHORT).show();
     }
 
@@ -531,7 +531,7 @@ public final class MainActivityFragment extends Fragment {
                 saveAppState(mActivity);
                 // notify user
                 Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_timer_cancelled), Toast.LENGTH_SHORT).show();
-                Log.v(LOG_TAG, "Sleep timer cancelled.");
+                LogHelper.v(LOG_TAG, "Sleep timer cancelled.");
             }
         });
         mSleepTimerNotification.show();
@@ -557,7 +557,7 @@ public final class MainActivityFragment extends Fragment {
         mPlayback = settings.getBoolean(TransistorKeys.PREF_PLAYBACK, false);
         mTwoPane = settings.getBoolean(TransistorKeys.PREF_TWO_PANE, false);
         mSleepTimerRunning = settings.getBoolean(TransistorKeys.PREF_TIMER_RUNNING, false);
-        Log.v(LOG_TAG, "Loading state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + ")");
+        LogHelper.v(LOG_TAG, "Loading state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + ")");
     }
 
 
@@ -570,7 +570,7 @@ public final class MainActivityFragment extends Fragment {
         editor.putBoolean(TransistorKeys.PREF_PLAYBACK, mPlayback);
         editor.putBoolean(TransistorKeys.PREF_TIMER_RUNNING, mSleepTimerRunning);
         editor.apply();
-        Log.v(LOG_TAG, "Saving state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + ")");
+        LogHelper.v(LOG_TAG, "Saving state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + ")");
     }
 
 
@@ -742,7 +742,7 @@ public final class MainActivityFragment extends Fragment {
                         Intent i = new Intent(mActivity, PlayerService.class);
                         i.setAction(TransistorKeys.ACTION_DISMISS);
                         mActivity.startService(i);
-                        Log.v(LOG_TAG, "Stopping player service.");
+                        LogHelper.v(LOG_TAG, "Stopping player service.");
                     }
 
                     // remove station from adapter and update

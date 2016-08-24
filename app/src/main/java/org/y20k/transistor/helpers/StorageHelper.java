@@ -17,7 +17,6 @@ package org.y20k.transistor.helpers;
 import android.app.Activity;
 import android.os.Environment;
 import android.support.v4.os.EnvironmentCompat;
-import android.util.Log;
 import android.widget.Toast;
 
 import org.y20k.transistor.R;
@@ -52,13 +51,13 @@ public class StorageHelper {
             if (file != null) {
                 String state = EnvironmentCompat.getStorageState(file);
                 if (Environment.MEDIA_MOUNTED.equals(state)) {
-                    Log.i(LOG_TAG, "External storage: " + file.toString());
+                    LogHelper.i(LOG_TAG, "External storage: " + file.toString());
                     return file;
                 }
             }
         }
         Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_no_external_storage), Toast.LENGTH_LONG).show();
-        Log.e(LOG_TAG, "Unable to access external storage.");
+        LogHelper.e(LOG_TAG, "Unable to access external storage.");
         // finish activity
         mActivity.finish();
 

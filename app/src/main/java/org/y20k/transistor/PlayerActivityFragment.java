@@ -35,7 +35,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.media.MediaBrowserCompat;
 import android.support.v4.media.session.MediaControllerCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -52,6 +51,7 @@ import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.DialogDelete;
 import org.y20k.transistor.helpers.DialogRename;
 import org.y20k.transistor.helpers.ImageHelper;
+import org.y20k.transistor.helpers.LogHelper;
 import org.y20k.transistor.helpers.NotificationHelper;
 import org.y20k.transistor.helpers.PermissionHelper;
 import org.y20k.transistor.helpers.ShortcutHelper;
@@ -134,7 +134,7 @@ public final class PlayerActivityFragment extends Fragment {
                 arguments.remove(TransistorKeys.ARG_STATION_ID);
             } else {
                 mStationID = 0;
-                Log.e(LOG_TAG, "Error: did not receive id of station. Choosing default ID for station");
+                LogHelper.e(LOG_TAG, "Error: did not receive id of station. Choosing default ID for station");
             }
 
             // get station name and Uri
@@ -143,7 +143,7 @@ public final class PlayerActivityFragment extends Fragment {
                 mStreamUri = mStation.getStreamUri().toString();
             } else {
                 mStationName = mActivity.getString(R.string.descr_station_name_example);
-                Log.e(LOG_TAG, "Error: did not receive station. Displaying default station name");
+                LogHelper.e(LOG_TAG, "Error: did not receive station. Displaying default station name");
             }
 
             // get tablet or phone mode info from arguments
@@ -267,7 +267,7 @@ public final class PlayerActivityFragment extends Fragment {
             // check if this station is not already playing
             Station currentStation = PlayerService.getStation();
             if (currentStation != null && currentStation.getStreamUri().equals(mStation.getStreamUri()) && mPlayback && !mStationLoading) {
-                Log.v(LOG_TAG, "Try to start playback from shortcut, but station is already running.");
+                LogHelper.v(LOG_TAG, "Try to start playback from shortcut, but station is already running.");
             } else {
                 // hide metadata
                 mStationMetadata = null;
@@ -278,7 +278,7 @@ public final class PlayerActivityFragment extends Fragment {
                 startPlayback();
                 // clear playback state argument
                 getArguments().putBoolean(TransistorKeys.ARG_PLAYBACK, false);
-                Log.v(LOG_TAG, "Staring playback from shortcut.");
+                LogHelper.v(LOG_TAG, "Staring playback from shortcut.");
             }
 
         }
@@ -346,13 +346,13 @@ public final class PlayerActivityFragment extends Fragment {
                 try (FileOutputStream out = new FileOutputStream(stationImageFile)) {
                     newImage.compress(Bitmap.CompressFormat.PNG, 100, out);
                 } catch (IOException e) {
-                    Log.e(LOG_TAG, "Unable to save: " + newImage.toString());
+                    LogHelper.e(LOG_TAG, "Unable to save: " + newImage.toString());
                 }
                 // change mStationImageView
                 Bitmap stationImage = imageHelper.createCircularFramedImage(192, R.color.transistor_grey_lighter);
                 mStationImageView.setImageBitmap(stationImage);
             } else {
-                Log.e(LOG_TAG, "Unable to get image from media picker: " + newImageUri.toString());
+                LogHelper.e(LOG_TAG, "Unable to get image from media picker: " + newImageUri.toString());
             }
 
         }
@@ -387,7 +387,7 @@ public final class PlayerActivityFragment extends Fragment {
         intent.putExtra(TransistorKeys.EXTRA_STATION, mStation);
         intent.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
         mActivity.startService(intent);
-        Log.v(LOG_TAG, "Starting player service.");
+        LogHelper.v(LOG_TAG, "Starting player service.");
 
     }
 
@@ -408,7 +408,7 @@ public final class PlayerActivityFragment extends Fragment {
         Intent intent = new Intent(mActivity, PlayerService.class);
         intent.setAction(TransistorKeys.ACTION_STOP);
         mActivity.startService(intent);
-        Log.v(LOG_TAG, "Stopping player service.");
+        LogHelper.v(LOG_TAG, "Stopping player service.");
     }
 
 
@@ -449,7 +449,7 @@ public final class PlayerActivityFragment extends Fragment {
 //                Intent intent = new Intent(mActivity, PlayerService.class);
 //                intent.setAction(TransistorKeys.ACTION_STOP);
 //                mActivity.startService(intent);
-//                Log.v(LOG_TAG, "Stopping player service.");
+//                LogHelper.v(LOG_TAG, "Stopping player service.");
                 // construct and run delete dialog
                 DialogDelete dialogDelete = new DialogDelete(mActivity, mStation, mStationID);
                 dialogDelete.show();
@@ -584,7 +584,7 @@ public final class PlayerActivityFragment extends Fragment {
 //        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
 //        SharedPreferences.Editor editor = settings.edit();
 //        editor.apply();
-//        Log.v(LOG_TAG, "Saving state.");
+//        LogHelper.v(LOG_TAG, "Saving state.");
 //    }
 
 
@@ -597,7 +597,7 @@ public final class PlayerActivityFragment extends Fragment {
         mStationMetadata = settings.getString(TransistorKeys.PREF_STATION_METADATA, null);
         mPlayback = settings.getBoolean(TransistorKeys.PREF_PLAYBACK, false);
         mStationLoading = settings.getBoolean(TransistorKeys.PREF_STATION_LOADING, false);
-        Log.v(LOG_TAG, "Loading state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + " / " + mStationLoading + " / " + mStationMetadata + ")");
+        LogHelper.v(LOG_TAG, "Loading state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + " / " + mStationLoading + " / " + mStationMetadata + ")");
     }
 
 
@@ -741,7 +741,7 @@ public final class PlayerActivityFragment extends Fragment {
                     Intent i = new Intent(mActivity, PlayerService.class);
                     i.setAction(TransistorKeys.ACTION_DISMISS);
                     mActivity.startService(i);
-                    Log.v(LOG_TAG, "Stopping player service.");
+                    LogHelper.v(LOG_TAG, "Stopping player service.");
                 }
 
                 if (!mTwoPane && mVisibility) {

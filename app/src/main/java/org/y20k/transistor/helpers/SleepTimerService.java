@@ -23,7 +23,6 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
 import org.y20k.transistor.PlayerService;
 
@@ -64,13 +63,13 @@ public class SleepTimerService  extends Service {
 
         // checking for empty intent
         if (intent == null) {
-            Log.v(LOG_TAG, "Null-Intent received. Stopping self.");
+            LogHelper.v(LOG_TAG, "Null-Intent received. Stopping self.");
             stopSelf();
         }
 
         // ACTION TIMER START
         else if (intent.getAction().equals(TransistorKeys.ACTION_TIMER_START)) {
-            Log.v(LOG_TAG, "Service received command: START");
+            LogHelper.v(LOG_TAG, "Service received command: START");
 
             if (intent.hasExtra(TransistorKeys.EXTRA_TIMER_DURATION)) {
                 // get duration from intent
@@ -97,7 +96,7 @@ public class SleepTimerService  extends Service {
 
         // ACTION TIMER STOP
         else if (intent.getAction().equals(TransistorKeys.ACTION_TIMER_STOP)) {
-            Log.v(LOG_TAG, "Service received command: STOP");
+            LogHelper.v(LOG_TAG, "Service received command: STOP");
 
             // set remaining time
             mTimerRemaining = 0;
@@ -127,7 +126,7 @@ public class SleepTimerService  extends Service {
 
     /* Method to start sleep timer */
     public void startActionStart(Context context, long duration) {
-        Log.v(LOG_TAG, "Starting sleep timer. Duration: " + duration);
+        LogHelper.v(LOG_TAG, "Starting sleep timer. Duration: " + duration);
 
         // start sleep timer service using intent
         Intent intent = new Intent(context, SleepTimerService.class);
@@ -139,7 +138,7 @@ public class SleepTimerService  extends Service {
 
     /* Method to stop sleep timer */
     public void startActionStop(Context context) {
-        Log.v(LOG_TAG, "Stopping sleep timer.");
+        LogHelper.v(LOG_TAG, "Stopping sleep timer.");
 
         // stop sleep timer service using intent
         Intent intent = new Intent(context, SleepTimerService.class);
@@ -168,7 +167,7 @@ public class SleepTimerService  extends Service {
                 i.putExtra(TransistorKeys.EXTRA_TIMER_REMAINING, mTimerRemaining);
                 LocalBroadcastManager.getInstance(getApplication()).sendBroadcast(i);
 
-                Log.v(LOG_TAG, "Sleep timer. Remaining time: " + mTimerRemaining);
+                LogHelper.v(LOG_TAG, "Sleep timer. Remaining time: " + mTimerRemaining);
             }
 
             @Override
@@ -186,7 +185,7 @@ public class SleepTimerService  extends Service {
                 i.putExtra(TransistorKeys.EXTRA_TIMER_REMAINING, mTimerRemaining);
                 LocalBroadcastManager.getInstance(getApplication()).sendBroadcast(i);
 
-                Log.v(LOG_TAG, "Sleep timer finished. Sweet dreams, dear user.");
+                LogHelper.v(LOG_TAG, "Sleep timer finished. Sweet dreams, dear user.");
             }
         };
 
@@ -199,7 +198,7 @@ public class SleepTimerService  extends Service {
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean(TransistorKeys.PREF_TIMER_RUNNING, running);
         editor.apply();
-        Log.v(LOG_TAG, "Saving state.");
+        LogHelper.v(LOG_TAG, "Saving state.");
     }
 
 

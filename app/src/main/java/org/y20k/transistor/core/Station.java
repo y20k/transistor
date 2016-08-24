@@ -21,8 +21,8 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
+import org.y20k.transistor.helpers.LogHelper;
 import org.y20k.transistor.helpers.TransistorKeys;
 
 import java.io.BufferedReader;
@@ -103,7 +103,7 @@ public final class Station implements Comparable<Station>, Parcelable {
 
         // determine content type of remote file
         ContentType contentType = getContentType(fileLocation);
-        Log.v(LOG_TAG, "Content type of given file is " + contentType);
+        LogHelper.v(LOG_TAG, "Content type of given file is " + contentType);
 
 
         // content type is raw audio file
@@ -177,7 +177,7 @@ public final class Station implements Comparable<Station>, Parcelable {
         if (localFile.exists()) {
             mPlaylistFileContent = readPlaylistFile(localFile);
         } else {
-            Log.v(LOG_TAG, "File does not exist " + localFile);
+            LogHelper.v(LOG_TAG, "File does not exist " + localFile);
         }
 
         // parse the raw content of playlist file (mPlaylistFileContent)
@@ -215,7 +215,7 @@ public final class Station implements Comparable<Station>, Parcelable {
         mPlaylistFileContent = in.readString();
         mStationFetchResults = in.readBundle(Bundle.class.getClassLoader());
         mPlayback = in.readByte() != 0; // true if byte != 0
-        Log.v(LOG_TAG, "Station re-created from parcel. State of playback is: " + mPlayback);
+        LogHelper.v(LOG_TAG, "Station re-created from parcel. State of playback is: " + mPlayback);
     }
 
 
@@ -252,7 +252,7 @@ public final class Station implements Comparable<Station>, Parcelable {
     /* Downloads remote playlist file */
     private String downloadPlaylistFile(URL fileLocation) {
 
-        Log.v(LOG_TAG, "Downloading... " + fileLocation.toString());
+        LogHelper.v(LOG_TAG, "Downloading... " + fileLocation.toString());
 
         try (BufferedReader br = new BufferedReader(new InputStreamReader(
                 fileLocation.openStream()))) {
@@ -269,7 +269,7 @@ public final class Station implements Comparable<Station>, Parcelable {
             }
 
             if (sb.length() == 0) {
-                Log.e(LOG_TAG, "Input stream was empty: " + fileLocation.toString());
+                LogHelper.e(LOG_TAG, "Input stream was empty: " + fileLocation.toString());
             }
 
             // set mPlaylistFileContent and return String
@@ -277,7 +277,7 @@ public final class Station implements Comparable<Station>, Parcelable {
             return sb.toString();
 
         } catch (IOException e) {
-            Log.e(LOG_TAG, "Unable to get playlist file from server: " + fileLocation.toString());
+            LogHelper.e(LOG_TAG, "Unable to get playlist file from server: " + fileLocation.toString());
             // set mPlaylistFileContent and return null
             mPlaylistFileContent = "[HTTP error. Unable to get playlist file from server: " + fileLocation.toString() + "]";
             return null;
@@ -305,7 +305,7 @@ public final class Station implements Comparable<Station>, Parcelable {
             return sb.toString();
 
         } catch (IOException e) {
-            Log.e(LOG_TAG, "Unable to read playlist file: " + playlistFile.toString());
+            LogHelper.e(LOG_TAG, "Unable to read playlist file: " + playlistFile.toString());
             // set mPlaylistFileContent and return null
             mPlaylistFileContent = "[IO error. Unable to read playlist file: " + playlistFile.toString()  + "]";
             return null;
@@ -423,11 +423,11 @@ public final class Station implements Comparable<Station>, Parcelable {
         String faviconLocation = "http://" + host + "/favicon.ico";
 
         // download favicon
-        Log.v(LOG_TAG, "Downloading favicon: " + faviconLocation);
+        LogHelper.v(LOG_TAG, "Downloading favicon: " + faviconLocation);
         try (InputStream in = new URL(faviconLocation).openStream()) {
             mStationImage = BitmapFactory.decodeStream(in);
         } catch (IOException e) {
-            Log.e(LOG_TAG, "Error downloading: " + faviconLocation);
+            LogHelper.e(LOG_TAG, "Error downloading: " + faviconLocation);
         }
 
     }
@@ -473,7 +473,7 @@ public final class Station implements Comparable<Station>, Parcelable {
         in.close();
 
         if (mStreamUri == null) {
-            Log.e(LOG_TAG, "Unable to parse: " + fileContent);
+            LogHelper.e(LOG_TAG, "Unable to parse: " + fileContent);
             return false;
         }
 
@@ -496,17 +496,17 @@ public final class Station implements Comparable<Station>, Parcelable {
         setStationPlaylistFile(folder);
 
         if (mStationPlaylistFile.exists()) {
-            Log.w(LOG_TAG, "File exists. Overwriting " + mStationPlaylistFile.getName() + " " + mStationName + " " + mStreamUri);
+            LogHelper.w(LOG_TAG, "File exists. Overwriting " + mStationPlaylistFile.getName() + " " + mStationName + " " + mStreamUri);
         }
 
-        Log.v(LOG_TAG, "Saving... " + mStationPlaylistFile.toString());
+        LogHelper.v(LOG_TAG, "Saving... " + mStationPlaylistFile.toString());
 
         String m3uString = createM3u();
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(mStationPlaylistFile))) {
             bw.write(m3uString);
         } catch (IOException e) {
-            Log.e(LOG_TAG, "Unable to write PlaylistFile " + mStationPlaylistFile.toString());
+            LogHelper.e(LOG_TAG, "Unable to write PlaylistFile " + mStationPlaylistFile.toString());
         }
 
     }
@@ -515,13 +515,13 @@ public final class Station implements Comparable<Station>, Parcelable {
     /* Writes station image as png to storage */
     public void writeImageFile() {
 
-        Log.v(LOG_TAG, "Saving favicon: " + mStationImageFile.toString());
+        LogHelper.v(LOG_TAG, "Saving favicon: " + mStationImageFile.toString());
 
         // write image to storage
         try (FileOutputStream out = new FileOutputStream(mStationImageFile)) {
             mStationImage.compress(Bitmap.CompressFormat.PNG, 100, out);
         } catch (IOException e) {
-            Log.e(LOG_TAG, "Unable to save favicon: " + mStationImage.toString());
+            LogHelper.e(LOG_TAG, "Unable to save favicon: " + mStationImage.toString());
         }
 
     }
