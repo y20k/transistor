@@ -23,9 +23,11 @@ import android.util.Log;
  */
 public final class LogHelper {
 
+    private final static boolean mTesting = false;
+
     public static void d(final String tag, String message) {
         // include logging only in debug versions
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG || mTesting) {
             Log.d(tag, message);
         }
     }
@@ -33,7 +35,7 @@ public final class LogHelper {
 
     public static void v(final String tag, String message) {
         // include logging only in debug versions
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG || mTesting) {
             Log.v(tag, message);
         }
     }
