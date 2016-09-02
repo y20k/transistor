@@ -67,7 +67,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     private int mStationIDLast;
     private int mStationIDSelected;
     private boolean mTwoPane;
-    private SortedList<Station> mStationList;
+    private final SortedList<Station> mStationList;
 
 
     /* Constructor */

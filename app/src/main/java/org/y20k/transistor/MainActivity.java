@@ -48,7 +48,6 @@ public final class MainActivity extends AppCompatActivity {
 
     /* Main class variables */
     private boolean mTwoPane;
-    private Intent mIntent;
     private File mCollectionFolder;
     private View mContainer;
     private BroadcastReceiver mCollectionChangedReceiver;
@@ -61,9 +60,6 @@ public final class MainActivity extends AppCompatActivity {
         // get collection folder
         StorageHelper storageHelper = new StorageHelper(this);
         mCollectionFolder = storageHelper.getCollectionDirectory();
-
-        // get intent add collection
-        mIntent = getIntent();
 
         // set layout
         setContentView(R.layout.activity_main);
