@@ -376,7 +376,9 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     public void setStationIDSelected(int stationIDSelected, boolean playbackState, boolean startPlayback) {
         mStationIDSelected = stationIDSelected;
         saveAppState(mActivity);
-        mStationList.get(stationIDSelected).setPlaybackState(playbackState);
+        if (mStationIDSelected >= 0) {
+            mStationList.get(stationIDSelected).setPlaybackState(playbackState);
+        }
         if (mTwoPane && mStationIDSelected >= 0) {
             handleSingleClick(mStationIDSelected);
         }
@@ -568,7 +570,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
 
                 // CASE: player is preparing stream
                 case TransistorKeys.PLAYBACK_LOADING_STATION:
-                    if (mStationIDLast > -1 && mStationIDLast < mStationList.size()) {
+                    if (mStationIDLast > -1 && mStationIDLast < mStationList.size() -1) {
                         mStationList.get(mStationIDLast).setPlaybackState(false);
                     }
                     mStationLoading = true;

@@ -94,7 +94,9 @@ public final class NotificationHelper {
 
     /* Stop displaying notification */
     public static void stop() {
-        mService.stopForeground(true);
+        if (mService != null) {
+            mService.stopForeground(true);
+        }
     }
 
 

@@ -737,6 +737,9 @@ public final class MainActivityFragment extends Fragment {
                     Station station = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
                     int stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
 
+                    // dismiss notification
+                    NotificationHelper.stop();
+
                     if (station.getPlaybackState()) {
                         // stop player service and notification using intent
                         Intent i = new Intent(mActivity, PlayerService.class);
