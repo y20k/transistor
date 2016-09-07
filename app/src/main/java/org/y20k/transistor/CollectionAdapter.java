@@ -564,32 +564,40 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
 
         if (intent.hasExtra(TransistorKeys.EXTRA_PLAYBACK_STATE_CHANGE) && intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)){
 
+            notifyDataSetChanged();
+
             // get station ID from intent
             int stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
             switch (intent.getIntExtra(TransistorKeys.EXTRA_PLAYBACK_STATE_CHANGE, 1)) {
 
                 // CASE: player is preparing stream
                 case TransistorKeys.PLAYBACK_LOADING_STATION:
-                    if (mStationIDLast > -1 && mStationIDLast < mStationList.size() -1) {
+                    if (mStationIDLast > -1 && mStationIDLast < mStationList.size()) {
                         mStationList.get(mStationIDLast).setPlaybackState(false);
                     }
                     mStationLoading = true;
                     mPlayback = true;
-                    mStationList.get(stationID).setPlaybackState(true);
+                    if (stationID > -1 && stationID < mStationList.size()) {
+                        mStationList.get(stationID).setPlaybackState(true);
+                    }
                     notifyDataSetChanged();
                     break;
 
                 // CASE: playback has started
                 case TransistorKeys.PLAYBACK_STARTED:
                     mStationLoading = false;
-                    mStationList.get(stationID).setPlaybackState(true);
+                    if (stationID > -1 && stationID < mStationList.size()) {
+                        mStationList.get(stationID).setPlaybackState(true);
+                    }
                     notifyDataSetChanged();
                     break;
 
                 // CASE: playback was stopped
                 case TransistorKeys.PLAYBACK_STOPPED:
                     mPlayback = false;
-                    mStationList.get(stationID).setPlaybackState(false);
+                    if (stationID > -1 && stationID < mStationList.size()) {
+                        mStationList.get(stationID).setPlaybackState(false);
+                    }
                     notifyDataSetChanged();
                     break;
             }
