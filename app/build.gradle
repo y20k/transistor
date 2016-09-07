@@ -8,8 +8,8 @@ android {
         applicationId "org.y20k.transistor"
         minSdkVersion 19
         targetSdkVersion 24
-        versionCode 29
-        versionName "2.1.3 (Moonage Daydream)"
+        versionCode 30
+        versionName "2.1.4 (Moonage Daydream)"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {

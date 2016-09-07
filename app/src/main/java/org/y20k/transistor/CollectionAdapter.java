@@ -376,10 +376,10 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     public void setStationIDSelected(int stationIDSelected, boolean playbackState, boolean startPlayback) {
         mStationIDSelected = stationIDSelected;
         saveAppState(mActivity);
-        if (mStationIDSelected >= 0) {
+        if (mStationIDSelected >= 0 && mStationIDSelected < mStationList.size()) {
             mStationList.get(stationIDSelected).setPlaybackState(playbackState);
         }
-        if (mTwoPane && mStationIDSelected >= 0) {
+        if (mTwoPane && mStationIDSelected >= 0 && mStationIDSelected < mStationList.size()) {
             handleSingleClick(mStationIDSelected);
         }
 
