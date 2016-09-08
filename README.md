@@ -1,7 +1,7 @@
 README
 ======
 
-Transistor - Radio app for Android
+Transistor - Radio App for Android
 ----------------------------------
 
 **Version 2.1.x ("Moonage Daydream")**
