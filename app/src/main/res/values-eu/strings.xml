@@ -104,7 +104,7 @@
     <string name="infosheet_about_p_free"/>
     <string name="infosheet_about_p_github">https://github.com/y20k/transistor</string>
     <string name="infosheet_about_p_license">https://opensource.org/licenses/MIT</string>
-    <string name="infosheet_about_h2_permissions"/>
+    <string name="infosheet_about_h2_permissions">Zentzu baimen behar ditu Transistorrek?</string>
     <string name="infosheet_about_h3_shortcut"/>
     <string name="infosheet_about_p_shortcut"/>
     <string name="infosheet_about_h3_internet"/>
