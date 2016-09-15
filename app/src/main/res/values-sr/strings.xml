@@ -99,7 +99,7 @@
     <string name="infosheet_about_h1_about">О Транзистору</string>
     <string name="infosheet_about_h2_radio">Радио апликација за Андроид</string>
     <string name="infosheet_about_h3_version">Издање 2.1 (Moonage Daydream)</string>
-    <string name="infosheet_about_p_bare"/>
+    <string name="infosheet_about_p_bare">Транзистор је проста апликација за слушање радија преко интернета. Апликација складишти радио станице као фајлове на спољашњем складишту вашег уређаја. Потражите m3u фајлове у /Android/data/org.y20k.transistor/files/Collection. Тренутно су подржани MP3 и OGG кодирани токови.</string>
     <string name="infosheet_about_p_note">Важна напомена: ово је апликација типа ДСС (донесите своју станицу). Нема функције уграђене претраге. Станице морате ручно да додајете.</string>
     <string name="infosheet_about_p_free">Транзистор је слободан софтвер. Објављен је под МИТ лиценцом. Изворни кôд можете да нађете на Гитхабу, где такође можете да пријављујете грешке или помогнете програмирање, ако сте заинтересовани.</string>
     <string name="infosheet_about_p_github">https://github.com/y20k/transistor</string>
@@ -110,11 +110,11 @@
     <string name="infosheet_about_h3_internet">Дозвола INTERNET</string>
     <string name="infosheet_about_p_internet">Транзистор пушта токове радио станица са интернета.</string>
     <string name="infosheet_about_h3_external">Дозвола READ_EXTERNAL_STORAGE</string>
-    <string name="infosheet_about_p_external"/>
+    <string name="infosheet_about_p_external">Транзистор захтева приступ сликама, фотографијама и документима да би могао да прилагоди иконе радио станица и отвори локално сачуване фајлове листи нумера.</string>
     <string name="infosheet_about_h3_vibrate">Дозвола VIBRATE</string>
     <string name="infosheet_about_p_vibrate">Тап и држање радио станице ће окинути лагану вибрацију.</string>
     <string name="infosheet_about_h3_wakelock">Дозвола WAKE_LOCK</string>
-    <string name="infosheet_about_p_wakelock"/>
+    <string name="infosheet_about_p_wakelock">Током пуштања Транзистор узима тзв. „блокаду буђења“ (wake lock). Ово спречава Андроид да заустави пуштање због уштеде енергије.</string>
 
     <!-- infosheet howto -->
     <string name="infosheet_howto_h1_howto">Како користити Транзистор</string>
@@ -125,7 +125,7 @@
     <string name="infosheet_howto_h2_stop">Како зауставити пуштање?</string>
     <string name="infosheet_howto_p_stop">Тапните велико Стоп дугме, ископчајте ваше слушалице или превуците обавештење са закључаног екрана.</string>
     <string name="infosheet_howto_h2_sleep">Како покренути тајмер спавања?</string>
-    <string name="infosheet_howto_p_sleep"/>
+    <string name="infosheet_howto_p_sleep">Тапом на икону сата отпочиње 15-минутно одбројавање након чега Транзистор зауставља пуштање. Други тап додаје 15 минута. За активирање тајмера спавања пуштање мора бити у току.</string>
     <string name="infosheet_howto_h2_shortcut">Како поставити пречицу станице на почетни екран?</string>
     <string name="infosheet_howto_p_shortcut"/>
     <string name="infosheet_howto_h2_edit">Како преименовати или обрисати станицу?</string>
