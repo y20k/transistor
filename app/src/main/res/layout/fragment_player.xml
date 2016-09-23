@@ -31,7 +31,7 @@
         <LinearLayout
             android:id="@+id/player_layout_station_info"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:paddingStart="24dp"
             android:paddingEnd="2dp"
@@ -41,7 +41,7 @@
 
             <TextView
                 android:id="@+id/player_textview_stationname"
-                android:contentDescription="@string/descr_station_metadata"
+                android:contentDescription="@string/descr_station_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
@@ -51,18 +51,19 @@
 
             <TextView
                 android:id="@+id/player_textview_station_metadata"
-                android:contentDescription="@string/descr_playback_indicator"
+                android:contentDescription="@string/descr_station_metadata"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:singleLine="true"
                 android:ellipsize="marquee"
                 android:marqueeRepeatLimit ="marquee_forever"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:scrollHorizontally="true"
                 android:text="@string/descr_station_stream_loading"
-                android:textAppearance="@android:style/TextAppearance.Small.Inverse"
-                android:visibility="gone" />
+                android:textAppearance="@android:style/TextAppearance.Medium.Inverse"
+                android:visibility="gone"
+                android:minLines="1"
+                android:maxLines="6" />
 
         </LinearLayout>
 
