@@ -196,6 +196,7 @@ public final class PlayerActivityFragment extends Fragment {
         if (mPlayback && mStationMetadata != null) {
             mStationMetadataView.setText(mStationMetadata);
             mStationMetadataView.setVisibility(View.VISIBLE);
+            mStationMetadataView.setSelected(true);
         } else {
             mStationMetadataView.setVisibility(View.GONE);
         }
@@ -564,6 +565,7 @@ public final class PlayerActivityFragment extends Fragment {
             }
             // show metadata view
             mStationMetadataView.setVisibility(View.VISIBLE);
+            mStationMetadataView.setSelected(true);
         }
         // playback stopped
         else {
@@ -648,6 +650,7 @@ public final class PlayerActivityFragment extends Fragment {
                 if (mPlayback && intent.hasExtra(TransistorKeys.EXTRA_METADATA)) {
                     mStationMetadata = intent.getStringExtra(TransistorKeys.EXTRA_METADATA);
                     mStationMetadataView.setText(mStationMetadata);
+                    mStationMetadataView.setSelected(true);
                 }
             }
         };
@@ -700,6 +703,7 @@ public final class PlayerActivityFragment extends Fragment {
                     } else {
                         mStationMetadataView.setText(mStationName);
                     }
+                    mStationMetadataView.setSelected(true);
                 }
                 break;
 
