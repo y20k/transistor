@@ -133,11 +133,11 @@ public final class NotificationHelper {
         PendingIntent tapActionPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 //        PendingIntent tapActionPendingIntent = PendingIntent.getService(mService, 0, tapActionIntent, 0);
         // pending intent wrapper for notification stop action
-        PendingIntent stopActionPendingIntent = PendingIntent.getService(mService, 0, stopActionIntent, 0);
+        PendingIntent stopActionPendingIntent = PendingIntent.getService(mService, 10, stopActionIntent, 0);
         // pending intent wrapper for notification start action
-        PendingIntent playActionPendingIntent = PendingIntent.getService(mService, 0, playActionIntent, 0);
+        PendingIntent playActionPendingIntent = PendingIntent.getService(mService, 11, playActionIntent, 0);
         // pending intent wrapper for notification swipe action
-        PendingIntent swipeActionPendingIntent = PendingIntent.getService(mService, 0, swipeActionIntent, 0);
+        PendingIntent swipeActionPendingIntent = PendingIntent.getService(mService, 12, swipeActionIntent, 0);
 
         // create media style
         NotificationCompat.MediaStyle style = new NotificationCompat.MediaStyle();

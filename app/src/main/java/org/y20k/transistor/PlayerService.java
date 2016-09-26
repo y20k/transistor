@@ -82,6 +82,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     private boolean mStationMetadataReceived;
     private int mPlayerInstanceCounter;
     private HeadphoneUnplugReceiver mHeadphoneUnplugReceiver;
+    private int mReconnectCounter;
 //    private WifiManager.WifiLock mWifiLock;
 
 
@@ -100,6 +101,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         mMediaPlayer = null;
         mPlayerInstanceCounter = 0;
+        mReconnectCounter = 0;
         mStationMetadataReceived = false;
         mSession = createMediaSession(this);
 
@@ -284,6 +286,9 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
             // decrease counter
             mPlayerInstanceCounter--;
 
+            // reset reconnect counter
+            mReconnectCounter = 0;
+
         } else {
             LogHelper.v(LOG_TAG, "Stopping and re-initializing media player. Player instance count: " + mPlayerInstanceCounter);
 
@@ -335,10 +340,14 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
                 break;
         }
 
-
         // stop playback
         stopPlayback(false);
-        // TODO try to reconnect to stream - limited to three attempts
+
+        // try to reconnect to stream - limited to ten attempts
+        if (mReconnectCounter < 10) {
+            mReconnectCounter++;
+            startPlayback();
+        }
 
         return true;
     }

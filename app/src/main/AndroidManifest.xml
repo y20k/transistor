@@ -57,6 +57,7 @@
                 <data android:mimeType="audio/x-scpls" />
                 <data android:mimeType="application/x-mpegurl" />
                 <data android:mimeType="audio/mpegurl" />
+                <data android:scheme="y20k" android:host="transistor" />
             </intent-filter>
 
             <!-- File extensions -->
@@ -71,6 +72,7 @@
                 <data android:pathPattern=".*\\.m3u" />
                 <data android:pathPattern=".*\\.m3u8" />
                 <data android:pathPattern=".*\\.pls" />
+                <data android:scheme="y20k" android:host="transistor" />
             </intent-filter>
 
         </activity>
