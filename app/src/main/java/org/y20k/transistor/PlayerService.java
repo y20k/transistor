@@ -337,7 +337,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
 
 
         // stop playback
-        stopPlayback(true);
+        stopPlayback(false);
         // TODO try to reconnect to stream - limited to three attempts
 
         return true;
