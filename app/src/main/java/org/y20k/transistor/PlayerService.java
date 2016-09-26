@@ -248,7 +248,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
 
     @Override
     public void onCompletion(MediaPlayer mp) {
-        LogHelper.i(LOG_TAG, "Resuming playback after completion / signal loss. Player instance count: " + mPlayerInstanceCounter);
+        LogHelper.w(LOG_TAG, "Resuming playback after completion / signal loss. Player instance count: " + mPlayerInstanceCounter);
         mp.reset();
         mPlayerInstanceCounter++;
         initializeMediaPlayer();
@@ -346,6 +346,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         // try to reconnect to stream - limited to ten attempts
         if (mReconnectCounter < 10) {
             mReconnectCounter++;
+            LogHelper.e(LOG_TAG, "Trying to reconnect after media playback error - attempt #" + mReconnectCounter + ".");
             startPlayback();
         }
 
