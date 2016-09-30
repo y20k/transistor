@@ -23,6 +23,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.PowerManager;
@@ -83,7 +84,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     private int mPlayerInstanceCounter;
     private HeadphoneUnplugReceiver mHeadphoneUnplugReceiver;
     private int mReconnectCounter;
-//    private WifiManager.WifiLock mWifiLock;
+    private WifiManager.WifiLock mWifiLock;
 
 
     /* Constructor (default) */
@@ -104,6 +105,9 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         mReconnectCounter = 0;
         mStationMetadataReceived = false;
         mSession = createMediaSession(this);
+
+        // create Wifi lock
+        mWifiLock = ((WifiManager) getSystemService(Context.WIFI_SERVICE)).createWifiLock(WifiManager.WIFI_MODE_FULL, "Transistor_lock");
 
         try {
             mController = new MediaControllerCompat(getApplicationContext(), mSession.getSessionToken());
@@ -430,6 +434,9 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         mStationIDCurrent = mStationID;
         saveAppState();
 
+        // acquire Wifi lock
+        mWifiLock.acquire();
+
         // register headphone unplug receiver
         IntentFilter headphoneUnplugIntentFilter = new IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
         mHeadphoneUnplugReceiver = new HeadphoneUnplugReceiver();
@@ -479,6 +486,9 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         mStationIDLast = mStationID;
         mStationIDCurrent = -1;
         saveAppState();
+
+        // release Wifi lock
+        mWifiLock.release();
 
         // send local broadcast
         Intent i = new Intent();
