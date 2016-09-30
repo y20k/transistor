@@ -2,14 +2,14 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.1"
+    buildToolsVersion "24.0.3"
 
     defaultConfig {
         applicationId "org.y20k.transistor"
         minSdkVersion 19
         targetSdkVersion 24
-        versionCode 30
-        versionName "2.1.4 (Moonage Daydream)"
+        versionCode 31
+        versionName "2.1.5 (Moonage Daydream)"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {

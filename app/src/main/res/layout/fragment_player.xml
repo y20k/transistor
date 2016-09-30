@@ -54,13 +54,13 @@
                 android:contentDescription="@string/descr_station_metadata"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:singleLine="true"
                 android:ellipsize="marquee"
+                android:singleLine="true"
                 android:marqueeRepeatLimit ="marquee_forever"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:text="@string/descr_station_stream_loading"
-                android:textAppearance="@android:style/TextAppearance.Medium.Inverse"
+                android:textAppearance="@android:style/TextAppearance.Small.Inverse"
                 android:visibility="gone" />
 
         </LinearLayout>
