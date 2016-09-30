@@ -435,7 +435,9 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         saveAppState();
 
         // acquire Wifi lock
-        mWifiLock.acquire();
+        if (!mWifiLock.isHeld()) {
+            mWifiLock.acquire();
+        }
 
         // register headphone unplug receiver
         IntentFilter headphoneUnplugIntentFilter = new IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
@@ -488,7 +490,9 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         saveAppState();
 
         // release Wifi lock
-        mWifiLock.release();
+        if (mWifiLock.isHeld()) {
+            mWifiLock.release();
+        }
 
         // send local broadcast
         Intent i = new Intent();
