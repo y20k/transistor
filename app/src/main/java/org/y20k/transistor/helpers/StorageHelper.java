@@ -17,9 +17,6 @@ package org.y20k.transistor.helpers;
 import android.app.Activity;
 import android.os.Environment;
 import android.support.v4.os.EnvironmentCompat;
-import android.widget.Toast;
-
-import org.y20k.transistor.R;
 
 import java.io.File;
 
@@ -56,11 +53,6 @@ public class StorageHelper {
                 }
             }
         }
-        Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_no_external_storage), Toast.LENGTH_LONG).show();
-        LogHelper.e(LOG_TAG, "Unable to access external storage.");
-        // finish activity
-        mActivity.finish();
-
         return null;
     }
 

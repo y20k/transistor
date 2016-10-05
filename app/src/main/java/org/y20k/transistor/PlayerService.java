@@ -543,7 +543,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         try {
             mMetadataHelper = new MetadataHelper(getApplicationContext(), mStation);
             mMediaPlayer.setDataSource(mMetadataHelper.getShoutcastProxy());
-            // mMediaPlayer.setDataSource(mStreamUri);
+//            mMediaPlayer.setDataSource(mStreamUri);
             mMediaPlayer.prepareAsync();
         } catch (IOException e) {
             e.printStackTrace();

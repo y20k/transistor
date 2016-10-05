@@ -29,6 +29,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.Toast;
 
 import org.y20k.transistor.helpers.LogHelper;
 import org.y20k.transistor.helpers.StorageHelper;
@@ -60,6 +61,10 @@ public final class MainActivity extends AppCompatActivity {
         // get collection folder
         StorageHelper storageHelper = new StorageHelper(this);
         mCollectionFolder = storageHelper.getCollectionDirectory();
+        if (mCollectionFolder == null) {
+            Toast.makeText(this, getString(R.string.toastalert_no_external_storage), Toast.LENGTH_LONG).show();
+            finish();
+        }
 
         // set layout
         setContentView(R.layout.activity_main);

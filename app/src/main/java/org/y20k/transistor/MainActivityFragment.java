@@ -136,6 +136,10 @@ public final class MainActivityFragment extends Fragment {
         // get collection folder
         StorageHelper storageHelper = new StorageHelper(mActivity);
         mFolder = storageHelper.getCollectionDirectory();
+        if (mFolder == null) {
+            Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_no_external_storage), Toast.LENGTH_LONG).show();
+            mActivity.finish();
+        }
         mFolderSize = mFolder.listFiles().length;
 
         // create collection adapter
