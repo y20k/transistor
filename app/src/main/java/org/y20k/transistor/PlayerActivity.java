@@ -100,4 +100,12 @@ public final class PlayerActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent playerIntent = new Intent(this, MainActivity.class);
+        startActivity(playerIntent);
+    }
+
 }
