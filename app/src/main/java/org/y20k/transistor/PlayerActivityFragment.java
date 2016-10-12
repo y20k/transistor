@@ -334,7 +334,10 @@ public final class PlayerActivityFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         // retrieve selected image Uri from image picker
-        Uri newImageUri = data.getData();
+        Uri newImageUri = null;
+        if (null != data) {
+            newImageUri = data.getData();
+        }
 
         if (requestCode == TransistorKeys.REQUEST_LOAD_IMAGE && resultCode == Activity.RESULT_OK && null != data) {
 
