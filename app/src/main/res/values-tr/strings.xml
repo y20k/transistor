@@ -1,2 +1,44 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<?xml version='1.0' encoding='UTF-8'?>
+<resources><string name="title_activity_player">Şimdi Oynuyor</string>
+    <string name="title_activity_infosheet">Bilgi Formu</string>
+
+    <string name="menu_about">Hakkında</string>
+    <string name="menu_howto">Nasıl Kullanılır</string>
+    <string name="menu_timer">Uyku zamanlayıcı</string>
+    <string name="menu_icon">Resmi Değiştir</string>
+    <string name="menu_add">Ekle</string>
+    <string name="menu_delete">Sil</string>
+    <string name="menu_rename">Yeniden adlandır</string>
+    <string name="menu_shortcut">Ana ekrana kısayol ekle</string>
+
+    <string name="header_about">Hakkında</string>
+    <string name="header_howto">Nasıl Kullanılır</string>
+
+    <string name="descr_overflow_button">radyo istasyonu için ekran seçenekleri</string>
+    <string name="descr_station_icon">Radyo istasyon simgesi</string>
+    <string name="descr_station_name">radyo istasyonunun adı</string>
+    <string name="descr_station_metadata">çalmakta olan radyo istasyonunun Meta veri (Sanatçı / Başlık)</string>
+    <string name="descr_station_name_example">Örnek FM</string>
+    <string name="descr_station_metadata_example">Sanatçı - Başlık</string>
+    <string name="app_name">Transistör</string> <string name="descr_station_stream_loading">Yükleniyor…</string>
+    <string name="descr_playback_button">Büyük oynatma düğmesi</string>
+    <string name="descr_timer_indicator_started">uyku zamanlayıcısı çalıştırmak için gösterge</string>
+
+    <string name="dialog_generic_button_okay">Tamam</string>
+    <string name="dialog_generic_button_cancel">iptal</string>
+    <string name="dialog_add_station_button">Ekle</string>
+    <string name="dialog_add_station_input_hint">Geçerli bir akış URL\'sini yapıştırın</string>
+    <string name="dialog_add_station_message">Yeni istasyon ekle</string>
+    <string name="dialog_add_station_howto">pls veya m3u dosyalarının yanı sıra MP3 ve OGG kodlanmış ses akışlarını ekleyebilirsiniz. Alternatif web tarayıcısından akış bağlantılarını (pls veya m3u) yeni istasyon olarak ekleyebilirsiniz.</string>
+    <string name="dialog_delete_station_message">istasyonunu sil</string>
+    <string name="dialog_button_delete">sil</string>
+    <string name="dialog_rename_station_input_hint">Yeni ad girin</string>
+    <string name="dialog_rename_station_message">istasyonunu yeniden adlandırmak</string>
+    <string name="dialog_button_rename">Adını değiştir</string>
+
+    <string name="dialog_error_title_default">Hata</string>
+    <string name="dialog_error_message_default">Bir hata oluştu</string>
+    <string name="dialog_error_details_button_default">Detayları göster</string>
+    <string name="dialog_error_title_fetch_read">Okuma Sorunu</string>
+    <string name="dialog_error_message_fetch_general_external_storage">Harici Depolama:</string>
+    </resources>
