@@ -90,7 +90,9 @@ public class MetadataHelper {
 
                         shoutcastProxyReaderLoop(proxy, connection);
 
-                    } catch (Exception e) {}
+                    } catch (Exception e) {
+                        LogHelper.e(LOG_TAG, "Error: Unable to create proxy server. (" + e + ")");
+                    }
 
                     mProxyRunning = false;
 
@@ -98,20 +100,26 @@ public class MetadataHelper {
                         if (connection != null) {
                             ((HttpURLConnection)connection).disconnect();
                         }
-                    } catch (Exception ee) {}
+                    } catch (Exception ee) {
+                        LogHelper.e(LOG_TAG, "Error: Unable to disconnect HttpURLConnection. (" + ee + ")");
+                    }
 
                     try {
                         if (proxy != null && !proxy.isClosed()) {
                             proxy.close();
                         }
-                    } catch (Exception eee) {}
+                    } catch (Exception eee) {
+                        LogHelper.e(LOG_TAG, "Error: Unable to close proxy. (" + eee + ")");
+                    }
                 }
             }).start();
 
             while (shoutcastProxyUri.length() == 0) {
                 try {
                     Thread.sleep(10);
-                } catch (Exception e) {}
+                } catch (Exception e) {
+                    LogHelper.e(LOG_TAG, "Error: Unable to Thread.sleep. (" + e + ")");
+                }
             }
             mShoutcastProxy = shoutcastProxyUri.toString();
 

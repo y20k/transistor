@@ -24,6 +24,7 @@ import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.wifi.WifiManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.PowerManager;
@@ -48,6 +49,8 @@ import org.y20k.transistor.helpers.NotificationHelper;
 import org.y20k.transistor.helpers.TransistorKeys;
 
 import java.io.IOException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.List;
 
 
@@ -532,23 +535,8 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     /* Set up the media player */
     private void initializeMediaPlayer() {
         mMediaPlayer = new MediaPlayer();
-        mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        mMediaPlayer.setOnCompletionListener(this);
-        mMediaPlayer.setOnPreparedListener(this);
-        mMediaPlayer.setOnErrorListener(this);
-        mMediaPlayer.setOnInfoListener(this);
-        mMediaPlayer.setOnBufferingUpdateListener(this);
-        mMediaPlayer.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK); // needs android.permission.WAKE_LOCK
-
-        try {
-            mMetadataHelper = new MetadataHelper(getApplicationContext(), mStation);
-            mMediaPlayer.setDataSource(mMetadataHelper.getShoutcastProxy());
-//            mMediaPlayer.setDataSource(mStreamUri);
-            mMediaPlayer.prepareAsync();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        InitializeMediaPlayerHelper initializeMediaPlayerHelper = new InitializeMediaPlayerHelper();
+        initializeMediaPlayerHelper.execute();
     }
 
 
@@ -716,6 +704,61 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         public void onStop() {
             // stop playback and dismiss notification on stop signal
             stopPlayback(true);
+        }
+
+    }
+    /**
+     * End of inner class
+     */
+
+
+    /**
+     * Inner class: Checks for HTTP Live Streaming (HLS) before playing
+     */
+    private class InitializeMediaPlayerHelper extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            URLConnection connection = null;
+            try {
+                connection = new URL(mStreamUri).openConnection();
+                connection.connect();
+                if (connection.getContentType().contains("application/vnd.apple.mpegurl")) {
+                    LogHelper.w(LOG_TAG, "HTTP Live Streaming detected.");
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            mMediaPlayer.setOnCompletionListener(PlayerService.this);
+            mMediaPlayer.setOnPreparedListener(PlayerService.this);
+            mMediaPlayer.setOnErrorListener(PlayerService.this);
+            mMediaPlayer.setOnInfoListener(PlayerService.this);
+            mMediaPlayer.setOnBufferingUpdateListener(PlayerService.this);
+            mMediaPlayer.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK); // needs android.permission.WAKE_LOCK
+
+            try {
+                if (result) {
+                    // stream is HLS - do not extract metadata
+                    mMediaPlayer.setDataSource(mStreamUri);
+                } else {
+                    // normal stream - extract metadata
+                    mMetadataHelper = new MetadataHelper(getApplicationContext(), mStation);
+                    mMediaPlayer.setDataSource(mMetadataHelper.getShoutcastProxy());
+                }
+
+                mMediaPlayer.prepareAsync();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
     }
