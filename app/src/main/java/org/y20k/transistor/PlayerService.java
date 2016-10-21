@@ -719,12 +719,15 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
 
         @Override
         protected Boolean doInBackground(Void... voids) {
+            String contentType = "";
             URLConnection connection = null;
             try {
                 connection = new URL(mStreamUri).openConnection();
                 connection.connect();
-                if (connection.getContentType().contains("application/vnd.apple.mpegurl")) {
-                    LogHelper.w(LOG_TAG, "HTTP Live Streaming detected.");
+                contentType = connection.getContentType();
+                LogHelper.v(LOG_TAG, "MIME type of stream: " + contentType);
+                if (contentType.contains("application/vnd.apple.mpegurl") || contentType.contains("application/x-mpegurl")) {
+                    LogHelper.v(LOG_TAG, "HTTP Live Streaming detected.");
                     return true;
                 } else {
                     return false;
