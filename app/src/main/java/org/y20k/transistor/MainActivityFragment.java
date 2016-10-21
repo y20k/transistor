@@ -769,7 +769,4 @@ public final class MainActivityFragment extends Fragment {
 
     }
 
-
-
-
 }
