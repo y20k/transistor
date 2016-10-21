@@ -534,7 +534,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
 
     /* Set up the media player */
     private void initializeMediaPlayer() {
-        mMediaPlayer = new MediaPlayer();
         InitializeMediaPlayerHelper initializeMediaPlayerHelper = new InitializeMediaPlayerHelper();
         initializeMediaPlayerHelper.execute();
     }
@@ -740,6 +739,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
 
         @Override
         protected void onPostExecute(Boolean result) {
+            mMediaPlayer = new MediaPlayer();
             mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mMediaPlayer.setOnCompletionListener(PlayerService.this);
             mMediaPlayer.setOnPreparedListener(PlayerService.this);

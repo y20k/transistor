@@ -27,6 +27,8 @@ Slovenian version: [bungabunga](https://github.com/bungabunga)
 
 Spanish version: [franciscot](https://github.com/franciscot)
 
+Turkish version [turkceapps](https://hosted.weblate.org/user/turkceapps/)
+
 Ukrainian version: [burunduk](https://github.com/burunduk) 
 
 ### Want to help?
