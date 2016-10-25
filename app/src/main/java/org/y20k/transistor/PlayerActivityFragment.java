@@ -14,7 +14,6 @@
 
 package org.y20k.transistor;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.BroadcastReceiver;
@@ -28,7 +27,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -607,7 +605,6 @@ public final class PlayerActivityFragment extends Fragment {
 
 
     /* Check permissions and start image picker */
-    @TargetApi(Build.VERSION_CODES.M)
     private void selectFromImagePicker() {
         // request permissions
         PermissionHelper permissionHelper = new PermissionHelper(mActivity, mRootView);

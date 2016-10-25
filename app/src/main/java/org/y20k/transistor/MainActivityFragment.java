@@ -379,7 +379,7 @@ public final class MainActivityFragment extends Fragment {
         if (permissionHelper.requestReadExternalStorage(TransistorKeys.PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE)) {
             // get system picker for images
             Intent pickImageIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            mActivity.startActivityForResult(pickImageIntent, TransistorKeys.REQUEST_LOAD_IMAGE);
+            startActivityForResult(pickImageIntent, TransistorKeys.REQUEST_LOAD_IMAGE);
         }
     }
 

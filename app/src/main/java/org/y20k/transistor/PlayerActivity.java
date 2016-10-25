@@ -108,4 +108,11 @@ public final class PlayerActivity extends AppCompatActivity {
         startActivity(playerIntent);
     }
 
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // make sure that PlayerActivityFragment's onActivityResult() gets called
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
 }

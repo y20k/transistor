@@ -126,14 +126,12 @@ public final class MainActivity extends AppCompatActivity {
     }
 
 
-    // Workaround for an IllegalStateException crash (Fragment not attached to Activity)
-    // See: https://github.com/y20k/transistor/issues/21
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment_main);
-        // hand results over to fragment main
-        fragment.onActivityResult(requestCode, resultCode, data);
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // make sure that MainActivityFragment's onActivityResult() gets called
+        super.onActivityResult(requestCode, resultCode, data);
     }
+
 
 
     @TargetApi(Build.VERSION_CODES.M)
