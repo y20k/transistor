@@ -124,7 +124,7 @@ public class MetadataHelper {
             mShoutcastProxy = shoutcastProxyUri.toString();
 
         } catch (Exception e) {
-            LogHelper.e(LOG_TAG, "createProxyConnection: cannot create new listening socket on localhost: " + e.toString());
+            LogHelper.e(LOG_TAG, "createProxyConnection: Cannot create new listening socket on localhost: " + e.toString());
             mProxyRunning = false;
             mShoutcastProxy = "";
         }
@@ -137,7 +137,9 @@ public class MetadataHelper {
             if (mProxyConnection != null && !mProxyConnection.isClosed()) {
                 mProxyConnection.close(); // terminate proxy thread loop
             }
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            LogHelper.e(LOG_TAG, "closeShoutcastProxyConnectionAsync: Unable to close proxy connection: " + e.toString());
+        }
     }
 
 

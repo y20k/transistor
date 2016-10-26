@@ -360,7 +360,7 @@ public final class MainActivityFragment extends Fragment {
 
 
     /* Show or hide call to action view if necessary */
-    public void toggleActionCall() {
+    private void toggleActionCall() {
         // show call to action, if necessary
         if (mCollectionAdapter.getItemCount() == 0) {
             mActionCallView.setVisibility(View.VISIBLE);
@@ -373,7 +373,7 @@ public final class MainActivityFragment extends Fragment {
 
 
     /* Check permissions and start image picker */
-    public void selectFromImagePicker() {
+    private void selectFromImagePicker() {
         // request read permissions
         PermissionHelper permissionHelper = new PermissionHelper(mActivity, mRootView);
         if (permissionHelper.requestReadExternalStorage(TransistorKeys.PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE)) {

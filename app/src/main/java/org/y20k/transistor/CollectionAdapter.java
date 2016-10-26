@@ -128,7 +128,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
 
     @Override
     public void onBindViewHolder(CollectionAdapterViewHolder holder, final int position) {
-        // Problem synopsis: Do not treat position as fixed; only use immediately and call holder.getAdapterPosition() to look it up later
+        // final int position --> Do not treat position as fixed; only use immediately and call holder.getAdapterPosition() to look it up later
         // get station from position
         final Station station = mStationList.get(position);
 
