@@ -104,37 +104,37 @@
     <string name="infosheet_about_p_free">Transistor is free software. It is published under the MIT open source license. You can find the code on GitHub. GitHub is also a good place to file bugs or even to contribute, if you are interested.</string>
     <string name="infosheet_about_p_github">https://github.com/y20k/transistor</string>
     <string name="infosheet_about_p_license">https://opensource.org/licenses/MIT</string>
-    <string name="infosheet_about_h2_permissions">Which Permissions does Transistor need?</string>
-    <string name="infosheet_about_h3_shortcut">Permission INSTALL_SHORTCUT and UNINSTALL_SHORTCUT</string>
-    <string name="infosheet_about_p_shortcut">This permission is needed to install and uninstall radio station shortcuts on the Android Home screen.</string>
+    <string name="infosheet_about_h2_permissions">Quelles sont les permissions que demande Transistor ?</string>
+    <string name="infosheet_about_h3_shortcut">Permission INSTALL_SHORTCUT et UNINSTALL_SHORTCUT</string>
+    <string name="infosheet_about_p_shortcut">Cette permission est nécessaire pour installer et désinstaller des raccourcis de radio sur l’accueil Android</string>
     <string name="infosheet_about_h3_internet">Permission INTERNET</string>
-    <string name="infosheet_about_p_internet">Transistor streams radio stations over the internet.</string>
+    <string name="infosheet_about_p_internet">Transistor transfère les flux de radio depuis Internet.</string>
     <string name="infosheet_about_h3_external">Permission READ_EXTERNAL_STORAGE</string>
     <string name="infosheet_about_p_external">Transistor needs access to images, photos and documents to be able customize radio station icons and to able to open locally saved playlist files.</string>
     <string name="infosheet_about_h3_vibrate">Permission VIBRATE</string>
     <string name="infosheet_about_p_vibrate">Tapping and holding a radio station will toggle a tiny vibration.</string>
     <string name="infosheet_about_h3_wakelock">Permission WAKE_LOCK</string>
-    <string name="infosheet_about_p_wakelock">During Playback Transistor acquires a so called partial wake lock. That prevents the Android system to stop playback for power saving reasons.</string>
+    <string name="infosheet_about_p_wakelock">Pendant la lecture, Transistor empêche le système de mettre en veille la radio pour des raisons d’économie d’énergie.</string>
 
     <!-- infosheet howto -->
-    <string name="infosheet_howto_h1_howto">How to use Transistor</string>
-    <string name="infosheet_howto_h2_add">How to add a new radio station?</string>
+    <string name="infosheet_howto_h1_howto">Comment utiliser Transistor</string>
+    <string name="infosheet_howto_h2_add">Comment ajouter une nouvelle station de radio ?</string>
     <string name="infosheet_howto_p_add">The easiest way to add a new station is to search the web for streaming links and then choose Transistor as a your default handler for those file types. You can also tap the (+) symbol in the top bar and paste in streaming links directly. Please note: Transistor does not feature any kind of built-in search option.</string>
-    <string name="infosheet_howto_h2_play">How to play back a radio station?</string>
-    <string name="infosheet_howto_p_play">Tap the big Play button ;).</string>
-    <string name="infosheet_howto_h2_stop">How to stop playback?</string>
-    <string name="infosheet_howto_p_stop">Tap the big Stop button or unplug your headphones or swipe off the notification from the lockscreen.</string>
-    <string name="infosheet_howto_h2_sleep">How to start the sleep timer?</string>
-    <string name="infosheet_howto_p_sleep">Tapping the Clock symbol starts a 15 minute countdown after which Transistor stops playback. An additional tap adds 15 minutes to the clock. Playback must be running to be able to activate the sleep timer.</string>
-    <string name="infosheet_howto_h2_shortcut">How to place a station shortcut on the Home screen?</string>
+    <string name="infosheet_howto_h2_play">Comment écouter une station de radio ?</string>
+    <string name="infosheet_howto_p_play">Appuyez sur le gros bouton Play ;).</string>
+    <string name="infosheet_howto_h2_stop">Comment arrêter la lecture ?</string>
+    <string name="infosheet_howto_p_stop">Appuyez sur le gros bouton Stop, débranchez vos écouteurs ou rejetez la notification depuis l’écran de verrouillage.</string>
+    <string name="infosheet_howto_h2_sleep">Comment allumer le minuteur d’arrêt ?</string>
+    <string name="infosheet_howto_p_sleep">Appuyer sur le symbole «horloge» pour commencer un minuteur de 15 minutes après lequel Transistor arrête la lecture. Une pression de plus rajoute 15 minutes au compteur. La lecture doit être en marche pour pouvoir activer le minuteur.</string>
+    <string name="infosheet_howto_h2_shortcut">Comment ajouter un raccourci vers une station sur l’écran d’accueil ?</string>
     <string name="infosheet_howto_p_shortcut">The option to place a shortcut for a station on the Home screen can be accessed from the station\'s three dots menu. A tap on a shortcut will open Transistor - playback will start immediately.</string>
-    <string name="infosheet_howto_h2_edit">How to rename or delete a station?</string>
+    <string name="infosheet_howto_h2_edit">Comment renommer ou supprimer une station ?</string>
     <string name="infosheet_howto_p_edit">The rename and delete options can be accessed both from the station\'s context menu. Just tap on the three dots symbol. You can manage the list of stations also from a file browser (see next question).</string>
-    <string name="infosheet_howto_h2_storage">Where does Transistor store its stations?</string>
+    <string name="infosheet_howto_h2_storage">Où est-ce que Transistor stocke les stations ?</string>
     <string name="infosheet_howto_p_storage">Transistor does not save its list of stations in a database. Instead it stores stations as m3u files on your device\'s external storage. Feel free to tinker with those files using the texteditor of your choice. The files are stored in /Android/data/org.y20k.transistor/files/Collection.</string>
-    <string name="infosheet_howto_h2_backup">How do I backup and transfer my radio stations?</string>
+    <string name="infosheet_howto_h2_backup">Comment puis-je sauvegarder et transférer mes stations de radio ?</string>
     <string name="infosheet_howto_p_backup">Transistor supports Android 6\'s Auto Backup feature. Radio stations are always backed up to your Google account and will be restored at reinstall. On devices running on older versions of Android you must manually save and restore the "Collection" folder.</string>
-    <string name="infosheet_howto_h2_settings">Why does Transistor not have any setting?</string>
+    <string name="infosheet_howto_h2_settings">Pourquoi n’y a-t-il pas de paramètres dans Transistor ?</string>
     <string name="infosheet_howto_p_settings">There is nothing to be set ;). Transistor is a very simple app. Depending on your point of view "simple" is either great or lame.</string>
 
     <!-- 
