@@ -86,7 +86,7 @@
     <string name="toastmessage_shortcut_created">Пречица направљена.</string>
     <string name="toastmessage_copied_to_clipboard_url">Stream URL copied to clipboard.</string>
     <string name="toastmessage_copied_to_clipboard_metadata">Metadata copied to clipboard.</string>
-    <string name="toastmessage_station_copied">Станица копирана.</string>
+    <string name="toastmessage_station_copied">Станица копирана на клипборд.</string>
     <string name="toastmessage_stream_may_not_work">Откривен неподржани формат звука. Пуштање тока можда неће радити исправно.</string>
     <string name="toastmessage_timer_activated">Тајмер активиран.</string>
     <string name="toastmessage_timer_cancelled">Тајмер отказан.</string>
