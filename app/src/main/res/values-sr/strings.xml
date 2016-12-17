@@ -119,7 +119,7 @@
     <!-- infosheet howto -->
     <string name="infosheet_howto_h1_howto">Како користити Транзистор</string>
     <string name="infosheet_howto_h2_add">Како додати нову радио станицу?</string>
-    <string name="infosheet_howto_p_add"/>
+    <string name="infosheet_howto_p_add">Најлакши начин додавања радио станице је да тражите на вебу везе тока и онда одредите Транзистор за руковаоца тим типовима фајлова. Такође можете да тапнете знак (+) на горњој траци и налепите везе тока директно. Напомена: Транзистор нема уграђену функцију претраге.</string>
     <string name="infosheet_howto_h2_play">Како пустити радио станицу?</string>
     <string name="infosheet_howto_p_play">Тапните велико Пусти дугме ;).</string>
     <string name="infosheet_howto_h2_stop">Како зауставити пуштање?</string>
@@ -127,13 +127,13 @@
     <string name="infosheet_howto_h2_sleep">Како покренути тајмер спавања?</string>
     <string name="infosheet_howto_p_sleep">Тапом на икону сата отпочиње 15-минутно одбројавање након чега Транзистор зауставља пуштање. Други тап додаје 15 минута. За активирање тајмера спавања пуштање мора бити у току.</string>
     <string name="infosheet_howto_h2_shortcut">Како поставити пречицу станице на почетни екран?</string>
-    <string name="infosheet_howto_p_shortcut"/>
+    <string name="infosheet_howto_p_shortcut">Опцији за постављање пречице за станицу на почетном екрану приступате тапом на три тачкице на приказу станице. Тапом на пречицу отварате Транзистор и пуштање одмах почиње.</string>
     <string name="infosheet_howto_h2_edit">Како преименовати или обрисати станицу?</string>
-    <string name="infosheet_howto_p_edit"/>
+    <string name="infosheet_howto_p_edit">Опцијама за преименовање и брисање можете да приступите из контекстног менија станице. Само тапните на три тачкице. Можете да управљате списком станица такође у прегледачу фајлова (погледајте следеће питање).</string>
     <string name="infosheet_howto_h2_storage">Где Транзистор смешта станице?</string>
     <string name="infosheet_howto_p_storage">Транзистор не смешта списак станица у базу података, већ их уписује као m3u фајлове на спољашњем складишту вашег уређаја. Слободно их отворите било којим уређивачем текста. Фајлови се налазе у /Android/data/org.y20k.transistor/files/Collection.</string>
     <string name="infosheet_howto_h2_backup">Како да направим резерву и пренесем своје радио станице?</string>
-    <string name="infosheet_howto_p_backup"/>
+    <string name="infosheet_howto_p_backup">Транзистор подржава функцију аутоматских резерви у Андроиду 6. Резервна копија радио станица се смешта на ваш Гугл налог и биће враћена по реинсталацији. На уређајима са старијим издањем Андроида морате ручно да сачувате и вратите фасциклу „Collection“.</string>
     <string name="infosheet_howto_h2_settings">Зашто нема поставки у Транзистору?</string>
     <string name="infosheet_howto_p_settings">Нема шта да се подешава ;). Транзистор је једноставна апликација. У зависности од ваше тачке гледишта, или је сјајна или безвезе.</string>
 
