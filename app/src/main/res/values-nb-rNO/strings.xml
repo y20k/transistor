@@ -90,7 +90,7 @@
     <string name="snackbar_message_timer_set">Tidsavbrudd satt til</string>
 
     <!-- notification -->
-    <string name="notification_play">Play</string>
+    <string name="notification_play">Spill</string>
     <string name="notification_stop">Stopp</string>
     <string name="notification_swipe_to_stop">Sveip for å stoppe</string>
     <string name="notification_playing">Spiller av</string>
