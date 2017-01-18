@@ -18,6 +18,11 @@
         android:label="@string/app_name"
         android:theme="@style/TransistorAppTheme">
 
+        <!-- ANDROID AUTO SUPPORT -->
+        <!--  https://developer.android.com/training/auto/audio/
+        <meta-data android:name="com.google.android.gms.car.application"
+            android:resource="@xml/automotive_app_desc"/> -->
+
         <!-- MEDIA BUTTON RECEIVER -->
         <receiver android:name="android.support.v4.media.session.MediaButtonReceiver">
             <intent-filter>
