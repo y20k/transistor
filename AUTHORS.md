@@ -31,7 +31,7 @@ Turkish version [turkceapps](https://hosted.weblate.org/user/turkceapps/)
 
 Ukrainian version: [burunduk](https://github.com/burunduk) 
 
-Egyptian Version: [malah] (https://github.com/malah-code)
+##Egyptian Version: [malah] (https://github.com/malah-code)
 
 ### Want to help?
 Please check out the notes in [CONTRIBUTE.md](https://github.com/y20k/transistor/blob/master/CONTRIBUTE.md) first.
