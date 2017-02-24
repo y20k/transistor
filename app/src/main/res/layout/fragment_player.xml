@@ -60,8 +60,10 @@
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:text="@string/descr_station_stream_loading"
-                android:textAppearance="@android:style/TextAppearance.Small.Inverse"
-                android:visibility="gone" />
+                android:textAppearance="@android:style/TextAppearance.Medium.Inverse"
+                android:visibility="gone"
+                android:minLines="1"
+                android:maxLines="6" />
 
         </LinearLayout>
 
