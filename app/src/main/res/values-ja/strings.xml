@@ -32,6 +32,17 @@
     <string name="descr_playback_indicator">再生中のインジケーター</string>
     <string name="descr_playback_indicator_started">再生中のインジケーター</string>
     <string name="descr_timer_indicator_started">スリープタイマー実行中のインジケーター</string>
+    <string name="descr_player_sheet_information_icon">Information Icon</string>
+    <string name="descr_player_sheet_content_copy_icon">Content copy icon</string>
+    <string name="descr_player_sheet_p_station_name">Name of selected radio station</string>
+    <string name="descr_player_sheet_p_station_metadata">Metadata from selected radio station</string>
+    <string name="descr_player_sheet_p_stream_url">Stream URL of selected radio station</string>
+
+    <!-- player -->
+    <string name="player_sheet_h1_station_name">Station</string>
+    <string name="player_sheet_h1_station_metadata">Currently Playing</string>
+    <string name="player_sheet_h1_stream_url">Stream URL</string>
+    <string name="player_sheet_p_station_metadata">no metadata available</string>
 
     <!-- dialogs -->
     <string name="dialog_generic_button_okay">OK</string>
@@ -98,7 +109,7 @@
     <!-- infosheet about -->
     <string name="infosheet_about_h1_about">トランジスターについて</string>
     <string name="infosheet_about_h2_radio">Android 向けラジオアプリ</string>
-    <string name="infosheet_about_h3_version">バージョン 2.1 (Moonage Daydream)</string>
+    <string name="infosheet_about_h3_version">バージョン 2.2 (Sons Of The Silent Age)</string>
     <string name="infosheet_about_p_bare">トランジスターは、インターネット上のラジオ番組を聴くためのベアボーン アプリです。アプリは、デバイスの外部ストレージ上にファイルとして局を格納します。/Android/data/org.y20k.transistor/files/Collection 内の m3u のファイルを探します。現在、MP3 と OGG でエンコードされたストリームを認識します。</string>
     <string name="infosheet_about_p_note">重要事項: これは BYOS (自分のラジオ局を持ち歩く) タイプのアプリです。検索機能は何も内蔵していません。ラジオ局を手動で追加する必要があります。</string>
     <string name="infosheet_about_p_free">トランジスターはフリー ソフトウェアです。MIT オープン ソース ライセンスの下で公開されます。コードは GitHub 上で参照することができます。GitHub は、バグの報告、興味があれば貢献することもできる場所です。</string>

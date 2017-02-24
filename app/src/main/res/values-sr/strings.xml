@@ -32,6 +32,17 @@
     <string name="descr_playback_indicator">Показивач тренутног пуштања</string>
     <string name="descr_playback_indicator_started">Показивач тренутног пуштања</string>
     <string name="descr_timer_indicator_started">Индикатор покренутог тајмера</string>
+    <string name="descr_player_sheet_information_icon">Information Icon</string>
+    <string name="descr_player_sheet_content_copy_icon">Content copy icon</string>
+    <string name="descr_player_sheet_p_station_name">Name of selected radio station</string>
+    <string name="descr_player_sheet_p_station_metadata">Metadata from selected radio station</string>
+    <string name="descr_player_sheet_p_stream_url">Stream URL of selected radio station</string>
+
+    <!-- player -->
+    <string name="player_sheet_h1_station_name">Station</string>
+    <string name="player_sheet_h1_station_metadata">Currently Playing</string>
+    <string name="player_sheet_h1_stream_url">Stream URL</string>
+    <string name="player_sheet_p_station_metadata">no metadata available</string>
 
     <!-- dialogs -->
     <string name="dialog_generic_button_okay">У реду</string>
@@ -98,7 +109,7 @@
     <!-- infosheet about -->
     <string name="infosheet_about_h1_about">О Транзистору</string>
     <string name="infosheet_about_h2_radio">Радио апликација за Андроид</string>
-    <string name="infosheet_about_h3_version">Издање 2.1 (Moonage Daydream)</string>
+    <string name="infosheet_about_h3_version">Издање 2.2 (Sons Of The Silent Age)</string>
     <string name="infosheet_about_p_bare">Транзистор је проста апликација за слушање радија преко интернета. Апликација складишти радио станице као фајлове на спољашњем складишту вашег уређаја. Потражите m3u фајлове у /Android/data/org.y20k.transistor/files/Collection. Тренутно су подржани MP3 и OGG кодирани токови.</string>
     <string name="infosheet_about_p_note">Важна напомена: ово је апликација типа ДСС (донесите своју станицу). Нема функције уграђене претраге. Станице морате ручно да додајете.</string>
     <string name="infosheet_about_p_free">Транзистор је слободан софтвер. Објављен је под МИТ лиценцом. Изворни кôд можете да нађете на Гитхабу, где такође можете да пријављујете грешке или помогнете програмирање, ако сте заинтересовани.</string>

@@ -32,6 +32,17 @@
     <string name="descr_playback_indicator">Indicateur de lecture en cours</string>
     <string name="descr_playback_indicator_started">Indicateur de lecture en cours</string>
     <string name="descr_timer_indicator_started">Indicateur d\'exécution du minuteur de veille</string>
+    <string name="descr_player_sheet_information_icon">Information Icon</string>
+    <string name="descr_player_sheet_content_copy_icon">Content copy icon</string>
+    <string name="descr_player_sheet_p_station_name">Name of selected radio station</string>
+    <string name="descr_player_sheet_p_station_metadata">Metadata from selected radio station</string>
+    <string name="descr_player_sheet_p_stream_url">Stream URL of selected radio station</string>
+
+    <!-- player -->
+    <string name="player_sheet_h1_station_name">Station</string>
+    <string name="player_sheet_h1_station_metadata">Currently Playing</string>
+    <string name="player_sheet_h1_stream_url">Stream URL</string>
+    <string name="player_sheet_p_station_metadata">no metadata available</string>
 
     <!-- dialogs -->
     <string name="dialog_generic_button_cancel">Annuler</string>
@@ -98,7 +109,7 @@
     <!-- infosheet about -->
     <string name="infosheet_about_h1_about">À propos de Transistor</string>
     <string name="infosheet_about_h2_radio">Application radio pour Android</string>
-    <string name="infosheet_about_h3_version">Version 2.1 ("Moonage Daydream")</string>
+    <string name="infosheet_about_h3_version">Version 2.2 (Sons Of The Silent Age)</string>
     <string name="infosheet_about_p_bare">Transistor is a bare bones app for listening to radio programs over the internet. The app stores stations as files on your device\'s external storage. Look for files of type m3u within /Android/data/org.y20k.transistor/files/Collection. It currently understands streams encoded in MP3 and OGG.</string>
     <string name="infosheet_about_p_note">Important note: This is an app of type BYOS ("bring your own station"). It does not feature any kind of built-in search option. You will have to manually add radio stations.</string>
     <string name="infosheet_about_p_free">Transistor is free software. It is published under the MIT open source license. You can find the code on GitHub. GitHub is also a good place to file bugs or even to contribute, if you are interested.</string>

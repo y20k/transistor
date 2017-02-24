@@ -51,7 +51,7 @@
     <!-- infosheet about -->
     <string name="infosheet_about_h1_about">Transistör hakkında</string>
     <string name="infosheet_about_h2_radio">Android için radyo uygulaması</string>
-    <string name="infosheet_about_h3_version">Versiyon 2.1 (Moonage Daydream)</string>
+    <string name="infosheet_about_h3_version">Versiyon 2.2 (Sons Of The Silent Age)</string>
     <string name="infosheet_about_p_bare">Transistör İnternet üzerinden radyo programlarını dinlemek için bir tasarlanmıştır. Cihazınızın harici depolarına alanına radyo dosyalarını kaydederek çalışır. Dosya kaydetme yeri /Android/data/org.y20k.transistor/files/Collection Içinde tip m3u dosyalarını arayın.</string>
     <string name="infosheet_about_p_note">Önemli not: Bu uygulama kendi radyo uygulamanızı tasarlamanızı sağlamaktadır. Yerleşik arama seçeneği yoktur. Elle radyo istasyonunu eklemeniz gerekmektedir.</string>
     <string name="infosheet_about_p_free">Transistör ücretsiz bir yazılımdır. Bu MİT açık kaynak lisansı altında yayınlanmaktadır. Sen GitHub kod bulabilirsiniz. GitHub da hata dosyaya ya da ilgilendi bile, katkıda bulunmak için iyi bir yerdir.</string>
@@ -115,6 +115,17 @@
     <string name="descr_station_stream_loading">Yükleniyor…</string>
     <string name="descr_playback_button">Büyük oynatma düğmesi</string>
     <string name="descr_timer_indicator_started">uyku zamanlayıcısı çalıştırmak için gösterge</string>
+    <string name="descr_player_sheet_information_icon">Information Icon</string>
+    <string name="descr_player_sheet_content_copy_icon">Content copy icon</string>
+    <string name="descr_player_sheet_p_station_name">Name of selected radio station</string>
+    <string name="descr_player_sheet_p_station_metadata">Metadata from selected radio station</string>
+    <string name="descr_player_sheet_p_stream_url">Stream URL of selected radio station</string>
+
+    <string name="player_sheet_h1_station_name">Station</string>
+    <string name="player_sheet_h1_station_metadata">Currently Playing</string>
+    <string name="player_sheet_h1_stream_url">Stream URL</string>
+    <string name="player_sheet_p_station_metadata">no metadata available</string>
+
 
     <string name="dialog_generic_button_okay">Tamam</string>
     <string name="dialog_generic_button_cancel">iptal</string>

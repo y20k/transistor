@@ -32,6 +32,17 @@
     <string name="descr_playback_indicator">Индикатор воспроизведения</string>
     <string name="descr_playback_indicator_started">Индикатор воспроизведения</string>
     <string name="descr_timer_indicator_started">Индикатор запущенного таймера сна</string>
+    <string name="descr_player_sheet_information_icon">Information Icon</string>
+    <string name="descr_player_sheet_content_copy_icon">Content copy icon</string>
+    <string name="descr_player_sheet_p_station_name">Name of selected radio station</string>
+    <string name="descr_player_sheet_p_station_metadata">Metadata from selected radio station</string>
+    <string name="descr_player_sheet_p_stream_url">Stream URL of selected radio station</string>
+
+    <!-- player -->
+    <string name="player_sheet_h1_station_name">Station</string>
+    <string name="player_sheet_h1_station_metadata">Currently Playing</string>
+    <string name="player_sheet_h1_stream_url">Stream URL</string>
+    <string name="player_sheet_p_station_metadata">no metadata available</string>
 
     <!-- dialogs -->
     <string name="dialog_generic_button_okay">Хорошо</string>
@@ -98,7 +109,7 @@
     <!-- infosheet about -->
     <string name="infosheet_about_h1_about">О программе Transistor</string>
     <string name="infosheet_about_h2_radio">Приложение интернет радио для Android</string>
-    <string name="infosheet_about_h3_version">Версия 2.1 (\"Moonage Daydream\")</string>
+    <string name="infosheet_about_h3_version">Версия 2.2 (Sons Of The Silent Age)</string>
     <string name="infosheet_about_p_bare">Transistor простое приложение для прослушивания радиопередач через интернет. Приложение хранит информацию о станциях в файлах на внешнем накопителе вашего устройства. Посмотрите на файлы с расширением m3u в директории /Android/data/org.y20k.transistor/files/Collection. В настоящее время приложение умеет работать с потоками в форматах MP3 и OGG.</string>
     <string name="infosheet_about_p_note">Важное примечание: в приложении нет какой-либо функции поиска радиостанций. Вам необходимо вручную добавить их.</string>
     <string name="infosheet_about_p_free">Transistor свободное приложение. Оно распространяется под лицензией MIT. Вы можете получить исходный код на GitHub. Также на GitHub вы можете сообщить об ошибках или помочь в разработке.</string>
