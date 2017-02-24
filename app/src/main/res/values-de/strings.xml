@@ -84,6 +84,8 @@
     <string name="toastmessage_long_press_playback_stopped">Playback gestoppt (Long Press)</string>
     <string name="toastmessage_long_press_playback_started">Playback gestarted (Long Press)</string>
     <string name="toastmessage_shortcut_created">Station auf Startbildschirm plaziert.</string>
+    <string name="toastmessage_copied_to_clipboard_url">Stream-URL in die Zwischenablage kopiert.</string>
+    <string name="toastmessage_copied_to_clipboard_metadata">Metadaten in die Zwischenablage kopiert.</string>
     <string name="toastmessage_station_copied">Station kopiert.</string>
     <string name="toastmessage_stream_may_not_work">Nicht unterstütztes Audioformat gefunden. Stream kann möglicherweise nicht abgespielt werden.</string>
     <string name="toastmessage_timer_activated">Sleeptimer aktiviert.</string>

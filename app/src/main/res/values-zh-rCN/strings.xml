@@ -84,6 +84,8 @@
     <string name="toastmessage_long_press_playback_stopped">播放已停止（长按删除）</string>
     <string name="toastmessage_long_press_playback_started">播放已开始（长按删除）</string>
     <string name="toastmessage_shortcut_created">捷径已创建。</string>
+    <string name="toastmessage_copied_to_clipboard_url">Stream URL copied to clipboard.</string>
+    <string name="toastmessage_copied_to_clipboard_metadata">Metadata copied to clipboard.</string>
     <string name="toastmessage_station_copied">电台已复制。</string>
     <string name="toastmessage_stream_may_not_work">Unsupported audio format detected. Playback of stream may not work properly.</string>
     <string name="toastmessage_timer_activated">睡眠定时器已激活。</string>

@@ -84,6 +84,8 @@
     <string name="toastmessage_long_press_playback_stopped">Avspilling stoppet (enset langt trykk)</string>
     <string name="toastmessage_long_press_playback_started">Avspilling startet (langt trykk enset)</string>
     <string name="toastmessage_shortcut_created">Snarvei opprettet.</string>
+    <string name="toastmessage_copied_to_clipboard_url">Stream URL copied to clipboard.</string>
+    <string name="toastmessage_copied_to_clipboard_metadata">Metadata copied to clipboard.</string>
     <string name="toastmessage_station_copied">Stasjon kopiert.</string>
     <string name="toastmessage_stream_may_not_work">Ustøttet lydformat oppdaget. Avspilling av strømmen kan bli skadelidende.</string>
     <string name="toastmessage_timer_activated">Tidsavbrudd aktivert.</string>

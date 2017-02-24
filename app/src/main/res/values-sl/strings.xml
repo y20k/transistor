@@ -84,6 +84,8 @@
     <string name="toastmessage_long_press_playback_stopped">Radijski prenos je bil ustavljen</string>
     <string name="toastmessage_long_press_playback_started">Radijski prenos se je začel</string>
     <string name="toastmessage_shortcut_created">Shortcut created.</string>
+    <string name="toastmessage_copied_to_clipboard_url">Stream URL copied to clipboard.</string>
+    <string name="toastmessage_copied_to_clipboard_metadata">Metadata copied to clipboard.</string>
     <string name="toastmessage_station_copied">Station copied.</string>
     <string name="toastmessage_stream_may_not_work">Unsupported audio format detected. Playback of stream may not work properly.</string>
     <string name="toastmessage_timer_activated">Sleep timer activated.</string>

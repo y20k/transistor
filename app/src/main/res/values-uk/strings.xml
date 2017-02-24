@@ -84,6 +84,8 @@
     <string name="toastmessage_long_press_playback_stopped">Відтворення зупинено</string>
     <string name="toastmessage_long_press_playback_started">Відтворення розпочато</string>
     <string name="toastmessage_shortcut_created">Посилання створено.</string>
+    <string name="toastmessage_copied_to_clipboard_url">Stream URL copied to clipboard.</string>
+    <string name="toastmessage_copied_to_clipboard_metadata">Metadata copied to clipboard.</string>
     <string name="toastmessage_station_copied">Станцію скопійовано.</string>
     <string name="toastmessage_stream_may_not_work">Unsupported audio format detected. Playback of stream may not work properly.</string>
     <string name="toastmessage_timer_activated">Таймер сну увімкнуто.</string>

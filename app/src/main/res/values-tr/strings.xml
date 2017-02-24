@@ -26,6 +26,8 @@
     <string name="toastmessage_long_press_playback_stopped">Oynatma durdurdu</string>
     <string name="toastmessage_long_press_playback_started">Oynatma başladı</string>
     <string name="toastmessage_shortcut_created">Kısayol oluşturuldu.</string>
+    <string name="toastmessage_copied_to_clipboard_url">Stream URL copied to clipboard.</string>
+    <string name="toastmessage_copied_to_clipboard_metadata">Metadata copied to clipboard.</string>
     <string name="toastmessage_station_copied">İstasyon kopyalandı.</string>
     <string name="toastmessage_stream_may_not_work">"Desteklenmeyen ses formatı tespit edildi. Akış  düzgün çalışmayabilir."</string>
     <string name="toastmessage_timer_activated">Uyku zamanlayıcısı aktif.</string>

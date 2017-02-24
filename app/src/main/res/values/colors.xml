@@ -9,6 +9,7 @@
     <color name="transistor_grey_lighter">#FFDDDBD9</color>
     <color name="transistor_grey_very_light">#FFEFEDEB</color>
     <color name="transistor_grey_dark">#FF2C2926</color>
+    <color name="transistor_grey_darker_95percent">#F2171615</color>
 
     <color name="transistor_gold">#FFE6BA64</color>
     <color name="transistor_gold_light">#FFE6C687</color>

@@ -30,6 +30,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.media.MediaBrowserCompat;
 import android.support.v4.media.session.MediaControllerCompat;
@@ -41,6 +42,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -81,6 +83,11 @@ public final class PlayerActivityFragment extends Fragment {
     private ImageButton mStationMenuView;
     private ImageView mPlaybackIndicator;
     private ImageButton mPlaybackButton;
+    private LinearLayout mStationDataSheetNameLayout;
+    private LinearLayout mStationDataSheetMetadataLayout;
+    private LinearLayout mStationDataSheetStreamUrlLayout;
+    private TextView mStationDataSheetMetadata;
+    private BottomSheetBehavior mStationDataSheetBehavior;
     private BroadcastReceiver mPlaybackStateChangedReceiver;
     private BroadcastReceiver mCollectionChangedReceiver;
     private BroadcastReceiver mMetadataChangedReceiver;
@@ -190,13 +197,48 @@ public final class PlayerActivityFragment extends Fragment {
             }
         });
 
+        // get views for station data sheet
+        View stationDataLayout = mRootView.findViewById(R.id.info_icon_layout);
+        View stationDataSheet = mRootView.findViewById(R.id.station_data_sheet);
+        mStationDataSheetNameLayout = (LinearLayout) mRootView.findViewById(R.id.station_data_sheet_name_layout);
+        mStationDataSheetMetadataLayout = (LinearLayout) mRootView.findViewById(R.id.station_data_sheet_metadata_layout);
+        mStationDataSheetStreamUrlLayout = (LinearLayout) mRootView.findViewById(R.id.station_data_sheet_stream_url_layout);
+        TextView stationDataSheetName = (TextView) mRootView.findViewById(R.id.station_data_sheet_name);
+        mStationDataSheetMetadata = (TextView) mRootView.findViewById(R.id.station_data_sheet_metadata);
+        TextView stationDataSheetStreamUrl = (TextView) mRootView.findViewById(R.id.station_data_sheet_stream_url);
+
+        // fill name and url
+        stationDataSheetName.setText(mStationName);
+        stationDataSheetStreamUrl.setText(mStreamUri);
+
+        // set up and show station data sheet
+        mStationDataSheetBehavior = BottomSheetBehavior.from(stationDataSheet);
+        mStationDataSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        mStationDataSheetBehavior.setBottomSheetCallback(getStationDataSheetCallback());
+        stationDataLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mStationDataSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+                    mStationDataSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                } else {
+                    mStationDataSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                }
+            }
+        });
+
+
         // show metadata
         if (mPlayback && mStationMetadata != null) {
             mStationMetadataView.setText(mStationMetadata);
             mStationMetadataView.setVisibility(View.VISIBLE);
             mStationMetadataView.setSelected(true);
+
+            mStationDataSheetMetadata.setText(mStationMetadata);
+            mStationDataSheetMetadataLayout.setVisibility(View.VISIBLE);
         } else {
             mStationMetadataView.setVisibility(View.GONE);
+            mStationDataSheetMetadataLayout.setVisibility(View.GONE);
+
         }
 
         // show three dots menu in tablet mode
@@ -228,6 +270,8 @@ public final class PlayerActivityFragment extends Fragment {
                 handlePlaybackButtonClick();
             }
         });
+
+
 
         return mRootView;
     }
@@ -271,6 +315,7 @@ public final class PlayerActivityFragment extends Fragment {
                 // hide metadata
                 mStationMetadata = null;
                 mStationMetadataView.setVisibility(View.GONE);
+                mStationDataSheetMetadataLayout.setVisibility(View.GONE);
                 // start playback
                 mStation.setPlaybackState(true);
                 mPlayback = true;
@@ -561,12 +606,14 @@ public final class PlayerActivityFragment extends Fragment {
             if (mStationLoading) {
                 mPlaybackIndicator.setBackgroundResource(R.drawable.ic_playback_indicator_loading_24dp);
                 mStationMetadataView.setText(R.string.descr_station_stream_loading);
+                mStationDataSheetMetadata.setText(R.string.descr_station_stream_loading);
             } else {
                 mPlaybackIndicator.setBackgroundResource(R.drawable.ic_playback_indicator_started_24dp);
             }
-            // show metadata view
+            // show metadata views
             mStationMetadataView.setVisibility(View.VISIBLE);
             mStationMetadataView.setSelected(true);
+            mStationDataSheetMetadataLayout.setVisibility(View.VISIBLE);
         }
         // playback stopped
         else {
@@ -574,8 +621,9 @@ public final class PlayerActivityFragment extends Fragment {
             mPlaybackButton.setImageResource(R.drawable.smbl_play);
             // change playback indicator
             mPlaybackIndicator.setBackgroundResource(R.drawable.ic_playback_indicator_stopped_24dp);
-            // hide metadata view
+            // hide metadata views
             mStationMetadataView.setVisibility(View.GONE);
+            mStationDataSheetMetadataLayout.setVisibility(View.GONE);
             // mStationMetadata = null;
         }
 
@@ -616,6 +664,36 @@ public final class PlayerActivityFragment extends Fragment {
     }
 
 
+    /* Creates BottomSheetCallback for the statistics sheet - needed in onCreateView */
+    private BottomSheetBehavior.BottomSheetCallback getStationDataSheetCallback() {
+        return new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                // react to state change
+                switch (newState) {
+                    case BottomSheetBehavior.STATE_EXPANDED:
+                        // statistics sheet expanded
+                        break;
+                    case BottomSheetBehavior.STATE_COLLAPSED:
+                        // statistics sheet collapsed
+                        mStationDataSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                        break;
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        // statistics sheet hidden
+                        mStationDataSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                // react to dragging events
+            }
+        };
+    }
+
+
     /* Initializes broadcast receivers for onCreate */
     private void initializeBroadcastReceivers() {
 
@@ -651,6 +729,7 @@ public final class PlayerActivityFragment extends Fragment {
                     mStationMetadata = intent.getStringExtra(TransistorKeys.EXTRA_METADATA);
                     mStationMetadataView.setText(mStationMetadata);
                     mStationMetadataView.setSelected(true);
+                    mStationDataSheetMetadata.setText(mStationMetadata);
                 }
             }
         };
@@ -700,8 +779,10 @@ public final class PlayerActivityFragment extends Fragment {
                     // set metadata
                     if (mStationMetadata != null) {
                         mStationMetadataView.setText(mStationMetadata);
+                        mStationDataSheetMetadata.setText(mStationMetadata);
                     } else {
                         mStationMetadataView.setText(mStationName);
+                        mStationDataSheetMetadata.setText(mStationName);
                     }
                     mStationMetadataView.setSelected(true);
                 }

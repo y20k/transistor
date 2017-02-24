@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/station_data_sheet"
+    android:layout_width="@dimen/bottom_sheet_width"
+    android:layout_height="match_parent"
+    android:layout_gravity="bottom"
+    android:background="@color/transistor_grey_darker_95percent"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="48dp"
+    app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/info_icon_layout"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:scrollbars="vertical">
+
+            <!-- INFORMATION ICON -->
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center"
+                android:background="@drawable/ic_info_white_24dp"
+                android:contentDescription="@string/descr_player_sheet_information_icon" />
+
+            <!-- STATION NAME-->
+            <LinearLayout
+                android:id="@+id/station_data_sheet_name_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="12dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:textAllCaps="true"
+                    android:text="@string/player_sheet_h1_station_name"
+                    android:textAppearance="@android:style/TextAppearance.Small.Inverse" />
+                <TextView
+                    android:id="@+id/station_data_sheet_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/descr_station_name_example"
+                    android:textAppearance="@android:style/TextAppearance.Medium.Inverse"
+                    android:contentDescription="@string/descr_player_sheet_p_station_name" />
+                <!-- TODO: Remove placeholder text-->
+            </LinearLayout>
+
+            <!-- STATION METADATA-->
+            <LinearLayout
+                android:id="@+id/station_data_sheet_metadata_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="16dp"
+                    android:orientation="vertical"
+                    android:layout_marginTop="16dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAllCaps="true"
+                        android:text="@string/player_sheet_h1_station_metadata"
+                        android:textAppearance="@android:style/TextAppearance.Small.Inverse" />
+                    <TextView
+                        android:id="@+id/station_data_sheet_metadata"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/player_sheet_p_station_metadata"
+                        android:textAppearance="@android:style/TextAppearance.Medium.Inverse"
+                        android:contentDescription="@string/descr_player_sheet_p_station_metadata" />
+                    <!-- TODO: Remove placeholder text-->
+                </LinearLayout>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|center"
+                    android:background="@drawable/ic_content_copy_grey_24dp"
+                    android:contentDescription="@string/descr_player_sheet_content_copy_icon" />
+            </LinearLayout>
+
+            <!-- STREAM URL -->
+            <LinearLayout
+                android:id="@+id/station_data_sheet_stream_url_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="16dp"
+                    android:orientation="vertical"
+                    android:layout_marginTop="16dp">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAllCaps="true"
+                        android:text="@string/player_sheet_h1_stream_url"
+                        android:textAppearance="@android:style/TextAppearance.Small.Inverse" />
+                    <TextView
+                        android:id="@+id/station_data_sheet_stream_url"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="http://streamingserver0123456789.byte.fm:8000/"
+                        android:textAppearance="@android:style/TextAppearance.Medium.Inverse"
+                        android:contentDescription="@string/descr_player_sheet_p_stream_url" />
+                    <!-- TODO: Remove placeholder text-->
+                </LinearLayout>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|center"
+                    android:background="@drawable/ic_content_copy_grey_24dp"
+                    android:contentDescription="@string/descr_player_sheet_content_copy_icon" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</android.support.v4.widget.NestedScrollView>
+
+
+
+

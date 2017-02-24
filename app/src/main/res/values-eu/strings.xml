@@ -84,6 +84,8 @@
     <string name="toastmessage_long_press_playback_stopped">Erreprodukzioa gelditu da (sakatze luzea atzeman da)</string>
     <string name="toastmessage_long_press_playback_started">Erreprodukzioa hasi da (sakatze luzea atzeman da)</string>
     <string name="toastmessage_shortcut_created">Lasterbidea sortu da.</string>
+    <string name="toastmessage_copied_to_clipboard_url">Stream URL copied to clipboard.</string>
+    <string name="toastmessage_copied_to_clipboard_metadata">Metadata copied to clipboard.</string>
     <string name="toastmessage_station_copied">Estazioa kopiatu da.</string>
     <string name="toastmessage_stream_may_not_work">Onartu gabeko audio formatua atzeman da. Jarioaren erreprodukzioa agian ez da behar bezalakoa izango.</string>
     <string name="toastmessage_timer_activated">Itzaltzeko atzera kontaketa gaitu da.</string>

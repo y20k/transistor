@@ -84,6 +84,8 @@
     <string name="toastmessage_long_press_playback_stopped">Reproducción detenida (detectada pulsación larga)</string>
     <string name="toastmessage_long_press_playback_started">Reproducción empezada (detectada pulsación larga)</string>
     <string name="toastmessage_shortcut_created">Acceso directo creado.</string>
+    <string name="toastmessage_copied_to_clipboard_url">Stream URL copied to clipboard.</string>
+    <string name="toastmessage_copied_to_clipboard_metadata">Metadata copied to clipboard.</string>
     <string name="toastmessage_station_copied">Estación copiada.</string>
     <string name="toastmessage_stream_may_not_work">Detectado formato de audio no soportado. La reproducción del stream quizás no funcione correctamente.</string>
     <string name="toastmessage_timer_activated">Temporizador de apagado activado.</string>

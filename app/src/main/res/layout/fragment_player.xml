@@ -1,107 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/transistor_grey_dark"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="org.y20k.transistor.PlayerActivityFragment">
 
-    <!-- REMOVE PLACEHOLDERS -->
     <LinearLayout
+        android:background="@color/transistor_grey_dark"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:divider="#ffffff"
-        android:dividerPadding="5dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
 
-        <ImageView
-            android:id="@+id/player_imageview_station_icon"
-            android:contentDescription="@string/descr_station_icon"
-            android:layout_width="?android:attr/listPreferredItemHeight"
-            android:layout_height="?android:attr/listPreferredItemHeight"
-            android:minHeight="?android:attr/listPreferredItemHeight"
-            app:srcCompat="@drawable/ic_notesymbol_36dp" />
-
+        <!-- REMOVE PLACEHOLDERS -->
         <LinearLayout
-            android:id="@+id/player_layout_station_info"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingStart="24dp"
-            android:paddingEnd="2dp"
-            android:orientation="vertical"
-            android:gravity="center_vertical"
-            android:layout_gravity="center_vertical" >
+            android:orientation="horizontal"
+            android:divider="#ffffff"
+            android:dividerPadding="5dp">
 
-            <TextView
-                android:id="@+id/player_textview_stationname"
-                android:contentDescription="@string/descr_station_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:ellipsize="end"
-                android:text="@string/descr_station_name_example"
-                android:textAppearance="@android:style/TextAppearance.Large.Inverse" />
+            <ImageView
+                android:id="@+id/player_imageview_station_icon"
+                android:contentDescription="@string/descr_station_icon"
+                android:layout_width="?android:attr/listPreferredItemHeight"
+                android:layout_height="?android:attr/listPreferredItemHeight"
+                android:minHeight="?android:attr/listPreferredItemHeight"
+                app:srcCompat="@drawable/ic_notesymbol_36dp" />
 
-            <TextView
-                android:id="@+id/player_textview_station_metadata"
-                android:contentDescription="@string/descr_station_metadata"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:id="@+id/player_layout_station_info"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:ellipsize="marquee"
-                android:singleLine="true"
-                android:marqueeRepeatLimit ="marquee_forever"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:text="@string/descr_station_stream_loading"
-                android:textAppearance="@android:style/TextAppearance.Small.Inverse"
+                android:layout_weight="1"
+                android:paddingStart="24dp"
+                android:paddingEnd="2dp"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_vertical" >
+
+                <TextView
+                    android:id="@+id/player_textview_stationname"
+                    android:contentDescription="@string/descr_station_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:maxLines="1"
+                    android:text="@string/descr_station_name_example"
+                    android:textAppearance="@android:style/TextAppearance.Large.Inverse" />
+
+                <TextView
+                    android:id="@+id/player_textview_station_metadata"
+                    android:contentDescription="@string/descr_station_metadata"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="marquee"
+                    android:singleLine="true"
+                    android:marqueeRepeatLimit ="marquee_forever"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:text="@string/descr_station_stream_loading"
+                    android:textAppearance="@android:style/TextAppearance.Small.Inverse"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/player_playback_indicator"
+                android:contentDescription="@string/descr_playback_indicator"
+                android:layout_width="?android:attr/listPreferredItemHeight"
+                android:layout_height="?android:attr/listPreferredItemHeight"
+                android:minHeight="?android:attr/listPreferredItemHeight"
+                android:background="@drawable/ic_playback_indicator_stopped_24dp" />
+
+            <ImageButton
+                android:id="@+id/player_item_more_button"
+                android:contentDescription="@string/descr_overflow_button"
+                android:layout_width="wrap_content"
+                android:layout_height="?android:attr/listPreferredItemHeight"
+                app:srcCompat="@drawable/ic_more_vert_white_24dp"
+                android:background="@android:color/transparent"
+                android:paddingStart="4dp"
+                android:paddingEnd="2dp"
                 android:visibility="gone" />
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/player_playback_indicator"
-            android:contentDescription="@string/descr_playback_indicator"
-            android:layout_width="?android:attr/listPreferredItemHeight"
-            android:layout_height="?android:attr/listPreferredItemHeight"
-            android:minHeight="?android:attr/listPreferredItemHeight"
-            android:background="@drawable/ic_playback_indicator_stopped_24dp" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp">
 
-        <ImageButton
-            android:id="@+id/player_item_more_button"
-            android:contentDescription="@string/descr_overflow_button"
-            android:layout_width="wrap_content"
-            android:layout_height="?android:attr/listPreferredItemHeight"
-            app:srcCompat="@drawable/ic_more_vert_white_24dp"
-            android:background="@android:color/transparent"
-            android:paddingStart="4dp"
-            android:paddingEnd="2dp"
-            android:visibility="gone" />
+            <ImageButton
+                android:id="@+id/player_playback_button"
+                android:contentDescription="@string/descr_playback_button"
+                android:adjustViewBounds="true"
+                android:background="@drawable/selector_playback_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:padding="32dp" />
+
+        </RelativeLayout>
 
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="8dp">
+    <!-- BOTTOM SHEET -->
+    <include layout="@layout/fragment_player_bottomsheet" />
 
-        <ImageButton
-            android:id="@+id/player_playback_button"
-            android:contentDescription="@string/descr_playback_button"
-            android:adjustViewBounds="true"
-            android:background="@drawable/selector_playback_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:padding="32dp" />
+</android.support.design.widget.CoordinatorLayout>
 
-    </RelativeLayout>
 
-</LinearLayout>
+
