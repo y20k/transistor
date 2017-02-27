@@ -31,6 +31,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.media.MediaBrowserCompat;
 import android.support.v4.media.session.MediaControllerCompat;
@@ -65,7 +66,7 @@ import java.io.IOException;
 /**
  * PlayerActivityFragment class
  */
-public final class PlayerActivityFragment extends Fragment {
+public final class PlayerActivityFragment extends Fragment implements TransistorKeys {
 
     /* Define log tag */
     private static final String LOG_TAG = PlayerActivityFragment.class.getSimpleName();
@@ -86,6 +87,7 @@ public final class PlayerActivityFragment extends Fragment {
     private LinearLayout mStationDataSheetNameLayout;
     private LinearLayout mStationDataSheetMetadataLayout;
     private LinearLayout mStationDataSheetStreamUrlLayout;
+    private View mStationDataSheet;
     private TextView mStationDataSheetMetadata;
     private BottomSheetBehavior mStationDataSheetBehavior;
     private BroadcastReceiver mPlaybackStateChangedReceiver;
@@ -128,15 +130,15 @@ public final class PlayerActivityFragment extends Fragment {
         if (arguments != null) {
 
             // get station from arguments
-            if (arguments.containsKey(TransistorKeys.ARG_STATION)) {
-                mStation = arguments.getParcelable(TransistorKeys.ARG_STATION);
-                arguments.remove(TransistorKeys.ARG_STATION);
+            if (arguments.containsKey(ARG_STATION)) {
+                mStation = arguments.getParcelable(ARG_STATION);
+                arguments.remove(ARG_STATION);
             }
 
             // get station ID from arguments
-            if (arguments.containsKey(TransistorKeys.ARG_STATION_ID)) {
-                mStationID = arguments.getInt(TransistorKeys.ARG_STATION_ID);
-                arguments.remove(TransistorKeys.ARG_STATION_ID);
+            if (arguments.containsKey(ARG_STATION_ID)) {
+                mStationID = arguments.getInt(ARG_STATION_ID);
+                arguments.remove(ARG_STATION_ID);
             } else {
                 mStationID = 0;
                 LogHelper.e(LOG_TAG, "Error: did not receive id of station. Choosing default ID for station");
@@ -152,8 +154,8 @@ public final class PlayerActivityFragment extends Fragment {
             }
 
             // get tablet or phone mode info from arguments
-            if (arguments.containsKey(TransistorKeys.ARG_TWO_PANE)) {
-                mTwoPane = arguments.getBoolean(TransistorKeys.ARG_TWO_PANE, false);
+            if (arguments.containsKey(ARG_TWO_PANE)) {
+                mTwoPane = arguments.getBoolean(ARG_TWO_PANE, false);
             } else {
                 mTwoPane = false;
             }
@@ -193,13 +195,13 @@ public final class PlayerActivityFragment extends Fragment {
         stationInfoView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                copyStationToClipboard();
+                copyToClipboard(COPY_STATION_ALL);
             }
         });
 
         // get views for station data sheet
         View stationDataLayout = mRootView.findViewById(R.id.info_icon_layout);
-        View stationDataSheet = mRootView.findViewById(R.id.station_data_sheet);
+        mStationDataSheet = mRootView.findViewById(R.id.station_data_sheet);
         mStationDataSheetNameLayout = (LinearLayout) mRootView.findViewById(R.id.station_data_sheet_name_layout);
         mStationDataSheetMetadataLayout = (LinearLayout) mRootView.findViewById(R.id.station_data_sheet_metadata_layout);
         mStationDataSheetStreamUrlLayout = (LinearLayout) mRootView.findViewById(R.id.station_data_sheet_stream_url_layout);
@@ -212,7 +214,7 @@ public final class PlayerActivityFragment extends Fragment {
         stationDataSheetStreamUrl.setText(mStreamUri);
 
         // set up and show station data sheet
-        mStationDataSheetBehavior = BottomSheetBehavior.from(stationDataSheet);
+        mStationDataSheetBehavior = BottomSheetBehavior.from(mStationDataSheet);
         mStationDataSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         mStationDataSheetBehavior.setBottomSheetCallback(getStationDataSheetCallback());
         stationDataLayout.setOnClickListener(new View.OnClickListener() {
@@ -226,6 +228,23 @@ public final class PlayerActivityFragment extends Fragment {
             }
         });
 
+        // attach listeners (for clipboard copy)
+        mStationDataSheetMetadataLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // copy station metadata to clipboard
+                copyToClipboard(COPY_STATION_METADATA);
+                mStationDataSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            }
+        });
+        mStationDataSheetStreamUrlLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // copy stream URL to clipboard
+                copyToClipboard(COPY_STREAM_URL);
+                mStationDataSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            }
+        });
 
         // show metadata
         if (mPlayback && mStationMetadata != null) {
@@ -271,8 +290,6 @@ public final class PlayerActivityFragment extends Fragment {
             }
         });
 
-
-
         return mRootView;
     }
 
@@ -298,15 +315,15 @@ public final class PlayerActivityFragment extends Fragment {
         Bundle args = getArguments();
 
         // get station from arguments
-        if (args != null && args.containsKey(TransistorKeys.ARG_STATION)) {
-            mStation = args.getParcelable(TransistorKeys.ARG_STATION);
+        if (args != null && args.containsKey(ARG_STATION)) {
+            mStation = args.getParcelable(ARG_STATION);
             // get playback state from station
             mPlayback = mStation.getPlaybackState();
         }
 
 
         // check if activity started from shortcut
-        if (args != null && args.getBoolean(TransistorKeys.ARG_PLAYBACK)) {
+        if (args != null && args.getBoolean(ARG_PLAYBACK)) {
             // check if this station is not already playing
             Station currentStation = PlayerService.getStation();
             if (currentStation != null && currentStation.getStreamUri().equals(mStation.getStreamUri()) && mPlayback && !mStationLoading) {
@@ -321,7 +338,7 @@ public final class PlayerActivityFragment extends Fragment {
                 mPlayback = true;
                 startPlayback();
                 // clear playback state argument
-                getArguments().putBoolean(TransistorKeys.ARG_PLAYBACK, false);
+                getArguments().putBoolean(ARG_PLAYBACK, false);
                 LogHelper.v(LOG_TAG, "Staring playback from shortcut.");
             }
 
@@ -358,11 +375,11 @@ public final class PlayerActivityFragment extends Fragment {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
-            case TransistorKeys.PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE: {
+            case PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission granted - get system picker for images
                     Intent pickImageIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(pickImageIntent, TransistorKeys.REQUEST_LOAD_IMAGE);
+                    startActivityForResult(pickImageIntent, REQUEST_LOAD_IMAGE);
                 } else {
                     // permission denied
                     Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_permission_denied) + " READ_EXTERNAL_STORAGE", Toast.LENGTH_LONG).show();
@@ -382,7 +399,7 @@ public final class PlayerActivityFragment extends Fragment {
             newImageUri = data.getData();
         }
 
-        if (requestCode == TransistorKeys.REQUEST_LOAD_IMAGE && resultCode == Activity.RESULT_OK && null != data) {
+        if (requestCode == REQUEST_LOAD_IMAGE && resultCode == Activity.RESULT_OK && null != data) {
 
             ImageHelper imageHelper = new ImageHelper(newImageUri, mActivity);
             Bitmap newImage = imageHelper.getInputImage();
@@ -410,9 +427,9 @@ public final class PlayerActivityFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         // save current station
-        outState.putParcelable(TransistorKeys.INSTANCE_STATION, mStation);
-        outState.putInt(TransistorKeys.INSTANCE_STATION_ID, mStationID);
-        outState.putBoolean(TransistorKeys.INSTANCE_PLAYBACK, mPlayback);
+        outState.putParcelable(INSTANCE_STATION, mStation);
+        outState.putInt(INSTANCE_STATION_ID, mStationID);
+        outState.putBoolean(INSTANCE_PLAYBACK, mPlayback);
     }
 
 
@@ -430,9 +447,9 @@ public final class PlayerActivityFragment extends Fragment {
 
         // start player service using intent
         Intent intent = new Intent(mActivity, PlayerService.class);
-        intent.setAction(TransistorKeys.ACTION_PLAY);
-        intent.putExtra(TransistorKeys.EXTRA_STATION, mStation);
-        intent.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
+        intent.setAction(ACTION_PLAY);
+        intent.putExtra(EXTRA_STATION, mStation);
+        intent.putExtra(EXTRA_STATION_ID, mStationID);
         mActivity.startService(intent);
         LogHelper.v(LOG_TAG, "Starting player service.");
 
@@ -453,7 +470,7 @@ public final class PlayerActivityFragment extends Fragment {
 
         // stop player service using intent
         Intent intent = new Intent(mActivity, PlayerService.class);
-        intent.setAction(TransistorKeys.ACTION_STOP);
+        intent.setAction(ACTION_STOP);
         mActivity.startService(intent);
         LogHelper.v(LOG_TAG, "Stopping player service.");
     }
@@ -494,7 +511,7 @@ public final class PlayerActivityFragment extends Fragment {
             case R.id.menu_delete:
                 // stop player service using intent
 //                Intent intent = new Intent(mActivity, PlayerService.class);
-//                intent.setAction(TransistorKeys.ACTION_STOP);
+//                intent.setAction(ACTION_STOP);
 //                mActivity.startService(intent);
 //                LogHelper.v(LOG_TAG, "Stopping player service.");
                 // construct and run delete dialog
@@ -535,27 +552,47 @@ public final class PlayerActivityFragment extends Fragment {
     }
 
 
-    /* Copy station date to system clipboard */
-    private void copyStationToClipboard() {
-        if (mStreamUri != null && mStationName != null) {
+    /* Copy station data to system clipboard */
+    private void copyToClipboard(int contentType) {
 
-            // create clip
-            String clipboardText;
-            ClipData clip;
-            if (mStationMetadata != null) {
-                clipboardText = mStationName +  " - " + mStationMetadata + " (" + mStreamUri + ")";
-            } else {
-                clipboardText = mStationName + " (" + mStreamUri + ")";
-            }
-            clip = ClipData.newPlainText("simple text",clipboardText);
+        String clipboardText = null;
+        ClipData clip;
 
-            // copy clip to clipboard
+        switch (contentType) {
+            case COPY_STATION_ALL:
+                if (mStreamUri != null && mStationName != null) {
+                    // set clip text
+                    if (mStationMetadata != null) {
+                        clipboardText = mStationName +  " - " + mStationMetadata + " (" + mStreamUri + ")";
+                    } else {
+                        clipboardText = mStationName + " (" + mStreamUri + ")";
+                    }
+                    // notify user
+                    Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_station_copied), Toast.LENGTH_SHORT).show();
+                }
+                break;
+
+            case COPY_STATION_METADATA:
+                // set clip text and notify user
+                clipboardText = mStationMetadata;
+                Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_copied_to_clipboard_metadata), Toast.LENGTH_SHORT).show();
+                break;
+
+            case COPY_STREAM_URL:
+                // set clip text and notify user
+                clipboardText = mStreamUri;
+                Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_copied_to_clipboard_url), Toast.LENGTH_SHORT).show();
+                break;
+
+        }
+
+        // create clip and to clipboard
+        if (clipboardText != null) {
+            clip = ClipData.newPlainText("simple text", clipboardText);
             ClipboardManager cm = (ClipboardManager) mActivity.getSystemService(Context.CLIPBOARD_SERVICE);
             cm.setPrimaryClip(clip);
-
-            // notify user
-            Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_station_copied), Toast.LENGTH_SHORT).show();
         }
+
     }
 
 
@@ -642,12 +679,12 @@ public final class PlayerActivityFragment extends Fragment {
     /* Loads app state from preferences */
     private void loadAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-        mStationIDCurrent = settings.getInt(TransistorKeys.PREF_STATION_ID_CURRENTLY_PLAYING, -1);
-        mStationIDLast = settings.getInt(TransistorKeys.PREF_STATION_ID_LAST, -1);
-        mStationID = settings.getInt(TransistorKeys.PREF_STATION_ID_SELECTED, 0);
-        mStationMetadata = settings.getString(TransistorKeys.PREF_STATION_METADATA, null);
-        mPlayback = settings.getBoolean(TransistorKeys.PREF_PLAYBACK, false);
-        mStationLoading = settings.getBoolean(TransistorKeys.PREF_STATION_LOADING, false);
+        mStationIDCurrent = settings.getInt(PREF_STATION_ID_CURRENTLY_PLAYING, -1);
+        mStationIDLast = settings.getInt(PREF_STATION_ID_LAST, -1);
+        mStationID = settings.getInt(PREF_STATION_ID_SELECTED, 0);
+        mStationMetadata = settings.getString(PREF_STATION_METADATA, null);
+        mPlayback = settings.getBoolean(PREF_PLAYBACK, false);
+        mStationLoading = settings.getBoolean(PREF_STATION_LOADING, false);
         LogHelper.v(LOG_TAG, "Loading state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + " / " + mStationLoading + " / " + mStationMetadata + ")");
     }
 
@@ -656,10 +693,10 @@ public final class PlayerActivityFragment extends Fragment {
     private void selectFromImagePicker() {
         // request permissions
         PermissionHelper permissionHelper = new PermissionHelper(mActivity, mRootView);
-        if (permissionHelper.requestReadExternalStorage(TransistorKeys.PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE)) {
+        if (permissionHelper.requestReadExternalStorage(PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE)) {
             // get system picker for images
             Intent pickImageIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(pickImageIntent, TransistorKeys.REQUEST_LOAD_IMAGE);
+            startActivityForResult(pickImageIntent, REQUEST_LOAD_IMAGE);
         }
     }
 
@@ -673,10 +710,12 @@ public final class PlayerActivityFragment extends Fragment {
                 switch (newState) {
                     case BottomSheetBehavior.STATE_EXPANDED:
                         // statistics sheet expanded
+                        mStationDataSheet.setBackgroundColor(ContextCompat.getColor(mActivity, R.color.transistor_grey_darker_95percent));
                         break;
                     case BottomSheetBehavior.STATE_COLLAPSED:
                         // statistics sheet collapsed
                         mStationDataSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                        mStationDataSheet.setBackgroundColor(ContextCompat.getColor(mActivity, R.color.transistor_transparent));
                         break;
                     case BottomSheetBehavior.STATE_HIDDEN:
                         // statistics sheet hidden
@@ -689,6 +728,12 @@ public final class PlayerActivityFragment extends Fragment {
             @Override
             public void onSlide(@NonNull View bottomSheet, float slideOffset) {
                 // react to dragging events
+                if (slideOffset < 0.125f) {
+                    mStationDataSheet.setBackgroundColor(ContextCompat.getColor(mActivity, R.color.transistor_transparent));
+                } else {
+                    mStationDataSheet.setBackgroundColor(ContextCompat.getColor(mActivity, R.color.transistor_grey_darker_95percent));
+                }
+
             }
         };
     }
@@ -701,39 +746,39 @@ public final class PlayerActivityFragment extends Fragment {
         mPlaybackStateChangedReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if (intent.hasExtra(TransistorKeys.EXTRA_PLAYBACK_STATE_CHANGE)) {
+                if (intent.hasExtra(EXTRA_PLAYBACK_STATE_CHANGE)) {
                     handlePlaybackStateChanges(intent);
                 }
             }
         };
-        IntentFilter playbackStateChangedIntentFilter = new IntentFilter(TransistorKeys.ACTION_PLAYBACK_STATE_CHANGED);
+        IntentFilter playbackStateChangedIntentFilter = new IntentFilter(ACTION_PLAYBACK_STATE_CHANGED);
         LocalBroadcastManager.getInstance(mActivity).registerReceiver(mPlaybackStateChangedReceiver, playbackStateChangedIntentFilter);
 
         // RECEIVER: station added, deleted, or changed
         mCollectionChangedReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if (intent != null && intent.hasExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE)) {
+                if (intent != null && intent.hasExtra(EXTRA_COLLECTION_CHANGE)) {
                     handleCollectionChanges(intent);
                 }
             }
         };
-        IntentFilter collectionChangedIntentFilter = new IntentFilter(TransistorKeys.ACTION_COLLECTION_CHANGED);
+        IntentFilter collectionChangedIntentFilter = new IntentFilter(ACTION_COLLECTION_CHANGED);
         LocalBroadcastManager.getInstance(mActivity).registerReceiver(mCollectionChangedReceiver, collectionChangedIntentFilter);
 
         // RECEIVER: station metadata has changed
         mMetadataChangedReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if (mPlayback && intent.hasExtra(TransistorKeys.EXTRA_METADATA)) {
-                    mStationMetadata = intent.getStringExtra(TransistorKeys.EXTRA_METADATA);
+                if (mPlayback && intent.hasExtra(EXTRA_METADATA)) {
+                    mStationMetadata = intent.getStringExtra(EXTRA_METADATA);
                     mStationMetadataView.setText(mStationMetadata);
                     mStationMetadataView.setSelected(true);
                     mStationDataSheetMetadata.setText(mStationMetadata);
                 }
             }
         };
-        IntentFilter metadataChangedIntentFilter = new IntentFilter(TransistorKeys.ACTION_METADATA_CHANGED);
+        IntentFilter metadataChangedIntentFilter = new IntentFilter(ACTION_METADATA_CHANGED);
         LocalBroadcastManager.getInstance(mActivity).registerReceiver(mMetadataChangedReceiver, metadataChangedIntentFilter);
 
     }
@@ -751,12 +796,12 @@ public final class PlayerActivityFragment extends Fragment {
     private void handlePlaybackStateChanges(Intent intent) {
 
         // get station from intent
-        Station station = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
+        Station station = intent.getParcelableExtra(EXTRA_STATION);
 
-        switch (intent.getIntExtra(TransistorKeys.EXTRA_PLAYBACK_STATE_CHANGE, 1)) {
+        switch (intent.getIntExtra(EXTRA_PLAYBACK_STATE_CHANGE, 1)) {
 
             // CASE: player is preparing stream
-            case TransistorKeys.PLAYBACK_LOADING_STATION:
+            case PLAYBACK_LOADING_STATION:
                 if (mVisibility && !mPlayback && mStation != null && mStation.getStreamUri().equals(station.getStreamUri())) {
                     // set playback true
                     mPlayback = true;
@@ -770,7 +815,7 @@ public final class PlayerActivityFragment extends Fragment {
                 break;
 
             // CASE: playback has started
-            case TransistorKeys.PLAYBACK_STARTED:
+            case PLAYBACK_STARTED:
                 if (mVisibility && mPlayback && mStation != null && mStation.getStreamUri().equals(station.getStreamUri())) {
                     loadAppState(mActivity);
                     // update loading status and playback indicator
@@ -789,12 +834,12 @@ public final class PlayerActivityFragment extends Fragment {
                 break;
 
             // CASE: playback was stopped
-            case TransistorKeys.PLAYBACK_STOPPED:
+            case PLAYBACK_STOPPED:
                 if (mVisibility && mPlayback && mStation != null && mStation.getStreamUri().equals(station.getStreamUri())) {
                     // set playback falseMediaB
                     mPlayback = false;
                     // rotate playback button
-                    if (intent.hasExtra(TransistorKeys.EXTRA_STATION_ID) && mStationID == intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, -1)) {
+                    if (intent.hasExtra(EXTRA_STATION_ID) && mStationID == intent.getIntExtra(EXTRA_STATION_ID, -1)) {
                         mStation.setPlaybackState(false);
                         changeVisualState(mActivity);
                     }
@@ -806,12 +851,12 @@ public final class PlayerActivityFragment extends Fragment {
 
     /* Handles adding, deleting and renaming of station */
     private void handleCollectionChanges(Intent intent) {
-        switch (intent.getIntExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, 1)) {
+        switch (intent.getIntExtra(EXTRA_COLLECTION_CHANGE, 1)) {
             // CASE: station was renamed
-            case TransistorKeys.STATION_RENAMED:
-                if (intent.hasExtra(TransistorKeys.EXTRA_STATION_NEW_NAME) && intent.hasExtra(TransistorKeys.EXTRA_STATION) && intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)) {
-                    Station station = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
-                    int stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
+            case STATION_RENAMED:
+                if (intent.hasExtra(EXTRA_STATION_NEW_NAME) && intent.hasExtra(EXTRA_STATION) && intent.hasExtra(EXTRA_STATION_ID)) {
+                    Station station = intent.getParcelableExtra(EXTRA_STATION);
+                    int stationID = intent.getIntExtra(EXTRA_STATION_ID, 0);
                     mStationNameView.setText(station.getStationName());
                     if (mPlayback) {
                         NotificationHelper.update(station, stationID, null, null);
@@ -820,11 +865,11 @@ public final class PlayerActivityFragment extends Fragment {
                 break;
 
             // CASE: station was deleted
-            case TransistorKeys.STATION_DELETED:
+            case STATION_DELETED:
                 if (mPlayback) {
                     // stop player service and notification using intent
                     Intent i = new Intent(mActivity, PlayerService.class);
-                    i.setAction(TransistorKeys.ACTION_DISMISS);
+                    i.setAction(ACTION_DISMISS);
                     mActivity.startService(i);
                     LogHelper.v(LOG_TAG, "Stopping player service.");
                 }

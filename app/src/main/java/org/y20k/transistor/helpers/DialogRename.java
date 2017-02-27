@@ -30,7 +30,7 @@ import org.y20k.transistor.core.Station;
 /**
  * DialogRename class
  */
-public final class DialogRename {
+public final class DialogRename implements TransistorKeys {
 
     /* Define log tag */
     private static final String LOG_TAG = DialogRename.class.getSimpleName();
@@ -77,11 +77,11 @@ public final class DialogRename {
 
                 // send local broadcast
                 Intent i = new Intent();
-                i.setAction(TransistorKeys.ACTION_COLLECTION_CHANGED);
-                i.putExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, TransistorKeys.STATION_RENAMED);
-                i.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
-                i.putExtra(TransistorKeys.EXTRA_STATION, mStation);
-                i.putExtra(TransistorKeys.EXTRA_STATION_NEW_NAME, stationNewName);
+                i.setAction(ACTION_COLLECTION_CHANGED);
+                i.putExtra(EXTRA_COLLECTION_CHANGE, STATION_RENAMED);
+                i.putExtra(EXTRA_STATION_ID, mStationID);
+                i.putExtra(EXTRA_STATION, mStation);
+                i.putExtra(EXTRA_STATION_NEW_NAME, stationNewName);
                 LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(i);
 
             }

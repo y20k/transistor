@@ -41,7 +41,7 @@ import java.io.File;
 /**
  * MainActivity class
  */
-public final class MainActivity extends AppCompatActivity {
+public final class MainActivity extends AppCompatActivity implements TransistorKeys {
 
     /* Define log tag */
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
@@ -163,7 +163,7 @@ public final class MainActivity extends AppCompatActivity {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = settings.edit();
         // editor.putInt(PREF_STATION_ID_SELECTED, mStationID);
-        editor.putBoolean(TransistorKeys.PREF_TWO_PANE, mTwoPane);
+        editor.putBoolean(PREF_TWO_PANE, mTwoPane);
         editor.apply();
         LogHelper.v(LOG_TAG, "Saving state. Two Pane = " + mTwoPane);
     }
@@ -191,7 +191,7 @@ public final class MainActivity extends AppCompatActivity {
                 }
             }
         };
-        IntentFilter collectionChangedIntentFilter = new IntentFilter(TransistorKeys.ACTION_COLLECTION_CHANGED);
+        IntentFilter collectionChangedIntentFilter = new IntentFilter(ACTION_COLLECTION_CHANGED);
         LocalBroadcastManager.getInstance(this).registerReceiver(mCollectionChangedReceiver, collectionChangedIntentFilter);
     }
 

@@ -28,7 +28,7 @@ import org.y20k.transistor.core.Station;
 /**
  * ShortcutHelper class
  */
-public class ShortcutHelper {
+public class ShortcutHelper implements TransistorKeys {
 
     /* Define log tag */
     private static final String LOG_TAG = ShortcutHelper.class.getSimpleName();
@@ -85,9 +85,9 @@ public class ShortcutHelper {
 
         // create intent to start MainActivity
         Intent shortcutIntent = new Intent(mContext, MainActivity.class);
-        shortcutIntent.setAction(TransistorKeys.ACTION_SHOW_PLAYER);
-        shortcutIntent.putExtra(TransistorKeys.EXTRA_STREAM_URI, stationUri);
-        shortcutIntent.putExtra(TransistorKeys.EXTRA_PLAYBACK_STATE, true);
+        shortcutIntent.setAction(ACTION_SHOW_PLAYER);
+        shortcutIntent.putExtra(EXTRA_STREAM_URI, stationUri);
+        shortcutIntent.putExtra(EXTRA_PLAYBACK_STATE, true);
         shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 

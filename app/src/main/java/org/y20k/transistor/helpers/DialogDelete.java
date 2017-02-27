@@ -27,7 +27,7 @@ import org.y20k.transistor.core.Station;
 /**
  * DialogDelete class
  */
-public final class DialogDelete {
+public final class DialogDelete implements TransistorKeys {
 
     /* Define log tag */
     private static final String LOG_TAG = DialogDelete.class.getSimpleName();
@@ -61,10 +61,10 @@ public final class DialogDelete {
 
                 // send local broadcast
                 Intent i = new Intent();
-                i.setAction(TransistorKeys.ACTION_COLLECTION_CHANGED);
-                i.putExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, TransistorKeys.STATION_DELETED);
-                i.putExtra(TransistorKeys.EXTRA_STATION, mStation);
-                i.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
+                i.setAction(ACTION_COLLECTION_CHANGED);
+                i.putExtra(EXTRA_COLLECTION_CHANGE, STATION_DELETED);
+                i.putExtra(EXTRA_STATION, mStation);
+                i.putExtra(EXTRA_STATION_ID, mStationID);
                 LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(i);
 
             }

@@ -61,7 +61,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * MainActivityFragment class
  */
-public final class MainActivityFragment extends Fragment {
+public final class MainActivityFragment extends Fragment implements TransistorKeys {
 
     /* Define log tag */
     private static final String LOG_TAG = MainActivityFragment.class.getSimpleName();
@@ -157,7 +157,7 @@ public final class MainActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // get list state from saved instance
         if (savedInstanceState != null) {
-            mListState = savedInstanceState.getParcelable(TransistorKeys.INSTANCE_LIST_STATE);
+            mListState = savedInstanceState.getParcelable(INSTANCE_LIST_STATE);
         }
 
         // inflate root view from xml
@@ -207,7 +207,7 @@ public final class MainActivityFragment extends Fragment {
         Intent intent = mActivity.getIntent();
         if (Intent.ACTION_VIEW.equals(intent.getAction())) {
             handleStreamingLink(intent);
-        } else if (TransistorKeys.ACTION_SHOW_PLAYER.equals(intent.getAction())) {
+        } else if (ACTION_SHOW_PLAYER.equals(intent.getAction())) {
             handleShowPlayer(intent);
         }
 
@@ -259,8 +259,8 @@ public final class MainActivityFragment extends Fragment {
                 String aboutTitle = mActivity.getString(R.string.header_about);
                 // put title and content into intent and start activity
                 Intent aboutIntent = new Intent(mActivity, InfosheetActivity.class);
-                aboutIntent.putExtra(TransistorKeys.EXTRA_INFOSHEET_TITLE, aboutTitle);
-                aboutIntent.putExtra(TransistorKeys.EXTRA_INFOSHEET_CONTENT, TransistorKeys.INFOSHEET_CONTENT_ABOUT);
+                aboutIntent.putExtra(EXTRA_INFOSHEET_TITLE, aboutTitle);
+                aboutIntent.putExtra(EXTRA_INFOSHEET_CONTENT, INFOSHEET_CONTENT_ABOUT);
                 startActivity(aboutIntent);
                 return true;
 
@@ -270,8 +270,8 @@ public final class MainActivityFragment extends Fragment {
                 String howToTitle = mActivity.getString(R.string.header_howto);
                 // put title and content into intent and start activity
                 Intent howToIntent = new Intent(mActivity, InfosheetActivity.class);
-                howToIntent.putExtra(TransistorKeys.EXTRA_INFOSHEET_TITLE, howToTitle);
-                howToIntent.putExtra(TransistorKeys.EXTRA_INFOSHEET_CONTENT, TransistorKeys.INFOSHEET_CONTENT_HOWTO);
+                howToIntent.putExtra(EXTRA_INFOSHEET_TITLE, howToTitle);
+                howToIntent.putExtra(EXTRA_INFOSHEET_CONTENT, INFOSHEET_CONTENT_HOWTO);
                 startActivity(howToIntent);
                 return true;
 
@@ -287,7 +287,7 @@ public final class MainActivityFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         // save list view position
         mListState = mLayoutManager.onSaveInstanceState();
-        outState.putParcelable(TransistorKeys.INSTANCE_LIST_STATE, mListState);
+        outState.putParcelable(INSTANCE_LIST_STATE, mListState);
         super.onSaveInstanceState(outState);
     }
 
@@ -297,11 +297,11 @@ public final class MainActivityFragment extends Fragment {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         switch (requestCode) {
-            case TransistorKeys.PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE: {
+            case PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission granted - get system picker for images
                     Intent pickImageIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    mActivity.startActivityForResult(pickImageIntent, TransistorKeys.REQUEST_LOAD_IMAGE);
+                    mActivity.startActivityForResult(pickImageIntent, REQUEST_LOAD_IMAGE);
                 } else {
                     // permission denied
                     Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_permission_denied) + " READ_EXTERNAL_STORAGE", Toast.LENGTH_LONG).show();
@@ -309,7 +309,7 @@ public final class MainActivityFragment extends Fragment {
                 break;
             }
 
-            case TransistorKeys.PERMISSION_REQUEST_STATION_FETCHER_READ_EXTERNAL_STORAGE: {
+            case PERMISSION_REQUEST_STATION_FETCHER_READ_EXTERNAL_STORAGE: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission granted - fetch station from given Uri
                     fetchNewStation(mNewStationUri);
@@ -333,7 +333,7 @@ public final class MainActivityFragment extends Fragment {
             newImageUri = data.getData();
         }
 
-        if (requestCode == TransistorKeys.REQUEST_LOAD_IMAGE && resultCode == Activity.RESULT_OK && newImageUri != null) {
+        if (requestCode == REQUEST_LOAD_IMAGE && resultCode == Activity.RESULT_OK && newImageUri != null) {
 
             ImageHelper imageHelper = new ImageHelper(newImageUri, mActivity);
             Bitmap newImage = imageHelper.getInputImage();
@@ -376,10 +376,10 @@ public final class MainActivityFragment extends Fragment {
     private void selectFromImagePicker() {
         // request read permissions
         PermissionHelper permissionHelper = new PermissionHelper(mActivity, mRootView);
-        if (permissionHelper.requestReadExternalStorage(TransistorKeys.PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE)) {
+        if (permissionHelper.requestReadExternalStorage(PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE)) {
             // get system picker for images
             Intent pickImageIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(pickImageIntent, TransistorKeys.REQUEST_LOAD_IMAGE);
+            startActivityForResult(pickImageIntent, REQUEST_LOAD_IMAGE);
         }
     }
 
@@ -398,7 +398,7 @@ public final class MainActivityFragment extends Fragment {
         } else if (mNewStationUri != null && mNewStationUri.getScheme().startsWith("file")) {
             // check for read permission
             PermissionHelper permissionHelper = new PermissionHelper(mActivity, mRootView);
-            if (permissionHelper.requestReadExternalStorage(TransistorKeys.PERMISSION_REQUEST_STATION_FETCHER_READ_EXTERNAL_STORAGE)) {
+            if (permissionHelper.requestReadExternalStorage(PERMISSION_REQUEST_STATION_FETCHER_READ_EXTERNAL_STORAGE)) {
                 // read and add new station
                 fetchNewStation(mNewStationUri);
             }
@@ -414,13 +414,13 @@ public final class MainActivityFragment extends Fragment {
     private void handleShowPlayer(Intent intent) {
         // get station from intent
         Station station = null;
-        if (intent.hasExtra(TransistorKeys.EXTRA_STATION)) {
+        if (intent.hasExtra(EXTRA_STATION)) {
             // get station from notification
-            station = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
-        } else if (intent.hasExtra(TransistorKeys.EXTRA_STREAM_URI)) {
+            station = intent.getParcelableExtra(EXTRA_STATION);
+        } else if (intent.hasExtra(EXTRA_STREAM_URI)) {
             // get Uri of station from home screen shortcut
-            station = mCollectionAdapter.findStation(Uri.parse(intent.getStringExtra(TransistorKeys.EXTRA_STREAM_URI)));
-        } else if (intent.hasExtra(TransistorKeys.EXTRA_LAST_STATION) && intent.getBooleanExtra(TransistorKeys.EXTRA_LAST_STATION, false)) {
+            station = mCollectionAdapter.findStation(Uri.parse(intent.getStringExtra(EXTRA_STREAM_URI)));
+        } else if (intent.hasExtra(EXTRA_LAST_STATION) && intent.getBooleanExtra(EXTRA_LAST_STATION, false)) {
             // try to get last station
             loadAppState(mActivity);
             if (mStationIDLast > -1 && mStationIDLast < mCollectionAdapter.getItemCount()) {
@@ -434,8 +434,8 @@ public final class MainActivityFragment extends Fragment {
 
         // get playback action from intent
         boolean startPlayback;
-        if (intent.hasExtra(TransistorKeys.EXTRA_PLAYBACK_STATE)) {
-            startPlayback = intent.getBooleanExtra(TransistorKeys.EXTRA_PLAYBACK_STATE, false);
+        if (intent.hasExtra(EXTRA_PLAYBACK_STATE)) {
+            startPlayback = intent.getBooleanExtra(EXTRA_PLAYBACK_STATE, false);
         } else {
             startPlayback = false;
         }
@@ -447,9 +447,9 @@ public final class MainActivityFragment extends Fragment {
         } else if (station != null) {
             // start player activity - on phone
             Intent playerIntent = new Intent(mActivity, PlayerActivity.class);
-            playerIntent.setAction(TransistorKeys.ACTION_SHOW_PLAYER);
-            playerIntent.putExtra(TransistorKeys.EXTRA_STATION, station);
-            playerIntent.putExtra(TransistorKeys.EXTRA_PLAYBACK_STATE, startPlayback);
+            playerIntent.setAction(ACTION_SHOW_PLAYER);
+            playerIntent.putExtra(EXTRA_STATION, station);
+            playerIntent.putExtra(EXTRA_PLAYBACK_STATE, startPlayback);
             startActivity(playerIntent);
         }
     }
@@ -555,12 +555,12 @@ public final class MainActivityFragment extends Fragment {
     /* Loads app state from preferences */
     private void loadAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-        mStationIDSelected = settings.getInt(TransistorKeys.PREF_STATION_ID_SELECTED, 0);
-        mStationIDCurrent = settings.getInt(TransistorKeys.PREF_STATION_ID_CURRENTLY_PLAYING, -1);
-        mStationIDLast = settings.getInt(TransistorKeys.PREF_STATION_ID_LAST, -1);
-        mPlayback = settings.getBoolean(TransistorKeys.PREF_PLAYBACK, false);
-        mTwoPane = settings.getBoolean(TransistorKeys.PREF_TWO_PANE, false);
-        mSleepTimerRunning = settings.getBoolean(TransistorKeys.PREF_TIMER_RUNNING, false);
+        mStationIDSelected = settings.getInt(PREF_STATION_ID_SELECTED, 0);
+        mStationIDCurrent = settings.getInt(PREF_STATION_ID_CURRENTLY_PLAYING, -1);
+        mStationIDLast = settings.getInt(PREF_STATION_ID_LAST, -1);
+        mPlayback = settings.getBoolean(PREF_PLAYBACK, false);
+        mTwoPane = settings.getBoolean(PREF_TWO_PANE, false);
+        mSleepTimerRunning = settings.getBoolean(PREF_TIMER_RUNNING, false);
         LogHelper.v(LOG_TAG, "Loading state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + ")");
     }
 
@@ -569,10 +569,10 @@ public final class MainActivityFragment extends Fragment {
     private void saveAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putInt(TransistorKeys.PREF_STATION_ID_CURRENTLY_PLAYING, mStationIDCurrent);
-        editor.putInt(TransistorKeys.PREF_STATION_ID_LAST, mStationIDLast);
-        editor.putBoolean(TransistorKeys.PREF_PLAYBACK, mPlayback);
-        editor.putBoolean(TransistorKeys.PREF_TIMER_RUNNING, mSleepTimerRunning);
+        editor.putInt(PREF_STATION_ID_CURRENTLY_PLAYING, mStationIDCurrent);
+        editor.putInt(PREF_STATION_ID_LAST, mStationIDLast);
+        editor.putBoolean(PREF_PLAYBACK, mPlayback);
+        editor.putBoolean(PREF_TIMER_RUNNING, mSleepTimerRunning);
         editor.apply();
         LogHelper.v(LOG_TAG, "Saving state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + ")");
     }
@@ -593,40 +593,40 @@ public final class MainActivityFragment extends Fragment {
         mPlaybackStateChangedReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if (intent.hasExtra(TransistorKeys.EXTRA_PLAYBACK_STATE_CHANGE)) {
+                if (intent.hasExtra(EXTRA_PLAYBACK_STATE_CHANGE)) {
                     handlePlaybackStateChanges(intent);
                 }
             }
         };
-        IntentFilter playbackStateChangedIntentFilter = new IntentFilter(TransistorKeys.ACTION_PLAYBACK_STATE_CHANGED);
+        IntentFilter playbackStateChangedIntentFilter = new IntentFilter(ACTION_PLAYBACK_STATE_CHANGED);
         LocalBroadcastManager.getInstance(mActivity).registerReceiver(mPlaybackStateChangedReceiver, playbackStateChangedIntentFilter);
 
         // RECEIVER: station added, deleted, or changed
         mCollectionChangedReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if (intent != null && intent.hasExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE)) {
+                if (intent != null && intent.hasExtra(EXTRA_COLLECTION_CHANGE)) {
                     handleCollectionChanges(intent);
                 }
             }
         };
-        IntentFilter collectionChangedIntentFilter = new IntentFilter(TransistorKeys.ACTION_COLLECTION_CHANGED);
+        IntentFilter collectionChangedIntentFilter = new IntentFilter(ACTION_COLLECTION_CHANGED);
         LocalBroadcastManager.getInstance(mApplication).registerReceiver(mCollectionChangedReceiver, collectionChangedIntentFilter);
 
         // RECEIVER: listen for request to change station image
         mImageChangeRequestReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if (intent.hasExtra(TransistorKeys.EXTRA_STATION) && intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)) {
+                if (intent.hasExtra(EXTRA_STATION) && intent.hasExtra(EXTRA_STATION_ID)) {
                     // get station and id from intent
-                    mTempStation = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
-                    mTempStationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, -1);
+                    mTempStation = intent.getParcelableExtra(EXTRA_STATION);
+                    mTempStationID = intent.getIntExtra(EXTRA_STATION_ID, -1);
                     // start image picker
                     selectFromImagePicker();
                 }
             }
         };
-        IntentFilter imageChangeRequestIntentFilter = new IntentFilter(TransistorKeys.ACTION_IMAGE_CHANGE_REQUESTED);
+        IntentFilter imageChangeRequestIntentFilter = new IntentFilter(ACTION_IMAGE_CHANGE_REQUESTED);
         LocalBroadcastManager.getInstance(mApplication).registerReceiver(mImageChangeRequestReceiver, imageChangeRequestIntentFilter);
 
         // RECEIVER: sleep timer service sends updates
@@ -634,7 +634,7 @@ public final class MainActivityFragment extends Fragment {
             @Override
             public void onReceive(Context context, Intent intent) {
                 // get duration from intent
-                long remaining = intent.getLongExtra(TransistorKeys.EXTRA_TIMER_REMAINING, 0);
+                long remaining = intent.getLongExtra(EXTRA_TIMER_REMAINING, 0);
                 if (mSleepTimerNotification != null && remaining > 0) {
                     // update existing notification
                     mSleepTimerNotification.setText(mSleepTimerNotificationMessage + getReadableTime(remaining));
@@ -649,7 +649,7 @@ public final class MainActivityFragment extends Fragment {
 
             }
         };
-        IntentFilter sleepTimerIntentFilter = new IntentFilter(TransistorKeys.ACTION_TIMER_RUNNING);
+        IntentFilter sleepTimerIntentFilter = new IntentFilter(ACTION_TIMER_RUNNING);
         LocalBroadcastManager.getInstance(mActivity).registerReceiver(mSleepTimerStartedReceiver, sleepTimerIntentFilter);
 
     }
@@ -665,9 +665,9 @@ public final class MainActivityFragment extends Fragment {
 
     /* Handles changes in state of playback, eg. start, stop, loading stream */
     private void handlePlaybackStateChanges(Intent intent) {
-        switch (intent.getIntExtra(TransistorKeys.EXTRA_PLAYBACK_STATE_CHANGE, 1)) {
+        switch (intent.getIntExtra(EXTRA_PLAYBACK_STATE_CHANGE, 1)) {
             // CASE: playback was stopped
-            case TransistorKeys.PLAYBACK_STOPPED:
+            case PLAYBACK_STOPPED:
                 // load app state
                 loadAppState(mActivity);
                 // stop sleep timer
@@ -687,14 +687,14 @@ public final class MainActivityFragment extends Fragment {
 
         int newStationPosition;
 
-        switch (intent.getIntExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, 1)) {
+        switch (intent.getIntExtra(EXTRA_COLLECTION_CHANGE, 1)) {
 
             // CASE: station was added
-            case TransistorKeys.STATION_ADDED:
-                if (intent.hasExtra(TransistorKeys.EXTRA_STATION)) {
+            case STATION_ADDED:
+                if (intent.hasExtra(EXTRA_STATION)) {
 
                     // get station from intent
-                    Station station = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
+                    Station station = intent.getParcelableExtra(EXTRA_STATION);
 
                     // add station to adapter, scroll to new position and update adapter
                     newStationPosition = mCollectionAdapter.add(station);
@@ -710,13 +710,13 @@ public final class MainActivityFragment extends Fragment {
                 break;
 
             // CASE: station was renamed
-            case TransistorKeys.STATION_RENAMED:
-                if (intent.hasExtra(TransistorKeys.EXTRA_STATION_NEW_NAME) && intent.hasExtra(TransistorKeys.EXTRA_STATION) && intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)) {
+            case STATION_RENAMED:
+                if (intent.hasExtra(EXTRA_STATION_NEW_NAME) && intent.hasExtra(EXTRA_STATION) && intent.hasExtra(EXTRA_STATION_ID)) {
 
                     // get new name, station and station ID from intent
-                    String newStationName = intent.getStringExtra(TransistorKeys.EXTRA_STATION_NEW_NAME);
-                    Station station = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
-                    int stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
+                    String newStationName = intent.getStringExtra(EXTRA_STATION_NEW_NAME);
+                    Station station = intent.getParcelableExtra(EXTRA_STATION);
+                    int stationID = intent.getIntExtra(EXTRA_STATION_ID, 0);
 
                     // update notification
                     if (station.getPlaybackState()) {
@@ -734,12 +734,12 @@ public final class MainActivityFragment extends Fragment {
                 break;
 
             // CASE: station was deleted
-            case TransistorKeys.STATION_DELETED:
-                if (intent.hasExtra(TransistorKeys.EXTRA_STATION) && intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)) {
+            case STATION_DELETED:
+                if (intent.hasExtra(EXTRA_STATION) && intent.hasExtra(EXTRA_STATION_ID)) {
 
                     // get station and station ID from intent
-                    Station station = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
-                    int stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
+                    Station station = intent.getParcelableExtra(EXTRA_STATION);
+                    int stationID = intent.getIntExtra(EXTRA_STATION_ID, 0);
 
                     // dismiss notification
                     NotificationHelper.stop();
@@ -747,7 +747,7 @@ public final class MainActivityFragment extends Fragment {
                     if (station.getPlaybackState()) {
                         // stop player service and notification using intent
                         Intent i = new Intent(mActivity, PlayerService.class);
-                        i.setAction(TransistorKeys.ACTION_DISMISS);
+                        i.setAction(ACTION_DISMISS);
                         mActivity.startService(i);
                         LogHelper.v(LOG_TAG, "Stopping player service.");
                     }

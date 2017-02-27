@@ -1,7 +1,7 @@
 /**
  * TransistorKeys.java
  * Implements the keys used throughout the app
- * This class hosts all keys used to control Transistor's state
+ * This interface hosts all keys used to control Transistor's state
  *
  * This file is part of
  * TRANSISTOR - Radio App for Android
@@ -17,79 +17,83 @@ package org.y20k.transistor.helpers;
 /**
  * TransistorKeys class
  */
-public class TransistorKeys {
+public interface TransistorKeys {
 
     /* ACTIONS */
-    public static final String ACTION_PLAY = "org.y20k.transistor.action.PLAY";
-    public static final String ACTION_STOP = "org.y20k.transistor.action.STOP";
-    public static final String ACTION_DISMISS = "org.y20k.transistor.action.DISMISS";
-    public static final String ACTION_PLAYBACK_STATE_CHANGED = "org.y20k.transistor.action.PLAYBACK_STATE_CHANGED";
-    public static final String ACTION_CHANGE_VIEW_SELECTION = "org.y20k.transistor.action.CHANGE_VIEW_SELECTION";
-    public static final String ACTION_COLLECTION_CHANGED = "org.y20k.transistor.action.COLLECTION_CHANGED";
-    public static final String ACTION_IMAGE_CHANGE_REQUESTED = "org.y20k.transistor.action.IMAGE_CHANGE_REQUESTED";
-    public static final String ACTION_METADATA_CHANGED = "org.y20k.transistor.action.METADATA_CHANGED";
-    public static final String ACTION_SHOW_PLAYER = "org.y20k.transistor.action.SHOW_PLAYER";
-    public static final String ACTION_TIMER_RUNNING = "org.y20k.transistor.action.TIMER_RUNNING";
-    public static final String ACTION_TIMER_START = "org.y20k.transistor.action.TIMER_START";
-    public static final String ACTION_TIMER_STOP = "org.y20k.transistor.action.TIMER_STOP";
+    String ACTION_PLAY = "org.y20k.transistor.action.PLAY";
+    String ACTION_STOP = "org.y20k.transistor.action.STOP";
+    String ACTION_DISMISS = "org.y20k.transistor.action.DISMISS";
+    String ACTION_PLAYBACK_STATE_CHANGED = "org.y20k.transistor.action.PLAYBACK_STATE_CHANGED";
+    String ACTION_CHANGE_VIEW_SELECTION = "org.y20k.transistor.action.CHANGE_VIEW_SELECTION";
+    String ACTION_COLLECTION_CHANGED = "org.y20k.transistor.action.COLLECTION_CHANGED";
+    String ACTION_IMAGE_CHANGE_REQUESTED = "org.y20k.transistor.action.IMAGE_CHANGE_REQUESTED";
+    String ACTION_METADATA_CHANGED = "org.y20k.transistor.action.METADATA_CHANGED";
+    String ACTION_SHOW_PLAYER = "org.y20k.transistor.action.SHOW_PLAYER";
+    String ACTION_TIMER_RUNNING = "org.y20k.transistor.action.TIMER_RUNNING";
+    String ACTION_TIMER_START = "org.y20k.transistor.action.TIMER_START";
+    String ACTION_TIMER_STOP = "org.y20k.transistor.action.TIMER_STOP";
 
     /* EXTRAS */
-    public static final String EXTRA_COLLECTION_CHANGE = "COLLECTION_CHANGE";
-    public static final String EXTRA_INFOSHEET_TITLE = "INFOSHEET_TITLE";
-    public static final String EXTRA_INFOSHEET_CONTENT = "INFOSHEET_CONTENT";
-    public static final String EXTRA_METADATA = "METADATA";
-    public static final String EXTRA_PLAYBACK_STATE_CHANGE = "PLAYBACK_STATE_CHANGE";
-    public static final String EXTRA_PLAYBACK_STATE = "PLAYBACK_STATE";
-    public static final String EXTRA_STATION = "STATION";
-    public static final String EXTRA_STATION_ID = "STATION_ID";
-    public static final String EXTRA_LAST_STATION = "LAST_STATION";
-    public static final String EXTRA_STATION_NEW_NAME = "STATION_NEW_NAME";
-    public static final String EXTRA_STREAM_URI = "STREAM_URI";
-    public static final String EXTRA_TIMER_DURATION = "TIMER_DURATION";
-    public static final String EXTRA_TIMER_REMAINING = "TIMER_REMAINING";
+    String EXTRA_COLLECTION_CHANGE = "COLLECTION_CHANGE";
+    String EXTRA_INFOSHEET_TITLE = "INFOSHEET_TITLE";
+    String EXTRA_INFOSHEET_CONTENT = "INFOSHEET_CONTENT";
+    String EXTRA_METADATA = "METADATA";
+    String EXTRA_PLAYBACK_STATE_CHANGE = "PLAYBACK_STATE_CHANGE";
+    String EXTRA_PLAYBACK_STATE = "PLAYBACK_STATE";
+    String EXTRA_STATION = "STATION";
+    String EXTRA_STATION_ID = "STATION_ID";
+    String EXTRA_LAST_STATION = "LAST_STATION";
+    String EXTRA_STATION_NEW_NAME = "STATION_NEW_NAME";
+    String EXTRA_STREAM_URI = "STREAM_URI";
+    String EXTRA_TIMER_DURATION = "TIMER_DURATION";
+    String EXTRA_TIMER_REMAINING = "TIMER_REMAINING";
 
     /* ARGS */
-    public static final String ARG_STATION = "ArgStation";
-    public static final String ARG_STATION_ID = "ArgStationID";
-    public static final String ARG_STREAM_URI = "ArgStreamUri";
-    public static final String ARG_TWO_PANE = "ArgTwoPane";
-    public static final String ARG_PLAYBACK = "ArgPlayback";
+    String ARG_STATION = "ArgStation";
+    String ARG_STATION_ID = "ArgStationID";
+    String ARG_STREAM_URI = "ArgStreamUri";
+    String ARG_TWO_PANE = "ArgTwoPane";
+    String ARG_PLAYBACK = "ArgPlayback";
 
     /* PREFS */
-    public static final String PREF_PLAYBACK = "prefPlayback";
-    public static final String PREF_STATION_LOADING = "prefStationLoading";
-    public static final String PREF_STATION_ID_CURRENTLY_PLAYING = "prefStationIDCurrentlyPlaying";
-    public static final String PREF_STATION_ID_LAST = "prefStationIDLast";
-    public static final String PREF_STATION_ID_SELECTED = "prefStationIDSelected";
-    public static final String PREF_STATION_METADATA = "prefStationMetadata";
-    public static final String PREF_TIMER_RUNNING = "prefTimerRunning";
-    public static final String PREF_TWO_PANE = "prefTwoPane";
+    String PREF_PLAYBACK = "prefPlayback";
+    String PREF_STATION_LOADING = "prefStationLoading";
+    String PREF_STATION_ID_CURRENTLY_PLAYING = "prefStationIDCurrentlyPlaying";
+    String PREF_STATION_ID_LAST = "prefStationIDLast";
+    String PREF_STATION_ID_SELECTED = "prefStationIDSelected";
+    String PREF_STATION_METADATA = "prefStationMetadata";
+    String PREF_TIMER_RUNNING = "prefTimerRunning";
+    String PREF_TWO_PANE = "prefTwoPane";
 
     /* RESULTS */
-    public static final String RESULT_FETCH_ERROR = "FETCH_ERROR";
-    public static final String RESULT_PLAYLIST_TYPE = "PLAYLIST_TYPE";
-    public static final String RESULT_STREAM_TYPE = "STREAM_TYPE";
-    public static final String RESULT_FILE_CONTENT = "FILE_CONTENT";
+    String RESULT_FETCH_ERROR = "FETCH_ERROR";
+    String RESULT_PLAYLIST_TYPE = "PLAYLIST_TYPE";
+    String RESULT_STREAM_TYPE = "STREAM_TYPE";
+    String RESULT_FILE_CONTENT = "FILE_CONTENT";
 
     /* MISC */
-    public static final int INFOSHEET_CONTENT_ABOUT = 1;
-    public static final int INFOSHEET_CONTENT_HOWTO = 2;
-    public static final int PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE = 1;
-    public static final int PERMISSION_REQUEST_STATION_FETCHER_READ_EXTERNAL_STORAGE = 2;
+    int INFOSHEET_CONTENT_ABOUT = 1;
+    int INFOSHEET_CONTENT_HOWTO = 2;
+    int PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE = 1;
+    int PERMISSION_REQUEST_STATION_FETCHER_READ_EXTERNAL_STORAGE = 2;
 
-    public static final int PLAYER_SERVICE_NOTIFICATION_ID = 1;
-    public static final int REQUEST_LOAD_IMAGE = 1;
-    public static final int STATION_ADDED = 1;
-    public static final int STATION_RENAMED = 2;
-    public static final int STATION_DELETED = 3;
-    public static final int PLAYBACK_LOADING_STATION = 1;
-    public static final int PLAYBACK_STARTED = 2;
-    public static final int PLAYBACK_STOPPED = 3;
-    public static final String INSTANCE_LIST_STATE = "instanceListState";
-    public static final String INSTANCE_STATION = "instanceStation";
-    public static final String INSTANCE_STATION_ID = "instanceStationID";
-    public static final String INSTANCE_PLAYBACK = "instancePlayback";
-    public static final String PLAYER_FRAGMENT_TAG = "PFTAG";
-    public static final String SHOUTCAST_STREAM_TITLE_HEADER = "StreamTitle='";
+    int PLAYER_SERVICE_NOTIFICATION_ID = 1;
+    int REQUEST_LOAD_IMAGE = 1;
+    int STATION_ADDED = 1;
+    int STATION_RENAMED = 2;
+    int STATION_DELETED = 3;
+    int PLAYBACK_LOADING_STATION = 1;
+    int PLAYBACK_STARTED = 2;
+    int PLAYBACK_STOPPED = 3;
+    String INSTANCE_LIST_STATE = "instanceListState";
+    String INSTANCE_STATION = "instanceStation";
+    String INSTANCE_STATION_ID = "instanceStationID";
+    String INSTANCE_PLAYBACK = "instancePlayback";
+    String PLAYER_FRAGMENT_TAG = "PFTAG";
+    String SHOUTCAST_STREAM_TITLE_HEADER = "StreamTitle='";
+
+    int COPY_STATION_ALL = 1;
+    int COPY_STATION_METADATA = 2;
+    int COPY_STREAM_URL = 3;
 
 }

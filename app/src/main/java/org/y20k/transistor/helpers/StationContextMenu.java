@@ -29,7 +29,7 @@ import org.y20k.transistor.core.Station;
 /**
  * StationContextMenu class
  */
-public final class StationContextMenu extends DialogFragment {
+public final class StationContextMenu extends DialogFragment implements TransistorKeys {
 
 
     /* Main class variables */
@@ -68,9 +68,9 @@ public final class StationContextMenu extends DialogFragment {
                     case R.id.menu_icon:
                         // send local broadcast (needed by MainActivityFragment)
                         Intent iconIntent = new Intent();
-                        iconIntent.setAction(TransistorKeys.ACTION_IMAGE_CHANGE_REQUESTED);
-                        iconIntent.putExtra(TransistorKeys.EXTRA_STATION, mStation);
-                        iconIntent.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
+                        iconIntent.setAction(ACTION_IMAGE_CHANGE_REQUESTED);
+                        iconIntent.putExtra(EXTRA_STATION, mStation);
+                        iconIntent.putExtra(EXTRA_STATION_ID, mStationID);
                         LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(iconIntent);
                         return true;
 

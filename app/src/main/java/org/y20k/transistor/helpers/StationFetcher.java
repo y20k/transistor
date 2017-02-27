@@ -33,7 +33,7 @@ import java.net.URL;
 /**
  * StationFetcher class
  */
-public final class StationFetcher extends AsyncTask<Void, Void, Station> {
+public final class StationFetcher extends AsyncTask<Void, Void, Station> implements TransistorKeys {
 
     /* Define log tag */
     private static final String LOG_TAG = StationFetcher.class.getSimpleName();
@@ -93,17 +93,17 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
         }
 
         // station was successfully fetched
-        if (station != null && fetchResults != null && !fetchResults.getBoolean(TransistorKeys.RESULT_FETCH_ERROR) && mFolderExists) {
+        if (station != null && fetchResults != null && !fetchResults.getBoolean(RESULT_FETCH_ERROR) && mFolderExists) {
 
             // send local broadcast - adapter will save station
             Intent i = new Intent();
-            i.setAction(TransistorKeys.ACTION_COLLECTION_CHANGED);
-            i.putExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, TransistorKeys.STATION_ADDED);
-            i.putExtra(TransistorKeys.EXTRA_STATION, station);
+            i.setAction(ACTION_COLLECTION_CHANGED);
+            i.putExtra(EXTRA_COLLECTION_CHANGE, STATION_ADDED);
+            i.putExtra(EXTRA_STATION, station);
             LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(i);
 
             // inform user that aac might not work properly
-            if (fetchResults.containsKey(TransistorKeys.RESULT_STREAM_TYPE) && fetchResults.getParcelable(TransistorKeys.RESULT_STREAM_TYPE) != null && fetchResults.getParcelable(TransistorKeys.RESULT_STREAM_TYPE).toString().contains("aac")) {
+            if (fetchResults.containsKey(RESULT_STREAM_TYPE) && fetchResults.getParcelable(RESULT_STREAM_TYPE) != null && fetchResults.getParcelable(RESULT_STREAM_TYPE).toString().contains("aac")) {
                 Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_stream_may_not_work), Toast.LENGTH_LONG).show();
             }
 
@@ -111,7 +111,7 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
         }
 
         // an error occurred
-        if (station == null || (fetchResults != null && fetchResults.getBoolean(TransistorKeys.RESULT_FETCH_ERROR)) || !mFolderExists) {
+        if (station == null || (fetchResults != null && fetchResults.getBoolean(RESULT_FETCH_ERROR)) || !mFolderExists) {
 
             String errorTitle;
             String errorMessage;
@@ -163,16 +163,16 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
     /* Builds more detailed download error string */
     private String buildDownloadErrorDetails(Bundle fetchResults) {
 
-        String fileContent = fetchResults.getString(TransistorKeys.RESULT_FILE_CONTENT);
+        String fileContent = fetchResults.getString(RESULT_FILE_CONTENT);
         String playListType;
         String streamType;
-        if (fetchResults.containsKey(TransistorKeys.RESULT_PLAYLIST_TYPE) && fetchResults.getParcelable(TransistorKeys.RESULT_PLAYLIST_TYPE) != null) {
-            playListType = fetchResults.getParcelable(TransistorKeys.RESULT_PLAYLIST_TYPE).toString();
+        if (fetchResults.containsKey(RESULT_PLAYLIST_TYPE) && fetchResults.getParcelable(RESULT_PLAYLIST_TYPE) != null) {
+            playListType = fetchResults.getParcelable(RESULT_PLAYLIST_TYPE).toString();
         } else {
             playListType = "unknown";
         }
-        if (fetchResults.containsKey(TransistorKeys.RESULT_STREAM_TYPE) && fetchResults.getParcelable(TransistorKeys.RESULT_STREAM_TYPE) != null) {
-            streamType = fetchResults.getParcelable(TransistorKeys.RESULT_STREAM_TYPE).toString();
+        if (fetchResults.containsKey(RESULT_STREAM_TYPE) && fetchResults.getParcelable(RESULT_STREAM_TYPE) != null) {
+            streamType = fetchResults.getParcelable(RESULT_STREAM_TYPE).toString();
         } else {
             streamType = "unknown";
         }
@@ -240,8 +240,8 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
             sb.append(mActivity.getResources().getString(R.string.dialog_error_message_fetch_general_hint_m3u));
         }
 
-        if (fetchResults != null && fetchResults.getBoolean(TransistorKeys.RESULT_FETCH_ERROR)) {
-            String fileContent = fetchResults.getString(TransistorKeys.RESULT_FILE_CONTENT);
+        if (fetchResults != null && fetchResults.getBoolean(RESULT_FETCH_ERROR)) {
+            String fileContent = fetchResults.getString(RESULT_FILE_CONTENT);
             if (fileContent != null) {
                 sb.append("\n\n");
                 sb.append(mActivity.getResources().getString(R.string.dialog_error_message_fetch_general_file_content));

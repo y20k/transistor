@@ -7,7 +7,7 @@
     android:layout_width="@dimen/bottom_sheet_width"
     android:layout_height="match_parent"
     android:layout_gravity="bottom"
-    android:background="@color/transistor_grey_darker_95percent"
+    android:background="@color/transistor_transparent"
     app:behavior_hideable="true"
     app:behavior_peekHeight="48dp"
     app:layout_behavior="android.support.design.widget.BottomSheetBehavior">

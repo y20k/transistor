@@ -17,5 +17,6 @@
     <color name="transistor_gold_dark">#FFCC9933</color>
 
     <color name="transistor_white">#FFFFFFFF</color>
+    <color name="transistor_transparent">#00FFFFFF</color>
 
 </resources>

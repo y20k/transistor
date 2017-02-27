@@ -86,7 +86,7 @@
     <string name="toastmessage_shortcut_created">Shortcut created.</string>
     <string name="toastmessage_copied_to_clipboard_url">Stream URL copied to clipboard.</string>
     <string name="toastmessage_copied_to_clipboard_metadata">Metadata copied to clipboard.</string>
-    <string name="toastmessage_station_copied">Station copied.</string>
+    <string name="toastmessage_station_copied">Station copied to clipboard.</string>
     <string name="toastmessage_stream_may_not_work">Unsupported audio format detected. Playback of stream may not work properly.</string>
     <string name="toastmessage_timer_activated">Sleep timer activated.</string>
     <string name="toastmessage_timer_cancelled">Sleep timer cancelled.</string>

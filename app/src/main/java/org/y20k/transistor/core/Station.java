@@ -47,7 +47,7 @@ import java.util.regex.Pattern;
 /**
  * Station class
  */
-public final class Station implements Comparable<Station>, Parcelable {
+public final class Station implements TransistorKeys, Comparable<Station>, Parcelable {
 
     /* Define log tag */
     private static final String LOG_TAG = Station.class.getSimpleName();
@@ -112,8 +112,8 @@ public final class Station implements Comparable<Station>, Parcelable {
             mStreamUri = Uri.parse(fileLocation.toString().trim());
             mStationName = getStationName(fileLocation);
             // save results
-            mStationFetchResults.putParcelable(TransistorKeys.RESULT_STREAM_TYPE, contentType);
-            mStationFetchResults.putBoolean(TransistorKeys.RESULT_FETCH_ERROR, false);
+            mStationFetchResults.putParcelable(RESULT_STREAM_TYPE, contentType);
+            mStationFetchResults.putBoolean(RESULT_FETCH_ERROR, false);
         }
 
         // content type is playlist
@@ -125,29 +125,29 @@ public final class Station implements Comparable<Station>, Parcelable {
             if (parse(mPlaylistFileContent) && mStreamUri != null) {
                 mStationName = getStationName(fileLocation);
                 // save results
-                mStationFetchResults.putParcelable(TransistorKeys.RESULT_PLAYLIST_TYPE, contentType);
-                mStationFetchResults.putParcelable(TransistorKeys.RESULT_STREAM_TYPE, getContentType(mStreamUri));
-                mStationFetchResults.putString(TransistorKeys.RESULT_FILE_CONTENT, mPlaylistFileContent);
-                mStationFetchResults.putBoolean(TransistorKeys.RESULT_FETCH_ERROR, false);
+                mStationFetchResults.putParcelable(RESULT_PLAYLIST_TYPE, contentType);
+                mStationFetchResults.putParcelable(RESULT_STREAM_TYPE, getContentType(mStreamUri));
+                mStationFetchResults.putString(RESULT_FILE_CONTENT, mPlaylistFileContent);
+                mStationFetchResults.putBoolean(RESULT_FETCH_ERROR, false);
 
             } else {
                 // save error flag and file content in results
-                mStationFetchResults.putParcelable(TransistorKeys.RESULT_PLAYLIST_TYPE, contentType);
-                mStationFetchResults.putString(TransistorKeys.RESULT_FILE_CONTENT, "\n[File probably does not contain a valid streaming URL.]");
-                mStationFetchResults.putBoolean(TransistorKeys.RESULT_FETCH_ERROR, true);
+                mStationFetchResults.putParcelable(RESULT_PLAYLIST_TYPE, contentType);
+                mStationFetchResults.putString(RESULT_FILE_CONTENT, "\n[File probably does not contain a valid streaming URL.]");
+                mStationFetchResults.putBoolean(RESULT_FETCH_ERROR, true);
             }
 
         // content type is none of the above
         } else if (contentType != null) {
             // save results and return
-            mStationFetchResults.putParcelable(TransistorKeys.RESULT_STREAM_TYPE, contentType);
-            mStationFetchResults.putBoolean(TransistorKeys.RESULT_FETCH_ERROR, true);
+            mStationFetchResults.putParcelable(RESULT_STREAM_TYPE, contentType);
+            mStationFetchResults.putBoolean(RESULT_FETCH_ERROR, true);
             return;
 
         // no content type
         } else {
             // save error flag in results and return
-            mStationFetchResults.putBoolean(TransistorKeys.RESULT_FETCH_ERROR, true);
+            mStationFetchResults.putBoolean(RESULT_FETCH_ERROR, true);
             return;
         }
 
@@ -183,14 +183,14 @@ public final class Station implements Comparable<Station>, Parcelable {
         // parse the raw content of playlist file (mPlaylistFileContent)
         if (parse(mPlaylistFileContent) &&  mStreamUri != null) {
             // save results
-            mStationFetchResults.putParcelable(TransistorKeys.RESULT_STREAM_TYPE, getContentType(mStreamUri));
-            mStationFetchResults.putString(TransistorKeys.RESULT_FILE_CONTENT, mPlaylistFileContent);
-            mStationFetchResults.putBoolean(TransistorKeys.RESULT_FETCH_ERROR, false);
+            mStationFetchResults.putParcelable(RESULT_STREAM_TYPE, getContentType(mStreamUri));
+            mStationFetchResults.putString(RESULT_FILE_CONTENT, mPlaylistFileContent);
+            mStationFetchResults.putBoolean(RESULT_FETCH_ERROR, false);
 
         } else {
             // save error flag and file content in results
-            mStationFetchResults.putString(TransistorKeys.RESULT_FILE_CONTENT, "\n[File probably does not contain a valid streaming URL.]");
-            mStationFetchResults.putBoolean(TransistorKeys.RESULT_FETCH_ERROR, true);
+            mStationFetchResults.putString(RESULT_FILE_CONTENT, "\n[File probably does not contain a valid streaming URL.]");
+            mStationFetchResults.putBoolean(RESULT_FETCH_ERROR, true);
         }
 
         // set Transistor's playlist file object
