@@ -1,2 +1,134 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<?xml version='1.0' encoding='UTF-8'?>
+<resources><string name="title_activity_infosheet">Informacje</string>
+
+    <string name="menu_about">O aplikacji</string>
+    <string name="menu_howto">Instrukcja obsługi</string>
+    <string name="menu_timer">Wyłącznik czasowy</string>
+    <string name="menu_icon">Zmień ikonę</string>
+    <string name="menu_add">Dodaj</string>
+    <string name="menu_delete">Usuń</string>
+    <string name="menu_rename">Zmień nazwę</string>
+    <string name="menu_shortcut">Dodaj do ekranu głównego</string>
+
+    <string name="header_about">O aplikacji</string>
+    <string name="header_howto">Instrukcja obsługi</string>
+
+    <string name="descr_arrow_actioncall">Strzałka wskazująca na przycisk dodawania stacji</string>
+    <string name="descr_overflow_button">Wyświetl opcje dla stacji</string>
+    <string name="descr_station_icon">Ikona stacji</string>
+    <string name="descr_station_name">Nazwa stacji</string>
+    <string name="descr_station_metadata">Metadane (Wykonawca / Tytuł) odtwarzanej stacji</string>
+    <string name="descr_station_name_example">Przykład FM</string>
+    <string name="descr_station_metadata_example">Wykonawca - Tytuł</string>
+    <string name="descr_station_stream_loading">Ładowanie strumienia …</string>
+    <string name="descr_playback_button">Duży przycisk odtwarzania</string>
+    <string name="descr_playback_indicator">Wskaźnik odtwarzania</string>
+    <string name="descr_playback_indicator_started">Wskaźnik odtwarzania</string>
+    <string name="descr_timer_indicator_started">Wskaźnik wyłącznika czasowego</string>
+    <string name="descr_player_sheet_information_icon">Ikona Informacji</string>
+    <string name="descr_player_sheet_p_station_name">Nazwa wybranej stacji</string>
+    <string name="descr_player_sheet_p_station_metadata">Metadane wybranej stacji</string>
+    <string name="descr_player_sheet_p_stream_url">URL strumienia wybranej stacji</string>
+
+    <string name="player_sheet_h1_station_name">Stacja</string>
+    <string name="player_sheet_h1_stream_url">URL strumienia</string>
+    <string name="player_sheet_p_station_metadata">metadane niedostępne</string>
+
+    <string name="dialog_generic_button_okay">Okej</string>
+    <string name="dialog_generic_button_cancel">Anuluj</string>
+    <string name="dialog_add_station_button">Dodaj</string>
+    <string name="dialog_add_station_input_hint">Wklej poprawny URL</string>
+    <string name="dialog_add_station_message">Dodaj nową stację</string>
+    <string name="dialog_add_station_howto">Możesz dodać zarówno surowe strumienie audio zakodowane w MP3 i OGG jak i strumienie zapisane w plikach pls lub m3u. Alternatywnie możesz dodać nowe stacje poprzez dotknięcie linków (pls lub m3u) w Twojej przeglądarce internetowej.</string>
+    <string name="dialog_delete_station_message">Usuń stację</string>
+    <string name="dialog_button_delete">Usuń</string>
+    <string name="dialog_rename_station_input_hint">Wpisz nową nazwę</string>
+    <string name="dialog_rename_station_message">Zmień nazwę stacji</string>
+    <string name="dialog_button_rename">Zmień nazwę</string>
+
+    <string name="dialog_error_title_default">Błąd</string>
+    <string name="dialog_error_message_default">Wystąpił błąd</string>
+    <string name="dialog_error_details_button_default">Pokaż szczegóły</string>
+    <string name="dialog_error_details_default">Brak dostępnych szczegółów</string>
+    <string name="dialog_error_details_write">Stacja prawdopodobnie już istnieje (a jeśli nie, sprawdź swoją pamięć zewnętrzną).</string>
+    <string name="dialog_error_title_fetch_download">Problem ze ściągnięciem</string>
+    <string name="dialog_error_title_fetch_read">Problem z odczytem</string>
+    <string name="dialog_error_title_fetch_write">Problem z zapisem</string>
+    <string name="dialog_error_message_fetch_general_external_storage">Pamięć zewnętrzna:</string>
+    <string name="dialog_error_message_fetch_general_hint_m3u">Porada: Transistor może przetworzyć tylko strumienie MP3 i OGG lub URLe kończące się na .m3u lub .pls.</string>
+    <string name="dialog_error_message_fetch_general_playlist_type">Typ MIME pliku:</string>
+    <string name="dialog_error_message_fetch_general_stream_type">Typ MIME strumienia:</string>
+    <string name="dialog_error_message_fetch_general_file_content">Zawartość pliku:</string>
+    <string name="dialog_error_message_fetch_download">Transistor próbował z całych sił, ale nie był w stanie zrozumieć podanego linku.</string>
+    <string name="dialog_error_message_fetch_download_station_url">URL stacji:</string>
+    <string name="dialog_error_message_fetch_read">Transistor próbował z całych sił, ale nie był w stanie zrozumieć podanego pliku.</string>
+    <string name="dialog_error_message_fetch_read_file_location">Lokalizacja pliku:</string>
+    <string name="dialog_error_message_fetch_write">Transistor próbował z całych sił, ale nie był w stanie zapisać podanej stacji do pamięci.</string>
+
+    <string name="actioncall_message_start_here">Dodaj nową stację</string>
+    <string name="toastmessage_add_download_started">Pobieranie rozpoczęte.</string>
+    <string name="toastmessage_add_open_file_started">Otwieranie pliku.</string>
+    <string name="toastmessage_long_press_playback_stopped">Odtwarzanie zatrzymanie (wykryto długie naciśnięcie)</string>
+    <string name="toastmessage_long_press_playback_started">Odtwarzanie rozpoczęte (wykryto długie naciśnięcie)</string>
+    <string name="toastmessage_shortcut_created">Skrót utworzony.</string>
+    <string name="toastmessage_copied_to_clipboard_url">URL strumienia skopiowany do schowka.</string>
+    <string name="toastmessage_copied_to_clipboard_metadata">Metadane skopiowane do schowka.</string>
+    <string name="toastmessage_station_copied">Stacja skopiowana do schowka.</string>
+    <string name="toastmessage_stream_may_not_work">Wykryto niewspierany format audio. Odtwarzanie strumienia może nie działać poprawnie.</string>
+    <string name="toastmessage_timer_activated">Wyłącznik czasowy uruchomiony.</string>
+    <string name="toastmessage_timer_cancelled">Wyłącznik czasowy anulowany.</string>
+    <string name="toastmessage_timer_duration_increased">Zwiększono czas wyłącznika.</string>
+    <string name="toastmessage_timer_start_unable">Proszę najpierw rozpocząć odtwarzanie.</string>
+    <string name="toastalert_rename_unsuccessful">Nie udało się zmienić nazwy stacji. Proszę wybrać inną nazwę.</string>
+    <string name="toastalert_delete_successful">Stacja usunięta.</string>
+    <string name="toastalert_no_external_storage">Dostęp do pamięci zewnętrznej nie powiódł się.</string>
+    <string name="toastalert_headphones_unplugged">Słuchawki odłączone. Odtwarzanie zatrzymane.</string>
+    <string name="toastalert_permission_denied">Odmowa dostępu:</string>
+    <string name="toastalert_station_not_found">Nie udało się odnaleźć stacji.</string>
+    <string name="toastalert_stream_not_found">Transistor nie może rozpoznać tej stacji. Proszę ją usunąć i dodać jeszcze raz do ekranu głównego.</string>
+    <string name="snackbar_request_storage_access">Transistor potrzebuje uprawnień odczytu w celu uzyskania dostępu do danych z pamięci zewnętrznej.</string>
+    <string name="snackbar_message_timer_set">Wyłącznik czasowy ustawiony na</string>
+
+    <string name="notification_swipe_to_stop">Przesuń palcem, aby zatrzymać</string>
+    <string name="notification_playing">Odtwarzane</string>
+
+    <string name="infosheet_about_h1_about">O Transistorze</string>
+    <string name="infosheet_about_h2_radio">Aplikacja radiowa dla Androida</string>
+    <string name="infosheet_about_h3_version">Wersja 2.2 (Synowie Cichej Epoki)</string>
+    <string name="infosheet_about_p_bare">Transistor jest prostą aplikacją służącą do słuchania programów radiowych przez internet. Aplikacja przechowuje stacje jako pliki na pamięci zewnętrznej Twojego urządzenia. Poszukaj plików typu m3u pod /Android/data/org.y20k.transistor/files/Collection. Aplikacja obecnie obsługuje strumienie zapisane w MP3 i OGG.</string>
+    <string name="infosheet_about_p_note">Ważna informacja: To jest aplikacja typu BYOS (przynieś własną stację - bring your own station). Nie posiada żadnej opcji szukania stacji - musisz je dodać samodzielnie.</string>
+    <string name="infosheet_about_p_free">Transistor jest wolnym oprogramowaniem, opublikowanym na licencji MIT. Kod źródłowy jest na GitHubie. GitHub jest również dobrym miejscem do zgłaszania błędów (lub nawet pomocy w rozwoju aplikacji, jeśli masz ochotę).</string>
+    <string name="infosheet_about_h2_permissions">Jakich Uprawnień potrzebuje Transistor?</string>
+    <string name="infosheet_about_h3_shortcut">Uprawnienia INSTALL_SHORTCUT oraz UNINSTALL_SHORTCUT</string>
+    <string name="infosheet_about_p_shortcut">To uprawnienie jest potrzebne do (de)instalacji skrótów do stacji na ekranie głównym Androida.</string>
+    <string name="infosheet_about_h3_internet">Uprawnienie INTERNET</string>
+    <string name="infosheet_about_p_internet">Transistor odtwarza stacje radiowe przez internet.</string>
+    <string name="infosheet_about_h3_external">Uprawnienie READ_EXTERNAL_STORAGE</string>
+    <string name="infosheet_about_p_external">Transistor potrzebuje dostępu do obrazków, zdjęć i dokumentów, aby móc dostosować ikony stacji oraz otwierać lokalnie zapisane listy odtwarzania.</string>
+    <string name="infosheet_about_h3_vibrate">Uprawnienie VIBRATE</string>
+    <string name="infosheet_about_p_vibrate">Stuknięcie i przytrzymanie stacji wywoła lekkie wibracje.</string>
+    <string name="infosheet_about_h3_wakelock">Uprawnienie WAKE_LOCK</string>
+    <string name="infosheet_about_p_wakelock">Podczas odtwarzania, Transistor używa częściowego \'wake locka\'. To sprawia, że Android nie będzie zatrzymywał odtwarzania, aby oszczędzić baterię.</string>
+
+    <string name="infosheet_howto_h1_howto">Instrukcja obsługi Transistora</string>
+    <string name="infosheet_howto_h2_add">Jak dodać nową stację?</string>
+    <string name="infosheet_howto_p_add">Najprostszym sposobem dodania nowej stacji jest wyszukiwanie linków strumieni w internecie i wybór Transistora jako domyślnej aplikacji obsługującej te typy plików. Możesz również stuknąć w symbol (+) w górnym pasku i bezpośrednio wkleić linki strumieniu. Uwaga: Transistor nie posiada żadnej opcji wyszukiwania.</string>
+    <string name="infosheet_howto_h2_play">Jak uruchomić odtwarzanie stacji?</string>
+    <string name="infosheet_howto_p_play">Stuknij wielki przycisk Play ;).</string>
+    <string name="infosheet_howto_h2_stop">Jak zatrzymać odtwarzanie?</string>
+    <string name="infosheet_howto_p_stop">Stuknij w wielki przycisk Stop lub odłącz słuchawki albo usuń powiadomienie z zablokowanego ekranu, przesuwając palcem.</string>
+    <string name="infosheet_howto_h2_sleep">Jak uruchomić wyłącznik czasowy?</string>
+    <string name="infosheet_howto_p_sleep">Stuknięcie symbolu Zegara uruchamia odliczanie 15 minut, po których Transistor zatrzyma odtwarzanie. Każde dodatkowe stuknięcie dodaje 15 minut do odliczania. Odtwarzanie musi być w toku, aby można było uruchomić wyłącznik.</string>
+    <string name="infosheet_howto_h2_shortcut">Jak dodać skrót do stacji do ekranu głównego?</string>
+    <string name="infosheet_howto_p_shortcut">Opcja dodania skrótu do stacji do ekranu głównego jest dostępna z poziomu menu stacji (wielokropka). Stuknięcie w skrót otworzy Transistor, który od razu uruchomi odtwarzanie.</string>
+    <string name="infosheet_howto_h2_edit">Jak zmienić nazwę stacji lub ją usunąć?</string>
+    <string name="infosheet_howto_p_edit">Opcje zmiany nazwy i usuwania są dostępne z poziomu menu kontekstowego stacji. Stuknij symbol wielokropka. Możesz zarządzać listami stacji również z poziomu przeglądarki plików (patrz następne pytanie).</string>
+    <string name="infosheet_howto_h2_storage">Gdzie Transistor przechowuje stacje?</string>
+    <string name="infosheet_howto_p_storage">Transistor nie zapisuje swojej listy stacji do bazy danych. Zamiast tego, przechowuje stacje jako pliki m3u w pamięci zewnętrznej Twojego urządzenia. Możesz śmiało eksperymentować z tymi plikami używając dowolnego edytora tekstu. Pliki są zapisywane w folderze /data/org.y20k.transistor/files/Collection.</string>
+    <string name="infosheet_howto_h2_backup">Jak zrobić kopię zapasową lub przenieść moje stacje?</string>
+    <string name="infosheet_howto_p_backup">Transistor obsługuje funkcję Automatycznej Kopii Zapasowej w Androidzie 6. Stacje są zawsze kopiowane na Twoje konto Google i zostanę odtworzone przy reinstalacji. Na urządzeniach ze starszymi wersjami Androida musisz samodzielnie skopiować i odtworzyć folder Collections.</string>
+    <string name="infosheet_howto_h2_settings">Dlaczego Transistor nie ma żadnych ustawień?</string>
+    <string name="infosheet_howto_p_settings">Nie ma nic do ustawiania ;). Transistor jest bardzo prostą aplikacją. W zależności od Twojego punktu widzenia to będzie albo świetne, albo słabe.</string>
+
+    <string name="app_name">Transistor</string> <string name="title_activity_player">Odtwarzanie</string>
+    </resources>
