@@ -33,16 +33,16 @@
     <string name="descr_playback_indicator_started">再生中のインジケーター</string>
     <string name="descr_timer_indicator_started">スリープタイマー実行中のインジケーター</string>
     <string name="descr_player_sheet_information_icon">Information Icon</string>
-    <string name="descr_player_sheet_content_copy_icon">Content copy icon</string>
-    <string name="descr_player_sheet_p_station_name">Name of selected radio station</string>
-    <string name="descr_player_sheet_p_station_metadata">Metadata from selected radio station</string>
-    <string name="descr_player_sheet_p_stream_url">Stream URL of selected radio station</string>
+    <string name="descr_player_sheet_content_copy_icon">コンテンツ コピー アイコン</string>
+    <string name="descr_player_sheet_p_station_name">選択したラジオ局の名前</string>
+    <string name="descr_player_sheet_p_station_metadata">選択したラジオ局からのメタデータ</string>
+    <string name="descr_player_sheet_p_stream_url">選択したラジオ局のストリーム URL</string>
 
     <!-- player -->
-    <string name="player_sheet_h1_station_name">Station</string>
-    <string name="player_sheet_h1_station_metadata">Currently Playing</string>
-    <string name="player_sheet_h1_stream_url">Stream URL</string>
-    <string name="player_sheet_p_station_metadata">no metadata available</string>
+    <string name="player_sheet_h1_station_name">放送局</string>
+    <string name="player_sheet_h1_station_metadata">現在再生中</string>
+    <string name="player_sheet_h1_stream_url">ストリーム URL</string>
+    <string name="player_sheet_p_station_metadata">メタデータがありません</string>
 
     <!-- dialogs -->
     <string name="dialog_generic_button_okay">OK</string>
@@ -84,8 +84,8 @@
     <string name="toastmessage_long_press_playback_stopped">再生が停止しました (長押しを検出しました)</string>
     <string name="toastmessage_long_press_playback_started">再生を開始しました (長押しを検出しました)</string>
     <string name="toastmessage_shortcut_created">ショートカットを作成しました。</string>
-    <string name="toastmessage_copied_to_clipboard_url">Stream URL copied to clipboard.</string>
-    <string name="toastmessage_copied_to_clipboard_metadata">Metadata copied to clipboard.</string>
+    <string name="toastmessage_copied_to_clipboard_url">ストリーム URL をクリップボードにコピーしました。</string>
+    <string name="toastmessage_copied_to_clipboard_metadata">メタデータをクリップボードにコピーしました。</string>
     <string name="toastmessage_station_copied">放送局をクリップボードにコピーしました。</string>
     <string name="toastmessage_stream_may_not_work">サポートされていないオーディオ形式が検出されました。ストリームの再生が正しく動作しない場合があります。</string>
     <string name="toastmessage_timer_activated">スリープタイマーを有効にしました。</string>
