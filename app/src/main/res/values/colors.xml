@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+
     <color name="transistor_red">#FFE53935</color>
     <color name="transistor_red_dark">#FFB71C1C</color>
 
@@ -16,5 +21,7 @@
     <color name="transistor_gold_dark">#FFCC9933</color>
 
     <color name="transistor_white">#FFFFFFFF</color>
+
+
 
 </resources>

@@ -6,7 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivityFragment">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".MainActivityFragment"
+    tools:showIn="@layout/app_bar_main">
 
     <LinearLayout
         android:id="@+id/main_actioncall_layout"

@@ -5,10 +5,18 @@
     <style name="TransistorAppTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
 
         <!-- Set AppCompat’s colors -->
-        <item name="colorPrimary">@color/transistor_red</item>
-        <item name="colorPrimaryDark">@color/transistor_red_dark</item>
-        <item name="colorAccent">@color/transistor_gold_dark</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
 
     </style>
 
+    <style name="TransistorAppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

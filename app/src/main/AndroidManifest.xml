@@ -16,7 +16,7 @@
         android:fullBackupContent="@xml/backupscheme"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/TransistorAppTheme">
+        android:theme="@style/TransistorAppTheme.NoActionBar">
 
         <!-- ANDROID AUTO SUPPORT -->
         <!--  https://developer.android.com/training/auto/audio/
