@@ -334,6 +334,93 @@ public final class Station implements Comparable<Station>, Parcelable {
     /* Returns content type for given URL */
     private ContentType getContentType(URL fileLocation) {
         try {
+
+//            URLConnection connection2 =null;
+//            InputStream in=null;
+//            String titleFromDtreem = "";
+//            try{
+//                connection2 = new URL(fileLocation.toString()).openConnection();
+//                connection2.setConnectTimeout(5000);
+//                connection2.setReadTimeout(5000);
+//                connection2.setRequestProperty("Icy-MetaData", "1");
+//                connection2.connect();
+//
+//                in = connection2.getInputStream();
+//                byte buf[] = new byte[16384]; // one second of 128kbit stream
+//                int count = 0;
+//                int total = 0;
+//                int metadataSize = 0;
+//                final int metadataOffset = connection2.getHeaderFieldInt("icy-metaint", 0);
+//                int bitRate = Math.max(connection2.getHeaderFieldInt("icy-br", 128), 32);
+//                LogHelper.v(LOG_TAG, "createProxyConnection: connected, icy-metaint " + metadataOffset + " icy-br " + bitRate);
+//                while (true) {
+//                    count = Math.min(in.available(), buf.length);
+//                    if (count <= 0) {
+//                        count = Math.min(bitRate * 64, buf.length); // buffer half-second of stream data
+//                    }
+//                    if (metadataOffset > 0) {
+//                        count = Math.min(count, metadataOffset - total);
+//                    }
+//
+//                    count = in.read(buf, 0, count);
+//                    if (count == 0) {
+//                        continue;
+//                    }
+//                    if (count < 0) {
+//                        break;
+//                    }
+//
+//                    total += count;
+//                    if (metadataOffset > 0 && total >= metadataOffset) {
+//                        // read metadata
+//                        total = 0;
+//                        count = in.read();
+//                        if (count < 0) {
+//                            break;
+//                        }
+//                        count *= 16;
+//                        metadataSize = count;
+//                        if (metadataSize == 0) {
+//                            continue;
+//                        }
+//                        // maximum metadata length is 4080 bytes
+//                        total = 0;
+//                        while (total < metadataSize) {
+//                            count = in.read(buf, total, count);
+//                            if (count < 0) {
+//                                break;
+//                            }
+//                            if (count == 0) {
+//                                continue;
+//                            }
+//                            total += count;
+//                            count = metadataSize - total;
+//                        }
+//                        total = 0;
+//                        String[] metadata = new String(buf, 0, metadataSize, StandardCharsets.UTF_8).split(";");
+//                        for (String s : metadata) {
+//                            if (s.indexOf(TransistorKeys.SHOUTCAST_STREAM_TITLE_HEADER) == 0 && s.length() >= TransistorKeys.SHOUTCAST_STREAM_TITLE_HEADER.length() + 1) {
+//                                Log.d(TAG, "SHOUTCAST_STREAM_TITLE_HEADER: " + s.substring(TransistorKeys.SHOUTCAST_STREAM_TITLE_HEADER.length(), s.length() - 1));
+//                                titleFromDtreem = s.substring(TransistorKeys.SHOUTCAST_STREAM_TITLE_HEADER.length(), s.length() - 1);
+//                            }
+//                        }
+//                    }
+//                }
+//            } finally {
+//                // Close Stream and disconnect HTTPS connection.
+//                if (in != null) {
+//                    in.close();
+//                }
+//            }
+
+
+
+
+
+
+
+
+
             HttpURLConnection connection = (HttpURLConnection)fileLocation.openConnection();
             connection.setConnectTimeout(5000);
             connection.setReadTimeout(5000);

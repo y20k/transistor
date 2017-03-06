@@ -78,7 +78,7 @@ public final class MainActivity extends AppCompatActivity  implements Navigation
         // initialize broadcast receivers
         initializeBroadcastReceivers();
 
-        //toolbar
+        //Mal:toolbar and Drawer
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -90,6 +90,7 @@ public final class MainActivity extends AppCompatActivity  implements Navigation
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        //Mal:END toolbar and Drawer
     }
 
 
@@ -99,10 +100,15 @@ public final class MainActivity extends AppCompatActivity  implements Navigation
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
+        if (id == R.id.nav_home) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.now_play) {
+//            Intent intent = new Intent(this, PlayerActivity.class);
+//            intent.setAction(TransistorKeys.ACTION_SHOW_PLAYER);
+//            //intent.putExtra(TransistorKeys.EXTRA_STATION, station);
+//            //intent.putExtra(TransistorKeys.EXTRA_STATION_ID, position);
+//            startActivity(intent);
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {

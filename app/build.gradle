@@ -5,7 +5,7 @@ android {
     buildToolsVersion '25.0.0'
 
     defaultConfig {
-        applicationId "org.y20k.transistor"
+        applicationId "org.malah.transistor"
         minSdkVersion 19
         targetSdkVersion 25
         versionCode 34
