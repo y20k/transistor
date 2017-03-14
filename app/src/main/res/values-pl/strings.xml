@@ -25,12 +25,14 @@
     <string name="descr_playback_indicator">Wskaźnik odtwarzania</string>
     <string name="descr_playback_indicator_started">Wskaźnik odtwarzania</string>
     <string name="descr_timer_indicator_started">Wskaźnik wyłącznika czasowego</string>
-    <string name="descr_player_sheet_information_icon">Ikona Informacji</string>
+    <string name="descr_player_sheet_information_icon">Information Icon</string>
+    <string name="descr_player_sheet_content_copy_icon">Content copy icon</string>
     <string name="descr_player_sheet_p_station_name">Nazwa wybranej stacji</string>
     <string name="descr_player_sheet_p_station_metadata">Metadane wybranej stacji</string>
     <string name="descr_player_sheet_p_stream_url">URL strumienia wybranej stacji</string>
 
     <string name="player_sheet_h1_station_name">Stacja</string>
+    <string name="player_sheet_h1_station_metadata">Currently Playing</string>
     <string name="player_sheet_h1_stream_url">URL strumienia</string>
     <string name="player_sheet_p_station_metadata">metadane niedostępne</string>
 
@@ -89,6 +91,8 @@
     <string name="snackbar_request_storage_access">Transistor potrzebuje uprawnień odczytu w celu uzyskania dostępu do danych z pamięci zewnętrznej.</string>
     <string name="snackbar_message_timer_set">Wyłącznik czasowy ustawiony na</string>
 
+    <string name="notification_play">Play</string>
+    <string name="notification_stop">Stop</string>
     <string name="notification_swipe_to_stop">Przesuń palcem, aby zatrzymać</string>
     <string name="notification_playing">Odtwarzane</string>
 
@@ -98,6 +102,8 @@
     <string name="infosheet_about_p_bare">Transistor jest prostą aplikacją służącą do słuchania programów radiowych przez internet. Aplikacja przechowuje stacje jako pliki na pamięci zewnętrznej Twojego urządzenia. Poszukaj plików typu m3u pod /Android/data/org.y20k.transistor/files/Collection. Aplikacja obecnie obsługuje strumienie zapisane w MP3 i OGG.</string>
     <string name="infosheet_about_p_note">Ważna informacja: To jest aplikacja typu BYOS (przynieś własną stację - bring your own station). Nie posiada żadnej opcji szukania stacji - musisz je dodać samodzielnie.</string>
     <string name="infosheet_about_p_free">Transistor jest wolnym oprogramowaniem, opublikowanym na licencji MIT. Kod źródłowy jest na GitHubie. GitHub jest również dobrym miejscem do zgłaszania błędów (lub nawet pomocy w rozwoju aplikacji, jeśli masz ochotę).</string>
+    <string name="infosheet_about_p_github">https://github.com/y20k/transistor</string>
+    <string name="infosheet_about_p_license">https://opensource.org/licenses/MIT</string>
     <string name="infosheet_about_h2_permissions">Jakich Uprawnień potrzebuje Transistor?</string>
     <string name="infosheet_about_h3_shortcut">Uprawnienia INSTALL_SHORTCUT oraz UNINSTALL_SHORTCUT</string>
     <string name="infosheet_about_p_shortcut">To uprawnienie jest potrzebne do (de)instalacji skrótów do stacji na ekranie głównym Androida.</string>

@@ -111,7 +111,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         mSession = createMediaSession(this);
 
         // create Wifi lock
-        mWifiLock = ((WifiManager) getSystemService(Context.WIFI_SERVICE)).createWifiLock(WifiManager.WIFI_MODE_FULL, "Transistor_lock");
+        mWifiLock = ((WifiManager) this.getSystemService(Context.WIFI_SERVICE)).createWifiLock(WifiManager.WIFI_MODE_FULL, "Transistor_lock");
 
         try {
             mController = new MediaControllerCompat(getApplicationContext(), mSession.getSessionToken());
