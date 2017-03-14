@@ -19,6 +19,8 @@ Japanese version: [naofum](https://github.com/naofum)
 
 Norwegian version: [comradekingu](https://github.com/comradekingu)
 
+Polish version: [woodypl](https://github.com/woodypl)
+
 Russian version: [Boris Timofeev](https://github.com/btimofeev)
 
 Serbian version: [pejakm](https://github.com/pejakm)

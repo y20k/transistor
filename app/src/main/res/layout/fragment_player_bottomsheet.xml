@@ -32,8 +32,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|center"
-                android:background="@drawable/ic_info_white_24dp"
-                android:contentDescription="@string/descr_player_sheet_information_icon" />
+                android:contentDescription="@string/descr_player_sheet_information_icon"
+                app:srcCompat="@drawable/ic_info_white_24dp" />
 
             <!-- STATION NAME-->
             <LinearLayout
@@ -91,8 +91,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end|center"
-                    android:background="@drawable/ic_content_copy_grey_24dp"
-                    android:contentDescription="@string/descr_player_sheet_content_copy_icon" />
+                    android:contentDescription="@string/descr_player_sheet_content_copy_icon"
+                    app:srcCompat="@drawable/ic_content_copy_grey_24dp" />
             </LinearLayout>
 
             <!-- STREAM URL -->
@@ -118,17 +118,15 @@
                         android:id="@+id/station_data_sheet_stream_url"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="http://streamingserver0123456789.byte.fm:8000/"
                         android:textAppearance="@android:style/TextAppearance.Medium.Inverse"
                         android:contentDescription="@string/descr_player_sheet_p_stream_url" />
-                    <!-- TODO: Remove placeholder text-->
                 </LinearLayout>
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end|center"
-                    android:background="@drawable/ic_content_copy_grey_24dp"
-                    android:contentDescription="@string/descr_player_sheet_content_copy_icon" />
+                    android:contentDescription="@string/descr_player_sheet_content_copy_icon"
+                    app:srcCompat="@drawable/ic_content_copy_grey_24dp" />
             </LinearLayout>
 
         </LinearLayout>
