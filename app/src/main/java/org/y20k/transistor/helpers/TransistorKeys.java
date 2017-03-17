@@ -19,6 +19,8 @@ package org.y20k.transistor.helpers;
  */
 public interface TransistorKeys {
 
+    String APPLICATION_NAME = "Transistor";
+
     /* ACTIONS */
     String ACTION_PLAY = "org.y20k.transistor.action.PLAY";
     String ACTION_STOP = "org.y20k.transistor.action.STOP";

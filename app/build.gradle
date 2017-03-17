@@ -8,8 +8,8 @@ android {
         applicationId "org.y20k.transistor"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 35
-        versionName "2.2.0 (Sons Of The Silent Age)"
+        versionCode 36
+        versionName "2.2.1 (Sons Of The Silent Age)"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
@@ -18,10 +18,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
 }
+
+
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:25.2.0'
-    compile 'com.android.support:design:25.2.0'
+    compile 'com.android.support:appcompat-v7:25.3.0'
+    compile 'com.android.support:design:25.3.0'
+    compile 'com.google.android.exoplayer:exoplayer:r2.2.0'
 }
