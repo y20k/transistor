@@ -219,7 +219,14 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             LogHelper.v(LOG_TAG, "Service received command: DISMISS");
 
             // update controller - stop playback
-            mController.getTransportControls().stop();
+            if (mPlayback) {
+                mController.getTransportControls().stop();
+            }
+
+            // dismiss notification
+            NotificationHelper.stop();
+            // set media session in-active
+            mSession.setActive(false);
         }
 
         // listen for media button
@@ -280,13 +287,13 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
                 // error occurred in a Renderer. Playback state: ExoPlayer.STATE_IDLE
                 mExoPlayer.release();
                 mExoPlayer = createExoPlayer();
-                stopPlayback(true);
+                stopPlayback();
                 LogHelper.w(LOG_TAG, "An error occurred. Type RENDERER: " + error.getRendererException().toString());
                 break;
             case TYPE_SOURCE:
                 // error occurred loading data from a MediaSource. Playback state: ExoPlayer.STATE_IDLE
                 if (mPlayback) {
-                    stopPlayback(true);
+                    stopPlayback();
                 }
                 LogHelper.w(LOG_TAG, "An error occurred. Type SOURCE: " + error.getSourceException().toString());
                 break;
@@ -294,13 +301,13 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
                 // error was an unexpected RuntimeException. Playback state: ExoPlayer.STATE_IDLE
                 mExoPlayer.release();
                 mExoPlayer = createExoPlayer();
-                stopPlayback(true);
+                stopPlayback();
                 LogHelper.w(LOG_TAG, "An error occurred. Type UNEXPECTED: " + error.getUnexpectedException().toString());
                 break;
             default:
                 mExoPlayer.release();
                 mExoPlayer = createExoPlayer();
-                stopPlayback(true);
+                stopPlayback();
                 LogHelper.w(LOG_TAG, "An error occurred. Type OTHER ERROR.");
                 break;
         }
@@ -375,13 +382,13 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             // loss of audio focus of unknown duration
             case AudioManager.AUDIOFOCUS_LOSS:
                 if (mPlayback) {
-                    stopPlayback(false);
+                    stopPlayback();
                 }
                 break;
             // transient loss of audio focus
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
                 if (!mPlayback && mExoPlayer != null && mExoPlayer.getPlayWhenReady()) {
-                    stopPlayback(false);
+                    stopPlayback();
                 }
                 else if (mPlayback && mExoPlayer != null && mExoPlayer.getPlayWhenReady()) {
                     mExoPlayer.setPlayWhenReady(false);
@@ -429,6 +436,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
     /* Starts playback */
     private void startPlayback() {
+        LogHelper.v(LOG_TAG, "Starting playback.");
 
         // set and save state
         mStationMetadata = mStation.getStationName();
@@ -488,7 +496,8 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
 
     /* Stops playback */
-    private void stopPlayback(boolean dismissNotification) {
+    private void stopPlayback() {
+        LogHelper.v(LOG_TAG, "Stopping playback.");
 
         // set and save state
         mStationMetadata = mStation.getStationName();
@@ -529,17 +538,22 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         // update playback state
         mSession.setPlaybackState(getPlaybackState());
 
-        if (dismissNotification) {
-            // dismiss notification
-            NotificationHelper.stop();
-            // set media session in-active
-            mSession.setActive(false);
-        } else {
-            // update notification
-            NotificationHelper.update(mStation, mStationID, mStation.getStationName(), mSession);
-            // keep media session active
-            mSession.setActive(true);
-        }
+//        if (dismissNotification) {
+//            // dismiss notification
+//            NotificationHelper.stop();
+//            // set media session in-active
+//            mSession.setActive(false);
+//        } else {
+//            // update notification
+//            NotificationHelper.update(mStation, mStationID, mStation.getStationName(), mSession);
+//            // keep media session active
+//            mSession.setActive(true);
+//        }
+
+        // update notification
+        NotificationHelper.update(mStation, mStationID, mStation.getStationName(), mSession);
+        // keep media session active
+        mSession.setActive(true);
 
         // close metadata helper
         if (mMetadataHelper != null) {
@@ -578,8 +592,8 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
     /* Set up the media mExoPlayer */
     private void initializeExoPlayer() {
-        InitializeMediaPlayerHelper initializeMediaPlayerHelper = new InitializeMediaPlayerHelper();
-        initializeMediaPlayerHelper.execute();
+        InitializeExoPlayerHelper initializeExoPlayerHelper = new InitializeExoPlayerHelper();
+        initializeExoPlayerHelper.execute();
     }
 
 
@@ -690,7 +704,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             if (mPlayback && AudioManager.ACTION_AUDIO_BECOMING_NOISY.equals(intent.getAction())) {
                 LogHelper.v(LOG_TAG, "Headphones unplugged. Stopping playback.");
                 // stop playback
-                stopPlayback(false);
+                stopPlayback();
                 // notify user
                 Toast.makeText(context, context.getString(R.string.toastalert_headphones_unplugged), Toast.LENGTH_LONG).show();
             }
@@ -715,14 +729,14 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
         @Override
         public void onPause() {
-            // stop playback on pause signal from Android Wear or headphone button
-            stopPlayback(false);
+            // stop playback
+            stopPlayback();
         }
 
         @Override
         public void onStop() {
-            // stop playback and dismiss notification on stop signal
-            stopPlayback(true);
+            // stop playback
+            stopPlayback();
         }
 
     }
@@ -734,7 +748,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     /**
      * Inner class: Checks for HTTP Live Streaming (HLS) before playing
      */
-    private class InitializeMediaPlayerHelper extends AsyncTask<Void, Void, Boolean> {
+    private class InitializeExoPlayerHelper extends AsyncTask<Void, Void, Boolean> {
 
         @Override
         protected Boolean doInBackground(Void... voids) {
