@@ -811,6 +811,10 @@ public final class PlayerActivityFragment extends Fragment implements Transistor
                     // update playback state
                     mStationIDLast = mStationIDCurrent;
                     mStationIDCurrent = mStationID;
+                } else if (mVisibility && mPlayback && mStation != null && mStation.getStreamUri().equals(station.getStreamUri())) {
+                    // set station loading true and set visual state
+                    mStationLoading = true;
+                    setVisualState();
                 }
                 break;
 
