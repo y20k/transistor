@@ -51,6 +51,8 @@ import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
 import com.google.android.exoplayer2.extractor.ExtractorsFactory;
+import com.google.android.exoplayer2.metadata.Metadata;
+import com.google.android.exoplayer2.metadata.MetadataRenderer;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.TrackGroupArray;
@@ -66,7 +68,6 @@ import com.google.android.exoplayer2.util.Util;
 
 import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.LogHelper;
-import org.y20k.transistor.helpers.MetadataHelper;
 import org.y20k.transistor.helpers.NotificationHelper;
 import org.y20k.transistor.helpers.TransistorKeys;
 
@@ -87,7 +88,7 @@ import static com.google.android.exoplayer2.ExoPlayer.STATE_READY;
 /**
  * PlayerService class
  */
-public final class PlayerService extends MediaBrowserServiceCompat implements TransistorKeys, AudioManager.OnAudioFocusChangeListener, ExoPlayer.EventListener {
+public final class PlayerService extends MediaBrowserServiceCompat implements TransistorKeys, AudioManager.OnAudioFocusChangeListener, ExoPlayer.EventListener, MetadataRenderer.Output {
 
     /* Define log tag */
     private static final String LOG_TAG = PlayerService.class.getSimpleName();
@@ -95,7 +96,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
     /* Main class variables */
     private static Station mStation;
-    private MetadataHelper mMetadataHelper;
+//    private MetadataHelper mMetadataHelper;
     private AudioManager mAudioManager;
     private static MediaSessionCompat mSession;
     private static MediaControllerCompat mController;
@@ -107,9 +108,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     private boolean mPlayback;
     private boolean mStationLoading;
     private boolean mStationMetadataReceived;
-    private int mPlayerInstanceCounter;
     private HeadphoneUnplugReceiver mHeadphoneUnplugReceiver;
-    private int mReconnectCounter;
     private WifiManager.WifiLock mWifiLock;
     private PowerManager.WakeLock mWakeLock;
 
@@ -131,8 +130,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
         // set up variables
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        mPlayerInstanceCounter = 0;
-        mReconnectCounter = 0;
+
         mStationMetadataReceived = false;
         mSession = createMediaSession(this);
 
@@ -150,7 +148,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         }
 
         // get instance of mExoPlayer
-        mExoPlayer = createExoPlayer();
+        createExoPlayer();
 
         // RECEIVER: station metadata has changed
         BroadcastReceiver metadataChangedReceiver = new BroadcastReceiver() {
@@ -238,7 +236,39 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
 
 
-    /* NEW EXO PLAYER EVENT LISTENER METHODS*/
+    @Override
+    public void onMetadata(Metadata metadata) {
+        LogHelper.v(LOG_TAG, "Got new metadata: " + metadata.toString());
+    }
+//
+//    @Override
+//    public void onMetadata(List<Id3Frame> id3Frames) {
+//        for (Id3Frame id3Frame : id3Frames) {
+//            if (id3Frame instanceof TxxxFrame) {
+//                TxxxFrame txxxFrame = (TxxxFrame) id3Frame;
+//                Log.i(LOG_TAG, String.format("ID3 TimedMetadata %s: description=%s, value=%s", txxxFrame.id,
+//                        txxxFrame.description, txxxFrame.value));
+//            } else if (id3Frame instanceof PrivFrame) {
+//                PrivFrame privFrame = (PrivFrame) id3Frame;
+//                Log.i(LOG_TAG, String.format("ID3 TimedMetadata %s: owner=%s", privFrame.id, privFrame.owner));
+//            } else if (id3Frame instanceof GeobFrame) {
+//                GeobFrame geobFrame = (GeobFrame) id3Frame;
+//                Log.i(LOG_TAG, String.format("ID3 TimedMetadata %s: mimeType=%s, filename=%s, description=%s",
+//                        geobFrame.id, geobFrame.mimeType, geobFrame.filename, geobFrame.description));
+//            } else if (id3Frame instanceof ApicFrame) {
+//                ApicFrame apicFrame = (ApicFrame) id3Frame;
+//                Log.i(LOG_TAG, String.format("ID3 TimedMetadata %s: mimeType=%s, description=%s",
+//                        apicFrame.id, apicFrame.mimeType, apicFrame.description));
+//            } else if (id3Frame instanceof TextInformationFrame) {
+//                TextInformationFrame textInformationFrame = (TextInformationFrame) id3Frame;
+//                Log.i(LOG_TAG, String.format("ID3 TimedMetadata %s: description=%s", textInformationFrame.id,
+//                        textInformationFrame.description));
+//            } else {
+//                Log.i(LOG_TAG, String.format("ID3 TimedMetadata %s", id3Frame.id));
+//            }
+//        }
+//    }
+
 
     @Override
     public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
@@ -247,6 +277,20 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             case STATE_BUFFERING:
                 // The player is not able to immediately play from the current position.
                 LogHelper.v(LOG_TAG, "State of ExoPlayer has changed: BUFFERING");
+                mStationLoading = true;
+                if (mPlayback) {
+                    // set loading state
+                    mStationLoading = true;
+                    // send local broadcast: buffering
+                    Intent intent = new Intent();
+                    intent.setAction(ACTION_PLAYBACK_STATE_CHANGED);
+                    intent.putExtra(EXTRA_PLAYBACK_STATE_CHANGE, PLAYBACK_LOADING_STATION);
+                    intent.putExtra(EXTRA_STATION, mStation);
+                    intent.putExtra(EXTRA_STATION_ID, mStationID);
+                    LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
+                    // update notification
+                    NotificationHelper.update(mStation, mStationID, this.getString(R.string.descr_station_stream_loading), mSession);
+                }
                 break;
 
             case STATE_ENDED:
@@ -263,13 +307,24 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
                 // The player is able to immediately play from the current position.
                 LogHelper.v(LOG_TAG, "State of ExoPlayer has changed: READY");
 
-                // send local broadcast: buffering finished - playback started
-                Intent intent = new Intent();
-                intent.setAction(ACTION_PLAYBACK_STATE_CHANGED);
-                intent.putExtra(EXTRA_PLAYBACK_STATE_CHANGE, PLAYBACK_STARTED);
-                intent.putExtra(EXTRA_STATION, mStation);
-                intent.putExtra(EXTRA_STATION_ID, mStationID);
-                LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(intent);
+                if (mPlayback && mStationLoading) {
+                    // set loading state
+                    mStationLoading = false;
+                    // send local broadcast: buffering finished - playback started
+                    Intent intent = new Intent();
+                    intent.setAction(ACTION_PLAYBACK_STATE_CHANGED);
+                    intent.putExtra(EXTRA_PLAYBACK_STATE_CHANGE, PLAYBACK_STARTED);
+                    intent.putExtra(EXTRA_STATION, mStation);
+                    intent.putExtra(EXTRA_STATION_ID, mStationID);
+                    LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(intent);
+                }
+
+                // check for race between onPlayerStateChanged and MetadataHelper
+                if (!mStationMetadataReceived) {
+                    // update notification
+                    NotificationHelper.update(mStation, mStationID, mStation.getStationName(), mSession);
+                }
+
                 break;
 
             default:
@@ -285,29 +340,37 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         switch (error.type) {
             case TYPE_RENDERER:
                 // error occurred in a Renderer. Playback state: ExoPlayer.STATE_IDLE
-                mExoPlayer.release();
-                mExoPlayer = createExoPlayer();
-                stopPlayback();
-                LogHelper.w(LOG_TAG, "An error occurred. Type RENDERER: " + error.getRendererException().toString());
+                LogHelper.e(LOG_TAG, "An error occurred. Type RENDERER: " + error.getRendererException().toString());
                 break;
+
             case TYPE_SOURCE:
                 // error occurred loading data from a MediaSource. Playback state: ExoPlayer.STATE_IDLE
-                if (mPlayback) {
-                    stopPlayback();
-                }
-                LogHelper.w(LOG_TAG, "An error occurred. Type SOURCE: " + error.getSourceException().toString());
+                LogHelper.e(LOG_TAG, "An error occurred. Type SOURCE: " + error.getSourceException().toString());
+//                if (mPlayback) {
+//                    Intent intent = new Intent();
+//                    intent.setAction(ACTION_PLAYBACK_STATE_CHANGED);
+//                    intent.putExtra(EXTRA_PLAYBACK_STATE_CHANGE, PLAYBACK_LOADING_STATION);
+//                    intent.putExtra(EXTRA_STATION, mStation);
+//                    intent.putExtra(EXTRA_STATION_ID, mStationID);
+//                    LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(intent);
+//                    mStationLoading = true;
+//
+//                    // wait a sec - and then try to restart playback
+//                    try {
+//                        Thread.sleep(1000);
+//                        startPlayback();
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
                 break;
+
             case TYPE_UNEXPECTED:
                 // error was an unexpected RuntimeException. Playback state: ExoPlayer.STATE_IDLE
-                mExoPlayer.release();
-                mExoPlayer = createExoPlayer();
-                stopPlayback();
-                LogHelper.w(LOG_TAG, "An error occurred. Type UNEXPECTED: " + error.getUnexpectedException().toString());
+                LogHelper.e(LOG_TAG, "An error occurred. Type UNEXPECTED: " + error.getUnexpectedException().toString());
                 break;
+
             default:
-                mExoPlayer.release();
-                mExoPlayer = createExoPlayer();
-                stopPlayback();
                 LogHelper.w(LOG_TAG, "An error occurred. Type OTHER ERROR.");
                 break;
         }
@@ -381,7 +444,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
                 break;
             // loss of audio focus of unknown duration
             case AudioManager.AUDIOFOCUS_LOSS:
-                if (mPlayback) {
+                if (mPlayback && mExoPlayer.getPlayWhenReady()) {
                     stopPlayback();
                 }
                 break;
@@ -421,10 +484,14 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         }
 
         // release ExoPlayer
-        mExoPlayer.release(); // release only when service gets destroyed
+        if (mExoPlayer != null) {
+            releaseExoPlayer();
+        }
 
         // cancel notification
         stopForeground(true);
+
+        // todo: unregister broadcast receivers
     }
 
 
@@ -456,17 +523,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             mWakeLock.acquire(); // needs android.permission.WAKE_LOCK
         }
 
-        // send local broadcast: buffering
-        Intent intent = new Intent();
-        intent.setAction(ACTION_PLAYBACK_STATE_CHANGED);
-        intent.putExtra(EXTRA_PLAYBACK_STATE_CHANGE, PLAYBACK_LOADING_STATION);
-        intent.putExtra(EXTRA_STATION, mStation);
-        intent.putExtra(EXTRA_STATION_ID, mStationID);
-        LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(intent);
-
-        // increase counter
-        mPlayerInstanceCounter++;
-
         // stop running mExoPlayer - request focus and initialize media mExoPlayer
         if (mExoPlayer.getPlayWhenReady()) {
             mExoPlayer.setPlayWhenReady(false);
@@ -477,6 +533,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         if (mStreamUri != null && requestFocus()) {
             // initialize player and start playback
             initializeExoPlayer();
+//            mExoPlayer.setId3Output(this);
             mExoPlayer.setPlayWhenReady(true);
 
             // update MediaSession
@@ -487,6 +544,14 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             // put up notification
             NotificationHelper.show(this, mSession, mStation, mStationID, this.getString(R.string.descr_station_stream_loading));
         }
+
+        // send local broadcast: buffering
+        Intent intent = new Intent();
+        intent.setAction(ACTION_PLAYBACK_STATE_CHANGED);
+        intent.putExtra(EXTRA_PLAYBACK_STATE_CHANGE, PLAYBACK_LOADING_STATION);
+        intent.putExtra(EXTRA_STATION, mStation);
+        intent.putExtra(EXTRA_STATION_ID, mStationID);
+        LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(intent);
 
         // register headphone listener
         IntentFilter headphoneUnplugIntentFilter = new IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
@@ -517,20 +582,10 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             mWakeLock.release();
         }
 
-        // send local broadcast: playback stopped
-        Intent intent = new Intent();
-        intent.setAction(ACTION_PLAYBACK_STATE_CHANGED);
-        intent.putExtra(EXTRA_PLAYBACK_STATE_CHANGE, PLAYBACK_STOPPED);
-        intent.putExtra(EXTRA_STATION, mStation);
-        intent.putExtra(EXTRA_STATION_ID, mStationID);
-        LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(intent);
-
-        // reset counter
-        mPlayerInstanceCounter = 0;
 
         // stop playback
         mExoPlayer.setPlayWhenReady(false);
-        mExoPlayer.stop();
+        // mExoPlayer.stop();
 
         // give up audio focus
         giveUpAudioFocus();
@@ -538,28 +593,18 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         // update playback state
         mSession.setPlaybackState(getPlaybackState());
 
-//        if (dismissNotification) {
-//            // dismiss notification
-//            NotificationHelper.stop();
-//            // set media session in-active
-//            mSession.setActive(false);
-//        } else {
-//            // update notification
-//            NotificationHelper.update(mStation, mStationID, mStation.getStationName(), mSession);
-//            // keep media session active
-//            mSession.setActive(true);
-//        }
-
         // update notification
         NotificationHelper.update(mStation, mStationID, mStation.getStationName(), mSession);
         // keep media session active
         mSession.setActive(true);
 
-        // close metadata helper
-        if (mMetadataHelper != null) {
-            mMetadataHelper.closeShoutcastProxyConnection();
-            mMetadataHelper = null;
-        }
+        // send local broadcast: playback stopped
+        Intent intent = new Intent();
+        intent.setAction(ACTION_PLAYBACK_STATE_CHANGED);
+        intent.putExtra(EXTRA_PLAYBACK_STATE_CHANGE, PLAYBACK_STOPPED);
+        intent.putExtra(EXTRA_STATION, mStation);
+        intent.putExtra(EXTRA_STATION_ID, mStationID);
+        LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(intent);
 
         // unregister headphone listener
         try {
@@ -571,9 +616,11 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
 
     /* Creates an instance of SimpleExoPlayer */
-    private SimpleExoPlayer createExoPlayer() {
+    private void createExoPlayer() {
 
-        // https://github.com/yusufcakmak/ExoPlayerSample/blob/master/app/src/main/java/com/yusufcakmak/exoplayersample/RadioPlayerActivity.java
+        if (mExoPlayer != null) {
+            releaseExoPlayer();
+        }
 
         // create default ExoPlayer modules
         BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
@@ -584,8 +631,23 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
                 Util.getUserAgent(this, APPLICATION_NAME),
                 (TransferListener<? super DataSource>) bandwidthMeter);
 
-        // return instance of SimpleExoPlayer
-        return ExoPlayerFactory.newSimpleInstance(getApplicationContext(), trackSelector, loadControl);
+        // create an assign instance of SimpleExoPlayer
+        mExoPlayer = ExoPlayerFactory.newSimpleInstance(getApplicationContext(), trackSelector, loadControl);
+    }
+
+
+    /* Releases the ExoPlayer */
+    private void releaseExoPlayer() {
+        mExoPlayer.release();
+        mExoPlayer = null;
+        mExtractorsFactory = null;
+        mDataSourceFactory = null;
+
+//        // close metadata helper - if it was in use
+//        if (mMetadataHelper != null) {
+//            mMetadataHelper.closeShoutcastProxyConnection();
+//            mMetadataHelper = null;
+//        }
     }
 
 
@@ -694,6 +756,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         LogHelper.v(LOG_TAG, "Loading state ("+  mStationIDCurrent + " / " + mStationIDLast + ")");
     }
 
+
     /**
      * Inner class: Receiver for headphone unplug-signal
      */
@@ -775,23 +838,23 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         protected void onPostExecute(Boolean sourceIsHLS) {
 
             // get a stream uri string
-            String uriString;
-            if (sourceIsHLS) {
-                // stream is HLS - do not extract metadata
-                uriString = mStreamUri;
-            } else {
-                // normal stream - extract metadata
-                mMetadataHelper = new MetadataHelper(getApplicationContext(), mStation);
-                uriString = mMetadataHelper.getShoutcastProxy();
-            }
+            String uriString = mStreamUri;
+//            if (sourceIsHLS) {
+//                // stream is HLS - do not extract metadata
+//                uriString = mStreamUri;
+//            } else {
+//                // normal stream - extract metadata
+//                mMetadataHelper = new MetadataHelper(getApplicationContext(), mStation);
+//                uriString = mMetadataHelper.getShoutcastProxy();
+//            }
 
             // create media source using stream uri string
             MediaSource mediaSource = new ExtractorMediaSource(Uri.parse(uriString),
-                    mDataSourceFactory, mExtractorsFactory, null, null);
+                    mDataSourceFactory, mExtractorsFactory, 32, null, null, null);
 
             // prepare mExoPlayer
             if (mExoPlayer == null) {
-                mExoPlayer = createExoPlayer();
+                createExoPlayer();
             }
             mExoPlayer.prepare(mediaSource);
             mExoPlayer.addListener(PlayerService.this);
@@ -801,81 +864,5 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     /**
      * End of inner class
      */
-
-
-//    @Override
-//    public void onCompletion(MediaPlayer mp) {
-//        LogHelper.w(LOG_TAG, "Resuming playback after completion / signal loss. Player instance count: " + mPlayerInstanceCounter);
-//        mp.reset();
-//        mPlayerInstanceCounter++;
-//        initializeMediaPlayer();
-//    }
-
-
-//    @Override
-//    public void onPrepared(MediaPlayer mp) {
-//
-//        if (mPlayerInstanceCounter == 1) {
-//            LogHelper.v(LOG_TAG, "Preparation finished. Starting playback. Player instance count: " + mPlayerInstanceCounter);
-//            LogHelper.v(LOG_TAG, "Playback: " + mStreamUri);
-//
-//            // check for race between onPrepared ans MetadataHelper
-//            if (!mStationMetadataReceived) {
-//                // update notification
-//                NotificationHelper.update(mStation, mStationID, mStation.getStationName(), mSession);
-//            }
-//
-//            // start media mExoPlayer
-//            mp.start();
-//
-//            // send local broadcast: buffering finished
-//            Intent i = new Intent();
-//            i.setAction(ACTION_PLAYBACK_STATE_CHANGED);
-//            i.putExtra(EXTRA_PLAYBACK_STATE_CHANGE, PLAYBACK_STARTED);
-//            i.putExtra(EXTRA_STATION, mStation);
-//            i.putExtra(EXTRA_STATION_ID, mStationID);
-//            LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(i);
-//
-//            // save state
-//            mStationLoading = false;
-//            saveAppState();
-//
-//            // decrease counter
-//            mPlayerInstanceCounter--;
-//
-//            // reset reconnect counter
-//            mReconnectCounter = 0;
-//
-//        } else {
-//            LogHelper.v(LOG_TAG, "Stopping and re-initializing media mExoPlayer. Player instance count: " + mPlayerInstanceCounter);
-//
-//            // release media mExoPlayer
-//            releaseMediaPlayer();
-//
-//            // decrease counter
-//            mPlayerInstanceCounter--;
-//
-//            // re-initializing media mExoPlayer
-//            if (mPlayerInstanceCounter >= 0) {
-//                initializeMediaPlayer();
-//            }
-//        }
-//
-//    }
-//
-//
-//    @Override
-//    public boolean onError(MediaPlayer mp, int what, int extra) {
-//        // try to reconnect to stream - limited to ten attempts
-//        if (mReconnectCounter < 10) {
-//            mReconnectCounter++;
-//            LogHelper.e(LOG_TAG, "Trying to reconnect after media playback error - attempt #" + mReconnectCounter + ".");
-//            startPlayback();
-//        }
-//
-//        return true;
-//    }
-
-
 
 }
