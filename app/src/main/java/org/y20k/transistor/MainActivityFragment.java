@@ -177,8 +177,13 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
         // set animator
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(mActivity);
+        // use a linear layout manager - turn PredictiveItemAnimations on
+        mLayoutManager = new LinearLayoutManager(mActivity) {
+            @Override
+            public boolean supportsPredictiveItemAnimations() {
+                return true;
+            }
+        };
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // attach adapter to list view
