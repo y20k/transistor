@@ -32,17 +32,17 @@
     <string name="descr_playback_indicator">Индикатор воспроизведения</string>
     <string name="descr_playback_indicator_started">Индикатор воспроизведения</string>
     <string name="descr_timer_indicator_started">Индикатор запущенного таймера сна</string>
-    <string name="descr_player_sheet_information_icon">Information Icon</string>
-    <string name="descr_player_sheet_content_copy_icon">Content copy icon</string>
-    <string name="descr_player_sheet_p_station_name">Name of selected radio station</string>
-    <string name="descr_player_sheet_p_station_metadata">Metadata from selected radio station</string>
-    <string name="descr_player_sheet_p_stream_url">Stream URL of selected radio station</string>
+    <string name="descr_player_sheet_information_icon">Информационная иконка</string>
+    <string name="descr_player_sheet_content_copy_icon">Иконка копирования контента</string>
+    <string name="descr_player_sheet_p_station_name">Название выбранной радиостанции</string>
+    <string name="descr_player_sheet_p_station_metadata">Метаданные выбранной радиостанции</string>
+    <string name="descr_player_sheet_p_stream_url">Адрес потока выбранной радиостанции</string>
 
     <!-- player -->
-    <string name="player_sheet_h1_station_name">Station</string>
-    <string name="player_sheet_h1_station_metadata">Currently Playing</string>
-    <string name="player_sheet_h1_stream_url">Stream URL</string>
-    <string name="player_sheet_p_station_metadata">no metadata available</string>
+    <string name="player_sheet_h1_station_name">Станция</string>
+    <string name="player_sheet_h1_station_metadata">Сейчас играет</string>
+    <string name="player_sheet_h1_stream_url">Адрес потока</string>
+    <string name="player_sheet_p_station_metadata">нет доступных метаданных</string>
 
     <!-- dialogs -->
     <string name="dialog_generic_button_okay">Хорошо</string>
@@ -84,8 +84,8 @@
     <string name="toastmessage_long_press_playback_stopped">Воспроизведение остановлено</string>
     <string name="toastmessage_long_press_playback_started">Начинаю воспроизведение радиостанции</string>
     <string name="toastmessage_shortcut_created">Ярлык создан.</string>
-    <string name="toastmessage_copied_to_clipboard_url">Stream URL copied to clipboard.</string>
-    <string name="toastmessage_copied_to_clipboard_metadata">Metadata copied to clipboard.</string>
+    <string name="toastmessage_copied_to_clipboard_url">Адрес потока скопирован в буфер обмена.</string>
+    <string name="toastmessage_copied_to_clipboard_metadata">Метаданные скопированы в буфер обмена.</string>
     <string name="toastmessage_station_copied">Станция скопирована в буфер обмена.</string>
     <string name="toastmessage_stream_may_not_work">"Обнаружен неподдерживаемый аудиоформат.  Воспроизведение потока может не работать должным образом."</string>
     <string name="toastmessage_timer_activated">Таймер сна активирован.</string>
