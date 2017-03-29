@@ -42,6 +42,7 @@ import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.widget.Toast;
 
+import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayer;
@@ -56,13 +57,14 @@ import com.google.android.exoplayer2.metadata.MetadataRenderer;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.TrackGroupArray;
+import com.google.android.exoplayer2.source.hls.HlsMediaSource;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
-import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.android.exoplayer2.upstream.DataSource;
-import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
-import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.upstream.DataSpec;
+import com.google.android.exoplayer2.upstream.DefaultAllocator;
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.upstream.TransferListener;
 import com.google.android.exoplayer2.util.Util;
 
@@ -115,6 +117,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     private DataSource.Factory mDataSourceFactory;
     private ExtractorsFactory mExtractorsFactory;
     private SimpleExoPlayer mExoPlayer;
+    private String mUserAgent;
 
 
     /* Constructor (default) */
@@ -133,6 +136,8 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
         mStationMetadataReceived = false;
         mSession = createMediaSession(this);
+
+        mUserAgent = Util.getUserAgent(this, APPLICATION_NAME);
 
         // create Wifi and wake locks
         mWifiLock = ((WifiManager) this.getSystemService(Context.WIFI_SERVICE)).createWifiLock(WifiManager.WIFI_MODE_FULL, "Transistor_wifi_lock");
@@ -622,17 +627,49 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             releaseExoPlayer();
         }
 
-        // create default ExoPlayer modules
-        BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
+        // create default TrackSelector
         TrackSelector trackSelector = new DefaultTrackSelector();
-        LoadControl loadControl = new DefaultLoadControl();
-        mExtractorsFactory = new DefaultExtractorsFactory();
-        mDataSourceFactory = new DefaultDataSourceFactory(this,
-                Util.getUserAgent(this, APPLICATION_NAME),
-                (TransferListener<? super DataSource>) bandwidthMeter);
 
-        // create an assign instance of SimpleExoPlayer
+        // create default LoadControl - double the buffer
+        LoadControl loadControl = new DefaultLoadControl(new DefaultAllocator(true, C.DEFAULT_BUFFER_SEGMENT_SIZE * 2));
+
+        // create the player
         mExoPlayer = ExoPlayerFactory.newSimpleInstance(getApplicationContext(), trackSelector, loadControl);
+    }
+
+
+    private void prepareExoPLayer(boolean sourceIsHLS, String uriString) {
+        // create listener for DataSource.Factory
+        TransferListener transferListener = new TransferListener() {
+            @Override
+            public void onTransferStart(Object source, DataSpec dataSpec) {
+                LogHelper.v(LOG_TAG, "onTransferStart\nSource: " + source.toString() + "\nDataSpec: " + dataSpec.toString());
+            }
+
+            @Override
+            public void onBytesTransferred(Object source, int bytesTransferred) {
+
+            }
+
+            @Override
+            public void onTransferEnd(Object source) {
+                LogHelper.v(LOG_TAG, "onTransferEnd\nSource: " + source.toString());
+            }
+        };
+        // produce DataSource instances through which media data is loaded
+        DataSource.Factory dataSourceFactory = new DefaultHttpDataSourceFactory(mUserAgent, transferListener);
+        // create MediaSource
+        MediaSource mediaSource;
+        if (sourceIsHLS) {
+            mediaSource = new HlsMediaSource(Uri.parse(uriString),
+                    dataSourceFactory, 32, null, null);
+        } else {
+            ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
+            mediaSource = new ExtractorMediaSource(Uri.parse(mStreamUri),
+                    dataSourceFactory, extractorsFactory, 32, null, null, null); // todo attach listener here
+        }
+        // prepare player with source.
+        mExoPlayer.prepare(mediaSource);
     }
 
 
@@ -848,15 +885,9 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 //                uriString = mMetadataHelper.getShoutcastProxy();
 //            }
 
-            // create media source using stream uri string
-            MediaSource mediaSource = new ExtractorMediaSource(Uri.parse(uriString),
-                    mDataSourceFactory, mExtractorsFactory, 32, null, null, null);
-
-            // prepare mExoPlayer
-            if (mExoPlayer == null) {
-                createExoPlayer();
-            }
-            mExoPlayer.prepare(mediaSource);
+            // prepare player
+            prepareExoPLayer(sourceIsHLS, uriString);
+            // add listener
             mExoPlayer.addListener(PlayerService.this);
         }
 
