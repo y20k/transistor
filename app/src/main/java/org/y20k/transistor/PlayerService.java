@@ -64,11 +64,11 @@ import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DataSpec;
 import com.google.android.exoplayer2.upstream.DefaultAllocator;
-import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.upstream.TransferListener;
 import com.google.android.exoplayer2.util.Util;
 
 import org.y20k.transistor.core.Station;
+import org.y20k.transistor.helpers.CustomDefaultHttpDataSourceFactory;
 import org.y20k.transistor.helpers.LogHelper;
 import org.y20k.transistor.helpers.NotificationHelper;
 import org.y20k.transistor.helpers.TransistorKeys;
@@ -657,7 +657,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             }
         };
         // produce DataSource instances through which media data is loaded
-        DataSource.Factory dataSourceFactory = new DefaultHttpDataSourceFactory(mUserAgent, transferListener);
+        DataSource.Factory dataSourceFactory = new CustomDefaultHttpDataSourceFactory(mUserAgent, transferListener, true);
         // create MediaSource
         MediaSource mediaSource;
         if (sourceIsHLS) {
