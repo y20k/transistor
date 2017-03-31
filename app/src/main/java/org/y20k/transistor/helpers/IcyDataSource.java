@@ -17,7 +17,6 @@
 
 package org.y20k.transistor.helpers;
 
-import android.media.AudioTrack;
 
 import com.google.android.exoplayer2.upstream.DataSpec;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource;
@@ -34,19 +33,21 @@ import java.net.URL;
 /**
  * IcyDataSource class
  */
-public class IcyDataSource extends DefaultHttpDataSource {
+public class IcyDataSource extends DefaultHttpDataSource implements TransistorKeys {
 
     /* Define log tag */    
     private static final String LOG_TAG = IcyDataSource.class.getSimpleName();
 
 
     /* Main class variables */
-    boolean metadataEnabled = true;
+    private boolean metadataEnabled = true;
+    private PlayerCallback playerCallback;
 
     
     /* Constructor */
-    public IcyDataSource(String userAgent, Predicate<String> contentTypePredicate) {
+    public IcyDataSource(String userAgent, Predicate<String> contentTypePredicate, PlayerCallback playerCallback) {
         super(userAgent, contentTypePredicate);
+        this.playerCallback = playerCallback;
     }
 
 
@@ -96,38 +97,4 @@ public class IcyDataSource extends DefaultHttpDataSource {
         return ret;
     }
 
-
-    /* TODO Describe */
-    PlayerCallback playerCallback = new PlayerCallback() {
-
-        @Override
-        public void playerStarted() {
-            LogHelper.v(LOG_TAG, "playerStarted" );
-        }
-
-        @Override
-        public void playerPCMFeedBuffer(boolean isPlaying, int audioBufferSizeMs, int audioBufferCapacityMs) {
-            LogHelper.v(LOG_TAG, "playerPCMFeedBuffer" );
-        }
-
-        @Override
-        public void playerStopped(int perf) {
-            LogHelper.v(LOG_TAG, "playerStopped" );
-        }
-
-        @Override
-        public void playerException(Throwable t) {
-            LogHelper.v(LOG_TAG, "playerException" );
-        }
-
-        @Override
-        public void playerMetadata(String key, String value) {
-            LogHelper.v(LOG_TAG, "playerMetadata " + key + " : " + value);
-        }
-
-        @Override
-        public void playerAudioTrackCreated(AudioTrack audioTrack) {
-            LogHelper.v(LOG_TAG, "playerMetadata" );
-        }
-    };
 }

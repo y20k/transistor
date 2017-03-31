@@ -1,7 +1,7 @@
 /**
  * PlayerService.java
  * Implements the app's playback background service
- * The mExoPlayer service plays streaming audio
+ * The service plays streaming audio and handles playback controls
  *
  * This file is part of
  * TRANSISTOR - Radio App for Android
@@ -22,6 +22,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.AudioManager;
+import android.media.AudioTrack;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
@@ -66,6 +67,7 @@ import com.google.android.exoplayer2.upstream.DataSpec;
 import com.google.android.exoplayer2.upstream.DefaultAllocator;
 import com.google.android.exoplayer2.upstream.TransferListener;
 import com.google.android.exoplayer2.util.Util;
+import com.spoledge.aacdecoder.PlayerCallback;
 
 import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.CustomDefaultHttpDataSourceFactory;
@@ -98,7 +100,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
     /* Main class variables */
     private static Station mStation;
-//    private MetadataHelper mMetadataHelper;
     private AudioManager mAudioManager;
     private static MediaSessionCompat mSession;
     private static MediaControllerCompat mController;
@@ -114,8 +115,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     private WifiManager.WifiLock mWifiLock;
     private PowerManager.WakeLock mWakeLock;
 
-    private DataSource.Factory mDataSourceFactory;
-    private ExtractorsFactory mExtractorsFactory;
     private SimpleExoPlayer mExoPlayer;
     private String mUserAgent;
 
@@ -154,33 +153,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
         // get instance of mExoPlayer
         createExoPlayer();
-
-        // RECEIVER: station metadata has changed
-        BroadcastReceiver metadataChangedReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                if (intent.hasExtra(EXTRA_METADATA) && intent.hasExtra(EXTRA_STATION)) {
-
-                    Station station = intent.getParcelableExtra(EXTRA_STATION);
-                    mStationMetadata = intent.getStringExtra(EXTRA_METADATA);
-                    saveAppState();
-
-                    if (!mStationMetadataReceived && station.equals(mStation)) {
-                        // race between onPrepared and MetadataHelper has been won by the latter
-                        mStationMetadataReceived = true;
-                    }
-
-                    // update media session metadata
-                    mSession.setMetadata(getMetadata(context, station, mStationMetadata));
-
-                    // update notification
-                    NotificationHelper.update(mStation, mStationID, mStationMetadata, mSession);
-                }
-            }
-        };
-        IntentFilter metadataChangedIntentFilter = new IntentFilter(ACTION_METADATA_CHANGED);
-        LocalBroadcastManager.getInstance(this).registerReceiver(metadataChangedReceiver, metadataChangedIntentFilter);
-
     }
 
 
@@ -478,6 +450,11 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
         LogHelper.v(LOG_TAG, "onDestroy called.");
 
+        // stop playback
+        if (mPlayback) {
+            stopPlayback();
+        }
+
         // save state
         mPlayback = false;
         saveAppState();
@@ -495,8 +472,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
         // cancel notification
         stopForeground(true);
-
-        // todo: unregister broadcast receivers
     }
 
 
@@ -538,7 +513,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         if (mStreamUri != null && requestFocus()) {
             // initialize player and start playback
             initializeExoPlayer();
-//            mExoPlayer.setId3Output(this);
             mExoPlayer.setPlayWhenReady(true);
 
             // update MediaSession
@@ -587,9 +561,8 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             mWakeLock.release();
         }
 
-
         // stop playback
-        mExoPlayer.setPlayWhenReady(false);
+        mExoPlayer.setPlayWhenReady(false); // todo empty buffer
         // mExoPlayer.stop();
 
         // give up audio focus
@@ -657,7 +630,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             }
         };
         // produce DataSource instances through which media data is loaded
-        DataSource.Factory dataSourceFactory = new CustomDefaultHttpDataSourceFactory(mUserAgent, transferListener, true);
+        DataSource.Factory dataSourceFactory = new CustomDefaultHttpDataSourceFactory(mUserAgent, transferListener, true, playerCallback);
         // create MediaSource
         MediaSource mediaSource;
         if (sourceIsHLS) {
@@ -677,16 +650,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     private void releaseExoPlayer() {
         mExoPlayer.release();
         mExoPlayer = null;
-        mExtractorsFactory = null;
-        mDataSourceFactory = null;
-
-//        // close metadata helper - if it was in use
-//        if (mMetadataHelper != null) {
-//            mMetadataHelper.closeShoutcastProxyConnection();
-//            mMetadataHelper = null;
-//        }
     }
-
 
 
     /* Set up the media mExoPlayer */
@@ -873,17 +837,8 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
         @Override
         protected void onPostExecute(Boolean sourceIsHLS) {
-
             // get a stream uri string
             String uriString = mStreamUri;
-//            if (sourceIsHLS) {
-//                // stream is HLS - do not extract metadata
-//                uriString = mStreamUri;
-//            } else {
-//                // normal stream - extract metadata
-//                mMetadataHelper = new MetadataHelper(getApplicationContext(), mStation);
-//                uriString = mMetadataHelper.getShoutcastProxy();
-//            }
 
             // prepare player
             prepareExoPLayer(sourceIsHLS, uriString);
@@ -894,6 +849,73 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     }
     /**
      * End of inner class
+     */
+
+
+    /**
+     * Callback: Callback from IcyInputStream reacting to new metadata
+     */
+    PlayerCallback playerCallback = new PlayerCallback() {
+
+        @Override
+        public void playerStarted() {
+            LogHelper.v(LOG_TAG, "PlayerCallback: playerStarted" );
+        }
+
+        @Override
+        public void playerPCMFeedBuffer(boolean isPlaying, int audioBufferSizeMs, int audioBufferCapacityMs) {
+            LogHelper.v(LOG_TAG, "PlayerCallback: playerPCMFeedBuffer" );
+        }
+
+        @Override
+        public void playerStopped(int perf) {
+            LogHelper.v(LOG_TAG, "PlayerCallback: playerStopped" );
+        }
+
+        @Override
+        public void playerException(Throwable t) {
+            LogHelper.v(LOG_TAG, "PlayerCallback: playerException" );
+        }
+
+        @Override
+        public void playerMetadata(String key, String value) {
+            LogHelper.v(LOG_TAG, "PlayerCallback: playerMetadata " + key + " : " + value);
+
+            if (value.length() > 0) {
+                mStationMetadata = value;
+            } else {
+                mStationMetadata = mStation.getStationName();
+            }
+            mStationMetadataReceived = true;
+            saveAppState();
+
+            // send local broadcast
+            Intent i = new Intent();
+            i.setAction(ACTION_METADATA_CHANGED);
+            i.putExtra(EXTRA_METADATA, mStationMetadata);
+            i.putExtra(EXTRA_STATION, mStation);
+            LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(i);
+
+            // save metadata to shared preferences
+            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putString(PREF_STATION_METADATA,  mStationMetadata);
+            editor.apply();
+
+            // update media session metadata
+            mSession.setMetadata(getMetadata(getApplicationContext(), mStation, mStationMetadata));
+
+            // update notification
+            NotificationHelper.update(mStation, mStationID, mStationMetadata, mSession);
+        }
+
+        @Override
+        public void playerAudioTrackCreated(AudioTrack audioTrack) {
+            LogHelper.v(LOG_TAG, "PlayerCallback: playerMetadata" );
+        }
+    };
+    /**
+     * End of inner callback
      */
 
 }
