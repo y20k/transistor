@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <!-- Ignore the MissingTranslation issue -->
+    <issue id="MissingTranslation" severity="ignore" />
+
+<!--  Ignore the MissingTranslation issue for given files
+    <issue id="MissingTranslation">
+        <ignore path="../ExoPlayer/library/src/main/res/**/strings.xml" />
+    </issue> -->
+
+</lint>

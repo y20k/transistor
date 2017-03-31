@@ -38,6 +38,11 @@ android {
             java.srcDirs += "../testutils/src/main/java/"
         }
     }
+
+    lintOptions {
+        disable 'MissingTranslation'
+    }
+
 }
 
 dependencies {
