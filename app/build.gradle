@@ -8,8 +8,8 @@ android {
         applicationId "org.malah.transistor"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 34
-        versionName "2.1.8 (Moonage Daydream)"
+        versionCode 35
+        versionName "3.0.0 (Beta)"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
