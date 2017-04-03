@@ -41,6 +41,7 @@ public class TransistorKeys {
     public static final String EXTRA_PLAYBACK_STATE_CHANGE = "PLAYBACK_STATE_CHANGE";
     public static final String EXTRA_PLAYBACK_STATE = "PLAYBACK_STATE";
     public static final String EXTRA_STATION = "STATION";
+    public static final String EXTRA_STATIONS = "STATIONS";
     public static final String EXTRA_STATION_ID = "STATION_ID";
     public static final String EXTRA_LAST_STATION = "LAST_STATION";
     public static final String EXTRA_STATION_NEW_NAME = "STATION_NEW_NAME";
@@ -82,6 +83,8 @@ public class TransistorKeys {
     public static final int STATION_ADDED = 1;
     public static final int STATION_RENAMED = 2;
     public static final int STATION_DELETED = 3;
+    public static final int STATION_CHANGED_IMAGE = 4;
+
     public static final int PLAYBACK_LOADING_STATION = 1;
     public static final int PLAYBACK_STARTED = 2;
     public static final int PLAYBACK_STOPPED = 3;

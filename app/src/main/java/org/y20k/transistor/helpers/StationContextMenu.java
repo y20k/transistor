@@ -53,6 +53,7 @@ public final class StationContextMenu extends DialogFragment {
     }
 
 
+
     /* Displays context menu */
     public void show() {
 

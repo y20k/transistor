@@ -2,10 +2,10 @@
  * PlayerService.java
  * Implements the app's playback background service
  * The player service plays streaming audio
- *
+ * <p>
  * This file is part of
  * TRANSISTOR - Radio App for Android
- *
+ * <p>
  * Copyright (c) 2015-17 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
@@ -46,8 +46,10 @@ import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.LogHelper;
 import org.y20k.transistor.helpers.MetadataHelper;
 import org.y20k.transistor.helpers.NotificationHelper;
+import org.y20k.transistor.helpers.StorageHelper;
 import org.y20k.transistor.helpers.TransistorKeys;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -238,8 +240,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
                 if (!mPlayback && mMediaPlayer != null && mMediaPlayer.isPlaying()) {
                     stopPlayback(false);
-                }
-                else if (mPlayback && mMediaPlayer != null && mMediaPlayer.isPlaying()) {
+                } else if (mPlayback && mMediaPlayer != null && mMediaPlayer.isPlaying()) {
                     mMediaPlayer.pause();
                 }
                 break;
@@ -272,7 +273,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
             // check for race between onPrepared ans MetadataHelper
             if (!mStationMetadataReceived) {
                 // update notification
-                NotificationHelper.update(mStation, mStationID, mStation.getStationName(), mSession);
+                NotificationHelper.update(mStation, mStationID, mStation.TITLE, mSession);
             }
 
             // start media player
@@ -364,7 +365,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     @Override
     public boolean onInfo(MediaPlayer mp, int what, int extra) {
 
-        switch (what){
+        switch (what) {
             case MediaPlayer.MEDIA_INFO_UNKNOWN:
                 LogHelper.i(LOG_TAG, "Unknown media info");
                 break;
@@ -417,7 +418,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     }
 
 
-
     /* Getter for current station */
     public static Station getStation() {
         return mStation;
@@ -428,7 +428,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     private void startPlayback() {
 
         // set and save state
-        mStationMetadata = mStation.getStationName();
+        mStationMetadata = mStation.TITLE;
         mStationMetadataReceived = false;
         mStation.setPlaybackState(true);
         mPlayback = true;
@@ -483,7 +483,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     private void stopPlayback(boolean dismissNotification) {
 
         // set and save state
-        mStationMetadata = mStation.getStationName();
+        mStationMetadata = mStation.TITLE;
         mStationMetadataReceived = false;
         mStation.setPlaybackState(false);
         mPlayback = false;
@@ -524,7 +524,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
             mSession.setActive(false);
         } else {
             // update notification
-            NotificationHelper.update(mStation, mStationID, mStation.getStationName(), mSession);
+            NotificationHelper.update(mStation, mStationID, mStation.TITLE, mSession);
             // keep media session active
             mSession.setActive(true);
         }
@@ -616,9 +616,11 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     /* Creates the metadata needed for MediaSession */
     private MediaMetadataCompat getMetadata(Context context, Station station, String metaData) {
         Bitmap stationImage;
-        if (station.getStationImageFile() != null && station.getStationImageFile().exists()) {
+
+        File imageFileRef = station.getStationImage(context);
+        if (imageFileRef != null && imageFileRef.exists()) {
             // use station image
-            stationImage = BitmapFactory.decodeFile(station.getStationImageFile().toString());
+            stationImage = BitmapFactory.decodeFile(imageFileRef.toString());
         } else {
             stationImage = null;
         }
@@ -626,10 +628,10 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         String albumTitle = context.getResources().getString(R.string.app_name);
 
         // log metadata change
-        LogHelper.i(LOG_TAG, "New Metadata available. Artist: " + station.getStationName() + ", Title: " +  metaData + ", Album: " +  albumTitle);
+        LogHelper.i(LOG_TAG, "New Metadata available. Artist: " + station.TITLE + ", Title: " + metaData + ", Album: " + albumTitle);
 
         return new MediaMetadataCompat.Builder()
-                .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, station.getStationName())
+                .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, station.TITLE)
                 .putString(MediaMetadataCompat.METADATA_KEY_TITLE, metaData)
                 .putString(MediaMetadataCompat.METADATA_KEY_ALBUM, albumTitle)
                 .putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, stationImage)
@@ -647,7 +649,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         editor.putBoolean(TransistorKeys.PREF_STATION_LOADING, mStationLoading);
         editor.putString(TransistorKeys.PREF_STATION_METADATA, mStationMetadata);
         editor.apply();
-        LogHelper.v(LOG_TAG, "Saving state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + " / " + mStationLoading + " / " + ")");
+        LogHelper.v(LOG_TAG, "Saving state (" + mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + " / " + mStationLoading + " / " + ")");
     }
 
 
@@ -656,7 +658,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         mStationIDCurrent = settings.getInt(TransistorKeys.PREF_STATION_ID_CURRENTLY_PLAYING, -1);
         mStationIDLast = settings.getInt(TransistorKeys.PREF_STATION_ID_LAST, -1);
-        LogHelper.v(LOG_TAG, "Loading state ("+  mStationIDCurrent + " / " + mStationIDLast + ")");
+        LogHelper.v(LOG_TAG, "Loading state (" + mStationIDCurrent + " / " + mStationIDLast + ")");
     }
 
 
@@ -684,7 +686,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     /**
      * Inner class: Handles callback from active media session ***
      */
-    private final class MediaSessionCallback extends MediaSessionCompat.Callback  {
+    private final class MediaSessionCallback extends MediaSessionCompat.Callback {
         @Override
         public void onPlay() {
             // start playback
@@ -768,7 +770,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     /**
      * End of inner class
      */
-
 
 
 }

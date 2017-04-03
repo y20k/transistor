@@ -63,7 +63,11 @@ public final class ImageHelper {
         mContext = context;
         mInputImage = decodeSampledBitmapFromUri(inputImageUri, 72, 72);
     }
-
+    /* Constructor when given an Uri */
+    public ImageHelper(Uri inputImageUri, Context context, int reqWidth, int reqHeight) {
+        mContext = context;
+        mInputImage = decodeSampledBitmapFromUri(inputImageUri, reqWidth, reqHeight);
+    }
 
     /* Creates shortcut icon for Home screen */
     public Bitmap createShortcut(int size) {

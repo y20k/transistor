@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:background="@color/transistor_grey_dark"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -20,13 +21,20 @@
         android:divider="#ffffff"
         android:dividerPadding="5dp">
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/player_imageview_station_icon"
             android:contentDescription="@string/descr_station_icon"
             android:layout_width="?android:attr/listPreferredItemHeight"
             android:layout_height="?android:attr/listPreferredItemHeight"
             android:minHeight="?android:attr/listPreferredItemHeight"
-            app:srcCompat="@drawable/ic_notesymbol_36dp" />
+
+            fresco:placeholderImage="@drawable/ic_notesymbol_36dp"
+            fresco:placeholderImageScaleType="fitCenter"
+
+            fresco:progressBarImage="@drawable/progress_loading"
+            fresco:progressBarImageScaleType="centerInside"
+            fresco:progressBarAutoRotateInterval="1000"
+            />
 
         <LinearLayout
             android:id="@+id/player_layout_station_info"

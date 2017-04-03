@@ -2,10 +2,10 @@
  * Station.java
  * Implements the Station class
  * A Station handles station-related data, e.g. the name and the streaming URL
- *
+ * <p>
  * This file is part of
  * TRANSISTOR - Radio App for Android
- *
+ * <p>
  * Copyright (c) 2015-17 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
@@ -14,6 +14,12 @@
 
 package org.y20k.transistor.core;
 
+import android.app.Activity;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -21,23 +27,30 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.v4.content.LocalBroadcastManager;
+import android.util.Xml;
 
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
 import org.y20k.transistor.helpers.LogHelper;
+import org.y20k.transistor.helpers.StorageHelper;
 import org.y20k.transistor.helpers.TransistorKeys;
+import org.y20k.transistor.sqlcore.StationsDbContract;
+import org.y20k.transistor.sqlcore.StationsDbHelper;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -51,6 +64,29 @@ public final class Station implements Comparable<Station>, Parcelable {
 
     /* Define log tag */
     private static final String LOG_TAG = Station.class.getSimpleName();
+
+    /*fields */
+    public int _ID;
+    public String UNIQUE_ID;
+    public String TITLE;
+    public String SUBTITLE;
+    public String IMAGE_PATH;
+    //local image name
+    public String IMAGE_FILE_NAME;
+    public String URI;
+    public String CONTENT_TYPE;
+    public String DESCRIPTION;
+    public String RATING;
+    public String CATEGORY;
+    public String IS_FAVOURITE;
+    public String THUMP_UP_STATUS;
+    private File mStationImageFile;
+    private Bitmap mStationImage;
+    private ArrayList<Station> mInsertedStations = new ArrayList<Station>();
+
+    /* Supported xml import file content types */
+    private static final String[] CONTENT_TYPES_IMPORT_XML = {"application/xml"};
+
 
     /* Supported audio file content types */
     private static final String[] CONTENT_TYPES_MPEG = {"audio/mpeg"};
@@ -66,51 +102,58 @@ public final class Station implements Comparable<Station>, Parcelable {
 
 
     /* Main class variables */
-    private Bitmap mStationImage;
-    private File mStationImageFile;
-    private String mStationName;
-    private File mStationPlaylistFile;
-    private Uri mStreamUri;
     private String mPlaylistFileContent;
     private boolean mPlayback;
     private Bundle mStationFetchResults;
 
 
-    /* Constructor when given file from the Collection folder */
-    public Station(File file) {
-        // read and parse playlist file
-        mStationPlaylistFile = file;
-        if (mStationPlaylistFile.exists()) {
-            parse(readPlaylistFile(mStationPlaylistFile));
-        }
-
-        // set image file object
-        File folder = mStationPlaylistFile.getParentFile();
-        if (folder != null) {
-            setStationImageFile(folder);
-        }
-
-        // set playback state
-        mPlayback = false;
-    }
+//    /* Constructor when given file from the Collection folder */
+//    public Station(File file) {
+//        // read and parse playlist file
+//        mStationPlaylistFile = file;
+//        if (mStationPlaylistFile.exists()) {
+//            parse(readPlaylistFile(mStationPlaylistFile));
+//        }
+//
+//        // set image file object
+//        File folder = mStationPlaylistFile.getParentFile();
+//        if (folder != null) {
+//            setStationImageFile(folder);
+//        }
+//
+//        // set playback state
+//        mPlayback = false;
+//    }
 
 
     /* Constructor when given folder and remote location */
-    public Station(File folder, URL fileLocation) {
+    public Station(File folder, URL fileLocation, Activity mActivity) throws IOException, XmlPullParserException {
+        MainConstructor(folder, fileLocation, mActivity);
+    }
 
+    private void MainConstructor(File folder, URL fileLocation, Activity mActivity) throws XmlPullParserException, IOException {
         // create results bundle
         mStationFetchResults = new Bundle();
 
         // determine content type of remote file
         ContentType contentType = getContentType(fileLocation);
+        ContentType resultContentType = contentType;
+
         LogHelper.v(LOG_TAG, "Content type of given file is " + contentType);
 
-
+        //is XML import file
+        if (isXMLFile(contentType)) {
+            //READ THE XML FILE ITEMS
+            readXmlEntries(fileLocation, mActivity);
+            // set playback state
+            mPlayback = false;
+            return;
+        }
         // content type is raw audio file
-        if (isAudioFile(contentType)) {
+        else if (isAudioFile(contentType)) {
             // use raw audio file for station data
-            mStreamUri = Uri.parse(fileLocation.toString().trim());
-            mStationName = getStationName(fileLocation);
+            URI = fileLocation.toString().trim();
+            TITLE = detactStationName(fileLocation);
             // save results
             mStationFetchResults.putParcelable(TransistorKeys.RESULT_STREAM_TYPE, contentType);
             mStationFetchResults.putBoolean(TransistorKeys.RESULT_FETCH_ERROR, false);
@@ -122,11 +165,12 @@ public final class Station implements Comparable<Station>, Parcelable {
             mPlaylistFileContent = downloadPlaylistFile(fileLocation);
 
             // parse result of downloadPlaylistFile
-            if (parse(mPlaylistFileContent) && mStreamUri != null) {
-                mStationName = getStationName(fileLocation);
+            if (parse(mPlaylistFileContent) && URI != null) {
+                TITLE = detactStationName(fileLocation);
                 // save results
                 mStationFetchResults.putParcelable(TransistorKeys.RESULT_PLAYLIST_TYPE, contentType);
-                mStationFetchResults.putParcelable(TransistorKeys.RESULT_STREAM_TYPE, getContentType(mStreamUri));
+                resultContentType = getContentType(Uri.parse(URI));
+                mStationFetchResults.putParcelable(TransistorKeys.RESULT_STREAM_TYPE, resultContentType);
                 mStationFetchResults.putString(TransistorKeys.RESULT_FILE_CONTENT, mPlaylistFileContent);
                 mStationFetchResults.putBoolean(TransistorKeys.RESULT_FETCH_ERROR, false);
 
@@ -137,14 +181,14 @@ public final class Station implements Comparable<Station>, Parcelable {
                 mStationFetchResults.putBoolean(TransistorKeys.RESULT_FETCH_ERROR, true);
             }
 
-        // content type is none of the above
+            // content type is none of the above
         } else if (contentType != null) {
             // save results and return
             mStationFetchResults.putParcelable(TransistorKeys.RESULT_STREAM_TYPE, contentType);
             mStationFetchResults.putBoolean(TransistorKeys.RESULT_FETCH_ERROR, true);
             return;
 
-        // no content type
+            // no content type
         } else {
             // save error flag in results and return
             mStationFetchResults.putBoolean(TransistorKeys.RESULT_FETCH_ERROR, true);
@@ -152,22 +196,27 @@ public final class Station implements Comparable<Station>, Parcelable {
         }
 
         // set Transistor's playlist file object
-        setStationPlaylistFile(folder);
+        //setStationPlaylistFile(folder);
 
-        // download favicon and store bitmap object
-        downloadImageFile(fileLocation);
-
-        // set Transistor's image file object
-        setStationImageFile(folder);
 
         // set playback state
         mPlayback = false;
 
+        // set Transistor's image file object
+        final String uNIQUE_ID = fileLocation.toString().replaceAll("[:/]", "_");
+        IMAGE_FILE_NAME = uNIQUE_ID + ".png";
+
+        //v2
+        //add station to DB
+        // strip out problematic characters
+        UNIQUE_ID = uNIQUE_ID;
+        CONTENT_TYPE = resultContentType.getTypeString();
+        IMAGE_PATH = getFavIconUrlString(URI); //default to fav icon
+        AddStationItemToDb(this, mActivity); //save to DB
     }
 
-
     /* Constructor when given folder and file on sd card */
-    public Station(File folder, Uri fileLocation) {
+    public Station(File folder, Uri fileLocation, Activity mActivity) {
 
         // create results bundle
         mStationFetchResults = new Bundle();
@@ -181,40 +230,291 @@ public final class Station implements Comparable<Station>, Parcelable {
         }
 
         // parse the raw content of playlist file (mPlaylistFileContent)
-        if (parse(mPlaylistFileContent) &&  mStreamUri != null) {
-            // save results
-            mStationFetchResults.putParcelable(TransistorKeys.RESULT_STREAM_TYPE, getContentType(mStreamUri));
-            mStationFetchResults.putString(TransistorKeys.RESULT_FILE_CONTENT, mPlaylistFileContent);
-            mStationFetchResults.putBoolean(TransistorKeys.RESULT_FETCH_ERROR, false);
-
-        } else {
-            // save error flag and file content in results
-            mStationFetchResults.putString(TransistorKeys.RESULT_FILE_CONTENT, "\n[File probably does not contain a valid streaming URL.]");
-            mStationFetchResults.putBoolean(TransistorKeys.RESULT_FETCH_ERROR, true);
+        if (parse(mPlaylistFileContent) && URI != null) {
+            URL streamURL = null;
+            try {
+                MainConstructor(folder, streamURL, mActivity);
+                streamURL = new URL(URI);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (XmlPullParserException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
-        // set Transistor's playlist file object
-        setStationPlaylistFile(folder);
-
-        // set Transistor's image file object
-        setStationImageFile(folder);
-
-        // set playback state
-        mPlayback = false;
 
     }
+
+    private String readPlaylistFile(File playlistFile) {
+
+        try (BufferedReader br = new BufferedReader(new FileReader(playlistFile))) {
+            String line;
+            int counter = 0;
+            StringBuilder sb = new StringBuilder("");
+
+            // read until last line reached or until line five
+            while ((line = br.readLine()) != null && counter < 5) {
+                sb.append(line);
+                sb.append("\n");
+                counter++;
+            }
+
+            // set mPlaylistFileContent and return String
+            mPlaylistFileContent = sb.toString();
+            return sb.toString();
+
+        } catch (IOException e) {
+            LogHelper.e(LOG_TAG, "Unable to read playlist file: " + playlistFile.toString());
+            // set mPlaylistFileContent and return null
+            mPlaylistFileContent = "[IO error. Unable to read playlist file: " + playlistFile.toString() + "]";
+            return null;
+        }
+
+    }
+
+    public Station() {
+        //nothing for now
+    }
+
+//    public void resetStationImage(Activity mActivity) {
+//        mStationImage = null;
+//        getStationImage(mActivity);
+//    }
+
+//    /* Getter for station image */
+//    public Bitmap getAndCacheStationImage(Context mActivityOrContext) {
+//        //if already there return it
+//
+//        if (mStationImage != null) { //memory cache
+//            return mStationImage;
+//        }
+//        //try to find on desk by channel UNIQUE_ID
+//        // get collection folder
+//        Bitmap channelImage = null;
+//        try {
+//            StorageHelper storageHelper = new StorageHelper(mActivityOrContext);
+//            final File mFolder = storageHelper.getCollectionDirectory();
+//            final String fileImageName = IMAGE_FILE_NAME;
+//            //try find the file on desk
+//            File imageActualFile = new File(mFolder.getPath() + "//" + fileImageName);
+//            if (!imageActualFile.exists()) {
+//                //file not found
+//                //try download the file
+//                channelImage = downloadImageFile(IMAGE_PATH);
+//                //Save Image to desk
+//                if (channelImage != null) {
+//                    writeImageFile(mFolder, channelImage);
+//                }
+//            } else {
+//                //file already exists, then get it from file system
+//                channelImage = BitmapFactory.decodeStream(new FileInputStream(imageActualFile));
+//            }
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        mStationImage = channelImage;
+//        return channelImage;
+//    }
+
+    //v2
+    private void readXmlEntries(URL fileLocation, Activity mActivity) throws XmlPullParserException, IOException {
+        InputStream stream = null;
+        try {
+            HttpURLConnection conn = (HttpURLConnection) fileLocation.openConnection();
+            conn.setReadTimeout(10000 /* milliseconds */);
+            conn.setConnectTimeout(15000 /* milliseconds */);
+            conn.setRequestMethod("GET");
+            conn.setDoInput(true);
+            // Starts the query
+            conn.connect();
+            stream = conn.getInputStream();
+
+            //parse
+            XmlPullParser parser = Xml.newPullParser();
+            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+            parser.setInput(stream, null);
+            parser.nextTag();
+
+            List entries = new ArrayList();
+
+            parser.require(XmlPullParser.START_TAG, null, "channels");
+            while (parser.next() != XmlPullParser.END_TAG) {
+                if (parser.getEventType() != XmlPullParser.START_TAG) {
+                    continue;
+                }
+                String name = parser.getName();
+                // Starts by looking for the entry tag
+                if (name.equals("entry")) {
+                    parser.require(XmlPullParser.START_TAG, null, "entry");
+
+                    Station stationItem = new Station();
+                    while (parser.next() != XmlPullParser.END_TAG) {
+                        if (parser.getEventType() != XmlPullParser.START_TAG) {
+                            continue;
+                        }
+                        String tagName = parser.getName();
+                        if (tagName.equals("unique_id")) {
+                            parser.require(XmlPullParser.START_TAG, null, "unique_id");
+                            stationItem.UNIQUE_ID = readXmlElementText(parser);
+                            stationItem.IMAGE_FILE_NAME = stationItem.UNIQUE_ID + ".png";
+                        } else if (tagName.equals("title")) {
+                            parser.require(XmlPullParser.START_TAG, null, "title");
+                            stationItem.TITLE = readXmlElementText(parser);
+                        } else if (tagName.equals("subtitle")) {
+                            parser.require(XmlPullParser.START_TAG, null, "subtitle");
+                            stationItem.SUBTITLE = readXmlElementText(parser);
+                        } else if (tagName.equals("image")) {
+                            parser.require(XmlPullParser.START_TAG, null, "image");
+                            stationItem.IMAGE_PATH = readXmlElementText(parser);
+                        } else if (tagName.equals("uri")) {
+                            parser.require(XmlPullParser.START_TAG, null, "uri");
+                            stationItem.URI = readXmlElementText(parser);
+                        } else if (tagName.equals("content_type")) {
+                            parser.require(XmlPullParser.START_TAG, null, "content_type");
+                            stationItem.CONTENT_TYPE = readXmlElementText(parser);
+                        } else if (tagName.equals("rating")) {
+                            parser.require(XmlPullParser.START_TAG, null, "rating");
+                            stationItem.RATING = readXmlElementText(parser);
+                        } else if (tagName.equals("category")) {
+                            parser.require(XmlPullParser.START_TAG, null, "category");
+                            stationItem.CATEGORY = readXmlElementText(parser);
+                        } else if (tagName.equals("description")) {
+                            parser.require(XmlPullParser.START_TAG, null, "description");
+                            stationItem.DESCRIPTION = readXmlElementText(parser);
+                        } else {
+                            skipXmlTagParse(parser);
+                        }
+                    }
+
+                    if (stationItem.UNIQUE_ID != null && !stationItem.UNIQUE_ID.isEmpty()
+                            && stationItem.URI != null && !stationItem.URI.isEmpty()) {
+                        //add default Image URL
+                        if (stationItem.IMAGE_PATH == null || stationItem.IMAGE_PATH == "") {
+                            IMAGE_PATH = getFavIconUrlString(stationItem.URI); //default to fav icon
+                        }
+                        //add station to db
+                        AddStationItemToDb(stationItem, mActivity);
+
+                        //for reference and to inform the adaptor we need the list of mInsertedStations
+                        mInsertedStations.add(stationItem);
+                    }
+                } else {
+                    skipXmlTagParse(parser);
+                }
+            }
+
+            // Makes sure that the InputStream is closed after the app is
+            // finished using it.
+        } finally {
+            if (stream != null) {
+                stream.close();
+            }
+        }
+    }
+
+    //v2
+    private void skipXmlTagParse(XmlPullParser parser) throws XmlPullParserException, IOException {
+        if (parser.getEventType() != XmlPullParser.START_TAG) {
+            throw new IllegalStateException();
+        }
+        int depth = 1;
+        while (depth != 0) {
+            switch (parser.next()) {
+                case XmlPullParser.END_TAG:
+                    depth--;
+                    break;
+                case XmlPullParser.START_TAG:
+                    depth++;
+                    break;
+            }
+        }
+    }
+
+    //v2
+    private String readXmlElementText(XmlPullParser parser) throws IOException, XmlPullParserException {
+        String result = "";
+        if (parser.next() == XmlPullParser.TEXT) {
+            result = parser.getText();
+            parser.nextTag();
+        }
+        return result;
+    }
+
+    //v2
+    private boolean isXMLFile(ContentType contentType) {
+        if (contentType != null) {
+            for (String[] array : new String[][]{CONTENT_TYPES_IMPORT_XML}) {
+                if (Arrays.asList(array).contains(contentType.type)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
+//    /* Constructor when given folder and file on sd card */
+//    public Station(File folder, Uri fileLocation) {
+//
+//        // create results bundle
+//        mStationFetchResults = new Bundle();
+//
+//        // read local file and put result into mPlaylistFileContent
+//        File localFile = new File(fileLocation.getPath());
+//        if (localFile.exists()) {
+//            mPlaylistFileContent = readPlaylistFile(localFile);
+//        } else {
+//            LogHelper.v(LOG_TAG, "File does not exist " + localFile);
+//        }
+//
+//        // parse the raw content of playlist file (mPlaylistFileContent)
+//        if (parse(mPlaylistFileContent) && mStreamUri != null) {
+//            // save results
+//            mStationFetchResults.putParcelable(TransistorKeys.RESULT_STREAM_TYPE, getContentType(mStreamUri));
+//            mStationFetchResults.putString(TransistorKeys.RESULT_FILE_CONTENT, mPlaylistFileContent);
+//            mStationFetchResults.putBoolean(TransistorKeys.RESULT_FETCH_ERROR, false);
+//
+//        } else {
+//            // save error flag and file content in results
+//            mStationFetchResults.putString(TransistorKeys.RESULT_FILE_CONTENT, "\n[File probably does not contain a valid streaming URL.]");
+//            mStationFetchResults.putBoolean(TransistorKeys.RESULT_FETCH_ERROR, true);
+//        }
+//
+//        // set Transistor's playlist file object
+//        setStationPlaylistFile(folder);
+//
+//        // set Transistor's image file object
+//        setStationImageFile(folder);
+//
+//        // set playback state
+//        mPlayback = false;
+//
+//    }
 
 
     /* Constructor used by CREATOR */
     protected Station(Parcel in) {
-        mStationImage = in.readParcelable(Bitmap.class.getClassLoader());
-        mStationImageFile = new File (in.readString());
-        mStationName = in.readString();
-        mStationPlaylistFile = new File (in.readString());
-        mStreamUri = in.readParcelable(Uri.class.getClassLoader());
-        mPlaylistFileContent = in.readString();
+        TITLE = in.readString();
+        URI = in.readString();
         mStationFetchResults = in.readBundle(Bundle.class.getClassLoader());
         mPlayback = in.readByte() != 0; // true if byte != 0
+
+        _ID = in.readInt();
+        UNIQUE_ID = in.readString();
+        SUBTITLE = in.readString();
+        IMAGE_PATH = in.readString();
+        IMAGE_FILE_NAME = in.readString();
+        CONTENT_TYPE = in.readString();
+        DESCRIPTION = in.readString();
+        RATING = in.readString();
+        CATEGORY = in.readString();
+        IS_FAVOURITE = in.readString();
+        THUMP_UP_STATUS = in.readString();
+
         LogHelper.v(LOG_TAG, "Station re-created from parcel. State of playback is: " + mPlayback);
     }
 
@@ -233,20 +533,20 @@ public final class Station implements Comparable<Station>, Parcelable {
     };
 
 
-    /* Construct string representation of m3u mStationPlaylistFile */
-    private String createM3u() {
-
-        // construct m3u String
-        StringBuilder sb = new StringBuilder("");
-        sb.append("#EXTM3U\n\n");
-        sb.append("#EXTINF:-1,");
-        sb.append(mStationName);
-        sb.append("\n");
-        sb.append(mStreamUri.toString());
-        sb.append("\n");
-
-        return sb.toString();
-    }
+//    /* Construct string representation of m3u mStationPlaylistFile */
+//    private String createM3u() {
+//
+//        // construct m3u String
+//        StringBuilder sb = new StringBuilder("");
+//        sb.append("#EXTM3U\n\n");
+//        sb.append("#EXTINF:-1,");
+//        sb.append(mStationName);
+//        sb.append("\n");
+//        sb.append(mStreamUri.toString());
+//        sb.append("\n");
+//
+//        return sb.toString();
+//    }
 
 
     /* Downloads remote playlist file */
@@ -285,33 +585,32 @@ public final class Station implements Comparable<Station>, Parcelable {
     }
 
 
-    /* Reads local playlist file */
-    private String readPlaylistFile(File playlistFile) {
-
-        try (BufferedReader br = new BufferedReader(new FileReader(playlistFile))) {
-            String line;
-            int counter = 0;
-            StringBuilder sb = new StringBuilder("");
-
-            // read until last line reached or until line five
-            while ((line = br.readLine()) != null && counter < 5) {
-                sb.append(line);
-                sb.append("\n");
-                counter++;
-            }
-
-            // set mPlaylistFileContent and return String
-            mPlaylistFileContent = sb.toString();
-            return sb.toString();
-
-        } catch (IOException e) {
-            LogHelper.e(LOG_TAG, "Unable to read playlist file: " + playlistFile.toString());
-            // set mPlaylistFileContent and return null
-            mPlaylistFileContent = "[IO error. Unable to read playlist file: " + playlistFile.toString()  + "]";
-            return null;
-        }
-
-    }
+//    /* Reads local playlist file */
+//    private String readPlaylistFile(File playlistFile) {
+//        try (BufferedReader br = new BufferedReader(new FileReader(playlistFile))) {
+//            String line;
+//            int counter = 0;
+//            StringBuilder sb = new StringBuilder("");
+//
+//            // read until last line reached or until line five
+//            while ((line = br.readLine()) != null && counter < 5) {
+//                sb.append(line);
+//                sb.append("\n");
+//                counter++;
+//            }
+//
+//            // set mPlaylistFileContent and return String
+//            mPlaylistFileContent = sb.toString();
+//            return sb.toString();
+//
+//        } catch (IOException e) {
+//            LogHelper.e(LOG_TAG, "Unable to read playlist file: " + playlistFile.toString());
+//            // set mPlaylistFileContent and return null
+//            mPlaylistFileContent = "[IO error. Unable to read playlist file: " + playlistFile.toString() + "]";
+//            return null;
+//        }
+//
+//    }
 
 
     /* Returns content type for given Uri */
@@ -334,94 +633,7 @@ public final class Station implements Comparable<Station>, Parcelable {
     /* Returns content type for given URL */
     private ContentType getContentType(URL fileLocation) {
         try {
-
-//            URLConnection connection2 =null;
-//            InputStream in=null;
-//            String titleFromDtreem = "";
-//            try{
-//                connection2 = new URL(fileLocation.toString()).openConnection();
-//                connection2.setConnectTimeout(5000);
-//                connection2.setReadTimeout(5000);
-//                connection2.setRequestProperty("Icy-MetaData", "1");
-//                connection2.connect();
-//
-//                in = connection2.getInputStream();
-//                byte buf[] = new byte[16384]; // one second of 128kbit stream
-//                int count = 0;
-//                int total = 0;
-//                int metadataSize = 0;
-//                final int metadataOffset = connection2.getHeaderFieldInt("icy-metaint", 0);
-//                int bitRate = Math.max(connection2.getHeaderFieldInt("icy-br", 128), 32);
-//                LogHelper.v(LOG_TAG, "createProxyConnection: connected, icy-metaint " + metadataOffset + " icy-br " + bitRate);
-//                while (true) {
-//                    count = Math.min(in.available(), buf.length);
-//                    if (count <= 0) {
-//                        count = Math.min(bitRate * 64, buf.length); // buffer half-second of stream data
-//                    }
-//                    if (metadataOffset > 0) {
-//                        count = Math.min(count, metadataOffset - total);
-//                    }
-//
-//                    count = in.read(buf, 0, count);
-//                    if (count == 0) {
-//                        continue;
-//                    }
-//                    if (count < 0) {
-//                        break;
-//                    }
-//
-//                    total += count;
-//                    if (metadataOffset > 0 && total >= metadataOffset) {
-//                        // read metadata
-//                        total = 0;
-//                        count = in.read();
-//                        if (count < 0) {
-//                            break;
-//                        }
-//                        count *= 16;
-//                        metadataSize = count;
-//                        if (metadataSize == 0) {
-//                            continue;
-//                        }
-//                        // maximum metadata length is 4080 bytes
-//                        total = 0;
-//                        while (total < metadataSize) {
-//                            count = in.read(buf, total, count);
-//                            if (count < 0) {
-//                                break;
-//                            }
-//                            if (count == 0) {
-//                                continue;
-//                            }
-//                            total += count;
-//                            count = metadataSize - total;
-//                        }
-//                        total = 0;
-//                        String[] metadata = new String(buf, 0, metadataSize, StandardCharsets.UTF_8).split(";");
-//                        for (String s : metadata) {
-//                            if (s.indexOf(TransistorKeys.SHOUTCAST_STREAM_TITLE_HEADER) == 0 && s.length() >= TransistorKeys.SHOUTCAST_STREAM_TITLE_HEADER.length() + 1) {
-//                                Log.d(TAG, "SHOUTCAST_STREAM_TITLE_HEADER: " + s.substring(TransistorKeys.SHOUTCAST_STREAM_TITLE_HEADER.length(), s.length() - 1));
-//                                titleFromDtreem = s.substring(TransistorKeys.SHOUTCAST_STREAM_TITLE_HEADER.length(), s.length() - 1);
-//                            }
-//                        }
-//                    }
-//                }
-//            } finally {
-//                // Close Stream and disconnect HTTPS connection.
-//                if (in != null) {
-//                    in.close();
-//                }
-//            }
-
-
-
-
-
-
-
-
-
-            HttpURLConnection connection = (HttpURLConnection)fileLocation.openConnection();
+            HttpURLConnection connection = (HttpURLConnection) fileLocation.openConnection();
             connection.setConnectTimeout(5000);
             connection.setReadTimeout(5000);
             String contentTypeHeader = connection.getContentType();
@@ -474,9 +686,8 @@ public final class Station implements Comparable<Station>, Parcelable {
     }
 
 
-
     /* Determines name of station based on the location URL */
-    private String getStationName(URL fileLocationUrl) {
+    private String detactStationName(URL fileLocationUrl) {
 
         String stationName;
         String fileLocation = fileLocationUrl.toString();
@@ -494,10 +705,39 @@ public final class Station implements Comparable<Station>, Parcelable {
     }
 
 
-    /* Downloads remote favicon file */
-    private void downloadImageFile(URL fileLocation) {
+    //    /* download Image File from url */
+    private Bitmap downloadImageFile(String theImageExternalUrl) throws MalformedURLException {
+        //check if there is image URL availabe in object
+        URL fileLocation;
+        if (theImageExternalUrl != null && !theImageExternalUrl.isEmpty()) {
+            fileLocation = new URL(theImageExternalUrl);
+            // download favicon
+            LogHelper.v(LOG_TAG, "Downloading channelimage: " + fileLocation.toString());
+            try (InputStream in = fileLocation.openStream()) {
+                return BitmapFactory.decodeStream(in);
+            } catch (IOException e) {
+                LogHelper.e(LOG_TAG, "Error downloading: " + fileLocation.toString());
+            }
+        } else {
+            //useless , but leave it for compatibility
+            String faviconLocation = getFavIconUrlString(URI);
 
-        // get domain
+            // download favicon
+            LogHelper.v(LOG_TAG, "Downloading favicon: " + faviconLocation);
+            try (InputStream in = new URL(faviconLocation).openStream()) {
+                return BitmapFactory.decodeStream(in);
+            } catch (IOException e) {
+                LogHelper.e(LOG_TAG, "Error downloading: " + faviconLocation);
+            }
+        }
+        return null;
+    }
+
+    @NonNull
+    private String getFavIconUrlString(String inpotUrl) throws MalformedURLException {
+        URL fileLocation;//Image path not found
+        //Then try get image from fav icon of the host site
+        fileLocation = new URL(inpotUrl);
         String host = fileLocation.getHost();
 
         // strip subdomain and add www if necessary
@@ -507,16 +747,7 @@ public final class Station implements Comparable<Station>, Parcelable {
         }
 
         // get favicon location
-        String faviconLocation = "http://" + host + "/favicon.ico";
-
-        // download favicon
-        LogHelper.v(LOG_TAG, "Downloading favicon: " + faviconLocation);
-        try (InputStream in = new URL(faviconLocation).openStream()) {
-            mStationImage = BitmapFactory.decodeStream(in);
-        } catch (IOException e) {
-            LogHelper.e(LOG_TAG, "Error downloading: " + faviconLocation);
-        }
-
+        return "http://" + host + "/favicon.ico";
     }
 
 
@@ -541,34 +772,40 @@ public final class Station implements Comparable<Station>, Parcelable {
 
             // M3U: found station name
             if (line.contains("#EXTINF:-1,")) {
-                mStationName = line.substring(11).trim();
-            // M3U: found stream URL
+                TITLE = line.substring(11).trim();
+                // M3U: found stream URL
             } else if (line.startsWith("http")) {
-                mStreamUri = Uri.parse(line.trim());
+                URI = line.trim();
             }
 
             // PLS: found station name
             else if (line.startsWith("Title1=")) {
-                mStationName = line.substring(7).trim();
-            // PLS: found stream URL
+                TITLE = line.substring(7).trim();
+                // PLS: found stream URL
             } else if (line.startsWith("File1=http")) {
-                mStreamUri = Uri.parse(line.substring(6).trim());
+                URI = line.substring(6).trim();
             }
 
         }
 
         in.close();
 
-        if (mStreamUri == null) {
+        if (URI == null || URI == "") {
             LogHelper.e(LOG_TAG, "Unable to parse: " + fileContent);
             return false;
         }
 
         // try to construct name of station from remote mStationPlaylistFile name
-        if (mStationPlaylistFile != null && mStationName == null) {
-            mStationName = mStationPlaylistFile.getName().substring(0, mStationPlaylistFile.getName().lastIndexOf("."));
-        } else if (mStationPlaylistFile == null && mStationName == null) {
-            mStationName = "New Station";
+        if ((TITLE == null || TITLE == "") && URI != null && URI != "") {
+            try {
+                TITLE = detactStationName(new URL(URI));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+                LogHelper.e(LOG_TAG, "Unable to parse: " + fileContent);
+                return false;
+            }
+        } else {
+            TITLE = "New Station";
         }
 
         // file content string parsed successfully
@@ -577,40 +814,53 @@ public final class Station implements Comparable<Station>, Parcelable {
     }
 
 
-    /* Writes station as m3u to storage */
-    public void writePlaylistFile(File folder) {
+//    /* Writes station as m3u to storage */
+//    public void writePlaylistFile(File folder) {
+//
+//        setStationPlaylistFile(folder);
+//
+//        if (mStationPlaylistFile.exists()) {
+//            LogHelper.w(LOG_TAG, "File exists. Overwriting " + mStationPlaylistFile.getName() + " " + TITLE + " " + mStreamUri);
+//        }
+//
+//        LogHelper.v(LOG_TAG, "Saving... " + mStationPlaylistFile.toString());
+//
+//        String m3uString = createM3u();
+//
+//        try (BufferedWriter bw = new BufferedWriter(new FileWriter(mStationPlaylistFile))) {
+//            bw.write(m3uString);
+//        } catch (IOException e) {
+//            LogHelper.e(LOG_TAG, "Unable to write PlaylistFile " + mStationPlaylistFile.toString());
+//        }
+//
+//    }
 
-        setStationPlaylistFile(folder);
 
-        if (mStationPlaylistFile.exists()) {
-            LogHelper.w(LOG_TAG, "File exists. Overwriting " + mStationPlaylistFile.getName() + " " + mStationName + " " + mStreamUri);
-        }
-
-        LogHelper.v(LOG_TAG, "Saving... " + mStationPlaylistFile.toString());
-
-        String m3uString = createM3u();
-
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(mStationPlaylistFile))) {
-            bw.write(m3uString);
-        } catch (IOException e) {
-            LogHelper.e(LOG_TAG, "Unable to write PlaylistFile " + mStationPlaylistFile.toString());
-        }
-
-    }
-
+//    /* Writes station image as png to storage */
+//    public void writeImageFile() {
+//
+//        LogHelper.v(LOG_TAG, "Saving favicon: " + mStationImageFile.toString());
+//
+//        // write image to storage
+//        try (FileOutputStream out = new FileOutputStream(mStationImageFile)) {
+//            mStationImage.compress(Bitmap.CompressFormat.PNG, 100, out);
+//        } catch (IOException e) {
+//            LogHelper.e(LOG_TAG, "Unable to save favicon: " + mStationImage.toString());
+//        }
+//
+//    }
 
     /* Writes station image as png to storage */
-    public void writeImageFile() {
-
-        LogHelper.v(LOG_TAG, "Saving favicon: " + mStationImageFile.toString());
-
+    public void writeImageFile(File folder, Bitmap downloadedImage) {
+        String fileLocation = folder.toString() + "/" + IMAGE_FILE_NAME;
+        LogHelper.v(LOG_TAG, "Saving channel image : " + fileLocation.toString());
+        File mStationImageFile = new File(fileLocation);
         // write image to storage
         try (FileOutputStream out = new FileOutputStream(mStationImageFile)) {
-            mStationImage.compress(Bitmap.CompressFormat.PNG, 100, out);
+            downloadedImage.compress(Bitmap.CompressFormat.PNG, 100, out);
         } catch (IOException e) {
-            LogHelper.e(LOG_TAG, "Unable to save favicon: " + mStationImage.toString());
+            LogHelper.e(LOG_TAG, "Unable to save channel image: " + downloadedImage.toString());
         }
-
     }
 
 
@@ -620,28 +870,10 @@ public final class Station implements Comparable<Station>, Parcelable {
     }
 
 
-    /* Getter for playlist file object representing station */
-    public File getStationPlaylistFile() {
-        return mStationPlaylistFile;
-    }
-
-
-    /* Getter for file object representing station image */
-    public File getStationImageFile() {
-        return mStationImageFile;
-    }
-
-
-    /* Getter for station image */
-    public Bitmap getStationImage() {
-        return mStationImage;
-    }
-
-
-    /* Getter for name of station */
-    public String getStationName() {
-        return mStationName;
-    }
+//    /* Getter for file object representing station image */
+//    public File getStationImageFile() {
+//        return mStationImageFile;
+//    }
 
 
     /* Getter for playback state */
@@ -652,37 +884,88 @@ public final class Station implements Comparable<Station>, Parcelable {
 
     /* Getter for URL of stream */
     public Uri getStreamUri() {
-        return mStreamUri;
-    }
-
-
-    /* Setter for playlist file object of station */
-    public void setStationPlaylistFile(File folder) {
-        if (mStationName != null) {
-            // strip out problematic characters
-            String stationNameCleaned = mStationName.replaceAll("[:/]", "_");
-            // construct location of m3u playlist file from station name and folder
-            String fileLocation = folder.toString() + "/" + stationNameCleaned + ".m3u";
-            mStationPlaylistFile = new File(fileLocation);
-        }
+        return Uri.parse(URI);
     }
 
 
     /* Setter for image file object of station */
-    public void setStationImageFile(File folder) {
-        if (mStationName != null) {
-            // strip out problematic characters
-            String stationNameCleaned = mStationName.replaceAll("[:/]", "_");
+    public File getStationImageFileReference(File folder) {
+        if (IMAGE_FILE_NAME != null && IMAGE_FILE_NAME != "") {
             // construct location of png image file from station name and folder
-            String fileLocation = folder.toString() + "/" + stationNameCleaned + ".png";
+            String fileLocation = folder.toString() + "/" + IMAGE_FILE_NAME;
+            mStationImageFile = new File(fileLocation);
+        } else {
+            // construct location of png image file from station name and folder
+            String fileLocation = folder.toString() + "/" + UNIQUE_ID + ".png";
             mStationImageFile = new File(fileLocation);
         }
+        return mStationImageFile;
     }
 
+    /* return cached image File  */
+    public File getStationImage(final Context cntxt) {
+        //try get the image from file cache
+        Bitmap channelImage  =null;
+        StorageHelper storageHelper = new StorageHelper(cntxt);
+        final File folder = storageHelper.getCollectionDirectory();
+        if (IMAGE_FILE_NAME != null && IMAGE_FILE_NAME != "") {
+            // construct location of png image file from station name and folder
+            String fileLocation = folder.toString() + "/" + IMAGE_FILE_NAME;
+            mStationImageFile = new File(fileLocation);
+        } else {
+            // construct location of png image file from station name and folder
+            String fileLocation = folder.toString() + "/" + UNIQUE_ID + ".png";
+            mStationImageFile = new File(fileLocation);
+        }
+        if (mStationImageFile.exists()) {
+            //file already exists, then get it from file system
+//            try {
+//                channelImage = BitmapFactory.decodeStream(new FileInputStream(mStationImageFile));
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//            }
+            return  mStationImageFile;
+        } else {
+            //return null
+            //and download it in background
+            //check stations images ready on desk cache
+            Thread prepareThread = new Thread() {
+                @Override
+                public void run() {
+                    boolean downloadDoneSuccessfully = false;
+                    try{
+                        //load all stations and ensure images are cached
+                        final StationsDbHelper mDbHelper = new StationsDbHelper(cntxt);
+                        //try download the file
+                        Bitmap downloadedImage = downloadImageFile(IMAGE_PATH);
+                        //Save Image to desk
+                        if (downloadedImage != null) {
+                            writeImageFile(folder, downloadedImage);
+                            downloadDoneSuccessfully=true;
+                        }
+                    }  catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    }finally {
+                        // send local broadcast
+                        if(downloadDoneSuccessfully) {
+                            Intent i = new Intent();
+                            i.setAction(TransistorKeys.ACTION_COLLECTION_CHANGED);
+                            i.putExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, TransistorKeys.STATION_CHANGED_IMAGE);
+                            i.putExtra(TransistorKeys.EXTRA_STATION, Station.this);
+                            i.putExtra(TransistorKeys.EXTRA_STATION_ID, _ID);
+                            LocalBroadcastManager.getInstance(cntxt.getApplicationContext()).sendBroadcast(i);
+                        }
+                    }
+                }
+                @Override
+                public State getState() {
+                    return super.getState();
+                }
+            };
+            prepareThread.start();
+        }
 
-    /* Setter for name of station */
-    public void setStationName(String newStationName) {
-        mStationName = newStationName;
+        return null;
     }
 
 
@@ -692,22 +975,16 @@ public final class Station implements Comparable<Station>, Parcelable {
     }
 
 
-    /* Setter for URL of station */
-    public void setStreamUri(Uri newStreamUri) {
-        mStreamUri = newStreamUri;
-    }
-
-
     @Override
     public int compareTo(@NonNull Station otherStation) {
         // Compares two stations: returns "1" if name if this station is greater than name of given station
-        return mStationName.compareToIgnoreCase(otherStation.mStationName);
+        return TITLE.compareToIgnoreCase(otherStation.TITLE);
     }
 
 
     @Override
     public String toString() {
-        return "Station [Name=" + mStationName + ", Playlist = " + mStationPlaylistFile + ", Uri=" + mStreamUri + "]";
+        return "Station [Name=" + TITLE + ", Uri=" + URI + "]";
     }
 
 
@@ -719,14 +996,21 @@ public final class Station implements Comparable<Station>, Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeParcelable(mStationImage, flags);
-        dest.writeString(mStationImageFile.toString());
-        dest.writeString(mStationName);
-        dest.writeString(mStationPlaylistFile.toString());
-        dest.writeParcelable(mStreamUri, flags);
-        dest.writeString(mPlaylistFileContent);
+        dest.writeString(TITLE);
+        dest.writeString(URI);
         dest.writeBundle(mStationFetchResults);
         dest.writeByte((byte) (mPlayback ? 1 : 0));  // if mPlayback == true, byte == 1
+        dest.writeInt(_ID);
+        dest.writeString(UNIQUE_ID);
+        dest.writeString(SUBTITLE);
+        dest.writeString(IMAGE_PATH);
+        dest.writeString(IMAGE_FILE_NAME);
+        dest.writeString(CONTENT_TYPE);
+        dest.writeString(DESCRIPTION);
+        dest.writeString(RATING);
+        dest.writeString(CATEGORY);
+        dest.writeString(IS_FAVOURITE);
+        dest.writeString(THUMP_UP_STATUS);
     }
 
 
@@ -778,7 +1062,60 @@ public final class Station implements Comparable<Station>, Parcelable {
             return "ContentType{type='" + type + "'" + ", charset='" + charset + "'}";
         }
 
-
+        public String getTypeString() {
+            return type;
+        }
     }
 
+
+    /* add station data to DB SQLite */
+    public static void AddStationItemToDb(Station stationItem, Activity mActivity) {
+        //db test
+        StationsDbHelper mDbHelper = new StationsDbHelper(mActivity);
+        // Gets the data repository in write mode
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+        // Filter results WHERE "title" = 'My Title'
+        String selection = StationsDbContract.StationEntry.COLUMN_UNIQUE_ID + " = ?";
+        String[] selectionArgs = {stationItem.UNIQUE_ID};
+
+        String[] projection = {
+                StationsDbContract.StationEntry._ID,
+                StationsDbContract.StationEntry.COLUMN_UNIQUE_ID
+        };
+        String sortOrder =
+                StationsDbContract.StationEntry.COLUMN_UNIQUE_ID + " DESC";
+        Cursor cursor = db.query(
+                StationsDbContract.StationEntry.TABLE_NAME, // The table to query
+                projection,                               // The columns to return
+                selection,                                // The columns for the WHERE clause
+                selectionArgs,                            // The values for the WHERE clause
+                null,                                     // don't group the rows
+                null,                                     // don't filter by row groups
+                sortOrder
+        );
+        if (cursor.getCount() == 0) {
+            //record not found
+            // Create a new map of values, where column names are the keys
+            ContentValues values = new ContentValues();
+            values.put(StationsDbContract.StationEntry.COLUMN_NAME_TITLE, stationItem.TITLE);
+            values.put(StationsDbContract.StationEntry.COLUMN_UNIQUE_ID, stationItem.UNIQUE_ID);
+            values.put(StationsDbContract.StationEntry.COLUMN_NAME_SUBTITLE, stationItem.SUBTITLE);
+            values.put(StationsDbContract.StationEntry.COLUMN_DESCRIPTION, stationItem.DESCRIPTION);
+            values.put(StationsDbContract.StationEntry.COLUMN_IMAGE_PATH, stationItem.IMAGE_PATH);
+            values.put(StationsDbContract.StationEntry.COLUMN_IMAGE_FILE_NAME, stationItem.IMAGE_FILE_NAME);
+            values.put(StationsDbContract.StationEntry.COLUMN_URI, stationItem.URI);
+            values.put(StationsDbContract.StationEntry.COLUMN_CONTENT_TYPE, stationItem.CONTENT_TYPE);
+            //values.put(StationsDbContract.StationEntry.COLUMN_RATING, stationItem.RATING);
+            values.put(StationsDbContract.StationEntry.COLUMN_CATEGORY, stationItem.CATEGORY);
+
+            // Insert the new row, returning the primary key value of the new row
+            long newRowId = db.insert(StationsDbContract.StationEntry.TABLE_NAME, null, values);
+        }
+        db.close();
+    }
+
+    public ArrayList<Station> getInsertedStations() {
+        return mInsertedStations;
+    }
 }

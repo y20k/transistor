@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    card_view:cardUseCompatPadding="true"
+    card_view:cardCornerRadius="8dp"
+    android:layout_marginBottom="16dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/list_item_station_icon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="179dp"
+            android:contentDescription="@string/descr_station_icon"
+
+            fresco:placeholderImage="@drawable/ic_notesymbol_36dp"
+            fresco:placeholderImageScaleType="fitCenter"
+
+            fresco:progressBarImage="@drawable/progress_loading"
+            fresco:progressBarImageScaleType="centerInside"
+            fresco:progressBarAutoRotateInterval="1000"
+            />
+        <!--<com.facebook.drawee.view.SimpleDraweeView-->
+            <!--android:id="@+id/list_item_station_icon"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:contentDescription="@string/descr_station_icon"-->
+            <!--android:minHeight="179dp"-->
+            <!--android:scaleType="centerCrop"-->
+            <!--app:srcCompat="@drawable/radio_tower"-->
+            <!--fresco:placeholderImage="@drawable/ic_default_flowes"-->
+            <!--/>-->
+
+        <TextView
+            android:id="@+id/list_item_textview"
+            android:contentDescription="@string/descr_station_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="24dp"
+            android:paddingEnd="4dp"
+            android:text="@string/descr_station_name_example"
+            android:layout_weight="1"
+
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textAppearance="@android:style/TextAppearance.Medium"
+
+            android:layout_below="@+id/list_item_station_icon"
+            android:textSize="13sp"
+            android:gravity="center_horizontal"
+            android:layout_alignParentBottom="true"
+            android:background="#1976D2"
+            />
+
+
+        <ImageView
+            android:id="@+id/list_item_playback_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_playback_indicator_small_started_24dp"
+            android:contentDescription="@string/descr_playback_indicator_started"
+            android:visibility="visible"
+            android:layout_alignBottom="@+id/list_item_more_button"
+            android:layout_toStartOf="@+id/list_item_more_button"
+            android:layout_marginBottom="11dp" />
+
+        <ImageButton
+            android:id="@+id/list_item_more_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/descr_overflow_button"
+            android:paddingBottom="12dp"
+            android:paddingEnd="8dp"
+            android:paddingStart="12dp"
+            android:paddingTop="12dp"
+            app:srcCompat="@drawable/ic_more_vert_black_24dp" />
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

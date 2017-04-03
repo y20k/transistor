@@ -20,6 +20,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
+
 
 /**
  * CollectionAdapterViewHolder.class
@@ -32,7 +34,7 @@ public class CollectionAdapterViewHolder extends RecyclerView.ViewHolder impleme
 
     /* Main class variables */
     private final View mListItemLayout;
-    private final ImageView mStationImageView;
+    private final SimpleDraweeView mStationImageView;
     private final TextView mStationNameView;
     private final ImageView mPlaybackIndicator;
     private final ImageView mStationMenuView;
@@ -52,7 +54,7 @@ public class CollectionAdapterViewHolder extends RecyclerView.ViewHolder impleme
         itemView.setOnLongClickListener(this);
         itemView.setClickable(true);
         mListItemLayout = itemView;
-        mStationImageView = (ImageView) itemView.findViewById(R.id.list_item_station_icon);
+        mStationImageView = (SimpleDraweeView) itemView.findViewById(R.id.list_item_station_icon);
         mStationNameView = (TextView) itemView.findViewById(R.id.list_item_textview);
         mPlaybackIndicator = (ImageView) itemView.findViewById(R.id.list_item_playback_indicator);
         mStationMenuView = (ImageView) itemView.findViewById(R.id.list_item_more_button);
@@ -79,7 +81,7 @@ public class CollectionAdapterViewHolder extends RecyclerView.ViewHolder impleme
     }
 
     /* Getter for station image view */
-    public ImageView getStationImageView() {
+    public SimpleDraweeView getStationImageView() {
         return mStationImageView;
     }
 

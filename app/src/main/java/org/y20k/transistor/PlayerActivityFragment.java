@@ -2,10 +2,10 @@
  * PlayerActivityFragment.java
  * Implements the main fragment of the player activity
  * This fragment is a detail view with the ability to start and stop playback
- *
+ * <p>
  * This file is part of
  * TRANSISTOR - Radio App for Android
- *
+ * <p>
  * Copyright (c) 2015-17 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
@@ -25,7 +25,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -45,6 +44,10 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.core.ImagePipeline;
+
 import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.DialogDelete;
 import org.y20k.transistor.helpers.DialogRename;
@@ -53,6 +56,7 @@ import org.y20k.transistor.helpers.LogHelper;
 import org.y20k.transistor.helpers.NotificationHelper;
 import org.y20k.transistor.helpers.PermissionHelper;
 import org.y20k.transistor.helpers.ShortcutHelper;
+import org.y20k.transistor.helpers.StorageHelper;
 import org.y20k.transistor.helpers.TransistorKeys;
 
 import java.io.File;
@@ -77,7 +81,7 @@ public final class PlayerActivityFragment extends Fragment {
     private String mStreamUri;
     private TextView mStationNameView;
     private TextView mStationMetadataView;
-    private ImageView mStationImageView;
+    private SimpleDraweeView mStationImageView;
     private ImageButton mStationMenuView;
     private ImageView mPlaybackIndicator;
     private ImageButton mPlaybackButton;
@@ -137,7 +141,7 @@ public final class PlayerActivityFragment extends Fragment {
 
             // get station name and Uri
             if (mStation != null) {
-                mStationName = mStation.getStationName();
+                mStationName = mStation.TITLE;
                 mStreamUri = mStation.getStreamUri().toString();
             } else {
                 mStationName = mActivity.getString(R.string.descr_station_name_example);
@@ -168,18 +172,21 @@ public final class PlayerActivityFragment extends Fragment {
         // find views for station name and image and playback indicator
         mStationNameView = (TextView) mRootView.findViewById(R.id.player_textview_stationname);
         mStationMetadataView = (TextView) mRootView.findViewById(R.id.player_textview_station_metadata);
-        mStationImageView = (ImageView) mRootView.findViewById(R.id.player_imageview_station_icon);
+        mStationImageView = (SimpleDraweeView) mRootView.findViewById(R.id.player_imageview_station_icon);
         mPlaybackIndicator = (ImageView) mRootView.findViewById(R.id.player_playback_indicator);
         mStationMenuView = (ImageButton) mRootView.findViewById(R.id.player_item_more_button);
 
         // set station name
         mStationNameView.setText(mStationName);
 
+//        // set station image
+//        Bitmap stationImage = createStationImage();
+//        if (stationImage != null) {
+//            mStationImageView.setImageBitmap(stationImage);
+//        }
+
         // set station image
-        Bitmap stationImage = createStationImage();
-        if (stationImage != null) {
-            mStationImageView.setImageBitmap(stationImage);
-        }
+        setRefreshStationImage();
 
         // add listener to station info view for clipboard copy
         View stationInfoView = mRootView.findViewById(R.id.player_layout_station_info);
@@ -230,6 +237,15 @@ public final class PlayerActivityFragment extends Fragment {
         });
 
         return mRootView;
+    }
+
+    private void setRefreshStationImage() {
+        File stationImageFile = mStation.getStationImage(mActivity);
+        if (stationImageFile != null && stationImageFile.exists()) {
+            mStationImageView.setImageURI(stationImageFile.toURI().toString());//.setImageBitmap(stationImageSmall);
+        } else if (mStation.IMAGE_PATH != null && mStation.IMAGE_PATH != "") {
+            mStationImageView.setImageURI(mStation.IMAGE_PATH);//.setImageBitmap(stationImageSmall);
+        }
     }
 
 
@@ -339,20 +355,42 @@ public final class PlayerActivityFragment extends Fragment {
 
         if (requestCode == TransistorKeys.REQUEST_LOAD_IMAGE && resultCode == Activity.RESULT_OK && null != data) {
 
-            ImageHelper imageHelper = new ImageHelper(newImageUri, mActivity);
+            ImageHelper imageHelper = new ImageHelper(newImageUri, mActivity, 500, 500);
             Bitmap newImage = imageHelper.getInputImage();
 
             if (newImage != null) {
                 // write image to storage
-                File stationImageFile = mStation.getStationImageFile();
+                StorageHelper storageHelper = new StorageHelper(mActivity);
+                File mFolder = storageHelper.getCollectionDirectory();
+                File stationImageFile = mStation.getStationImageFileReference(mFolder);//get  station file with correct path according to UniqueID of the station
+                boolean changeImageSuccessfully = false;
                 try (FileOutputStream out = new FileOutputStream(stationImageFile)) {
                     newImage.compress(Bitmap.CompressFormat.PNG, 100, out);
+                    out.close();
+
+                    //remve image from fresco cache
+                    ImagePipeline imagePipeline = Fresco.getImagePipeline();
+                    imagePipeline.evictFromCache(Uri.parse(stationImageFile.toURI().toString()));
+
+                    changeImageSuccessfully = true;
                 } catch (IOException e) {
                     LogHelper.e(LOG_TAG, "Unable to save: " + newImage.toString());
                 }
-                // change mStationImageView
-                Bitmap stationImage = imageHelper.createCircularFramedImage(192, R.color.transistor_grey_lighter);
-                mStationImageView.setImageBitmap(stationImage);
+
+                // update adapter
+                // mStationImageView.setImageURI(stationImageFile.toURI().toString());
+
+                // send local broadcast
+                if (changeImageSuccessfully) {
+                    Intent i = new Intent();
+                    i.setAction(TransistorKeys.ACTION_COLLECTION_CHANGED);
+                    i.putExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, TransistorKeys.STATION_CHANGED_IMAGE);
+                    i.putExtra(TransistorKeys.EXTRA_STATION, mStation);
+                    i.putExtra(TransistorKeys.EXTRA_STATION_ID, mStation._ID);
+                    LocalBroadcastManager.getInstance(mActivity.getApplicationContext()).sendBroadcast(i);
+                }
+
+                Toast.makeText(mActivity, "Image Updated", Toast.LENGTH_SHORT).show();
             } else {
                 LogHelper.e(LOG_TAG, "Unable to get image from media picker: " + newImageUri.toString());
             }
@@ -473,21 +511,21 @@ public final class PlayerActivityFragment extends Fragment {
     }
 
 
-    /* Create Bitmap image for station */
-    private Bitmap createStationImage () {
-        Bitmap stationImageSmall;
-        ImageHelper imageHelper;
-        if (mStation != null &&  mStation.getStationImageFile().exists()) {
-            // get image from collection
-            stationImageSmall = BitmapFactory.decodeFile(mStation.getStationImageFile().toString());
-        } else {
-            // get default image
-            stationImageSmall = null;
-        }
-        imageHelper = new ImageHelper(stationImageSmall, mActivity);
-
-        return imageHelper.createCircularFramedImage(192, R.color.transistor_grey_lighter);
-    }
+//    /* Create Bitmap image for station */
+//    private Bitmap createStationImage () {
+//        Bitmap stationImageSmall;
+//        ImageHelper imageHelper;
+//        if (mStation != null &&  mStation.getStationImageFile().exists()) {
+//            // get image from collection
+//            stationImageSmall = BitmapFactory.decodeFile(mStation.getStationImageFile().toString());
+//        } else {
+//            // get default image
+//            stationImageSmall = null;
+//        }
+//        imageHelper = new ImageHelper(stationImageSmall, mActivity);
+//
+//        return imageHelper.createCircularFramedImage(192, R.color.transistor_grey_lighter);
+//    }
 
 
     /* Copy station date to system clipboard */
@@ -498,11 +536,11 @@ public final class PlayerActivityFragment extends Fragment {
             String clipboardText;
             ClipData clip;
             if (mStationMetadata != null) {
-                clipboardText = mStationName +  " - " + mStationMetadata + " (" + mStreamUri + ")";
+                clipboardText = mStationName + " - " + mStationMetadata + " (" + mStreamUri + ")";
             } else {
                 clipboardText = mStationName + " (" + mStreamUri + ")";
             }
-            clip = ClipData.newPlainText("simple text",clipboardText);
+            clip = ClipData.newPlainText("simple text", clipboardText);
 
             // copy clip to clipboard
             ClipboardManager cm = (ClipboardManager) mActivity.getSystemService(Context.CLIPBOARD_SERVICE);
@@ -600,7 +638,7 @@ public final class PlayerActivityFragment extends Fragment {
         mStationMetadata = settings.getString(TransistorKeys.PREF_STATION_METADATA, null);
         mPlayback = settings.getBoolean(TransistorKeys.PREF_PLAYBACK, false);
         mStationLoading = settings.getBoolean(TransistorKeys.PREF_STATION_LOADING, false);
-        LogHelper.v(LOG_TAG, "Loading state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + " / " + mStationLoading + " / " + mStationMetadata + ")");
+        LogHelper.v(LOG_TAG, "Loading state (" + mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + " / " + mStationLoading + " / " + mStationMetadata + ")");
     }
 
 
@@ -731,7 +769,7 @@ public final class PlayerActivityFragment extends Fragment {
                 if (intent.hasExtra(TransistorKeys.EXTRA_STATION_NEW_NAME) && intent.hasExtra(TransistorKeys.EXTRA_STATION) && intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)) {
                     Station station = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
                     int stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
-                    mStationNameView.setText(station.getStationName());
+                    mStationNameView.setText(station.TITLE);
                     if (mPlayback) {
                         NotificationHelper.update(station, stationID, null, null);
                     }
@@ -756,6 +794,17 @@ public final class PlayerActivityFragment extends Fragment {
                     // mActivity.finish();
                 }
                 // two pane behaviour is handles by the adapter
+                break;
+            case TransistorKeys.STATION_CHANGED_IMAGE:
+                if (intent.hasExtra(TransistorKeys.EXTRA_STATION) && intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)) {
+                    //update image
+                    // get new name, station and station ID from intent
+                    Station station = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
+                    int stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
+
+                    // set station image
+                    setRefreshStationImage();
+                }
                 break;
         }
     }

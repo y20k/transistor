@@ -24,6 +24,8 @@ import org.y20k.transistor.MainActivity;
 import org.y20k.transistor.R;
 import org.y20k.transistor.core.Station;
 
+import java.io.File;
+
 
 /**
  * ShortcutHelper class
@@ -72,9 +74,10 @@ public class ShortcutHelper {
         ImageHelper imageHelper;
         Bitmap stationImage;
         Bitmap shortcutIcon;
-        if (station.getStationImageFile().exists()) {
+        File imagFileRef=station.getStationImage(mContext);
+        if (imagFileRef!=null && imagFileRef.exists()) {
             // use station image
-            stationImage = BitmapFactory.decodeFile(station.getStationImageFile().toString());
+            stationImage = BitmapFactory.decodeFile(imagFileRef.toString());
         } else {
             stationImage = null;
         }
@@ -95,7 +98,7 @@ public class ShortcutHelper {
 
         // create and launch intent put shortcut on Home screen
         Intent addIntent = new Intent();
-        addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, station.getStationName());
+        addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, station.TITLE);
         addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON, shortcutIcon);
         addIntent.putExtra("duplicate", false);
         addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);

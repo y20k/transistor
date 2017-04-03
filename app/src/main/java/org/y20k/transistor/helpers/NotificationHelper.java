@@ -2,10 +2,10 @@
  * NotificationHelper.java
  * Implements the NotificationHelper class
  * A NotificationHelper creates and configures a notification
- *
+ * <p>
  * This file is part of
  * TRANSISTOR - Radio App for Android
- *
+ * <p>
  * Copyright (c) 2015-17 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
@@ -30,6 +30,8 @@ import org.y20k.transistor.MainActivity;
 import org.y20k.transistor.PlayerService;
 import org.y20k.transistor.R;
 import org.y20k.transistor.core.Station;
+
+import java.io.File;
 
 
 /**
@@ -152,7 +154,7 @@ public final class NotificationHelper {
         builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
         builder.setSmallIcon(R.drawable.ic_notification_small_24dp);
         builder.setLargeIcon(getStationIcon(mService, station));
-        builder.setContentTitle(station.getStationName());
+        builder.setContentTitle(station.TITLE);
         builder.setContentText(stationMetadata);
         builder.setShowWhen(false);
         builder.setStyle(style);
@@ -179,10 +181,10 @@ public final class NotificationHelper {
         ImageHelper imageHelper;
         Bitmap stationImage;
         Bitmap stationIcon;
-
-        if (station.getStationImageFile().exists()) {
+        File imagFileRef=station.getStationImage(context);
+        if (imagFileRef != null && imagFileRef.exists()) {
             // use station image
-            stationImage = BitmapFactory.decodeFile(station.getStationImageFile().toString());
+            stationImage = BitmapFactory.decodeFile(imagFileRef.toString());
         } else {
             stationImage = null;
         }

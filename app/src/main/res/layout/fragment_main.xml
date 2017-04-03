@@ -24,12 +24,13 @@
             android:id="@+id/main_textview"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:text="@string/actioncall_message_start_here"
+            android:layout_gravity="bottom|center_vertical"
             android:layout_weight="1"
-            android:layout_gravity="center_vertical|bottom"
-            android:gravity="bottom|end"
-            android:paddingStart="8dp"
+            android:gravity="top|end"
             android:paddingEnd="8dp"
+            android:paddingStart="8dp"
+            android:paddingTop="50dp"
+            android:text="@string/actioncall_message_start_here"
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Widget.ActionMode.Title" />
 
         <ImageView

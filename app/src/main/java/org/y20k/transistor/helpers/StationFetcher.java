@@ -2,10 +2,10 @@
  * StationFetcher.java
  * Implements helper for getting radio station metadata from local storage or internet
  * The downloader runs as AsyncTask
- *
+ * <p>
  * This file is part of
  * TRANSISTOR - Radio App for Android
- *
+ * <p>
  * Copyright (c) 2015-17 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
@@ -22,10 +22,12 @@ import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.widget.Toast;
 
+import org.xmlpull.v1.XmlPullParserException;
 import org.y20k.transistor.R;
 import org.y20k.transistor.core.Station;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -69,13 +71,21 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
     @Override
     public Station doInBackground(Void... params) {
 
-        if (mFolderExists && mStationUriScheme != null && mStationUriScheme.startsWith("http")  && urlCleanup()) {
+        if (mFolderExists && mStationUriScheme != null && mStationUriScheme.startsWith("http") && urlCleanup()) {
             // download and return new station
-            return new Station(mFolder, mStationURL);
+            try {
+                return new Station(mFolder, mStationURL, mActivity);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            } catch (XmlPullParserException e) {
+                e.printStackTrace();
+                return null;
+            }
 
         } else if (mFolderExists && mStationUriScheme != null && mStationUriScheme.startsWith("file")) {
             // read file and return new station
-            return new Station(mFolder, mStationUri);
+            return new Station(mFolder, mStationUri,mActivity);
 
         } else {
             return null;
@@ -88,12 +98,14 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
     protected void onPostExecute(Station station) {
 
         Bundle fetchResults = null;
-        if (station != null) {
+        if (station != null && station.URI!=null && station.TITLE!=null &&
+                station.getStreamUri() != null && station.getStreamUri().toString() != "") {
             fetchResults = station.getStationFetchResults();
         }
 
         // station was successfully fetched
-        if (station != null && fetchResults != null && !fetchResults.getBoolean(TransistorKeys.RESULT_FETCH_ERROR) && mFolderExists) {
+        if (station != null  && station.URI!=null && station.TITLE!=null &&
+                fetchResults != null && !fetchResults.getBoolean(TransistorKeys.RESULT_FETCH_ERROR) && mFolderExists) {
 
             // send local broadcast - adapter will save station
             Intent i = new Intent();
@@ -108,6 +120,17 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
             }
 
             LogHelper.v(LOG_TAG, "Station was successfully fetched: " + station.getStreamUri().toString());
+        }else{
+            //this comes from adding batch with XML
+
+            // send local broadcast - adapter will save station
+            Station mStationTemp=null;
+            Intent i = new Intent();
+            i.setAction(TransistorKeys.ACTION_COLLECTION_CHANGED);
+            i.putExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, TransistorKeys.STATION_ADDED);
+            i.putExtra(TransistorKeys.EXTRA_STATION, mStationTemp);
+            i.putExtra(TransistorKeys.EXTRA_STATIONS, station.getInsertedStations()); //station sent with null values, to refresh the whole adabtor
+            LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(i);
         }
 
         // an error occurred
@@ -192,7 +215,7 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
         sb.append(mStationUri);
 
         if ((mStationUri.getLastPathSegment() != null && !mStationUri.getLastPathSegment().contains("m3u")) ||
-                (mStationUri.getLastPathSegment() != null && !mStationUri.getLastPathSegment().contains("pls")) ) {
+                (mStationUri.getLastPathSegment() != null && !mStationUri.getLastPathSegment().contains("pls"))) {
             sb.append("\n\n");
             sb.append(mActivity.getResources().getString(R.string.dialog_error_message_fetch_general_hint_m3u));
         }
@@ -235,7 +258,7 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
         sb.append(mActivity.getResources().getString(R.string.dialog_error_message_fetch_read));
         sb.append("\n");
         sb.append(mStationUri);
-        if (!mStationUri.getLastPathSegment().contains("m3u") || !mStationUri.getLastPathSegment().contains("pls") ) {
+        if (!mStationUri.getLastPathSegment().contains("m3u") || !mStationUri.getLastPathSegment().contains("pls")) {
             sb.append("\n\n");
             sb.append(mActivity.getResources().getString(R.string.dialog_error_message_fetch_general_hint_m3u));
         }

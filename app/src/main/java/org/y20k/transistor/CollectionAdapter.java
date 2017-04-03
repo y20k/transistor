@@ -2,10 +2,10 @@
  * CollectionAdapter.java
  * Implements the CollectionAdapter class
  * A CollectionAdapter is a custom adapter for a RecyclerView
- *
+ * <p>
  * This file is part of
  * TRANSISTOR - Radio App for Android
- *
+ * <p>
  * Copyright (c) 2015-17 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
@@ -20,8 +20,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -37,11 +35,11 @@ import android.widget.Toast;
 
 import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.DialogError;
-import org.y20k.transistor.helpers.ImageHelper;
 import org.y20k.transistor.helpers.LogHelper;
 import org.y20k.transistor.helpers.ShortcutHelper;
 import org.y20k.transistor.helpers.StationContextMenu;
 import org.y20k.transistor.helpers.TransistorKeys;
+import org.y20k.transistor.sqlcore.StationsDbHelper;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -51,7 +49,7 @@ import java.io.IOException;
 /**
  * CollectionAdapter class
  */
-public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAdapterViewHolder> {
+public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapterViewHolder> {
 
     /* Define log tag */
     private static final String LOG_TAG = CollectionAdapter.class.getSimpleName();
@@ -71,7 +69,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
 
 
     /* Constructor */
-    public CollectionAdapter (Activity activity, File folder) {
+    public CollectionAdapter(Activity activity, File folder) {
         // set main variables
         mActivity = activity;
         mFolder = folder;
@@ -81,12 +79,12 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
             @Override
             public int compare(Station station1, Station station2) {
                 // Compares two stations: returns "1" if name if this station is greater than name of given station
-                return station1.getStationName().compareToIgnoreCase(station2.getStationName());
+                return station1.TITLE.compareToIgnoreCase(station2.TITLE);
             }
 
             @Override
             public boolean areContentsTheSame(Station oldStation, Station newStation) {
-                return oldStation.getStationName().equals(newStation.getStationName());
+                return oldStation.TITLE.equals(newStation.TITLE);
             }
 
             @Override
@@ -119,7 +117,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
     public CollectionAdapterViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
 
         // get view
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_collection, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_collection_staggered, parent, false);
 
         // put view into holder and return
         return new CollectionAdapterViewHolder(v);
@@ -138,23 +136,15 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
             holder.getListItemLayout().setSelected(false);
         }
 
-        // create station image
-        Bitmap stationImageSmall;
-        Bitmap stationImage;
-        if (station.getStationImageFile().exists()) {
-            // get image from collection
-            stationImageSmall = BitmapFactory.decodeFile(station.getStationImageFile().toString());
-        } else {
-            stationImageSmall = null;
-        }
-        ImageHelper imageHelper = new ImageHelper(stationImageSmall, mActivity);
-        stationImage = imageHelper.createCircularFramedImage(192, R.color.transistor_grey_lighter);
-
         // set station image
-        holder.getStationImageView().setImageBitmap(stationImage);
-
+        File stationImageFile = station.getStationImage(mActivity);
+        if (stationImageFile != null && stationImageFile.exists()) {
+            holder.getStationImageView().setImageURI(stationImageFile.toURI().toString());//.setImageBitmap(stationImageSmall);
+        } else if (station.IMAGE_PATH != null && station.IMAGE_PATH != "") {
+            holder.getStationImageView().setImageURI(station.IMAGE_PATH);//.setImageBitmap(stationImageSmall);
+        }
         // set station name
-        holder.getStationNameView().setText(station.getStationName());
+        holder.getStationNameView().setText(station.TITLE);
 
         // set playback indicator - in phone view only
         if (!mTwoPane && mPlayback && (station.getPlaybackState() || mStationIDCurrent == position)) {
@@ -211,6 +201,17 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
         return position;
     }
 
+    public int getItemPosition(int _ID) {
+        int position = 0;
+        for (int i = 0; i < mStationList.size(); i++) {
+            if (mStationList.get(i)._ID == _ID) {
+                position = i;
+                break;
+            }
+        }
+        return position;
+    }
+
 
     @Override
     public int getItemCount() {
@@ -219,14 +220,14 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
 
 
     /* Fills sorted list of station */
-    private void loadCollection()  {
-
+    private void loadCollection() {
         // create folder if necessary
         if (!mFolder.exists()) {
             LogHelper.v(LOG_TAG, "Creating mFolder new folder: " + mFolder.toString());
             mFolder.mkdir();
         }
 
+        //todo:remove that if not required (just backward compatibility)
         // create nomedia file to prevent media scanning
         File nomedia = new File(mFolder, ".nomedia");
         if (!nomedia.exists()) {
@@ -239,22 +240,12 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
             }
         }
 
-        // create array of Files from folder
-        File[] listOfFiles = mFolder.listFiles();
+        //clear mStationList in case of having any record
+        mStationList.clear();
 
-        if (listOfFiles != null) {
-            // fill array list of mStations
-            for (File file : listOfFiles) {
-                if (file.isFile() && file.toString().endsWith(".m3u")) {
-                    // create new station from file
-                    Station newStation = new Station(file);
-                    if (newStation.getStreamUri() != null) {
-                        mStationList.add(newStation);
-                    }
-                }
-            }
-        }
-
+        //Get from DB
+        StationsDbHelper mDbHelper = new StationsDbHelper(mActivity);
+        mDbHelper.FillListOfAllStations(mStationList);
     }
 
 
@@ -352,7 +343,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
         mStationIDSelected = settings.getInt(TransistorKeys.PREF_STATION_ID_SELECTED, 0);
         mPlayback = settings.getBoolean(TransistorKeys.PREF_PLAYBACK, false);
         mStationLoading = settings.getBoolean(TransistorKeys.PREF_STATION_LOADING, false);
-        LogHelper.v(LOG_TAG, "Loading state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback  + " / " + mStationLoading + ")");
+        LogHelper.v(LOG_TAG, "Loading state (" + mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + " / " + mStationLoading + ")");
     }
 
 
@@ -362,13 +353,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt(TransistorKeys.PREF_STATION_ID_SELECTED, mStationIDSelected);
         editor.apply();
-        LogHelper.v(LOG_TAG, "Saving state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback  + " / " + mStationLoading + " / " + mStationIDSelected +")");
-    }
-
-
-    /* Setter for image file within station object with given ID */
-    public void setNewImageFile(int stationID, File stationImageFile) {
-        mStationList.get(stationID).setStationImageFile(stationImageFile);
+        LogHelper.v(LOG_TAG, "Saving state (" + mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + " / " + mStationLoading + " / " + mStationIDSelected + ")");
     }
 
 
@@ -424,28 +409,22 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
 
 
     /* Getter for ID of given station */
-    public int getStationID (Station station) {
+    public int getStationID(Station station) {
         return mStationList.indexOf(station);
     }
 
 
     /* Getter for station of given ID */
-    public Station getStation (int stationID) {
+    public Station getStation(int stationID) {
         return mStationList.get(stationID);
     }
 
 
     /* Add station to collection */
     public int add(Station station) {
-        if (station.getStationName() != null && station.getStreamUri() != null) {
+        if (station.TITLE != null && station.getStreamUri() != null) {
             // add station to list of stations
             mStationList.add(station);
-
-            // save playlist file and image file to local storage
-            station.writePlaylistFile(mFolder);
-            if (station.getStationImage() != null) {
-                station.writeImageFile();
-            }
 
             // return new index
             return mStationList.indexOf(station);
@@ -469,26 +448,18 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
         Station oldStation = mStationList.get(stationID);
 
         // name of station is new
-        if (station != null && !oldStation.getStationName().equals(newStationName)) {
+        if (station != null && !oldStation.TITLE.equals(newStationName)) {
 
-            // get reference to old files
-            File oldStationPlaylistFile = oldStation.getStationPlaylistFile();
-            File oldStationImageFile = oldStation.getStationImageFile();
+            //update DB
+            StationsDbHelper mDbHelper = new StationsDbHelper(mActivity);
+            mDbHelper.RenameStation(oldStation._ID, newStationName);
 
-            // update new station
-            station.setStationName(newStationName);
-            station.setStationPlaylistFile(mFolder);
-            station.setStationImageFile(mFolder);
-
-            // rename playlist file
-            oldStationPlaylistFile.delete();
-            station.writePlaylistFile(mFolder);
-
-            // rename image file
-            oldStationImageFile.renameTo(station.getStationImageFile());
+            //update station object
+            station.TITLE = newStationName;
 
             // update station list
             mStationList.updateItemAt(stationID, station);
+
 
             // return changed station
             return mStationList.indexOf(station);
@@ -507,17 +478,15 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
 
         boolean success = false;
 
-        // delete playlist file
-        File stationPlaylistFile = station.getStationPlaylistFile();
-        if (stationPlaylistFile.exists()) {
-            stationPlaylistFile.delete();
-            success = true;
-        }
+        // get old station
+        Station oldStation = mStationList.get(stationID);
 
-        // delete station image file
-        File stationImageFile = station.getStationImageFile();
-        if (stationImageFile.exists()) {
-            stationImageFile.delete();
+        //delete from db
+        //update DB
+        //db test
+        StationsDbHelper mDbHelper = new StationsDbHelper(mActivity);
+        int resulti = mDbHelper.DeleteStation(oldStation._ID);
+        if (resulti > 0) {
             success = true;
         }
 
@@ -562,7 +531,7 @@ public final class CollectionAdapter  extends RecyclerView.Adapter<CollectionAda
         // load app state
         loadAppState(mActivity);
 
-        if (intent.hasExtra(TransistorKeys.EXTRA_PLAYBACK_STATE_CHANGE) && intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)){
+        if (intent.hasExtra(TransistorKeys.EXTRA_PLAYBACK_STATE_CHANGE) && intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)) {
 
             notifyDataSetChanged();
 
