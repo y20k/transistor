@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -145,6 +146,14 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
         }
         // set station name
         holder.getStationNameView().setText(station.TITLE);
+        if(station.RATING!=null && station.RATING!="") {
+            holder.getRatingBarView().setRating(Integer.valueOf(station.RATING));
+        }
+        //station description
+        holder.getmStationDesciptionView().setText(station.DESCRIPTION);
+
+        holder.getStationNameView().setShadowLayer(2, 1, 1, Color.BLACK);
+        holder.getmStationDesciptionView().setShadowLayer(2, 1,1, Color.BLACK);
 
         // set playback indicator - in phone view only
         if (!mTwoPane && mPlayback && (station.getPlaybackState() || mStationIDCurrent == position)) {

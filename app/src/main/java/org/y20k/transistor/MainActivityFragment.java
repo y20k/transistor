@@ -192,6 +192,7 @@ public final class MainActivityFragment extends Fragment {
 
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(mActivity);
+        mLayoutManager = new LinearLayoutManager(mActivity);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // attach adapter to list view

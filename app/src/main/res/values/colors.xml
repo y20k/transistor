@@ -20,7 +20,7 @@
     <color name="transistor_gold_lighter">#FFFFE3B6</color>
     <color name="transistor_gold_dark">#FFCC9933</color>
 
-    <color name="transistor_white">#FFFFFFFF</color>
+    <color name="transistor_white">#ffffff</color>
 
 
     <color name="viewBg">#f1f5f8</color>

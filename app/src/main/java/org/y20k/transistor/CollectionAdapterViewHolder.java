@@ -18,6 +18,7 @@ package org.y20k.transistor;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -36,8 +37,10 @@ public class CollectionAdapterViewHolder extends RecyclerView.ViewHolder impleme
     private final View mListItemLayout;
     private final SimpleDraweeView mStationImageView;
     private final TextView mStationNameView;
+    private final TextView mStationDesciptionView;
     private final ImageView mPlaybackIndicator;
     private final ImageView mStationMenuView;
+    private final RatingBar mRatingBarView;
     private ClickListener mClickListener;
 
 
@@ -56,6 +59,8 @@ public class CollectionAdapterViewHolder extends RecyclerView.ViewHolder impleme
         mListItemLayout = itemView;
         mStationImageView = (SimpleDraweeView) itemView.findViewById(R.id.list_item_station_icon);
         mStationNameView = (TextView) itemView.findViewById(R.id.list_item_textview);
+        mRatingBarView = (RatingBar) itemView.findViewById(R.id.ratingBar);
+        mStationDesciptionView = (TextView) itemView.findViewById(R.id.list_item_description);
         mPlaybackIndicator = (ImageView) itemView.findViewById(R.id.list_item_playback_indicator);
         mStationMenuView = (ImageView) itemView.findViewById(R.id.list_item_more_button);
     }
@@ -91,6 +96,13 @@ public class CollectionAdapterViewHolder extends RecyclerView.ViewHolder impleme
         return mStationNameView;
     }
 
+    public RatingBar getRatingBarView() {
+        return mRatingBarView;
+    }
+    /* Getter for Station Desciption View */
+    public TextView getmStationDesciptionView() {
+        return mStationDesciptionView;
+    }
 
     /* Getter for station playback indicator */
     public ImageView getPlaybackIndicator() {

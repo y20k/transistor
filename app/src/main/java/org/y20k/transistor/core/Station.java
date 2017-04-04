@@ -378,7 +378,8 @@ public final class Station implements Comparable<Station>, Parcelable {
                             stationItem.CONTENT_TYPE = readXmlElementText(parser);
                         } else if (tagName.equals("rating")) {
                             parser.require(XmlPullParser.START_TAG, null, "rating");
-                            stationItem.RATING = readXmlElementText(parser);
+                            String ratingVal = readXmlElementText(parser);
+                            stationItem.RATING = String.valueOf(getIntegerRating(ratingVal));
                         } else if (tagName.equals("category")) {
                             parser.require(XmlPullParser.START_TAG, null, "category");
                             stationItem.CATEGORY = readXmlElementText(parser);
@@ -413,6 +414,15 @@ public final class Station implements Comparable<Station>, Parcelable {
             if (stream != null) {
                 stream.close();
             }
+        }
+    }
+
+    public int getIntegerRating(String str) {
+        try {
+            int rating = Integer.parseInt(str);
+            return (rating > 5 || rating < 1) ? 0 : rating;
+        } catch (NumberFormatException nfe) {
+            return 0;
         }
     }
 
@@ -905,7 +915,7 @@ public final class Station implements Comparable<Station>, Parcelable {
     /* return cached image File  */
     public File getStationImage(final Context cntxt) {
         //try get the image from file cache
-        Bitmap channelImage  =null;
+        Bitmap channelImage = null;
         StorageHelper storageHelper = new StorageHelper(cntxt);
         final File folder = storageHelper.getCollectionDirectory();
         if (IMAGE_FILE_NAME != null && IMAGE_FILE_NAME != "") {
@@ -924,7 +934,7 @@ public final class Station implements Comparable<Station>, Parcelable {
 //            } catch (FileNotFoundException e) {
 //                e.printStackTrace();
 //            }
-            return  mStationImageFile;
+            return mStationImageFile;
         } else {
             //return null
             //and download it in background
@@ -933,7 +943,7 @@ public final class Station implements Comparable<Station>, Parcelable {
                 @Override
                 public void run() {
                     boolean downloadDoneSuccessfully = false;
-                    try{
+                    try {
                         //load all stations and ensure images are cached
                         final StationsDbHelper mDbHelper = new StationsDbHelper(cntxt);
                         //try download the file
@@ -941,13 +951,13 @@ public final class Station implements Comparable<Station>, Parcelable {
                         //Save Image to desk
                         if (downloadedImage != null) {
                             writeImageFile(folder, downloadedImage);
-                            downloadDoneSuccessfully=true;
+                            downloadDoneSuccessfully = true;
                         }
-                    }  catch (MalformedURLException e) {
+                    } catch (MalformedURLException e) {
                         e.printStackTrace();
-                    }finally {
+                    } finally {
                         // send local broadcast
-                        if(downloadDoneSuccessfully) {
+                        if (downloadDoneSuccessfully) {
                             Intent i = new Intent();
                             i.setAction(TransistorKeys.ACTION_COLLECTION_CHANGED);
                             i.putExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, TransistorKeys.STATION_CHANGED_IMAGE);
@@ -957,6 +967,7 @@ public final class Station implements Comparable<Station>, Parcelable {
                         }
                     }
                 }
+
                 @Override
                 public State getState() {
                     return super.getState();
