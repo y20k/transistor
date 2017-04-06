@@ -33,7 +33,7 @@
     <string name="descr_playback_indicator_started">Індикатор відтворення активний</string>
     <string name="descr_timer_indicator_started">Індикатор активного таймеру сну</string>
     <string name="descr_player_sheet_information_icon">Information Icon</string>
-    <string name="descr_player_sheet_content_copy_icon">Content copy icon</string>
+    <string name="descr_player_sheet_content_copy_icon">Значок копіювання контенту</string>
     <string name="descr_player_sheet_p_station_name">Назва обраної станції</string>
     <string name="descr_player_sheet_p_station_metadata">Метадані обраної станції</string>
     <string name="descr_player_sheet_p_stream_url">URL потоку обраної станції</string>
@@ -112,9 +112,9 @@
     <string name="infosheet_about_h1_about">Про Transistor</string>
     <string name="infosheet_about_h2_radio">Додаток інтернет радіо для Android</string>
     <string name="infosheet_about_h3_version">Версія 2.2 (Sons Of The Silent Age)</string>
-    <string name="infosheet_about_p_bare">Transistor is a bare bones app for listening to radio programs over the internet. The app stores stations as files on your device\'s external storage. Look for files of type m3u within /Android/data/org.y20k.transistor/files/Collection. It currently understands streams encoded in MP3 and OGG.</string>
-    <string name="infosheet_about_p_note">Important note: This is an app of type BYOS ("bring your own station"). It does not feature any kind of built-in search option. You will have to manually add radio stations.</string>
-    <string name="infosheet_about_p_free">Transistor is free software. It is published under the MIT open source license. You can find the code on GitHub. GitHub is also a good place to file bugs or even to contribute, if you are interested.</string>
+    <string name="infosheet_about_p_bare"/>
+    <string name="infosheet_about_p_note">Важливе зауваження: Додаток не містить функцій пошуку радіостанцій. Вам потрібно додавати їх вручну.</string>
+    <string name="infosheet_about_p_free">Transistor - вільний програмний засіб. Він поширюється під ліцензією MIT. Ви можете знайти джерельний код на GitHub. Також на GitHub ви можете повідомити про вади, або ж допомогти з супроводом, якщо це Вас цікавить.</string>
     <string name="infosheet_about_p_github">https://github.com/y20k/transistor</string>
     <string name="infosheet_about_p_license">https://opensource.org/licenses/MIT</string>
     <string name="infosheet_about_h2_permissions">Які дозволи потребує Transistor?</string>
@@ -132,21 +132,21 @@
     <!-- infosheet howto -->
     <string name="infosheet_howto_h1_howto">Як використовувати Transistor</string>
     <string name="infosheet_howto_h2_add">Як додати нову радіостанцію?</string>
-    <string name="infosheet_howto_p_add">The easiest way to add a new station is to search the web for streaming links and then choose Transistor as a your default handler for those file types. You can also tap the (+) symbol in the top bar and paste in streaming links directly. Please note: Transistor does not feature any kind of built-in search option.</string>
+    <string name="infosheet_howto_p_add"/>
     <string name="infosheet_howto_h2_play">Як відтворити радіостанцію?</string>
     <string name="infosheet_howto_p_play">Натиснути велику кнопку Грати ;).</string>
     <string name="infosheet_howto_h2_stop">Як зупинити відтворення?</string>
-    <string name="infosheet_howto_p_stop">Tap the big Stop button or unplug your headphones or swipe off the notification from the lockscreen.</string>
-    <string name="infosheet_howto_h2_sleep">How to start the sleep timer?</string>
-    <string name="infosheet_howto_p_sleep">Tapping the Clock symbol starts a 15 minute countdown after which Transistor stops playback. An additional tap adds 15 minutes to the clock. Playback must be running to be able to activate the sleep timer.</string>
-    <string name="infosheet_howto_h2_shortcut">How to place a station shortcut on the Home screen?</string>
-    <string name="infosheet_howto_p_shortcut">The option to place a shortcut for a station on the Home screen can be accessed from the station\'s three dots menu. A tap on a shortcut will open Transistor - playback will start immediately.</string>
-    <string name="infosheet_howto_h2_edit">How to rename or delete a station?</string>
-    <string name="infosheet_howto_p_edit">The rename and delete options can be accessed both from the station\'s context menu. Just tap on the three dots symbol. You can manage the list of stations also from a file browser (see next question).</string>
-    <string name="infosheet_howto_h2_storage">Where does Transistor store its stations?</string>
-    <string name="infosheet_howto_p_storage">Transistor does not save its list of stations in a database. Instead it stores stations as m3u files on your device\'s external storage. Feel free to tinker with those files using the texteditor of your choice. The files are stored in /Android/data/org.y20k.transistor/files/Collection.</string>
-    <string name="infosheet_howto_h2_backup">How do I backup and transfer my radio stations?</string>
-    <string name="infosheet_howto_p_backup">Transistor supports Android 6\'s Auto Backup feature. Radio stations are always backed up to your Google account and will be restored at reinstall. On devices running on older versions of Android you must manually save and restore the "Collection" folder.</string>
+    <string name="infosheet_howto_p_stop">Натиснути велику кнопку «Стоп», від\'єднати навушники чи посунути сповіщення з екрану блокування.</string>
+    <string name="infosheet_howto_h2_sleep">Як запустити таймер сну?</string>
+    <string name="infosheet_howto_p_sleep">Дотик до значку годинника запускає 15 хвилинний зворотній відлік, після завершення котрого додаток припинить відтворення. Додатковий дотик додає ще 15 хвилин. Активувати таймер сну можливо лише при активному відтворені.</string>
+    <string name="infosheet_howto_h2_shortcut">Як розмістити посилання радіостанції на домашньому екрані?</string>
+    <string name="infosheet_howto_p_shortcut"/>
+    <string name="infosheet_howto_h2_edit">Як перейменувати чи видалити станцію?</string>
+    <string name="infosheet_howto_p_edit"/>
+    <string name="infosheet_howto_h2_storage"/>
+    <string name="infosheet_howto_p_storage"/>
+    <string name="infosheet_howto_h2_backup"></string>
+    <string name="infosheet_howto_p_backup"/>
     <string name="infosheet_howto_h2_settings">Чому Transistor не має жодних налаштувань?</string>
     <string name="infosheet_howto_p_settings">Тут нема що налаштовувати ;). Transistor - це дуже простий додаток. В залежності від вашої точки зору, просте може означати бездоганне або ж неповноцінне.</string>
 
