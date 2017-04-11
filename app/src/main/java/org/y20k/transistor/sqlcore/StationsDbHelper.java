@@ -86,12 +86,22 @@ public class StationsDbHelper extends SQLiteOpenHelper {
     }
 
 
-    //delete station from DB
+    //rename station from DB
     public int RenameStation(int station_ID, String newStationName) {
         SQLiteDatabase db = this.getWritableDatabase();
         //update db
         ContentValues newValues = new ContentValues();
         newValues.put(StationsDbContract.StationEntry.COLUMN_NAME_TITLE, newStationName);
+        String strFilter = StationsDbContract.StationEntry._ID + " = " + String.valueOf(station_ID);
+        return db.update(TABLE_NAME, newValues, strFilter, null);
+    }
+
+    //delete station from DB
+    public int ChangeRatingOfStation(int station_ID, int newRating) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        //update db
+        ContentValues newValues = new ContentValues();
+        newValues.put(StationsDbContract.StationEntry.COLUMN_RATING, newRating);
         String strFilter = StationsDbContract.StationEntry._ID + " = " + String.valueOf(station_ID);
         return db.update(TABLE_NAME, newValues, strFilter, null);
     }
@@ -166,7 +176,7 @@ public class StationsDbHelper extends SQLiteOpenHelper {
                         cursor.getColumnIndexOrThrow(StationsDbContract.StationEntry.COLUMN_CONTENT_TYPE));
                 station.DESCRIPTION = cursor.getString(
                         cursor.getColumnIndexOrThrow(StationsDbContract.StationEntry.COLUMN_DESCRIPTION));
-                station.RATING = cursor.getString(
+                station.RATING = cursor.getInt(
                         cursor.getColumnIndexOrThrow(StationsDbContract.StationEntry.COLUMN_RATING));
                 station.CATEGORY = cursor.getString(
                         cursor.getColumnIndexOrThrow(StationsDbContract.StationEntry.COLUMN_CATEGORY));

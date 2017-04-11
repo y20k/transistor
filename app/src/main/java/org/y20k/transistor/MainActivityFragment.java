@@ -35,6 +35,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -206,6 +207,7 @@ public final class MainActivityFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        Log.v(LOG_TAG + "debugCollectionView","start onResume");
 
         // refresh app state
         loadAppState(mActivity);
@@ -760,8 +762,27 @@ public final class MainActivityFragment extends Fragment {
                     mLayoutManager.scrollToPosition(newStationPosition);
                     mCollectionAdapter.setStationIDSelected(newStationPosition, mPlayback, false);
                     mCollectionAdapter.notifyDataSetChanged(); // TODO Remove?
+                }
+                break;
+            case TransistorKeys.STATION_CHANGED_RATING:
+                if (intent.hasExtra(TransistorKeys.EXTRA_STATION) && intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)) {
 
+                    // get new name, station and station ID from intent
+                    Station station = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
+                    int stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
+                    int stPossition = mCollectionAdapter.getItemPosition(station._ID);
 
+                    // update notification
+                    if (station.getPlaybackState()) {
+                        NotificationHelper.update(station, stPossition, null, null);
+                    }
+
+                    // change station within in adapter, scroll to new position and update adapter
+                    newStationPosition = mCollectionAdapter.updateItemAtPosition(station, stPossition);
+                    mLayoutManager.scrollToPosition(stPossition);
+                    mCollectionAdapter.setStationIDSelected(stPossition, mPlayback, false);
+                    // change station within in adapter, scroll to new position and update adapter
+                    mCollectionAdapter.notifyItemChanged(stPossition);// .notifyDataSetChanged(); // TODO Remove?
                 }
                 break;
             case TransistorKeys.STATION_CHANGED_IMAGE:

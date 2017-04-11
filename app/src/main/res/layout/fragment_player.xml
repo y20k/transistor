@@ -94,21 +94,33 @@
 
     </LinearLayout>
 
+    <RatingBar
+        android:id="@+id/ratingBar"
+        style="@android:style/Widget.DeviceDefault.Light.RatingBar"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="1" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="8dp">
+        android:layout_margin="8dp"
+        android:visibility="gone">
 
         <ImageButton
             android:id="@+id/player_playback_button"
-            android:contentDescription="@string/descr_playback_button"
-            android:adjustViewBounds="true"
-            android:background="@drawable/selector_playback_button"
+            style="@android:style/Widget.Holo.ImageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:adjustViewBounds="true"
+            android:background="@drawable/selector_playback_button"
+            android:contentDescription="@string/descr_playback_button"
             android:padding="32dp" />
+
 
     </RelativeLayout>
 

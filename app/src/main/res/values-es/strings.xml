@@ -70,8 +70,8 @@
     <string name="actioncall_message_start_here">Añadir una nueva estación</string>
     <string name="toastmessage_add_download_started">Descarga comenzada.</string>
     <string name="toastmessage_add_open_file_started">Abriendo archivo.</string>
-    <string name="toastmessage_long_press_playback_stopped">Reproducción detenida (detectada pulsación larga)</string>
-    <string name="toastmessage_long_press_playback_started">Reproducción empezada (detectada pulsación larga)</string>
+    <string name="toastmessage_long_press_playback_stopped">Reproducción detenida</string>
+    <string name="toastmessage_long_press_playback_started">Reproducción empezada</string>
     <string name="toastmessage_shortcut_created">Acceso directo creado.</string>
     <string name="toastmessage_station_copied">Estación copiada.</string>
     <string name="toastmessage_stream_may_not_work">Detectado formato de audio no soportado. La reproducción del stream quizás no funcione correctamente.</string>

@@ -2,10 +2,10 @@
  * CollectionAdapterViewHolder.java
  * Implements the a custom view holder
  * A CollectionAdapterViewHolder is an implementation of the Android "view holder" design pattern
- *
+ * <p>
  * This file is part of
  * TRANSISTOR - Radio App for Android
- *
+ * <p>
  * Copyright (c) 2015-17 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
@@ -15,6 +15,7 @@
 package org.y20k.transistor;
 
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -40,6 +41,7 @@ public class CollectionAdapterViewHolder extends RecyclerView.ViewHolder impleme
     private final TextView mStationDesciptionView;
     private final ImageView mPlaybackIndicator;
     private final ImageView mStationMenuView;
+    private final FloatingActionButton mFabPlayButton;
     private final RatingBar mRatingBarView;
     private ClickListener mClickListener;
 
@@ -63,6 +65,7 @@ public class CollectionAdapterViewHolder extends RecyclerView.ViewHolder impleme
         mStationDesciptionView = (TextView) itemView.findViewById(R.id.list_item_description);
         mPlaybackIndicator = (ImageView) itemView.findViewById(R.id.list_item_playback_indicator);
         mStationMenuView = (ImageView) itemView.findViewById(R.id.list_item_more_button);
+        mFabPlayButton = (FloatingActionButton) itemView.findViewById(R.id.fabPlayButton);
     }
 
 
@@ -96,9 +99,16 @@ public class CollectionAdapterViewHolder extends RecyclerView.ViewHolder impleme
         return mStationNameView;
     }
 
+    /* Getter for station Rating Bar view */
     public RatingBar getRatingBarView() {
         return mRatingBarView;
     }
+
+    /* Getter for station FAB Play Button view */
+    public FloatingActionButton getFabPlayButton() {
+        return mFabPlayButton;
+    }
+
     /* Getter for Station Desciption View */
     public TextView getmStationDesciptionView() {
         return mStationDesciptionView;

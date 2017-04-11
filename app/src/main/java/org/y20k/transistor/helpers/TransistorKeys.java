@@ -84,6 +84,7 @@ public class TransistorKeys {
     public static final int STATION_RENAMED = 2;
     public static final int STATION_DELETED = 3;
     public static final int STATION_CHANGED_IMAGE = 4;
+    public static final int STATION_CHANGED_RATING = 5;
 
     public static final int PLAYBACK_LOADING_STATION = 1;
     public static final int PLAYBACK_STARTED = 2;

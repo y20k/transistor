@@ -3,20 +3,27 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 25
     buildToolsVersion '25.0.0'
-
     defaultConfig {
         applicationId "org.malah.transistor"
         minSdkVersion 19
         targetSdkVersion 25
+        defaultPublishConfig "debug"
         versionCode 35
         versionName "3.0.0 (Beta)"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            buildConfigField "boolean", "isDebug", "true"
+        }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "boolean", "isDebug", "false"
         }
+    }
+    productFlavors {
     }
 }
 

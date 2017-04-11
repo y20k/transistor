@@ -64,17 +64,17 @@
         android:background="@drawable/card_title_background">
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/floatingActionButton"
+            android:id="@+id/fabPlayButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_marginBottom="24dp"
             android:layout_marginEnd="12dp"
-            android:clickable="true"
-            fresco:fabSize="mini"
-            fresco:srcCompat="@drawable/smbl_play" />
 
+            android:clickable="true"
+            app:fabSize="mini"
+            fresco:srcCompat="@drawable/smbl_play" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -89,7 +89,7 @@
 
             <RatingBar
                 android:id="@+id/ratingBar"
-                style="@android:style/Widget.Material.Light.RatingBar.Small"
+                style="@android:style/Widget.DeviceDefault.Light.RatingBar.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/linearLayout"

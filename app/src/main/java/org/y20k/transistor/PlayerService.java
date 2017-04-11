@@ -40,13 +40,15 @@ import android.support.v4.media.session.MediaButtonReceiver;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.LogHelper;
 import org.y20k.transistor.helpers.MetadataHelper;
 import org.y20k.transistor.helpers.NotificationHelper;
-import org.y20k.transistor.helpers.StorageHelper;
+import org.y20k.transistor.helpers.PlaybackStatus;
+import org.y20k.transistor.helpers.SingletonProperties;
 import org.y20k.transistor.helpers.TransistorKeys;
 
 import java.io.File;
@@ -112,7 +114,8 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         mSession = createMediaSession(this);
 
         // create Wifi lock
-        mWifiLock = ((WifiManager) getSystemService(Context.WIFI_SERVICE)).createWifiLock(WifiManager.WIFI_MODE_FULL, "Transistor_lock");
+        WifiManager wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        mWifiLock = wifi.createWifiLock(WifiManager.WIFI_MODE_FULL, "Transistor_lock");
 
         try {
             mController = new MediaControllerCompat(getApplicationContext(), mSession.getSessionToken());
@@ -169,8 +172,9 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
                 mStation = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
                 mStationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
                 mStreamUri = mStation.getStreamUri().toString();
-            }
 
+
+            }
             // update controller - start playback
             mController.getTransportControls().play();
         }
@@ -181,6 +185,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
 
             // update controller - pause playback
             mController.getTransportControls().pause();
+
         }
 
         // ACTION DISMISS
@@ -189,6 +194,8 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
 
             // update controller - stop playback
             mController.getTransportControls().stop();
+
+
         }
 
         // listen for media button
@@ -287,6 +294,10 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
             i.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
             LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(i);
 
+
+            //update global variables
+            SingletonProperties.getInstance().CurrentSelectedStation_Playback_Status = PlaybackStatus.PLAYING;
+            logAllStatus();
             // save state
             mStationLoading = false;
             saveAppState();
@@ -312,6 +323,12 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
             }
         }
 
+    }
+
+    private void logAllStatus() {
+        Log.v(LOG_TAG + "SingletonPropertiesLog","CurrentSelectedStation_ID = " + SingletonProperties.getInstance().CurrentSelectedStation_ID);
+        Log.v(LOG_TAG + "SingletonPropertiesLog","CurrentSelectedStation_Playback_Status = " + SingletonProperties.getInstance().CurrentSelectedStation_Playback_Status);
+        Log.v(LOG_TAG + "SingletonPropertiesLog","LastRunningStation_ID = " + SingletonProperties.getInstance().LastRunningStation_ID);
     }
 
 
@@ -691,22 +708,45 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         public void onPlay() {
             // start playback
             if (mStation != null) {
+                //update global variables
+                String LastRunningStation_ID = SingletonProperties.getInstance().CurrentSelectedStation_ID;
+                if(LastRunningStation_ID!=null && LastRunningStation_ID!= String.valueOf(mStation._ID)){
+                    //if selected station not the lastRunningStation only
+                    SingletonProperties.getInstance().LastRunningStation_ID = LastRunningStation_ID;
+                }
+                SingletonProperties.getInstance().CurrentSelectedStation_ID = String.valueOf(mStation._ID);
+                SingletonProperties.getInstance().CurrentSelectedStation_Playback_Status = PlaybackStatus.LOADING;
+                logAllStatus();
+
                 startPlayback();
+
             }
         }
 
         @Override
         public void onPause() {
+
+            //update global variables
+            SingletonProperties.getInstance().CurrentSelectedStation_Playback_Status = PlaybackStatus.STOPPED;
+            logAllStatus();
+
             // stop playback on pause signal from Android Wear or headphone button
             stopPlayback(false);
+
+
         }
 
         @Override
         public void onStop() {
+            //update global variables
+            SingletonProperties.getInstance().LastRunningStation_ID = String.valueOf(mStation._ID);
+            SingletonProperties.getInstance().CurrentSelectedStation_ID = null;
+            SingletonProperties.getInstance().CurrentSelectedStation_Playback_Status = PlaybackStatus.STOPPED;
+            logAllStatus();
+
             // stop playback and dismiss notification on stop signal
             stopPlayback(true);
         }
-
     }
     /**
      * End of inner class
@@ -770,6 +810,4 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     /**
      * End of inner class
      */
-
-
 }

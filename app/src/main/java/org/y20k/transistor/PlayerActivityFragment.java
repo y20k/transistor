@@ -41,6 +41,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,6 +59,7 @@ import org.y20k.transistor.helpers.PermissionHelper;
 import org.y20k.transistor.helpers.ShortcutHelper;
 import org.y20k.transistor.helpers.StorageHelper;
 import org.y20k.transistor.helpers.TransistorKeys;
+import org.y20k.transistor.sqlcore.StationsDbHelper;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -80,6 +82,7 @@ public final class PlayerActivityFragment extends Fragment {
     private String mStationMetadata;
     private String mStreamUri;
     private TextView mStationNameView;
+    private RatingBar mRatingBarView;
     private TextView mStationMetadataView;
     private SimpleDraweeView mStationImageView;
     private ImageButton mStationMenuView;
@@ -98,6 +101,7 @@ public final class PlayerActivityFragment extends Fragment {
     private boolean mTwoPane;
     private boolean mVisibility;
     private Station mStation;
+    private int mStationRating;
 
     /* Constructor (default) */
     public PlayerActivityFragment() {
@@ -142,6 +146,7 @@ public final class PlayerActivityFragment extends Fragment {
             // get station name and Uri
             if (mStation != null) {
                 mStationName = mStation.TITLE;
+                mStationRating = mStation.RATING;
                 mStreamUri = mStation.getStreamUri().toString();
             } else {
                 mStationName = mActivity.getString(R.string.descr_station_name_example);
@@ -171,6 +176,7 @@ public final class PlayerActivityFragment extends Fragment {
 
         // find views for station name and image and playback indicator
         mStationNameView = (TextView) mRootView.findViewById(R.id.player_textview_stationname);
+        mRatingBarView = (RatingBar) mRootView.findViewById(R.id.ratingBar);
         mStationMetadataView = (TextView) mRootView.findViewById(R.id.player_textview_station_metadata);
         mStationImageView = (SimpleDraweeView) mRootView.findViewById(R.id.player_imageview_station_icon);
         mPlaybackIndicator = (ImageView) mRootView.findViewById(R.id.player_playback_indicator);
@@ -178,7 +184,26 @@ public final class PlayerActivityFragment extends Fragment {
 
         // set station name
         mStationNameView.setText(mStationName);
+        mRatingBarView.setRating(mStationRating);
+        mRatingBarView.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                //change rating in DB
+                //update DB
+                StationsDbHelper mDbHelper = new StationsDbHelper(mActivity);
+                int result = mDbHelper.ChangeRatingOfStation(mStation._ID   , Math.round(rating));
+                mStation.RATING = Math.round(rating);
 
+                if (result > 0) {
+                    Intent i = new Intent();
+                    i.setAction(TransistorKeys.ACTION_COLLECTION_CHANGED);
+                    i.putExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, TransistorKeys.STATION_CHANGED_RATING);
+                    i.putExtra(TransistorKeys.EXTRA_STATION, mStation);
+                    i.putExtra(TransistorKeys.EXTRA_STATION_ID, mStation._ID);
+                    LocalBroadcastManager.getInstance(mActivity.getApplicationContext()).sendBroadcast(i);
+                }
+            }
+        });
 //        // set station image
 //        Bitmap stationImage = createStationImage();
 //        if (stationImage != null) {
@@ -418,7 +443,7 @@ public final class PlayerActivityFragment extends Fragment {
         // set station loading status
         mStationLoading = true;
 
-        // rotate playback button
+        // rotate_infinite playback button
         changeVisualState(mActivity);
 
         // start player service using intent
@@ -428,7 +453,6 @@ public final class PlayerActivityFragment extends Fragment {
         intent.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
         mActivity.startService(intent);
         LogHelper.v(LOG_TAG, "Starting player service.");
-
     }
 
 
@@ -441,7 +465,7 @@ public final class PlayerActivityFragment extends Fragment {
         // reset metadata
         mStationMetadata = null;
 
-        // rotate playback button
+        // rotate_infinite playback button
         changeVisualState(mActivity);
 
         // stop player service using intent
@@ -453,7 +477,7 @@ public final class PlayerActivityFragment extends Fragment {
 
 
     /* Handles tap on the big playback button */
-    private void handlePlaybackButtonClick() {
+    public void handlePlaybackButtonClick() {
         // playback stopped or new station - start playback
         if (!mPlayback || !mStation.getPlaybackState()) {
             startPlayback();
@@ -554,7 +578,12 @@ public final class PlayerActivityFragment extends Fragment {
 
     /* Animate button and then set visual state */
     private void changeVisualState(Context context) {
-        // get rotate animation from xml
+        if(!mTwoPane){
+            setVisualState();
+            return;
+        }
+
+        // get rotate_infinite animation from xml
         Animation rotate;
         if (mPlayback) {
             // if playback has been started get start animation
@@ -720,7 +749,7 @@ public final class PlayerActivityFragment extends Fragment {
                     // set playback true
                     mPlayback = true;
                     mStation.setPlaybackState(true);
-                    // rotate playback button
+                    // rotate_infinite playback button
                     changeVisualState(mActivity);
                     // update playback state
                     mStationIDLast = mStationIDCurrent;
@@ -750,7 +779,7 @@ public final class PlayerActivityFragment extends Fragment {
                 if (mVisibility && mPlayback && mStation != null && mStation.getStreamUri().equals(station.getStreamUri())) {
                     // set playback falseMediaB
                     mPlayback = false;
-                    // rotate playback button
+                    // rotate_infinite playback button
                     if (intent.hasExtra(TransistorKeys.EXTRA_STATION_ID) && mStationID == intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, -1)) {
                         mStation.setPlaybackState(false);
                         changeVisualState(mActivity);

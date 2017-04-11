@@ -16,13 +16,10 @@ package org.y20k.transistor;
 import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.content.BroadcastReceiver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -43,8 +40,6 @@ import android.widget.Toast;
 import org.y20k.transistor.helpers.LogHelper;
 import org.y20k.transistor.helpers.StorageHelper;
 import org.y20k.transistor.helpers.TransistorKeys;
-import org.y20k.transistor.sqlcore.StationsDbContract;
-import org.y20k.transistor.sqlcore.StationsDbHelper;
 
 import java.io.File;
 

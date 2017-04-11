@@ -14,8 +14,10 @@
 
 package org.y20k.transistor.helpers;
 
-import android.support.v4.BuildConfig;
+
 import android.util.Log;
+
+import org.y20k.transistor.BuildConfig;
 
 
 /**

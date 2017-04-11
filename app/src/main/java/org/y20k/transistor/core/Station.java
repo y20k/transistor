@@ -28,11 +28,13 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.util.Xml;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.y20k.transistor.helpers.LogHelper;
+import org.y20k.transistor.helpers.SingletonProperties;
 import org.y20k.transistor.helpers.StorageHelper;
 import org.y20k.transistor.helpers.TransistorKeys;
 import org.y20k.transistor.sqlcore.StationsDbContract;
@@ -76,7 +78,7 @@ public final class Station implements Comparable<Station>, Parcelable {
     public String URI;
     public String CONTENT_TYPE;
     public String DESCRIPTION;
-    public String RATING;
+    public int RATING;
     public String CATEGORY;
     public String IS_FAVOURITE;
     public String THUMP_UP_STATUS;
@@ -379,7 +381,7 @@ public final class Station implements Comparable<Station>, Parcelable {
                         } else if (tagName.equals("rating")) {
                             parser.require(XmlPullParser.START_TAG, null, "rating");
                             String ratingVal = readXmlElementText(parser);
-                            stationItem.RATING = String.valueOf(getIntegerRating(ratingVal));
+                            stationItem.RATING = getIntegerRating(ratingVal);
                         } else if (tagName.equals("category")) {
                             parser.require(XmlPullParser.START_TAG, null, "category");
                             stationItem.CATEGORY = readXmlElementText(parser);
@@ -520,7 +522,7 @@ public final class Station implements Comparable<Station>, Parcelable {
         IMAGE_FILE_NAME = in.readString();
         CONTENT_TYPE = in.readString();
         DESCRIPTION = in.readString();
-        RATING = in.readString();
+        RATING = in.readInt();
         CATEGORY = in.readString();
         IS_FAVOURITE = in.readString();
         THUMP_UP_STATUS = in.readString();
@@ -888,7 +890,14 @@ public final class Station implements Comparable<Station>, Parcelable {
 
     /* Getter for playback state */
     public boolean getPlaybackState() {
-        return mPlayback;
+        String currentRunningStationid = SingletonProperties.getInstance().CurrentStation_ID;
+        if (currentRunningStationid != null && currentRunningStationid != ""
+                && currentRunningStationid == String.valueOf(_ID)) {
+            Log.v(LOG_TAG + "debug","getPlaybackState ,playback = " + String.valueOf(true) + " - StationID = " + String.valueOf(_ID) + " - currentRunningStationid="+currentRunningStationid);
+            return true;
+        }
+        Log.v(LOG_TAG + "debug","getPlaybackState ,playback = " + String.valueOf(false) + " - StationID = " + String.valueOf(_ID)+ " - currentRunningStationid="+currentRunningStationid);
+        return false;//mPlayback;
     }
 
 
@@ -982,7 +991,22 @@ public final class Station implements Comparable<Station>, Parcelable {
 
     /* Setter for playback state */
     public void setPlaybackState(boolean playback) {
-        mPlayback = playback;
+        Log.v(LOG_TAG + "debug","setPlaybackState ,playback = " + String.valueOf(playback) + " - StationID = " + String.valueOf(_ID));
+        String currentRunningStationid = SingletonProperties.getInstance().CurrentStation_ID;
+        String CurrentRunningStation_ID = SingletonProperties.getInstance().CurrentStation_ID;
+        int oldStation_ID   = (CurrentRunningStation_ID != null && CurrentRunningStation_ID != "") ? Integer.parseInt(CurrentRunningStation_ID) : -1;
+        if (playback) {
+            //set this station as current playing
+            SingletonProperties.getInstance().CurrentStation_ID = String.valueOf(_ID);
+            LogHelper.v(LOG_TAG, "CurrentStation_ID set to = " +  String.valueOf(_ID));
+
+        } else if (currentRunningStationid != null && currentRunningStationid != ""
+                && currentRunningStationid == String.valueOf(_ID)) {
+            //remove this station from currentRunningStation_id var only if it's already there
+            SingletonProperties.getInstance().CurrentStation_ID = null;
+            LogHelper.v(LOG_TAG, "CurrentStation_ID set to = null");
+        }
+        //mPlayback = playback;
     }
 
 
@@ -1018,7 +1042,7 @@ public final class Station implements Comparable<Station>, Parcelable {
         dest.writeString(IMAGE_FILE_NAME);
         dest.writeString(CONTENT_TYPE);
         dest.writeString(DESCRIPTION);
-        dest.writeString(RATING);
+        dest.writeInt(RATING);
         dest.writeString(CATEGORY);
         dest.writeString(IS_FAVOURITE);
         dest.writeString(THUMP_UP_STATUS);
@@ -1117,13 +1141,14 @@ public final class Station implements Comparable<Station>, Parcelable {
             values.put(StationsDbContract.StationEntry.COLUMN_IMAGE_FILE_NAME, stationItem.IMAGE_FILE_NAME);
             values.put(StationsDbContract.StationEntry.COLUMN_URI, stationItem.URI);
             values.put(StationsDbContract.StationEntry.COLUMN_CONTENT_TYPE, stationItem.CONTENT_TYPE);
-            //values.put(StationsDbContract.StationEntry.COLUMN_RATING, stationItem.RATING);
+            values.put(StationsDbContract.StationEntry.COLUMN_RATING, stationItem.RATING);
             values.put(StationsDbContract.StationEntry.COLUMN_CATEGORY, stationItem.CATEGORY);
 
             // Insert the new row, returning the primary key value of the new row
             long newRowId = db.insert(StationsDbContract.StationEntry.TABLE_NAME, null, values);
         }
         db.close();
+
     }
 
     public ArrayList<Station> getInsertedStations() {
