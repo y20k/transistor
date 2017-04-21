@@ -64,32 +64,32 @@
     <string name="infosheet_about_p_shortcut">Bu izin Android Ana ekranında radyo istasyonu kısayolları yüklemek ve kaldırmak için gereklidir.</string>
     <string name="infosheet_about_h3_internet">INTERNET izini</string>
     <string name="infosheet_about_p_internet">Transistör İnternet üzerinden radyo istasyonlarını alır.</string>
-    <string name="infosheet_about_h3_external">İzin READ_EXTERNAL_STORAGE</string>
+    <string name="infosheet_about_h3_external">READ_EXTERNAL_STORAGE izni</string>
     <string name="infosheet_about_p_external">Transistör radyo istasyonu simgeleri özelleştirmek mümkün ve yerel olarak kaydedilmiş playlist dosyaları açmak mümkün bağlı olduğu görüntüler, fotoğraflar ve belgelere erişmesi gerekir.</string>
-    <string name="infosheet_about_h3_vibrate">İzin VIBRATE</string>
-    <string name="infosheet_about_p_vibrate">küçük bir titreşim tetikleyerek radyo istasyonu açık tutar.</string>
-    <string name="infosheet_about_h3_wakelock">İzin WAKE_LOCK</string>
-    <string name="infosheet_about_p_wakelock">Oynatma Sırasında Transistör telefonunuzun uyanık kalmasını sağlar. Güç tasarrufu nedenlerden dolayı oynatma durdurulmasını önler.</string>
+    <string name="infosheet_about_h3_vibrate">VIBRATE izni</string>
+    <string name="infosheet_about_p_vibrate">Küçük bir titreşim tetikleyerek radyo istasyonu açık tutar.</string>
+    <string name="infosheet_about_h3_wakelock">WAKE_LOCK izni</string>
+    <string name="infosheet_about_p_wakelock">Oynatma sırasında Transistör telefonunuzun uyanık kalmasını sağlar. Güç tasarrufu için oynatmanın durdurulmasını engeller.</string>
 
     <!-- infosheet howto -->
     <string name="infosheet_howto_h1_howto">Transistör nasıl kullanılır</string>
-    <string name="infosheet_howto_h2_add">Yeni bir radyo nasıl eklenir?</string>
+    <string name="infosheet_howto_h2_add">Yeni bir radyo istasyonu nasıl eklenir?</string>
     <string name="infosheet_howto_p_add">Yeni bir istasyon eklemek için en kolay yolu bağlantıları akışı için webden arama ve daha sonra bu dosya türleri için bir varsayılan işleyicisi olarak Transistörü seçmektir. Ayrıca üst çubuğunda (+) sembolü dokunun ve doğrudan akış bağlantıları yapıştırabilirsiniz. Lütfen dikkat: Transistör yerleşik arama seçeneği yok.</string>
-    <string name="infosheet_howto_h2_play">Nasıl radyo istasyonu başlar ?</string>
-    <string name="infosheet_howto_p_play">Büyük Oynat düğmesine dokunun. ;).</string>
-    <string name="infosheet_howto_h2_stop">Oynatmayı durdurmak için?</string>
-    <string name="infosheet_howto_p_stop">"Büyük Dur düğmesine dokunun veya kulaklığınızı çıkarın veya  ekranı kilitle bildirimini kapalı kaydırın."</string>
-    <string name="infosheet_howto_h2_sleep">Uyku zamanlayıcı nasıl kullanılır ?</string>
+    <string name="infosheet_howto_h2_play">Bir radyo istasyonu nasıl oynatılır?</string>
+    <string name="infosheet_howto_p_play">Büyük Oynat düğmesine dokunun ;).</string>
+    <string name="infosheet_howto_h2_stop">Oynatma nasıl durdurulur?</string>
+    <string name="infosheet_howto_p_stop">Büyük Dur düğmesine dokunun veya kulaklığınızı çıkarın veya kilit ekranında bildirimini dışa kaydırın.</string>
+    <string name="infosheet_howto_h2_sleep">Uyku zamanlayıcı nasıl kullanılır?</string>
     <string name="infosheet_howto_p_sleep">Saat sembolü dokunarak Transistör oynatmayı durdurmak için 15 dakikalık geri sayım başlar. Her 15 dakika için Saat sembolüne basın. Uyku zamanlayıcısı aktive edebilmek için çalışıyor olması gerekir.</string>
-    <string name="infosheet_howto_h2_shortcut">Ana ekrana kısayolu nasıl yerleştirebilirim?</string>
+    <string name="infosheet_howto_h2_shortcut">Nasıl ana ekrana bir istasyon kısayolu ekleyebilirim?</string>
     <string name="infosheet_howto_p_shortcut">Ana ekranda bir istasyon için bir kısayol yerleştirmek için istasyonun üç nokta menüden ulaşabilirsin. Bu kısayolu kullandığınız zaman Radyonuz hemen çalmaya başlayacaktır.</string>
-    <string name="infosheet_howto_h2_edit">İstasyon Nasıl yeniden adlandırılır veya bir istasyonu nasıl silebilirim ?</string>
+    <string name="infosheet_howto_h2_edit">Bir istayonu nasıl yeniden adladırır veya silerim?</string>
     <string name="infosheet_howto_p_edit">Yeniden adlandırma ve silme seçenekleri istasyonun içerik menüsünden hem ulaşabilirsin. Sadece üç nokta sembolün üzerine dokunun. Sen bir dosya tarayıcısı da istasyonları (sonraki soruya bakın) listesini yönetebilirsin.</string>
-    <string name="infosheet_howto_h2_storage">Transistör istasyonları Nerede saklar?</string>
+    <string name="infosheet_howto_h2_storage">Transistör istasyonlarını nerede saklar?</string>
     <string name="infosheet_howto_p_storage">Transistör bir veritabanında istasyonların listesini kaydetmekmez. Bunun yerine cihazınızın harici depolamasına m3u dosyaları olarak saklar. Seçtiğiniz TextEditor kullanarak bu dosya içeriğini değiştirebilirsiniz.. dosyaları /Android/data/org.y20k.transistor/files/Collection saklanır.</string>
-    <string name="infosheet_howto_h2_backup">Nasıl yedekleme yapabilirim ve radyo istasyonlarını nasıl saklarım?</string>
+    <string name="infosheet_howto_h2_backup">Radyo istasyonlarımı nasıl yedekler ve aktarırım?</string>
     <string name="infosheet_howto_p_backup">Transistör Android 6. Radyo istasyonları Otomatik Yedekleme özelliği için her zaman Google hesabınıza yedeklenen ve yeniden yüklemede restore özelliği vardır. Android\'in eski sürümlerinde çalışan cihazlarda ise elle kaydetmek ve Koleksiyon klasörü geri yüklemeniz gerekir.</string>
-    <string name="infosheet_howto_h2_settings">Neden Transistor için hiçbir ayara gerek yok?</string>
+    <string name="infosheet_howto_h2_settings">Neden Transistör\'de hiçbir ayar yok?</string>
     <string name="infosheet_howto_p_settings">ayarlamak için bir neden yoktur;). Transistör çok basit bir uygulamadır ve kullanımı basittir.</string>
 
     <string name="title_activity_player">Şimdi Oynatılıyor</string>
@@ -127,9 +127,9 @@
     <string name="player_sheet_h1_station_metadata">Şimdi Oynatılıyor</string>
     <string name="player_sheet_h1_stream_url">Yayın URL\'si</string>
     <string name="player_sheet_p_station_metadata">mevcut meta veri yok</string>
-    <string name="player_sheet_h1_station_mime_type">MIME type</string>
-    <string name="player_sheet_h1_station_channel_count">Channel count</string>
-    <string name="player_sheet_h1_station_sample_rate">Sample rate</string>
+    <string name="player_sheet_h1_station_mime_type">MIME tipi</string>
+    <string name="player_sheet_h1_station_channel_count">Kanal sayısı</string>
+    <string name="player_sheet_h1_station_sample_rate">Örnekleme hızı</string>
     <string name="player_sheet_h1_station_bitrate">Bitrate</string>
 
     <string name="dialog_generic_button_okay">Tamam</string>
