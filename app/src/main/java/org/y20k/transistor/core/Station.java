@@ -73,8 +73,11 @@ public final class Station implements TransistorKeys, Comparable<Station>, Parce
     private Uri mStreamUri;
     private String mPlaylistFileContent;
     private boolean mPlayback;
+    private String mMimeType;
+    private int mChannelCount;
+    private int mSampleRate;
+    private int mBitrate;
     private Bundle mStationFetchResults;
-
 
     /* Constructor when given file from the Collection folder */
     public Station(File file) {
@@ -92,6 +95,9 @@ public final class Station implements TransistorKeys, Comparable<Station>, Parce
 
         // set playback state
         mPlayback = false;
+
+        // initialize variables that are set during playback to defaul values
+        initializePlaybackMetadata();
     }
 
 
@@ -163,6 +169,8 @@ public final class Station implements TransistorKeys, Comparable<Station>, Parce
         // set playback state
         mPlayback = false;
 
+        // initialize variables that are set during playback to defaul values
+        initializePlaybackMetadata();
     }
 
 
@@ -202,6 +210,8 @@ public final class Station implements TransistorKeys, Comparable<Station>, Parce
         // set playback state
         mPlayback = false;
 
+        // initialize variables that are set during playback to defaul values
+        initializePlaybackMetadata();
     }
 
 
@@ -215,6 +225,10 @@ public final class Station implements TransistorKeys, Comparable<Station>, Parce
         mPlaylistFileContent = in.readString();
         mStationFetchResults = in.readBundle(Bundle.class.getClassLoader());
         mPlayback = in.readByte() != 0; // true if byte != 0
+        mMimeType = in.readString();
+        mChannelCount = in.readInt();
+        mSampleRate = in.readInt();
+        mBitrate = in.readInt();
         LogHelper.v(LOG_TAG, "Station re-created from parcel. State of playback is: " + mPlayback);
     }
 
@@ -231,6 +245,16 @@ public final class Station implements TransistorKeys, Comparable<Station>, Parce
             return new Station[size];
         }
     };
+
+
+
+    /* Initializes variables that are set during playback */
+    private void initializePlaybackMetadata() {
+        mMimeType = null;
+        mChannelCount = -1;
+        mSampleRate = -1;
+        mBitrate = -1;
+    }
 
 
     /* Construct string representation of m3u mStationPlaylistFile */
@@ -569,6 +593,29 @@ public final class Station implements TransistorKeys, Comparable<Station>, Parce
     }
 
 
+    /* Getter for MIME type of station during playback */
+    public String getMimeType() {
+        return mMimeType;
+    }
+
+
+    /* Getter for channel count ((mono / stereo) of station during playback */
+    public int getChannelCount() {
+        return mChannelCount;
+    }
+
+
+    /* Getter for sample rate of station during playback */
+    public int getSampleRate() {
+        return mSampleRate;
+    }
+
+
+    /* Getter for bitrate of station during playback */
+    public int getBitrate() {
+        return mBitrate;
+    }
+
     /* Setter for playlist file object of station */
     public void setStationPlaylistFile(File folder) {
         if (mStationName != null) {
@@ -611,6 +658,29 @@ public final class Station implements TransistorKeys, Comparable<Station>, Parce
     }
 
 
+    /* Setter for MIME type of station during playback */
+    public void setMimeType(String mimeType) {
+        mMimeType = mimeType;
+    }
+
+
+    /* Setter for channel count (mono / stereo) of station during playback */
+    public void setChannelCount(int channelCount) {
+        mChannelCount = channelCount;
+    }
+
+
+    /* Setter for sample rate of station during playback */
+    public void setSampleRate(int sampleRate) {
+        mSampleRate = sampleRate;
+    }
+
+
+    /* Setter for bitrate of station during playback */
+    public void setBitrate(int bitrate) {
+        mBitrate = bitrate;
+    }
+
     @Override
     public int compareTo(@NonNull Station otherStation) {
         // Compares two stations: returns "1" if name if this station is greater than name of given station
@@ -640,6 +710,10 @@ public final class Station implements TransistorKeys, Comparable<Station>, Parce
         dest.writeString(mPlaylistFileContent);
         dest.writeBundle(mStationFetchResults);
         dest.writeByte((byte) (mPlayback ? 1 : 0));  // if mPlayback == true, byte == 1
+        dest.writeString(mMimeType);
+        dest.writeInt(mChannelCount);
+        dest.writeInt(mSampleRate);
+        dest.writeInt(mBitrate);
     }
 
 

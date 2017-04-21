@@ -43,6 +43,10 @@
     <string name="player_sheet_h1_station_metadata">Currently Playing</string>
     <string name="player_sheet_h1_stream_url">Stream URL</string>
     <string name="player_sheet_p_station_metadata">no metadata available</string>
+    <string name="player_sheet_h1_station_mime_type">MIME type</string>
+    <string name="player_sheet_h1_station_channel_count">Channel count</string>
+    <string name="player_sheet_h1_station_sample_rate">Sample rate</string>
+    <string name="player_sheet_h1_station_bitrate">Bitrate</string>
 
     <!-- dialogs -->
     <string name="dialog_generic_button_okay">Ados</string>

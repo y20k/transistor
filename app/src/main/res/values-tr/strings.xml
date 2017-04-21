@@ -127,7 +127,10 @@
     <string name="player_sheet_h1_station_metadata">Şimdi Oynatılıyor</string>
     <string name="player_sheet_h1_stream_url">Yayın URL\'si</string>
     <string name="player_sheet_p_station_metadata">mevcut meta veri yok</string>
-
+    <string name="player_sheet_h1_station_mime_type">MIME type</string>
+    <string name="player_sheet_h1_station_channel_count">Channel count</string>
+    <string name="player_sheet_h1_station_sample_rate">Sample rate</string>
+    <string name="player_sheet_h1_station_bitrate">Bitrate</string>
 
     <string name="dialog_generic_button_okay">Tamam</string>
     <string name="dialog_generic_button_cancel">İptal</string>

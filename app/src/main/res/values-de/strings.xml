@@ -43,6 +43,10 @@
     <string name="player_sheet_h1_station_metadata">Aktuelle Wiedergabe</string>
     <string name="player_sheet_h1_stream_url">Stream-URL</string>
     <string name="player_sheet_p_station_metadata">Metadaten nicht verfügbar</string>
+    <string name="player_sheet_h1_station_mime_type">MIME-Typ</string>
+    <string name="player_sheet_h1_station_channel_count">Kanäle</string>
+    <string name="player_sheet_h1_station_sample_rate">Samplerate</string>
+    <string name="player_sheet_h1_station_bitrate">Bitrate</string>
 
     <!-- dialogs -->
     <string name="dialog_generic_button_okay">Bestätigen</string>
