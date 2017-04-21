@@ -129,6 +129,99 @@
                     app:srcCompat="@drawable/ic_content_copy_grey_24dp" />
             </LinearLayout>
 
+            <!-- STATION MIME TYPE -->
+            <LinearLayout
+                android:id="@+id/station_data_sheet_mime_type_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="12dp"
+                android:visibility="gone">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:textAllCaps="true"
+                    android:text="@string/player_sheet_h1_station_mime_type"
+                    android:textAppearance="@android:style/TextAppearance.Small.Inverse" />
+                <TextView
+                    android:id="@+id/station_data_sheet_mime_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@android:style/TextAppearance.Medium.Inverse"
+                    android:contentDescription="@string/descr_player_sheet_p_station_name" />
+            </LinearLayout>
+
+            <!-- STATION CHANNEL COUNT -->
+            <LinearLayout
+                android:id="@+id/station_data_sheet_channel_count_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="12dp"
+                android:visibility="gone">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:textAllCaps="true"
+                    android:text="@string/player_sheet_h1_station_channel_count"
+                    android:textAppearance="@android:style/TextAppearance.Small.Inverse" />
+                <TextView
+                    android:id="@+id/station_data_sheet_channel_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@android:style/TextAppearance.Medium.Inverse"
+                    android:contentDescription="@string/descr_player_sheet_p_station_name" />
+            </LinearLayout>
+
+            <!-- STATION SAMPLE RATE -->
+            <LinearLayout
+                android:id="@+id/station_data_sheet_sample_rate_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="12dp"
+                android:visibility="gone">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:textAllCaps="true"
+                    android:text="@string/player_sheet_h1_station_sample_rate"
+                    android:textAppearance="@android:style/TextAppearance.Small.Inverse" />
+                <TextView
+                    android:id="@+id/station_data_sheet_sample_rate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@android:style/TextAppearance.Medium.Inverse"
+                    android:contentDescription="@string/descr_player_sheet_p_station_name" />
+            </LinearLayout>
+
+
+            <!-- STATION BITRATE -->
+            <LinearLayout
+                android:id="@+id/station_data_sheet_bitrate_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="12dp"
+                android:visibility="gone">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:textAllCaps="true"
+                    android:text="@string/player_sheet_h1_station_bitrate"
+                    android:textAppearance="@android:style/TextAppearance.Small.Inverse" />
+                <TextView
+                    android:id="@+id/station_data_sheet_bitrate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@android:style/TextAppearance.Medium.Inverse"
+                    android:contentDescription="@string/descr_player_sheet_p_station_name" />
+            </LinearLayout>
+
         </LinearLayout>
 
     </ScrollView>

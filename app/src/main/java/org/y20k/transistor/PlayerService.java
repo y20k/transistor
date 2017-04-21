@@ -48,6 +48,7 @@ import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.LoadControl;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.Timeline;
@@ -316,34 +317,17 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     public void onPlayerError(ExoPlaybackException error) {
         switch (error.type) {
             case TYPE_RENDERER:
-                // error occurred in a Renderer. Playback state: ExoPlayer.STATE_IDLE
+                // error occurred in a Renderer
                 LogHelper.e(LOG_TAG, "An error occurred. Type RENDERER: " + error.getRendererException().toString());
                 break;
 
             case TYPE_SOURCE:
-                // error occurred loading data from a MediaSource. Playback state: ExoPlayer.STATE_IDLE
+                // error occurred loading data from a MediaSource.
                 LogHelper.e(LOG_TAG, "An error occurred. Type SOURCE: " + error.getSourceException().toString());
-//                if (mPlayback) {
-//                    Intent intent = new Intent();
-//                    intent.setAction(ACTION_PLAYBACK_STATE_CHANGED);
-//                    intent.putExtra(EXTRA_PLAYBACK_STATE_CHANGE, PLAYBACK_LOADING_STATION);
-//                    intent.putExtra(EXTRA_STATION, mStation);
-//                    intent.putExtra(EXTRA_STATION_ID, mStationID);
-//                    LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(intent);
-//                    mStationLoading = true;
-//
-//                    // wait a sec - and then try to restart playback
-//                    try {
-//                        Thread.sleep(1000);
-//                        startPlayback();
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
                 break;
 
             case TYPE_UNEXPECTED:
-                // error was an unexpected RuntimeException. Playback state: ExoPlayer.STATE_IDLE
+                // error was an unexpected RuntimeException.
                 LogHelper.e(LOG_TAG, "An error occurred. Type UNEXPECTED: " + error.getUnexpectedException().toString());
                 break;
 
@@ -375,7 +359,14 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
     @Override
     public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
-
+        if (trackGroups.length > 0) {
+            // update format metadata of station
+            Format format = trackGroups.get(0).getFormat(0);
+            mStation.setMimeType(format.sampleMimeType);
+            mStation.setChannelCount(format.channelCount);
+            mStation.setSampleRate(format.sampleRate);
+            mStation.setBitrate(format.bitrate);
+        }
     }
 
 
@@ -563,7 +554,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
         // stop playback
         mExoPlayer.setPlayWhenReady(false); // todo empty buffer
-        // mExoPlayer.stop();
+        mExoPlayer.stop();
 
         // give up audio focus
         giveUpAudioFocus();

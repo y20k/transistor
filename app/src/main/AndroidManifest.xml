@@ -95,6 +95,7 @@
             android:name=".PlayerActivity"
             android:label="@string/title_activity_player"
             android:parentActivityName=".MainActivity"
+            android:resizeableActivity="true"
             android:configChanges="keyboardHidden|orientation|screenSize|screenLayout">
 
             <meta-data
