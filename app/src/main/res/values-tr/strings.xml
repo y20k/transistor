@@ -1,34 +1,34 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-    <string name="descr_arrow_actioncall">Arrow pointing towards the add station symbol</string>
-    <string name="descr_playback_indicator">oynatmayı çalıştırmak için gösterge</string>
-    <string name="descr_playback_indicator_started">oynatmayı çalıştırmak için gösterge</string>
+    <string name="descr_arrow_actioncall">İstasyon ekle sembolünü gösteren ok</string>
+    <string name="descr_playback_indicator">Çalışan oynatma için gösterge</string>
+    <string name="descr_playback_indicator_started">Çalışan oynatma için gösterge</string>
 
     <!-- error dialogs -->
-    <string name="dialog_error_details_default">Hiç bir ayrıntı yok</string>
-    <string name="dialog_error_details_write">İstasyon muhtemelen yineleniyor veya başka harici depolama kontrol etmek isteyebilirsiniz.</string>
-    <string name="dialog_error_title_fetch_download">indirme Sayı</string>
-    <string name="dialog_error_title_fetch_write">Yazma sorunu</string>
-    <string name="dialog_error_message_fetch_general_hint_m3u">"İpucu: Transistör MP3 ve OGG  veya .m3u veya pls biten URL\'ler kodlanmıştır."</string>
+    <string name="dialog_error_details_default">Mevcut ayrıntı yok</string>
+    <string name="dialog_error_details_write">İstasyon muhtemelen zaten mevcut veya değilse harici depolamanızı kontrol etmek isteyebilirsiniz.</string>
+    <string name="dialog_error_title_fetch_download">İndirme Sorunu</string>
+    <string name="dialog_error_title_fetch_write">Yazma Sorunu</string>
+    <string name="dialog_error_message_fetch_general_hint_m3u">İpucu: Transistör sadece MP3 ve OGG ile kodlanmış yayınları veya .m3u veya .pls ile biten URL\'leri işleyebilir.</string>
     <string name="dialog_error_message_fetch_general_playlist_type">Dosyanın MIME tipi:</string>
-    <string name="dialog_error_message_fetch_general_stream_type">Akış MIME tipinde:</string>
+    <string name="dialog_error_message_fetch_general_stream_type">Yayının MIME tipi:</string>
     <string name="dialog_error_message_fetch_general_file_content">Dosyanın içeriği:</string>
-    <string name="dialog_error_message_fetch_download">Transistör girmiş olduğunuz bağlantıyı tanımadı.</string>
-    <string name="dialog_error_message_fetch_download_station_url">İstasyonun URL:</string>
-    <string name="dialog_error_message_fetch_read">"Transistor  zor çalıştı verilen dosyayı tanımıyorum."</string>
-    <string name="dialog_error_message_fetch_read_file_location">Dosyanın Yeri:</string>
-    <string name="dialog_error_message_fetch_write">Transistör zor çalıştı ama depolama istasyon verilerini kaydetti.</string>
+    <string name="dialog_error_message_fetch_download">Transistör girmiş olduğunuz bağlantıyı tanıyamadı.</string>
+    <string name="dialog_error_message_fetch_download_station_url">İstasyonun URL\'si:</string>
+    <string name="dialog_error_message_fetch_read">Transistör girmiş olduğunuz dosyayı tanıyamadı.</string>
+    <string name="dialog_error_message_fetch_read_file_location">Dosyanın konumu:</string>
+    <string name="dialog_error_message_fetch_write">Transistör girmiş olduğunuz istasyonu depolamaya kaydedemedi.</string>
 
     <!-- messages -->
-    <string name="actioncall_message_start_here">Yeni bir istasyon ekle</string>
+    <string name="actioncall_message_start_here">Yeni istasyon ekle</string>
     <string name="toastmessage_add_download_started">İndirme başladı.</string>
-    <string name="toastmessage_add_open_file_started">Açılış dosyası.</string>
-    <string name="toastmessage_long_press_playback_stopped">Oynatma durdurdu</string>
-    <string name="toastmessage_long_press_playback_started">Oynatma başladı</string>
+    <string name="toastmessage_add_open_file_started">Dosya açılıyor.</string>
+    <string name="toastmessage_long_press_playback_stopped">Oynatma durdurdu (uzun dokunuş algılandı)</string>
+    <string name="toastmessage_long_press_playback_started">Oynatma başladı (uzun dokunuş algılandı)</string>
     <string name="toastmessage_shortcut_created">Kısayol oluşturuldu.</string>
-    <string name="toastmessage_copied_to_clipboard_url">Stream URL copied to clipboard.</string>
-    <string name="toastmessage_copied_to_clipboard_metadata">Metadata copied to clipboard.</string>
-    <string name="toastmessage_station_copied">İstasyon kopyalandı.</string>
+    <string name="toastmessage_copied_to_clipboard_url">Yayın URL\'si panoya kopyalandı.</string>
+    <string name="toastmessage_copied_to_clipboard_metadata">Meta veri panoya kopyalandı.</string>
+    <string name="toastmessage_station_copied">İstasyon panoya kopyalandı.</string>
     <string name="toastmessage_stream_may_not_work">"Desteklenmeyen ses formatı tespit edildi. Akış  düzgün çalışmayabilir."</string>
     <string name="toastmessage_timer_activated">Uyku zamanlayıcısı aktif.</string>
     <string name="toastmessage_timer_cancelled">Uyku zamanlayıcısı iptal edildi.</string>
@@ -92,60 +92,60 @@
     <string name="infosheet_howto_h2_settings">Neden Transistor için hiçbir ayara gerek yok?</string>
     <string name="infosheet_howto_p_settings">ayarlamak için bir neden yoktur;). Transistör çok basit bir uygulamadır ve kullanımı basittir.</string>
 
-    <string name="title_activity_player">Şimdi Oynuyor</string>
+    <string name="title_activity_player">Şimdi Oynatılıyor</string>
     <string name="title_activity_infosheet">Bilgi Formu</string>
 
     <string name="menu_about">Hakkında</string>
-    <string name="menu_howto">Nasıl Kullanılır</string>
+    <string name="menu_howto">Nasıl kullanılır</string>
     <string name="menu_timer">Uyku zamanlayıcı</string>
-    <string name="menu_icon">Resmi Değiştir</string>
+    <string name="menu_icon">Simgeyi değiştir</string>
     <string name="menu_add">Ekle</string>
     <string name="menu_delete">Sil</string>
     <string name="menu_rename">Yeniden adlandır</string>
-    <string name="menu_shortcut">Ana ekrana kısayol ekle</string>
+    <string name="menu_shortcut">Ana ekrana ekle</string>
 
     <string name="header_about">Hakkında</string>
-    <string name="header_howto">Nasıl Kullanılır</string>
+    <string name="header_howto">Nasıl kullanılır</string>
 
-    <string name="descr_overflow_button">radyo istasyonu için ekran seçenekleri</string>
-    <string name="descr_station_icon">Radyo istasyon simgesi</string>
-    <string name="descr_station_name">radyo istasyonunun adı</string>
-    <string name="descr_station_metadata">çalmakta olan radyo istasyonunun Meta veri (Sanatçı / Başlık)</string>
+    <string name="descr_overflow_button">Radyo istasyonu için seçenekleri göster</string>
+    <string name="descr_station_icon">Radyo istasyonunun simgesi</string>
+    <string name="descr_station_name">Radyo istasyonunun ismi</string>
+    <string name="descr_station_metadata">Oynatılmakta olan radyo istasyonunun meta verisi (Sanatçı / Başlık)</string>
     <string name="descr_station_name_example">Örnek FM</string>
     <string name="descr_station_metadata_example">Sanatçı - Başlık</string>
     <string name="app_name">Transistör</string>
-    <string name="descr_station_stream_loading">Yükleniyor…</string>
+    <string name="descr_station_stream_loading">Yayın yükleniyor…</string>
     <string name="descr_playback_button">Büyük oynatma düğmesi</string>
-    <string name="descr_timer_indicator_started">uyku zamanlayıcısı çalıştırmak için gösterge</string>
-    <string name="descr_player_sheet_information_icon">Information Icon</string>
-    <string name="descr_player_sheet_content_copy_icon">Content copy icon</string>
-    <string name="descr_player_sheet_p_station_name">Name of selected radio station</string>
-    <string name="descr_player_sheet_p_station_metadata">Metadata from selected radio station</string>
-    <string name="descr_player_sheet_p_stream_url">Stream URL of selected radio station</string>
+    <string name="descr_timer_indicator_started">Çalışan uyku zamanlayıcı için gösterge</string>
+    <string name="descr_player_sheet_information_icon">Bilgi Simgesi</string>
+    <string name="descr_player_sheet_content_copy_icon">İçerik kopyalama simgesi</string>
+    <string name="descr_player_sheet_p_station_name">Seçilen radyo istasyonunun ismi</string>
+    <string name="descr_player_sheet_p_station_metadata">Seçilen radyo istasyonunun meta verisi</string>
+    <string name="descr_player_sheet_p_stream_url">Seçilen radyo istasyonunun yayın URL\'si</string>
 
-    <string name="player_sheet_h1_station_name">Station</string>
-    <string name="player_sheet_h1_station_metadata">Currently Playing</string>
-    <string name="player_sheet_h1_stream_url">Stream URL</string>
-    <string name="player_sheet_p_station_metadata">no metadata available</string>
+    <string name="player_sheet_h1_station_name">İstasyon</string>
+    <string name="player_sheet_h1_station_metadata">Şimdi Oynatılıyor</string>
+    <string name="player_sheet_h1_stream_url">Yayın URL\'si</string>
+    <string name="player_sheet_p_station_metadata">mevcut meta veri yok</string>
 
 
     <string name="dialog_generic_button_okay">Tamam</string>
-    <string name="dialog_generic_button_cancel">iptal</string>
+    <string name="dialog_generic_button_cancel">İptal</string>
     <string name="dialog_add_station_button">Ekle</string>
-    <string name="dialog_add_station_input_hint">Geçerli bir akış URL\'sini yapıştırın</string>
+    <string name="dialog_add_station_input_hint">Geçerli bir yayın URL\'si yapıştırın</string>
     <string name="dialog_add_station_message">Yeni istasyon ekle</string>
-    <string name="dialog_add_station_howto">pls veya m3u dosyalarının yanı sıra MP3 ve OGG kodlanmış ses akışlarını ekleyebilirsiniz. Alternatif web tarayıcısından akış bağlantılarını (pls veya m3u) yeni istasyon olarak ekleyebilirsiniz.</string>
-    <string name="dialog_delete_station_message">istasyonunu sil</string>
-    <string name="dialog_button_delete">sil</string>
-    <string name="dialog_rename_station_input_hint">Yeni ad girin</string>
-    <string name="dialog_rename_station_message">istasyonunu yeniden adlandırmak</string>
-    <string name="dialog_button_rename">Adını değiştir</string>
+    <string name="dialog_add_station_howto">pls veya m3u dosyalarının yanı sıra MP3 ve OGG kodlanmış ses yayınlarını ekleyebilirsiniz. Tercihen web tarayıcısından akış bağlantılarını (pls veya m3u) yeni istasyon olarak ekleyebilirsiniz.</string>
+    <string name="dialog_delete_station_message">İstasyonu sil</string>
+    <string name="dialog_button_delete">Sil</string>
+    <string name="dialog_rename_station_input_hint">Yeni isim girin</string>
+    <string name="dialog_rename_station_message">İstasyonunu yeniden adlandır</string>
+    <string name="dialog_button_rename">Yeniden adlandır</string>
 
     <string name="dialog_error_title_default">Hata</string>
     <string name="dialog_error_message_default">Bir hata oluştu</string>
     <string name="dialog_error_details_button_default">Detayları göster</string>
     <string name="dialog_error_title_fetch_read">Okuma Sorunu</string>
-    <string name="dialog_error_message_fetch_general_external_storage">Harici Depolama:</string>
+    <string name="dialog_error_message_fetch_general_external_storage">Harici depolama:</string>
 
 
     </resources>
