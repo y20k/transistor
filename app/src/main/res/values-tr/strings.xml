@@ -54,8 +54,8 @@
     <string name="infosheet_about_h1_about">Transistör Hakkında</string>
     <string name="infosheet_about_h2_radio">Android için radyo uygulaması</string>
     <string name="infosheet_about_h3_version">Sürüm 2.2 (Sessiz Çağın Oğulları)</string>
-    <string name="infosheet_about_p_bare">Transistör İnternet üzerinden radyo programlarını dinlemek için bir uygulamadır. Uygulama istasyonları cihazınızın harici depolama alanına dosya olarak kaydeder. /Android/data/org.y20k.transistor/files/Collection konumundaki m3u dosyalarına bakın. Mevcut olarak MP3 ve OGG ile kodlanmış yayınları anlar.</string>
-    <string name="infosheet_about_p_note">Önemli not: Bu uygulama kendi radyo uygulamanızı tasarlamanızı sağlamaktadır. Yerleşik arama seçeneği yoktur. Elle radyo istasyonunu eklemeniz gerekmektedir.</string>
+    <string name="infosheet_about_p_bare">Transistör İnternet üzerinden radyo programlarını dinlemek için basit bir uygulamadır. Uygulama istasyonları cihazınızın harici depolama alanına dosya olarak kaydeder. /Android/data/org.y20k.transistor/files/Collection konumundaki m3u dosyalarına bakın. Mevcut olarak MP3 ve OGG ile kodlanmış yayınları anlar.</string>
+    <string name="infosheet_about_p_note">Önemli not: Bu uygulama kendi istanyonlarınızı kullanmanızı sağlar. Herhangi bir tür yerleşik arama seçeneği içermez. Radyo istasyonlarını elle eklemeniz gerekmektedir.</string>
     <string name="infosheet_about_p_free">Transistör ücretsiz bir yazılımdır. MIT açık kaynak lisansı altında sunulmuştur. Kodunu GitHub\'da bulabilirsiniz. GitHub hataları bildirmek ve hatta, ilgileniyorsanız, katkıda bulunmak için de iyi bir yerdir.</string>
     <string name="infosheet_about_p_github">https://github.com/y20k/transistor</string>
     <string name="infosheet_about_p_license">https://opensource.org/licenses/MIT</string>
@@ -65,9 +65,9 @@
     <string name="infosheet_about_h3_internet">INTERNET izini</string>
     <string name="infosheet_about_p_internet">Transistör İnternet üzerinden radyo istasyonlarını alır.</string>
     <string name="infosheet_about_h3_external">READ_EXTERNAL_STORAGE izni</string>
-    <string name="infosheet_about_p_external">Transistör radyo istasyonu simgeleri özelleştirmek mümkün ve yerel olarak kaydedilmiş playlist dosyaları açmak mümkün bağlı olduğu görüntüler, fotoğraflar ve belgelere erişmesi gerekir.</string>
+    <string name="infosheet_about_p_external">Transistör radyo istasyon simgelerini özelleştirmek ve yerel kayıtlı çalma listelerini açmak için resimlere, fotoğraflara ve belgelere erişmeye ihtiyaç duyar.</string>
     <string name="infosheet_about_h3_vibrate">VIBRATE izni</string>
-    <string name="infosheet_about_p_vibrate">Küçük bir titreşim tetikleyerek radyo istasyonu açık tutar.</string>
+    <string name="infosheet_about_p_vibrate">Bir radyo istasyonuna dokunmak ve basılı tutmak hafif bir titreşimi tetikler.</string>
     <string name="infosheet_about_h3_wakelock">WAKE_LOCK izni</string>
     <string name="infosheet_about_p_wakelock">Oynatma sırasında Transistör telefonunuzun uyanık kalmasını sağlar. Güç tasarrufu için oynatmanın durdurulmasını engeller.</string>
 
@@ -90,7 +90,7 @@
     <string name="infosheet_howto_h2_backup">Radyo istasyonlarımı nasıl yedekler ve aktarırım?</string>
     <string name="infosheet_howto_p_backup">Transistör Android 6. Radyo istasyonları Otomatik Yedekleme özelliği için her zaman Google hesabınıza yedeklenen ve yeniden yüklemede restore özelliği vardır. Android\'in eski sürümlerinde çalışan cihazlarda ise elle kaydetmek ve Koleksiyon klasörü geri yüklemeniz gerekir.</string>
     <string name="infosheet_howto_h2_settings">Neden Transistör\'de hiçbir ayar yok?</string>
-    <string name="infosheet_howto_p_settings">ayarlamak için bir neden yoktur;). Transistör çok basit bir uygulamadır ve kullanımı basittir.</string>
+    <string name="infosheet_howto_p_settings">"Ayarlanacak hiçbir şey yok ;). Transistör çok basit bir uygulamadır. Bakış açınıza bağlı olarak basit ya harikadır ya da  işe yaramazdır."</string>
 
     <string name="title_activity_player">Şimdi Oynatılıyor</string>
     <string name="title_activity_infosheet">Bilgi Formu</string>
@@ -137,7 +137,7 @@
     <string name="dialog_add_station_button">Ekle</string>
     <string name="dialog_add_station_input_hint">Geçerli bir yayın URL\'si yapıştırın</string>
     <string name="dialog_add_station_message">Yeni istasyon ekle</string>
-    <string name="dialog_add_station_howto">pls veya m3u dosyalarının yanı sıra MP3 ve OGG kodlanmış ses yayınlarını ekleyebilirsiniz. Tercihen web tarayıcısından akış bağlantılarını (pls veya m3u) yeni istasyon olarak ekleyebilirsiniz.</string>
+    <string name="dialog_add_station_howto">MP3 ve OGG ile kodlanmış ses yayınlarını ekleyebilireceğiniz gibi yayın içeren pls veya m3u dosyalarını da ekleyebilirsiniz. Tercihen web tarayıcısından yayın bağlantılarına (pls veya m3u) dokunarak yeni istasyonlar ekleyebilirsiniz.</string>
     <string name="dialog_delete_station_message">İstasyonu sil</string>
     <string name="dialog_button_delete">Sil</string>
     <string name="dialog_rename_station_input_hint">Yeni isim girin</string>
