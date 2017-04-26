@@ -99,7 +99,7 @@ public final class PlayerActivityFragment extends Fragment implements Transistor
     private int mStationIDCurrent;
     private int mStationIDLast;
     private boolean mPlayback;
-    private boolean mStationLoading;
+    private boolean mStationLoading = true;
     private boolean mTwoPane;
     private boolean mVisibility;
     private Station mStation;
@@ -646,6 +646,8 @@ public final class PlayerActivityFragment extends Fragment implements Transistor
                 mStationDataSheetMetadata.setText(R.string.descr_station_stream_loading);
             } else {
                 mPlaybackIndicator.setBackgroundResource(R.drawable.ic_playback_indicator_started_24dp);
+//                mStationMetadataView.setText(mStationMetadata);
+//                mStationDataSheetMetadata.setText(mStationMetadata);
             }
             // show metadata views
             mStationMetadataView.setVisibility(View.VISIBLE);
@@ -667,13 +669,10 @@ public final class PlayerActivityFragment extends Fragment implements Transistor
     }
 
 
-//    /* Saves app state to SharedPreferences */
-//    private void saveAppState(Context context) {
-//        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-//        SharedPreferences.Editor editor = settings.edit();
-//        editor.apply();
-//        LogHelper.v(LOG_TAG, "Saving state.");
-//    }
+    /* Saves app state to SharedPreferences (not in use) */
+    private void saveAppState(Context context) {
+        LogHelper.v(LOG_TAG, "Saving state.");
+    }
 
 
     /* Loads app state from preferences */
