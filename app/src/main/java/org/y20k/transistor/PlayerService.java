@@ -218,34 +218,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     public void onMetadata(Metadata metadata) {
         LogHelper.v(LOG_TAG, "Got new metadata: " + metadata.toString());
     }
-//
-//    @Override
-//    public void onMetadata(List<Id3Frame> id3Frames) {
-//        for (Id3Frame id3Frame : id3Frames) {
-//            if (id3Frame instanceof TxxxFrame) {
-//                TxxxFrame txxxFrame = (TxxxFrame) id3Frame;
-//                Log.i(LOG_TAG, String.format("ID3 TimedMetadata %s: description=%s, value=%s", txxxFrame.id,
-//                        txxxFrame.description, txxxFrame.value));
-//            } else if (id3Frame instanceof PrivFrame) {
-//                PrivFrame privFrame = (PrivFrame) id3Frame;
-//                Log.i(LOG_TAG, String.format("ID3 TimedMetadata %s: owner=%s", privFrame.id, privFrame.owner));
-//            } else if (id3Frame instanceof GeobFrame) {
-//                GeobFrame geobFrame = (GeobFrame) id3Frame;
-//                Log.i(LOG_TAG, String.format("ID3 TimedMetadata %s: mimeType=%s, filename=%s, description=%s",
-//                        geobFrame.id, geobFrame.mimeType, geobFrame.filename, geobFrame.description));
-//            } else if (id3Frame instanceof ApicFrame) {
-//                ApicFrame apicFrame = (ApicFrame) id3Frame;
-//                Log.i(LOG_TAG, String.format("ID3 TimedMetadata %s: mimeType=%s, description=%s",
-//                        apicFrame.id, apicFrame.mimeType, apicFrame.description));
-//            } else if (id3Frame instanceof TextInformationFrame) {
-//                TextInformationFrame textInformationFrame = (TextInformationFrame) id3Frame;
-//                Log.i(LOG_TAG, String.format("ID3 TimedMetadata %s: description=%s", textInformationFrame.id,
-//                        textInformationFrame.description));
-//            } else {
-//                Log.i(LOG_TAG, String.format("ID3 TimedMetadata %s", id3Frame.id));
-//            }
-//        }
-//    }
 
 
     @Override
@@ -259,6 +231,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
                 if (mPlayback) {
                     // set loading state
                     mStationLoading = true;
+                    saveAppState();
                     // send local broadcast: buffering
                     Intent intent = new Intent();
                     intent.setAction(ACTION_PLAYBACK_STATE_CHANGED);
@@ -288,6 +261,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
                 if (mPlayback && mStationLoading) {
                     // set loading state
                     mStationLoading = false;
+                    saveAppState();
                     // send local broadcast: buffering finished - playback started
                     Intent intent = new Intent();
                     intent.setAction(ACTION_PLAYBACK_STATE_CHANGED);
@@ -310,6 +284,8 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
                 break;
 
         }
+
+
     }
 
 
@@ -814,7 +790,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
                 connection.connect();
                 contentType = connection.getContentType();
                 LogHelper.v(LOG_TAG, "MIME type of stream: " + contentType);
-                if (contentType.contains("application/vnd.apple.mpegurl") || contentType.contains("application/x-mpegurl")) {
+                if (contentType != null && (contentType.contains("application/vnd.apple.mpegurl") || contentType.contains("application/x-mpegurl"))) {
                     LogHelper.v(LOG_TAG, "HTTP Live Streaming detected.");
                     return true;
                 } else {
@@ -887,11 +863,12 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             i.putExtra(EXTRA_STATION, mStation);
             LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(i);
 
-            // save metadata to shared preferences
-            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            SharedPreferences.Editor editor = settings.edit();
-            editor.putString(PREF_STATION_METADATA,  mStationMetadata);
-            editor.apply();
+//            // save metadata to shared preferences
+//            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+//            SharedPreferences.Editor editor = settings.edit();
+//            editor.putBoolean()
+//            editor.putString(PREF_STATION_METADATA,  mStationMetadata);
+//            editor.apply();
 
             // update media session metadata
             mSession.setMetadata(getMetadata(getApplicationContext(), mStation, mStationMetadata));
