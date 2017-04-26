@@ -3,21 +3,10 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/ic_playback_indicator_loading_24dp"
-            android:title="Home" />
-        <item
-            android:id="@+id/now_play"
-            android:icon="@drawable/ic_playback_indicator_loading_24dp"
-            android:title="Now Playing" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_playback_indicator_loading_24dp"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_playback_indicator_loading_24dp"
-            android:title="Tools" />
+            android:id="@+id/menu_add"
+            android:icon="@drawable/ic_add_white_24dp"
+            android:title="@string/menu_add"
+            />
     </group>
 
     <item android:title="Communicate">

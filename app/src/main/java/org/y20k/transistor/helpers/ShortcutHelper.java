@@ -2,10 +2,10 @@
  * ShortcutHelper.java
  * Implements the ShortcutHelper class
  * A ShortcutHelper creates and handles station shortcuts on the Home screen
- *
+ * <p>
  * This file is part of
  * TRANSISTOR - Radio App for Android
- *
+ * <p>
  * Copyright (c) 2015-17 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
@@ -25,6 +25,8 @@ import org.y20k.transistor.R;
 import org.y20k.transistor.core.Station;
 
 import java.io.File;
+
+import static org.y20k.transistor.helpers.ImageHelper.GetIconSizeFromDensityAndScreenSize;
 
 
 /**
@@ -68,21 +70,25 @@ public class ShortcutHelper {
 
 
     /* Creates Intent for a station shortcut */
-    private Intent createShortcutIntent (Station station) {
+    private Intent createShortcutIntent(Station station) {
 
         // create shortcut icon
         ImageHelper imageHelper;
         Bitmap stationImage;
         Bitmap shortcutIcon;
-        File imagFileRef=station.getStationImage(mContext);
-        if (imagFileRef!=null && imagFileRef.exists()) {
+        File imagFileRef = station.getStationSmallImage(mContext);
+        if (imagFileRef != null && imagFileRef.exists()) {
             // use station image
             stationImage = BitmapFactory.decodeFile(imagFileRef.toString());
+            stationImage = ImageHelper.TransformToRounded(stationImage,mContext,ImageHelper.GetIconSizeFromDensityAndScreenSize(mContext)
+                                                            ,ImageHelper.GetIconSizeFromDensityAndScreenSize(mContext));
         } else {
             stationImage = null;
         }
         imageHelper = new ImageHelper(stationImage, mContext);
-        shortcutIcon = imageHelper.createShortcut(192);
+
+
+        shortcutIcon = imageHelper.createShortcut(GetIconSizeFromDensityAndScreenSize(mContext));
 
         String stationUri = station.getStreamUri().toString();
 
@@ -105,5 +111,8 @@ public class ShortcutHelper {
 
         return addIntent;
     }
+
+
+
 
 }

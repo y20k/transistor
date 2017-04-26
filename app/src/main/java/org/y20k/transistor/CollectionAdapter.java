@@ -15,6 +15,7 @@
 package org.y20k.transistor;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -41,6 +42,7 @@ import android.widget.Toast;
 import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.DialogError;
 import org.y20k.transistor.helpers.LogHelper;
+import org.y20k.transistor.helpers.PlaybackStatus;
 import org.y20k.transistor.helpers.ShortcutHelper;
 import org.y20k.transistor.helpers.SingletonProperties;
 import org.y20k.transistor.helpers.StationContextMenu;
@@ -70,9 +72,6 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
     private final File mFolder;
     private BroadcastReceiver mPlaybackStateChangedReceiver;
     private boolean mPlayback;
-    private boolean mStationLoading;
-    private int mStationIDCurrent;
-    private int mStationIDLast;
     private int mStationIDSelected;
     private boolean mTwoPane;
     private final SortedList<Station> mStationList;
@@ -107,9 +106,6 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
         // fill station list
         loadCollection();
 
-        // load state
-        // loadAppState(mActivity);
-
     }
 
 
@@ -127,7 +123,7 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
     public CollectionAdapterViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
 
         // get view
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_collection_staggered, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_collection_v2, parent, false);
 
         // put view into holder and return
         return new CollectionAdapterViewHolder(v);
@@ -137,11 +133,11 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
     @Override
     public void onViewAttachedToWindow(CollectionAdapterViewHolder holder) {
         super.onViewAttachedToWindow(holder);
-        Log.v(LOG_TAG + "debugCollectionView","start onViewAttachedToWindow , getFabPlayButton().getTag="+String.valueOf(holder.getFabPlayButton().getTag().toString()));
+        Log.v(LOG_TAG + "debugCollectionView", "start onViewAttachedToWindow , getFabPlayButton().getTag=" + String.valueOf(holder.getFabPlayButton().getTag()));
         //restore animation if loading status
         FloatingActionButton fabPlayButton = holder.getFabPlayButton();
         String tag = fabPlayButton.getTag() == null ? "" : fabPlayButton.getTag().toString();
-        if (Objects.equals(tag,LOADING_STATUS)) {
+        if (Objects.equals(tag, LOADING_STATUS)) {
             Animation rotate_infinite = AnimationUtils.loadAnimation(mActivity, R.anim.rotate_infinite);
             rotate_infinite.setFillAfter(true);
             fabPlayButton.startAnimation(rotate_infinite);
@@ -149,8 +145,8 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
     }
 
     @Override
-    public void onBindViewHolder(CollectionAdapterViewHolder holder, final int position) {
-        Log.v(LOG_TAG + "debugCollectionView","start onBindViewHolder , position="+String.valueOf(position));
+    public void onBindViewHolder(final CollectionAdapterViewHolder holder, final int position) {
+        Log.v(LOG_TAG + "debugCollectionView", "start onBindViewHolder , position=" + String.valueOf(position));
         // final int position --> Do not treat position as fixed; only use immediately and call holder.getAdapterPosition() to look it up later
         // get station from position
         final Station station = mStationList.get(position);
@@ -181,8 +177,10 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
 
         // set playback indicator - in phone view only
         FloatingActionButton fabPlayButton = holder.getFabPlayButton();
-        if (!mTwoPane && mPlayback && (station.getPlaybackState())) { // || getPositionOfCurrentPlayStation() == position
-            if (mStationLoading) {
+
+
+        if( mPlayback && (station.getPlaybackState())){
+            if (SingletonProperties.getInstance().CurrentSelectedStation_Playback_Status == PlaybackStatus.LOADING) {
                 holder.getPlaybackIndicator().setBackgroundResource(R.drawable.ic_playback_indicator_small_loading_24dp);
                 fabPlayButton.setImageResource(R.drawable.progress_loading);
                 fabPlayButton.setTag(LOADING_STATUS);
@@ -191,10 +189,14 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
                 fabPlayButton.setImageResource(R.drawable.smbl_stop);
                 fabPlayButton.setTag(STOP_STATUS);
             }
-            holder.getPlaybackIndicator().setVisibility(View.VISIBLE);
-        } else {
+        }else{
+            //default
             fabPlayButton.setImageResource(R.drawable.smbl_play);
             fabPlayButton.setTag(PLAY_STATUS);
+        }
+        if (!mTwoPane && mPlayback && (station.getPlaybackState())) { // || getPositionOfCurrentPlayStation() == position
+            holder.getPlaybackIndicator().setVisibility(View.VISIBLE);
+        } else {
             holder.getPlaybackIndicator().setVisibility(View.GONE);
         }
 
@@ -212,6 +214,7 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
             holder.getStationMenuView().setVisibility(View.GONE);
         }
 
+
         fabPlayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -221,8 +224,11 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
                     // long click in phone mode
                     handlePlayStopClick(position);
                 } else {
+                    // long click in phone mode
+                    handlePlayStopClick(position);
+
                     // click in tablet mode
-                    handleSingleClick(position);
+                    handleSingleClick(position, holder);
                     notifyDataSetChanged();
                 }
             }
@@ -240,10 +246,10 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
                     handlePlayStopClick(pos);
                 } else if (!isLongClick && !mTwoPane) {
                     // click in phone mode
-                    handleSingleClick(pos);
+                    handleSingleClick(pos, holder);
                 } else {
                     // click in tablet mode
-                    handleSingleClick(pos);
+                    handleSingleClick(pos, holder);
                     notifyDataSetChanged();
                 }
             }
@@ -258,7 +264,7 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
     }
 
     public int getItemPosition(int _ID) {
-        int position = 0;
+        int position = -1;
         for (int i = 0; i < mStationList.size(); i++) {
             if (mStationList.get(i)._ID == _ID) {
                 position = i;
@@ -306,7 +312,7 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
 
 
     /* Handles click on list item */
-    private void handleSingleClick(int position) {
+    private void handleSingleClick(int position, CollectionAdapterViewHolder theHolder) {
 
         Station station = mStationList.get(position);
 
@@ -327,14 +333,23 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
             intent.setAction(TransistorKeys.ACTION_SHOW_PLAYER);
             intent.putExtra(TransistorKeys.EXTRA_STATION, station);
             intent.putExtra(TransistorKeys.EXTRA_STATION_ID, position);
-            mActivity.startActivity(intent);
+
+            if (theHolder != null && android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                //for Motion (transaction) between activities
+                View sharedView = theHolder.getStationImageView();
+                String transitionName = mActivity.getString(R.string.mainImageForSation);
+                ActivityOptions transitionActivityOptions =
+                        ActivityOptions.makeSceneTransitionAnimation(mActivity, sharedView, transitionName);
+                mActivity.startActivity(intent, transitionActivityOptions.toBundle());
+            } else {
+                mActivity.startActivity(intent);
+            }
         }
     }
 
 
     /* Handles long click on list item */
     private void handlePlayStopClick(int position) {
-
         // get current playback state
         loadAppState(mActivity);
 
@@ -345,13 +360,8 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
             mActivity.startService(intent);
             LogHelper.v(LOG_TAG, "Stopping player service.");
 
-            // keep track of playback state
-            mStationIDLast = position;
-            mStationIDCurrent = -1;
-
             // remove playback flag from this station
             mPlayback = false;
-            mStationList.get(position).setPlaybackState(false);
 
             // inform user
             Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_long_press_playback_stopped), Toast.LENGTH_LONG).show();
@@ -364,17 +374,8 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
             mActivity.startService(intent);
             LogHelper.v(LOG_TAG, "Starting player service.");
 
-            // keep track of playback state
-            mStationIDLast = getPositionOfCurrentPlayStation();
-            mStationIDCurrent = position;
-
-            // remove playback flag from last station
-            if (mPlayback && mStationIDLast != -1) {
-                mStationList.get(mStationIDLast).setPlaybackState(false);
-            }
             // add playback flag to current station
             mPlayback = true;
-            mStationList.get(position).setPlaybackState(true);
 
             // inform user
             Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_long_press_playback_started), Toast.LENGTH_LONG).show();
@@ -390,10 +391,10 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
     }
 
     private int getPositionOfCurrentPlayStation() {
-        int position=-1;
+        int position = -1;
         for (int i = 0; i < mStationList.size(); i++) {
             String currentRunningStationid = SingletonProperties.getInstance().CurrentStation_ID;
-            if(String.valueOf(mStationList.get(i)._ID).equals(currentRunningStationid)){
+            if (String.valueOf(mStationList.get(i)._ID).equals(currentRunningStationid)) {
                 position = i;
                 break;
             }
@@ -406,12 +407,9 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
     private void loadAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         mTwoPane = settings.getBoolean(TransistorKeys.PREF_TWO_PANE, false);
-        mStationIDCurrent = getPositionOfCurrentPlayStation();// settings.getInt(TransistorKeys.PREF_STATION_ID_CURRENTLY_PLAYING, -1);
-        mStationIDLast = settings.getInt(TransistorKeys.PREF_STATION_ID_LAST, -1);
         mStationIDSelected = settings.getInt(TransistorKeys.PREF_STATION_ID_SELECTED, 0);
         mPlayback = settings.getBoolean(TransistorKeys.PREF_PLAYBACK, false);
-        mStationLoading = settings.getBoolean(TransistorKeys.PREF_STATION_LOADING, false);
-        LogHelper.v(LOG_TAG, "Loading state (" + mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + " / " + mStationLoading + ")");
+        LogHelper.v(LOG_TAG, "Loading state (" + SingletonProperties.getInstance().CurrentSelectedStation_ID + " / " + SingletonProperties.getInstance().getLastRunningStation_ID() + " / " + mPlayback + ")");
     }
 
 
@@ -421,27 +419,24 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt(TransistorKeys.PREF_STATION_ID_SELECTED, mStationIDSelected);
         editor.apply();
-        LogHelper.v(LOG_TAG, "Saving state (" + mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + " / " + mStationLoading + " / " + mStationIDSelected + ")");
+        LogHelper.v(LOG_TAG, "Saving state (" + SingletonProperties.getInstance().CurrentSelectedStation_ID + " / " + SingletonProperties.getInstance().getLastRunningStation_ID() + " / " + mPlayback + " / " + mStationIDSelected + ")");
     }
 
 
     /* Setter for ID of currently selected station */
-    public void setStationIDSelected(int stationIDSelected, boolean playbackState, boolean startPlayback) {
-        mStationIDSelected = stationIDSelected;
+    public void setStationIDSelected(int stationIDSelectedPosition, boolean playbackState, boolean startPlayback) {
+        mStationIDSelected = stationIDSelectedPosition;
         saveAppState(mActivity);
-        if (mStationIDSelected >= 0 && mStationIDSelected < mStationList.size()) {
-            mStationList.get(stationIDSelected).setPlaybackState(playbackState);
-        }
         if (mTwoPane && mStationIDSelected >= 0 && mStationIDSelected < mStationList.size()) {
-            handleSingleClick(mStationIDSelected);
+            handleSingleClick(mStationIDSelected, null);
         }
 
         if (startPlayback) {
             // start player service using intent
             Intent intent = new Intent(mActivity, PlayerService.class);
             intent.setAction(TransistorKeys.ACTION_PLAY);
-            intent.putExtra(TransistorKeys.EXTRA_STATION, mStationList.get(stationIDSelected));
-            intent.putExtra(TransistorKeys.EXTRA_STATION_ID, stationIDSelected);
+            intent.putExtra(TransistorKeys.EXTRA_STATION, mStationList.get(stationIDSelectedPosition));
+            intent.putExtra(TransistorKeys.EXTRA_STATION_ID, stationIDSelectedPosition);
             mActivity.startService(intent);
             LogHelper.v(LOG_TAG, "Starting player service.");
         }
@@ -626,32 +621,18 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
 
                 // CASE: player is preparing stream
                 case TransistorKeys.PLAYBACK_LOADING_STATION:
-                    if (mStationIDLast > -1 && mStationIDLast < mStationList.size()) {
-                        mStationList.get(mStationIDLast).setPlaybackState(false);
-                    }
-                    mStationLoading = true;
                     mPlayback = true;
-                    if (stationID > -1 && stationID < mStationList.size()) {
-                        mStationList.get(stationID).setPlaybackState(true);
-                    }
                     notifyDataSetChanged();
                     break;
 
                 // CASE: playback has started
                 case TransistorKeys.PLAYBACK_STARTED:
-                    mStationLoading = false;
-                    if (stationID > -1 && stationID < mStationList.size()) {
-                        mStationList.get(stationID).setPlaybackState(true);
-                    }
                     notifyDataSetChanged();
                     break;
 
                 // CASE: playback was stopped
                 case TransistorKeys.PLAYBACK_STOPPED:
                     mPlayback = false;
-                    if (stationID > -1 && stationID < mStationList.size()) {
-                        mStationList.get(stationID).setPlaybackState(false);
-                    }
                     notifyDataSetChanged();
                     break;
             }

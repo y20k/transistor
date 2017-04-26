@@ -1,24 +1,62 @@
 package org.y20k.transistor.helpers;
 
-/**
- * Created by Tarek on 2017-04-05.
- */
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
+/**
+ * Singleton Class holds application session variables (properties)
+ */
 public class SingletonProperties {
-    private static SingletonProperties mInstance= null;
+    private static SingletonProperties mInstance = null;
 
     public PlaybackStatus CurrentSelectedStation_Playback_Status = PlaybackStatus.STOPPED;
     public String CurrentStation_ID = null;
-    public String CurrentSelectedStation_ID = null;
-    public String LastRunningStation_ID = null;
+    public int CurrentSelectedStation_ID = -1;
 
-    protected SingletonProperties(){}
+    private static Context mContext;
 
-    public static synchronized SingletonProperties getInstance(){
-        if(null == mInstance){
+    protected SingletonProperties() {
+    }
+
+    /**
+     *This function supposed to be called only from application level onCreate, one time call per application open
+     */
+    public static void setContextToApplicationContext(Context context) {
+        if (null == mInstance) {
+            mContext = context.getApplicationContext();
+            mInstance = new SingletonProperties();
+        }
+    }
+
+    /**
+     *This function return instance of the SingletonProperties application level object
+     */
+    public static synchronized SingletonProperties getInstance() {
+        if (null == mInstance) {
             mInstance = new SingletonProperties();
         }
         return mInstance;
     }
 
+    public int getLastRunningStation_ID() {
+        //get from application setting/ preferences
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext);
+        return settings.getInt(TransistorKeys.PREF_STATION_ID_LAST, -1);
+    }
+
+    /**
+     * return true if status is loading or playing
+     * @return true if status is loading or playing
+     */
+    public boolean getIsPlayback() {
+        return (CurrentSelectedStation_Playback_Status==PlaybackStatus.LOADING || CurrentSelectedStation_Playback_Status==PlaybackStatus.PLAYING);
+    }
+    public void setLastRunningStation_ID(int lastRunningStation_ID) {
+        //add to application setting/ preferences
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putInt(TransistorKeys.PREF_STATION_ID_LAST, lastRunningStation_ID);
+        editor.apply();
+    }
 }

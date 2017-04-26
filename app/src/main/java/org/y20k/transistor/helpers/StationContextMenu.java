@@ -66,7 +66,7 @@ public final class StationContextMenu extends DialogFragment {
                 switch (item.getItemId()) {
 
                     // CASE ICON
-                    case R.id.menu_icon:
+                    case R.id.menu_change_photo:
                         // send local broadcast (needed by MainActivityFragment)
                         Intent iconIntent = new Intent();
                         iconIntent.setAction(TransistorKeys.ACTION_IMAGE_CHANGE_REQUESTED);

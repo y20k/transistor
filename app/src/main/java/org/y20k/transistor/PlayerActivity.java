@@ -2,10 +2,10 @@
  * PlayerActivity.java
  * Implements the app's player activity
  * The player activity sets up the now playing view for phone  mode and inflates a menu bar menu
- *
+ * <p>
  * This file is part of
  * TRANSISTOR - Radio App for Android
- *
+ * <p>
  * Copyright (c) 2015-17 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
@@ -18,23 +18,25 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.facebook.drawee.drawable.ScalingUtils;
+import com.facebook.drawee.view.DraweeTransition;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.y20k.transistor.core.Station;
+import org.y20k.transistor.helpers.LogHelper;
 import org.y20k.transistor.helpers.TransistorKeys;
 
 import java.io.File;
@@ -43,17 +45,21 @@ import java.io.File;
 /**
  * PlayerActivity class
  */
-public final class PlayerActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener  {
+public final class PlayerActivity extends AppCompatActivity   {
 
     /* Define log tag */
     private static final String LOG_TAG = PlayerActivity.class.getSimpleName();
     private boolean mPlayback;
     private FloatingActionButton fabPlay;
+    private FloatingActionButton fabPlay_nsNestedScrollView;
     private BroadcastReceiver mPlaybackStateChangedReceiver;
     private BroadcastReceiver mCollectionChangedReceiver;
     private Station mStation;
     private TextView txtSubTitleView;
     private SimpleDraweeView backdrop;
+    private CollapsingToolbarLayout collapsingToolbarLayout;
+    private AppBarLayout mAppBarLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,9 +70,9 @@ public final class PlayerActivity extends AppCompatActivity  implements Navigati
         // get intent
         Intent intent = getIntent();
 
-        //Mal:toolbar and Drawer
+        //Mal:toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
+        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -76,7 +82,28 @@ public final class PlayerActivity extends AppCompatActivity  implements Navigati
         backdrop = (SimpleDraweeView) findViewById(R.id.backdrop);
 
 
+        fabPlay = (FloatingActionButton) findViewById(R.id.fabPlay);
+        fabPlay_nsNestedScrollView = (FloatingActionButton) findViewById(R.id.fabPlay_nsNestedScrollView);
+        mAppBarLayout = (AppBarLayout) findViewById(R.id.appbar);
 
+        //This part to detect if toolbar collapsed then move pay button to the bottom of the activity
+        mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (Math.abs(verticalOffset)-appBarLayout.getTotalScrollRange() == 0)
+                {
+                    //  Collapsed
+                    LogHelper.v(LOG_TAG, "addOnOffsetChangedListener COLLAPSED");
+                    fabPlay_nsNestedScrollView.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    //Expanded
+                    LogHelper.v(LOG_TAG, "addOnOffsetChangedListener Expanded");
+                    fabPlay_nsNestedScrollView.setVisibility(View.GONE);
+                }
+            }
+        });
         // CASE: show player in phone mode
         if (intent != null && TransistorKeys.ACTION_SHOW_PLAYER.equals(intent.getAction())) {
 
@@ -87,7 +114,14 @@ public final class PlayerActivity extends AppCompatActivity  implements Navigati
                 setStationImageUi();
                 setStationTitleUi();
 
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    //to fix transaction problem with Fresco (Facebook library)
+                    getWindow().setSharedElementEnterTransition(DraweeTransition.createTransitionSet(ScalingUtils.ScaleType.CENTER_CROP,
+                            ScalingUtils.ScaleType.CENTER_CROP));
 
+                    getWindow().setSharedElementReturnTransition(DraweeTransition.createTransitionSet(ScalingUtils.ScaleType.CENTER_CROP,
+                            ScalingUtils.ScaleType.CENTER_CROP));
+                }
             } else {
                 mStation = null;
             }
@@ -105,7 +139,7 @@ public final class PlayerActivity extends AppCompatActivity  implements Navigati
 
                 // enable the Up button
                 ActionBar actionBar = getSupportActionBar();
-                if (actionBar != null ) {
+                if (actionBar != null) {
                     actionBar.setDisplayHomeAsUpEnabled(true);
                 }
 
@@ -123,19 +157,23 @@ public final class PlayerActivity extends AppCompatActivity  implements Navigati
             playerActivityFragment.setArguments(args);
 
             getFragmentManager().beginTransaction()
-                    .add(R.id.player_container, playerActivityFragment,getString(R.string.playerFragmentTag))
+                    .add(R.id.player_container, playerActivityFragment, getString(R.string.playerFragmentTag))
                     .commit();
 
 
             //update FAB
-            if(mStation!=null) {
+            if (mStation != null) {
                 UpdateUiStatus(mStation);
                 fabPlay.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        PlayerActivityFragment fragment = (PlayerActivityFragment)
-                                getFragmentManager().findFragmentByTag(getString(R.string.playerFragmentTag));
-                        fragment.handlePlaybackButtonClick();
+                        onFabClick();
+                    }
+                });
+                fabPlay_nsNestedScrollView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onFabClick();
                     }
                 });
             }
@@ -145,9 +183,16 @@ public final class PlayerActivity extends AppCompatActivity  implements Navigati
         initializeBroadcastReceivers();
     }
 
+    private void onFabClick() {
+        PlayerActivityFragment fragment = (PlayerActivityFragment)
+                getFragmentManager().findFragmentByTag(getString(R.string.playerFragmentTag));
+        fragment.handlePlaybackButtonClick();
+    }
+
     private void setStationTitleUi() {
         //set title subtitle
         getSupportActionBar().setTitle(mStation.TITLE);
+        collapsingToolbarLayout.setTitle(mStation.TITLE);
         getSupportActionBar().setSubtitle(mStation.SUBTITLE);
         txtSubTitleView.setText(mStation.SUBTITLE);
     }
@@ -164,43 +209,21 @@ public final class PlayerActivity extends AppCompatActivity  implements Navigati
 
     public void UpdateUiStatus(Station station) {
         mPlayback = station.getPlaybackState();
-        fabPlay = (FloatingActionButton) findViewById(R.id.fabPlay);
         if (mPlayback) {
             // this station is running
             // change playback button image to stop
             fabPlay.setImageResource(R.drawable.smbl_stop);
+            fabPlay_nsNestedScrollView.setImageResource(R.drawable.smbl_stop);
         } else {
             // playback stopped
             // change playback button image to play
             fabPlay.setImageResource(R.drawable.smbl_play);
+            fabPlay_nsNestedScrollView.setImageResource(R.drawable.smbl_play);
         }
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
 
-        if (id == R.id.nav_home) {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.now_play) {
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -251,6 +274,7 @@ public final class PlayerActivity extends AppCompatActivity  implements Navigati
         IntentFilter collectionChangedIntentFilter = new IntentFilter(TransistorKeys.ACTION_COLLECTION_CHANGED);
         LocalBroadcastManager.getInstance(this).registerReceiver(mCollectionChangedReceiver, collectionChangedIntentFilter);
     }
+
     /* Handles adding, deleting and renaming of station */
     private void handleCollectionChanges(Intent intent) {
         switch (intent.getIntExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, 1)) {
@@ -258,7 +282,7 @@ public final class PlayerActivity extends AppCompatActivity  implements Navigati
             case TransistorKeys.STATION_RENAMED:
                 if (intent.hasExtra(TransistorKeys.EXTRA_STATION_NEW_NAME) && intent.hasExtra(TransistorKeys.EXTRA_STATION) && intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)) {
                     Station station = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
-                    if(station._ID == mStation._ID) {
+                    if (station._ID == mStation._ID) {
                         int stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
                         //set title subtitle
                         mStation.TITLE = station.TITLE;
@@ -278,13 +302,14 @@ public final class PlayerActivity extends AppCompatActivity  implements Navigati
                     // get new name, station and station ID from intent
                     Station station = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
                     int stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
-                    if(station._ID == mStation._ID) {
+                    if (station._ID == mStation._ID) {
                         setStationImageUi();
                     }
                 }
                 break;
         }
     }
+
     /* Handles changes in state of playback, eg. start, stop, loading stream */
     private void handlePlaybackStateChanges(Intent intent) {
 
@@ -298,7 +323,8 @@ public final class PlayerActivity extends AppCompatActivity  implements Navigati
                 if (mStation != null && mStation.getStreamUri().equals(station.getStreamUri())) {
                     // set playback true
                     mPlayback = true;
-                    mStation.setPlaybackState(true);
+                    ////comment unneeded setPlaybackState
+                    //mStation.setPlaybackState(true);
                     UpdateUiStatus(mStation);
                 }
                 break;
@@ -313,15 +339,17 @@ public final class PlayerActivity extends AppCompatActivity  implements Navigati
 
             // CASE: playback was stopped
             case TransistorKeys.PLAYBACK_STOPPED:
-                if ( mStation != null && mStation.getStreamUri().equals(station.getStreamUri())) {
+                if (mStation != null && mStation.getStreamUri().equals(station.getStreamUri())) {
                     // set playback falseMediaB
                     mPlayback = false;
-                    mStation.setPlaybackState(false);
+                    ////comment unneeded setPlaybackState
+                    //mStation.setPlaybackState(false);
                     UpdateUiStatus(mStation);
                 }
                 break;
         }
     }
+
     /* Unregisters broadcast receivers */
     private void unregisterBroadcastReceivers() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mPlaybackStateChangedReceiver);

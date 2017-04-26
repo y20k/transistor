@@ -85,7 +85,7 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
 
         } else if (mFolderExists && mStationUriScheme != null && mStationUriScheme.startsWith("file")) {
             // read file and return new station
-            return new Station(mFolder, mStationUri,mActivity);
+            return new Station(mFolder, mStationUri, mActivity);
 
         } else {
             return null;
@@ -97,72 +97,84 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> {
     @Override
     protected void onPostExecute(Station station) {
 
-        Bundle fetchResults = null;
-        if (station != null && station.URI!=null && station.TITLE!=null &&
-                station.getStreamUri() != null && station.getStreamUri().toString() != "") {
-            fetchResults = station.getStationFetchResults();
-        }
 
-        // station was successfully fetched
-        if (station != null  && station.URI!=null && station.TITLE!=null &&
-                fetchResults != null && !fetchResults.getBoolean(TransistorKeys.RESULT_FETCH_ERROR) && mFolderExists) {
+        String errorTitle;
+        String errorMessage;
+        String errorDetails;
 
-            // send local broadcast - adapter will save station
-            Intent i = new Intent();
-            i.setAction(TransistorKeys.ACTION_COLLECTION_CHANGED);
-            i.putExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, TransistorKeys.STATION_ADDED);
-            i.putExtra(TransistorKeys.EXTRA_STATION, station);
-            LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(i);
-
-            // inform user that aac might not work properly
-            if (fetchResults.containsKey(TransistorKeys.RESULT_STREAM_TYPE) && fetchResults.getParcelable(TransistorKeys.RESULT_STREAM_TYPE) != null && fetchResults.getParcelable(TransistorKeys.RESULT_STREAM_TYPE).toString().contains("aac")) {
-                Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_stream_may_not_work), Toast.LENGTH_LONG).show();
+        try {
+            Bundle fetchResults = null;
+            if (station != null) {
+                fetchResults = station.getStationFetchResults();
             }
 
-            LogHelper.v(LOG_TAG, "Station was successfully fetched: " + station.getStreamUri().toString());
-        }else{
-            //this comes from adding batch with XML
+            // station was successfully fetched
+            if (station != null && station.StreamURI != null && station.TITLE != null &&
+                    fetchResults != null && !fetchResults.getBoolean(TransistorKeys.RESULT_FETCH_ERROR) && mFolderExists) {
 
-            // send local broadcast - adapter will save station
-            Station mStationTemp=null;
-            Intent i = new Intent();
-            i.setAction(TransistorKeys.ACTION_COLLECTION_CHANGED);
-            i.putExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, TransistorKeys.STATION_ADDED);
-            i.putExtra(TransistorKeys.EXTRA_STATION, mStationTemp);
-            i.putExtra(TransistorKeys.EXTRA_STATIONS, station.getInsertedStations()); //station sent with null values, to refresh the whole adabtor
-            LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(i);
-        }
+                // send local broadcast - adapter will save station
+                Intent i = new Intent();
+                i.setAction(TransistorKeys.ACTION_COLLECTION_CHANGED);
+                i.putExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, TransistorKeys.STATION_ADDED);
+                i.putExtra(TransistorKeys.EXTRA_STATION, station);
+                LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(i);
 
-        // an error occurred
-        if (station == null || (fetchResults != null && fetchResults.getBoolean(TransistorKeys.RESULT_FETCH_ERROR)) || !mFolderExists) {
+                // inform user that aac might not work properly
+                if (fetchResults.containsKey(TransistorKeys.RESULT_STREAM_TYPE) && fetchResults.getParcelable(TransistorKeys.RESULT_STREAM_TYPE) != null && fetchResults.getParcelable(TransistorKeys.RESULT_STREAM_TYPE).toString().contains("aac")) {
+                    Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_stream_may_not_work), Toast.LENGTH_LONG).show();
+                }
 
-            String errorTitle;
-            String errorMessage;
-            String errorDetails;
+                LogHelper.v(LOG_TAG, "Station was successfully fetched: " + station.getStreamUri().toString());
+            } else if (station != null && station.getInsertedStations().size() > 0) {
+                //this comes from adding batch with XML
 
-            if (mStationUriScheme != null && mStationUriScheme.startsWith("http")) {
-                // construct error message for "http"
-                errorTitle = mActivity.getResources().getString(R.string.dialog_error_title_fetch_download);
-                errorMessage = mActivity.getResources().getString(R.string.dialog_error_message_fetch_download);
-                errorDetails = buildDownloadErrorDetails(fetchResults);
-            } else if (mStationUriScheme != null && mStationUriScheme.startsWith("file")) {
-                // construct error message for "file"
-                errorTitle = mActivity.getResources().getString(R.string.dialog_error_title_fetch_read);
-                errorMessage = mActivity.getResources().getString(R.string.dialog_error_message_fetch_read);
-                errorDetails = buildReadErrorDetails(fetchResults);
-            } else if (!mFolderExists) {
-                // construct error message for write error
-                errorTitle = mActivity.getResources().getString(R.string.dialog_error_title_fetch_write);
-                errorMessage = mActivity.getResources().getString(R.string.dialog_error_message_fetch_write);
-                errorDetails = mActivity.getResources().getString(R.string.dialog_error_details_write);
-            } else {
-                // default values
-                errorTitle = mActivity.getResources().getString(R.string.dialog_error_title_default);
-                errorMessage = mActivity.getResources().getString(R.string.dialog_error_message_default);
-                errorDetails = mActivity.getResources().getString(R.string.dialog_error_details_default);
+                // send local broadcast - adapter will save station
+                Station mStationTemp = null;
+                Intent i = new Intent();
+                i.setAction(TransistorKeys.ACTION_COLLECTION_CHANGED);
+                i.putExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, TransistorKeys.STATION_ADDED);
+                i.putExtra(TransistorKeys.EXTRA_STATION, mStationTemp);
+                i.putExtra(TransistorKeys.EXTRA_STATIONS, station.getInsertedStations()); //station sent with null values, to refresh the whole adabtor
+                LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(i);
             }
 
+            // an error occurred
+            if (station == null ||
+                    (station != null && station.getInsertedStations().size() == 0 && station.TITLE == null)
+                    || (fetchResults != null && fetchResults.getBoolean(TransistorKeys.RESULT_FETCH_ERROR)) || !mFolderExists) {
+
+                if (mStationUriScheme != null && mStationUriScheme.startsWith("http") && fetchResults != null) {
+                    // construct error message for "http"
+                    errorTitle = mActivity.getResources().getString(R.string.dialog_error_title_fetch_download);
+                    errorMessage = mActivity.getResources().getString(R.string.dialog_error_message_fetch_download);
+                    errorDetails = buildDownloadErrorDetails(fetchResults);
+                } else if (mStationUriScheme != null && mStationUriScheme.startsWith("file") && fetchResults != null) {
+                    // construct error message for "file"
+                    errorTitle = mActivity.getResources().getString(R.string.dialog_error_title_fetch_read);
+                    errorMessage = mActivity.getResources().getString(R.string.dialog_error_message_fetch_read);
+                    errorDetails = buildReadErrorDetails(fetchResults);
+                } else if (!mFolderExists) {
+                    // construct error message for write error
+                    errorTitle = mActivity.getResources().getString(R.string.dialog_error_title_fetch_write);
+                    errorMessage = mActivity.getResources().getString(R.string.dialog_error_message_fetch_write);
+                    errorDetails = mActivity.getResources().getString(R.string.dialog_error_details_write);
+                } else {
+                    // default values
+                    errorTitle = mActivity.getResources().getString(R.string.dialog_error_title_default);
+                    errorMessage = mActivity.getResources().getString(R.string.dialog_error_message_default);
+                    errorDetails = mActivity.getResources().getString(R.string.dialog_error_details_default);
+                }
+
+                // show error dialog
+                DialogError dialogError = new DialogError(mActivity, errorTitle, errorMessage, errorDetails);
+                dialogError.show();
+            }
+        }catch(Exception ex){
             // show error dialog
+            // default values
+            errorTitle = mActivity.getResources().getString(R.string.dialog_error_title_default);
+            errorMessage = mActivity.getResources().getString(R.string.dialog_error_message_default);
+            errorDetails = mActivity.getResources().getString(R.string.dialog_error_details_default);
             DialogError dialogError = new DialogError(mActivity, errorTitle, errorMessage, errorDetails);
             dialogError.show();
         }

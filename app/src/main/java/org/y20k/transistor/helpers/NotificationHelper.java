@@ -58,7 +58,8 @@ public final class NotificationHelper {
         mStationMetadata = stationMetadata;
 
         // build notification
-        station.setPlaybackState(true);
+        ////comment unneeded setPlaybackState
+        //station.setPlaybackState(true);
         mNotification = getNotificationBuilder(station, stationID, mStationMetadata).build(); // TODO: change -> Station object contains metadata, too
 
         // display notification
@@ -181,10 +182,13 @@ public final class NotificationHelper {
         ImageHelper imageHelper;
         Bitmap stationImage;
         Bitmap stationIcon;
-        File imagFileRef=station.getStationImage(context);
+        File imagFileRef=station.getStationSmallImage(context);
         if (imagFileRef != null && imagFileRef.exists()) {
             // use station image
             stationImage = BitmapFactory.decodeFile(imagFileRef.toString());
+            //make the image rounded with border background
+            stationImage = ImageHelper.TransformToRounded(stationImage,context,ImageHelper.GetIconSizeFromDensityAndScreenSize(context)
+                                                                ,ImageHelper.GetIconSizeFromDensityAndScreenSize(context));
         } else {
             stationImage = null;
         }
@@ -193,5 +197,7 @@ public final class NotificationHelper {
 
         return stationIcon;
     }
+
+
 
 }

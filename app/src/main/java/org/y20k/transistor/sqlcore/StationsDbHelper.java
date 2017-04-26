@@ -20,7 +20,7 @@ import static org.y20k.transistor.sqlcore.StationsDbContract.StationEntry.TABLE_
 public class StationsDbHelper extends SQLiteOpenHelper {
 
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 3;
+    public static final int DATABASE_VERSION = 5;
     public static final String DATABASE_NAME = "StationsDb.db";
 
 
@@ -30,16 +30,17 @@ public class StationsDbHelper extends SQLiteOpenHelper {
                     StationsDbContract.StationEntry.COLUMN_UNIQUE_ID + " TEXT," +
                     StationsDbContract.StationEntry.COLUMN_NAME_TITLE + " TEXT," +
                     StationsDbContract.StationEntry.COLUMN_CATEGORY + " TEXT," +
-
+                    StationsDbContract.StationEntry.COLUMN_HTML_DESCRIPTION + " TEXT," +
+                    StationsDbContract.StationEntry.COLUMN_SMALL_IMAGE_URL + " TEXT," +
                     StationsDbContract.StationEntry.COLUMN_IMAGE_PATH + " TEXT," +
                     StationsDbContract.StationEntry.COLUMN_IMAGE_FILE_NAME + " TEXT," +
+                    StationsDbContract.StationEntry.COLUMN_SMALL_IMAGE_FILE_NAME + " TEXT," +
                     StationsDbContract.StationEntry.COLUMN_URI + " TEXT," +
                     StationsDbContract.StationEntry.COLUMN_CONTENT_TYPE + " TEXT," +
                     StationsDbContract.StationEntry.COLUMN_DESCRIPTION + " TEXT," +
                     StationsDbContract.StationEntry.COLUMN_RATING + " INTEGER," +
                     StationsDbContract.StationEntry.COLUMN_IS_FAVOURITE + " INTEGER," +
                     StationsDbContract.StationEntry.COLUMN_THUMP_UP_STATUS + " INTEGER," +
-
                     StationsDbContract.StationEntry.COLUMN_NAME_SUBTITLE + " TEXT)";
 
     private static final String SQL_DELETE_ENTRIES =
@@ -134,11 +135,14 @@ public class StationsDbHelper extends SQLiteOpenHelper {
                 StationsDbContract.StationEntry.COLUMN_NAME_SUBTITLE,
                 StationsDbContract.StationEntry.COLUMN_IMAGE_PATH,
                 StationsDbContract.StationEntry.COLUMN_IMAGE_FILE_NAME,
+                StationsDbContract.StationEntry.COLUMN_SMALL_IMAGE_FILE_NAME,
                 StationsDbContract.StationEntry.COLUMN_URI,
                 StationsDbContract.StationEntry.COLUMN_CONTENT_TYPE,
                 StationsDbContract.StationEntry.COLUMN_DESCRIPTION,
                 StationsDbContract.StationEntry.COLUMN_RATING,
                 StationsDbContract.StationEntry.COLUMN_CATEGORY,
+                StationsDbContract.StationEntry.COLUMN_HTML_DESCRIPTION,
+                StationsDbContract.StationEntry.COLUMN_SMALL_IMAGE_URL,
                 StationsDbContract.StationEntry.COLUMN_IS_FAVOURITE,
                 StationsDbContract.StationEntry.COLUMN_THUMP_UP_STATUS
         };
@@ -170,7 +174,9 @@ public class StationsDbHelper extends SQLiteOpenHelper {
                         cursor.getColumnIndexOrThrow(StationsDbContract.StationEntry.COLUMN_IMAGE_PATH));
                 station.IMAGE_FILE_NAME = cursor.getString(
                         cursor.getColumnIndexOrThrow(StationsDbContract.StationEntry.COLUMN_IMAGE_FILE_NAME));
-                station.URI = cursor.getString(
+                station.SMALL_IMAGE_FILE_NAME = cursor.getString(
+                        cursor.getColumnIndexOrThrow(StationsDbContract.StationEntry.COLUMN_SMALL_IMAGE_FILE_NAME));
+                station.StreamURI = cursor.getString(
                         cursor.getColumnIndexOrThrow(StationsDbContract.StationEntry.COLUMN_URI));
                 station.CONTENT_TYPE = cursor.getString(
                         cursor.getColumnIndexOrThrow(StationsDbContract.StationEntry.COLUMN_CONTENT_TYPE));
@@ -180,6 +186,13 @@ public class StationsDbHelper extends SQLiteOpenHelper {
                         cursor.getColumnIndexOrThrow(StationsDbContract.StationEntry.COLUMN_RATING));
                 station.CATEGORY = cursor.getString(
                         cursor.getColumnIndexOrThrow(StationsDbContract.StationEntry.COLUMN_CATEGORY));
+                station.HtmlDescription = cursor.getString(
+                        cursor.getColumnIndexOrThrow(StationsDbContract.StationEntry.COLUMN_HTML_DESCRIPTION));
+                station.SMALL_IMAGE_PATH = cursor.getString(
+                        cursor.getColumnIndexOrThrow(StationsDbContract.StationEntry.COLUMN_SMALL_IMAGE_URL));
+                if(station.SMALL_IMAGE_PATH == null || station.SMALL_IMAGE_PATH.isEmpty()){
+                    station.SMALL_IMAGE_PATH=station.IMAGE_PATH; //default value for small image if no image provided
+                }
                 station.IS_FAVOURITE = cursor.getString(
                         cursor.getColumnIndexOrThrow(StationsDbContract.StationEntry.COLUMN_IS_FAVOURITE));
                 station.THUMP_UP_STATUS = cursor.getString(

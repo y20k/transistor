@@ -50,7 +50,6 @@
         android:id="@+id/main_recyclerview_collection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/transistor_grey_lighter"
         android:visibility="visible" />
 
 </LinearLayout>

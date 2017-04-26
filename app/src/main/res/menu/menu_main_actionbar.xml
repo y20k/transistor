@@ -16,6 +16,22 @@
         android:title="@string/menu_add"
         app:showAsAction="ifRoom" />
 
+    <item android:title="View Type">
+        <menu>
+            <item
+                android:id="@+id/menu_grid_view"
+                android:icon="@drawable/ic_grid_on_black_24dp"
+                android:title="@string/grid_view"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/menu_list_view"
+                android:icon="@drawable/ic_view_headline_black_24dp"
+                android:title="@string/list_view"
+                app:showAsAction="never" />
+        </menu>
+    </item>
+
+
     <item
         android:id="@+id/menu_about"
         android:title="@string/menu_about"

@@ -64,6 +64,7 @@ public class TransistorKeys {
     public static final String PREF_STATION_ID_SELECTED = "prefStationIDSelected";
     public static final String PREF_STATION_METADATA = "prefStationMetadata";
     public static final String PREF_TIMER_RUNNING = "prefTimerRunning";
+    public static final String PREF_LAYOUT_VIEW_MANAGER = "LayoutViewManager";
     public static final String PREF_TWO_PANE = "prefTwoPane";
 
     /* RESULTS */

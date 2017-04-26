@@ -8,12 +8,16 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorSecondary">@color/textColorSecondary</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
 
         <!-- Tint NavigationBar on v21 -->
         <!-- <item name="android:navigationBarColor">@color/transistor_red_dark</item> -->
 
         <!-- Default window background used for resizing on v24) -->
-        <item name="android:windowBackgroundFallback">@color/transistor_red_dark</item>
+        <item name="android:windowBackgroundFallback">@color/colorPrimary</item>
+
+        <item name="android:alertDialogTheme">@style/Theme.AppCompat.Dialog.Alert</item>
 
     </style>
 

@@ -81,8 +81,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     private static MediaSessionCompat mSession;
     private static MediaControllerCompat mController;
     private int mStationID;
-    private int mStationIDCurrent;
-    private int mStationIDLast;
     private String mStationMetadata;
     private String mStreamUri;
     private boolean mPlayback;
@@ -149,7 +147,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         };
         IntentFilter metadataChangedIntentFilter = new IntentFilter(TransistorKeys.ACTION_METADATA_CHANGED);
         LocalBroadcastManager.getInstance(this).registerReceiver(metadataChangedReceiver, metadataChangedIntentFilter);
-
     }
 
 
@@ -326,9 +323,9 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     }
 
     private void logAllStatus() {
-        Log.v(LOG_TAG + "SingletonPropertiesLog","CurrentSelectedStation_ID = " + SingletonProperties.getInstance().CurrentSelectedStation_ID);
-        Log.v(LOG_TAG + "SingletonPropertiesLog","CurrentSelectedStation_Playback_Status = " + SingletonProperties.getInstance().CurrentSelectedStation_Playback_Status);
-        Log.v(LOG_TAG + "SingletonPropertiesLog","LastRunningStation_ID = " + SingletonProperties.getInstance().LastRunningStation_ID);
+        Log.v(LOG_TAG + "SingletonPropertiesLog", "CurrentSelectedStation_ID = " + SingletonProperties.getInstance().CurrentSelectedStation_ID);
+        Log.v(LOG_TAG + "SingletonPropertiesLog", "CurrentSelectedStation_Playback_Status = " + SingletonProperties.getInstance().CurrentSelectedStation_Playback_Status);
+        Log.v(LOG_TAG + "SingletonPropertiesLog", "LastRunningStation_ID = " + SingletonProperties.getInstance().getLastRunningStation_ID());
     }
 
 
@@ -450,8 +447,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         mStation.setPlaybackState(true);
         mPlayback = true;
         mStationLoading = true;
-        mStationIDLast = mStationIDCurrent;
-        mStationIDCurrent = mStationID;
         saveAppState();
 
         // acquire Wifi lock
@@ -505,8 +500,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         mStation.setPlaybackState(false);
         mPlayback = false;
         mStationLoading = false;
-        mStationIDLast = mStationID;
-        mStationIDCurrent = -1;
         saveAppState();
 
         // release Wifi lock
@@ -660,22 +653,19 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     private void saveAppState() {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplication());
         SharedPreferences.Editor editor = settings.edit();
-        editor.putInt(TransistorKeys.PREF_STATION_ID_CURRENTLY_PLAYING, mStationIDCurrent);
-        editor.putInt(TransistorKeys.PREF_STATION_ID_LAST, mStationIDLast);
+        editor.putInt(TransistorKeys.PREF_STATION_ID_CURRENTLY_PLAYING, SingletonProperties.getInstance().CurrentSelectedStation_ID);
         editor.putBoolean(TransistorKeys.PREF_PLAYBACK, mPlayback);
         editor.putBoolean(TransistorKeys.PREF_STATION_LOADING, mStationLoading);
         editor.putString(TransistorKeys.PREF_STATION_METADATA, mStationMetadata);
         editor.apply();
-        LogHelper.v(LOG_TAG, "Saving state (" + mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + " / " + mStationLoading + " / " + ")");
+        LogHelper.v(LOG_TAG, "Saving state (" + SingletonProperties.getInstance().CurrentSelectedStation_ID + " / " + SingletonProperties.getInstance().getLastRunningStation_ID() + " / " + mPlayback + " / " + mStationLoading + " / " + ")");
     }
 
 
     /* Loads app state from preferences */
     private void loadAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-        mStationIDCurrent = settings.getInt(TransistorKeys.PREF_STATION_ID_CURRENTLY_PLAYING, -1);
-        mStationIDLast = settings.getInt(TransistorKeys.PREF_STATION_ID_LAST, -1);
-        LogHelper.v(LOG_TAG, "Loading state (" + mStationIDCurrent + " / " + mStationIDLast + ")");
+        LogHelper.v(LOG_TAG, "Loading state (" + SingletonProperties.getInstance().CurrentSelectedStation_ID + " / " + SingletonProperties.getInstance().getLastRunningStation_ID() + ")");
     }
 
 
@@ -709,12 +699,12 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
             // start playback
             if (mStation != null) {
                 //update global variables
-                String LastRunningStation_ID = SingletonProperties.getInstance().CurrentSelectedStation_ID;
-                if(LastRunningStation_ID!=null && LastRunningStation_ID!= String.valueOf(mStation._ID)){
+                int LastRunningStation_ID = SingletonProperties.getInstance().CurrentSelectedStation_ID;
+                if (LastRunningStation_ID != -1 && LastRunningStation_ID != mStation._ID) {
                     //if selected station not the lastRunningStation only
-                    SingletonProperties.getInstance().LastRunningStation_ID = LastRunningStation_ID;
+                    SingletonProperties.getInstance().setLastRunningStation_ID(LastRunningStation_ID);
                 }
-                SingletonProperties.getInstance().CurrentSelectedStation_ID = String.valueOf(mStation._ID);
+                SingletonProperties.getInstance().CurrentSelectedStation_ID =  mStation._ID ;
                 SingletonProperties.getInstance().CurrentSelectedStation_Playback_Status = PlaybackStatus.LOADING;
                 logAllStatus();
 
@@ -739,8 +729,8 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         @Override
         public void onStop() {
             //update global variables
-            SingletonProperties.getInstance().LastRunningStation_ID = String.valueOf(mStation._ID);
-            SingletonProperties.getInstance().CurrentSelectedStation_ID = null;
+            SingletonProperties.getInstance().setLastRunningStation_ID(mStation._ID);
+            SingletonProperties.getInstance().CurrentSelectedStation_ID = -1;
             SingletonProperties.getInstance().CurrentSelectedStation_Playback_Status = PlaybackStatus.STOPPED;
             logAllStatus();
 

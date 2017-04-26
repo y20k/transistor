@@ -35,6 +35,7 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:context="org.y20k.transistor.MainActivity"
             tools:showIn="@layout/activity_main_inc"
+            android:background="@color/colorPrimaryLight"
             >
 
             <include

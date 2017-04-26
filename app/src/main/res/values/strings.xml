@@ -39,7 +39,11 @@
     <string name="dialog_add_station_button">Add</string>
     <string name="dialog_add_station_input_hint">Paste a valid streaming URL</string>
     <string name="dialog_add_station_message">Add new station</string>
-    <string name="dialog_add_station_howto">You can add raw audio streams encoded in MP3 and OGG as well as streams encapsulated in pls or m3u files. Alternatively you can add new stations by tapping on streaming links (pls or m3u) in your web browser.</string>
+    <string name="dialog_add_station_howto">
+        You can add raw audio streams encoded in MP3 and OGG as well as streams encapsulated in pls or m3u files.
+        Alternatively you can add new stations by tapping on streaming links (pls or m3u) in your web browser.
+        Also, the new way to import is by importing a custom list of stations with metadata. sample XML format can be found at
+        https://transistor-open.firebaseapp.com/radios.xml</string>
     <string name="dialog_delete_station_message">Delete station</string>
     <string name="dialog_button_delete">Delete</string>
     <string name="dialog_rename_station_input_hint">Enter a new name</string>
@@ -56,7 +60,7 @@
     <string name="dialog_error_title_fetch_read">Read Issue</string>
     <string name="dialog_error_title_fetch_write">Write Issue</string>
     <string name="dialog_error_message_fetch_general_external_storage">External storage:</string>
-    <string name="dialog_error_message_fetch_general_hint_m3u">Hint: Transistor can only process MP3 and OGG encoded streams or URLs ending in .m3u or .pls.</string>
+    <string name="dialog_error_message_fetch_general_hint_m3u">Hint: Transistor can only process MP3 and OGG encoded streams or URLs ending in .m3u or .pls or .xml.</string>
     <string name="dialog_error_message_fetch_general_playlist_type">MIME type of file:</string>
     <string name="dialog_error_message_fetch_general_stream_type">MIME type of stream:</string>
     <string name="dialog_error_message_fetch_general_file_content">Content of file:</string>
@@ -96,10 +100,11 @@
     <string name="notification_playing">Playing</string>
 
     <!-- infosheet about -->
+
     <string name="infosheet_about_h1_about">About Transistor</string>
     <string name="infosheet_about_h2_radio">Radio app for Android</string>
-    <string name="infosheet_about_h3_version">Version 2.1 ("Moonage Daydream")</string>
-    <string name="infosheet_about_p_bare">Transistor is a bare bones app for listening to radio programs over the internet. The app stores stations as files on your device\'s external storage. Look for files of type m3u within /Android/data/org.y20k.transistor/files/Collection. It currently understands streams encoded in MP3 and OGG.</string>
+    <string name="infosheet_about_h3_version">Version 3.1 ("Beta")</string>
+    <string name="infosheet_about_p_bare">Transistor is a bare bones app for listening to radio programs over the internet. The app stores stations in local database with images as files on your device\'s external storage. Look for files within /Android/data/{{application-Name}}/files/Collection. It currently understands streams encoded in MP3 and OGG.</string>
     <string name="infosheet_about_p_note">Important note: This is an app of type BYOS (&quot;bring your own station&quot;). It does not feature any kind of built-in search option. You will have to manually add radio stations.</string>
     <string name="infosheet_about_p_free">Transistor is free software. It is published under the MIT open source license. You can find the code on GitHub. GitHub is also a good place to file bugs or even to contribute, if you are interested.</string>
     <string name="infosheet_about_p_github">https://github.com/y20k/transistor</string>
@@ -119,7 +124,7 @@
     <!-- infosheet howto -->
     <string name="infosheet_howto_h1_howto">How to use Transistor</string>
     <string name="infosheet_howto_h2_add">How to add a new radio station?</string>
-    <string name="infosheet_howto_p_add">The easiest way to add a new station is to search the web for streaming links and then choose Transistor as a your default handler for those file types. You can also tap the (+) symbol in the top bar and paste in streaming links directly. Please note: Transistor does not feature any kind of built-in search option.</string>
+    <string name="infosheet_howto_p_add">The easiest way to add a new station is to search the web for streaming links and then choose Transistor as a your default handler for those file types. You can also tap the (+) symbol in the top bar and paste in streaming links directly. Please note: Transistor does not feature any kind of built-in search option. Also, the new way to import is by importing a custom list of stations with metadata. sample XML format can be found at https://transistor-open.firebaseapp.com/radios.xml</string>
     <string name="infosheet_howto_h2_play">How to play back a radio station?</string>
     <string name="infosheet_howto_p_play">Tap the big Play button ;).</string>
     <string name="infosheet_howto_h2_stop">How to stop playback?</string>
@@ -129,19 +134,24 @@
     <string name="infosheet_howto_h2_shortcut">How to place a station shortcut on the Home screen?</string>
     <string name="infosheet_howto_p_shortcut">The option to place a shortcut for a station on the Home screen can be accessed from the station\'s three dots menu. A tap on a shortcut will open Transistor - playback will start immediately.</string>
     <string name="infosheet_howto_h2_edit">How to rename or delete a station?</string>
-    <string name="infosheet_howto_p_edit">The rename and delete options can be accessed both from the station\'s context menu. Just tap on the three dots symbol. You can manage the list of stations also from a file browser (see next question).</string>
+    <string name="infosheet_howto_p_edit">The rename and delete options can be accessed both from the station\'s context menu.Just tap on the three dots symbol.</string>
     <string name="infosheet_howto_h2_storage">Where does Transistor store its stations?</string>
-    <string name="infosheet_howto_p_storage">Transistor does not save its list of stations in a database. Instead it stores stations as m3u files on your device\'s external storage. Feel free to tinker with those files using the texteditor of your choice. The files are stored in /Android/data/org.y20k.transistor/files/Collection.</string>
+    <string name="infosheet_howto_p_storage">Transistor saves its list of stations in a database. and stores stations images files on your device\'s external storage. The files are stored in /Android/data/{{Application-Name}}/files/Collection.</string>
     <string name="infosheet_howto_h2_backup">How do I backup and transfer my radio stations?</string>
-    <string name="infosheet_howto_p_backup">Transistor has support for the Auto Backup feature in Android 6. Radio stations are always backed up to your Google account and will be restored at reinstall. On devices running on older versions of Android you must manually save and restore the &quot;Collection&quot; folder.</string>
+    <string name="infosheet_howto_p_backup">Transistor has support for the Auto Backup feature in Android 6. Radio stations are always backed up to your Google account and will be restored at reinstall.On devices running on older versions of Android you must manually save and restore the &quot;/Android/data/{{Application-Name}}/files/Collection&quot; folder and &quot;//data/data/{{Application-Name}}/databases/&quot; folder.</string>
     <string name="infosheet_howto_h2_settings">Why are there no settings in Transistor?</string>
-    <string name="infosheet_howto_p_settings">There is nothing to set ;). Transistor is a very simple app. Depending on your point of view &quot;simple&quot; is either great or lame.</string>
+    <string name="infosheet_howto_p_settings">There is nothing to set ;). Transistor is a very simple app.Depending on your point of view &quot;simple&quot; is either great or lame.</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="playerFragmentTag">playerFragmentTag</string>
     <string name="animate">animate</string>
     <string name="loading">loading</string>
     <string name="stoped">stoped</string>
+    <string name="mainImageForSation">mainImageForSation</string>
+    <string name="desciption">Desciption</string>
+    <string name="change_station_photo">Change Station Photo</string>
+    <string name="grid_view">Grid View</string>
+    <string name="list_view">List View</string>
 
     <!-- 
     +++ IMPORTANT NOTE +++

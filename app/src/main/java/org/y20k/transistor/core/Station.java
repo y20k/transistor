@@ -67,23 +67,89 @@ public final class Station implements Comparable<Station>, Parcelable {
     /* Define log tag */
     private static final String LOG_TAG = Station.class.getSimpleName();
 
-    /*fields */
+    /**
+     * Station  ID , the primary key in DB, and it's UNIQUE integer
+     */
     public int _ID;
+    /**
+     * Station  UNIQUE ID , used to identify station in DB, and should be UNIQUE and it can be string value
+     */
     public String UNIQUE_ID;
+    /**
+     * Station Title
+     */
     public String TITLE;
+    /**
+     * Station Sub Title
+     */
     public String SUBTITLE;
+
+
+    /**
+     * This is image link (this should be external http link or in storage file link to image)
+     */
     public String IMAGE_PATH;
-    //local image name
+    /**
+     * This is small image link (icon) (this should be external http link or in storage file link to image)
+     */
+    public String SMALL_IMAGE_PATH;
+
+    /**
+     * This is local image name (after cache to storage it should be with that name)
+     */
     public String IMAGE_FILE_NAME;
-    public String URI;
+    /**
+     * This is local small image name (icon)  (after cache to storage it should be with that name)
+     */
+    public String SMALL_IMAGE_FILE_NAME;
+
+    /**
+     * Station Stream URI (Mandatory)
+     */
+    public String StreamURI;
+
+    /**
+     * Station CONTENT TYPE (value auto detected / or can be read from xml metadata - if it's imported using xml file)
+     */
     public String CONTENT_TYPE;
+
+    /**
+     * Station DESCRIPTION (metadata) - string value and not have any formats
+     */
     public String DESCRIPTION;
+
+    /**
+     * Station DESCRIPTION (metadata) - string value and not have any formats
+     */
     public int RATING;
+
+    /**
+     * Station CATEGORY
+     */
     public String CATEGORY;
+
+    /**
+     * Station Html Description , with HTML formal, it will be visible inside in-app WebView
+     * with default header\styles located in \assets\webViewStyleDefaults.html
+     */
+    public String HtmlDescription;
+
+    /**
+     * Station IS FAVOURITE (user favourite) (feature not used yet)
+     */
     public String IS_FAVOURITE;
+
+    /**
+     * Station is Thump Up by user (not used yet) (feature not used yet)
+     */
     public String THUMP_UP_STATUS;
+
+
     private File mStationImageFile;
+    private File mStationSmallImageFile;
     private Bitmap mStationImage;
+
+    //inserted stations if user import XML file
     private ArrayList<Station> mInsertedStations = new ArrayList<Station>();
 
     /* Supported xml import file content types */
@@ -107,26 +173,6 @@ public final class Station implements Comparable<Station>, Parcelable {
     private String mPlaylistFileContent;
     private boolean mPlayback;
     private Bundle mStationFetchResults;
-
-
-//    /* Constructor when given file from the Collection folder */
-//    public Station(File file) {
-//        // read and parse playlist file
-//        mStationPlaylistFile = file;
-//        if (mStationPlaylistFile.exists()) {
-//            parse(readPlaylistFile(mStationPlaylistFile));
-//        }
-//
-//        // set image file object
-//        File folder = mStationPlaylistFile.getParentFile();
-//        if (folder != null) {
-//            setStationImageFile(folder);
-//        }
-//
-//        // set playback state
-//        mPlayback = false;
-//    }
-
 
     /* Constructor when given folder and remote location */
     public Station(File folder, URL fileLocation, Activity mActivity) throws IOException, XmlPullParserException {
@@ -154,7 +200,7 @@ public final class Station implements Comparable<Station>, Parcelable {
         // content type is raw audio file
         else if (isAudioFile(contentType)) {
             // use raw audio file for station data
-            URI = fileLocation.toString().trim();
+            StreamURI = fileLocation.toString().trim();
             TITLE = detactStationName(fileLocation);
             // save results
             mStationFetchResults.putParcelable(TransistorKeys.RESULT_STREAM_TYPE, contentType);
@@ -167,11 +213,11 @@ public final class Station implements Comparable<Station>, Parcelable {
             mPlaylistFileContent = downloadPlaylistFile(fileLocation);
 
             // parse result of downloadPlaylistFile
-            if (parse(mPlaylistFileContent) && URI != null) {
+            if (parse(mPlaylistFileContent) && StreamURI != null) {
                 TITLE = detactStationName(fileLocation);
                 // save results
                 mStationFetchResults.putParcelable(TransistorKeys.RESULT_PLAYLIST_TYPE, contentType);
-                resultContentType = getContentType(Uri.parse(URI));
+                resultContentType = getContentType(Uri.parse(StreamURI));
                 mStationFetchResults.putParcelable(TransistorKeys.RESULT_STREAM_TYPE, resultContentType);
                 mStationFetchResults.putString(TransistorKeys.RESULT_FILE_CONTENT, mPlaylistFileContent);
                 mStationFetchResults.putBoolean(TransistorKeys.RESULT_FETCH_ERROR, false);
@@ -189,7 +235,6 @@ public final class Station implements Comparable<Station>, Parcelable {
             mStationFetchResults.putParcelable(TransistorKeys.RESULT_STREAM_TYPE, contentType);
             mStationFetchResults.putBoolean(TransistorKeys.RESULT_FETCH_ERROR, true);
             return;
-
             // no content type
         } else {
             // save error flag in results and return
@@ -197,9 +242,7 @@ public final class Station implements Comparable<Station>, Parcelable {
             return;
         }
 
-        // set Transistor's playlist file object
-        //setStationPlaylistFile(folder);
-
+        //---This part of code will run if it's not import from XML---
 
         // set playback state
         mPlayback = false;
@@ -207,13 +250,14 @@ public final class Station implements Comparable<Station>, Parcelable {
         // set Transistor's image file object
         final String uNIQUE_ID = fileLocation.toString().replaceAll("[:/]", "_");
         IMAGE_FILE_NAME = uNIQUE_ID + ".png";
+        SMALL_IMAGE_FILE_NAME = uNIQUE_ID + "_small" + ".png";
 
-        //v2
         //add station to DB
         // strip out problematic characters
         UNIQUE_ID = uNIQUE_ID;
         CONTENT_TYPE = resultContentType.getTypeString();
-        IMAGE_PATH = getFavIconUrlString(URI); //default to fav icon
+        IMAGE_PATH = getFavIconUrlString(StreamURI); //default to fav icon
+        SMALL_IMAGE_FILE_NAME = IMAGE_PATH; //default to fav icon
         AddStationItemToDb(this, mActivity); //save to DB
     }
 
@@ -232,11 +276,11 @@ public final class Station implements Comparable<Station>, Parcelable {
         }
 
         // parse the raw content of playlist file (mPlaylistFileContent)
-        if (parse(mPlaylistFileContent) && URI != null) {
+        if (parse(mPlaylistFileContent) && StreamURI != null) {
             URL streamURL = null;
             try {
                 MainConstructor(folder, streamURL, mActivity);
-                streamURL = new URL(URI);
+                streamURL = new URL(StreamURI);
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (XmlPullParserException e) {
@@ -277,52 +321,10 @@ public final class Station implements Comparable<Station>, Parcelable {
     }
 
     public Station() {
-        //nothing for now
+        //nothing for now, this will create empty station object
     }
 
-//    public void resetStationImage(Activity mActivity) {
-//        mStationImage = null;
-//        getStationImage(mActivity);
-//    }
-
-//    /* Getter for station image */
-//    public Bitmap getAndCacheStationImage(Context mActivityOrContext) {
-//        //if already there return it
-//
-//        if (mStationImage != null) { //memory cache
-//            return mStationImage;
-//        }
-//        //try to find on desk by channel UNIQUE_ID
-//        // get collection folder
-//        Bitmap channelImage = null;
-//        try {
-//            StorageHelper storageHelper = new StorageHelper(mActivityOrContext);
-//            final File mFolder = storageHelper.getCollectionDirectory();
-//            final String fileImageName = IMAGE_FILE_NAME;
-//            //try find the file on desk
-//            File imageActualFile = new File(mFolder.getPath() + "//" + fileImageName);
-//            if (!imageActualFile.exists()) {
-//                //file not found
-//                //try download the file
-//                channelImage = downloadImageFile(IMAGE_PATH);
-//                //Save Image to desk
-//                if (channelImage != null) {
-//                    writeImageFile(mFolder, channelImage);
-//                }
-//            } else {
-//                //file already exists, then get it from file system
-//                channelImage = BitmapFactory.decodeStream(new FileInputStream(imageActualFile));
-//            }
-//        } catch (MalformedURLException e) {
-//            e.printStackTrace();
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//        mStationImage = channelImage;
-//        return channelImage;
-//    }
-
-    //v2
+    //v3
     private void readXmlEntries(URL fileLocation, Activity mActivity) throws XmlPullParserException, IOException {
         InputStream stream = null;
         try {
@@ -354,6 +356,9 @@ public final class Station implements Comparable<Station>, Parcelable {
                     parser.require(XmlPullParser.START_TAG, null, "entry");
 
                     Station stationItem = new Station();
+                    //reset some variables
+                    stationItem.HtmlDescription = "";
+
                     while (parser.next() != XmlPullParser.END_TAG) {
                         if (parser.getEventType() != XmlPullParser.START_TAG) {
                             continue;
@@ -363,6 +368,7 @@ public final class Station implements Comparable<Station>, Parcelable {
                             parser.require(XmlPullParser.START_TAG, null, "unique_id");
                             stationItem.UNIQUE_ID = readXmlElementText(parser);
                             stationItem.IMAGE_FILE_NAME = stationItem.UNIQUE_ID + ".png";
+                            stationItem.SMALL_IMAGE_FILE_NAME = stationItem.UNIQUE_ID + "_small.png";
                         } else if (tagName.equals("title")) {
                             parser.require(XmlPullParser.START_TAG, null, "title");
                             stationItem.TITLE = readXmlElementText(parser);
@@ -374,7 +380,7 @@ public final class Station implements Comparable<Station>, Parcelable {
                             stationItem.IMAGE_PATH = readXmlElementText(parser);
                         } else if (tagName.equals("uri")) {
                             parser.require(XmlPullParser.START_TAG, null, "uri");
-                            stationItem.URI = readXmlElementText(parser);
+                            stationItem.StreamURI = readXmlElementText(parser);
                         } else if (tagName.equals("content_type")) {
                             parser.require(XmlPullParser.START_TAG, null, "content_type");
                             stationItem.CONTENT_TYPE = readXmlElementText(parser);
@@ -385,6 +391,12 @@ public final class Station implements Comparable<Station>, Parcelable {
                         } else if (tagName.equals("category")) {
                             parser.require(XmlPullParser.START_TAG, null, "category");
                             stationItem.CATEGORY = readXmlElementText(parser);
+                        } else if (tagName.equals("html_description")) {
+                            parser.require(XmlPullParser.START_TAG, null, "html_description");
+                            stationItem.HtmlDescription = readXmlElementText(parser);
+                        } else if (tagName.equals("small_image_URL")) {
+                            parser.require(XmlPullParser.START_TAG, null, "small_image_URL");
+                            stationItem.SMALL_IMAGE_PATH = readXmlElementText(parser);
                         } else if (tagName.equals("description")) {
                             parser.require(XmlPullParser.START_TAG, null, "description");
                             stationItem.DESCRIPTION = readXmlElementText(parser);
@@ -394,10 +406,13 @@ public final class Station implements Comparable<Station>, Parcelable {
                     }
 
                     if (stationItem.UNIQUE_ID != null && !stationItem.UNIQUE_ID.isEmpty()
-                            && stationItem.URI != null && !stationItem.URI.isEmpty()) {
+                            && stationItem.StreamURI != null && !stationItem.StreamURI.isEmpty()) {
                         //add default Image URL
-                        if (stationItem.IMAGE_PATH == null || stationItem.IMAGE_PATH == "") {
-                            IMAGE_PATH = getFavIconUrlString(stationItem.URI); //default to fav icon
+                        if (stationItem.IMAGE_PATH == null || stationItem.IMAGE_PATH.isEmpty()) {
+                            IMAGE_PATH = getFavIconUrlString(stationItem.StreamURI); //default to fav icon
+                        }
+                        if (stationItem.SMALL_IMAGE_PATH == null || stationItem.SMALL_IMAGE_PATH.isEmpty()) {
+                            SMALL_IMAGE_PATH = IMAGE_PATH; //default AS IMAGE_PATH
                         }
                         //add station to db
                         AddStationItemToDb(stationItem, mActivity);
@@ -409,15 +424,21 @@ public final class Station implements Comparable<Station>, Parcelable {
                     skipXmlTagParse(parser);
                 }
             }
-
-            // Makes sure that the InputStream is closed after the app is
-            // finished using it.
         } finally {
+            // close InputStream after the app is
+            // finished using it.
             if (stream != null) {
                 stream.close();
             }
         }
     }
+
+    /**
+     * Get rating - default value is 0 and acceptable values are from 0 to 5
+     *
+     * @param str rating number value
+     * @return int from 0 to 5 - default value is 0
+     */
 
     public int getIntegerRating(String str) {
         try {
@@ -453,10 +474,13 @@ public final class Station implements Comparable<Station>, Parcelable {
             result = parser.getText();
             parser.nextTag();
         }
+        if (result != null && !result.isEmpty()) {
+            result = result.trim();
+        }
         return result;
     }
 
-    //v2
+    //v2 - check the content type of file is XML
     private boolean isXMLFile(ContentType contentType) {
         if (contentType != null) {
             for (String[] array : new String[][]{CONTENT_TYPES_IMPORT_XML}) {
@@ -468,50 +492,10 @@ public final class Station implements Comparable<Station>, Parcelable {
         return false;
     }
 
-
-//    /* Constructor when given folder and file on sd card */
-//    public Station(File folder, Uri fileLocation) {
-//
-//        // create results bundle
-//        mStationFetchResults = new Bundle();
-//
-//        // read local file and put result into mPlaylistFileContent
-//        File localFile = new File(fileLocation.getPath());
-//        if (localFile.exists()) {
-//            mPlaylistFileContent = readPlaylistFile(localFile);
-//        } else {
-//            LogHelper.v(LOG_TAG, "File does not exist " + localFile);
-//        }
-//
-//        // parse the raw content of playlist file (mPlaylistFileContent)
-//        if (parse(mPlaylistFileContent) && mStreamUri != null) {
-//            // save results
-//            mStationFetchResults.putParcelable(TransistorKeys.RESULT_STREAM_TYPE, getContentType(mStreamUri));
-//            mStationFetchResults.putString(TransistorKeys.RESULT_FILE_CONTENT, mPlaylistFileContent);
-//            mStationFetchResults.putBoolean(TransistorKeys.RESULT_FETCH_ERROR, false);
-//
-//        } else {
-//            // save error flag and file content in results
-//            mStationFetchResults.putString(TransistorKeys.RESULT_FILE_CONTENT, "\n[File probably does not contain a valid streaming URL.]");
-//            mStationFetchResults.putBoolean(TransistorKeys.RESULT_FETCH_ERROR, true);
-//        }
-//
-//        // set Transistor's playlist file object
-//        setStationPlaylistFile(folder);
-//
-//        // set Transistor's image file object
-//        setStationImageFile(folder);
-//
-//        // set playback state
-//        mPlayback = false;
-//
-//    }
-
-
     /* Constructor used by CREATOR */
     protected Station(Parcel in) {
         TITLE = in.readString();
-        URI = in.readString();
+        StreamURI = in.readString();
         mStationFetchResults = in.readBundle(Bundle.class.getClassLoader());
         mPlayback = in.readByte() != 0; // true if byte != 0
 
@@ -520,10 +504,13 @@ public final class Station implements Comparable<Station>, Parcelable {
         SUBTITLE = in.readString();
         IMAGE_PATH = in.readString();
         IMAGE_FILE_NAME = in.readString();
+        SMALL_IMAGE_FILE_NAME = in.readString();
         CONTENT_TYPE = in.readString();
         DESCRIPTION = in.readString();
         RATING = in.readInt();
         CATEGORY = in.readString();
+        HtmlDescription = in.readString();
+        SMALL_IMAGE_PATH = in.readString();
         IS_FAVOURITE = in.readString();
         THUMP_UP_STATUS = in.readString();
 
@@ -543,23 +530,6 @@ public final class Station implements Comparable<Station>, Parcelable {
             return new Station[size];
         }
     };
-
-
-//    /* Construct string representation of m3u mStationPlaylistFile */
-//    private String createM3u() {
-//
-//        // construct m3u String
-//        StringBuilder sb = new StringBuilder("");
-//        sb.append("#EXTM3U\n\n");
-//        sb.append("#EXTINF:-1,");
-//        sb.append(mStationName);
-//        sb.append("\n");
-//        sb.append(mStreamUri.toString());
-//        sb.append("\n");
-//
-//        return sb.toString();
-//    }
-
 
     /* Downloads remote playlist file */
     private String downloadPlaylistFile(URL fileLocation) {
@@ -595,35 +565,6 @@ public final class Station implements Comparable<Station>, Parcelable {
             return null;
         }
     }
-
-
-//    /* Reads local playlist file */
-//    private String readPlaylistFile(File playlistFile) {
-//        try (BufferedReader br = new BufferedReader(new FileReader(playlistFile))) {
-//            String line;
-//            int counter = 0;
-//            StringBuilder sb = new StringBuilder("");
-//
-//            // read until last line reached or until line five
-//            while ((line = br.readLine()) != null && counter < 5) {
-//                sb.append(line);
-//                sb.append("\n");
-//                counter++;
-//            }
-//
-//            // set mPlaylistFileContent and return String
-//            mPlaylistFileContent = sb.toString();
-//            return sb.toString();
-//
-//        } catch (IOException e) {
-//            LogHelper.e(LOG_TAG, "Unable to read playlist file: " + playlistFile.toString());
-//            // set mPlaylistFileContent and return null
-//            mPlaylistFileContent = "[IO error. Unable to read playlist file: " + playlistFile.toString() + "]";
-//            return null;
-//        }
-//
-//    }
-
 
     /* Returns content type for given Uri */
     private ContentType getContentType(Uri streamUri) {
@@ -716,8 +657,7 @@ public final class Station implements Comparable<Station>, Parcelable {
         return stationName;
     }
 
-
-    //    /* download Image File from url */
+    /* download Image File from url */
     private Bitmap downloadImageFile(String theImageExternalUrl) throws MalformedURLException {
         //check if there is image URL availabe in object
         URL fileLocation;
@@ -730,18 +670,20 @@ public final class Station implements Comparable<Station>, Parcelable {
             } catch (IOException e) {
                 LogHelper.e(LOG_TAG, "Error downloading: " + fileLocation.toString());
             }
-        } else {
-            //useless , but leave it for compatibility
-            String faviconLocation = getFavIconUrlString(URI);
-
-            // download favicon
-            LogHelper.v(LOG_TAG, "Downloading favicon: " + faviconLocation);
-            try (InputStream in = new URL(faviconLocation).openStream()) {
-                return BitmapFactory.decodeStream(in);
-            } catch (IOException e) {
-                LogHelper.e(LOG_TAG, "Error downloading: " + faviconLocation);
-            }
         }
+
+        //if due to any reason ,
+        // the download not complete then try to download favicon
+        String faviconLocation = getFavIconUrlString(StreamURI);
+        //try download favicon
+        LogHelper.v(LOG_TAG, "Downloading favicon: " + faviconLocation);
+        try (InputStream in = new URL(faviconLocation).openStream()) {
+            return BitmapFactory.decodeStream(in);
+        } catch (IOException e) {
+            LogHelper.e(LOG_TAG, "Error downloading: " + faviconLocation);
+        }
+
+        //if all failed then return null , app should use the default image
         return null;
     }
 
@@ -787,7 +729,7 @@ public final class Station implements Comparable<Station>, Parcelable {
                 TITLE = line.substring(11).trim();
                 // M3U: found stream URL
             } else if (line.startsWith("http")) {
-                URI = line.trim();
+                StreamURI = line.trim();
             }
 
             // PLS: found station name
@@ -795,22 +737,22 @@ public final class Station implements Comparable<Station>, Parcelable {
                 TITLE = line.substring(7).trim();
                 // PLS: found stream URL
             } else if (line.startsWith("File1=http")) {
-                URI = line.substring(6).trim();
+                StreamURI = line.substring(6).trim();
             }
 
         }
 
         in.close();
 
-        if (URI == null || URI == "") {
+        if (StreamURI == null || StreamURI == "") {
             LogHelper.e(LOG_TAG, "Unable to parse: " + fileContent);
             return false;
         }
 
         // try to construct name of station from remote mStationPlaylistFile name
-        if ((TITLE == null || TITLE == "") && URI != null && URI != "") {
+        if ((TITLE == null || TITLE == "") && StreamURI != null && StreamURI != "") {
             try {
-                TITLE = detactStationName(new URL(URI));
+                TITLE = detactStationName(new URL(StreamURI));
             } catch (MalformedURLException e) {
                 e.printStackTrace();
                 LogHelper.e(LOG_TAG, "Unable to parse: " + fileContent);
@@ -825,53 +767,16 @@ public final class Station implements Comparable<Station>, Parcelable {
 
     }
 
-
-//    /* Writes station as m3u to storage */
-//    public void writePlaylistFile(File folder) {
-//
-//        setStationPlaylistFile(folder);
-//
-//        if (mStationPlaylistFile.exists()) {
-//            LogHelper.w(LOG_TAG, "File exists. Overwriting " + mStationPlaylistFile.getName() + " " + TITLE + " " + mStreamUri);
-//        }
-//
-//        LogHelper.v(LOG_TAG, "Saving... " + mStationPlaylistFile.toString());
-//
-//        String m3uString = createM3u();
-//
-//        try (BufferedWriter bw = new BufferedWriter(new FileWriter(mStationPlaylistFile))) {
-//            bw.write(m3uString);
-//        } catch (IOException e) {
-//            LogHelper.e(LOG_TAG, "Unable to write PlaylistFile " + mStationPlaylistFile.toString());
-//        }
-//
-//    }
-
-
-//    /* Writes station image as png to storage */
-//    public void writeImageFile() {
-//
-//        LogHelper.v(LOG_TAG, "Saving favicon: " + mStationImageFile.toString());
-//
-//        // write image to storage
-//        try (FileOutputStream out = new FileOutputStream(mStationImageFile)) {
-//            mStationImage.compress(Bitmap.CompressFormat.PNG, 100, out);
-//        } catch (IOException e) {
-//            LogHelper.e(LOG_TAG, "Unable to save favicon: " + mStationImage.toString());
-//        }
-//
-//    }
-
     /* Writes station image as png to storage */
-    public void writeImageFile(File folder, Bitmap downloadedImage) {
-        String fileLocation = folder.toString() + "/" + IMAGE_FILE_NAME;
+    public void writeImageFile(File folder, Bitmap downloadedImage, String imgFileName) {
+        String fileLocation = folder.toString() + "/" + imgFileName;
         LogHelper.v(LOG_TAG, "Saving channel image : " + fileLocation.toString());
         File mStationImageFile = new File(fileLocation);
         // write image to storage
         try (FileOutputStream out = new FileOutputStream(mStationImageFile)) {
             downloadedImage.compress(Bitmap.CompressFormat.PNG, 100, out);
         } catch (IOException e) {
-            LogHelper.e(LOG_TAG, "Unable to save channel image: " + downloadedImage.toString());
+            LogHelper.e(LOG_TAG, "Unable to save station image: " + downloadedImage.toString());
         }
     }
 
@@ -881,29 +786,23 @@ public final class Station implements Comparable<Station>, Parcelable {
         return mStationFetchResults;
     }
 
-
-//    /* Getter for file object representing station image */
-//    public File getStationImageFile() {
-//        return mStationImageFile;
-//    }
-
-
-    /* Getter for playback state */
+    /* Getter for playback state - if this station is currently selected in player */
     public boolean getPlaybackState() {
+        //check the global variable (singleton application variable)
         String currentRunningStationid = SingletonProperties.getInstance().CurrentStation_ID;
         if (currentRunningStationid != null && currentRunningStationid != ""
                 && currentRunningStationid == String.valueOf(_ID)) {
-            Log.v(LOG_TAG + "debug","getPlaybackState ,playback = " + String.valueOf(true) + " - StationID = " + String.valueOf(_ID) + " - currentRunningStationid="+currentRunningStationid);
+            Log.v(LOG_TAG + "debug", "getPlaybackState ,playback = " + String.valueOf(true) + " - StationID = " + String.valueOf(_ID) + " - currentRunningStationid=" + currentRunningStationid);
             return true;
         }
-        Log.v(LOG_TAG + "debug","getPlaybackState ,playback = " + String.valueOf(false) + " - StationID = " + String.valueOf(_ID)+ " - currentRunningStationid="+currentRunningStationid);
+        Log.v(LOG_TAG + "debug", "getPlaybackState ,playback = " + String.valueOf(false) + " - StationID = " + String.valueOf(_ID) + " - currentRunningStationid=" + currentRunningStationid);
         return false;//mPlayback;
     }
 
 
     /* Getter for URL of stream */
     public Uri getStreamUri() {
-        return Uri.parse(URI);
+        return Uri.parse(StreamURI);
     }
 
 
@@ -924,7 +823,6 @@ public final class Station implements Comparable<Station>, Parcelable {
     /* return cached image File  */
     public File getStationImage(final Context cntxt) {
         //try get the image from file cache
-        Bitmap channelImage = null;
         StorageHelper storageHelper = new StorageHelper(cntxt);
         final File folder = storageHelper.getCollectionDirectory();
         if (IMAGE_FILE_NAME != null && IMAGE_FILE_NAME != "") {
@@ -937,76 +835,106 @@ public final class Station implements Comparable<Station>, Parcelable {
             mStationImageFile = new File(fileLocation);
         }
         if (mStationImageFile.exists()) {
-            //file already exists, then get it from file system
-//            try {
-//                channelImage = BitmapFactory.decodeStream(new FileInputStream(mStationImageFile));
-//            } catch (FileNotFoundException e) {
-//                e.printStackTrace();
-//            }
+            //file already exists, then return it from file system
             return mStationImageFile;
         } else {
-            //return null
-            //and download it in background
-            //check stations images ready on desk cache
-            Thread prepareThread = new Thread() {
-                @Override
-                public void run() {
-                    boolean downloadDoneSuccessfully = false;
-                    try {
-                        //load all stations and ensure images are cached
-                        final StationsDbHelper mDbHelper = new StationsDbHelper(cntxt);
-                        //try download the file
-                        Bitmap downloadedImage = downloadImageFile(IMAGE_PATH);
-                        //Save Image to desk
-                        if (downloadedImage != null) {
-                            writeImageFile(folder, downloadedImage);
-                            downloadDoneSuccessfully = true;
-                        }
-                    } catch (MalformedURLException e) {
-                        e.printStackTrace();
-                    } finally {
-                        // send local broadcast
-                        if (downloadDoneSuccessfully) {
-                            Intent i = new Intent();
-                            i.setAction(TransistorKeys.ACTION_COLLECTION_CHANGED);
-                            i.putExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, TransistorKeys.STATION_CHANGED_IMAGE);
-                            i.putExtra(TransistorKeys.EXTRA_STATION, Station.this);
-                            i.putExtra(TransistorKeys.EXTRA_STATION_ID, _ID);
-                            LocalBroadcastManager.getInstance(cntxt.getApplicationContext()).sendBroadcast(i);
-                        }
-                    }
-                }
-
-                @Override
-                public State getState() {
-                    return super.getState();
-                }
-            };
-            prepareThread.start();
+            //file not exists in cache, then
+            //and download image in background
+            final String sIMAGE_PATH = IMAGE_PATH;
+            final String sIMAGE_FILE_NAME = IMAGE_FILE_NAME;
+            AsyncSaveDownloadToDesk(cntxt, folder, sIMAGE_PATH, sIMAGE_FILE_NAME);
         }
 
+        //return null (to force app use the URL of image/ or default image)
         return null;
+    }
+
+    /* return cached SMALL image File  (icon) */
+    public File getStationSmallImage(final Context cntxt) {
+        //try get the image from file cache
+        StorageHelper storageHelper = new StorageHelper(cntxt);
+        final File folder = storageHelper.getCollectionDirectory();
+        if (SMALL_IMAGE_FILE_NAME != null && !SMALL_IMAGE_FILE_NAME.isEmpty()) {
+            // construct location of png image file from station name and folder
+            String fileLocation = folder.toString() + "/" + SMALL_IMAGE_FILE_NAME;
+            mStationSmallImageFile = new File(fileLocation);
+        } else {
+            // construct location of png image file from station name and folder
+            String fileLocation = folder.toString() + "/" + UNIQUE_ID + "_small.png";
+            mStationSmallImageFile = new File(fileLocation);
+        }
+        if (mStationSmallImageFile.exists()) {
+            //file already exists, then get it from file system
+            return mStationSmallImageFile;
+        } else {
+            //return null (will load the file from URL or default image)
+            //and download it in background
+            final String sSMALL_IMAGE_PATH = SMALL_IMAGE_PATH;
+            final String sSMALL_IMAGE_FILE_NAME = SMALL_IMAGE_FILE_NAME;
+
+            AsyncSaveDownloadToDesk(cntxt, folder, sSMALL_IMAGE_PATH, sSMALL_IMAGE_FILE_NAME);
+        }
+
+        //return null (to force app use the URL of image/ or default image)
+        return null;
+    }
+
+    /*
+    Download image from URL to desk to be cached for next time use
+     */
+    private void AsyncSaveDownloadToDesk(final Context cntxt, final File folder, final String sImagePath, final String sImageFileName) {
+        Thread prepareThread = new Thread() {
+            @Override
+            public void run() {
+                boolean downloadDoneSuccessfully = false;
+                try {
+                    //load all stations and ensure images are cached
+                    final StationsDbHelper mDbHelper = new StationsDbHelper(cntxt);
+                    //try download the file
+                    Bitmap downloadedImage = downloadImageFile(sImagePath);
+                    //Save Image to desk
+                    if (downloadedImage != null) {
+                        writeImageFile(folder, downloadedImage, sImageFileName);
+                        downloadDoneSuccessfully = true;
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } finally {
+                    // send local broadcast to inform all that image of this channel has been updated
+                    if (downloadDoneSuccessfully) {
+                        Intent i = new Intent();
+                        i.setAction(TransistorKeys.ACTION_COLLECTION_CHANGED);
+                        i.putExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, TransistorKeys.STATION_CHANGED_IMAGE);
+                        i.putExtra(TransistorKeys.EXTRA_STATION, Station.this);
+                        i.putExtra(TransistorKeys.EXTRA_STATION_ID, _ID);
+                        LocalBroadcastManager.getInstance(cntxt.getApplicationContext()).sendBroadcast(i);
+                    }
+                }
+            }
+
+            @Override
+            public State getState() {
+                return super.getState();
+            }
+        };
+        prepareThread.start();
     }
 
 
     /* Setter for playback state */
     public void setPlaybackState(boolean playback) {
-        Log.v(LOG_TAG + "debug","setPlaybackState ,playback = " + String.valueOf(playback) + " - StationID = " + String.valueOf(_ID));
+        Log.v(LOG_TAG + "debug", "setPlaybackState ,playback = " + String.valueOf(playback) + " - StationID = " + String.valueOf(_ID));
         String currentRunningStationid = SingletonProperties.getInstance().CurrentStation_ID;
-        String CurrentRunningStation_ID = SingletonProperties.getInstance().CurrentStation_ID;
-        int oldStation_ID   = (CurrentRunningStation_ID != null && CurrentRunningStation_ID != "") ? Integer.parseInt(CurrentRunningStation_ID) : -1;
         if (playback) {
             //set this station as current playing
             SingletonProperties.getInstance().CurrentStation_ID = String.valueOf(_ID);
-            LogHelper.v(LOG_TAG, "CurrentStation_ID set to = " +  String.valueOf(_ID));
-
+            LogHelper.v(LOG_TAG, "CurrentStation_ID set to = " + String.valueOf(_ID));
         } else if (currentRunningStationid != null && currentRunningStationid != ""
                 && currentRunningStationid == String.valueOf(_ID)) {
             //remove this station from currentRunningStation_id var only if it's already there
             SingletonProperties.getInstance().CurrentStation_ID = null;
             LogHelper.v(LOG_TAG, "CurrentStation_ID set to = null");
         }
-        //mPlayback = playback;
     }
 
 
@@ -1019,7 +947,7 @@ public final class Station implements Comparable<Station>, Parcelable {
 
     @Override
     public String toString() {
-        return "Station [Name=" + TITLE + ", Uri=" + URI + "]";
+        return "Station [Name=" + TITLE + ", Uri=" + StreamURI + "]";
     }
 
 
@@ -1032,7 +960,7 @@ public final class Station implements Comparable<Station>, Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(TITLE);
-        dest.writeString(URI);
+        dest.writeString(StreamURI);
         dest.writeBundle(mStationFetchResults);
         dest.writeByte((byte) (mPlayback ? 1 : 0));  // if mPlayback == true, byte == 1
         dest.writeInt(_ID);
@@ -1040,10 +968,13 @@ public final class Station implements Comparable<Station>, Parcelable {
         dest.writeString(SUBTITLE);
         dest.writeString(IMAGE_PATH);
         dest.writeString(IMAGE_FILE_NAME);
+        dest.writeString(SMALL_IMAGE_FILE_NAME);
         dest.writeString(CONTENT_TYPE);
         dest.writeString(DESCRIPTION);
         dest.writeInt(RATING);
         dest.writeString(CATEGORY);
+        dest.writeString(HtmlDescription);
+        dest.writeString(SMALL_IMAGE_PATH);
         dest.writeString(IS_FAVOURITE);
         dest.writeString(THUMP_UP_STATUS);
     }
@@ -1139,14 +1070,18 @@ public final class Station implements Comparable<Station>, Parcelable {
             values.put(StationsDbContract.StationEntry.COLUMN_DESCRIPTION, stationItem.DESCRIPTION);
             values.put(StationsDbContract.StationEntry.COLUMN_IMAGE_PATH, stationItem.IMAGE_PATH);
             values.put(StationsDbContract.StationEntry.COLUMN_IMAGE_FILE_NAME, stationItem.IMAGE_FILE_NAME);
-            values.put(StationsDbContract.StationEntry.COLUMN_URI, stationItem.URI);
+            values.put(StationsDbContract.StationEntry.COLUMN_SMALL_IMAGE_FILE_NAME, stationItem.SMALL_IMAGE_FILE_NAME);
+            values.put(StationsDbContract.StationEntry.COLUMN_URI, stationItem.StreamURI);
             values.put(StationsDbContract.StationEntry.COLUMN_CONTENT_TYPE, stationItem.CONTENT_TYPE);
             values.put(StationsDbContract.StationEntry.COLUMN_RATING, stationItem.RATING);
             values.put(StationsDbContract.StationEntry.COLUMN_CATEGORY, stationItem.CATEGORY);
+            values.put(StationsDbContract.StationEntry.COLUMN_HTML_DESCRIPTION, stationItem.HtmlDescription);
+            values.put(StationsDbContract.StationEntry.COLUMN_SMALL_IMAGE_URL, stationItem.SMALL_IMAGE_PATH);
 
             // Insert the new row, returning the primary key value of the new row
             long newRowId = db.insert(StationsDbContract.StationEntry.TABLE_NAME, null, values);
         }
+
         db.close();
 
     }

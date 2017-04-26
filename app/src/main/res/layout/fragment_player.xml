@@ -1,127 +1,216 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
-    android:background="@color/transistor_grey_dark"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="org.y20k.transistor.PlayerActivityFragment">
+    android:orientation="vertical">
 
-    <!-- REMOVE PLACEHOLDERS -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:divider="#ffffff"
-        android:dividerPadding="5dp">
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryLight"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="org.y20k.transistor.PlayerActivityFragment">
 
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/player_imageview_station_icon"
-            android:contentDescription="@string/descr_station_icon"
-            android:layout_width="?android:attr/listPreferredItemHeight"
-            android:layout_height="?android:attr/listPreferredItemHeight"
-            android:minHeight="?android:attr/listPreferredItemHeight"
-
-            fresco:placeholderImage="@drawable/ic_notesymbol_36dp"
-            fresco:placeholderImageScaleType="fitCenter"
-
-            fresco:progressBarImage="@drawable/progress_loading"
-            fresco:progressBarImageScaleType="centerInside"
-            fresco:progressBarAutoRotateInterval="1000"
-            />
-
+        <!-- REMOVE PLACEHOLDERS -->
         <LinearLayout
-            android:id="@+id/player_layout_station_info"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingStart="24dp"
-            android:paddingEnd="2dp"
-            android:orientation="vertical"
-            android:gravity="center_vertical"
-            android:layout_gravity="center_vertical" >
+            android:divider="#ffffff"
+            android:dividerPadding="5dp"
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/player_textview_stationname"
-                android:contentDescription="@string/descr_station_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:ellipsize="end"
-                android:text="@string/descr_station_name_example"
-                android:textAppearance="@android:style/TextAppearance.Large.Inverse" />
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/player_imageview_station_icon"
+                android:layout_width="?android:attr/listPreferredItemHeight"
+                android:layout_height="?android:attr/listPreferredItemHeight"
+                android:contentDescription="@string/descr_station_icon"
+                android:minHeight="?android:attr/listPreferredItemHeight"
 
-            <TextView
-                android:id="@+id/player_textview_station_metadata"
-                android:contentDescription="@string/descr_station_metadata"
-                android:layout_width="match_parent"
+                fresco:placeholderImage="@drawable/ic_notesymbol_36dp"
+                fresco:placeholderImageScaleType="fitCenter"
+
+                android:scaleType="fitXY"
+
+                fresco:progressBarAutoRotateInterval="1000"
+                fresco:progressBarImage="@drawable/progress_loading"
+                fresco:progressBarImageScaleType="centerInside" />
+
+            <LinearLayout
+                android:id="@+id/player_layout_station_info"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:ellipsize="marquee"
-                android:singleLine="true"
-                android:marqueeRepeatLimit ="marquee_forever"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:text="@string/descr_station_stream_loading"
-                android:textAppearance="@android:style/TextAppearance.Small.Inverse"
-                android:visibility="gone" />
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:paddingEnd="2dp">
+
+                <ImageView
+                    android:id="@+id/player_playback_indicator"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/ic_playback_indicator_stopped_24dp"
+                    android:contentDescription="@string/descr_playback_indicator"
+                    android:minHeight="?android:attr/listPreferredItemHeight" />
+
+                <TextView
+                    android:id="@+id/player_textview_stationname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/descr_station_name"
+                    android:ellipsize="end"
+                    android:paddingStart="6dp"
+                    android:singleLine="true"
+                    android:text="@string/descr_station_name_example"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title.Inverse" />
+
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/player_item_more_button"
+                android:layout_width="wrap_content"
+                android:layout_height="?android:attr/listPreferredItemHeight"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/descr_overflow_button"
+                android:paddingEnd="2dp"
+                android:paddingStart="4dp"
+                android:visibility="gone"
+                app:srcCompat="@drawable/ic_more_vert_white_24dp" />
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/player_playback_indicator"
-            android:contentDescription="@string/descr_playback_indicator"
-            android:layout_width="?android:attr/listPreferredItemHeight"
-            android:layout_height="?android:attr/listPreferredItemHeight"
-            android:minHeight="?android:attr/listPreferredItemHeight"
-            android:background="@drawable/ic_playback_indicator_stopped_24dp" />
-
-        <ImageButton
-            android:id="@+id/player_item_more_button"
-            android:contentDescription="@string/descr_overflow_button"
+        <RatingBar
+            android:id="@+id/ratingBar"
+            style="@android:style/Widget.DeviceDefault.RatingBar"
             android:layout_width="wrap_content"
-            android:layout_height="?android:attr/listPreferredItemHeight"
-            app:srcCompat="@drawable/ic_more_vert_white_24dp"
-            android:background="@android:color/transparent"
-            android:paddingStart="4dp"
-            android:paddingEnd="2dp"
+
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:stepSize="1" />
+
+        <TextView
+            android:id="@+id/player_textview_station_metadata"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/descr_station_metadata"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:paddingStart="6dp"
+            android:singleLine="true"
+            android:text="@string/descr_station_stream_loading"
+            android:textAppearance="@android:style/TextAppearance.Small.Inverse"
             android:visibility="gone" />
+
+        <RelativeLayout
+            android:id="@+id/relLayLargeButtonPlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:visibility="visible">
+
+            <ImageButton
+                android:id="@+id/player_playback_button"
+                style="@android:style/Widget.Holo.ImageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:adjustViewBounds="true"
+                android:background="@drawable/selector_playback_button"
+                android:contentDescription="@string/descr_playback_button"
+                android:padding="32dp" />
+
+
+        </RelativeLayout>
 
     </LinearLayout>
 
-    <RatingBar
-        android:id="@+id/ratingBar"
-        style="@android:style/Widget.DeviceDefault.Light.RatingBar"
-        android:layout_width="wrap_content"
-
-        android:layout_height="wrap_content"
-        android:numStars="5"
-        android:stepSize="1" />
-
-    <RelativeLayout
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="8dp"
-        android:visibility="gone">
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/card_margin">
 
-        <ImageButton
-            android:id="@+id/player_playback_button"
-            style="@android:style/Widget.Holo.ImageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:adjustViewBounds="true"
-            android:background="@drawable/selector_playback_button"
-            android:contentDescription="@string/descr_playback_button"
-            android:padding="32dp" />
+        <LinearLayout
+            style="@style/Widget.CardContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/desciption"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+            <TextView
+                android:id="@+id/txtDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="" />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/crdHtmlDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/card_margin"
+        android:layout_marginLeft="@dimen/card_margin"
+        android:layout_marginRight="@dimen/card_margin">
+
+        <LinearLayout
+            style="@style/Widget.CardContent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
 
-    </RelativeLayout>
+            <WebView
+                android:id="@+id/wbStationWebView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
 
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/card_margin"
+        android:layout_marginLeft="@dimen/card_margin"
+        android:layout_marginRight="@dimen/card_margin">
+
+        <LinearLayout
+            style="@style/Widget.CardContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Related"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Jarlsberg lancashire edam. Dolcelatte hard cheese brie st. agur blue
+    cheese caerphilly bavarian bergkase cheese and biscuits mascarpone. Cheeseburger swiss bavarian
+    bergkase cream cheese fromage frais cheesy feet port-salut airedale. St. agur blue cheese rubber
+    cheese caerphilly cheddar cheesecake cream cheese manchego lancashire. Roquefort squirty cheese
+    the big cheese." />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
 </LinearLayout>

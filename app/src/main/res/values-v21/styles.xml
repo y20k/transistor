@@ -8,17 +8,23 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorSecondary">@color/textColorSecondary</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
 
+        <item name="android:alertDialogTheme">@style/Theme.AppCompat.Dialog.Alert</item>
         <!-- Tint NavigationBar on v21 -->
         <!-- <item name="android:navigationBarColor">@color/transistor_red_dark</item> -->
 
     </style>
 
     <style name="TransistorAppTheme.NoActionBar">
+
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
+
+        <item name="android:windowContentTransitions">true</item>
     </style>
 
 </resources>

@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#212121</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorPrimaryLight">#484848</color>
+    <color name="colorAccent">@color/colorSecondary</color>
+
+    <color name="colorSecondary">#e0e0e0</color>
+    <color name="colorSecondaryDark">#aeaeae</color>
+    <color name="colorSecondaryLight">#ffffff</color>
 
 
     <color name="transistor_red">#FFE53935</color>
@@ -14,6 +19,8 @@
     <color name="transistor_grey_lighter">#FFDDDBD9</color>
     <color name="transistor_grey_very_light">#FFEFEDEB</color>
     <color name="transistor_grey_dark">#FF2C2926</color>
+    <color name="textColorSecondary">#000000</color>
+    <color name="textColorPrimary">#000000</color>
 
     <color name="transistor_gold">#FFE6BA64</color>
     <color name="transistor_gold_light">#FFE6C687</color>

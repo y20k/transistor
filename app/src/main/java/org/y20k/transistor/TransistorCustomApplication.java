@@ -5,6 +5,8 @@ import android.content.res.Configuration;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 
+import org.y20k.transistor.helpers.SingletonProperties;
+
 /**
  * Created by Tarek on 2017-03-30.
  */
@@ -18,7 +20,8 @@ public class TransistorCustomApplication extends Application {
         // Required initialization logic here!
         Fresco.initialize(this);
 
-
+        //initialize SingletonProperties
+        SingletonProperties.setContextToApplicationContext(getApplicationContext());
     }
 
     // Called by the system when the device configuration changes while your component is running.

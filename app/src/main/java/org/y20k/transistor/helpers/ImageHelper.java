@@ -15,6 +15,7 @@
 package org.y20k.transistor.helpers;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -24,6 +25,9 @@ import android.net.Uri;
 import android.os.ParcelFileDescriptor;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
+import android.util.DisplayMetrics;
 
 import org.y20k.transistor.R;
 
@@ -160,7 +164,7 @@ public final class ImageHelper {
         // get size of original image and calculate padding
         float inputImageHeight = (float)mInputImage.getHeight();
         float inputImageWidth = (float)mInputImage.getWidth();
-        float padding = (float)size/4;
+        float padding = (float)size/32;
 
         // define variables needed for transformation matrix
         float aspectRatio = 0.0f;
@@ -267,4 +271,172 @@ public final class ImageHelper {
         return mInputImage;
     }
 
+
+
+
+    public static Bitmap TransformToRounded(Bitmap source, Context mContext, int width, int heigth) {
+        // Create the RoundedBitmapDrawable.
+        RoundedBitmapDrawable drawable = RoundedBitmapDrawableFactory.create(mContext.getResources(), source);
+        drawable.setCircular(true);
+        //drawable.setCornerRadius(mContext.getCornerRadius(source));
+        Bitmap output = Bitmap.createBitmap(width, heigth, source.getConfig());
+        Canvas canvas = new Canvas(output);
+        drawable.setAntiAlias(true);
+        drawable.setBounds(0, 0, width, heigth);
+        drawable.draw(canvas);
+        if (source != output) {
+            source.recycle();
+        }
+        return output;
+    }
+
+    public static int GetIconSizeFromDensityAndScreenSize(Context context) {
+        int value = 192;
+        String str = "";
+        if ((context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) ==
+                Configuration.SCREENLAYOUT_SIZE_SMALL) {
+            switch (context.getResources().getDisplayMetrics().densityDpi) {
+                case DisplayMetrics.DENSITY_LOW:
+                    str = "small-ldpi";
+                    value = 36;
+                    break;
+                case DisplayMetrics.DENSITY_MEDIUM:
+                    str = "small-mdpi";
+                    value = 48;
+                    break;
+                case DisplayMetrics.DENSITY_HIGH:
+                    str = "small-hdpi";
+                    value = 72;
+                    break;
+                case DisplayMetrics.DENSITY_XHIGH:
+                    str = "small-xhdpi";
+                    value = 96;
+                    break;
+                case DisplayMetrics.DENSITY_XXHIGH:
+                    str = "small-xxhdpi";
+                    value = 144;
+                    break;
+                case DisplayMetrics.DENSITY_XXXHIGH:
+                    str = "small-xxxhdpi";
+                    value = 192;
+                    break;
+                case DisplayMetrics.DENSITY_TV:
+                    str = "small-tvdpi";
+                    //default
+                    break;
+                default:
+                    str = "small-unknown";
+                    //default
+                    break;
+            }
+
+        } else if ((context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_NORMAL) {
+            switch (context.getResources().getDisplayMetrics().densityDpi) {
+                case DisplayMetrics.DENSITY_LOW:
+                    str = "normal-ldpi";
+                    value = 36;
+                    break;
+                case DisplayMetrics.DENSITY_MEDIUM:
+                    str = "normal-mdpi";
+                    value = 48;
+                    break;
+                case DisplayMetrics.DENSITY_HIGH:
+                    str = "normal-hdpi";
+                    value = 72;
+                    break;
+                case DisplayMetrics.DENSITY_XHIGH:
+                    str = "normal-xhdpi";
+                    value = 96;
+                    break;
+                case DisplayMetrics.DENSITY_XXHIGH:
+                    str = "normal-xxhdpi";
+                    value = 144;
+                    break;
+                case DisplayMetrics.DENSITY_XXXHIGH:
+                    str = "normal-xxxhdpi";
+                    value = 192;
+                    break;
+                case DisplayMetrics.DENSITY_TV:
+                    str = "normal-tvdpi";
+                    //default
+                    break;
+                default:
+                    str = "normal-unknown";
+                    //default
+                    break;
+            }
+        } else if ((context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE) {
+            switch (context.getResources().getDisplayMetrics().densityDpi) {
+                case DisplayMetrics.DENSITY_LOW:
+                    str = "large-ldpi";
+                    value = 36;
+                    break;
+                case DisplayMetrics.DENSITY_MEDIUM:
+                    str = "large-mdpi";
+                    value = 48;
+                    break;
+                case DisplayMetrics.DENSITY_HIGH:
+                    str = "large-hdpi";
+                    value = 72;
+                    break;
+                case DisplayMetrics.DENSITY_XHIGH:
+                    str = "large-xhdpi";
+                    value = 96;
+                    break;
+                case DisplayMetrics.DENSITY_XXHIGH:
+                    str = "large-xxhdpi";
+                    value = 144;
+                    break;
+                case DisplayMetrics.DENSITY_XXXHIGH:
+                    str = "large-xxxhdpi";
+                    value = 192;
+                    break;
+                case DisplayMetrics.DENSITY_TV:
+                    str = "large-tvdpi";
+                    //default
+                    break;
+                default:
+                    str = "large-unknown";
+                    //default
+                    break;
+            }
+
+        } else if ((context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_XLARGE) {
+            switch (context.getResources().getDisplayMetrics().densityDpi) {
+                case DisplayMetrics.DENSITY_LOW:
+                    str = "xlarge-ldpi";
+                    value = 36;
+                    break;
+                case DisplayMetrics.DENSITY_MEDIUM:
+                    str = "xlarge-mdpi";
+                    value = 48;
+                    break;
+                case DisplayMetrics.DENSITY_HIGH:
+                    str = "xlarge-hdpi";
+                    value = 72;
+                    break;
+                case DisplayMetrics.DENSITY_XHIGH:
+                    str = "xlarge-xhdpi";
+                    value = 96;
+                    break;
+                case DisplayMetrics.DENSITY_XXHIGH:
+                    str = "xlarge-xxhdpi";
+                    value = 144;
+                    break;
+                case DisplayMetrics.DENSITY_XXXHIGH:
+                    str = "xlarge-xxxhdpi";
+                    value = 192;
+                    break;
+                case DisplayMetrics.DENSITY_TV:
+                    str = "xlarge-tvdpi";
+                    //default
+                    break;
+                default:
+                    str = "xlarge-unknown";
+                    //default
+                    break;
+            }
+        }
+        return value;
+    }
 }
