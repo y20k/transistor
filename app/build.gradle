@@ -8,8 +8,8 @@ android {
         applicationId "org.y20k.transistor"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 36
-        versionName "2.2.1 (Sons Of The Silent Age)"
+        versionCode 37
+        versionName "2.2.2 (Sons Of The Silent Age)"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
