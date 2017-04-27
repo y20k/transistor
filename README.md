@@ -28,6 +28,7 @@ What's new in Open-Transistor
 Install Transistor
 ------------------
 Download the latest beta from HockeyApp :
+
 [<img src="https://transistor-open.firebaseapp.com/assets/hockeyapp.jpg" width="192">](https://rink.hockeyapp.net/apps/2b8994e7a60b485dad0a5507ceb05c01)
 
 [<img alt="Chart?cht=qr&amp;chl=https%3a%2f%2frink.hockeyapp" src="https://chart.googleapis.com/chart?cht=qr&amp;chl=https%3A%2F%2Frink.hockeyapp.net%2Fapps%2F2b8994e7a60b485dad0a5507ceb05c01&amp;chs=192x192">](https://rink.hockeyapp.net/apps/2b8994e7a60b485dad0a5507ceb05c01)
@@ -38,7 +39,8 @@ Vew a short video on how to use Transistor on [Vimeo](https://vimeo.com/18117958
 ### How to add a new radio station?
 The easiest way to add a new station is to search for streaming links and then choose Transistor as a your default handler for those file types. You can also tap the (+) symbol in the top bar and paste in streaming links directly. Please note: Transistor does not feature any kind of built-in search option.
 Also, it's new in that version , you are able to add bulk of stations with it's metadata from XML file, file format can be as below sample 
-            https://transistor-open.firebaseapp.com/radios.xml
+
+https://transistor-open.firebaseapp.com/radios.xml
 
 Xml file should contains nelow metadata :
 * unique_id :Station  UNIQUE ID: used to identify station in DB, and should be UNIQUE and it can be string value
@@ -53,7 +55,7 @@ Xml file should contains nelow metadata :
 * category : Station CATEGORY
 * html_description : (HtmlDescription) : Station Html Description , with HTML formal, it will be visible inside in-app WebView with default header\styles located in \assets\webViewStyleDefaults.html
  
-
+# Sample Xml file
             <channels>
                         <entry>
                                     <unique_id>BBCArabic_1</unique_id>
