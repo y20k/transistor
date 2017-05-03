@@ -36,7 +36,7 @@ Download the latest beta from HockeyApp :
 How to use Open-Transistor
 ---------------------
 Vew a short video on how to use Transistor on [Vimeo](https://vimeo.com/215778690).
-	[![IMAGE ALT TEXT HERE](https://i.vimeocdn.com/video/632580200_640.webp)](https://vimeo.com/215778690#)
+	[![IMAGE ALT TEXT HERE](https://raw.githubusercontent.com/malah-code/transistor/Enhancements-v1/screen.png)](https://vimeo.com/215778690#)
 ### How to add a new radio station?
 The easiest way to add a new station is to search for streaming links and then choose Transistor as a your default handler for those file types. You can also tap the (+) symbol in the top bar and paste in streaming links directly. Please note: Transistor does not feature any kind of built-in search option.
 Also, it's new in that version , you are able to add bulk of stations with it's metadata from XML file, file format can be as below sample 
