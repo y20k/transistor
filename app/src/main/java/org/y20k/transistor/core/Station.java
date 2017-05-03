@@ -70,7 +70,7 @@ public final class Station implements Comparable<Station>, Parcelable {
     /**
      * Station  ID , the primary key in DB, and it's UNIQUE integer
      */
-    public int _ID;
+    public long _ID;
     /**
      * Station  UNIQUE ID , used to identify station in DB, and should be UNIQUE and it can be string value
      */
@@ -499,7 +499,7 @@ public final class Station implements Comparable<Station>, Parcelable {
         mStationFetchResults = in.readBundle(Bundle.class.getClassLoader());
         mPlayback = in.readByte() != 0; // true if byte != 0
 
-        _ID = in.readInt();
+        _ID = in.readLong();
         UNIQUE_ID = in.readString();
         SUBTITLE = in.readString();
         IMAGE_PATH = in.readString();
@@ -515,6 +515,28 @@ public final class Station implements Comparable<Station>, Parcelable {
         THUMP_UP_STATUS = in.readString();
 
         LogHelper.v(LOG_TAG, "Station re-created from parcel. State of playback is: " + mPlayback);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(TITLE);
+        dest.writeString(StreamURI);
+        dest.writeBundle(mStationFetchResults);
+        dest.writeByte((byte) (mPlayback ? 1 : 0));  // if mPlayback == true, byte == 1
+        dest.writeLong(_ID);
+        dest.writeString(UNIQUE_ID);
+        dest.writeString(SUBTITLE);
+        dest.writeString(IMAGE_PATH);
+        dest.writeString(IMAGE_FILE_NAME);
+        dest.writeString(SMALL_IMAGE_FILE_NAME);
+        dest.writeString(CONTENT_TYPE);
+        dest.writeString(DESCRIPTION);
+        dest.writeInt(RATING);
+        dest.writeString(CATEGORY);
+        dest.writeString(HtmlDescription);
+        dest.writeString(SMALL_IMAGE_PATH);
+        dest.writeString(IS_FAVOURITE);
+        dest.writeString(THUMP_UP_STATUS);
     }
 
 
@@ -873,10 +895,11 @@ public final class Station implements Comparable<Station>, Parcelable {
             final String sSMALL_IMAGE_FILE_NAME = SMALL_IMAGE_FILE_NAME;
 
             AsyncSaveDownloadToDesk(cntxt, folder, sSMALL_IMAGE_PATH, sSMALL_IMAGE_FILE_NAME);
-        }
 
-        //return null (to force app use the URL of image/ or default image)
-        return null;
+            //return the large image instead if it's available (better than just return the default 'null'
+            //if large image also not available , it will return null (to force app use the URL of image/ or default image)
+            return getStationImage(cntxt);
+        }
     }
 
     /*
@@ -906,7 +929,7 @@ public final class Station implements Comparable<Station>, Parcelable {
                         i.setAction(TransistorKeys.ACTION_COLLECTION_CHANGED);
                         i.putExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, TransistorKeys.STATION_CHANGED_IMAGE);
                         i.putExtra(TransistorKeys.EXTRA_STATION, Station.this);
-                        i.putExtra(TransistorKeys.EXTRA_STATION_ID, _ID);
+                        i.putExtra(TransistorKeys.EXTRA_STATION_DB_ID, _ID);
                         LocalBroadcastManager.getInstance(cntxt.getApplicationContext()).sendBroadcast(i);
                     }
                 }
@@ -957,27 +980,6 @@ public final class Station implements Comparable<Station>, Parcelable {
     }
 
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(TITLE);
-        dest.writeString(StreamURI);
-        dest.writeBundle(mStationFetchResults);
-        dest.writeByte((byte) (mPlayback ? 1 : 0));  // if mPlayback == true, byte == 1
-        dest.writeInt(_ID);
-        dest.writeString(UNIQUE_ID);
-        dest.writeString(SUBTITLE);
-        dest.writeString(IMAGE_PATH);
-        dest.writeString(IMAGE_FILE_NAME);
-        dest.writeString(SMALL_IMAGE_FILE_NAME);
-        dest.writeString(CONTENT_TYPE);
-        dest.writeString(DESCRIPTION);
-        dest.writeInt(RATING);
-        dest.writeString(CATEGORY);
-        dest.writeString(HtmlDescription);
-        dest.writeString(SMALL_IMAGE_PATH);
-        dest.writeString(IS_FAVOURITE);
-        dest.writeString(THUMP_UP_STATUS);
-    }
 
 
     /**
@@ -1080,7 +1082,8 @@ public final class Station implements Comparable<Station>, Parcelable {
 
             // Insert the new row, returning the primary key value of the new row
             long newRowId = db.insert(StationsDbContract.StationEntry.TABLE_NAME, null, values);
-        }
+            stationItem._ID = newRowId;
+        } //todo: , else then update the existing with new data
 
         db.close();
 

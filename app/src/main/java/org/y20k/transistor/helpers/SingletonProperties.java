@@ -12,7 +12,7 @@ public class SingletonProperties {
 
     public PlaybackStatus CurrentSelectedStation_Playback_Status = PlaybackStatus.STOPPED;
     public String CurrentStation_ID = null;
-    public int CurrentSelectedStation_ID = -1;
+    public long CurrentSelectedStation_ID = -1;
 
     private static Context mContext;
 
@@ -39,10 +39,10 @@ public class SingletonProperties {
         return mInstance;
     }
 
-    public int getLastRunningStation_ID() {
+    public long getLastRunningStation_ID() {
         //get from application setting/ preferences
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext);
-        return settings.getInt(TransistorKeys.PREF_STATION_ID_LAST, -1);
+        return settings.getLong(TransistorKeys.PREF_STATION_ID_LAST, -1);
     }
 
     /**
@@ -52,11 +52,11 @@ public class SingletonProperties {
     public boolean getIsPlayback() {
         return (CurrentSelectedStation_Playback_Status==PlaybackStatus.LOADING || CurrentSelectedStation_Playback_Status==PlaybackStatus.PLAYING);
     }
-    public void setLastRunningStation_ID(int lastRunningStation_ID) {
+    public void setLastRunningStation_ID(long lastRunningStation_ID) {
         //add to application setting/ preferences
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putInt(TransistorKeys.PREF_STATION_ID_LAST, lastRunningStation_ID);
+        editor.putLong(TransistorKeys.PREF_STATION_ID_LAST, lastRunningStation_ID);
         editor.apply();
     }
 }

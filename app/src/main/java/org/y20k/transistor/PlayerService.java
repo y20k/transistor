@@ -80,7 +80,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     private MediaPlayer mMediaPlayer;
     private static MediaSessionCompat mSession;
     private static MediaControllerCompat mController;
-    private int mStationID;
+    private int mStationID_Position;
     private String mStationMetadata;
     private String mStreamUri;
     private boolean mPlayback;
@@ -141,7 +141,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
                     mSession.setMetadata(getMetadata(context, station, mStationMetadata));
 
                     // update notification
-                    NotificationHelper.update(mStation, mStationID, mStationMetadata, mSession);
+                    NotificationHelper.update(mStation, mStationID_Position, mStationMetadata, mSession);
                 }
             }
         };
@@ -167,7 +167,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
             // get URL of station from intent
             if (intent.hasExtra(TransistorKeys.EXTRA_STATION)) {
                 mStation = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
-                mStationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
+                mStationID_Position = intent.getIntExtra(TransistorKeys.EXTRA_STATION_Position_ID, 0);
                 mStreamUri = mStation.getStreamUri().toString();
 
 
@@ -277,7 +277,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
             // check for race between onPrepared ans MetadataHelper
             if (!mStationMetadataReceived) {
                 // update notification
-                NotificationHelper.update(mStation, mStationID, mStation.TITLE, mSession);
+                NotificationHelper.update(mStation, mStationID_Position, mStation.TITLE, mSession);
             }
 
             // start media player
@@ -288,7 +288,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
             i.setAction(TransistorKeys.ACTION_PLAYBACK_STATE_CHANGED);
             i.putExtra(TransistorKeys.EXTRA_PLAYBACK_STATE_CHANGE, TransistorKeys.PLAYBACK_STARTED);
             i.putExtra(TransistorKeys.EXTRA_STATION, mStation);
-            i.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
+            i.putExtra(TransistorKeys.EXTRA_STATION_Position_ID, mStationID_Position);
             LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(i);
 
 
@@ -464,7 +464,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         i.setAction(TransistorKeys.ACTION_PLAYBACK_STATE_CHANGED);
         i.putExtra(TransistorKeys.EXTRA_PLAYBACK_STATE_CHANGE, TransistorKeys.PLAYBACK_LOADING_STATION);
         i.putExtra(TransistorKeys.EXTRA_STATION, mStation);
-        i.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
+        i.putExtra(TransistorKeys.EXTRA_STATION_Position_ID, mStationID_Position);
         LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(i);
 
         // increase counter
@@ -484,7 +484,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
             mSession.setActive(true);
 
             // put up notification
-            NotificationHelper.show(this, mSession, mStation, mStationID, this.getString(R.string.descr_station_stream_loading));
+            NotificationHelper.show(this, mSession, mStation, mStationID_Position, this.getString(R.string.descr_station_stream_loading));
 
         }
 
@@ -512,7 +512,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
         i.setAction(TransistorKeys.ACTION_PLAYBACK_STATE_CHANGED);
         i.putExtra(TransistorKeys.EXTRA_PLAYBACK_STATE_CHANGE, TransistorKeys.PLAYBACK_STOPPED);
         i.putExtra(TransistorKeys.EXTRA_STATION, mStation);
-        i.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
+        i.putExtra(TransistorKeys.EXTRA_STATION_Position_ID, mStationID_Position);
         LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(i);
 
         // reset counter
@@ -534,7 +534,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
             mSession.setActive(false);
         } else {
             // update notification
-            NotificationHelper.update(mStation, mStationID, mStation.TITLE, mSession);
+            NotificationHelper.update(mStation, mStationID_Position, mStation.TITLE, mSession);
             // keep media session active
             mSession.setActive(true);
         }
@@ -653,7 +653,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
     private void saveAppState() {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplication());
         SharedPreferences.Editor editor = settings.edit();
-        editor.putInt(TransistorKeys.PREF_STATION_ID_CURRENTLY_PLAYING, SingletonProperties.getInstance().CurrentSelectedStation_ID);
+        editor.putLong(TransistorKeys.PREF_STATION_ID_CURRENTLY_PLAYING, SingletonProperties.getInstance().CurrentSelectedStation_ID);
         editor.putBoolean(TransistorKeys.PREF_PLAYBACK, mPlayback);
         editor.putBoolean(TransistorKeys.PREF_STATION_LOADING, mStationLoading);
         editor.putString(TransistorKeys.PREF_STATION_METADATA, mStationMetadata);
@@ -699,7 +699,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements
             // start playback
             if (mStation != null) {
                 //update global variables
-                int LastRunningStation_ID = SingletonProperties.getInstance().CurrentSelectedStation_ID;
+                long LastRunningStation_ID = SingletonProperties.getInstance().CurrentSelectedStation_ID;
                 if (LastRunningStation_ID != -1 && LastRunningStation_ID != mStation._ID) {
                     //if selected station not the lastRunningStation only
                     SingletonProperties.getInstance().setLastRunningStation_ID(LastRunningStation_ID);

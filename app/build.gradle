@@ -5,12 +5,12 @@ android {
     compileSdkVersion 25
     buildToolsVersion '25.0.0'
     defaultConfig {
-        applicationId "org.y20k.transistor"
+        applicationId "org.malah.transistor"
         minSdkVersion 19
         targetSdkVersion 25
         defaultPublishConfig "debug"
         versionCode 35
-        versionName "3.1.0 (Beta)"
+        versionName "3.1.1 (Beta)"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
@@ -20,6 +20,7 @@ android {
         }
         release {
             minifyEnabled true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "boolean", "isDebug", "false"
         }

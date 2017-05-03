@@ -17,7 +17,8 @@
         <!-- Default window background used for resizing on v24) -->
         <item name="android:windowBackgroundFallback">@color/colorPrimary</item>
 
-        <item name="android:alertDialogTheme">@style/Theme.AppCompat.Dialog.Alert</item>
+        <item name="android:alertDialogTheme">@style/Base.Theme.AppCompat.Light.Dialog.Alert</item>
+
 
     </style>
 

@@ -7,4 +7,5 @@
     android:layout_height="wrap_content"
     tools:context="org.y20k.transistor.MainActivityFragment"
     tools:layout="@layout/fragment_main"
+
     />

@@ -68,7 +68,7 @@ public final class NotificationHelper {
 
 
     /* Updates the notification */
-    public static void update(Station station, int stationID, String stationMetadata, MediaSessionCompat session) {
+    public static void update(Station station, int stationID_Position, String stationMetadata, MediaSessionCompat session) {
 
         // session can be null on update
         if (session != null) {
@@ -81,7 +81,7 @@ public final class NotificationHelper {
         }
 
         // build notification
-        mNotification = getNotificationBuilder(station, stationID, mStationMetadata).build();
+        mNotification = getNotificationBuilder(station, stationID_Position, mStationMetadata).build();
 
         // display updated notification
         NotificationManager notificationManager = (NotificationManager) mService.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -104,13 +104,13 @@ public final class NotificationHelper {
 
 
     /* Creates a notification builder */
-    private static NotificationCompat.Builder getNotificationBuilder(Station station, int stationID, String stationMetadata) {
+    private static NotificationCompat.Builder getNotificationBuilder(Station station, int stationID_Position, String stationMetadata) {
 
         // explicit intent for notification tap
         Intent tapActionIntent = new Intent(mService, MainActivity.class);
         tapActionIntent.setAction(TransistorKeys.ACTION_SHOW_PLAYER);
         tapActionIntent.putExtra(TransistorKeys.EXTRA_STATION, station);
-        tapActionIntent.putExtra(TransistorKeys.EXTRA_STATION_ID, stationID);
+        tapActionIntent.putExtra(TransistorKeys.EXTRA_STATION_Position_ID, stationID_Position);
 
         // explicit intent for stopping playback
         Intent stopActionIntent = new Intent(mService, PlayerService.class);

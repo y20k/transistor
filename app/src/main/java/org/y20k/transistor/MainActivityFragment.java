@@ -87,8 +87,8 @@ public final class MainActivityFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private StaggeredGridLayoutManager mStaggeredGridLayoutManagerManager;
-    private int RECYCLER_VIEW_LIST = 0 ;
-    private int RECYCLER_VIEW_GRID = 1 ;
+    private int RECYCLER_VIEW_LIST = 0;
+    private int RECYCLER_VIEW_GRID = 1;
 
     private Parcelable mListState;
     private BroadcastReceiver mCollectionChangedReceiver;
@@ -96,7 +96,7 @@ public final class MainActivityFragment extends Fragment {
     private BroadcastReceiver mSleepTimerStartedReceiver;
     private BroadcastReceiver mPlaybackStateChangedReceiver;
     private int mStationIDSelected;
-    private int mTempStationID;
+    private int mTempStationID_Position;
     private Station mTempStation;
     private Uri mNewStationUri;
     private boolean mTwoPane;
@@ -115,6 +115,8 @@ public final class MainActivityFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        LogHelper.i("MainActivityFragment", "onCreate");
+
         super.onCreate(savedInstanceState);
 
         // fragment has options menu
@@ -137,7 +139,7 @@ public final class MainActivityFragment extends Fragment {
         mStationIDSelected = 0;
 
         // initialize temporary station image id
-        mTempStationID = -1;
+        mTempStationID_Position = -1;
 
         // initialize two pane
         mTwoPane = false;
@@ -167,13 +169,13 @@ public final class MainActivityFragment extends Fragment {
             mCollectionAdapter = new CollectionAdapter(mActivity, mFolder);
         }
 
-        // initialize broadcast receivers
-        initializeBroadcastReceivers();
+
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        LogHelper.i("MainActivityFragment", "onCreateView");
         // get list state from saved instance
         if (savedInstanceState != null) {
             mListState = savedInstanceState.getParcelable(TransistorKeys.INSTANCE_LIST_STATE);
@@ -199,9 +201,9 @@ public final class MainActivityFragment extends Fragment {
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(mActivity);
         mStaggeredGridLayoutManagerManager = new StaggeredGridLayoutManager(2, 1);
-        if(mLayoutViewManager == RECYCLER_VIEW_LIST){
+        if (mLayoutViewManager == RECYCLER_VIEW_LIST) {
             mRecyclerView.setLayoutManager(mLayoutManager);
-        }else{
+        } else {
             mRecyclerView.setLayoutManager(mStaggeredGridLayoutManagerManager);
         }
 
@@ -215,6 +217,7 @@ public final class MainActivityFragment extends Fragment {
 
     @Override
     public void onResume() {
+        LogHelper.i("MainActivityFragment", "onResume");
         super.onResume();
         Log.v(LOG_TAG + "debugCollectionView", "start onResume");
 
@@ -255,13 +258,34 @@ public final class MainActivityFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onStart() {
+        LogHelper.i("MainActivityFragment", "onStart");
+        super.onStart();
+
+        // initialize broadcast receivers
+        initializeBroadcastReceivers();
+    }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onStop() {
+        LogHelper.i("MainActivityFragment", "onStop");
+        super.onStop();
+        // unregister Broadcast Receivers
         unregisterBroadcastReceivers();
     }
 
+    @Override
+    public void onDestroy() {
+        LogHelper.i("MainActivityFragment", "onDestroy");
+        super.onDestroy();
+    }
+
+    @Override
+    public void onDestroyView() {
+        LogHelper.i("MainActivityFragment", "onDestroyView");
+        super.onDestroyView();
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -330,6 +354,7 @@ public final class MainActivityFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+        LogHelper.i("MainActivityFragment", "onSaveInstanceState");
         // save list view position
         mListState = mLayoutManager.onSaveInstanceState();
         outState.putParcelable(TransistorKeys.INSTANCE_LIST_STATE, mListState);
@@ -339,6 +364,7 @@ public final class MainActivityFragment extends Fragment {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        LogHelper.i("MainActivityFragment", "onRequestPermissionsResult");
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         switch (requestCode) {
@@ -370,6 +396,7 @@ public final class MainActivityFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        LogHelper.i("MainActivityFragment", "onActivityResult");
         super.onActivityResult(requestCode, resultCode, data);
 
         // retrieve selected image Uri from image picker
@@ -383,7 +410,7 @@ public final class MainActivityFragment extends Fragment {
             ImageHelper imageHelper = new ImageHelper(newImageUri, mActivity, 500, 500);
             Bitmap newImage = imageHelper.getInputImage();
 
-            if (newImage != null && mTempStationID != -1) {
+            if (newImage != null && mTempStationID_Position != -1) {
                 // write image to storage
                 File stationImageFile = mTempStation.getStationImageFileReference(mFolder);//get  station file with correct path according to UniqueID of the station
                 try (FileOutputStream out = new FileOutputStream(stationImageFile)) {
@@ -397,7 +424,7 @@ public final class MainActivityFragment extends Fragment {
                 }
 
                 // update adapter
-                mCollectionAdapter.notifyItemChanged(mTempStationID);
+                mCollectionAdapter.notifyItemChanged(mTempStationID_Position);
                 Toast.makeText(mApplication, "Image Updated", Toast.LENGTH_SHORT).show();
             } else {
                 LogHelper.e(LOG_TAG, "Unable to get image from media picker. Uri was:  " + newImageUri.toString());
@@ -415,7 +442,7 @@ public final class MainActivityFragment extends Fragment {
         if (mCollectionAdapter.getItemCount() == 0) {
             mActionCallView.setVisibility(View.VISIBLE);
             mRecyclerView.setVisibility(View.GONE);
-            if(mTwoPane && mActivity instanceof  MainActivity) {
+            if (mTwoPane && mActivity instanceof MainActivity) {
                 ((MainActivity) mActivity).removePlayFragment();
             }
         } else {
@@ -476,10 +503,10 @@ public final class MainActivityFragment extends Fragment {
         } else if (intent.hasExtra(TransistorKeys.EXTRA_LAST_STATION) && intent.getBooleanExtra(TransistorKeys.EXTRA_LAST_STATION, false)) {
             // try to get last station
             loadAppState(mActivity);
-            int station_IDLast = SingletonProperties.getInstance().getLastRunningStation_ID();
+            long station_IDLast = SingletonProperties.getInstance().getLastRunningStation_ID();
             if (station_IDLast > -1 && mCollectionAdapter.getItemCount() > 0) {
                 int posTmp = mCollectionAdapter.getItemPosition(station_IDLast);
-                if(posTmp>-1) {
+                if (posTmp > -1) {
                     station = mCollectionAdapter.getStation(posTmp);
                 }
             }
@@ -499,8 +526,7 @@ public final class MainActivityFragment extends Fragment {
 
         // prepare arguments or intent
         if (mTwoPane && station != null) {
-            mStationIDSelected = mCollectionAdapter.getStationID(station);
-            mCollectionAdapter.setStationIDSelected(mStationIDSelected, station.getPlaybackState(), startPlayback);
+            mCollectionAdapter.setStationIDSelected(mCollectionAdapter.getItemPosition(station._ID), station.getPlaybackState(), startPlayback);
         } else if (station != null) {
             // start player activity - on phone
             Intent playerIntent = new Intent(mActivity, PlayerActivity.class);
@@ -625,7 +651,7 @@ public final class MainActivityFragment extends Fragment {
     private void saveAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putInt(TransistorKeys.PREF_STATION_ID_CURRENTLY_PLAYING, SingletonProperties.getInstance().CurrentSelectedStation_ID);
+        editor.putLong(TransistorKeys.PREF_STATION_ID_CURRENTLY_PLAYING, SingletonProperties.getInstance().CurrentSelectedStation_ID);
         editor.putBoolean(TransistorKeys.PREF_PLAYBACK, mPlayback);
         editor.putBoolean(TransistorKeys.PREF_TIMER_RUNNING, mSleepTimerRunning);
         editor.apply();
@@ -672,10 +698,10 @@ public final class MainActivityFragment extends Fragment {
         mImageChangeRequestReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if (intent.hasExtra(TransistorKeys.EXTRA_STATION) && intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)) {
+                if (intent.hasExtra(TransistorKeys.EXTRA_STATION) && intent.hasExtra(TransistorKeys.EXTRA_STATION_Position_ID)) {
                     // get station and id from intent
                     mTempStation = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
-                    mTempStationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, -1);
+                    mTempStationID_Position = intent.getIntExtra(TransistorKeys.EXTRA_STATION_Position_ID, -1);
                     // start image picker
                     selectFromImagePicker();
                 }
@@ -777,31 +803,30 @@ public final class MainActivityFragment extends Fragment {
 
             // CASE: station was renamed
             case TransistorKeys.STATION_RENAMED:
-                if (intent.hasExtra(TransistorKeys.EXTRA_STATION_NEW_NAME) && intent.hasExtra(TransistorKeys.EXTRA_STATION) && intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)) {
+                if (intent.hasExtra(TransistorKeys.EXTRA_STATION_NEW_NAME) && intent.hasExtra(TransistorKeys.EXTRA_STATION) && intent.hasExtra(TransistorKeys.EXTRA_STATION_Position_ID)) {
 
                     // get new name, station and station ID from intent
                     String newStationName = intent.getStringExtra(TransistorKeys.EXTRA_STATION_NEW_NAME);
                     Station station = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
-                    int stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
+                    int stationID_Position = intent.getIntExtra(TransistorKeys.EXTRA_STATION_Position_ID, 0);
 
                     // update notification
                     if (station.getPlaybackState()) {
-                        NotificationHelper.update(station, stationID, null, null);
+                        NotificationHelper.update(station, stationID_Position, null, null);
                     }
 
                     // change station within in adapter, scroll to new position and update adapter
-                    newStationPosition = mCollectionAdapter.rename(newStationName, station, stationID);
+                    newStationPosition = mCollectionAdapter.rename(newStationName, station, stationID_Position);
                     mLayoutManager.scrollToPosition(newStationPosition);
                     mCollectionAdapter.setStationIDSelected(newStationPosition, mPlayback, false);
                     mCollectionAdapter.notifyDataSetChanged();
                 }
                 break;
             case TransistorKeys.STATION_CHANGED_RATING:
-                if (intent.hasExtra(TransistorKeys.EXTRA_STATION) && intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)) {
+                if (intent.hasExtra(TransistorKeys.EXTRA_STATION)) {
 
                     // get new name, station and station ID from intent
                     Station station = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
-                    int stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
                     int stPossition = mCollectionAdapter.getItemPosition(station._ID);
 
                     // update notification
@@ -818,11 +843,11 @@ public final class MainActivityFragment extends Fragment {
                 }
                 break;
             case TransistorKeys.STATION_CHANGED_IMAGE:
-                if (intent.hasExtra(TransistorKeys.EXTRA_STATION) && intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)) {
+                if (intent.hasExtra(TransistorKeys.EXTRA_STATION) && intent.hasExtra(TransistorKeys.EXTRA_STATION_DB_ID)) {
 
                     // get new name, station and station ID from intent
                     Station station = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
-                    int stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
+                    int stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_DB_ID, 0);
                     int stPossition = mCollectionAdapter.getItemPosition(stationID);
 
                     // update notification
@@ -836,11 +861,11 @@ public final class MainActivityFragment extends Fragment {
                 break;
             // CASE: station was deleted
             case TransistorKeys.STATION_DELETED:
-                if (intent.hasExtra(TransistorKeys.EXTRA_STATION) && intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)) {
-
+                if (intent.hasExtra(TransistorKeys.EXTRA_STATION) && intent.hasExtra(TransistorKeys.EXTRA_STATION_Position_ID)) {
                     // get station and station ID from intent
                     Station station = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
-                    int stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
+                    int stPossition = mCollectionAdapter.getItemPosition(station._ID);
+                    int stationID_position = intent.getIntExtra(TransistorKeys.EXTRA_STATION_Position_ID, 0);
 
                     // dismiss notification
                     NotificationHelper.stop();
@@ -854,7 +879,8 @@ public final class MainActivityFragment extends Fragment {
                     }
 
                     // remove station from adapter and update
-                    newStationPosition = mCollectionAdapter.delete(station, stationID);
+                    newStationPosition = mCollectionAdapter.delete(station);
+
                     if (newStationPosition == -1 || mCollectionAdapter.getItemCount() == 0) {
                         // show call to action
                         toggleActionCall();
@@ -863,7 +889,9 @@ public final class MainActivityFragment extends Fragment {
                         mCollectionAdapter.setStationIDSelected(newStationPosition, mPlayback, false);
                         mLayoutManager.scrollToPosition(newStationPosition);
                     }
-                    mCollectionAdapter.notifyDataSetChanged();
+
+                    //mCollectionAdapter.notifyItemRemoved(stPossition); //not working well (try to know why)
+                    mCollectionAdapter.notifyItemChanged(stPossition);
                 }
                 break;
         }

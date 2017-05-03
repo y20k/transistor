@@ -103,7 +103,7 @@ public final class PlayerActivityFragment extends Fragment {
     private BroadcastReceiver mPlaybackStateChangedReceiver;
     private BroadcastReceiver mCollectionChangedReceiver;
     private BroadcastReceiver mMetadataChangedReceiver;
-    private int mStationID;
+    private int mStationID_Position;
     private boolean mTwoPane;
     private boolean mVisibility;
     private Station mStation;
@@ -145,10 +145,10 @@ public final class PlayerActivityFragment extends Fragment {
 
             // get station ID from arguments
             if (arguments.containsKey(TransistorKeys.ARG_STATION_ID)) {
-                mStationID = arguments.getInt(TransistorKeys.ARG_STATION_ID);
+                mStationID_Position = arguments.getInt(TransistorKeys.ARG_STATION_ID);
                 arguments.remove(TransistorKeys.ARG_STATION_ID);
             } else {
-                mStationID = 0;
+                mStationID_Position = 0;
                 LogHelper.e(LOG_TAG, "Error: did not receive id of station. Choosing default ID for station");
             }
 
@@ -266,7 +266,7 @@ public final class PlayerActivityFragment extends Fragment {
                     i.setAction(TransistorKeys.ACTION_COLLECTION_CHANGED);
                     i.putExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, TransistorKeys.STATION_CHANGED_RATING);
                     i.putExtra(TransistorKeys.EXTRA_STATION, mStation);
-                    i.putExtra(TransistorKeys.EXTRA_STATION_ID, mStation._ID);
+                    i.putExtra(TransistorKeys.EXTRA_STATION_DB_ID, mStation._ID);
                     LocalBroadcastManager.getInstance(mActivity.getApplicationContext()).sendBroadcast(i);
                 }
             }
@@ -495,7 +495,7 @@ public final class PlayerActivityFragment extends Fragment {
                     i.setAction(TransistorKeys.ACTION_COLLECTION_CHANGED);
                     i.putExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, TransistorKeys.STATION_CHANGED_IMAGE);
                     i.putExtra(TransistorKeys.EXTRA_STATION, mStation);
-                    i.putExtra(TransistorKeys.EXTRA_STATION_ID, mStation._ID);
+                    i.putExtra(TransistorKeys.EXTRA_STATION_DB_ID, mStation._ID);
                     LocalBroadcastManager.getInstance(mActivity.getApplicationContext()).sendBroadcast(i);
                 }
 
@@ -513,7 +513,7 @@ public final class PlayerActivityFragment extends Fragment {
         super.onSaveInstanceState(outState);
         // save current station
         outState.putParcelable(TransistorKeys.INSTANCE_STATION, mStation);
-        outState.putInt(TransistorKeys.INSTANCE_STATION_ID, mStationID);
+        outState.putInt(TransistorKeys.INSTANCE_STATION_ID, mStationID_Position);
         //remove unneeded mPlayback , and replace it SingletonProperties.getInstance().getIsPlayback()
         outState.putBoolean(TransistorKeys.INSTANCE_PLAYBACK,SingletonProperties.getInstance().getIsPlayback());
     }
@@ -528,7 +528,7 @@ public final class PlayerActivityFragment extends Fragment {
         Intent intent = new Intent(mActivity, PlayerService.class);
         intent.setAction(TransistorKeys.ACTION_PLAY);
         intent.putExtra(TransistorKeys.EXTRA_STATION, mStation);
-        intent.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
+        intent.putExtra(TransistorKeys.EXTRA_STATION_Position_ID, mStationID_Position);
         mActivity.startService(intent);
         LogHelper.v(LOG_TAG, "Starting player service.");
     }
@@ -577,7 +577,7 @@ public final class PlayerActivityFragment extends Fragment {
             // CASE RENAME
             case R.id.menu_rename:
                 // construct and run rename dialog
-                final DialogRename dialogRename = new DialogRename(mActivity, mStation, mStationID);
+                final DialogRename dialogRename = new DialogRename(mActivity, mStation, mStationID_Position);
                 dialogRename.show();
                 return true;
 
@@ -585,7 +585,7 @@ public final class PlayerActivityFragment extends Fragment {
             case R.id.menu_delete:
                 // stop player service using intent
                 // construct and run delete dialog
-                DialogDelete dialogDelete = new DialogDelete(mActivity, mStation, mStationID);
+                DialogDelete dialogDelete = new DialogDelete(mActivity, mStation, mStationID_Position);
                 dialogDelete.show();
                 return true;
 
@@ -703,7 +703,7 @@ public final class PlayerActivityFragment extends Fragment {
     /* Loads app state from preferences */
     private void loadAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-        mStationID = settings.getInt(TransistorKeys.PREF_STATION_ID_SELECTED, 0);
+        mStationID_Position = settings.getInt(TransistorKeys.PREF_STATION_ID_SELECTED, 0);
         mStationMetadata = settings.getString(TransistorKeys.PREF_STATION_METADATA, null);
         LogHelper.v(LOG_TAG, "Loading state (" + SingletonProperties.getInstance().CurrentSelectedStation_ID + " / " + SingletonProperties.getInstance().getLastRunningStation_ID() + " / " +SingletonProperties.getInstance().getIsPlayback()  + " / " + (SingletonProperties.getInstance().CurrentSelectedStation_Playback_Status == PlaybackStatus.LOADING) + " / " + mStationMetadata + ")");
     }
@@ -825,12 +825,12 @@ public final class PlayerActivityFragment extends Fragment {
         switch (intent.getIntExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, 1)) {
             // CASE: station was renamed
             case TransistorKeys.STATION_RENAMED:
-                if (intent.hasExtra(TransistorKeys.EXTRA_STATION_NEW_NAME) && intent.hasExtra(TransistorKeys.EXTRA_STATION) && intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)) {
+                if (intent.hasExtra(TransistorKeys.EXTRA_STATION_NEW_NAME) && intent.hasExtra(TransistorKeys.EXTRA_STATION) && intent.hasExtra(TransistorKeys.EXTRA_STATION_Position_ID)) {
                     Station station = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
-                    int stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
+                    int stationID_Position = intent.getIntExtra(TransistorKeys.EXTRA_STATION_Position_ID, 0);
                     mStationNameView.setText(station.TITLE);
                     if (SingletonProperties.getInstance().getIsPlayback()) {
-                        NotificationHelper.update(station, stationID, null, null);
+                        NotificationHelper.update(station, stationID_Position, null, null);
                     }
                 }
                 break;
@@ -853,11 +853,11 @@ public final class PlayerActivityFragment extends Fragment {
                 // two pane behaviour is handles by the adapter
                 break;
             case TransistorKeys.STATION_CHANGED_IMAGE:
-                if (intent.hasExtra(TransistorKeys.EXTRA_STATION) && intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)) {
+                if (intent.hasExtra(TransistorKeys.EXTRA_STATION) && intent.hasExtra(TransistorKeys.EXTRA_STATION_DB_ID)) {
                     //update image
                     // get new name, station and station ID from intent
                     Station station = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
-                    int stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
+                    int stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_DB_ID, 0);
 
                     // set station image
                     setRefreshStationImage();

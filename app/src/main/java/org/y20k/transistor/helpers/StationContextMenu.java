@@ -36,7 +36,7 @@ public final class StationContextMenu extends DialogFragment {
     private View mView;
     private Activity mActivity;
     private Station mStation;
-    private int mStationID;
+    private int mStationID_Position;
 
 
     /* Constructor (default) */
@@ -45,11 +45,11 @@ public final class StationContextMenu extends DialogFragment {
 
 
     /* Initializer for main class variables */
-    public void initialize(Activity activity, View view, Station station, int stationID) {
+    public void initialize(Activity activity, View view, Station station, int stationID_Position) {
         mActivity = activity;
         mView = view;
         mStation = station;
-        mStationID = stationID;
+        mStationID_Position = stationID_Position;
     }
 
 
@@ -71,21 +71,21 @@ public final class StationContextMenu extends DialogFragment {
                         Intent iconIntent = new Intent();
                         iconIntent.setAction(TransistorKeys.ACTION_IMAGE_CHANGE_REQUESTED);
                         iconIntent.putExtra(TransistorKeys.EXTRA_STATION, mStation);
-                        iconIntent.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
+                        iconIntent.putExtra(TransistorKeys.EXTRA_STATION_Position_ID, mStationID_Position);
                         LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(iconIntent);
                         return true;
 
                     // CASE RENAME
                     case R.id.menu_rename:
                         // construct and run rename dialog
-                        DialogRename dialogRename = new DialogRename(mActivity, mStation, mStationID);
+                        DialogRename dialogRename = new DialogRename(mActivity, mStation, mStationID_Position);
                         dialogRename.show();
                         return true;
 
                     // CASE DELETE
                     case R.id.menu_delete:
                         // construct and run delete dialog
-                        DialogDelete dialogDelete = new DialogDelete(mActivity, mStation, mStationID);
+                        DialogDelete dialogDelete = new DialogDelete(mActivity, mStation, mStationID_Position);
                         dialogDelete.show();
                         return true;
 

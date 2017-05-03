@@ -38,15 +38,15 @@ public final class DialogRename {
 
     /* Main class variables */
     private final Activity mActivity;
-    private final int mStationID;
+    private final int mStationID_Position;
     private final Station mStation;
 
 
     /* Constructor */
-    public DialogRename(Activity activity, Station station, int stationID) {
+    public DialogRename(Activity activity, Station station, int stationID_Position) {
         mActivity = activity;
         mStation = station;
-        mStationID = stationID;
+        mStationID_Position = stationID_Position;
     }
 
 
@@ -79,7 +79,7 @@ public final class DialogRename {
                 Intent i = new Intent();
                 i.setAction(TransistorKeys.ACTION_COLLECTION_CHANGED);
                 i.putExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, TransistorKeys.STATION_RENAMED);
-                i.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
+                i.putExtra(TransistorKeys.EXTRA_STATION_Position_ID, mStationID_Position);
                 i.putExtra(TransistorKeys.EXTRA_STATION, mStation);
                 i.putExtra(TransistorKeys.EXTRA_STATION_NEW_NAME, stationNewName);
                 LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(i);

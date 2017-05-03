@@ -1,1 +1,99 @@
-/*this file should be replaced with your Firebase file */
+{
+  "project_info": {
+    "project_number": "836193810810",
+    "firebase_url": "https://malah-transistor.firebaseio.com",
+    "project_id": "malah-transistor",
+    "storage_bucket": "malah-transistor.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:836193810810:android:d1f2feafdb14485d",
+        "android_client_info": {
+          "package_name": "org.malah.transistor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "836193810810-ug675tp6pch3svmnv90il5o6i5klm8e7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.malah.transistor",
+            "certificate_hash": "e737b0dc20bd522ac20598b009cc3061f127e62c"
+          }
+        },
+        {
+          "client_id": "836193810810-3fg4gga0jmnolndo16u83jihtdvnsdcp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlfcLwMPjtsQQaKak0s7qKLDuqM1_TLzA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "836193810810-3fg4gga0jmnolndo16u83jihtdvnsdcp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:836193810810:android:cb1db904585082dd",
+        "android_client_info": {
+          "package_name": "org.malah.transistor.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "836193810810-ph52udbmqvhaloco7p9tn1m4887vug6k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.malah.transistor.debug",
+            "certificate_hash": "e737b0dc20bd522ac20598b009cc3061f127e62c"
+          }
+        },
+        {
+          "client_id": "836193810810-3fg4gga0jmnolndo16u83jihtdvnsdcp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlfcLwMPjtsQQaKak0s7qKLDuqM1_TLzA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "836193810810-3fg4gga0jmnolndo16u83jihtdvnsdcp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

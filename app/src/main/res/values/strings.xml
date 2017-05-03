@@ -141,17 +141,17 @@
     <string name="infosheet_howto_p_backup">Transistor has support for the Auto Backup feature in Android 6. Radio stations are always backed up to your Google account and will be restored at reinstall.On devices running on older versions of Android you must manually save and restore the &quot;/Android/data/{{Application-Name}}/files/Collection&quot; folder and &quot;//data/data/{{Application-Name}}/databases/&quot; folder.</string>
     <string name="infosheet_howto_h2_settings">Why are there no settings in Transistor?</string>
     <string name="infosheet_howto_p_settings">There is nothing to set ;). Transistor is a very simple app.Depending on your point of view &quot;simple&quot; is either great or lame.</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="playerFragmentTag">playerFragmentTag</string>
-    <string name="animate">animate</string>
-    <string name="loading">loading</string>
-    <string name="stoped">stoped</string>
-    <string name="mainImageForSation">mainImageForSation</string>
-    <string name="desciption">Desciption</string>
-    <string name="change_station_photo">Change Station Photo</string>
-    <string name="grid_view">Grid View</string>
-    <string name="list_view">List View</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+    <string name="playerFragmentTag" translatable="false">playerFragmentTag</string>
+    <string name="animate" translatable="false">animate</string>
+    <string name="loading" translatable="false">loading</string>
+    <string name="stoped" translatable="false">stoped</string>
+    <string name="mainImageForSation" translatable="false">mainImageForSation</string>
+    <string name="desciption" translatable="false">Desciption</string>
+    <string name="change_station_photo" translatable="false">Change Station Photo</string>
+    <string name="grid_view" translatable="false">Grid View</string>
+    <string name="list_view" translatable="false">List View</string>
 
     <!-- 
     +++ IMPORTANT NOTE +++

@@ -64,7 +64,7 @@ public class StationsDbHelper extends SQLiteOpenHelper {
     }
 
     //delete station from DB
-    public int DeleteStation(int station_ID) {
+    public int DeleteStation(long station_ID) {
         // Gets the data repository in write mode
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -88,7 +88,7 @@ public class StationsDbHelper extends SQLiteOpenHelper {
 
 
     //rename station from DB
-    public int RenameStation(int station_ID, String newStationName) {
+    public int RenameStation(long station_ID, String newStationName) {
         SQLiteDatabase db = this.getWritableDatabase();
         //update db
         ContentValues newValues = new ContentValues();
@@ -98,7 +98,7 @@ public class StationsDbHelper extends SQLiteOpenHelper {
     }
 
     //delete station from DB
-    public int ChangeRatingOfStation(int station_ID, int newRating) {
+    public int ChangeRatingOfStation(long station_ID, int newRating) {
         SQLiteDatabase db = this.getWritableDatabase();
         //update db
         ContentValues newValues = new ContentValues();

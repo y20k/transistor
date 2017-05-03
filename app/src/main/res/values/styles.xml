@@ -11,7 +11,8 @@
         <item name="android:textColorSecondary">@color/textColorSecondary</item>
         <item name="android:textColorPrimary">@color/textColorPrimary</item>
         <!--<item name="android:dialogTheme">@style/DefaultAlertDialogTheme</item>-->
-        <item name="android:alertDialogTheme">@style/Theme.AppCompat.Dialog.Alert</item>
+        <item name="android:alertDialogTheme">@style/Base.Theme.AppCompat.Light.Dialog.Alert</item>
+
 
     </style>
     <style name="TransistorAppTheme.NoActionBar">

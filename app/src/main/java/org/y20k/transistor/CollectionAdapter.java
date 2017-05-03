@@ -164,6 +164,11 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
         } else if (station.IMAGE_PATH != null && station.IMAGE_PATH != "") {
             holder.getStationImageView().setImageURI(station.IMAGE_PATH);//.setImageBitmap(stationImageSmall);
         }
+
+        // set station Small image (to help cache image only if it's not already cached - this cache is Async)
+        File stationSmallImageFile = station.getStationSmallImage(mActivity);
+        stationSmallImageFile = null; //currently not needed
+
         // set station name
         holder.getStationNameView().setText(station.TITLE);
         holder.getRatingBarView().setRating(station.RATING);
@@ -179,7 +184,7 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
         FloatingActionButton fabPlayButton = holder.getFabPlayButton();
 
 
-        if( mPlayback && (station.getPlaybackState())){
+        if (mPlayback && (station.getPlaybackState())) {
             if (SingletonProperties.getInstance().CurrentSelectedStation_Playback_Status == PlaybackStatus.LOADING) {
                 holder.getPlaybackIndicator().setBackgroundResource(R.drawable.ic_playback_indicator_small_loading_24dp);
                 fabPlayButton.setImageResource(R.drawable.progress_loading);
@@ -189,7 +194,7 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
                 fabPlayButton.setImageResource(R.drawable.smbl_stop);
                 fabPlayButton.setTag(STOP_STATUS);
             }
-        }else{
+        } else {
             //default
             fabPlayButton.setImageResource(R.drawable.smbl_play);
             fabPlayButton.setTag(PLAY_STATUS);
@@ -263,7 +268,7 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
         return position;
     }
 
-    public int getItemPosition(int _ID) {
+    public int getItemPosition(long _ID) {
         int position = -1;
         for (int i = 0; i < mStationList.size(); i++) {
             if (mStationList.get(i)._ID == _ID) {
@@ -332,7 +337,7 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
             Intent intent = new Intent(mActivity, PlayerActivity.class);
             intent.setAction(TransistorKeys.ACTION_SHOW_PLAYER);
             intent.putExtra(TransistorKeys.EXTRA_STATION, station);
-            intent.putExtra(TransistorKeys.EXTRA_STATION_ID, position);
+            intent.putExtra(TransistorKeys.EXTRA_STATION_Position_ID, position);
 
             if (theHolder != null && android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                 //for Motion (transaction) between activities
@@ -370,7 +375,7 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
             Intent intent = new Intent(mActivity, PlayerService.class);
             intent.setAction(TransistorKeys.ACTION_PLAY);
             intent.putExtra(TransistorKeys.EXTRA_STATION, mStationList.get(position));
-            intent.putExtra(TransistorKeys.EXTRA_STATION_ID, position);
+            intent.putExtra(TransistorKeys.EXTRA_STATION_Position_ID, position);
             mActivity.startService(intent);
             LogHelper.v(LOG_TAG, "Starting player service.");
 
@@ -425,10 +430,9 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
 
     /* Setter for ID of currently selected station */
     public void setStationIDSelected(int stationIDSelectedPosition, boolean playbackState, boolean startPlayback) {
-        mStationIDSelected = stationIDSelectedPosition;
         saveAppState(mActivity);
-        if (mTwoPane && mStationIDSelected >= 0 && mStationIDSelected < mStationList.size()) {
-            handleSingleClick(mStationIDSelected, null);
+        if (mTwoPane && stationIDSelectedPosition >= 0 && stationIDSelectedPosition < mStationList.size()) {
+            handleSingleClick(stationIDSelectedPosition, null);
         }
 
         if (startPlayback) {
@@ -436,7 +440,7 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
             Intent intent = new Intent(mActivity, PlayerService.class);
             intent.setAction(TransistorKeys.ACTION_PLAY);
             intent.putExtra(TransistorKeys.EXTRA_STATION, mStationList.get(stationIDSelectedPosition));
-            intent.putExtra(TransistorKeys.EXTRA_STATION_ID, stationIDSelectedPosition);
+            intent.putExtra(TransistorKeys.EXTRA_STATION_Position_ID, stationIDSelectedPosition);
             mActivity.startService(intent);
             LogHelper.v(LOG_TAG, "Starting player service.");
         }
@@ -554,25 +558,27 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
 
 
     /* Delete station within collection */
-    public int delete(Station station, int stationID) {
+    public int delete(Station station) {
 
         boolean success = false;
 
         // get old station
-        Station oldStation = mStationList.get(stationID);
-
+        int stationID_Possition = mStationList.indexOf(station);
         //delete from db
         //update DB
         //db test
         StationsDbHelper mDbHelper = new StationsDbHelper(mActivity);
-        int resulti = mDbHelper.DeleteStation(oldStation._ID);
+
+        int resulti = mDbHelper.DeleteStation(station._ID);
+
         if (resulti > 0) {
             success = true;
         }
 
         // remove station and notify user
         if (success) {
-            mStationList.removeItemAt(stationID);
+            int logInt =mStationList.indexOf(station);
+            mStationList.removeItemAt(mStationList.indexOf(station));
             Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_delete_successful), Toast.LENGTH_LONG).show();
         }
 
@@ -581,16 +587,17 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
         shortcutHelper.removeShortcut(station);
 
         if (mTwoPane) {
+
             // determine ID of next station to display in two pane mode
-            if (mStationList.size() >= stationID) {
-                stationID--;
+            if (mStationList.size() >= stationID_Possition) {
+                stationID_Possition--;
             }
 
-            if (stationID >= 0) {
+            if (stationID_Possition >= 0) {
                 // show next station
                 Bundle args = new Bundle();
-                args.putParcelable(TransistorKeys.ARG_STATION, mStationList.get(stationID));
-                args.putInt(TransistorKeys.ARG_STATION_ID, stationID);
+                args.putParcelable(TransistorKeys.ARG_STATION, mStationList.get(stationID_Possition));
+                args.putInt(TransistorKeys.ARG_STATION_ID, stationID_Possition);
                 args.putBoolean(TransistorKeys.ARG_TWO_PANE, mTwoPane);
                 PlayerActivityFragment playerActivityFragment = new PlayerActivityFragment();
                 playerActivityFragment.setArguments(args);
@@ -601,7 +608,7 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
         }
 
         // return ID of next station
-        return stationID;
+        return stationID_Possition;
     }
 
 
@@ -611,12 +618,10 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
         // load app state
         loadAppState(mActivity);
 
-        if (intent.hasExtra(TransistorKeys.EXTRA_PLAYBACK_STATE_CHANGE) && intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)) {
+        if (intent.hasExtra(TransistorKeys.EXTRA_PLAYBACK_STATE_CHANGE)) {
 
             notifyDataSetChanged();
 
-            // get station ID from intent
-            int stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
             switch (intent.getIntExtra(TransistorKeys.EXTRA_PLAYBACK_STATE_CHANGE, 1)) {
 
                 // CASE: player is preparing stream

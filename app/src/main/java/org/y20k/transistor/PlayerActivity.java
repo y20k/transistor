@@ -127,9 +127,9 @@ public final class PlayerActivity extends AppCompatActivity   {
             }
 
             // get id of station from intent
-            int stationID = 0;
-            if (intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)) {
-                stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
+            int stationID_Position = 0;
+            if (intent.hasExtra(TransistorKeys.EXTRA_STATION_Position_ID)) {
+                stationID_Position = intent.getIntExtra(TransistorKeys.EXTRA_STATION_Position_ID, 0);
             }
 
             // get playback action from intent (if started from shortcut)
@@ -150,7 +150,7 @@ public final class PlayerActivity extends AppCompatActivity   {
             // create bundle for player activity fragment
             Bundle args = new Bundle();
             args.putParcelable(TransistorKeys.ARG_STATION, mStation);
-            args.putInt(TransistorKeys.ARG_STATION_ID, stationID);
+            args.putInt(TransistorKeys.ARG_STATION_ID, stationID_Position);
             args.putBoolean(TransistorKeys.ARG_PLAYBACK, startPlayback);
 
             PlayerActivityFragment playerActivityFragment = new PlayerActivityFragment();
@@ -280,10 +280,9 @@ public final class PlayerActivity extends AppCompatActivity   {
         switch (intent.getIntExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, 1)) {
             // CASE: station was renamed
             case TransistorKeys.STATION_RENAMED:
-                if (intent.hasExtra(TransistorKeys.EXTRA_STATION_NEW_NAME) && intent.hasExtra(TransistorKeys.EXTRA_STATION) && intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)) {
+                if (intent.hasExtra(TransistorKeys.EXTRA_STATION_NEW_NAME) && intent.hasExtra(TransistorKeys.EXTRA_STATION)  ) {
                     Station station = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
                     if (station._ID == mStation._ID) {
-                        int stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
                         //set title subtitle
                         mStation.TITLE = station.TITLE;
                         mStation.SUBTITLE = station.SUBTITLE;
@@ -297,11 +296,11 @@ public final class PlayerActivity extends AppCompatActivity   {
 
                 break;
             case TransistorKeys.STATION_CHANGED_IMAGE:
-                if (intent.hasExtra(TransistorKeys.EXTRA_STATION) && intent.hasExtra(TransistorKeys.EXTRA_STATION_ID)) {
+                if (intent.hasExtra(TransistorKeys.EXTRA_STATION) && intent.hasExtra(TransistorKeys.EXTRA_STATION_DB_ID)) {
                     //update image
                     // get new name, station and station ID from intent
                     Station station = intent.getParcelableExtra(TransistorKeys.EXTRA_STATION);
-                    int stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_ID, 0);
+                    int stationID = intent.getIntExtra(TransistorKeys.EXTRA_STATION_DB_ID, 0);
                     if (station._ID == mStation._ID) {
                         setStationImageUi();
                     }

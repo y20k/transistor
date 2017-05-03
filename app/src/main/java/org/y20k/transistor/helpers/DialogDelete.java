@@ -36,14 +36,14 @@ public final class DialogDelete {
     /* Main class variables */
     private final Activity mActivity;
     private final Station mStation;
-    private final int mStationID;
+    private final int mStationID_Position;
 
 
     /* Constructor */
-    public DialogDelete(Activity activity, Station station, int stationID) {
+    public DialogDelete(Activity activity, Station station, int stationID_Position) {
         mActivity = activity;
         mStation = station;
-        mStationID = stationID;
+        mStationID_Position = stationID_Position;
     }
 
 
@@ -64,7 +64,7 @@ public final class DialogDelete {
                 i.setAction(TransistorKeys.ACTION_COLLECTION_CHANGED);
                 i.putExtra(TransistorKeys.EXTRA_COLLECTION_CHANGE, TransistorKeys.STATION_DELETED);
                 i.putExtra(TransistorKeys.EXTRA_STATION, mStation);
-                i.putExtra(TransistorKeys.EXTRA_STATION_ID, mStationID);
+                i.putExtra(TransistorKeys.EXTRA_STATION_Position_ID, mStationID_Position);
                 LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(i);
 
             }

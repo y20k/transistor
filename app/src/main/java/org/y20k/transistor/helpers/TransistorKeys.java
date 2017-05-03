@@ -42,7 +42,8 @@ public class TransistorKeys {
     public static final String EXTRA_PLAYBACK_STATE = "PLAYBACK_STATE";
     public static final String EXTRA_STATION = "STATION";
     public static final String EXTRA_STATIONS = "STATIONS";
-    public static final String EXTRA_STATION_ID = "STATION_ID";
+    public static final String EXTRA_STATION_Position_ID = "STATION_ID";
+    public static final String EXTRA_STATION_DB_ID = "STATION_DB_ID";
     public static final String EXTRA_LAST_STATION = "LAST_STATION";
     public static final String EXTRA_STATION_NEW_NAME = "STATION_NEW_NAME";
     public static final String EXTRA_STREAM_URI = "STREAM_URI";

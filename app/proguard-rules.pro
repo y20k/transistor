@@ -18,3 +18,7 @@
 
 -keepattributes Signature
 -keepattributes *Annotation*
+
+-dontwarn javax.servlet.**
+-dontwarn org.joda.time.**
+-dontwarn com.facebook.**
