@@ -4,7 +4,7 @@ README
 Open-Transistor - Radio App for Android
 ----------------------------------
 
-**Version 3.1.0 (Beta) **
+**Version 3.1.1 (Beta) **
 
 Transistor is a bare bones app for listening to radio programs over the internet. The app stores stations as files on your device's external storage. It currently understands streams encoded in MP3 and OGG.
 
@@ -25,7 +25,7 @@ What's new in Open-Transistor
 - Add login by Google account function (currently nothing happend after login, but in the next versions we can connect user by ID and save his data to cloud for example, and many more.)
 	
 
-Install Transistor
+Install Open-Transistor
 ------------------
 Download the latest beta from HockeyApp :
 
@@ -33,9 +33,10 @@ Download the latest beta from HockeyApp :
 
 [<img alt="Chart?cht=qr&amp;chl=https%3a%2f%2frink.hockeyapp" src="https://chart.googleapis.com/chart?cht=qr&amp;chl=https%3A%2F%2Frink.hockeyapp.net%2Fapps%2F2b8994e7a60b485dad0a5507ceb05c01&amp;chs=192x192">](https://rink.hockeyapp.net/apps/2b8994e7a60b485dad0a5507ceb05c01)
 
-How to use Transistor
+How to use Open-Transistor
 ---------------------
-Vew a short video on how to use Transistor on [Vimeo](https://vimeo.com/181179583).
+Vew a short video on how to use Transistor on [Vimeo](https://vimeo.com/215778690).
+	[![IMAGE ALT TEXT HERE](https://i.vimeocdn.com/video/632580200_640.webp)](https://vimeo.com/215778690#)
 ### How to add a new radio station?
 The easiest way to add a new station is to search for streaming links and then choose Transistor as a your default handler for those file types. You can also tap the (+) symbol in the top bar and paste in streaming links directly. Please note: Transistor does not feature any kind of built-in search option.
 Also, it's new in that version , you are able to add bulk of stations with it's metadata from XML file, file format can be as below sample 
