@@ -33,19 +33,19 @@
     <string name="descr_playback_indicator_started">Indikator for avspillingsfremdrift</string>
     <string name="descr_timer_indicator_started">Aktiv tidsavbruddsindikator</string>
     <string name="descr_player_sheet_information_icon">Information Icon</string>
-    <string name="descr_player_sheet_content_copy_icon">Content copy icon</string>
-    <string name="descr_player_sheet_p_station_name">Name of selected radio station</string>
-    <string name="descr_player_sheet_p_station_metadata">Metadata from selected radio station</string>
-    <string name="descr_player_sheet_p_stream_url">Stream URL of selected radio station</string>
+    <string name="descr_player_sheet_content_copy_icon">Ikon for innholdskopiering</string>
+    <string name="descr_player_sheet_p_station_name">Navn på valgt radiostasjon</string>
+    <string name="descr_player_sheet_p_station_metadata">Metadata fra valgt radiostasjon</string>
+    <string name="descr_player_sheet_p_stream_url">Strømningsnettadresse fra valgt radiostasjon</string>
 
     <!-- player -->
-    <string name="player_sheet_h1_station_name">Station</string>
-    <string name="player_sheet_h1_station_metadata">Currently Playing</string>
-    <string name="player_sheet_h1_stream_url">Stream URL</string>
-    <string name="player_sheet_p_station_metadata">no metadata available</string>
-    <string name="player_sheet_h1_station_mime_type">MIME type</string>
-    <string name="player_sheet_h1_station_channel_count">Channel count</string>
-    <string name="player_sheet_h1_station_sample_rate">Sample rate</string>
+    <string name="player_sheet_h1_station_name">Stasjon</string>
+    <string name="player_sheet_h1_station_metadata">Spilles nå</string>
+    <string name="player_sheet_h1_stream_url">Strømningsnettadresse</string>
+    <string name="player_sheet_p_station_metadata">ingen metadata tilgjengelig</string>
+    <string name="player_sheet_h1_station_mime_type">MIME-type</string>
+    <string name="player_sheet_h1_station_channel_count">Kanalantall</string>
+    <string name="player_sheet_h1_station_sample_rate">Samplingsrate</string>
     <string name="player_sheet_h1_station_bitrate">Bitrate</string>
 
     <!-- dialogs -->
@@ -53,8 +53,8 @@
     <string name="dialog_generic_button_cancel">Avbryt</string>
     <string name="dialog_add_station_button">Legg til</string>
     <string name="dialog_add_station_input_hint">Lim inn en gyldig nettadresse til strøm</string>
-    <string name="dialog_add_station_message">Legg til ny stasjon</string>
-    <string name="dialog_add_station_howto">Du kan legge til råe lydstrømmer kodet som MP3 og OGG sågar også strømmer innkapslet i pls eller m3u-filer. Alternativt kan du legge til nye stasjoner ved å trykke på strømmingslenker (pls eller m3u) i nettleseren din.</string>
+    <string name="dialog_add_station_message">Legg til en ny stasjon</string>
+    <string name="dialog_add_station_howto">Du kan legge til råe lydstrømmer kodet som MP3 og OGG sågar også strømmer innkapslet i pls eller m3u-filer. Alternativt kan du legge til nye stasjoner ved å trykke på strømmingslenker (.pls eller .m3u) i nettleseren din.</string>
     <string name="dialog_delete_station_message">Slett stasjon</string>
     <string name="dialog_button_delete">Slett</string>
     <string name="dialog_rename_station_input_hint">Skriv inn nytt navn</string>
@@ -82,15 +82,15 @@
     <string name="dialog_error_message_fetch_write">Transistor prøvde hardt, men kunne ikke lagre angitt stasjon til lagringsmedium.</string>
 
     <!-- messages -->
-    <string name="actioncall_message_start_here">Legg il ny stasjon</string>
+    <string name="actioncall_message_start_here">Legg til ny stasjon</string>
     <string name="toastmessage_add_download_started">Nedlasting startet.</string>
     <string name="toastmessage_add_open_file_started">Åpner fil.</string>
     <string name="toastmessage_long_press_playback_stopped">Avspilling stoppet (enset langt trykk)</string>
     <string name="toastmessage_long_press_playback_started">Avspilling startet (langt trykk enset)</string>
     <string name="toastmessage_shortcut_created">Snarvei opprettet.</string>
-    <string name="toastmessage_copied_to_clipboard_url">Stream URL copied to clipboard.</string>
-    <string name="toastmessage_copied_to_clipboard_metadata">Metadata copied to clipboard.</string>
-    <string name="toastmessage_station_copied">Stasjon kopiert.</string>
+    <string name="toastmessage_copied_to_clipboard_url">Strømningsnettadresse kopiert til utklippstavle.</string>
+    <string name="toastmessage_copied_to_clipboard_metadata">Metadata kopiert til utklippstavle.</string>
+    <string name="toastmessage_station_copied">Stasjon kopiert til utklippstavle.</string>
     <string name="toastmessage_stream_may_not_work">Ustøttet lydformat oppdaget. Avspilling av strømmen kan bli skadelidende.</string>
     <string name="toastmessage_timer_activated">Tidsavbrudd aktivert.</string>
     <string name="toastmessage_timer_cancelled">Tidsavbrudd avbrutt.</string>
@@ -127,9 +127,9 @@
     <string name="infosheet_about_h3_internet">Tilgang INTERNET</string>
     <string name="infosheet_about_p_internet">Transistor strømmer radiostasjoner over Internett.</string>
     <string name="infosheet_about_h3_external">Tilgang READ_EXTERNAL_STORAGE</string>
-    <string name="infosheet_about_p_external">Tilgang trenger tilgang til bilder og dokumenter for å skreddersy radiostasjoners miniatyrbilder og for å kunne åpne lokalt lagrede spilleliste-filer.</string>
+    <string name="infosheet_about_p_external">Tilgang trenger tilgang til bilder og dokumenter for å kunne skreddersy radiostasjoners miniatyrbilder, og for å kunne åpne lokalt lagrede spilleliste-filer.</string>
     <string name="infosheet_about_h3_vibrate">Tilgang VIBRATE</string>
-    <string name="infosheet_about_p_vibrate">Trykk og hold på vilkårlig radiostasjon vil utløse en liten vibrasjon.</string>
+    <string name="infosheet_about_p_vibrate">Å trykke og holde en vilkårlig radiostasjon vil utløse en liten vibrasjon.</string>
     <string name="infosheet_about_h3_wakelock">Tilgang WAKE_LOCK</string>
     <string name="infosheet_about_p_wakelock">Ved avspilling innhenter Transistor en såkalt delvis oppvåkningslås. Dette forhindrer Android-systemet i å stoppe avspilling for å spare strøm.</string>
 
@@ -150,7 +150,7 @@
     <string name="infosheet_howto_h2_storage">Hvor lagrer Transistor sine stasjoner?</string>
     <string name="infosheet_howto_p_storage">Transistor lagrer ikke stasjonslisten i en database. Istedenfor lagres stasjoner som m3u-filer på din enhets lagringsmedium. Du kan tukle med disse filene som du vil ved bruk av en tekstbehandler. FIlene lagres i /Android/data/org.y20k.transistor/files/Collection.</string>
     <string name="infosheet_howto_h2_backup">Hvordan kan jeg sikkerhetskopiere og overføre mine radiostasjoner?</string>
-    <string name="infosheet_howto_p_backup">Transistor støtter funksjonen for automatisk sikkerhetskopiering i Android 6. Radiostasjoner blir alltid synkronisert til din Google-konto og blir gjenopprettet ved nye installasjoner. På enheter som kjører eldre versjoner av Android må du manuelt lagre og gjennopprette mappen med din samling.</string>
+    <string name="infosheet_howto_p_backup">Transistor har støtte for funksjonen \'automatisk sikkerhetskopiering\' i Android 6. Radiostasjoner blir alltid synkronisert til din Google-konto og blir gjenopprettet ved nye installasjoner. På enheter som kjører eldre versjoner av Android må du manuelt lagre og gjennopprette mappen med din samling.</string>
     <string name="infosheet_howto_h2_sleep">Hvordan starte tidsavbrudd?</string>
     <string name="infosheet_howto_p_sleep">Trykk på klokkesymbolet for å igangsette et kvarters nedtelling. Når denne fullføres vil Transistor stoppe all avspilling. Ytterligere trykk utsetter tidsavbruddet med ytterligere 15 minutter. Noe må spilles av for å kunne aktivere tidsavbrudd.</string>
 
