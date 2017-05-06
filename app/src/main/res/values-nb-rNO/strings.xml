@@ -30,7 +30,7 @@
     <string name="descr_station_stream_loading">Laster strøm …</string>
     <string name="descr_playback_button">Stor avspillingsknapp</string>
     <string name="descr_playback_indicator">Indikator for avspillingsfremdrift</string>
-    <string name="descr_playback_indicator_started">Indikator for avspillingsfremdrift</string>
+    <string name="descr_playback_indicator_started">Indikator for avspillingsaktivitet</string>
     <string name="descr_timer_indicator_started">Aktiv tidsavbruddsindikator</string>
     <string name="descr_player_sheet_information_icon">Information Icon</string>
     <string name="descr_player_sheet_content_copy_icon">Ikon for innholdskopiering</string>
@@ -66,7 +66,7 @@
     <string name="dialog_error_message_default">En feil inntraff</string>
     <string name="dialog_error_details_button_default">Vis detaljer</string>
     <string name="dialog_error_details_default">Ingen detaljer tilgjengelig</string>
-    <string name="dialog_error_details_write">Stasjon er antageligvis et duplikat, eller så bør du kanskje sjekke eksternt lagringsmedium.</string>
+    <string name="dialog_error_details_write">Stasjonen er antageligvis et duplikat, eller så bør du kanskje sjekke eksternt lagringsmedium.</string>
     <string name="dialog_error_title_fetch_download">Last ned feilmelding</string>
     <string name="dialog_error_title_fetch_read">Les feilmelding</string>
     <string name="dialog_error_title_fetch_write">Skriv feilmelding</string>
