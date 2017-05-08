@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '25.0.3'
+    compileSdkVersion project.ext.compileSdkVersion
+    buildToolsVersion project.ext.buildToolsVersion
 
     defaultConfig {
         applicationId "org.y20k.transistor"
-        minSdkVersion 19
-        targetSdkVersion 25
+        minSdkVersion project.ext.minSdkVersion
+        targetSdkVersion project.ext.targetSdkVersion
         versionCode 37
         versionName "2.2.2 (Sons Of The Silent Age)"
         vectorDrawables.useSupportLibrary = true
@@ -27,7 +27,15 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
-    compile project(':ExoPlayer:library')
+    compile 'com.android.support:appcompat-v7:' + supportLibraryVersion
+    compile 'com.android.support:design:' + supportLibraryVersion
+//    compileSdkVersion = 25
+//    targetSdkVersion = 37
+//    buildToolsVersion = '25.0.3'
+//    testSupportLibraryVersion = '0.5'
+//    supportLibraryVersion = '25.3.1'
+//    dexmakerVersion = '1.2'
+//    mockitoVersion = '1.9.5'
+    compile project(":library:core")
+    compile project(":library:hls")
 }

@@ -16,4 +16,25 @@ allprojects {
     repositories {
         jcenter()
     }
+    project.ext {
+        minSdkVersion = 19
+        compileSdkVersion = 25
+        targetSdkVersion = 37
+        buildToolsVersion = '25.0.3'
+        testSupportLibraryVersion = '0.5'
+        supportLibraryVersion = '25.3.1'
+        dexmakerVersion = '1.2'
+        mockitoVersion = '1.9.5'
+//        releaseRepoName = getBintrayRepo()
+//        releaseUserOrg = 'google'
+//        releaseGroupId = 'com.google.android.exoplayer'
+//        releaseVersion = 'r2.4.0'
+//        releaseWebsite = 'https://github.com/google/ExoPlayer'
+    }
+    if (it.hasProperty('externalBuildDir')) {
+        if (!new File(externalBuildDir).isAbsolute()) {
+            externalBuildDir = new File(rootDir, externalBuildDir)
+        }
+        buildDir = "${externalBuildDir}/${project.name}"
+    }
 }

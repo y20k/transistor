@@ -1,1 +1,1 @@
-include ':app', ':ExoPlayer:library'
+include ':app', ':library:core', ':library:hls'
