@@ -64,6 +64,10 @@ public interface TransistorKeys {
     String PREF_STATION_ID_LAST = "prefStationIDLast";
     String PREF_STATION_ID_SELECTED = "prefStationIDSelected";
     String PREF_STATION_METADATA = "prefStationMetadata";
+    String PREF_STATION_MIME_TYPE = "prefStationMimeType";
+    String PREF_STATION_CHANNEL_COUNT = "prefStationChannelCount";
+    String PREF_STATION_SAMPLE_RATE = "prefStationSampleRate";
+    String PREF_STATION_BIT_RATE = "prefStationBitRate";
     String PREF_TIMER_RUNNING = "prefTimerRunning";
     String PREF_TWO_PANE = "prefTwoPane";
 

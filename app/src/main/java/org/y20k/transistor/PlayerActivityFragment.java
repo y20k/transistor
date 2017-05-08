@@ -76,8 +76,12 @@ public final class PlayerActivityFragment extends Fragment implements Transistor
     private Activity mActivity;
     private View mRootView;
     private String mStationName;
-    private String mStationMetadata;
     private String mStreamUri;
+    private String mStationMetadata;
+    private String mStationMimeType;
+    private int mStationChannelCount;
+    private int mStationSampleRate;
+    private int mStationBitRate;
     private TextView mStationNameView;
     private TextView mStationMetadataView;
     private ImageView mStationImageView;
@@ -472,6 +476,10 @@ public final class PlayerActivityFragment extends Fragment implements Transistor
 
         // reset metadata
         mStationMetadata = null;
+        mStationMimeType = null;
+        mStationChannelCount = -1;
+        mStationSampleRate = -1;
+        mStationBitRate = -1;
 
         // rotate playback button
         changeVisualState(mActivity);
@@ -661,6 +669,7 @@ public final class PlayerActivityFragment extends Fragment implements Transistor
             mStationMetadataView.setVisibility(View.VISIBLE);
             mStationMetadataView.setSelected(true);
             mStationDataSheetMetadataLayout.setVisibility(View.VISIBLE);
+            displayExtendedMetaData();
         }
         // playback stopped
         else {
@@ -695,6 +704,10 @@ public final class PlayerActivityFragment extends Fragment implements Transistor
         mStationIDLast = settings.getInt(PREF_STATION_ID_LAST, -1);
         mStationID = settings.getInt(PREF_STATION_ID_SELECTED, 0);
         mStationMetadata = settings.getString(PREF_STATION_METADATA, null);
+        mStationMimeType = settings.getString(PREF_STATION_MIME_TYPE, null);
+        mStationChannelCount = settings.getInt(PREF_STATION_CHANNEL_COUNT, -1);
+        mStationSampleRate = settings.getInt(PREF_STATION_SAMPLE_RATE, -1);
+        mStationBitRate = settings.getInt(PREF_STATION_BIT_RATE, -1);
         mPlayback = settings.getBoolean(PREF_PLAYBACK, false);
         mStationLoading = settings.getBoolean(PREF_STATION_LOADING, false);
         LogHelper.v(LOG_TAG, "Loading state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + " / " + mStationLoading + " / " + mStationMetadata + ")");
@@ -845,34 +858,12 @@ public final class PlayerActivityFragment extends Fragment implements Transistor
                         mStationMetadataView.setText(mStationName);
                         mStationDataSheetMetadata.setText(mStationName);
                     }
-                    // fill and show mime type bottom sheet view
-                    String mimeType = station.getMimeType();
-                    if (mimeType != null) {
-                        TextView stationDataSheetMimeTypeView = (TextView) mRootView.findViewById(R.id.station_data_sheet_mime_type);
-                        stationDataSheetMimeTypeView.setText(mimeType);
-                        mStationDataSheetMimeTypeLayout.setVisibility(View.VISIBLE);
-                    }
-                    // fill and show channel count bottom sheet view
-                    int channelCount = station.getChannelCount();
-                    if (channelCount > 0) {
-                        TextView stationDataSheetChannelCountView = (TextView) mRootView.findViewById(R.id.station_data_sheet_channel_count);
-                        stationDataSheetChannelCountView.setText(String.valueOf(channelCount));
-                        mStationDataSheetChannelCountLayout.setVisibility(View.VISIBLE);
-                    }
-                    // fill and show sample rate bottom sheet view
-                    int sampleRate = station.getSampleRate();
-                    if (sampleRate > 0) {
-                        TextView stationDataSheetSampleRateView = (TextView) mRootView.findViewById(R.id.station_data_sheet_sample_rate);
-                        stationDataSheetSampleRateView.setText(String.valueOf(sampleRate));
-                        mStationDataSheetSampleRateLayout.setVisibility(View.VISIBLE);
-                    }
-                    // fill and show bit rate bottom sheet view
-                    int bitRate = station.getBitrate();
-                    if (bitRate > 0) {
-                        TextView stationDataSheetBitRateView = (TextView) mRootView.findViewById(R.id.station_data_sheet_bitrate);
-                        stationDataSheetBitRateView.setText(String.valueOf(bitRate));
-                        mStationDataSheetBitRateLayout.setVisibility(View.VISIBLE);
-                    }
+                    // update and display extended meta data
+                    mStationMimeType = station.getMimeType();
+                    mStationChannelCount = station.getChannelCount();
+                    mStationSampleRate = station.getSampleRate();
+                    mStationBitRate = station.getBitrate();
+                    displayExtendedMetaData();
 
                     mStationMetadataView.setSelected(true);
                 }
@@ -892,6 +883,35 @@ public final class PlayerActivityFragment extends Fragment implements Transistor
                 break;
         }
     }
+
+
+    private void displayExtendedMetaData() {
+        // fill and show mime type bottom sheet view
+        if (mStationMimeType != null) {
+            TextView stationDataSheetMimeTypeView = (TextView) mRootView.findViewById(R.id.station_data_sheet_mime_type);
+            stationDataSheetMimeTypeView.setText(mStationMimeType);
+            mStationDataSheetMimeTypeLayout.setVisibility(View.VISIBLE);
+        }
+        // fill and show channel count bottom sheet view
+        if (mStationChannelCount > 0) {
+            TextView stationDataSheetChannelCountView = (TextView) mRootView.findViewById(R.id.station_data_sheet_channel_count);
+            stationDataSheetChannelCountView.setText(String.valueOf(mStationChannelCount));
+            mStationDataSheetChannelCountLayout.setVisibility(View.VISIBLE);
+        }
+        // fill and show sample rate bottom sheet view
+        if (mStationSampleRate > 0) {
+            TextView stationDataSheetSampleRateView = (TextView) mRootView.findViewById(R.id.station_data_sheet_sample_rate);
+            stationDataSheetSampleRateView.setText(String.valueOf(mStationSampleRate));
+            mStationDataSheetSampleRateLayout.setVisibility(View.VISIBLE);
+        }
+        // fill and show bit rate bottom sheet view
+        if (mStationBitRate > 0) {
+            TextView stationDataSheetBitRateView = (TextView) mRootView.findViewById(R.id.station_data_sheet_bitrate);
+            stationDataSheetBitRateView.setText(String.valueOf(mStationBitRate));
+            mStationDataSheetBitRateLayout.setVisibility(View.VISIBLE);
+        }
+    }
+
 
 
     /* Handles adding, deleting and renaming of station */

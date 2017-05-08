@@ -343,6 +343,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             mStation.setChannelCount(format.channelCount);
             mStation.setSampleRate(format.sampleRate);
             mStation.setBitrate(format.bitrate);
+            saveAppState();
         }
     }
 
@@ -718,6 +719,10 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         editor.putBoolean(PREF_PLAYBACK, mPlayback);
         editor.putBoolean(PREF_STATION_LOADING, mStationLoading);
         editor.putString(PREF_STATION_METADATA, mStationMetadata);
+        editor.putString(PREF_STATION_MIME_TYPE, mStation.getMimeType());
+        editor.putInt(PREF_STATION_CHANNEL_COUNT, mStation.getChannelCount());
+        editor.putInt(PREF_STATION_SAMPLE_RATE, mStation.getSampleRate());
+        editor.putInt(PREF_STATION_BIT_RATE, mStation.getBitrate());
         editor.apply();
         LogHelper.v(LOG_TAG, "Saving state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + " / " + mStationLoading + " / " + ")");
     }
