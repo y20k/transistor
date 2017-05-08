@@ -87,6 +87,10 @@ public final class PlayerActivityFragment extends Fragment implements Transistor
     private LinearLayout mStationDataSheetNameLayout;
     private LinearLayout mStationDataSheetMetadataLayout;
     private LinearLayout mStationDataSheetStreamUrlLayout;
+    private LinearLayout mStationDataSheetMimeTypeLayout;
+    private LinearLayout mStationDataSheetChannelCountLayout;
+    private LinearLayout mStationDataSheetSampleRateLayout;
+    private LinearLayout mStationDataSheetBitRateLayout;
     private View mStationDataSheet;
     private TextView mStationDataSheetMetadata;
     private BottomSheetBehavior mStationDataSheetBehavior;
@@ -208,6 +212,10 @@ public final class PlayerActivityFragment extends Fragment implements Transistor
         TextView stationDataSheetName = (TextView) mRootView.findViewById(R.id.station_data_sheet_name);
         mStationDataSheetMetadata = (TextView) mRootView.findViewById(R.id.station_data_sheet_metadata);
         TextView stationDataSheetStreamUrl = (TextView) mRootView.findViewById(R.id.station_data_sheet_stream_url);
+        mStationDataSheetMimeTypeLayout = (LinearLayout) mRootView.findViewById(R.id.station_data_sheet_mime_type_layout);
+        mStationDataSheetChannelCountLayout = (LinearLayout) mRootView.findViewById(R.id.station_data_sheet_channel_count_layout);
+        mStationDataSheetSampleRateLayout = (LinearLayout) mRootView.findViewById(R.id.station_data_sheet_sample_rate_layout);
+        mStationDataSheetBitRateLayout = (LinearLayout) mRootView.findViewById(R.id.station_data_sheet_bitrate_layout);
 
         // fill name and url
         stationDataSheetName.setText(mStationName);
@@ -663,6 +671,11 @@ public final class PlayerActivityFragment extends Fragment implements Transistor
             // hide metadata views
             mStationMetadataView.setVisibility(View.GONE);
             mStationDataSheetMetadataLayout.setVisibility(View.GONE);
+            mStationDataSheetMimeTypeLayout.setVisibility(View.GONE);
+            mStationDataSheetChannelCountLayout.setVisibility(View.GONE);
+            mStationDataSheetSampleRateLayout.setVisibility(View.GONE);
+            mStationDataSheetBitRateLayout.setVisibility(View.GONE);
+
             // mStationMetadata = null;
         }
 
@@ -824,7 +837,7 @@ public final class PlayerActivityFragment extends Fragment implements Transistor
                     // update loading status and playback indicator
                     mStationLoading = false;
                     mPlaybackIndicator.setBackgroundResource(R.drawable.ic_playback_indicator_started_24dp);
-                    // set metadata
+                    // fill metadata views
                     if (mStationMetadata != null) {
                         mStationMetadataView.setText(mStationMetadata);
                         mStationDataSheetMetadata.setText(mStationMetadata);
@@ -832,6 +845,35 @@ public final class PlayerActivityFragment extends Fragment implements Transistor
                         mStationMetadataView.setText(mStationName);
                         mStationDataSheetMetadata.setText(mStationName);
                     }
+                    // fill and show mime type bottom sheet view
+                    String mimeType = station.getMimeType();
+                    if (mimeType != null) {
+                        TextView stationDataSheetMimeTypeView = (TextView) mRootView.findViewById(R.id.station_data_sheet_mime_type);
+                        stationDataSheetMimeTypeView.setText(mimeType);
+                        mStationDataSheetMimeTypeLayout.setVisibility(View.VISIBLE);
+                    }
+                    // fill and show channel count bottom sheet view
+                    int channelCount = station.getChannelCount();
+                    if (channelCount > 0) {
+                        TextView stationDataSheetChannelCountView = (TextView) mRootView.findViewById(R.id.station_data_sheet_channel_count);
+                        stationDataSheetChannelCountView.setText(String.valueOf(channelCount));
+                        mStationDataSheetChannelCountLayout.setVisibility(View.VISIBLE);
+                    }
+                    // fill and show sample rate bottom sheet view
+                    int sampleRate = station.getSampleRate();
+                    if (sampleRate > 0) {
+                        TextView stationDataSheetSampleRateView = (TextView) mRootView.findViewById(R.id.station_data_sheet_sample_rate);
+                        stationDataSheetSampleRateView.setText(String.valueOf(sampleRate));
+                        mStationDataSheetSampleRateLayout.setVisibility(View.VISIBLE);
+                    }
+                    // fill and show bit rate bottom sheet view
+                    int bitRate = station.getBitrate();
+                    if (bitRate > 0) {
+                        TextView stationDataSheetBitRateView = (TextView) mRootView.findViewById(R.id.station_data_sheet_bitrate);
+                        stationDataSheetBitRateView.setText(String.valueOf(bitRate));
+                        mStationDataSheetBitRateLayout.setVisibility(View.VISIBLE);
+                    }
+
                     mStationMetadataView.setSelected(true);
                 }
                 break;
