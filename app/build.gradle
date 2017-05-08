@@ -5,11 +5,12 @@ android {
     buildToolsVersion project.ext.buildToolsVersion
 
     defaultConfig {
-        applicationId "org.y20k.transistor"
+        applicationId project.ext.applicationId
         minSdkVersion project.ext.minSdkVersion
         targetSdkVersion project.ext.targetSdkVersion
-        versionCode 37
-        versionName "2.2.2 (Sons Of The Silent Age)"
+        versionCode project.ext.versionCode
+        versionName project.ext.versionName
+
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
@@ -29,13 +30,6 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:' + supportLibraryVersion
     compile 'com.android.support:design:' + supportLibraryVersion
-//    compileSdkVersion = 25
-//    targetSdkVersion = 37
-//    buildToolsVersion = '25.0.3'
-//    testSupportLibraryVersion = '0.5'
-//    supportLibraryVersion = '25.3.1'
-//    dexmakerVersion = '1.2'
-//    mockitoVersion = '1.9.5'
     compile project(":library:core")
     compile project(":library:hls")
 }
