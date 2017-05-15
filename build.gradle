@@ -18,7 +18,7 @@ allprojects {
     }
     project.ext {
         applicationId = 'org.y20k.transistor'
-        versionCode = 37
+        versionCode = 38
         versionName = '2.2.3 (Sons Of The Silent Age)'
         minSdkVersion = 19
         compileSdkVersion = 25
