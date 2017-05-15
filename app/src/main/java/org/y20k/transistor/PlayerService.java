@@ -45,6 +45,7 @@ import android.widget.Toast;
 
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.DefaultLoadControl;
+import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
@@ -65,9 +66,8 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.upstream.DataSource;
-import com.google.android.exoplayer2.upstream.DataSpec;
 import com.google.android.exoplayer2.upstream.DefaultAllocator;
-import com.google.android.exoplayer2.upstream.TransferListener;
+import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.util.Util;
 import com.spoledge.aacdecoder.PlayerCallback;
 
@@ -582,34 +582,20 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         LoadControl loadControl = new DefaultLoadControl(new DefaultAllocator(true, C.DEFAULT_BUFFER_SEGMENT_SIZE * 2));
 
         // create the player
-        mExoPlayer = ExoPlayerFactory.newSimpleInstance(getApplicationContext(), trackSelector, loadControl);
+        mExoPlayer = ExoPlayerFactory.newSimpleInstance(new DefaultRenderersFactory(getApplicationContext()), trackSelector, loadControl);
     }
 
 
-    private void prepareExoPLayer(boolean sourceIsHLS, String uriString) {
-        // create listener for DataSource.Factory
-        TransferListener transferListener = new TransferListener() {
-            @Override
-            public void onTransferStart(Object source, DataSpec dataSpec) {
-                LogHelper.v(LOG_TAG, "onTransferStart\nSource: " + source.toString() + "\nDataSpec: " + dataSpec.toString());
-            }
-
-            @Override
-            public void onBytesTransferred(Object source, int bytesTransferred) {
-
-            }
-
-            @Override
-            public void onTransferEnd(Object source) {
-                LogHelper.v(LOG_TAG, "onTransferEnd\nSource: " + source.toString());
-            }
-        };
+    /* Add a media source to the ExoPlayer */
+    private void prepareExoPLayer(boolean sourceIsHLS) {
+        // create BandwidthMeter for DataSource.Factory
+        DefaultBandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
         // produce DataSource instances through which media data is loaded
-        DataSource.Factory dataSourceFactory = new CustomDefaultHttpDataSourceFactory(mUserAgent, transferListener, true, playerCallback);
+        DataSource.Factory dataSourceFactory = new CustomDefaultHttpDataSourceFactory(mUserAgent, bandwidthMeter, true, playerCallback);
         // create MediaSource
         MediaSource mediaSource;
         if (sourceIsHLS) {
-            mediaSource = new HlsMediaSource(Uri.parse(uriString),
+            mediaSource = new HlsMediaSource(Uri.parse(mStreamUri),
                     dataSourceFactory, 32, null, null);
         } else {
             ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
@@ -719,10 +705,12 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         editor.putBoolean(PREF_PLAYBACK, mPlayback);
         editor.putBoolean(PREF_STATION_LOADING, mStationLoading);
         editor.putString(PREF_STATION_METADATA, mStationMetadata);
-        editor.putString(PREF_STATION_MIME_TYPE, mStation.getMimeType());
-        editor.putInt(PREF_STATION_CHANNEL_COUNT, mStation.getChannelCount());
-        editor.putInt(PREF_STATION_SAMPLE_RATE, mStation.getSampleRate());
-        editor.putInt(PREF_STATION_BIT_RATE, mStation.getBitrate());
+        if (mStation != null) {
+            editor.putString(PREF_STATION_MIME_TYPE, mStation.getMimeType());
+            editor.putInt(PREF_STATION_CHANNEL_COUNT, mStation.getChannelCount());
+            editor.putInt(PREF_STATION_SAMPLE_RATE, mStation.getSampleRate());
+            editor.putInt(PREF_STATION_BIT_RATE, mStation.getBitrate());
+        }
         editor.apply();
         LogHelper.v(LOG_TAG, "Saving state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + " / " + mStationLoading + " / " + ")");
     }
@@ -816,11 +804,9 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
         @Override
         protected void onPostExecute(Boolean sourceIsHLS) {
-            // get a stream uri string
-            String uriString = mStreamUri;
-
             // prepare player
-            prepareExoPLayer(sourceIsHLS, uriString);
+            prepareExoPLayer(sourceIsHLS);
+
             // add listener
             mExoPlayer.addListener(PlayerService.this);
         }
