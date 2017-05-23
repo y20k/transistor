@@ -370,7 +370,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     @Override
     public BrowserRoot onGetRoot(@NonNull String clientPackageName, int clientUid, @Nullable Bundle rootHints) {
         return new BrowserRoot(getString(R.string.app_name), null);
-
     }
 
     @Override
@@ -397,13 +396,13 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             // loss of audio focus of unknown duration
             case AudioManager.AUDIOFOCUS_LOSS:
                 if (mPlayback && mExoPlayer.getPlayWhenReady()) {
-                    stopPlayback();
+                    mController.getTransportControls().stop();
                 }
                 break;
             // transient loss of audio focus
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
                 if (!mPlayback && mExoPlayer != null && mExoPlayer.getPlayWhenReady()) {
-                    stopPlayback();
+                    mController.getTransportControls().stop();
                 }
                 else if (mPlayback && mExoPlayer != null && mExoPlayer.getPlayWhenReady()) {
                     mExoPlayer.setPlayWhenReady(false);
@@ -427,7 +426,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
         // stop playback
         if (mPlayback) {
-            stopPlayback();
+            mController.getTransportControls().stop();
         }
 
         // save state
@@ -674,25 +673,27 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
     /* Creates the metadata needed for MediaSession */
     private MediaMetadataCompat getMetadata(Context context, Station station, String metaData) {
-        Bitmap stationImage;
-        if (station.getStationImageFile() != null && station.getStationImageFile().exists()) {
-            // use station image
+        Bitmap stationImage = null;
+        // try to get station image
+        if (station != null && station.getStationImageFile() != null && station.getStationImageFile().exists()) {
             stationImage = BitmapFactory.decodeFile(station.getStationImageFile().toString());
-        } else {
-            stationImage = null;
         }
         // use name of app as album title
         String albumTitle = context.getResources().getString(R.string.app_name);
 
         // log metadata change
-        LogHelper.i(LOG_TAG, "New Metadata available. Artist: " + station.getStationName() + ", Title: " +  metaData + ", Album: " +  albumTitle);
+        LogHelper.v(LOG_TAG, "New Metadata available.");
 
-        return new MediaMetadataCompat.Builder()
-                .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, station.getStationName())
-                .putString(MediaMetadataCompat.METADATA_KEY_TITLE, metaData)
-                .putString(MediaMetadataCompat.METADATA_KEY_ALBUM, albumTitle)
-                .putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, stationImage)
-                .build();
+        if (station != null) {
+            return new MediaMetadataCompat.Builder()
+                    .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, station.getStationName())
+                    .putString(MediaMetadataCompat.METADATA_KEY_TITLE, metaData)
+                    .putString(MediaMetadataCompat.METADATA_KEY_ALBUM, albumTitle)
+                    .putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, stationImage)
+                    .build();
+        } else {
+            return null;
+        }
     }
 
 
@@ -735,7 +736,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             if (mPlayback && AudioManager.ACTION_AUDIO_BECOMING_NOISY.equals(intent.getAction())) {
                 LogHelper.v(LOG_TAG, "Headphones unplugged. Stopping playback.");
                 // stop playback
-                stopPlayback();
+                mController.getTransportControls().stop();
                 // notify user
                 Toast.makeText(context, context.getString(R.string.toastalert_headphones_unplugged), Toast.LENGTH_LONG).show();
             }
