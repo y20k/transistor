@@ -116,7 +116,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     private HeadphoneUnplugReceiver mHeadphoneUnplugReceiver;
     private WifiManager.WifiLock mWifiLock;
     private PowerManager.WakeLock mWakeLock;
-
     private SimpleExoPlayer mExoPlayer;
     private String mUserAgent;
 
@@ -515,7 +514,13 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
     /* Stops playback */
     private void stopPlayback() {
-        LogHelper.v(LOG_TAG, "Stopping playback.");
+        LogHelper.e(LOG_TAG, "Stopping playback.");
+
+        // check for null - can happen after a crash during playback
+        if (mStation == null) {
+            stopSelf();
+            return;
+        }
 
         // set and save state
         mStationMetadata = mStation.getStationName();
