@@ -96,7 +96,7 @@ public interface TransistorKeys {
     String INSTANCE_STATION_ID = "instanceStationID";
     String INSTANCE_PLAYBACK = "instancePlayback";
     String PLAYER_FRAGMENT_TAG = "PFTAG";
-    String SHOUTCAST_STREAM_TITLE_HEADER = "StreamTitle='";
+    String SHOUTCAST_STREAM_TITLE_HEADER = "StreamTitle";
 
     int COPY_STATION_ALL = 1;
     int COPY_STATION_METADATA = 2;

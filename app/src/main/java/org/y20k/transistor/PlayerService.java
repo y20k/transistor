@@ -850,22 +850,23 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
         @Override
         public void playerMetadata(String key, String value) {
-            LogHelper.v(LOG_TAG, "PlayerCallback: playerMetadata " + key + " : " + value);
+            if (key.equals(SHOUTCAST_STREAM_TITLE_HEADER)) {
+                LogHelper.v(LOG_TAG, "PlayerCallback: playerMetadata " + key + " : " + value);
 
-            if (value.length() > 0) {
-                mStationMetadata = value;
-            } else {
-                mStationMetadata = mStation.getStationName();
-            }
-            mStationMetadataReceived = true;
-            saveAppState();
+                if (value.length() > 0) {
+                    mStationMetadata = value;
+                } else {
+                    mStationMetadata = mStation.getStationName();
+                }
+                mStationMetadataReceived = true;
+                saveAppState();
 
-            // send local broadcast
-            Intent i = new Intent();
-            i.setAction(ACTION_METADATA_CHANGED);
-            i.putExtra(EXTRA_METADATA, mStationMetadata);
-            i.putExtra(EXTRA_STATION, mStation);
-            LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(i);
+                // send local broadcast
+                Intent i = new Intent();
+                i.setAction(ACTION_METADATA_CHANGED);
+                i.putExtra(EXTRA_METADATA, mStationMetadata);
+                i.putExtra(EXTRA_STATION, mStation);
+                LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(i);
 
 //            // save metadata to shared preferences
 //            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -874,11 +875,13 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 //            editor.putString(PREF_STATION_METADATA,  mStationMetadata);
 //            editor.apply();
 
-            // update media session metadata
-            mSession.setMetadata(getMetadata(getApplicationContext(), mStation, mStationMetadata));
+                // update media session metadata
+                mSession.setMetadata(getMetadata(getApplicationContext(), mStation, mStationMetadata));
 
-            // update notification
-            NotificationHelper.update(mStation, mStationID, mStationMetadata, mSession);
+                // update notification
+                NotificationHelper.update(mStation, mStationID, mStationMetadata, mSession);
+
+            }
         }
 
         @Override
