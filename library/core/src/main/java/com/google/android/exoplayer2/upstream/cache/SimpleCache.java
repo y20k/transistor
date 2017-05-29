@@ -288,7 +288,9 @@ public final class SimpleCache implements Cache {
 
   private void removeSpan(CacheSpan span, boolean removeEmptyCachedContent) throws CacheException {
     CachedContent cachedContent = index.get(span.key);
-    Assertions.checkState(cachedContent.removeSpan(span));
+    if (cachedContent == null || !cachedContent.removeSpan(span)) {
+      return;
+    }
     totalSpace -= span.length;
     if (removeEmptyCachedContent && cachedContent.isEmpty()) {
       index.removeEmpty(cachedContent.key);

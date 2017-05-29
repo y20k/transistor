@@ -26,7 +26,9 @@ import com.google.android.exoplayer2.extractor.ts.AdtsExtractor;
 import com.google.android.exoplayer2.extractor.ts.DefaultTsPayloadReaderFactory;
 import com.google.android.exoplayer2.extractor.ts.PsExtractor;
 import com.google.android.exoplayer2.extractor.ts.TsExtractor;
+import com.google.android.exoplayer2.extractor.ts.TsPayloadReader;
 import com.google.android.exoplayer2.extractor.wav.WavExtractor;
+import com.google.android.exoplayer2.util.TimestampAdjuster;
 
 import java.lang.reflect.Constructor;
 
@@ -68,7 +70,12 @@ public final class DefaultExtractorsFactory implements ExtractorsFactory {
   private @MatroskaExtractor.Flags int matroskaFlags;
   private @FragmentedMp4Extractor.Flags int fragmentedMp4Flags;
   private @Mp3Extractor.Flags int mp3Flags;
+  private @TsExtractor.Mode int tsMode;
   private @DefaultTsPayloadReaderFactory.Flags int tsFlags;
+
+  public DefaultExtractorsFactory() {
+    tsMode = TsExtractor.MODE_SINGLE_PMT;
+  }
 
   /**
    * Sets flags for {@link MatroskaExtractor} instances created by the factory.
@@ -109,6 +116,18 @@ public final class DefaultExtractorsFactory implements ExtractorsFactory {
   }
 
   /**
+   * Sets the mode for {@link TsExtractor} instances created by the factory.
+   *
+   * @see TsExtractor#TsExtractor(int, TimestampAdjuster, TsPayloadReader.Factory).
+   * @param mode The mode to use.
+   * @return The factory, for convenience.
+   */
+  public synchronized DefaultExtractorsFactory setTsExtractorMode(@TsExtractor.Mode int mode) {
+    tsMode = mode;
+    return this;
+  }
+
+  /**
    * Sets flags for {@link DefaultTsPayloadReaderFactory}s used by {@link TsExtractor} instances
    * created by the factory.
    *
@@ -131,7 +150,7 @@ public final class DefaultExtractorsFactory implements ExtractorsFactory {
     extractors[3] = new Mp3Extractor(mp3Flags);
     extractors[4] = new AdtsExtractor();
     extractors[5] = new Ac3Extractor();
-    extractors[6] = new TsExtractor(tsFlags);
+    extractors[6] = new TsExtractor(tsMode, tsFlags);
     extractors[7] = new FlvExtractor();
     extractors[8] = new OggExtractor();
     extractors[9] = new PsExtractor();

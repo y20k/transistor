@@ -263,6 +263,7 @@ public class DefaultHttpDataSource implements HttpDataSource {
     }
 
 
+
     opened = true;
     if (listener != null) {
       listener.onTransferStart(this, dataSpec);
