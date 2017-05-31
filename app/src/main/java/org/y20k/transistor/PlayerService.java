@@ -113,6 +113,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     private boolean mPlayback;
     private boolean mStationLoading;
     private boolean mStationMetadataReceived;
+    private boolean mAudioFocusLossTransient;
     private HeadphoneUnplugReceiver mHeadphoneUnplugReceiver;
     private WifiManager.WifiLock mWifiLock;
     private PowerManager.WakeLock mWakeLock;
@@ -133,7 +134,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
         // set up variables
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-
+        mAudioFocusLossTransient = false;
         mStationMetadataReceived = false;
         mSession = createMediaSession(this);
 
@@ -382,7 +383,12 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         switch (focusChange) {
             // gain of audio focus of unknown duration
             case AudioManager.AUDIOFOCUS_GAIN:
-                if (mPlayback) {
+                if (mAudioFocusLossTransient) {
+                    // AUDIOFOCUS_GAIN after AUDIOFOCUS_LOSS_TRANSIENT -> restart playback
+                    mController.getTransportControls().play();
+                    mAudioFocusLossTransient = false;
+                } else if (mPlayback) {
+                    // AUDIOFOCUS_GAIN after AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> raise volume again
                     if (mExoPlayer == null) {
                         initializeExoPlayer();
                         mExoPlayer.setPlayWhenReady(true);
@@ -398,13 +404,17 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
                     mController.getTransportControls().stop();
                 }
                 break;
-            // transient loss of audio focus
+            // transient loss of audio focus - e.g. phone call
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
                 if (mPlayback && mExoPlayer != null && mExoPlayer.getPlayWhenReady()) {
+                    mAudioFocusLossTransient = true;
                     mController.getTransportControls().stop();
+                    mPlayback = true;
                 }
                 else if (!mPlayback && mExoPlayer != null && mExoPlayer.getPlayWhenReady()) {
+                    mAudioFocusLossTransient = true;
                     mExoPlayer.setPlayWhenReady(false);
+                    mPlayback = true;
                 }
                 break;
             // temporary external request of audio focus
@@ -514,7 +524,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
     /* Stops playback */
     private void stopPlayback() {
-        LogHelper.e(LOG_TAG, "Stopping playback.");
+        LogHelper.v(LOG_TAG, "Stopping playback.");
 
         // check for null - can happen after a crash during playback
         if (mStation == null) {
@@ -634,10 +644,17 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     }
 
 
-    /* Give up audio focus */
+    /* Give up audio focus - if not transient */
     private boolean giveUpAudioFocus() {
-        int result = mAudioManager.abandonAudioFocus(this);
-        return result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED;
+        if (mAudioFocusLossTransient) {
+            // do not give up focus when focus loss is just transient
+            return false;
+        } else {
+            // give up audio focus
+            LogHelper.e(LOG_TAG, "!!! giving up focus");
+            int result = mAudioManager.abandonAudioFocus(this);
+            return result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED;
+        }
     }
 
 
