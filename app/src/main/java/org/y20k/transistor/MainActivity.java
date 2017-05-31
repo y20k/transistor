@@ -22,6 +22,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
@@ -77,6 +78,9 @@ public final class MainActivity extends AppCompatActivity implements TransistorK
     @Override
     protected void onResume() {
         super.onResume();
+
+        // check state of External Storage
+        checkExternalStorageState();
 
         // check if two pane mode can be used
         mTwoPane = detectTwoPane();
@@ -195,4 +199,20 @@ public final class MainActivity extends AppCompatActivity implements TransistorK
         LocalBroadcastManager.getInstance(this).registerReceiver(mCollectionChangedReceiver, collectionChangedIntentFilter);
     }
 
+
+    /* Checks state of External Storage */
+    private void checkExternalStorageState() {
+
+        String state = Environment.getExternalStorageState();
+        if (!state.equals(Environment.MEDIA_MOUNTED)) {
+            LogHelper.e(LOG_TAG, "Error: Unable to mount External Storage. Current state: " + state);
+
+            // move MainActivity to back
+            moveTaskToBack(true);
+
+            // shutting down app
+            android.os.Process.killProcess(android.os.Process.myPid());
+            System.exit(1);
+        }
+    }
 }

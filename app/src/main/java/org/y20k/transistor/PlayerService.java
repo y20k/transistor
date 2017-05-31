@@ -400,10 +400,10 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
                 break;
             // transient loss of audio focus
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
-                if (!mPlayback && mExoPlayer != null && mExoPlayer.getPlayWhenReady()) {
+                if (mPlayback && mExoPlayer != null && mExoPlayer.getPlayWhenReady()) {
                     mController.getTransportControls().stop();
                 }
-                else if (mPlayback && mExoPlayer != null && mExoPlayer.getPlayWhenReady()) {
+                else if (!mPlayback && mExoPlayer != null && mExoPlayer.getPlayWhenReady()) {
                     mExoPlayer.setPlayWhenReady(false);
                 }
                 break;
