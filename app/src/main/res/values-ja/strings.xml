@@ -52,9 +52,9 @@
     <string name="dialog_generic_button_okay">OK</string>
     <string name="dialog_generic_button_cancel">キャンセル</string>
     <string name="dialog_add_station_button">追加</string>
-    <string name="dialog_add_station_input_hint">正しいストリーミング URL を貼り付けてください</string>
+    <string name="dialog_add_station_input_hint">ストリーミング URL を貼り付けてください</string>
     <string name="dialog_add_station_message">新しい放送局を追加</string>
-    <string name="dialog_add_station_howto">MP3 と OGG にエンコードされた素のオーディオ ストリーム同様、pls または m3u ファイルにカプセル化されたストリーム を追加できます。また、web ブラウザーでストリーミングのリンクをタップして新しいステーションを追加できます (pls または m3u)。</string>
+    <string name="dialog_add_station_howto">MP3 と OGG にエンコードされた素のオーディオストリームと同様に、PLS または M3U ファイルにカプセル化されたストリームを追加できます。また、Web ブラウザーでストリーミングのリンク (.pls または .m3u) をタップして新しい局を追加できます。</string>
     <string name="dialog_delete_station_message">放送局を削除</string>
     <string name="dialog_button_delete">削除</string>
     <string name="dialog_rename_station_input_hint">新しい名前を入力してください</string>
@@ -131,7 +131,7 @@
     <string name="infosheet_about_h3_vibrate">アクセス許可 VIBRATE</string>
     <string name="infosheet_about_p_vibrate">ラジオ局を長押しすると、小さく振動します。</string>
     <string name="infosheet_about_h3_wakelock">アクセス許可 WAKE_LOCK</string>
-    <string name="infosheet_about_p_wakelock">再生中、トランジスターはいわゆる部分的なウェイクロックを取得します。省電力のために Android のシステムが再生を停止するのを防止します。</string>
+    <string name="infosheet_about_p_wakelock">再生中、Transistor はいわゆる部分的なウェイクロックを取得します。省電力のために Android のシステムが再生を停止するのを防止します。</string>
 
     <!-- infosheet howto -->
     <string name="infosheet_howto_h1_howto">トランジスターの使用方法</string>
