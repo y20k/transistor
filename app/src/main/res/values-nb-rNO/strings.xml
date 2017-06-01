@@ -54,7 +54,7 @@
     <string name="dialog_add_station_button">Legg til</string>
     <string name="dialog_add_station_input_hint">Lim inn en gyldig nettadresse til strøm</string>
     <string name="dialog_add_station_message">Legg til en ny stasjon</string>
-    <string name="dialog_add_station_howto">Du kan legge til råe lydstrømmer kodet som MP3 og OGG sågar også strømmer innkapslet i pls eller m3u-filer. Alternativt kan du legge til nye stasjoner ved å trykke på strømmingslenker (.pls eller .m3u) i nettleseren din.</string>
+    <string name="dialog_add_station_howto">Du kan legge til råe lydstrømmer kodet som MP3 og OGG sågar også strømmer innkapslet i PLS eller M3U-filer. Alternativt kan du legge til nye stasjoner ved å trykke på strømmingslenker (.pls eller .m3u) i nettleseren din.</string>
     <string name="dialog_delete_station_message">Slett stasjon</string>
     <string name="dialog_button_delete">Slett</string>
     <string name="dialog_rename_station_input_hint">Skriv inn nytt navn</string>
