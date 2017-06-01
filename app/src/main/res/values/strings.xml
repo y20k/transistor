@@ -52,9 +52,9 @@
     <string name="dialog_generic_button_okay">Okay</string>
     <string name="dialog_generic_button_cancel">Cancel</string>
     <string name="dialog_add_station_button">Add</string>
-    <string name="dialog_add_station_input_hint">Paste a valid streaming URL</string>
+    <string name="dialog_add_station_input_hint">Paste stream URL</string>
     <string name="dialog_add_station_message">Add new station</string>
-    <string name="dialog_add_station_howto">You can add raw audio streams encoded in MP3 and OGG as well as streams encapsulated in pls or m3u files. Alternatively you can add new stations by tapping on streaming links (pls or m3u) in your web browser.</string>
+    <string name="dialog_add_station_howto">You can add raw audio streams encoded in MP3 and OGG as well as streams encapsulated in PLS or M3U files. Alternatively you can add new stations by tapping on streaming links (.pls or .m3u) in your web browser.</string>
     <string name="dialog_delete_station_message">Delete station</string>
     <string name="dialog_button_delete">Delete</string>
     <string name="dialog_rename_station_input_hint">Enter a new name</string>
@@ -131,7 +131,7 @@
     <string name="infosheet_about_h3_vibrate">Permission VIBRATE</string>
     <string name="infosheet_about_p_vibrate">Tapping and holding a radio station will trigger a tiny vibration.</string>
     <string name="infosheet_about_h3_wakelock">Permission WAKE_LOCK</string>
-    <string name="infosheet_about_p_wakelock">During Playback Transistor acquires a so called partial wake lock. That prevents the Android system to stop playback for power saving reasons.</string>
+    <string name="infosheet_about_p_wakelock">During playback Transistor acquires a so called partial wake lock. That prevents the Android system to stop playback for power saving reasons.</string>
 
     <!-- infosheet howto -->
     <string name="infosheet_howto_h1_howto">How to use Transistor</string>
