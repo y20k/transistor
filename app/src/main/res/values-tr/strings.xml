@@ -9,7 +9,7 @@
     <string name="dialog_error_details_write">İstasyon muhtemelen zaten mevcut veya değilse harici depolamanızı kontrol etmek isteyebilirsiniz.</string>
     <string name="dialog_error_title_fetch_download">İndirme Sorunu</string>
     <string name="dialog_error_title_fetch_write">Yazma Sorunu</string>
-    <string name="dialog_error_message_fetch_general_hint_m3u">İpucu: Transistör sadece MP3 ve OGG ile kodlanmış yayınları veya .m3u veya .pls ile biten URL\'leri işleyebilir.</string>
+    <string name="dialog_error_message_fetch_general_hint_m3u">İpucu: Transistör sadece MP3, AAC ve Ogg/Opus ile kodlanmış yayınları veya .m3u veya .pls ile biten URL\'leri işleyebilir.</string>
     <string name="dialog_error_message_fetch_general_playlist_type">Dosyanın MIME tipi:</string>
     <string name="dialog_error_message_fetch_general_stream_type">Yayının MIME tipi:</string>
     <string name="dialog_error_message_fetch_general_file_content">Dosyanın içeriği:</string>
@@ -54,7 +54,7 @@
     <string name="infosheet_about_h1_about">Transistör Hakkında</string>
     <string name="infosheet_about_h2_radio">Android için radyo uygulaması</string>
     <string name="infosheet_about_h3_version">Sürüm 2.2 (Sessiz Çağın Oğulları)</string>
-    <string name="infosheet_about_p_bare">Transistör İnternet üzerinden radyo programlarını dinlemek için basit bir uygulamadır. Uygulama istasyonları cihazınızın harici depolama alanına dosya olarak kaydeder. /Android/data/org.y20k.transistor/files/Collection konumundaki m3u dosyalarına bakın. Mevcut olarak MP3 ve OGG ile kodlanmış yayınları anlar.</string>
+    <string name="infosheet_about_p_bare">Transistör İnternet üzerinden radyo programlarını dinlemek için basit bir uygulamadır. Uygulama istasyonları cihazınızın harici depolama alanına dosya olarak kaydeder. /Android/data/org.y20k.transistor/files/Collection konumundaki m3u dosyalarına bakın. Mevcut olarak MP3, AAC ve Ogg/Opus ile kodlanmış yayınları anlar.</string>
     <string name="infosheet_about_p_note">Önemli not: Bu uygulama kendi istanyonlarınızı kullanmanızı sağlar. Herhangi bir tür yerleşik arama seçeneği içermez. Radyo istasyonlarını elle eklemeniz gerekmektedir.</string>
     <string name="infosheet_about_p_free">Transistör ücretsiz bir yazılımdır. MIT açık kaynak lisansı altında sunulmuştur. Kodunu GitHub\'da bulabilirsiniz. GitHub hataları bildirmek ve hatta, ilgileniyorsanız, katkıda bulunmak için de iyi bir yerdir.</string>
     <string name="infosheet_about_p_github">https://github.com/y20k/transistor</string>
@@ -137,7 +137,7 @@
     <string name="dialog_add_station_button">Ekle</string>
     <string name="dialog_add_station_input_hint">Yayın URL\'si yapıştırın</string>
     <string name="dialog_add_station_message">Yeni istasyon ekle</string>
-    <string name="dialog_add_station_howto">MP3 ve OGG ile kodlanmış ham ses yayınlarını ekleyebileceğiniz gibi PLS veya M3U dosyalarında tutulan yayınları da ekleyebilirsiniz. Alternatif olarak web tarayıcınızdan yayın bağlantılarına (.pls veya .m3u) dokunarak yeni istasyonlar ekleyebilirsiniz.</string>
+    <string name="dialog_add_station_howto">MP3, AAC ve Ogg/Opus ile kodlanmış ham ses yayınlarını ekleyebileceğiniz gibi PLS veya M3U dosyalarında tutulan yayınları da ekleyebilirsiniz. Alternatif olarak web tarayıcınızdan yayın bağlantılarına (.pls veya .m3u) dokunarak yeni istasyonlar ekleyebilirsiniz.</string>
     <string name="dialog_delete_station_message">İstasyonu sil</string>
     <string name="dialog_button_delete">Sil</string>
     <string name="dialog_rename_station_input_hint">Yeni isim girin</string>
