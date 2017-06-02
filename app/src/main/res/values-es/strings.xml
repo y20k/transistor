@@ -27,13 +27,13 @@
     <string name="descr_station_metadata">Metadata (Artista / Títulos) de la reproducción de la actual estación de radio</string>
     <string name="descr_station_name_example">Ejemplo FM</string>
     <string name="descr_station_metadata_example">Artista - Título</string>
-    <string name="descr_station_stream_loading">Cargando stream …</string>
+    <string name="descr_station_stream_loading">Cargando retransmisión …</string>
     <string name="descr_playback_button">Botón grande de reproducción</string>
     <string name="descr_playback_indicator">Indicador para el funcionamiento de la reproducción</string>
     <string name="descr_playback_indicator_started">Indicador para el funcionamiento de la reproducción</string>
     <string name="descr_timer_indicator_started">Indicador para el funcionamiento del temporizador de apagado</string>
     <string name="descr_player_sheet_information_icon">Information Icon</string>
-    <string name="descr_player_sheet_content_copy_icon">Content copy icon</string>
+    <string name="descr_player_sheet_content_copy_icon">Icono de copia de contenido</string>
     <string name="descr_player_sheet_p_station_name">Nombre de la estación de radio seleccionada</string>
     <string name="descr_player_sheet_p_station_metadata">Metadatos de la estación de radio seleccionada</string>
     <string name="descr_player_sheet_p_stream_url">Stream URL de la estación de radio seleccionada</string>
@@ -41,11 +41,11 @@
     <!-- player -->
     <string name="player_sheet_h1_station_name">Estación</string>
     <string name="player_sheet_h1_station_metadata">Reproducción en curso</string>
-    <string name="player_sheet_h1_stream_url">Stream URL</string>
+    <string name="player_sheet_h1_stream_url">URL de retransmisión</string>
     <string name="player_sheet_p_station_metadata">Sin metadatos disponibles</string>
-    <string name="player_sheet_h1_station_mime_type">MIME type</string>
-    <string name="player_sheet_h1_station_channel_count">Channel count</string>
-    <string name="player_sheet_h1_station_sample_rate">Sample rate</string>
+    <string name="player_sheet_h1_station_mime_type">Tipo MIME</string>
+    <string name="player_sheet_h1_station_channel_count">Número de canales</string>
+    <string name="player_sheet_h1_station_sample_rate">Frecuencia de muestreo</string>
     <string name="player_sheet_h1_station_bitrate">Bitrate</string>
 
     <!-- dialogs -->
@@ -88,10 +88,10 @@
     <string name="toastmessage_long_press_playback_stopped">Reproducción detenida (detectada pulsación larga)</string>
     <string name="toastmessage_long_press_playback_started">Reproducción empezada (detectada pulsación larga)</string>
     <string name="toastmessage_shortcut_created">Acceso directo creado.</string>
-    <string name="toastmessage_copied_to_clipboard_url">Stream URL copiada al portapapeles.</string>
+    <string name="toastmessage_copied_to_clipboard_url">URL de retransmisión copiada al portapapeles.</string>
     <string name="toastmessage_copied_to_clipboard_metadata">Metadatos copiados al portapapeles.</string>
     <string name="toastmessage_station_copied">Estación copiada al portapapeles.</string>
-    <string name="toastmessage_stream_may_not_work">Detectado formato de audio no soportado. La reproducción del stream quizás no funcione correctamente.</string>
+    <string name="toastmessage_stream_may_not_work">Detectado formato de audio no soportado. La reproducción de la retransmisión quizás no funcione correctamente.</string>
     <string name="toastmessage_timer_activated">Temporizador de apagado activado.</string>
     <string name="toastmessage_timer_cancelled">Temporizador de apagado cancelado.</string>
     <string name="toastmessage_timer_duration_increased">Duración incrementada.</string>
@@ -125,7 +125,7 @@
     <string name="infosheet_about_h3_shortcut">Permiso INSTALL_SHORTCUT y UNINSTALL_SHORTCUT</string>
     <string name="infosheet_about_p_shortcut">Este permiso es necesario para instalar y desinstalar accesos directos a estaciones de radio en la pantalla principal de Android.</string>
     <string name="infosheet_about_h3_internet">Permiso INTERNET</string>
-    <string name="infosheet_about_p_internet">Transistor streams estaciones de radio a través de internet.</string>
+    <string name="infosheet_about_p_internet">Transistor retransmisión de estaciones de radio a través de internet.</string>
     <string name="infosheet_about_h3_external">Permiso READ_EXTERNAL_STORAGE</string>
     <string name="infosheet_about_p_external">Transistor necesita acceder a imágenes, fotos y documentos para poder personalizar los iconos de las estaciones de radio y guardar los archivos localmente de las listas de reproducción.</string>
     <string name="infosheet_about_h3_vibrate">Permiso VIBRATE</string>
@@ -136,7 +136,7 @@
     <!-- infosheet howto -->
     <string name="infosheet_howto_h1_howto">Cómo utilizar Transistor</string>
     <string name="infosheet_howto_h2_add">¿Cómo añadir una nueva estación de radio?</string>
-    <string name="infosheet_howto_p_add">La manera más fácil de añadir una nueva estación de radio es buscar en la web enlaces de stream de radio y elegir Transistor como la aplicación por defecto para este tipo de archivos. También puedes pulsar el símbolo (+) en la barra superior y pegar el enlace de stream directamente. Tenga en cuenta: Transistor no dispone de ningún tipo de opción de búsqueda integrado.</string>
+    <string name="infosheet_howto_p_add">La manera más fácil de añadir una nueva estación de radio es buscar en la web enlaces de retransmisión de radio y elegir Transistor como la aplicación por defecto para este tipo de archivos. También puedes pulsar el símbolo (+) en la barra superior y pegar el enlace de retransmisión directamente. Tenga en cuenta: Transistor no dispone de ningún tipo de opción de búsqueda integrado.</string>
     <string name="infosheet_howto_h2_play">¿Cómo reproducir una estación de radio?</string>
     <string name="infosheet_howto_p_play">Pulsa el botón grande de reproducción ;).</string>
     <string name="infosheet_howto_h2_stop">¿Como detener la reproducción?</string>
