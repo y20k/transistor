@@ -59,7 +59,17 @@ public final class Station implements TransistorKeys, Comparable<Station>, Parce
 
     /* Supported playlist content types */
     private static final String[] CONTENT_TYPES_PLS = {"audio/x-scpls"};
-    private static final String[] CONTENT_TYPES_M3U = {"audio/x-mpegurl", "application/vnd.apple.mpegurl", "audio/mpegurl"};
+    private static final String[] CONTENT_TYPES_M3U = { // See https://en.wikipedia.org/wiki/M3U for the list of MIME types
+            "audio/mpegurl",
+            "audio/x-mpegurl",
+            "application/mpegurl",
+            "application/x-mpegurl",
+            "application/vnd.apple.mpegurl",
+    };
+
+    private static final String[] CONTENT_TYPES_UNKNOWN = {"application/octet-stream"};
+    private static final String[] FILE_EXTENSIONS_M3U = {".m3u", ".m3u8", ".M3U", ".M3U8"};
+    private static final String[] FILE_EXTENSIONS_PLS = {".pls", ".PLS"};
 
     /* Regular expression to extract content-type and charset from header string */
     private static final Pattern CONTENT_TYPE_PATTERN = Pattern.compile("([^;]*)(; ?charset=([^;]+))?");
@@ -375,6 +385,22 @@ public final class Station implements TransistorKeys, Comparable<Station>, Parce
                     if (charsetString != null) {
                         contentType.charset = charsetString.trim();
                     }
+                    // Generic octet-stream MIME type, check if we can guess file type from extension
+                    // This hack is needed only for playlists, most stations set audio stream type correctly
+                    if (Arrays.asList(CONTENT_TYPES_UNKNOWN).contains(contentType.type)) {
+                        for (String ext: FILE_EXTENSIONS_M3U) {
+                            if (fileLocation.getFile() != null && fileLocation.getFile().endsWith(ext) ||
+                                    fileLocation.getQuery() != null && fileLocation.getQuery().endsWith(ext)) {
+                                contentType.type = CONTENT_TYPES_M3U[0];
+                            }
+                        }
+                        for (String ext: FILE_EXTENSIONS_PLS) {
+                            if (fileLocation.getFile() != null && fileLocation.getFile().endsWith(ext) ||
+                                    fileLocation.getQuery() != null && fileLocation.getQuery().endsWith(ext)) {
+                                contentType.type = CONTENT_TYPES_PLS[0];
+                            }
+                        }
+                    }
                     return contentType;
                 }
             }
@@ -470,6 +496,8 @@ public final class Station implements TransistorKeys, Comparable<Station>, Parce
         // prepare scanner
         Scanner in = new Scanner(fileContent);
         String line;
+        mStationName = null;
+        mStreamUri = null;
 
         while (in.hasNextLine()) {
 
@@ -492,6 +520,10 @@ public final class Station implements TransistorKeys, Comparable<Station>, Parce
                 mStreamUri = Uri.parse(line.substring(6).trim());
             }
 
+            // Use the first entry, some stations shuffle playlist to put less used mirror to the top of the list
+            if (mStreamUri != null && mStationName != null) {
+                break;
+            }
         }
 
         in.close();
