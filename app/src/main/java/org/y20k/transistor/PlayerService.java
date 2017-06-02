@@ -651,7 +651,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             return false;
         } else {
             // give up audio focus
-            LogHelper.e(LOG_TAG, "!!! giving up focus");
             int result = mAudioManager.abandonAudioFocus(this);
             return result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED;
         }

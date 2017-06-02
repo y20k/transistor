@@ -102,11 +102,6 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> impleme
             i.putExtra(EXTRA_STATION, station);
             LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(i);
 
-            // inform user that aac might not work properly
-            if (fetchResults.containsKey(RESULT_STREAM_TYPE) && fetchResults.getParcelable(RESULT_STREAM_TYPE) != null && fetchResults.getParcelable(RESULT_STREAM_TYPE).toString().contains("aac")) {
-                Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_stream_may_not_work), Toast.LENGTH_LONG).show();
-            }
-
             LogHelper.v(LOG_TAG, "Station was successfully fetched: " + station.getStreamUri().toString());
         }
 

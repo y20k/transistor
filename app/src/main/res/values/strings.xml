@@ -54,7 +54,7 @@
     <string name="dialog_add_station_button">Add</string>
     <string name="dialog_add_station_input_hint">Paste stream URL</string>
     <string name="dialog_add_station_message">Add new station</string>
-    <string name="dialog_add_station_howto">You can add raw audio streams encoded in MP3 and OGG as well as streams encapsulated in PLS or M3U files. Alternatively you can add new stations by tapping on streaming links (.pls or .m3u) in your web browser.</string>
+    <string name="dialog_add_station_howto">You can add raw audio streams encoded in MP3, AAC and Ogg/Opus as well as streams encapsulated in PLS or M3U files. Alternatively you can add new stations by tapping on streaming links (.pls or .m3u) in your web browser.</string>
     <string name="dialog_delete_station_message">Delete station</string>
     <string name="dialog_button_delete">Delete</string>
     <string name="dialog_rename_station_input_hint">Enter a new name</string>
@@ -71,7 +71,7 @@
     <string name="dialog_error_title_fetch_read">Read Issue</string>
     <string name="dialog_error_title_fetch_write">Write Issue</string>
     <string name="dialog_error_message_fetch_general_external_storage">External storage:</string>
-    <string name="dialog_error_message_fetch_general_hint_m3u">Hint: Transistor can only process MP3 and OGG encoded streams or URLs ending in .m3u or .pls.</string>
+    <string name="dialog_error_message_fetch_general_hint_m3u">Hint: Transistor can only process MP3, AAC and Ogg/Opus encoded streams or URLs ending in .m3u or .pls.</string>
     <string name="dialog_error_message_fetch_general_playlist_type">MIME type of file:</string>
     <string name="dialog_error_message_fetch_general_stream_type">MIME type of stream:</string>
     <string name="dialog_error_message_fetch_general_file_content">Content of file:</string>
@@ -116,7 +116,7 @@
     <string name="infosheet_about_h1_about">About Transistor</string>
     <string name="infosheet_about_h2_radio">Radio app for Android</string>
     <string name="infosheet_about_h3_version">Version 2.2 (Sons Of The Silent Age)</string>
-    <string name="infosheet_about_p_bare">Transistor is a bare bones app for listening to radio programs over the internet. The app stores stations as files on your device\'s external storage. Look for files of type m3u within /Android/data/org.y20k.transistor/files/Collection. It currently understands streams encoded in MP3 and OGG.</string>
+    <string name="infosheet_about_p_bare">Transistor is a bare bones app for listening to radio programs over the internet. The app stores stations as files on your device\'s external storage. Look for files of type m3u within /Android/data/org.y20k.transistor/files/Collection. It currently understands streams encoded in MP3, AAC and Ogg/Opus.</string>
     <string name="infosheet_about_p_note">Important note: This is an app of type BYOS (&quot;bring your own station&quot;). It does not feature any kind of built-in search option. You will have to manually add radio stations.</string>
     <string name="infosheet_about_p_free">Transistor is free software. It is published under the MIT open source license. You can find the code on GitHub. GitHub is also a good place to file bugs or even to contribute, if you are interested.</string>
     <string name="infosheet_about_p_github">https://github.com/y20k/transistor</string>

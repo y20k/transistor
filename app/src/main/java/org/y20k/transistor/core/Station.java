@@ -54,12 +54,12 @@ public final class Station implements TransistorKeys, Comparable<Station>, Parce
 
     /* Supported audio file content types */
     private static final String[] CONTENT_TYPES_MPEG = {"audio/mpeg"};
-    private static final String[] CONTENT_TYPES_OGG = {"audio/ogg", "application/ogg"};
+    private static final String[] CONTENT_TYPES_OGG = {"audio/ogg", "application/ogg", "audio/opus"};
     private static final String[] CONTENT_TYPES_AAC = {"audio/aac", "audio/aacp"};
 
     /* Supported playlist content types */
     private static final String[] CONTENT_TYPES_PLS = {"audio/x-scpls"};
-    private static final String[] CONTENT_TYPES_M3U = {"audio/x-mpegurl", "application/vnd.apple.mpegurl", "audio/mpegurl"};
+    private static final String[] CONTENT_TYPES_M3U = {"audio/mpegurl", "audio/x-mpegurl", "application/x-mpegurl", "application/vnd.apple.mpegurl"};
 
     /* Regular expression to extract content-type and charset from header string */
     private static final Pattern CONTENT_TYPE_PATTERN = Pattern.compile("([^;]*)(; ?charset=([^;]+))?");
