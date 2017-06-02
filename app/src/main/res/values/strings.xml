@@ -148,7 +148,7 @@
     <string name="infosheet_howto_h2_edit">How to rename or delete a station?</string>
     <string name="infosheet_howto_p_edit">The rename and delete options can be accessed both from the station\'s context menu. Just tap on the three dots symbol. You can manage the list of stations also from a file browser (see next question).</string>
     <string name="infosheet_howto_h2_storage">Where does Transistor store its stations?</string>
-    <string name="infosheet_howto_p_storage">Transistor does not save its list of stations in a database. Instead it stores stations as m3u files on your device\'s external storage. Feel free to tinker with those files using the texteditor of your choice. The files are stored in /Android/data/org.y20k.transistor/files/Collection.</string>
+    <string name="infosheet_howto_p_storage">Transistor does not save its list of stations in a database. Instead it stores stations as .m3u files on your device\'s external storage. Feel free to tinker with those files using the texteditor of your choice. The files are stored in /Android/data/org.y20k.transistor/files/Collection.</string>
     <string name="infosheet_howto_h2_backup">How do I backup and transfer my radio stations?</string>
     <string name="infosheet_howto_p_backup">Transistor has support for the Auto Backup feature in Android 6. Radio stations are always backed up to your Google account and will be restored at reinstall. On devices running on older versions of Android you must manually save and restore the &quot;Collection&quot; folder.</string>
     <string name="infosheet_howto_h2_settings">Why are there no settings in Transistor?</string>
