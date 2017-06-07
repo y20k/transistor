@@ -79,8 +79,8 @@ import org.y20k.transistor.helpers.NotificationHelper;
 import org.y20k.transistor.helpers.TransistorKeys;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.Arrays;
 import java.util.List;
 
@@ -817,15 +817,14 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         @Override
         protected Integer doInBackground(Void... voids) {
             String contentType = "";
-            HttpURLConnection connection = null;
+            URLConnection connection = null;
 
             try {
-                connection = (HttpURLConnection)new URL(mStreamUri).openConnection();
+                connection = new URL(mStreamUri).openConnection();
                 connection.connect();
                 contentType = connection.getContentType();
                 if (contentType == null) {
                     LogHelper.e(LOG_TAG, "Connection Error. Connection is NULL");
-                    connection.disconnect();
                     return CONNECTION_TYPE_ERROR;
                 }
 
@@ -837,15 +836,12 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
                 if (Arrays.asList(CONTENT_TYPES_HLS).contains(contentType) || Arrays.asList(CONTENT_TYPES_M3U).contains(contentType) ) {
                     LogHelper.v(LOG_TAG, "HTTP Live Streaming detected.");
-                    connection.disconnect();
                     return CONNECTION_TYPE_HLS;
                 } else if (Arrays.asList(CONTENT_TYPES_MPEG).contains(contentType) || Arrays.asList(CONTENT_TYPES_AAC).contains(contentType)  || Arrays.asList(CONTENT_TYPES_OGG).contains(contentType) ) {
                     LogHelper.v(LOG_TAG, "Other Streaming protocol detected (MPEG, AAC, OGG).");
-                    connection.disconnect();
                     return CONNECTION_TYPE_OTHER;
                 } else {
                     LogHelper.e(LOG_TAG, "Connection Error. Connection is " + contentType);
-                    connection.disconnect();
                     return CONNECTION_TYPE_ERROR;
                 }
             } catch (IOException e) {

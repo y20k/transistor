@@ -180,7 +180,7 @@ public final class PlayerActivityFragment extends Fragment implements Transistor
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance) {
 
         // inflate root view from xml
-        mRootView = inflater.inflate(R.layout.fragment_player, container, false);
+        mRootView = inflater.inflate(R.layout.fragment_player_v2, container, false);
 
         // find views for station name and image and playback indicator
         mStationNameView = (TextView) mRootView.findViewById(R.id.player_textview_stationname);
@@ -198,14 +198,14 @@ public final class PlayerActivityFragment extends Fragment implements Transistor
             mStationImageView.setImageBitmap(stationImage);
         }
 
-        // add listener to station info view for clipboard copy
-        View stationInfoView = mRootView.findViewById(R.id.player_layout_station_info);
-        stationInfoView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                copyToClipboard(COPY_STATION_ALL);
-            }
-        });
+//        // add listener to station info view for clipboard copy
+//        View stationInfoView = mRootView.findViewById(R.id.player_layout_station_info);
+//        stationInfoView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                copyToClipboard(COPY_STATION_ALL);
+//            }
+//        });
 
         // get views for station data sheet
         View stationDataLayout = mRootView.findViewById(R.id.info_icon_layout);
