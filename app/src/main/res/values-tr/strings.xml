@@ -6,7 +6,7 @@
 
     <!-- error dialogs -->
     <string name="dialog_error_details_default">Kullanılabilir ayrıntı yok</string>
-    <string name="dialog_error_details_write">İstasyon muhtemelen zaten var ya da yoksa harici depolamanızı doğrulamak isteyebilirsiniz.</string>
+    <string name="dialog_error_details_write">Bu istasyon muhtemelen zaten var ya da yoksa, harici depolamanızı doğrulamak isteyebilirsiniz.</string>
     <string name="dialog_error_title_fetch_download">İndirme Sorunu</string>
     <string name="dialog_error_title_fetch_write">Yazma Sorunu</string>
     <string name="dialog_error_message_fetch_general_hint_m3u">İpucu: Transistor sadece MP3, AAC ve Ogg/Opus ile kodlanmış yayınları veya .m3u veya .pls ile biten URL\'leri işleyebilir.</string>
@@ -62,7 +62,7 @@
     <string name="infosheet_about_p_license">https://opensource.org/licenses/MIT</string>
     <string name="infosheet_about_h2_permissions">Transistor hangi İzinlere gerek duyar?</string>
     <string name="infosheet_about_h3_shortcut">INSTALL_SHORTCUT ve UNINSTALL_SHORTCUT izinleri</string>
-    <string name="infosheet_about_p_shortcut">Bu izin Android Ana ekranına radyo istasyonu kısayolları kurmak ve kaldırmak için gereklidir.</string>
+    <string name="infosheet_about_p_shortcut">Bu izin radyo istasyonu kısayollarını Android Ana ekranı üstüne kurmak ve üstünden kaldırmak için gereklidir.</string>
     <string name="infosheet_about_h3_internet">INTERNET izini</string>
     <string name="infosheet_about_p_internet">Transistor radyo istasyonlarının yayınını internet üstünden alır.</string>
     <string name="infosheet_about_h3_external">READ_EXTERNAL_STORAGE izni</string>
