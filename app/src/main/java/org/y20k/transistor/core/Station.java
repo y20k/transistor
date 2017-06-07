@@ -52,16 +52,7 @@ public final class Station implements TransistorKeys, Comparable<Station>, Parce
     /* Define log tag */
     private static final String LOG_TAG = Station.class.getSimpleName();
 
-    /* Supported audio file content types */
-    private static final String[] CONTENT_TYPES_MPEG = {"audio/mpeg"};
-    private static final String[] CONTENT_TYPES_OGG = {"audio/ogg", "application/ogg", "audio/opus"};
-    private static final String[] CONTENT_TYPES_AAC = {"audio/aac", "audio/aacp"};
-
-    /* Supported playlist content types */
-    private static final String[] CONTENT_TYPES_PLS = {"audio/x-scpls"};
-    private static final String[] CONTENT_TYPES_M3U = {"audio/mpegurl", "audio/x-mpegurl", "application/x-mpegurl", "application/vnd.apple.mpegurl"};
-
-    /* Regular expression to extract content-type and charset from header string */
+    /* Regular expression to extract content-type and charset from header string - supported content types are in TransistorKeys*/
     private static final Pattern CONTENT_TYPE_PATTERN = Pattern.compile("([^;]*)(; ?charset=([^;]+))?");
 
 
@@ -388,7 +379,7 @@ public final class Station implements TransistorKeys, Comparable<Station>, Parce
     /* Determines if given content type is a playlist */
     private boolean isPlaylist(ContentType contentType) {
         if (contentType != null) {
-            for (String[] array : new String[][]{CONTENT_TYPES_PLS, CONTENT_TYPES_M3U}) {
+            for (String[] array : new String[][]{CONTENT_TYPES_PLS, CONTENT_TYPES_M3U, CONTENT_TYPES_HLS}) {
                 if (Arrays.asList(array).contains(contentType.type)) {
                     return true;
                 }
@@ -479,17 +470,19 @@ public final class Station implements TransistorKeys, Comparable<Station>, Parce
             // M3U: found station name
             if (line.contains("#EXTINF:-1,")) {
                 mStationName = line.substring(11).trim();
-            // M3U: found stream URL
+            // M3U: found stream URL - abort loop
             } else if (line.startsWith("http")) {
                 mStreamUri = Uri.parse(line.trim());
+                break;
             }
 
             // PLS: found station name
             else if (line.startsWith("Title1=")) {
                 mStationName = line.substring(7).trim();
-            // PLS: found stream URL
+            // PLS: found stream URL - abort loop
             } else if (line.startsWith("File1=http")) {
                 mStreamUri = Uri.parse(line.substring(6).trim());
+                break;
             }
 
         }

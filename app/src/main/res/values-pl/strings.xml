@@ -85,6 +85,7 @@
     <string name="toastmessage_timer_cancelled">Wyłącznik czasowy anulowany.</string>
     <string name="toastmessage_timer_duration_increased">Zwiększono czas wyłącznika.</string>
     <string name="toastmessage_timer_start_unable">Proszę najpierw rozpocząć odtwarzanie.</string>
+    <string name="toastalert_unable_to_connect">Unable to connect. Device does not have an internet connection or stream may be outdated.</string>
     <string name="toastalert_rename_unsuccessful">Nie udało się zmienić nazwy stacji. Proszę wybrać inną nazwę.</string>
     <string name="toastalert_delete_successful">Stacja usunięta.</string>
     <string name="toastalert_no_external_storage">Dostęp do pamięci zewnętrznej nie powiódł się.</string>

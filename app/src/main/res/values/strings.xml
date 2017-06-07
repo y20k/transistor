@@ -96,6 +96,7 @@
     <string name="toastmessage_timer_cancelled">Sleep timer cancelled.</string>
     <string name="toastmessage_timer_duration_increased">Duration increased.</string>
     <string name="toastmessage_timer_start_unable">Please start playback first.</string>
+    <string name="toastalert_unable_to_connect">Unable to connect. Device does not have an internet connection or stream may be outdated.</string>
     <string name="toastalert_rename_unsuccessful">Unable to rename station. Please choose a different name.</string>
     <string name="toastalert_delete_successful">Station removed.</string>
     <string name="toastalert_no_external_storage">Unable to access external storage.</string>

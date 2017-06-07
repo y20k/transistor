@@ -77,6 +77,16 @@ public interface TransistorKeys {
     String RESULT_STREAM_TYPE = "STREAM_TYPE";
     String RESULT_FILE_CONTENT = "FILE_CONTENT";
 
+    /* SUPPORTED AUDIO FILE CONTENT TYPES */
+    String[] CONTENT_TYPES_MPEG = {"audio/mpeg"};
+    String[] CONTENT_TYPES_OGG = {"audio/ogg", "application/ogg", "audio/opus"};
+    String[] CONTENT_TYPES_AAC = {"audio/aac", "audio/aacp"};
+
+    /* SUPPORTED PLAYLIST CONTENT TYPES */
+    String[] CONTENT_TYPES_PLS = {"audio/x-scpls"};
+    String[] CONTENT_TYPES_M3U = {"audio/mpegurl", "application/x-mpegurl", "application/x-mpegURL", "audio/x-mpegurl", "application/x-mpegurl"};
+    String[] CONTENT_TYPES_HLS = {"application/vnd.apple.mpegurl", "application/vnd.apple.mpegurl.audio"};
+
     /* MISC */
     int INFOSHEET_CONTENT_ABOUT = 1;
     int INFOSHEET_CONTENT_HOWTO = 2;
@@ -101,5 +111,9 @@ public interface TransistorKeys {
     int COPY_STATION_ALL = 1;
     int COPY_STATION_METADATA = 2;
     int COPY_STREAM_URL = 3;
+
+    int CONNECTION_TYPE_HLS = 1;
+    int CONNECTION_TYPE_OTHER = 2;
+    int CONNECTION_TYPE_ERROR = 3;
 
 }

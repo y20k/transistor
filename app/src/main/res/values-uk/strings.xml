@@ -96,6 +96,7 @@
     <string name="toastmessage_timer_cancelled">Таймер сну вимкнено.</string>
     <string name="toastmessage_timer_duration_increased">Тривалість збільшено.</string>
     <string name="toastmessage_timer_start_unable">Будь ласка, спершу розпочніть список відтворення.</string>
+    <string name="toastalert_unable_to_connect">Unable to connect. Device does not have an internet connection or stream may be outdated.</string>
     <string name="toastalert_rename_unsuccessful">Не вдалося перейменувати станцію. Будь ласка, оберіть іншу назву.</string>
     <string name="toastalert_delete_successful">Станцію вилучено.</string>
     <string name="toastalert_no_external_storage">Не вдалося отримати доступ до зовнішнього сховища.</string>

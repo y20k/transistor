@@ -95,6 +95,7 @@
     <string name="toastmessage_timer_activated">Minuteur de veille activé.</string>
     <string name="toastmessage_timer_cancelled">Minuteur de veille annulé.</string>
     <string name="toastmessage_timer_duration_increased">Durée augmentée.</string>
+    <string name="toastalert_unable_to_connect">Unable to connect. Device does not have an internet connection or stream may be outdated.</string>
     <string name="toastmessage_timer_start_unable">Veuillez d\'abord démarrer la lecture.</string>
     <string name="toastalert_rename_unsuccessful">Impossible de renommer la station. Veuillez choisir un nom différent.</string>
     <string name="toastalert_delete_successful">Station supprimée.</string>

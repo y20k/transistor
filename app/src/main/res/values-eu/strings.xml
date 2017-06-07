@@ -96,6 +96,7 @@
     <string name="toastmessage_timer_cancelled">Itzaltzeko atzera kontaketa eten da.</string>
     <string name="toastmessage_timer_duration_increased">Iraupena luzatu da.</string>
     <string name="toastmessage_timer_start_unable">Aurretik hasi erreprodukzioa.</string>
+    <string name="toastalert_unable_to_connect">Unable to connect. Device does not have an internet connection or stream may be outdated.</string>
     <string name="toastalert_rename_unsuccessful">"Ezin  izan zaio izena aldatu estazioari. Aukeratu beste izen bat."</string>
     <string name="toastalert_delete_successful">Estazioa kendu da.</string>
     <string name="toastalert_no_external_storage">Ezin izan da kanpo biltegia atzitu.</string>

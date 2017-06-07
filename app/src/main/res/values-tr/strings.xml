@@ -34,6 +34,7 @@
     <string name="toastmessage_timer_cancelled">Uyku zamanlayıcısı iptal edildi.</string>
     <string name="toastmessage_timer_duration_increased">Süre arttı.</string>
     <string name="toastmessage_timer_start_unable">Lütfen ilk önce oynatmayı başlatın.</string>
+    <string name="toastalert_unable_to_connect">Unable to connect. Device does not have an internet connection or stream may be outdated.</string>
     <string name="toastalert_rename_unsuccessful">İstasyon yeniden adlandırılamadı. Lütfen farklı bir isim seçin.</string>
     <string name="toastalert_delete_successful">İstasyon kaldırıldı.</string>
     <string name="toastalert_no_external_storage">Harici depolamaya erişilemiyor.</string>

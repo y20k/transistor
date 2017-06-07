@@ -68,6 +68,7 @@ import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultAllocator;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import com.spoledge.aacdecoder.PlayerCallback;
 
@@ -78,8 +79,9 @@ import org.y20k.transistor.helpers.NotificationHelper;
 import org.y20k.transistor.helpers.TransistorKeys;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.google.android.exoplayer2.ExoPlaybackException.TYPE_RENDERER;
@@ -323,6 +325,10 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             state = "Media source is currently being loaded.";
         } else {
             state = "Media source is currently not being loaded.";
+            // update controller - stop playback
+            if (mPlayback) {
+                mController.getTransportControls().stop();
+            }
         }
         LogHelper.v(LOG_TAG, "State of loading has changed: " + state);
     }
@@ -601,17 +607,22 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
 
     /* Add a media source to the ExoPlayer */
-    private void prepareExoPLayer(boolean sourceIsHLS) {
-        // create BandwidthMeter for DataSource.Factory
-        DefaultBandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
-        // produce DataSource instances through which media data is loaded
-        DataSource.Factory dataSourceFactory = new CustomDefaultHttpDataSourceFactory(mUserAgent, bandwidthMeter, true, playerCallback);
+    private void prepareExoPLayer(int connectionType) {
         // create MediaSource
         MediaSource mediaSource;
-        if (sourceIsHLS) {
+        // create BandwidthMeter for DataSource.Factory
+        DefaultBandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
+        // create DataSource.Factory - produces DataSource instances through which media data is loaded
+        DataSource.Factory dataSourceFactory;
+
+        if (connectionType == CONNECTION_TYPE_HLS) {
+            // TODO HLS does not work reliable
+            Toast.makeText(this, this.getString(R.string.toastmessage_stream_may_not_work), Toast.LENGTH_LONG).show();
+            dataSourceFactory = new DefaultDataSourceFactory(this, Util.getUserAgent(this, mUserAgent), bandwidthMeter);
             mediaSource = new HlsMediaSource(Uri.parse(mStreamUri),
-                    dataSourceFactory, 32, null, null);
+                    dataSourceFactory, null, null);
         } else {
+            dataSourceFactory = new CustomDefaultHttpDataSourceFactory(mUserAgent, bandwidthMeter, true, playerCallback);
             ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
             mediaSource = new ExtractorMediaSource(Uri.parse(mStreamUri),
                     dataSourceFactory, extractorsFactory, 32, null, null, null); // todo attach listener here
@@ -801,36 +812,60 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     /**
      * Inner class: Checks for HTTP Live Streaming (HLS) before playing
      */
-    private class InitializeExoPlayerHelper extends AsyncTask<Void, Void, Boolean> {
+    private class InitializeExoPlayerHelper extends AsyncTask<Void, Void, Integer> {
 
         @Override
-        protected Boolean doInBackground(Void... voids) {
+        protected Integer doInBackground(Void... voids) {
             String contentType = "";
-            URLConnection connection = null;
+            HttpURLConnection connection = null;
+
             try {
-                connection = new URL(mStreamUri).openConnection();
+                connection = (HttpURLConnection)new URL(mStreamUri).openConnection();
                 connection.connect();
                 contentType = connection.getContentType();
+                if (contentType == null) {
+                    LogHelper.e(LOG_TAG, "Connection Error. Connection is NULL");
+                    connection.disconnect();
+                    return CONNECTION_TYPE_ERROR;
+                }
+
                 LogHelper.v(LOG_TAG, "MIME type of stream: " + contentType);
-                if (contentType != null && (contentType.contains("application/vnd.apple.mpegurl") || contentType.contains("application/x-mpegurl"))) {
+                // strip encoding part after semicolon if necessary
+                if (contentType.contains(";")) {
+                    contentType = contentType.substring(0, contentType.indexOf(";"));
+                }
+
+                if (Arrays.asList(CONTENT_TYPES_HLS).contains(contentType) || Arrays.asList(CONTENT_TYPES_M3U).contains(contentType) ) {
                     LogHelper.v(LOG_TAG, "HTTP Live Streaming detected.");
-                    return true;
+                    connection.disconnect();
+                    return CONNECTION_TYPE_HLS;
+                } else if (Arrays.asList(CONTENT_TYPES_MPEG).contains(contentType) || Arrays.asList(CONTENT_TYPES_AAC).contains(contentType)  || Arrays.asList(CONTENT_TYPES_OGG).contains(contentType) ) {
+                    LogHelper.v(LOG_TAG, "Other Streaming protocol detected (MPEG, AAC, OGG).");
+                    connection.disconnect();
+                    return CONNECTION_TYPE_OTHER;
                 } else {
-                    return false;
+                    LogHelper.e(LOG_TAG, "Connection Error. Connection is " + contentType);
+                    connection.disconnect();
+                    return CONNECTION_TYPE_ERROR;
                 }
             } catch (IOException e) {
-                e.printStackTrace();
-                return false;
+                LogHelper.e(LOG_TAG, "Connection Error. Details: " + e);
+                return CONNECTION_TYPE_ERROR;
             }
         }
 
         @Override
-        protected void onPostExecute(Boolean sourceIsHLS) {
-            // prepare player
-            prepareExoPLayer(sourceIsHLS);
+        protected void onPostExecute(Integer connectionType) {
+            if (connectionType == CONNECTION_TYPE_ERROR) {
+                Toast.makeText(PlayerService.this, getString(R.string.toastalert_unable_to_connect), Toast.LENGTH_LONG).show();
+                stopPlayback();
+            } else {
+                // prepare player
+                prepareExoPLayer(connectionType);
 
-            // add listener
-            mExoPlayer.addListener(PlayerService.this);
+                // add listener
+                mExoPlayer.addListener(PlayerService.this);
+            }
         }
 
     }

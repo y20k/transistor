@@ -96,6 +96,7 @@
     <string name="toastmessage_timer_cancelled">睡眠定时器已取消。</string>
     <string name="toastmessage_timer_duration_increased">已增加持续时间 (+ 15 分钟)。</string>
     <string name="toastmessage_timer_start_unable">请先开始播放。</string>
+    <string name="toastalert_unable_to_connect">Unable to connect. Device does not have an internet connection or stream may be outdated.</string>
     <string name="toastalert_rename_unsuccessful">无法重命名电台。请另选其他名称。</string>
     <string name="toastalert_delete_successful">电台已移除。</string>
     <string name="toastalert_no_external_storage">无法访问外部存储。</string>
