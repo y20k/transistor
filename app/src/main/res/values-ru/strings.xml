@@ -7,7 +7,7 @@
 
     <!-- menu entries -->
     <string name="menu_about">О программе</string>
-    <string name="menu_howto">Помощь</string>
+    <string name="menu_howto">Справка</string>
     <string name="menu_timer">Таймер сна</string>
     <string name="menu_icon">Изменить иконку</string>
     <string name="menu_add">Добавить</string>
@@ -24,9 +24,9 @@
     <string name="descr_overflow_button">Показать опции радиостанции</string>
     <string name="descr_station_icon">Иконка радиостанции</string>
     <string name="descr_station_name">Название радиостанции</string>
-    <string name="descr_station_metadata">Метаданные (Артист / Заголовок) проигрываемой радиостанции</string>
+    <string name="descr_station_metadata">Метаданные (Исполнитель / Название) проигрываемой радиостанции</string>
     <string name="descr_station_name_example">Например FM</string>
-    <string name="descr_station_metadata_example">Артист - Заголовок</string>
+    <string name="descr_station_metadata_example">Исполнитель - Название</string>
     <string name="descr_station_stream_loading">Загрузка потока …</string>
     <string name="descr_playback_button">Большая кнопка воспроизведения</string>
     <string name="descr_playback_indicator">Индикатор воспроизведения</string>
@@ -43,18 +43,18 @@
     <string name="player_sheet_h1_station_metadata">Сейчас играет</string>
     <string name="player_sheet_h1_stream_url">Адрес потока</string>
     <string name="player_sheet_p_station_metadata">нет доступных метаданных</string>
-    <string name="player_sheet_h1_station_mime_type">MIME type</string>
-    <string name="player_sheet_h1_station_channel_count">Channel count</string>
-    <string name="player_sheet_h1_station_sample_rate">Sample rate</string>
-    <string name="player_sheet_h1_station_bitrate">Bitrate</string>
+    <string name="player_sheet_h1_station_mime_type">Тип MIME</string>
+    <string name="player_sheet_h1_station_channel_count">Число каналов</string>
+    <string name="player_sheet_h1_station_sample_rate">Частота дискретизации</string>
+    <string name="player_sheet_h1_station_bitrate">Битрейт</string>
 
     <!-- dialogs -->
     <string name="dialog_generic_button_okay">Хорошо</string>
     <string name="dialog_generic_button_cancel">Отмена</string>
     <string name="dialog_add_station_button">Добавить</string>
-    <string name="dialog_add_station_input_hint">Вставьте адрес потокового вещания</string>
+    <string name="dialog_add_station_input_hint">Вставьте адрес потока</string>
     <string name="dialog_add_station_message">Добавить новую станцию</string>
-    <string name="dialog_add_station_howto">Вы можете добавлять аудио потоки закодированные в mp3 или ogg, так же как и встроенные в m3u или pls файлах. Также возможно добавить новую станцию нажав на ссылку на поток (pls или m3u) в вашем веб-браузере.</string>
+    <string name="dialog_add_station_howto">Вы можете добавлять аудио потоки, закодированные в MP3, AAC или Ogg/Opus, а также потоки в файлах PLS или M3U. Также можно добавить новую станцию, нажав на ссылку на поток (.pls или .m3u) в вашем веб-браузере.</string>
     <string name="dialog_delete_station_message">Удалить станцию</string>
     <string name="dialog_button_delete">Удалить</string>
     <string name="dialog_rename_station_input_hint">Введите новое имя</string>
@@ -64,16 +64,16 @@
     <!-- error dialogs -->
     <string name="dialog_error_title_default">Ошибка</string>
     <string name="dialog_error_message_default">Произошла ошибка</string>
-    <string name="dialog_error_details_button_default">Показать детали</string>
+    <string name="dialog_error_details_button_default">Показать подробности</string>
     <string name="dialog_error_details_default">Подробности недоступны</string>
     <string name="dialog_error_details_write">Возможно радиостанция уже существеут или проблема с внешним накопителем.</string>
     <string name="dialog_error_title_fetch_download">Проблема скачивания</string>
     <string name="dialog_error_title_fetch_read">Проблема чтения</string>
     <string name="dialog_error_title_fetch_write">Проблема записи</string>
     <string name="dialog_error_message_fetch_general_external_storage">Внешнее хранилище:</string>
-    <string name="dialog_error_message_fetch_general_hint_m3u">Подсказка: Transistor может работать только с потоками закодированными в mp3 и ogg, или с адресами оканчивающимися на .m3u или .pls.</string>
-    <string name="dialog_error_message_fetch_general_playlist_type">MIME тип файла:</string>
-    <string name="dialog_error_message_fetch_general_stream_type">MIME тип потока:</string>
+    <string name="dialog_error_message_fetch_general_hint_m3u">Подсказка: Transistor может работать только с потоками, закодированными в MP3, AAC и Ogg/Opus, или с адресами, заканчивающимися на .m3u или .pls.</string>
+    <string name="dialog_error_message_fetch_general_playlist_type">MIME-тип файла:</string>
+    <string name="dialog_error_message_fetch_general_stream_type">MIME-тип потока:</string>
     <string name="dialog_error_message_fetch_general_file_content">Содержание файла:</string>
     <string name="dialog_error_message_fetch_download">Transistor не может обработать эту ссылку.</string>
     <string name="dialog_error_message_fetch_download_station_url">Адрес станции:</string>
@@ -98,7 +98,7 @@
     <string name="toastmessage_timer_start_unable">Сперва запустите воспроизведение.</string>
     <string name="toastalert_unable_to_connect">Unable to connect. Device does not have an internet connection or stream may be outdated.</string>
     <string name="toastalert_rename_unsuccessful">Невозможно переименовать станцию. Пожалуйста, выберите другое имя.</string>
-    <string name="toastalert_delete_successful">Станция удалена.</string>
+    <string name="toastalert_delete_successful">Станция была удалена.</string>
     <string name="toastalert_no_external_storage">Нет доступа к внешнему накопителю.</string>
     <string name="toastalert_headphones_unplugged">Наушники отключили. Воспроизведение остановлено.</string>
     <string name="toastalert_permission_denied">Доступ запрещен:</string>
@@ -149,7 +149,7 @@
     <string name="infosheet_howto_h2_edit">Как переименовать или удалить станцию?</string>
     <string name="infosheet_howto_p_edit">Опции переименования и удаления доступны из контекстного меню станции. Просто нажмите на символ с тремя точками. Вы также можете управлять списком станций через файловый менеджер (см. следующий вопрос).</string>
     <string name="infosheet_howto_h2_storage">Где Transistor хранит станции?</string>
-    <string name="infosheet_howto_p_storage">Transistor не хранит список станций в базе данных. Вместо этого он сохраняет станции как m3u файлы на внешнем накопителе вашего устройства. Можете свободно изменять эти файлы текстовым редактором. Файлы хранятся в директории /Android/data/org.y20k.transistor/files/Collection.</string>
+    <string name="infosheet_howto_p_storage">Transistor не хранит список станций в базе данных. Вместо этого он сохраняет станции как файлы .m3u на внешнем накопителе вашего устройства. Можете свободно изменять эти файлы текстовым редактором. Файлы хранятся в директории /Android/data/org.y20k.transistor/files/Collection.</string>
     <string name="infosheet_howto_h2_backup">Как я могу сделать резервную копию моих радиостанций и передать их?</string>
     <string name="infosheet_howto_p_backup">Transistor поддерживает функцию резервного копирования Android 6. Радиостанции всегда сохраняются в вашем Google-аккаунте и могут быть восстановлены при переустановке приложения. На устройствах работающих под более старыми версиями Android вы должны вручную сохранить и восстановить директорию \"Collection\".</string>
     <string name="infosheet_howto_h2_settings">Почему Transistor не имеет настроек?</string>
