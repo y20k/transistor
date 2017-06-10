@@ -66,7 +66,7 @@
     <string name="dialog_error_message_default">エラーが発生しました</string>
     <string name="dialog_error_details_button_default">詳細の表示</string>
     <string name="dialog_error_details_default">詳細はありません</string>
-    <string name="dialog_error_details_write">局がおそらく重複しているか、外部ストレージを確認する必要があります。</string>
+    <string name="dialog_error_details_write">この放送局はおそらく重複しているようです。あるいは外部ストレージを確認する必要があります。</string>
     <string name="dialog_error_title_fetch_download">ダウンロードの問題</string>
     <string name="dialog_error_title_fetch_read">問題を読む</string>
     <string name="dialog_error_title_fetch_write">問題を書き込む</string>
@@ -98,7 +98,7 @@
     <string name="toastmessage_timer_start_unable">まず再生を開始してください。</string>
     <string name="toastalert_unable_to_connect">Unable to connect. Device does not have an internet connection or stream may be outdated.</string>
     <string name="toastalert_rename_unsuccessful">放送局の名前を変更できません。別の名前を選択してください。</string>
-    <string name="toastalert_delete_successful">放送局を削除しました。</string>
+    <string name="toastalert_delete_successful">放送局が削除されました。</string>
     <string name="toastalert_no_external_storage">外部ストレージにアクセスできません。</string>
     <string name="toastalert_headphones_unplugged">ヘッドフォンのプラグを外しました。再生を停止します。</string>
     <string name="toastalert_permission_denied">アクセスが拒否されました:</string>
