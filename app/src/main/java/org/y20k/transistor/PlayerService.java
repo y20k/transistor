@@ -287,8 +287,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
                 break;
 
         }
-
-
     }
 
 
@@ -324,11 +322,11 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         if (isLoading) {
             state = "Media source is currently being loaded.";
         } else {
-            state = "Media source is currently not being loaded.";
-            // update controller - stop playback
-            if (mPlayback) {
-                mController.getTransportControls().stop();
-            }
+            state = "Media source is currently NOT being loaded.";
+//            // update controller - stop playback
+//            if (mPlayback) {
+//                mController.getTransportControls().stop();
+//            }
         }
         LogHelper.v(LOG_TAG, "State of loading has changed: " + state);
     }
@@ -372,11 +370,13 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         return null;
     }
 
+
     @Nullable
     @Override
     public BrowserRoot onGetRoot(@NonNull String clientPackageName, int clientUid, @Nullable Bundle rootHints) {
         return new BrowserRoot(getString(R.string.app_name), null);
     }
+
 
     @Override
     public void onLoadChildren(@NonNull String rootId, @NonNull Result<List<MediaBrowserCompat.MediaItem>> result) {
@@ -472,7 +472,13 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
     /* Starts playback */
     private void startPlayback() {
-        LogHelper.v(LOG_TAG, "Starting playback.");
+        LogHelper.v(LOG_TAG, "Starting playback. Station name:" + mStation.getStationName());
+
+        // stop running mExoPlayer - request focus and initialize media mExoPlayer
+        if (mExoPlayer.getPlayWhenReady()) {
+            mExoPlayer.setPlayWhenReady(false);
+            mExoPlayer.stop();
+        }
 
         // set and save state
         mStationMetadata = mStation.getStationName();
@@ -492,13 +498,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             mWakeLock.acquire(); // needs android.permission.WAKE_LOCK
         }
 
-        // stop running mExoPlayer - request focus and initialize media mExoPlayer
-        if (mExoPlayer.getPlayWhenReady()) {
-            mExoPlayer.setPlayWhenReady(false);
-            mExoPlayer.stop();
-            NotificationHelper.stop();
-        }
-
+        // request focus and initialize media mExoPlayer
         if (mStreamUri != null && requestFocus()) {
             // initialize player and start playback
             initializeExoPlayer();
@@ -530,7 +530,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
     /* Stops playback */
     private void stopPlayback() {
-        LogHelper.v(LOG_TAG, "Stopping playback.");
+        LogHelper.v(LOG_TAG, "Stopping playback. Station name:" + mStation.getStationName());
 
         // check for null - can happen after a crash during playback
         if (mStation == null) {
