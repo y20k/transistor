@@ -24,7 +24,7 @@
     <string name="descr_overflow_button">Optionen für Station anzeigen</string>
     <string name="descr_station_icon">Logo der Radiostation</string>
     <string name="descr_station_name">Name der Radiostation</string>
-    <string name="descr_station_metadata">Metadaten (Interpret / Titel) der momentan aktiven Radiostation.</string>
+    <string name="descr_station_metadata">Metadaten (Interpret / Titel) der momentan aktiven Radiostation</string>
     <string name="descr_station_name_example">FM-Beispiel</string>
     <string name="descr_station_metadata_example">Interpret - Titel</string>
     <string name="descr_station_stream_loading">Lade Stream …</string>
@@ -98,8 +98,8 @@
     <string name="toastmessage_timer_start_unable">Bitte zuerst Playback starten.</string>
     <string name="toastalert_unable_to_connect">Verbindung fehlgeschlagen. Gerät hat keine Verbing zum Internet oder Stream ist möglicherweise veraltet.</string>
     <string name="toastalert_rename_unsuccessful">Station kann nicht umbenannt werden. Bitte wählen Sie einen anderen Namen.</string>
-    <string name="toastalert_delete_successful">Station entfernt.</string>
-    <string name="toastalert_no_external_storage">Zugriff auf den externen Speicher verweigert.</string>
+    <string name="toastalert_delete_successful">Die Station wurde entfernt.</string>
+    <string name="toastalert_no_external_storage">Zugriff auf den externen Speicher nicht möglich.</string>
     <string name="toastalert_headphones_unplugged">Kopfhörer entfernt. Playback gestoppt.</string>
     <string name="toastalert_permission_denied">Fehlende Berechtigung:</string>
     <string name="toastalert_station_not_found">Station kann nicht gefunden werden.</string>
@@ -124,24 +124,24 @@
     <string name="infosheet_about_p_license">https://opensource.org/licenses/MIT</string>
     <string name="infosheet_about_h2_permissions">Welche App-Berechtigungen braucht Transistor?</string>
     <string name="infosheet_about_h3_shortcut">Berechtigung INSTALL_SHORTCUT und UNINSTALL_SHORTCUT</string>
-    <string name="infosheet_about_p_shortcut">Diese Berechtigung wird benötigt, um Radiostationen auf dem Android Startbildschirm plazieren zu können.</string>
+    <string name="infosheet_about_p_shortcut">Diese Berechtigungen werden benötigt, um Radiostationen auf dem Android Startbildschirm platzieren zu können.</string>
     <string name="infosheet_about_h3_internet">Berechtigung INTERNET</string>
     <string name="infosheet_about_p_internet">Transistor streamt Radioprogramme über das Internet.</string>
     <string name="infosheet_about_h3_external">Berechtigung READ_EXTERNAL_STORAGE</string>
-    <string name="infosheet_about_p_external">Für die Option die Icons von Radiostationen zu ändern und für die Möglichkeit lokal gespeicherte Playlist-Dateien zu öffnen benötigt Transistor Zugriff auf Fotos, Bilder und Dokumente.</string>
+    <string name="infosheet_about_p_external">Transistor braucht Zugriff auf Bilder, Fotos und Dokumente, um Radiosender-Icons anpassen zu können und lokal gespeicherte Playlist-Dateien zu öffnen.</string>
     <string name="infosheet_about_h3_vibrate">Berechtigung VIBRATE</string>
     <string name="infosheet_about_p_vibrate">Das Antippen und Halten einer Radiostation aktiviert eine kurze Vibration.</string>
     <string name="infosheet_about_h3_wakelock">Berechtigung WAKE_LOCK</string>
-    <string name="infosheet_about_p_wakelock">Während der Wiedergabe hält Transistor ein sogenannntes "Partial Wake Lock". Es hindert das Betriebssystem daran eigenständig die Wiedergabe zu stoppen um Energie zu sparen.</string>
+    <string name="infosheet_about_p_wakelock">Während der Wiedergabe hält Transistor ein sogenanntes Partial Wake Lock. Es hindert das Betriebssystem daran eigenständig die Wiedergabe zu stoppen, um Energie zu sparen.</string>
 
     <!-- infosheet howto -->
     <string name="infosheet_howto_h1_howto">Wie Transistor funktioniert</string>
     <string name="infosheet_howto_h2_add">Wie füge ich eine neue Radiostation hinzu?</string>
     <string name="infosheet_howto_p_add">Die einfachste Variante eine neue Station hinzuzufügen ist: Im Web nach Streaminglinks suchen und diese dann mit Transistor zu öffnen. Man kann zudem auch auf das (+)-Symbol tippen und Streaminglinks via Copy und Paste direkt eingeben. Hinweis: Transistor hat keine interne Suchfunktion.</string>
-    <string name="infosheet_howto_h2_play">Wie schalte ich das Radio ein?</string>
+    <string name="infosheet_howto_h2_play">Wie schalte ich eine Radiostation ein?</string>
     <string name="infosheet_howto_p_play">Den großen Play-Knopf drücken ;).</string>
     <string name="infosheet_howto_h2_stop">Wie schalte ich das Radio wieder aus?</string>
-    <string name="infosheet_howto_p_stop">Den großen Stop-Knopf drücken oder das Kopfhörerkabel abziehen oder die "Notification" der App ausblenden.</string>
+    <string name="infosheet_howto_p_stop">Den großen Stop-Knopf drücken oder das Kopfhörerkabel abziehen oder die Benachrichtigung der App ausblenden.</string>
     <string name="infosheet_howto_h2_sleep">Wie starte ich den Sleeptimer?</string>
     <string name="infosheet_howto_p_sleep">Über den Knopf mit dem Uhr-Symbol kann ein 15-minütiger Countdown aktiviert werden - wenn der abläuft, stoppt Transistor die Wiedergabe. Wiederholtes Tippen verlängert den Countdown um 15 Minuten. Der Sleeptimer kann nur aktiviert werden, wenn die Wiedergabe einer Station läuft.</string>
     <string name="infosheet_howto_h2_shortcut">Wie speichere ich eine Radiostation auf dem Startbildschirm ab?</string>
@@ -149,11 +149,11 @@
     <string name="infosheet_howto_h2_edit">Wie kann ich eine Station löschen oder umbenennen?</string>
     <string name="infosheet_howto_p_edit">Die Optionen für Löschen und Umbenennen finden sich im Kontextmenü der jeweiligen Station – dazu einfach auf das Drei-Punkte-Symbol tippen. Es ist zudem möglich, die Liste der Stationen direkt mit einem Datei-Browser zu bearbeiten (siehe nächste Frage).</string>
     <string name="infosheet_howto_h2_storage">Wo speichert Transistor seine Radiostationen ab?</string>
-    <string name="infosheet_howto_p_storage">Transistor speichert seine Stationen nicht in einer Datenbank. Stattdessen werden Stationen als M3U-Textdateien im externen Gerätespeicher abgelegt. Diese können auch manuell mit Hilfe eines Texteditors bearbeitet werden. Die Dateien finden sich hier: /Android/data/org.y20k.transistor/files/Collection</string>
+    <string name="infosheet_howto_p_storage">Transistor speichert seine Stationen nicht in einer Datenbank. Stattdessen werden Stationen als M3U-Textdateien im externen Gerätespeicher abgespeichert. Diese können auch manuell mit Hilfe eines Texteditors bearbeitet werden. Die Dateien befinden sich hier: /Android/data/org.y20k.transistor/files/Collection.</string>
     <string name="infosheet_howto_h2_backup">Wie kann ich meine Radiostationen sichern und wiederherstellen?</string>
-    <string name="infosheet_howto_p_backup">Transistor unterstützt die Auto Backup Funktion von Android 6. Alle Radiostationen werden im Google-Konto gespeichert. Bei einer Neu-Installation der App werden sie automatisch wiederhergestellt. Auf Geräten mit älteren Android-Versionen muss man den Ordner "Collection" manuell sichern und gegebenenfalls zurückkopieren.</string>
+    <string name="infosheet_howto_p_backup">Transistor unterstützt die Auto Backup Funktion von Android 6. Alle Radiostationen werden im Google-Konto gespeichert. Bei einer Neu-Installation der App werden sie automatisch wiederhergestellt. Auf Geräten mit älteren Android-Versionen muss man den Ordner Collection manuell sichern und gegebenenfalls zurück kopieren.</string>
     <string name="infosheet_howto_h2_settings">Warum hat Transistor keine Einstellungen?</string>
-    <string name="infosheet_howto_p_settings">Es gibt schlicht nichts einzustellen ;). Transistor ist eine sehr einfache App. Abhängig vom eigenen Standpunkt ist "einfach" entweder großartig oder mies.</string>
+    <string name="infosheet_howto_p_settings">Es gibt schlicht nichts einzustellen ;). Transistor ist eine sehr einfache App. Abhängig vom eigenen Standpunkt ist entweder großartig oder mies.</string>
 
     <!-- 
     +++ IMPORTANT NOTE +++
