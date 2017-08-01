@@ -115,6 +115,8 @@
     <string name="notification_stop">Остановить</string>
     <string name="notification_swipe_to_stop">Смахните, чтобы остановить</string>
     <string name="notification_playing">Играет</string>
+    <string name="notification_channel_playback_name">Playback Controls</string>
+    <string name="notification_channel_playback_description">Playback controls, station logo and now playing info.</string>
 
     <!-- infosheet about -->
     <string name="infosheet_about_h1_about">О программе Transistor</string>

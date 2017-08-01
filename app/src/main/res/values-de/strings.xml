@@ -115,6 +115,8 @@
     <string name="notification_stop">Stopp</string>
     <string name="notification_playing">Wiedergabe</string>
     <string name="notification_swipe_to_stop">Ausblenden, um Wiedergabe zu stoppen</string>
+    <string name="notification_channel_playback_name">Playback-Steuerung</string>
+    <string name="notification_channel_playback_description">Playback-Steuerung, Sender Logo und Infos über Programminformationen.</string>
 
     <!-- infosheet about -->
     <string name="infosheet_about_h1_about">Über Transistor</string>

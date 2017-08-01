@@ -115,6 +115,8 @@
     <string name="notification_stop">Stop</string>
     <string name="notification_swipe_to_stop">Swipe to stop</string>
     <string name="notification_playing">Playing</string>
+    <string name="notification_channel_playback_name">Playback Controls</string>
+    <string name="notification_channel_playback_description">Playback controls, station logo and now playing info.</string>
 
     <!-- infosheet about -->
     <string name="infosheet_about_h1_about">About Transistor</string>

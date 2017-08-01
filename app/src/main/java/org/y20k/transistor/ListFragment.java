@@ -1,7 +1,7 @@
 /**
- * MainActivityFragment.java
+ * ListFragment.java
  * Implements the main fragment of the main activity
- * This fragment is a list view of radio stations
+ * This fragment implements a RecyclerView list of radio stations
  *
  * This file is part of
  * TRANSISTOR - Radio App for Android
@@ -16,7 +16,9 @@ package org.y20k.transistor;
 
 import android.app.Activity;
 import android.app.Application;
-import android.app.Fragment;
+import android.arch.lifecycle.LifecycleOwner;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -29,17 +31,25 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import org.y20k.transistor.adapter.CollectionAdapter;
+import org.y20k.transistor.adapter.CollectionViewModel;
 import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.DialogAdd;
 import org.y20k.transistor.helpers.ImageHelper;
@@ -54,42 +64,44 @@ import org.y20k.transistor.helpers.TransistorKeys;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 
 /**
- * MainActivityFragment class
+ * ListFragment class
  */
-public final class MainActivityFragment extends Fragment implements TransistorKeys {
+public final class ListFragment extends Fragment implements TransistorKeys {
 
     /* Define log tag */
-    private static final String LOG_TAG = MainActivityFragment.class.getSimpleName();
+    private static final String LOG_TAG = ListFragment.class.getSimpleName();
 
 
     /* Main class variables */
     private Application mApplication;
     private Activity mActivity;
+    private StorageHelper mStorageHelper;
     private CollectionAdapter mCollectionAdapter = null;
-    private File mFolder;
-    private int mFolderSize;
     private View mRootView;
     private View mActionCallView;
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private Parcelable mListState;
+    private CollectionViewModel mCollectionViewModel;
     private BroadcastReceiver mCollectionChangedReceiver;
     private BroadcastReceiver mImageChangeRequestReceiver;
     private BroadcastReceiver mSleepTimerStartedReceiver;
     private BroadcastReceiver mPlaybackStateChangedReceiver;
-    private int mStationIDSelected;
-    private int mStationIDCurrent;
-    private int mStationIDLast;
-    private int mTempStationID;
+//    private int mPlayback;
+    private int mStationIdSelected;
+    private int mTempStationId;
+    private String mStationUrlLast;
+    private Station mStation;
     private Station mTempStation;
     private Uri mNewStationUri;
+//    private boolean mPlaybackRequestFromIntent;
     private boolean mTwoPane;
-    private boolean mPlayback;
     private boolean mSleepTimerRunning;
     private SleepTimerService mSleepTimerService;
     private String mSleepTimerNotificationMessage;
@@ -97,7 +109,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
 
 
     /* Constructor (default) */
-    public MainActivityFragment() {
+    public ListFragment() {
     }
 
 
@@ -118,38 +130,33 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
         // initiate sleep timer service
         mSleepTimerService = new SleepTimerService();
 
-        // set list state null
+        // set initial values
         mListState = null;
-
-        // initialize id of currently selected station
-        mStationIDSelected = 0;
-
-        // initialize temporary station image id
-        mTempStationID = -1;
+        mStationIdSelected = 0;
+        mTempStationId = -1;
 
         // initialize two pane
-        mTwoPane = false;
+        Bundle args = getArguments();
+        if (args != null && args.containsKey(ARG_TWO_PANE)) {
+            mTwoPane = args.getBoolean(ARG_TWO_PANE, false);
+        } else {
+            mTwoPane = false;
+        }
+
+        // initialize StorageHelper
+        mStorageHelper = new StorageHelper(mActivity);
 
         // load playback state
         loadAppState(mActivity);
 
-        // get collection folder
-        StorageHelper storageHelper = new StorageHelper(mActivity);
-        mFolder = storageHelper.getCollectionDirectory();
-        if (mFolder == null) {
-            Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_no_external_storage), Toast.LENGTH_LONG).show();
-            mActivity.finish();
-        }
-        mFolderSize = mFolder.listFiles().length;
+        // get uri of selected station from saved instance
+        // todo implememt
 
         // create collection adapter
-        if (mCollectionAdapter == null) {
-            mCollectionAdapter = new CollectionAdapter(mActivity, mFolder);
-        }
+        mCollectionAdapter = new CollectionAdapter(mActivity, mStorageHelper.getCollectionDirectory(), mTwoPane, null);
 
         // initialize broadcast receivers
         initializeBroadcastReceivers();
-
     }
 
 
@@ -161,17 +168,15 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
         }
 
         // inflate root view from xml
-        mRootView = inflater.inflate(R.layout.fragment_main, container, false);
+        mRootView = inflater.inflate(R.layout.fragment_list, container, false);
 
         // get reference to action call view from inflated root view
-        mActionCallView = mRootView.findViewById(R.id.main_actioncall_layout);
+        mActionCallView = mRootView.findViewById(R.id.collection_actioncall_layout);
 
         // get reference to recycler list view from inflated root view
-        mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.main_recyclerview_collection);
+        mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.list_recyclerview);
 
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        // TODO check if necessary here
+        // use this setting to improve performance if you know that changes in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
 
         // set animator
@@ -186,11 +191,26 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
         };
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        // attach adapter to list view
+        // associate RecyclerView with CollectionAdapter
         mRecyclerView.setAdapter(mCollectionAdapter);
 
+        // observe changes in LiveData
+        mCollectionViewModel = ViewModelProviders.of((AppCompatActivity)mActivity).get(CollectionViewModel.class);
+        mCollectionViewModel.getStationList().observe((LifecycleOwner) mActivity, createStationListObserver());
+        mCollectionViewModel.getStation().observe((LifecycleOwner) mActivity, createStationObserver());
+
+        // show call to action, if necessary
+        toggleActionCall();
 
         return mRootView;
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        // inflate the menu items for use in action bar
+        inflater.inflate(R.menu.menu_list_actionbar, menu);
     }
 
 
@@ -198,15 +218,19 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
     public void onResume() {
         super.onResume();
 
+        // set title of activity in ActionBar
+        mActivity.setTitle(R.string.app_name);
+
         // refresh app state
         loadAppState(mActivity);
 
-        // update collection adapter
-        mCollectionAdapter.setTwoPane(mTwoPane);
-        mCollectionAdapter.refresh();
-        if (mCollectionAdapter.getItemCount() > 0) {
-            mCollectionAdapter.setStationIDSelected(mStationIDSelected, mPlayback, false);
-        }
+//        // update collection adapter
+//        if (mCollectionAdapter != null) {
+//            mCollectionAdapter.setTwoPane(mTwoPane);
+////            if (mCollectionAdapter.getItemCount() > 0) {
+////                mCollectionAdapter.setStationIdSelected(mStationIdSelected, mPlayback, false);
+////            }
+//        }
 
         // handles the activity's intent
         Intent intent = mActivity.getIntent();
@@ -216,16 +240,16 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
             handleShowPlayer(intent);
         }
 
-        // check if folder content has been changed
-        int folderSize = mFolder.listFiles().length;
-        if (mFolderSize != mFolder.listFiles().length) {
-            mFolderSize = folderSize;
-            mCollectionAdapter = new CollectionAdapter(mActivity, mFolder);
-            mRecyclerView.setAdapter(mCollectionAdapter);
-        }
+        // check if folder content has been changed // todo rewrite
+//        int folderSize = mFolder.listFiles().length;
+//        if (mFolderSize != mFolder.listFiles().length) {
+//            mFolderSize = folderSize;
+//            mCollectionAdapter = new CollectionAdapter(mActivity, mFolder, mStationList);
+//            mRecyclerView.setAdapter(mCollectionAdapter);
+//        }
 
         // show call to action, if necessary
-        toggleActionCall();
+        // toggleActionCall();
 
         // show notification bar if timer is running
         if (mSleepTimerRunning) {
@@ -237,7 +261,9 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
     @Override
     public void onDestroy() {
         super.onDestroy();
+        // unregister Broadcast Receivers
         unregisterBroadcastReceivers();
+        mCollectionAdapter.unregisterBroadcastReceivers(mActivity);
     }
 
 
@@ -254,30 +280,69 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
             // CASE ADD
             case R.id.menu_add:
 
-                DialogAdd dialog = new DialogAdd(mActivity, mFolder);
+                DialogAdd dialog = new DialogAdd(mActivity, mStorageHelper.getCollectionDirectory());
                 dialog.show();
                 return true;
 
             // CASE ABOUT
             case R.id.menu_about:
-                // get title and content
+                // put title and content into arguments and start fragment transaction
                 String aboutTitle = mActivity.getString(R.string.header_about);
-                // put title and content into intent and start activity
-                Intent aboutIntent = new Intent(mActivity, InfosheetActivity.class);
-                aboutIntent.putExtra(EXTRA_INFOSHEET_TITLE, aboutTitle);
-                aboutIntent.putExtra(EXTRA_INFOSHEET_CONTENT, INFOSHEET_CONTENT_ABOUT);
-                startActivity(aboutIntent);
+                Bundle aboutArgs = new Bundle();
+                aboutArgs.putString(ARG_INFOSHEET_TITLE, aboutTitle);
+                aboutArgs.putInt(ARG_INFOSHEET_CONTENT, INFOSHEET_CONTENT_ABOUT);
+
+                InfosheetFragment aboutInfosheetFragment = new InfosheetFragment();
+                aboutInfosheetFragment.setArguments(aboutArgs);
+
+                ((AppCompatActivity)mActivity).getSupportFragmentManager().beginTransaction()
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .replace(R.id.main_container, aboutInfosheetFragment, INFOSHEET_FRAGMENT_TAG)
+                        .addToBackStack(null)
+                        .commit();
                 return true;
 
             // CASE HOWTO
             case R.id.menu_howto:
-                // get title and content
+                // put title and content into arguments and start fragment transaction
                 String howToTitle = mActivity.getString(R.string.header_howto);
-                // put title and content into intent and start activity
-                Intent howToIntent = new Intent(mActivity, InfosheetActivity.class);
-                howToIntent.putExtra(EXTRA_INFOSHEET_TITLE, howToTitle);
-                howToIntent.putExtra(EXTRA_INFOSHEET_CONTENT, INFOSHEET_CONTENT_HOWTO);
-                startActivity(howToIntent);
+                Bundle howtoArgs = new Bundle();
+                howtoArgs.putString(ARG_INFOSHEET_TITLE, howToTitle);
+                howtoArgs.putInt(ARG_INFOSHEET_CONTENT, INFOSHEET_CONTENT_ABOUT);
+
+                InfosheetFragment howtoInfosheetFragment = new InfosheetFragment();
+                howtoInfosheetFragment.setArguments(howtoArgs);
+
+                ((AppCompatActivity)mActivity).getSupportFragmentManager().beginTransaction()
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .replace(R.id.main_container, howtoInfosheetFragment, INFOSHEET_FRAGMENT_TAG)
+                        .addToBackStack(null)
+                        .commit();
+                return true;
+
+            // CASE REFRESH LIST
+            case R.id.menu_refresh:
+                // manually refresh list of stations - useful when editing playlist files manually outside of Transistor
+                mRecyclerView.setAdapter(null); // todo check if necessary
+                mRecyclerView.setLayoutManager(null); // todo check if necessary
+                mCollectionAdapter.notifyDataSetChanged(); // todo check if necessary
+
+                mCollectionAdapter = new CollectionAdapter(mActivity, mStorageHelper.getCollectionDirectory(), mTwoPane, null);
+                mRecyclerView.setAdapter(mCollectionAdapter);
+                mRecyclerView.setLayoutManager(mLayoutManager);
+                mCollectionAdapter.notifyDataSetChanged();
+
+                ((MainActivity)mActivity).togglePlayerContainerVisibility();
+                toggleActionCall();
+
+                // stop player service using intent
+                Intent intent = new Intent(mActivity, PlayerService.class);
+                intent.setAction(ACTION_DISMISS);
+                mActivity.startService(intent);
+
+                // notify user
+                Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_list_refreshed), Toast.LENGTH_LONG).show();
+
                 return true;
 
             // CASE DEFAULT
@@ -292,7 +357,9 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
     public void onSaveInstanceState(Bundle outState) {
         // save list view position
         mListState = mLayoutManager.onSaveInstanceState();
+        Uri stationUriSelected = mCollectionAdapter.getStationUriSelected();
         outState.putParcelable(INSTANCE_LIST_STATE, mListState);
+        outState.putParcelable(INSTANCE_STATION_SELECTED, stationUriSelected);
         super.onSaveInstanceState(outState);
     }
 
@@ -343,7 +410,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
             ImageHelper imageHelper = new ImageHelper(newImageUri, mActivity);
             Bitmap newImage = imageHelper.getInputImage();
 
-            if (newImage != null && mTempStationID != -1) {
+            if (newImage != null && mTempStationId != -1) {
                 // write image to storage
                 File stationImageFile = mTempStation.getStationImageFile();
                 try (FileOutputStream out = new FileOutputStream(stationImageFile)) {
@@ -352,7 +419,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
                     LogHelper.e(LOG_TAG, "Unable to save: " + newImage.toString());
                 }
                 // update adapter
-                mCollectionAdapter.notifyItemChanged(mTempStationID);
+                mCollectionAdapter.notifyItemChanged(mTempStationId);
 
             } else {
                 LogHelper.e(LOG_TAG, "Unable to get image from media picker. Uri was:  " + newImageUri.toString());
@@ -366,13 +433,12 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
 
     /* Show or hide call to action view if necessary */
     private void toggleActionCall() {
-        // show call to action, if necessary
-        if (mCollectionAdapter.getItemCount() == 0) {
-            mActionCallView.setVisibility(View.VISIBLE);
-            mRecyclerView.setVisibility(View.GONE);
-        } else {
+        if (mStorageHelper.storageHasStationPlaylistFiles()) {
             mActionCallView.setVisibility(View.GONE);
             mRecyclerView.setVisibility(View.VISIBLE);
+        } else {
+            mActionCallView.setVisibility(View.VISIBLE);
+            mRecyclerView.setVisibility(View.GONE);
         }
     }
 
@@ -417,46 +483,41 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
 
     /* Handles intent to show player from notification or from shortcut */
     private void handleShowPlayer(Intent intent) {
-        // get station from intent
+
         Station station = null;
+        boolean startPlayback = false;
+
+        // CASE: user tapped on notification
         if (intent.hasExtra(EXTRA_STATION)) {
             // get station from notification
             station = intent.getParcelableExtra(EXTRA_STATION);
-        } else if (intent.hasExtra(EXTRA_STREAM_URI)) {
+            startPlayback = false;
+        }
+        // CASE: playback requested via homescreen shortcut
+        else if (intent.hasExtra(EXTRA_STREAM_URI)) {
             // get Uri of station from home screen shortcut
             station = mCollectionAdapter.findStation(Uri.parse(intent.getStringExtra(EXTRA_STREAM_URI)));
-        } else if (intent.hasExtra(EXTRA_LAST_STATION) && intent.getBooleanExtra(EXTRA_LAST_STATION, false)) {
-            // try to get last station
+            startPlayback = true;
+        }
+        // CASE: transistor received a last station intent
+        else if(intent.hasExtra(EXTRA_LAST_STATION)) {
+            // try to get last station from SharedPreferences
             loadAppState(mActivity);
-            if (mStationIDLast > -1 && mStationIDLast < mCollectionAdapter.getItemCount()) {
-                station = mCollectionAdapter.getStation(mStationIDLast);
+            if (mStationUrlLast != null) {
+                Uri stationUriLast = Uri.parse(mStationUrlLast);
+                station = mCollectionAdapter.findStation(stationUriLast);
             }
+            startPlayback = true;
         }
 
-        if (station == null) {
+        // show player and clear the intent
+        if (station != null) {
+            mCollectionAdapter.showPlayerFragment(station, startPlayback);
+            intent.setAction("");
+        } else {
             Toast.makeText(mActivity, getString(R.string.toastalert_station_not_found), Toast.LENGTH_LONG).show();
         }
 
-        // get playback action from intent
-        boolean startPlayback;
-        if (intent.hasExtra(EXTRA_PLAYBACK_STATE)) {
-            startPlayback = intent.getBooleanExtra(EXTRA_PLAYBACK_STATE, false);
-        } else {
-            startPlayback = false;
-        }
-
-        // prepare arguments or intent
-        if (mTwoPane && station != null) {
-            mStationIDSelected = mCollectionAdapter.getStationID(station);
-            mCollectionAdapter.setStationIDSelected(mStationIDSelected, station.getPlaybackState(), startPlayback);
-        } else if (station != null) {
-            // start player activity - on phone
-            Intent playerIntent = new Intent(mActivity, PlayerActivity.class);
-            playerIntent.setAction(ACTION_SHOW_PLAYER);
-            playerIntent.putExtra(EXTRA_STATION, station);
-            playerIntent.putExtra(EXTRA_PLAYBACK_STATE, startPlayback);
-            startActivity(playerIntent);
-        }
     }
 
 
@@ -469,17 +530,17 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
         long duration = 900000; // equals 15 minutes
 
         // CASE: No station is playing, no timer is running
-        if (!mPlayback && !mSleepTimerRunning) {
+        if (mStation == null || (mStation.getPlaybackState() == PLAYBACK_STATE_STOPPED && !mSleepTimerRunning)) {
             // unable to start timer
             Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_timer_start_unable), Toast.LENGTH_SHORT).show();
         }
         // CASE: A station is playing, no sleep timer is running
-        else if (mPlayback && !mSleepTimerRunning) {
+        else if (mStation != null && mStation.getPlaybackState() != PLAYBACK_STATE_STOPPED && !mSleepTimerRunning) {
             startSleepTimer(duration);
             Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_timer_activated), Toast.LENGTH_SHORT).show();
         }
         // CASE: A station is playing, Sleep timer is running
-        else if (mPlayback) {
+        else if (mStation != null && mStation.getPlaybackState() == PLAYBACK_STATE_STARTED) {
             startSleepTimer(duration);
             Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_timer_duration_increased) + " [+" + getReadableTime(duration) + "]", Toast.LENGTH_SHORT).show();
         }
@@ -537,7 +598,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
                 // stop sleep timer service
                 mSleepTimerService.startActionStop(mActivity);
                 mSleepTimerRunning = false;
-                saveAppState(mActivity);
+//                saveAppState(mActivity);
                 // notify user
                 Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_timer_cancelled), Toast.LENGTH_SHORT).show();
                 LogHelper.v(LOG_TAG, "Sleep timer cancelled.");
@@ -560,13 +621,11 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
     /* Loads app state from preferences */
     private void loadAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-        mStationIDSelected = settings.getInt(PREF_STATION_ID_SELECTED, 0);
-        mStationIDCurrent = settings.getInt(PREF_STATION_ID_CURRENTLY_PLAYING, -1);
-        mStationIDLast = settings.getInt(PREF_STATION_ID_LAST, -1);
-        mPlayback = settings.getBoolean(PREF_PLAYBACK, false);
+        mStationIdSelected = settings.getInt(PREF_STATION_ID_SELECTED, 0);
+        mStationUrlLast = settings.getString(PREF_STATION_URL_LAST, null);
         mTwoPane = settings.getBoolean(PREF_TWO_PANE, false);
         mSleepTimerRunning = settings.getBoolean(PREF_TIMER_RUNNING, false);
-        LogHelper.v(LOG_TAG, "Loading state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + ")");
+        LogHelper.v(LOG_TAG, "Loading state.");
     }
 
 
@@ -574,20 +633,86 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
     private void saveAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putInt(PREF_STATION_ID_CURRENTLY_PLAYING, mStationIDCurrent);
-        editor.putInt(PREF_STATION_ID_LAST, mStationIDLast);
-        editor.putBoolean(PREF_PLAYBACK, mPlayback);
-        editor.putBoolean(PREF_TIMER_RUNNING, mSleepTimerRunning);
+//        editor.putBoolean(PREF_TIMER_RUNNING, mSleepTimerRunning);
         editor.apply();
-        LogHelper.v(LOG_TAG, "Saving state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + ")");
+        LogHelper.v(LOG_TAG, "Saving state.");
     }
 
 
     /* Fetch new station with given Uri */
     private void fetchNewStation(Uri stationUri) {
         // download and add new station
-        StationFetcher stationFetcher = new StationFetcher(mActivity, mFolder, stationUri);
+        StationFetcher stationFetcher = new StationFetcher(mActivity, mStorageHelper.getCollectionDirectory(), stationUri);
         stationFetcher.execute();
+    }
+
+
+    /* Creates an observer for collection of stations stored as LiveData */
+    private Observer<ArrayList<Station>> createStationListObserver() {
+        return new Observer<ArrayList<Station>>() {
+            @Override
+            public void onChanged(@Nullable ArrayList<Station> newStationList) {
+
+                // toggle action call view if necessary
+                toggleActionCall();
+
+//                // check if intent requested playback
+//                Intent intent = mActivity.getIntent();
+//                if (mPlaybackRequestFromIntent && intent.hasExtra(ACTION_SHOW_PLAYER) && mCollectionAdapter.getItemCount() != 0) {
+//                    Station station = null;
+//
+//                    // CASE: playback requested via homescreen shortcut
+//                    if (intent.hasExtra(EXTRA_STREAM_URI)) {
+//                        // get Uri of station from home screen shortcut
+//                        station = mCollectionAdapter.findStation(Uri.parse(intent.getStringExtra(EXTRA_STREAM_URI)));
+//                    }
+//                    // CASE: transistor received a last station intent
+//                    else if (intent.hasExtra(EXTRA_LAST_STATION) && intent.getBooleanExtra(EXTRA_LAST_STATION, false)) {
+//                        // try to get last station from SharedPreferences
+//                        loadAppState(mActivity);
+//                        if (mStationUrlLast != null) {
+//                            Uri stationUriLast = Uri.parse(mStationUrlLast);
+//                            station = mCollectionAdapter.findStation(stationUriLast);
+//                        }
+//                    }
+//
+//                    // show player
+//                    showPlayer(station, true);
+//                    // clear the intent
+//                    intent.setAction("");
+//                    // reset mPlaybackRequestFromIntent
+//                    mPlaybackRequestFromIntent = false;
+//                }
+
+            }
+        };
+    }
+
+
+    /* Creates an observer for currently active stored as LiveData */
+    private Observer<Station> createStationObserver() {
+        return new Observer<Station>() {
+            @Override
+            public void onChanged(@Nullable Station newStation) {
+                mStation = newStation;
+                // todo check for
+                // a) new metadata
+                // b) playback state changes
+            }
+        };
+    }
+
+
+    /* Creates an observer for state of two pane layout stored as LiveData */
+    private Observer<Boolean> createTwoPaneObserver() {
+        return new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean twoPane) {
+                LogHelper.v(LOG_TAG, "Observer for two pane layout in ListFragment: layout has changed. ");
+                mTwoPane = twoPane;
+                // todo change layout
+            }
+        };
     }
 
 
@@ -625,7 +750,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
                 if (intent.hasExtra(EXTRA_STATION) && intent.hasExtra(EXTRA_STATION_ID)) {
                     // get station and id from intent
                     mTempStation = intent.getParcelableExtra(EXTRA_STATION);
-                    mTempStationID = intent.getIntExtra(EXTRA_STATION_ID, -1);
+                    mTempStationId = intent.getIntExtra(EXTRA_STATION_ID, -1);
                     // start image picker
                     selectFromImagePicker();
                 }
@@ -646,10 +771,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
                 } else if (mSleepTimerNotification != null) {
                     // cancel notification
                     mSleepTimerNotification.dismiss();
-                    // save state and update user interface
-                    mPlayback = false;
                     mSleepTimerRunning = false;
-                    saveAppState(mActivity);
                 }
 
             }
@@ -668,11 +790,12 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
         LocalBroadcastManager.getInstance(mActivity).unregisterReceiver(mSleepTimerStartedReceiver);
     }
 
+
     /* Handles changes in state of playback, eg. start, stop, loading stream */
     private void handlePlaybackStateChanges(Intent intent) {
         switch (intent.getIntExtra(EXTRA_PLAYBACK_STATE_CHANGE, 1)) {
             // CASE: playback was stopped
-            case PLAYBACK_STOPPED:
+            case PLAYBACK_STATE_STOPPED:
                 // load app state
                 loadAppState(mActivity);
                 // stop sleep timer
@@ -709,47 +832,41 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
                     }
 
                     mLayoutManager.scrollToPosition(newStationPosition);
-                    mCollectionAdapter.setStationIDSelected(newStationPosition, mPlayback, false);
-                    mCollectionAdapter.notifyDataSetChanged(); // TODO Remove?
+//                    mCollectionAdapter.setStationIdSelected(newStationPosition, mPlayback, false);
                 }
                 break;
 
             // CASE: station was renamed
             case STATION_RENAMED:
-                if (intent.hasExtra(EXTRA_STATION_NEW_NAME) && intent.hasExtra(EXTRA_STATION) && intent.hasExtra(EXTRA_STATION_ID)) {
+                if (intent.hasExtra(EXTRA_STATION_NEW_NAME) && intent.hasExtra(EXTRA_STATION)) {
 
                     // get new name, station and station ID from intent
                     String newStationName = intent.getStringExtra(EXTRA_STATION_NEW_NAME);
                     Station station = intent.getParcelableExtra(EXTRA_STATION);
-                    int stationID = intent.getIntExtra(EXTRA_STATION_ID, 0);
 
                     // update notification
-                    if (station.getPlaybackState()) {
-                        NotificationHelper.update(station, stationID, null, null);
+                    if (station.getPlaybackState() != PLAYBACK_STATE_STOPPED) {
+                        NotificationHelper.update(station, null);
                     }
 
                     // change station within in adapter, scroll to new position and update adapter
-                    newStationPosition = mCollectionAdapter.rename(newStationName, station, stationID);
+                    newStationPosition = mCollectionAdapter.rename(newStationName, station);
                     mLayoutManager.scrollToPosition(newStationPosition);
-                    mCollectionAdapter.setStationIDSelected(newStationPosition, mPlayback, false);
-                    mCollectionAdapter.notifyDataSetChanged(); // TODO Remove?
-
-
+//                    mCollectionAdapter.setStationIdSelected(newStationPosition, mPlayback, false);
                 }
                 break;
 
             // CASE: station was deleted
             case STATION_DELETED:
-                if (intent.hasExtra(EXTRA_STATION) && intent.hasExtra(EXTRA_STATION_ID)) {
+                if (intent.hasExtra(EXTRA_STATION)) {
 
-                    // get station and station ID from intent
+                    // get station from intent
                     Station station = intent.getParcelableExtra(EXTRA_STATION);
-                    int stationID = intent.getIntExtra(EXTRA_STATION_ID, 0);
 
                     // dismiss notification
                     NotificationHelper.stop();
 
-                    if (station.getPlaybackState()) {
+                    if (station.getPlaybackState() == PLAYBACK_STATE_STARTED) {
                         // stop player service and notification using intent
                         Intent i = new Intent(mActivity, PlayerService.class);
                         i.setAction(ACTION_DISMISS);
@@ -758,16 +875,15 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
                     }
 
                     // remove station from adapter and update
-                    newStationPosition = mCollectionAdapter.delete(station, stationID);
+                    newStationPosition = mCollectionAdapter.delete(station);
                     if (newStationPosition == -1 || mCollectionAdapter.getItemCount() == 0) {
                         // show call to action
                         toggleActionCall();
                     } else {
                         // scroll to new position
-                        mCollectionAdapter.setStationIDSelected(newStationPosition, mPlayback, false);
+//                        mCollectionAdapter.setStationIdSelected(newStationPosition, mPlayback, false);
                         mLayoutManager.scrollToPosition(newStationPosition);
                     }
-                    mCollectionAdapter.notifyDataSetChanged(); // TODO Remove?
                 }
                 break;
         }

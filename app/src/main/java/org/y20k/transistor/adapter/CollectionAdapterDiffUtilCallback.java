@@ -1,0 +1,90 @@
+/**
+ * CollectionAdapterDiffUtilCallback.java
+ * Implements a DiffUtil Callback
+ * A CollectionAdapterDiffUtilCallback is a DiffUtil.Callback that compares two lists of stations
+ *
+ * This file is part of
+ * TRANSISTOR - Radio App for Android
+ *
+ * Copyright (c) 2015-17 - Y20K.org
+ * Licensed under the MIT-License
+ * http://opensource.org/licenses/MIT
+ */
+
+package org.y20k.transistor.adapter;
+
+import android.support.annotation.Nullable;
+import android.support.v7.util.DiffUtil;
+import android.support.v7.util.SortedList;
+
+import org.y20k.transistor.core.Station;
+import org.y20k.transistor.helpers.LogHelper;
+
+import java.util.ArrayList;
+
+
+/**
+ * CollectionAdapterDiffUtilCallback class
+ */
+public class CollectionAdapterDiffUtilCallback extends DiffUtil.Callback {
+
+    /* Define log tag */
+    private static final String LOG_TAG = CollectionAdapterDiffUtilCallback.class.getSimpleName();
+
+
+    /* Main class variables */
+    private ArrayList<Station> mOldStations;
+    private ArrayList<Station> mNewStations;
+
+    /* Constructor */
+//    public CollectionAdapterDiffUtilCallback(ArrayList<Station> oldStations, ArrayList<Station> newStations, int type) {
+    public CollectionAdapterDiffUtilCallback(ArrayList<Station> oldStations, ArrayList<Station> newStations) {
+
+        // todo type: look for type -> eg just playback changes. or just renames etc.
+
+        mOldStations = oldStations;
+        mNewStations = newStations;
+    }
+
+
+    @Override
+    public int getOldListSize() {
+        return mOldStations.size();
+    }
+
+
+    @Override
+    public int getNewListSize() {
+        return mNewStations.size();
+    }
+
+
+    @Override
+    public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+        // Called by the DiffUtil to decide whether two object represent the same Item.
+        return mOldStations.get(oldItemPosition).getStationName().equals(mNewStations.get(newItemPosition).getStationName());
+    }
+
+
+    @Override
+    public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+        // Called by the DiffUtil when it wants to check whether two items have the same data. DiffUtil uses this information to detect if the contents of an item has changed.
+        if (mOldStations.get(oldItemPosition).getStationName().equals(mNewStations.get(newItemPosition).getStationName()) &&
+                mOldStations.get(oldItemPosition).getStreamUri().equals(mNewStations.get(newItemPosition).getStreamUri()) &&
+                mOldStations.get(oldItemPosition).getPlaybackState() == mNewStations.get(newItemPosition).getPlaybackState() &&
+                mOldStations.get(oldItemPosition).getStationImageFile().equals(mNewStations.get(newItemPosition).getStationImageFile()) &&
+                mOldStations.get(oldItemPosition).getStationImageFile().length() ==  mNewStations.get(newItemPosition).getStationImageFile().length()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    @Nullable
+    @Override
+    public Object getChangePayload(int oldItemPosition, int newItemPosition) {
+        return super.getChangePayload(oldItemPosition, newItemPosition);
+    }
+
+}
