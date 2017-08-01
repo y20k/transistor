@@ -2,12 +2,13 @@
 <resources>
     <!-- activities -->
     <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
-    <string name="title_activity_player">Jetzt hören</string>
+    <string name="title_fragment_player">Jetzt hören</string>
     <string name="title_activity_infosheet">Informationsanzeige</string>
 
     <!-- menu entries -->
     <string name="menu_about">Über Transistor</string>
     <string name="menu_howto">Wie Transistor funktioniert</string>
+    <string name="menu_refresh">Liste aktualisieren</string>
     <string name="menu_timer">Sleeptimer</string>
     <string name="menu_icon">Icon ändern</string>
     <string name="menu_add">Hinzufügen</string>
@@ -88,6 +89,8 @@
     <string name="toastmessage_long_press_playback_stopped">Wiedergabe gestoppt (Lange Drücken erkannt)</string>
     <string name="toastmessage_long_press_playback_started">Wiedergabe gestartet (Lange Drücken)</string>
     <string name="toastmessage_shortcut_created">Sender auf Startbildschirm platziert.</string>
+    <string name="toastmessage_shortcut_not_created">Sender nicht auf Startbildschirm platziert. Das Gerät unterbindet das Platzieren von Verknüpfungen.</string>
+    <string name="toastmessage_list_refreshed">Akualisiere Senderliste.</string>
     <string name="toastmessage_copied_to_clipboard_url">Stream-URL in die Zwischenablage kopiert.</string>
     <string name="toastmessage_copied_to_clipboard_metadata">Metadaten in die Zwischenablage kopiert.</string>
     <string name="toastmessage_station_copied">Sender in die Zwischenablage kopiert.</string>

@@ -26,6 +26,8 @@
     <string name="toastmessage_long_press_playback_stopped">Oynatma durdurdu (uzun dokunuş algılandı)</string>
     <string name="toastmessage_long_press_playback_started">Oynatma başladı (uzun dokunuş algılandı)</string>
     <string name="toastmessage_shortcut_created">Kısayol oluşturuldu.</string>
+    <string name="toastmessage_shortcut_not_created">Shortcut not created. This device does not allow the creation of shortcuts.</string>
+    <string name="toastmessage_list_refreshed">Reloading list of stations.</string>
     <string name="toastmessage_copied_to_clipboard_url">Yayın URL\'si panoya kopyalandı.</string>
     <string name="toastmessage_copied_to_clipboard_metadata">Meta veri panoya kopyalandı.</string>
     <string name="toastmessage_station_copied">İstasyon panoya kopyalandı.</string>
@@ -93,11 +95,12 @@
     <string name="infosheet_howto_h2_settings">Neden Transistor\'de hiçbir ayar yok?</string>
     <string name="infosheet_howto_p_settings">"Ayarlanacak hiçbir şey yok ;). Transistor çok basit bir uygulamadır. Bakış açınıza bağlı olarak basit ya harikadır ya da  işe yaramazdır."</string>
 
-    <string name="title_activity_player">Şimdi Oynatılıyor</string>
+    <string name="title_fragment_player">Şimdi Oynatılıyor</string>
     <string name="title_activity_infosheet">Bilgi Formu</string>
 
     <string name="menu_about">Hakkında</string>
     <string name="menu_howto">Nasıl kullanılır</string>
+    <string name="menu_refresh">Refresh list</string>
     <string name="menu_timer">Uyku zamanlayıcı</string>
     <string name="menu_icon">Simgeyi değiştir</string>
     <string name="menu_add">Ekle</string>

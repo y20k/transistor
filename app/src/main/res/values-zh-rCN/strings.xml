@@ -2,12 +2,13 @@
 <resources>
     <!-- activities -->
     <string name="app_name">Transistor</string>
-    <string name="title_activity_player">正在播放</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
+    <string name="title_fragment_player">正在播放</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
     <string name="title_activity_infosheet">信息表</string>
 
     <!-- menu entries -->
     <string name="menu_about">关于</string>
     <string name="menu_howto">如何使用</string>
+    <string name="menu_refresh">Refresh list</string>
     <string name="menu_timer">睡眠定时器</string>
     <string name="menu_icon">更改图标</string>
     <string name="menu_add">添加</string>
@@ -88,6 +89,8 @@
     <string name="toastmessage_long_press_playback_stopped">播放已停止（长按删除）</string>
     <string name="toastmessage_long_press_playback_started">播放已开始（长按删除）</string>
     <string name="toastmessage_shortcut_created">捷径已创建。</string>
+    <string name="toastmessage_shortcut_not_created">Shortcut not created. This device does not allow the creation of shortcuts.</string>
+    <string name="toastmessage_list_refreshed">Reloading list of stations.</string>
     <string name="toastmessage_copied_to_clipboard_url">Stream URL copied to clipboard.</string>
     <string name="toastmessage_copied_to_clipboard_metadata">Metadata copied to clipboard.</string>
     <string name="toastmessage_station_copied">电台已复制。</string>

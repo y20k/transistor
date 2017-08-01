@@ -2,12 +2,13 @@
 <resources>
     <!-- activities -->
     <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
-    <string name="title_activity_player">Reproduint ara</string>
+    <string name="title_fragment_player">Reproduint ara</string>
     <string name="title_activity_infosheet">Full d\'informació</string>
 
     <!-- menu entries -->
     <string name="menu_about">Quant a</string>
     <string name="menu_howto">Com utilitzar</string>
+    <string name="menu_refresh">Refresh list</string>
     <string name="menu_timer">Temporitzador per dormir</string>
     <string name="menu_icon">Canvia la icona</string>
     <string name="menu_add">Afegeix</string>
@@ -88,6 +89,8 @@
     <string name="toastmessage_long_press_playback_stopped">Reproducció aturada (pulsació llarga detectada)</string>
     <string name="toastmessage_long_press_playback_started">Reproducció iniciada (pulsació llarga detectada)</string>
     <string name="toastmessage_shortcut_created">Accés directe creat.</string>
+    <string name="toastmessage_shortcut_not_created">Shortcut not created. This device does not allow the creation of shortcuts.</string>
+    <string name="toastmessage_list_refreshed">Reloading list of stations.</string>
     <string name="toastmessage_copied_to_clipboard_url">Stream URL copied to clipboard.</string>
     <string name="toastmessage_copied_to_clipboard_metadata">Metadata copied to clipboard.</string>
     <string name="toastmessage_station_copied">Emissora copiada.</string>

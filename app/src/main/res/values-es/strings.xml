@@ -2,12 +2,13 @@
 <resources>
     <!-- activities -->
     <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
-    <string name="title_activity_player">Reproduciendo ahora</string>
+    <string name="title_fragment_player">Reproduciendo ahora</string>
     <string name="title_activity_infosheet">Hoja de información</string>
 
     <!-- menu entries -->
     <string name="menu_about">Acerca de</string>
     <string name="menu_howto">Cómo utilizar</string>
+    <string name="menu_refresh">Refresh list</string>
     <string name="menu_timer">Temporizador de apagado</string>
     <string name="menu_icon">Cambiar icono</string>
     <string name="menu_add">Añadir</string>
@@ -88,6 +89,8 @@
     <string name="toastmessage_long_press_playback_stopped">Reproducción detenida (detectada pulsación larga)</string>
     <string name="toastmessage_long_press_playback_started">Reproducción empezada (detectada pulsación larga)</string>
     <string name="toastmessage_shortcut_created">Acceso directo creado.</string>
+    <string name="toastmessage_shortcut_not_created">Shortcut not created. This device does not allow the creation of shortcuts.</string>
+    <string name="toastmessage_list_refreshed">Reloading list of stations.</string>
     <string name="toastmessage_copied_to_clipboard_url">URL de retransmisión copiada al portapapeles.</string>
     <string name="toastmessage_copied_to_clipboard_metadata">Metadatos copiados al portapapeles.</string>
     <string name="toastmessage_station_copied">Estación copiada al portapapeles.</string>

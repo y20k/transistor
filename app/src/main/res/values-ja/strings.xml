@@ -2,12 +2,13 @@
 <resources>
     <!-- activities -->
     <string name="app_name">トランジスター</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
-    <string name="title_activity_player">再生しています</string>
+    <string name="title_fragment_player">再生しています</string>
     <string name="title_activity_infosheet">情報シート</string>
 
     <!-- menu entries -->
     <string name="menu_about">アプリについて</string>
     <string name="menu_howto">使用方法</string>
+    <string name="menu_refresh">Refresh list</string>
     <string name="menu_timer">スリープタイマー</string>
     <string name="menu_icon">アイコンの変更</string>
     <string name="menu_add">追加</string>
@@ -88,6 +89,8 @@
     <string name="toastmessage_long_press_playback_stopped">再生が停止しました (長押しを検出しました)</string>
     <string name="toastmessage_long_press_playback_started">再生を開始しました (長押しを検出しました)</string>
     <string name="toastmessage_shortcut_created">ショートカットを作成しました。</string>
+    <string name="toastmessage_shortcut_not_created">Shortcut not created. This device does not allow the creation of shortcuts.</string>
+    <string name="toastmessage_list_refreshed">Reloading list of stations.</string>
     <string name="toastmessage_copied_to_clipboard_url">ストリーム URL をクリップボードにコピーしました。</string>
     <string name="toastmessage_copied_to_clipboard_metadata">メタデータをクリップボードにコピーしました。</string>
     <string name="toastmessage_station_copied">放送局をクリップボードにコピーしました。</string>

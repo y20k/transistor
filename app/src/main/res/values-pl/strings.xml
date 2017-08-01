@@ -3,6 +3,7 @@
 
     <string name="menu_about">O aplikacji</string>
     <string name="menu_howto">Instrukcja obsługi</string>
+    <string name="menu_refresh">Refresh list</string>
     <string name="menu_timer">Wyłącznik czasowy</string>
     <string name="menu_icon">Zmień ikonę</string>
     <string name="menu_add">Dodaj</string>
@@ -77,6 +78,8 @@
     <string name="toastmessage_long_press_playback_stopped">Odtwarzanie zatrzymanie (wykryto długie naciśnięcie)</string>
     <string name="toastmessage_long_press_playback_started">Odtwarzanie rozpoczęte (wykryto długie naciśnięcie)</string>
     <string name="toastmessage_shortcut_created">Skrót utworzony.</string>
+    <string name="toastmessage_shortcut_not_created">Shortcut not created. This device does not allow the creation of shortcuts.</string>
+    <string name="toastmessage_list_refreshed">Reloading list of stations.</string>
     <string name="toastmessage_copied_to_clipboard_url">URL strumienia skopiowany do schowka.</string>
     <string name="toastmessage_copied_to_clipboard_metadata">Metadane skopiowane do schowka.</string>
     <string name="toastmessage_station_copied">Stacja skopiowana do schowka.</string>
@@ -141,5 +144,5 @@
     <string name="infosheet_howto_h2_settings">Dlaczego Transistor nie ma żadnych ustawień?</string>
     <string name="infosheet_howto_p_settings">Nie ma nic do ustawiania ;). Transistor jest bardzo prostą aplikacją. W zależności od Twojego punktu widzenia to będzie albo świetne, albo słabe.</string>
 
-    <string name="app_name">Transistor</string> <string name="title_activity_player">Odtwarzanie</string>
+    <string name="app_name">Transistor</string> <string name="title_fragment_player">Odtwarzanie</string>
     </resources>

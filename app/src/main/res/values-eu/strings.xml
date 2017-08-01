@@ -2,12 +2,13 @@
 <resources>
     <!-- activities -->
     <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
-    <string name="title_activity_player">Orain erreproduzitzen</string>
+    <string name="title_fragment_player">Orain erreproduzitzen</string>
     <string name="title_activity_infosheet">Informazio orria</string>
 
     <!-- menu entries -->
     <string name="menu_about">Honi buruz</string>
     <string name="menu_howto">Nola erabili</string>
+    <string name="menu_refresh">Refresh list</string>
     <string name="menu_timer">Itzaltzeko atzera kontaketa</string>
     <string name="menu_icon">Aldatu ikonoa</string>
     <string name="menu_add">Gehitu</string>
@@ -88,6 +89,8 @@
     <string name="toastmessage_long_press_playback_stopped">Erreprodukzioa gelditu da (sakatze luzea atzeman da)</string>
     <string name="toastmessage_long_press_playback_started">Erreprodukzioa hasi da (sakatze luzea atzeman da)</string>
     <string name="toastmessage_shortcut_created">Lasterbidea sortu da.</string>
+    <string name="toastmessage_shortcut_not_created">Shortcut not created. This device does not allow the creation of shortcuts.</string>
+    <string name="toastmessage_list_refreshed">Reloading list of stations.</string>
     <string name="toastmessage_copied_to_clipboard_url">Jarioaren URLa arbelera kopiatu da.</string>
     <string name="toastmessage_copied_to_clipboard_metadata">Metadatuak arbelera kopiatu dira.</string>
     <string name="toastmessage_station_copied">Estazioa arbelera kopiatu da.</string>
