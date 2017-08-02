@@ -161,7 +161,7 @@ public class SleepTimerService  extends Service implements TransistorKeys {
             public void onTick(long millisUntilFinished) {
                 mTimerRemaining = millisUntilFinished;
 
-                // send local broadcast (needed by PlayerActivityFragment)
+                // send local broadcast (needed by PlayerFragment)
                 Intent i = new Intent();
                 i.setAction(ACTION_TIMER_RUNNING);
                 i.putExtra(EXTRA_TIMER_REMAINING, mTimerRemaining);
@@ -179,7 +179,7 @@ public class SleepTimerService  extends Service implements TransistorKeys {
                 intent.setAction(ACTION_STOP);
                 startService(intent);
 
-                // send local broadcast (needed by PlayerActivityFragment)
+                // send local broadcast (needed by PlayerFragment)
                 Intent i = new Intent();
                 i.setAction(ACTION_TIMER_RUNNING);
                 i.putExtra(EXTRA_TIMER_REMAINING, mTimerRemaining);

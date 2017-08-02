@@ -37,12 +37,13 @@ public interface TransistorKeys {
 
     /* EXTRAS */
     String EXTRA_COLLECTION_CHANGE = "COLLECTION_CHANGE";
-    String EXTRA_INFOSHEET_TITLE = "INFOSHEET_TITLE";
-    String EXTRA_INFOSHEET_CONTENT = "INFOSHEET_CONTENT";
     String EXTRA_METADATA = "METADATA";
+    String EXTRA_START_PLAYBACK ="START_PLAYBACK";
     String EXTRA_PLAYBACK_STATE_CHANGE = "PLAYBACK_STATE_CHANGE";
+    String EXTRA_PLAYBACK_STATE_PREVIOUS_STATION = "PLAYBACK_STATE_PREVIOUS_STATION";
     String EXTRA_PLAYBACK_STATE = "PLAYBACK_STATE";
     String EXTRA_STATION = "STATION";
+    String EXTRA_STATION_LIST = "STATION_LIST";
     String EXTRA_STATION_ID = "STATION_ID";
     String EXTRA_LAST_STATION = "LAST_STATION";
     String EXTRA_STATION_NEW_NAME = "STATION_NEW_NAME";
@@ -51,6 +52,8 @@ public interface TransistorKeys {
     String EXTRA_TIMER_REMAINING = "TIMER_REMAINING";
 
     /* ARGS */
+    String ARG_INFOSHEET_TITLE = "INFOSHEET_TITLE";
+    String ARG_INFOSHEET_CONTENT = "INFOSHEET_CONTENT";
     String ARG_STATION = "ArgStation";
     String ARG_STATION_ID = "ArgStationID";
     String ARG_STREAM_URI = "ArgStreamUri";
@@ -58,9 +61,10 @@ public interface TransistorKeys {
     String ARG_PLAYBACK = "ArgPlayback";
 
     /* PREFS */
-    String PREF_PLAYBACK = "prefPlayback";
-    String PREF_STATION_LOADING = "prefStationLoading";
-    String PREF_STATION_ID_CURRENTLY_PLAYING = "prefStationIDCurrentlyPlaying";
+    String PREF_PLAYBACK = "prefPlaybackState";
+    String PREF_STATION_URL = "prefStationUrl";
+    String PREF_STATION_URL_LAST = "prefStationUrlLast";
+    String PREF_STATION_ID_CURRENT = "prefStationIDCurrentlyPlaying";
     String PREF_STATION_ID_LAST = "prefStationIDLast";
     String PREF_STATION_ID_SELECTED = "prefStationIDSelected";
     String PREF_STATION_METADATA = "prefStationMetadata";
@@ -95,17 +99,27 @@ public interface TransistorKeys {
 
     int PLAYER_SERVICE_NOTIFICATION_ID = 1;
     int REQUEST_LOAD_IMAGE = 1;
+
     int STATION_ADDED = 1;
     int STATION_RENAMED = 2;
     int STATION_DELETED = 3;
-    int PLAYBACK_LOADING_STATION = 1;
-    int PLAYBACK_STARTED = 2;
-    int PLAYBACK_STOPPED = 3;
+
+    int PLAYBACK_STATE_LOADING_STATION = 1;
+    int PLAYBACK_STATE_STARTED = 2;
+    int PLAYBACK_STATE_STOPPED = 3;
+
+    int PLAYBACK_STATE_CHANGE_TYPE_DEFAULT = 1;
+    int PLAYBACK_STATE_CHANGE_TYPE_START_DURING_PLAYBACK = 2;
+
+    String NOTIFICATION_CHANEL_ID_PLAYBACK_CHANNEL ="notificationChannelIdPlaybackChannel";
     String INSTANCE_LIST_STATE = "instanceListState";
     String INSTANCE_STATION = "instanceStation";
+    String INSTANCE_STATION_SELECTED = "instanceStationSelected";
     String INSTANCE_STATION_ID = "instanceStationID";
     String INSTANCE_PLAYBACK = "instancePlayback";
+    String COLLECTION_FRAGMENT_TAG = "CFTAG";
     String PLAYER_FRAGMENT_TAG = "PFTAG";
+    String INFOSHEET_FRAGMENT_TAG = "PFTAG";
     String SHOUTCAST_STREAM_TITLE_HEADER = "StreamTitle";
 
     int COPY_STATION_ALL = 1;

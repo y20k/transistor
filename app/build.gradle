@@ -28,4 +28,8 @@ dependencies {
     compile 'com.android.support:design:' + supportLibraryVersion
     compile project(":library:core")
     compile project(":library:hls")
+
+    compile 'android.arch.lifecycle:extensions:' + archLifecycleVersion;
+    annotationProcessor 'android.arch.lifecycle:compiler:' + archLifecycleVersion;
+
 }

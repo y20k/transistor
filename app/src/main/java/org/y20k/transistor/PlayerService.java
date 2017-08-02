@@ -23,7 +23,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.media.AudioTrack;
-import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -107,13 +106,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     private AudioManager mAudioManager;
     private static MediaSessionCompat mSession;
     private static MediaControllerCompat mController;
-    private int mStationID;
-    private int mStationIDCurrent;
-    private int mStationIDLast;
-    private String mStationMetadata;
-    private String mStreamUri;
-    private boolean mPlayback;
-    private boolean mStationLoading;
     private boolean mStationMetadataReceived;
     private boolean mAudioFocusLossTransient;
     private HeadphoneUnplugReceiver mHeadphoneUnplugReceiver;
@@ -131,15 +123,13 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     public void onCreate() {
         super.onCreate();
 
-        // load app state
-        loadAppState(getApplication());
-
         // set up variables
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         mAudioFocusLossTransient = false;
         mStationMetadataReceived = false;
         mSession = createMediaSession(this);
 
+        // set user agent
         mUserAgent = Util.getUserAgent(this, APPLICATION_NAME);
 
         // create Wifi and wake locks
@@ -177,8 +167,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             // get URL of station from intent
             if (intent.hasExtra(EXTRA_STATION)) {
                 mStation = intent.getParcelableExtra(EXTRA_STATION);
-                mStationID = intent.getIntExtra(EXTRA_STATION_ID, 0);
-                mStreamUri = mStation.getStreamUri().toString();
             }
 
             // update controller - start playback
@@ -198,7 +186,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             LogHelper.v(LOG_TAG, "Service received command: DISMISS");
 
             // update controller - stop playback
-            if (mPlayback) {
+            if (mStation != null && mStation.getPlaybackState() != PLAYBACK_STATE_STOPPED) {
                 mController.getTransportControls().stop();
             }
 
@@ -228,57 +216,58 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
         switch (playbackState) {
             case STATE_BUFFERING:
-                // The player is not able to immediately play from the current position.
+                // player is not able to immediately play from the current position.
                 LogHelper.v(LOG_TAG, "State of ExoPlayer has changed: BUFFERING");
-                mStationLoading = true;
-                if (mPlayback) {
-                    // set loading state
-                    mStationLoading = true;
-                    saveAppState();
-                    // send local broadcast: buffering
-                    Intent intent = new Intent();
-                    intent.setAction(ACTION_PLAYBACK_STATE_CHANGED);
-                    intent.putExtra(EXTRA_PLAYBACK_STATE_CHANGE, PLAYBACK_LOADING_STATION);
-                    intent.putExtra(EXTRA_STATION, mStation);
-                    intent.putExtra(EXTRA_STATION_ID, mStationID);
-                    LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
-                    // update notification
-                    NotificationHelper.update(mStation, mStationID, this.getString(R.string.descr_station_stream_loading), mSession);
-                }
+
+                // set playback state
+                mStation.setPlaybackState(PLAYBACK_STATE_LOADING_STATION);
+                saveAppState();
+
+                // update notification
+                mStation.setMetadata(this.getString(R.string.descr_station_stream_loading));
+                NotificationHelper.update(mStation, mSession);
+
+                // send local broadcast: buffering
+                Intent intentStateBuffering = new Intent();
+                intentStateBuffering.setAction(ACTION_PLAYBACK_STATE_CHANGED);
+                intentStateBuffering.putExtra(EXTRA_STATION, mStation);
+                LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intentStateBuffering);
+                LogHelper.v(LOG_TAG, "LocalBroadcast: ACTION_PLAYBACK_STATE_CHANGED -> PLAYBACK_STATE_LOADING_STATION");
                 break;
 
             case STATE_ENDED:
-                // The player has finished playing the media.
+                // player has finished playing the media.
                 LogHelper.v(LOG_TAG, "State of ExoPlayer has changed: ENDED");
                 break;
 
             case STATE_IDLE:
-                // The player does not have a source to play, so it is neither buffering nor ready to play.
+                // player does not have a source to play, so it is neither buffering nor ready to play.
                 LogHelper.v(LOG_TAG, "State of ExoPlayer has changed: IDLE");
                 break;
 
             case STATE_READY:
-                // The player is able to immediately play from the current position.
+                // player is able to immediately play from the current position.
                 LogHelper.v(LOG_TAG, "State of ExoPlayer has changed: READY");
 
-                if (mPlayback && mStationLoading) {
-                    // set loading state
-                    mStationLoading = false;
+                if (mStation.getPlaybackState() == PLAYBACK_STATE_LOADING_STATION) {
+                    // update playback state
+                    mStation.setPlaybackState(PLAYBACK_STATE_STARTED);
                     saveAppState();
                     // send local broadcast: buffering finished - playback started
-                    Intent intent = new Intent();
-                    intent.setAction(ACTION_PLAYBACK_STATE_CHANGED);
-                    intent.putExtra(EXTRA_PLAYBACK_STATE_CHANGE, PLAYBACK_STARTED);
-                    intent.putExtra(EXTRA_STATION, mStation);
-                    intent.putExtra(EXTRA_STATION_ID, mStationID);
-                    LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(intent);
+                    Intent intentStateReady = new Intent();
+                    intentStateReady.setAction(ACTION_PLAYBACK_STATE_CHANGED);
+                    intentStateReady.putExtra(EXTRA_STATION, mStation);
+                    LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(intentStateReady);
+                    LogHelper.v(LOG_TAG, "LocalBroadcast: ACTION_PLAYBACK_STATE_CHANGED -> PLAYBACK_STATE_STARTED");
                 }
 
                 // check for race between onPlayerStateChanged and MetadataHelper
                 if (!mStationMetadataReceived) {
-                    // update notification
-                    NotificationHelper.update(mStation, mStationID, mStation.getStationName(), mSession);
+                    mStation.setMetadata(mStation.getStationName());
                 }
+
+                // update notification
+                NotificationHelper.update(mStation, mSession);
 
                 break;
 
@@ -347,7 +336,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             mStation.setChannelCount(format.channelCount);
             mStation.setSampleRate(format.sampleRate);
             mStation.setBitrate(format.bitrate);
-            saveAppState();
         }
     }
 
@@ -393,7 +381,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
                     // AUDIOFOCUS_GAIN after AUDIOFOCUS_LOSS_TRANSIENT -> restart playback
                     mController.getTransportControls().play();
                     mAudioFocusLossTransient = false;
-                } else if (mPlayback) {
+                } else if (mStation.getPlaybackState() != PLAYBACK_STATE_STOPPED) {
                     // AUDIOFOCUS_GAIN after AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> raise volume again
                     if (mExoPlayer == null) {
                         initializeExoPlayer();
@@ -406,21 +394,19 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
                 break;
             // loss of audio focus of unknown duration
             case AudioManager.AUDIOFOCUS_LOSS:
-                if (mPlayback && mExoPlayer.getPlayWhenReady()) {
+                if (mStation.getPlaybackState() != PLAYBACK_STATE_STOPPED && mExoPlayer.getPlayWhenReady()) {
                     mController.getTransportControls().stop();
                 }
                 break;
             // transient loss of audio focus - e.g. phone call
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
-                if (mPlayback && mExoPlayer != null && mExoPlayer.getPlayWhenReady()) {
+                if (mStation.getPlaybackState() != PLAYBACK_STATE_STOPPED && mExoPlayer != null && mExoPlayer.getPlayWhenReady()) {
                     mAudioFocusLossTransient = true;
                     mController.getTransportControls().stop();
-                    mPlayback = true;
                 }
-                else if (!mPlayback && mExoPlayer != null && mExoPlayer.getPlayWhenReady()) {
+                else if (mStation.getPlaybackState() == PLAYBACK_STATE_STOPPED && mExoPlayer != null && mExoPlayer.getPlayWhenReady()) {
                     mAudioFocusLossTransient = true;
                     mExoPlayer.setPlayWhenReady(false);
-                    mPlayback = true;
                 }
                 break;
             // temporary external request of audio focus
@@ -440,12 +426,11 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         LogHelper.v(LOG_TAG, "onDestroy called.");
 
         // stop playback
-        if (mPlayback) {
+        if (mStation != null && mStation.getPlaybackState() != PLAYBACK_STATE_STOPPED) {
             mController.getTransportControls().stop();
         }
 
         // save state
-        mPlayback = false;
         saveAppState();
 
         // release media session
@@ -474,20 +459,24 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     private void startPlayback() {
         LogHelper.v(LOG_TAG, "Starting playback. Station name:" + mStation.getStationName());
 
-        // stop running mExoPlayer - request focus and initialize media mExoPlayer
+        // string representation of the stream uri of the previous station
+        String previousStationUrlString;
+
+        // stop running mExoPlayer, if necessary - set type playback change accordingly
         if (mExoPlayer.getPlayWhenReady()) {
             mExoPlayer.setPlayWhenReady(false);
             mExoPlayer.stop();
+            previousStationUrlString = PreferenceManager.getDefaultSharedPreferences(getApplication()).getString(PREF_STATION_URL, null);
+        } else {
+            previousStationUrlString = null;
         }
 
+        // todo
+        // additionally check for playback state
+
         // set and save state
-        mStationMetadata = mStation.getStationName();
         mStationMetadataReceived = false;
-        mStation.setPlaybackState(true);
-        mPlayback = true;
-        mStationLoading = true;
-        mStationIDLast = mStationIDCurrent;
-        mStationIDCurrent = mStationID;
+        mStation.setPlaybackState(PLAYBACK_STATE_LOADING_STATION);
         saveAppState();
 
         // acquire Wifi and wake locks
@@ -499,27 +488,29 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         }
 
         // request focus and initialize media mExoPlayer
-        if (mStreamUri != null && requestFocus()) {
+        if (mStation.getStreamUri() != null && requestFocus()) {
             // initialize player and start playback
             initializeExoPlayer();
             mExoPlayer.setPlayWhenReady(true);
 
             // update MediaSession
-            mSession.setPlaybackState(getPlaybackState());
-            mSession.setMetadata(getMetadata(getApplicationContext(), mStation, mStationMetadata));
+            mSession.setPlaybackState(getSessionPlaybackState());
+            mSession.setMetadata(getSessionMetadata(getApplicationContext(), mStation));
             mSession.setActive(true);
 
             // put up notification
-            NotificationHelper.show(this, mSession, mStation, mStationID, this.getString(R.string.descr_station_stream_loading));
+            NotificationHelper.show(this, mSession, mStation);
         }
 
         // send local broadcast: buffering
         Intent intent = new Intent();
         intent.setAction(ACTION_PLAYBACK_STATE_CHANGED);
-        intent.putExtra(EXTRA_PLAYBACK_STATE_CHANGE, PLAYBACK_LOADING_STATION);
         intent.putExtra(EXTRA_STATION, mStation);
-        intent.putExtra(EXTRA_STATION_ID, mStationID);
+        if (previousStationUrlString != null) {
+            intent.putExtra(EXTRA_PLAYBACK_STATE_PREVIOUS_STATION, previousStationUrlString);
+        }
         LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(intent);
+        LogHelper.v(LOG_TAG, "LocalBroadcast: ACTION_PLAYBACK_STATE_CHANGED -> PLAYBACK_STATE_LOADING_STATION");
 
         // register headphone listener
         IntentFilter headphoneUnplugIntentFilter = new IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
@@ -530,22 +521,19 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
     /* Stops playback */
     private void stopPlayback() {
-        LogHelper.v(LOG_TAG, "Stopping playback. Station name:" + mStation.getStationName());
-
         // check for null - can happen after a crash during playback
         if (mStation == null) {
+            LogHelper.e(LOG_TAG, "Stopping playback. Station is null.");
             stopSelf();
             return;
+        } else {
+            LogHelper.v(LOG_TAG, "Stopping playback. Station name:" + mStation.getStationName());
         }
 
         // set and save state
-        mStationMetadata = mStation.getStationName();
+        mStation.setMetadata(mStation.getStationName());
         mStationMetadataReceived = false;
-        mStation.setPlaybackState(false);
-        mPlayback = false;
-        mStationLoading = false;
-        mStationIDLast = mStationID;
-        mStationIDCurrent = -1;
+        mStation.setPlaybackState(PLAYBACK_STATE_STOPPED);
         saveAppState();
 
         // release Wifi and wake locks
@@ -564,20 +552,20 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         giveUpAudioFocus();
 
         // update playback state
-        mSession.setPlaybackState(getPlaybackState());
+        mSession.setPlaybackState(getSessionPlaybackState());
 
         // update notification
-        NotificationHelper.update(mStation, mStationID, mStation.getStationName(), mSession);
+        NotificationHelper.update(mStation, mSession);
+
         // keep media session active
         mSession.setActive(true);
 
         // send local broadcast: playback stopped
         Intent intent = new Intent();
         intent.setAction(ACTION_PLAYBACK_STATE_CHANGED);
-        intent.putExtra(EXTRA_PLAYBACK_STATE_CHANGE, PLAYBACK_STOPPED);
         intent.putExtra(EXTRA_STATION, mStation);
-        intent.putExtra(EXTRA_STATION_ID, mStationID);
         LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(intent);
+        LogHelper.v(LOG_TAG, "LocalBroadcast: ACTION_PLAYBACK_STATE_CHANGED -> PLAYBACK_STATE_STOPPED");
 
         // unregister headphone listener
         try {
@@ -619,13 +607,11 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             // TODO HLS does not work reliable
             Toast.makeText(this, this.getString(R.string.toastmessage_stream_may_not_work), Toast.LENGTH_LONG).show();
             dataSourceFactory = new DefaultDataSourceFactory(this, Util.getUserAgent(this, mUserAgent), bandwidthMeter);
-            mediaSource = new HlsMediaSource(Uri.parse(mStreamUri),
-                    dataSourceFactory, null, null);
+            mediaSource = new HlsMediaSource(mStation.getStreamUri(), dataSourceFactory, null, null);
         } else {
             dataSourceFactory = new CustomDefaultHttpDataSourceFactory(mUserAgent, bandwidthMeter, true, playerCallback);
             ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
-            mediaSource = new ExtractorMediaSource(Uri.parse(mStreamUri),
-                    dataSourceFactory, extractorsFactory, 32, null, null, null); // todo attach listener here
+            mediaSource = new ExtractorMediaSource(mStation.getStreamUri(), dataSourceFactory, extractorsFactory, 32, null, null, null); // todo attach listener here
         }
         // prepare player with source.
         mExoPlayer.prepare(mediaSource);
@@ -673,11 +659,8 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         // create a media session
         MediaSessionCompat session = new MediaSessionCompat(context, LOG_TAG);
         session.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS | MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
-        session.setPlaybackState(getPlaybackState());
+        session.setPlaybackState(getSessionPlaybackState());
         session.setCallback(new MediaSessionCallback());
-        if (mStation != null) {
-            session.setMetadata(getMetadata(context, mStation, null));
-        }
         setSessionToken(session.getSessionToken());
 
         return session;
@@ -685,26 +668,26 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
 
     /* Creates playback state depending on mPlayback */
-    private PlaybackStateCompat getPlaybackState() {
+    private PlaybackStateCompat getSessionPlaybackState() {
 
-        if (mPlayback) {
-            // define action for playback state to be used in media session callback
-            return new PlaybackStateCompat.Builder()
-                    .setState(PlaybackStateCompat.STATE_PLAYING, 0, 0)
-                    .setActions(PlaybackStateCompat.ACTION_STOP | PlaybackStateCompat.ACTION_PAUSE)
-                    .build();
-        } else {
+        if (mStation == null || mStation.getPlaybackState() == PLAYBACK_STATE_STOPPED) {
             // define action for playback state to be used in media session callback
             return new PlaybackStateCompat.Builder()
                     .setState(PlaybackStateCompat.STATE_STOPPED, 0, 0)
                     .setActions(PlaybackStateCompat.ACTION_PLAY)
+                    .build();
+        } else {
+            // define action for playback state to be used in media session callback
+            return new PlaybackStateCompat.Builder()
+                    .setState(PlaybackStateCompat.STATE_PLAYING, 0, 0)
+                    .setActions(PlaybackStateCompat.ACTION_STOP | PlaybackStateCompat.ACTION_PAUSE)
                     .build();
         }
     }
 
 
     /* Creates the metadata needed for MediaSession */
-    private MediaMetadataCompat getMetadata(Context context, Station station, String metaData) {
+    private MediaMetadataCompat getSessionMetadata(Context context, Station station) {
         Bitmap stationImage = null;
         // try to get station image
         if (station != null && station.getStationImageFile() != null && station.getStationImageFile().exists()) {
@@ -719,7 +702,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         if (station != null) {
             return new MediaMetadataCompat.Builder()
                     .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, station.getStationName())
-                    .putString(MediaMetadataCompat.METADATA_KEY_TITLE, metaData)
+                    .putString(MediaMetadataCompat.METADATA_KEY_TITLE, station.getMetadata())
                     .putString(MediaMetadataCompat.METADATA_KEY_ALBUM, albumTitle)
                     .putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, stationImage)
                     .build();
@@ -733,29 +716,27 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     private void saveAppState() {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplication());
         SharedPreferences.Editor editor = settings.edit();
-        editor.putInt(PREF_STATION_ID_CURRENTLY_PLAYING, mStationIDCurrent);
-        editor.putInt(PREF_STATION_ID_LAST, mStationIDLast);
-        editor.putBoolean(PREF_PLAYBACK, mPlayback);
-        editor.putBoolean(PREF_STATION_LOADING, mStationLoading);
-        editor.putString(PREF_STATION_METADATA, mStationMetadata);
-        if (mStation != null) {
-            editor.putString(PREF_STATION_MIME_TYPE, mStation.getMimeType());
-            editor.putInt(PREF_STATION_CHANNEL_COUNT, mStation.getChannelCount());
-            editor.putInt(PREF_STATION_SAMPLE_RATE, mStation.getSampleRate());
-            editor.putInt(PREF_STATION_BIT_RATE, mStation.getBitrate());
+        if (mStation == null) {
+            editor.putString(PREF_STATION_URL, null);
+        } else if (mStation.getPlaybackState() == PLAYBACK_STATE_STOPPED) {
+            editor.putString(PREF_STATION_URL, null);
+            editor.putString(PREF_STATION_URL_LAST, mStation.getStreamUri().toString());
+        } else {
+            editor.putString(PREF_STATION_URL, mStation.getStreamUri().toString());
+            editor.putString(PREF_STATION_URL_LAST, mStation.getStreamUri().toString());
         }
         editor.apply();
-        LogHelper.v(LOG_TAG, "Saving state ("+  mStationIDCurrent + " / " + mStationIDLast + " / " + mPlayback + " / " + mStationLoading + " / " + ")");
+        LogHelper.v(LOG_TAG, "Saving state.");
     }
 
 
-    /* Loads app state from preferences */
-    private void loadAppState(Context context) {
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-        mStationIDCurrent = settings.getInt(PREF_STATION_ID_CURRENTLY_PLAYING, -1);
-        mStationIDLast = settings.getInt(PREF_STATION_ID_LAST, -1);
-        LogHelper.v(LOG_TAG, "Loading state ("+  mStationIDCurrent + " / " + mStationIDLast + ")");
-    }
+//    /* Loads app state from preferences */
+//    private void loadAppState(Context context) {
+//        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
+//        mStationIdCurrent = settings.getInt(PREF_STATION_ID_CURRENT, -1);
+//        mStationIdLast = settings.getInt(PREF_STATION_ID_LAST, -1);
+//        LogHelper.v(LOG_TAG, "Loading state ("+  mStationIdCurrent + " / " + mStationIdLast + ")");
+//    }
 
 
     /**
@@ -765,7 +746,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (mPlayback && AudioManager.ACTION_AUDIO_BECOMING_NOISY.equals(intent.getAction())) {
+            if (mStation.getPlaybackState() != PLAYBACK_STATE_STOPPED && AudioManager.ACTION_AUDIO_BECOMING_NOISY.equals(intent.getAction())) {
                 LogHelper.v(LOG_TAG, "Headphones unplugged. Stopping playback.");
                 // stop playback
                 mController.getTransportControls().stop();
@@ -820,7 +801,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             URLConnection connection = null;
 
             try {
-                connection = new URL(mStreamUri).openConnection();
+                connection = new URL(mStation.getStreamUri().toString()).openConnection();
                 connection.connect();
                 contentType = connection.getContentType();
                 if (contentType == null) {
@@ -861,6 +842,9 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
                 // add listener
                 mExoPlayer.addListener(PlayerService.this);
+
+                // set content type
+                mExoPlayer.setAudioStreamType(C.STREAM_TYPE_MUSIC);
             }
         }
 
@@ -901,19 +885,18 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
                 LogHelper.v(LOG_TAG, "PlayerCallback: playerMetadata " + key + " : " + value);
 
                 if (value.length() > 0) {
-                    mStationMetadata = value;
+                    mStation.setMetadata(value);
                 } else {
-                    mStationMetadata = mStation.getStationName();
+                    mStation.setMetadata(mStation.getStationName());
                 }
                 mStationMetadataReceived = true;
-                saveAppState();
 
                 // send local broadcast
                 Intent i = new Intent();
                 i.setAction(ACTION_METADATA_CHANGED);
-                i.putExtra(EXTRA_METADATA, mStationMetadata);
                 i.putExtra(EXTRA_STATION, mStation);
                 LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(i);
+                LogHelper.v(LOG_TAG, "LocalBroadcast: ACTION_METADATA_CHANGED -> EXTRA_STATION");
 
 //            // save metadata to shared preferences
 //            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -923,10 +906,10 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 //            editor.apply();
 
                 // update media session metadata
-                mSession.setMetadata(getMetadata(getApplicationContext(), mStation, mStationMetadata));
+                mSession.setMetadata(getSessionMetadata(getApplicationContext(), mStation));
 
                 // update notification
-                NotificationHelper.update(mStation, mStationID, mStationMetadata, mSession);
+                NotificationHelper.update(mStation, mSession);
 
             }
         }

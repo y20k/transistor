@@ -16,6 +16,8 @@ package org.y20k.transistor.helpers;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -25,7 +27,11 @@ import android.widget.Toast;
 import org.y20k.transistor.R;
 import org.y20k.transistor.core.Station;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -45,6 +51,7 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> impleme
     private final Uri mStationUri;
     private final String mStationUriScheme;
     private URL mStationURL;
+    private Bitmap mStationBitmap;
     private final boolean mFolderExists;
 
 
@@ -70,12 +77,20 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> impleme
     public Station doInBackground(Void... params) {
 
         if (mFolderExists && mStationUriScheme != null && mStationUriScheme.startsWith("http")  && urlCleanup()) {
-            // download and return new station
-            return new Station(mFolder, mStationURL);
+            // download new station,
+            Station newStation = new Station(mFolder, mStationURL);
+//            // write playlist file and favicon based image file
+            newStation.writePlaylistFile(mFolder);
+            newStation.writeImageFile(mStationURL);
+
+            return newStation;
 
         } else if (mFolderExists && mStationUriScheme != null && mStationUriScheme.startsWith("file")) {
             // read file and return new station
-            return new Station(mFolder, mStationUri);
+            Station newStation =  new Station(mFolder, mStationUri);
+//            // write playlist file
+//            newStation.writePlaylistFile(mFolder);
+            return newStation;
 
         } else {
             return null;
@@ -249,6 +264,127 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> impleme
         }
         return sb.toString();
 
+    }
+
+
+    private Bitmap downloadStationBitmap(URL fileLocation, File stationImageFile) {
+        LogHelper.v(LOG_TAG, "Saving favicon: " + stationImageFile.toString());
+
+        Bitmap stationImage = null;
+
+        // get domain
+        String host = fileLocation.getHost();
+
+        // strip subdomain and add www if necessary
+
+        if (!host.startsWith("www")) {
+            int index = host.indexOf(".");
+            host = "www" + host.substring(index);
+        }
+
+
+        String faviconUrlString = "http://" + host + "/favicon.ico";
+
+        LogHelper.v(LOG_TAG, "Downloading favicon: " + faviconUrlString);
+//        try (InputStream in = new URL(faviconUrlString).openStream()) {
+//            LogHelper.e(LOG_TAG, "InputStream: " + in.available()); // todo remove
+//            stationImage = BitmapFactory.decodeStream(in);
+//        } catch (IOException e) {
+//            LogHelper.e(LOG_TAG, "Error downloading: " + faviconUrlString);
+//        }
+
+        InputStream in = null;
+        try {
+            in = new URL(faviconUrlString).openStream();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BufferedInputStream buffer=new BufferedInputStream(in);
+        BitmapFactory.decodeStream(buffer,null,options);
+        try {
+            buffer.reset();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, 100, 100);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        stationImage = BitmapFactory.decodeStream(buffer,null,options);
+
+
+
+
+         return stationImage;
+    }
+
+
+    /* Writes station image as png to storage */
+    private void writeImageFile(URL fileLocation, File stationImageFile) {
+
+        LogHelper.v(LOG_TAG, "Saving favicon: " + stationImageFile.toString());
+
+        Bitmap stationImage = null;
+
+        // get domain
+        String host = fileLocation.getHost();
+
+        // strip subdomain and add www if necessary
+
+        if (!host.startsWith("www")) {
+            int index = host.indexOf(".");
+            host = "www" + host.substring(index);
+        }
+
+
+        String faviconUrlString = "http://" + host + "/favicon.ico";
+
+        LogHelper.v(LOG_TAG, "Downloading favicon: " + faviconUrlString);
+        try (InputStream in = new URL(faviconUrlString).openStream()) {
+            LogHelper.e(LOG_TAG, "InputStream: " + in.available()); // todo remove
+            stationImage = BitmapFactory.decodeStream(in);
+        } catch (IOException e) {
+            LogHelper.e(LOG_TAG, "Error downloading: " + faviconUrlString);
+        }
+
+        // write image to storage
+        try (FileOutputStream out = new FileOutputStream(stationImageFile)) {
+            stationImage.compress(Bitmap.CompressFormat.PNG, 100, out);
+        } catch (IOException e) {
+            LogHelper.e(LOG_TAG, "Unable to save favicon: " + stationImage.toString());
+        }
+
+    }
+
+
+
+
+    private static int calculateInSampleSize(
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) >= reqHeight
+                    && (halfWidth / inSampleSize) >= reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
     }
 
 }

@@ -26,7 +26,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.y20k.transistor.helpers.LogHelper;
 import org.y20k.transistor.helpers.TransistorKeys;
 
 
@@ -96,7 +95,6 @@ public final class InfosheetFragment extends Fragment implements TransistorKeys 
         switch (item.getItemId()) {
             // CASE HOME
             case android.R.id.home:
-                LogHelper.e(LOG_TAG, "HOME - Backstack: " + ((AppCompatActivity) mActivity).getSupportFragmentManager().getBackStackEntryCount()); // todo remove
                 // initiate back action
                 ((AppCompatActivity) mActivity).getSupportFragmentManager().popBackStack();
                 return true;

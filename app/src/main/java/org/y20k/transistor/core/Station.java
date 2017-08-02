@@ -47,7 +47,7 @@ import java.util.regex.Pattern;
 /**
  * Station class
  */
-public final class Station implements TransistorKeys, Comparable<Station>, Parcelable {
+public final class Station implements TransistorKeys, Cloneable, Comparable<Station>, Parcelable {
 
     /* Define log tag */
     private static final String LOG_TAG = Station.class.getSimpleName();
@@ -57,18 +57,36 @@ public final class Station implements TransistorKeys, Comparable<Station>, Parce
 
 
     /* Main class variables */
-    private Bitmap mStationImage;
     private File mStationImageFile;
     private String mStationName;
     private File mStationPlaylistFile;
     private Uri mStreamUri;
     private String mPlaylistFileContent;
-    private boolean mPlayback;
+    private int mPlayback;
+    private String mMetadata;
     private String mMimeType;
     private int mChannelCount;
     private int mSampleRate;
     private int mBitrate;
     private Bundle mStationFetchResults;
+
+
+    /* Generic Constructor */
+    public Station(File stationImageFile, String stationName, File stationPlaylistFile, Uri streamUri, String playlistFileContent, int playback, String metadata, String mimeType, int channelCount, int sampleRate, int bitrate, Bundle stationFetchResults) {
+        mStationImageFile = stationImageFile;
+        mStationName = stationName;
+        mStationPlaylistFile = stationPlaylistFile;
+        mStreamUri = streamUri;
+        mPlaylistFileContent = playlistFileContent;
+        mPlayback = playback;
+        mMetadata = metadata;
+        mMimeType = mimeType;
+        mChannelCount = channelCount;
+        mSampleRate = sampleRate;
+        mBitrate = bitrate;
+        mStationFetchResults = stationFetchResults;
+    }
+
 
     /* Constructor when given file from the Collection folder */
     public Station(File file) {
@@ -85,14 +103,15 @@ public final class Station implements TransistorKeys, Comparable<Station>, Parce
         }
 
         // set playback state
-        mPlayback = false;
+        mPlayback = PLAYBACK_STATE_STOPPED;
 
-        // initialize variables that are set during playback to defaul values
+
+        // initialize variables that are set during playback to default values
         initializePlaybackMetadata();
     }
 
 
-    /* Constructor when given folder and remote location */
+    /* Constructor when given folder and remote location (-> the internet) */
     public Station(File folder, URL fileLocation) {
 
         // create results bundle
@@ -151,14 +170,11 @@ public final class Station implements TransistorKeys, Comparable<Station>, Parce
         // set Transistor's playlist file object
         setStationPlaylistFile(folder);
 
-        // download favicon and store bitmap object
-        downloadImageFile(fileLocation);
-
         // set Transistor's image file object
         setStationImageFile(folder);
 
         // set playback state
-        mPlayback = false;
+        mPlayback = PLAYBACK_STATE_STOPPED;
 
         // initialize variables that are set during playback to defaul values
         initializePlaybackMetadata();
@@ -199,23 +215,29 @@ public final class Station implements TransistorKeys, Comparable<Station>, Parce
         setStationImageFile(folder);
 
         // set playback state
-        mPlayback = false;
+        mPlayback = PLAYBACK_STATE_STOPPED;
 
         // initialize variables that are set during playback to defaul values
         initializePlaybackMetadata();
     }
 
+    /* Copy Constructor */
+    public Station(Station station) {
+        this(station.getStationImageFile(), station.getStationName(), station.getStationPlaylistFile(), station.getStreamUri(), station.getplaylistFileContent(), station.getPlaybackState(), station.getMetadata(), station.getMimeType(), station.getChannelCount(), station.getSampleRate(), station.getBitrate(), station.getStationFetchResults());
+    }
+
+
 
     /* Constructor used by CREATOR */
     protected Station(Parcel in) {
-        mStationImage = in.readParcelable(Bitmap.class.getClassLoader());
         mStationImageFile = new File (in.readString());
         mStationName = in.readString();
         mStationPlaylistFile = new File (in.readString());
         mStreamUri = in.readParcelable(Uri.class.getClassLoader());
         mPlaylistFileContent = in.readString();
         mStationFetchResults = in.readBundle(Bundle.class.getClassLoader());
-        mPlayback = in.readByte() != 0; // true if byte != 0
+        mPlayback = in.readInt();
+        mMetadata = in.readString();
         mMimeType = in.readString();
         mChannelCount = in.readInt();
         mSampleRate = in.readInt();
@@ -241,6 +263,7 @@ public final class Station implements TransistorKeys, Comparable<Station>, Parce
 
     /* Initializes variables that are set during playback */
     private void initializePlaybackMetadata() {
+        mMetadata = mStationName;
         mMimeType = null;
         mChannelCount = -1;
         mSampleRate = -1;
@@ -366,6 +389,7 @@ public final class Station implements TransistorKeys, Comparable<Station>, Parce
                     if (charsetString != null) {
                         contentType.charset = charsetString.trim();
                     }
+                    connection.disconnect();
                     return contentType;
                 }
             }
@@ -421,31 +445,6 @@ public final class Station implements TransistorKeys, Comparable<Station>, Parce
         return stationName;
     }
 
-
-    /* Downloads remote favicon file */
-    private void downloadImageFile(URL fileLocation) {
-
-        // get domain
-        String host = fileLocation.getHost();
-
-        // strip subdomain and add www if necessary
-        if (!host.startsWith("www")) {
-            int index = host.indexOf(".");
-            host = "www" + host.substring(index);
-        }
-
-        // get favicon location
-        String faviconLocation = "http://" + host + "/favicon.ico";
-
-        // download favicon
-        LogHelper.v(LOG_TAG, "Downloading favicon: " + faviconLocation);
-        try (InputStream in = new URL(faviconLocation).openStream()) {
-            mStationImage = BitmapFactory.decodeStream(in);
-        } catch (IOException e) {
-            LogHelper.e(LOG_TAG, "Error downloading: " + faviconLocation);
-        }
-
-    }
 
 
     /* Parses string representation of mStationPlaylistFile */
@@ -530,17 +529,70 @@ public final class Station implements TransistorKeys, Comparable<Station>, Parce
 
 
     /* Writes station image as png to storage */
-    public void writeImageFile() {
+    public void writeImageFile(URL stationURL) {
 
         LogHelper.v(LOG_TAG, "Saving favicon: " + mStationImageFile.toString());
 
-        // write image to storage
-        try (FileOutputStream out = new FileOutputStream(mStationImageFile)) {
-            mStationImage.compress(Bitmap.CompressFormat.PNG, 100, out);
+        // initialize image object
+        Bitmap image = null;
+
+        // Step 1: Get favicon address
+        String host = stationURL.getHost();
+        if (!host.startsWith("www")) {
+            int index = host.indexOf(".");
+            host = "www" + host.substring(index);
+        }
+        String faviconUrlString = "http://" + host + "/favicon.ico";
+
+        // Step 2: try to get image from favicon location
+        try {
+            // open connection
+            HttpURLConnection connection = (HttpURLConnection)(new URL(faviconUrlString).openConnection());
+
+            // handle redirects
+            boolean redirect = false;
+            int status = connection.getResponseCode();
+            if (status != HttpURLConnection.HTTP_OK) {
+                if (status == HttpURLConnection.HTTP_MOVED_TEMP
+                        || status == HttpURLConnection.HTTP_MOVED_PERM
+                        || status == HttpURLConnection.HTTP_SEE_OTHER)
+                    redirect = true;
+            }
+            if (redirect) {
+                // get redirect url from "location" header field
+                String newUrl = connection.getHeaderField("Location");
+                connection = (HttpURLConnection) new URL(newUrl).openConnection();
+            }
+
+            // get image daata and decode stream
+            InputStream inputStream = connection.getInputStream();
+            image = BitmapFactory.decodeStream(inputStream);
+
         } catch (IOException e) {
-            LogHelper.e(LOG_TAG, "Unable to save favicon: " + mStationImage.toString());
+            LogHelper.e(LOG_TAG, "Unable to load favicon from URL: " + faviconUrlString);
+            e.printStackTrace();
         }
 
+
+        // Step 3: Write image to storage
+        if (image != null) {
+            try (FileOutputStream out = new FileOutputStream(mStationImageFile)) {
+                image.compress(Bitmap.CompressFormat.PNG, 100, out);
+                LogHelper.v(LOG_TAG, "Writing favicon to storage.");
+            } catch (IOException e) {
+                e.printStackTrace();
+                LogHelper.e(LOG_TAG, "Unable to write favicon to storage: " + image.toString());
+            }
+        } else {
+            LogHelper.e(LOG_TAG, "Favicon not available (null).");
+        }
+
+    }
+
+
+    /* Checks if two stations have the same stream Uri */
+    public boolean streamEquals(Station station) {
+        return mStreamUri.equals(station.getStreamUri());
     }
 
 
@@ -562,12 +614,6 @@ public final class Station implements TransistorKeys, Comparable<Station>, Parce
     }
 
 
-    /* Getter for station image */
-    public Bitmap getStationImage() {
-        return mStationImage;
-    }
-
-
     /* Getter for name of station */
     public String getStationName() {
         return mStationName;
@@ -575,7 +621,7 @@ public final class Station implements TransistorKeys, Comparable<Station>, Parce
 
 
     /* Getter for playback state */
-    public boolean getPlaybackState() {
+    public int getPlaybackState() {
         return mPlayback;
     }
 
@@ -583,6 +629,18 @@ public final class Station implements TransistorKeys, Comparable<Station>, Parce
     /* Getter for URL of stream */
     public Uri getStreamUri() {
         return mStreamUri;
+    }
+
+
+    /* Getter for Content of playlist file */
+    public String getplaylistFileContent() {
+        return mPlaylistFileContent;
+    }
+
+
+    /* Getter for metadata of currently playing song */
+    public String getMetadata() {
+        return mMetadata;
     }
 
 
@@ -634,20 +692,26 @@ public final class Station implements TransistorKeys, Comparable<Station>, Parce
 
 
     /* Setter for name of station */
-    public void setStationName(String newStationName) {
-        mStationName = newStationName;
+    public void setStationName(String stationName) {
+        mStationName = stationName;
     }
 
 
     /* Setter for playback state */
-    public void setPlaybackState(boolean playback) {
+    public void setPlaybackState(int playback) {
         mPlayback = playback;
     }
 
 
     /* Setter for URL of station */
-    public void setStreamUri(Uri newStreamUri) {
-        mStreamUri = newStreamUri;
+    public void setStreamUri(Uri streamUri) {
+        mStreamUri = streamUri;
+    }
+
+
+    /* Setter for Metadata of currently playing media */
+    public void setMetadata(String metadata) {
+        mMetadata = metadata;
     }
 
 
@@ -683,7 +747,7 @@ public final class Station implements TransistorKeys, Comparable<Station>, Parce
 
     @Override
     public String toString() {
-        return "Station [Name=" + mStationName + ", Playlist = " + mStationPlaylistFile + ", Uri=" + mStreamUri + "]";
+        return "Station [Name=" + mStationName + ", Playlist = " + mStationPlaylistFile + ", Uri=" + mStreamUri + ", Playback" + mPlayback + "]";
     }
 
 
@@ -695,14 +759,14 @@ public final class Station implements TransistorKeys, Comparable<Station>, Parce
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeParcelable(mStationImage, flags);
         dest.writeString(mStationImageFile.toString());
         dest.writeString(mStationName);
         dest.writeString(mStationPlaylistFile.toString());
         dest.writeParcelable(mStreamUri, flags);
         dest.writeString(mPlaylistFileContent);
         dest.writeBundle(mStationFetchResults);
-        dest.writeByte((byte) (mPlayback ? 1 : 0));  // if mPlayback == true, byte == 1
+        dest.writeInt(mPlayback);
+        dest.writeString(mMetadata);
         dest.writeString(mMimeType);
         dest.writeInt(mChannelCount);
         dest.writeInt(mSampleRate);
@@ -757,7 +821,6 @@ public final class Station implements TransistorKeys, Comparable<Station>, Parce
         public String toString() {
             return "ContentType{type='" + type + "'" + ", charset='" + charset + "'}";
         }
-
 
     }
 

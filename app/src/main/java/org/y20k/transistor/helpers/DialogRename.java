@@ -38,15 +38,13 @@ public final class DialogRename implements TransistorKeys {
 
     /* Main class variables */
     private final Activity mActivity;
-    private final int mStationID;
     private final Station mStation;
 
 
     /* Constructor */
-    public DialogRename(Activity activity, Station station, int stationID) {
+    public DialogRename(Activity activity, Station station) {
         mActivity = activity;
         mStation = station;
-        mStationID = stationID;
     }
 
 
@@ -79,7 +77,6 @@ public final class DialogRename implements TransistorKeys {
                 Intent i = new Intent();
                 i.setAction(ACTION_COLLECTION_CHANGED);
                 i.putExtra(EXTRA_COLLECTION_CHANGE, STATION_RENAMED);
-                i.putExtra(EXTRA_STATION_ID, mStationID);
                 i.putExtra(EXTRA_STATION, mStation);
                 i.putExtra(EXTRA_STATION_NEW_NAME, stationNewName);
                 LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(i);

@@ -502,10 +502,10 @@ public final class ListFragment extends Fragment implements TransistorKeys {
         // CASE: transistor received a last station intent
         else if(intent.hasExtra(EXTRA_LAST_STATION)) {
             // try to get last station from SharedPreferences
+            String stationUrlLastString = PreferenceManager.getDefaultSharedPreferences(mActivity).getString(PREF_STATION_URL_LAST, null);
             loadAppState(mActivity);
-            if (mStationUrlLast != null) {
-                Uri stationUriLast = Uri.parse(mStationUrlLast);
-                station = mCollectionAdapter.findStation(stationUriLast);
+            if (stationUrlLastString != null) {
+                station = mCollectionAdapter.findStation(Uri.parse(stationUrlLastString));
             }
             startPlayback = true;
         }

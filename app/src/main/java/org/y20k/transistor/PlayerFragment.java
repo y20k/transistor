@@ -452,13 +452,6 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
         mPlayback = PLAYBACK_STATE_STOPPED;
         mStation.setPlaybackState(PLAYBACK_STATE_STOPPED);
 
-        // reset metadata // todo remove
-//        mStationMetadata = null;
-//        mStationMimeType = null;
-//        mStationChannelCount = -1;
-//        mStationSampleRate = -1;
-//        mStationBitRate = -1;
-
         // rotate playback button
         changeVisualState(mActivity);
 
@@ -490,7 +483,6 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
 
             // CASE HOME
             case android.R.id.home:
-                LogHelper.e(LOG_TAG, "HOME - Backstack: " + ((AppCompatActivity)mActivity).getSupportFragmentManager().getBackStackEntryCount()); // todo remove
                 // initiate back action
                 ((AppCompatActivity)mActivity).getSupportFragmentManager().popBackStack();
                 return true;

@@ -21,30 +21,22 @@ allprojects {
     }
     project.ext {
         applicationId = 'org.y20k.transistor'
-        versionCode = 41
-        versionName = '2.2.6 (Sons Of The Silent Age)'
+        versionCode = 42
+        versionName = '2.3.0 (Kooks)'
         minSdkVersion = 19
-        // Android N - release
-        compileSdkVersion = 25
-        targetSdkVersion = 25
-        buildToolsVersion = '25.0.3 '
-        supportLibraryVersion = '25.4.0'
-        // Android O - test
-//        compileSdkVersion = 26
-//        targetSdkVersion = 26
-//        buildToolsVersion = '26.0.0'
-//        supportLibraryVersion = '26.0.0-beta2'
+        // Android N
+//        compileSdkVersion = 25
+//        targetSdkVersion = 25
+//        buildToolsVersion = '25.0.3 '
+//        supportLibraryVersion = '25.4.0'
+//        archLifecycleVersion = '1.0.0-alpha5'
+        // Android O
+        compileSdkVersion = 26
+        targetSdkVersion = 26
+        buildToolsVersion = '26.0.0'
+        supportLibraryVersion = '26.0.0-beta2'
+        archLifecycleVersion = '1.0.0-alpha5'
 
-
-//        testSupportLibraryVersion = '0.5'
-//        dexmakerVersion = '1.2'
-//        mockitoVersion = '1.9.5'
-
-//        releaseRepoName = getBintrayRepo()
-//        releaseUserOrg = 'google'
-//        releaseGroupId = 'com.google.android.exoplayer'
-//        releaseVersion = 'r2.4.0'
-//        releaseWebsite = 'https://github.com/google/ExoPlayer'
     }
     if (it.hasProperty('externalBuildDir')) {
         if (!new File(externalBuildDir).isAbsolute()) {

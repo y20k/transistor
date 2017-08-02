@@ -36,14 +36,12 @@ public final class DialogDelete implements TransistorKeys {
     /* Main class variables */
     private final Activity mActivity;
     private final Station mStation;
-    private final int mStationID;
 
 
     /* Constructor */
-    public DialogDelete(Activity activity, Station station, int stationID) {
+    public DialogDelete(Activity activity, Station station) {
         mActivity = activity;
         mStation = station;
-        mStationID = stationID;
     }
 
 
@@ -64,7 +62,6 @@ public final class DialogDelete implements TransistorKeys {
                 i.setAction(ACTION_COLLECTION_CHANGED);
                 i.putExtra(EXTRA_COLLECTION_CHANGE, STATION_DELETED);
                 i.putExtra(EXTRA_STATION, mStation);
-                i.putExtra(EXTRA_STATION_ID, mStationID);
                 LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(i);
 
             }

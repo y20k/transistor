@@ -14,7 +14,7 @@
 
 package org.y20k.transistor.helpers;
 
-import android.app.Activity;
+import android.content.Context;
 import android.os.Environment;
 import android.support.v4.os.EnvironmentCompat;
 
@@ -31,29 +31,57 @@ public class StorageHelper {
 
 
     /* Main class variables */
-    private final Activity mActivity;
+    private final Context mActivity;
+    private File mCollectionDirectory;
 
 
     /* Constructor */
-    public StorageHelper(Activity activity) {
+    public StorageHelper(Context activity) {
         mActivity = activity;
+        mCollectionDirectory = findCollectionDirectory();
+    }
+
+
+    /* Getter for collection directory */
+    public File getCollectionDirectory() {
+        return mCollectionDirectory;
+    }
+
+
+    /* Checks if given folder holds any m3u files */
+    public boolean storageHasStationPlaylistFiles() {
+        if (!mCollectionDirectory.isDirectory()) {
+            LogHelper.i(LOG_TAG, "Given file object is not a directory.");
+            return false;
+        }
+        File[] listOfFiles = mCollectionDirectory.listFiles();
+        for (File file : listOfFiles) {
+            if (file.getPath().endsWith(".m3u")) {
+                return true;
+            }
+        }
+        LogHelper.i(LOG_TAG, "External storage does not contain any station playlist files.");
+        return false;
     }
 
 
     /* Return a write-able sub-directory from external storage  */
-    public File getCollectionDirectory() {
+    private File findCollectionDirectory() {
         String subDirectory = "Collection";
         File[] storage = mActivity.getExternalFilesDirs(subDirectory);
         for (File file : storage) {
             if (file != null) {
                 String state = EnvironmentCompat.getStorageState(file);
                 if (Environment.MEDIA_MOUNTED.equals(state)) {
-                    LogHelper.i(LOG_TAG, "External storage: " + file.toString());
+                    LogHelper.v(LOG_TAG, "External storage: " + file.toString());
                     return file;
                 }
             }
         }
         return null;
     }
+
+
+
 
 }

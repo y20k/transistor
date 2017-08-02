@@ -76,37 +76,6 @@
 
         </activity>
 
-
-        <!-- INFOSHEET ACTIVITY -->
-        <activity
-            android:name=".InfosheetActivity"
-            android:label="@string/title_activity_infosheet"
-            android:parentActivityName=".MainActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize|screenLayout">
-
-
-        <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.y20k.transistor.MainActivity" />
-
-        </activity>
-
-
-        <!-- PLAYER ACTIVITY -->
-        <activity
-            android:name=".PlayerActivity"
-            android:label="@string/title_activity_player"
-            android:parentActivityName=".MainActivity"
-            android:resizeableActivity="true"
-            android:configChanges="keyboardHidden|orientation|screenSize|screenLayout">
-
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.y20k.transistor.MainActivity" />
-
-        </activity>
-
-
         <!-- PLAYER SERVICE -->
         <service
             android:name=".PlayerService"

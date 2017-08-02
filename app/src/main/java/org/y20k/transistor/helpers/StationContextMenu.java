@@ -36,7 +36,6 @@ public final class StationContextMenu extends DialogFragment implements Transist
     private View mView;
     private Activity mActivity;
     private Station mStation;
-    private int mStationID;
 
 
     /* Constructor (default) */
@@ -45,11 +44,10 @@ public final class StationContextMenu extends DialogFragment implements Transist
 
 
     /* Initializer for main class variables */
-    public void initialize(Activity activity, View view, Station station, int stationID) {
+    public void initialize(Activity activity, View view, Station station) {
         mActivity = activity;
         mView = view;
         mStation = station;
-        mStationID = stationID;
     }
 
 
@@ -57,7 +55,7 @@ public final class StationContextMenu extends DialogFragment implements Transist
     public void show() {
 
         PopupMenu popup = new PopupMenu(mActivity, mView);
-        popup.inflate(R.menu.menu_main_list_item);
+        popup.inflate(R.menu.menu_list_list_item);
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -66,25 +64,25 @@ public final class StationContextMenu extends DialogFragment implements Transist
 
                     // CASE ICON
                     case R.id.menu_icon:
-                        // send local broadcast (needed by MainActivityFragment)
+                        // send local broadcast (needed by ListFragment)
                         Intent iconIntent = new Intent();
                         iconIntent.setAction(ACTION_IMAGE_CHANGE_REQUESTED);
                         iconIntent.putExtra(EXTRA_STATION, mStation);
-                        iconIntent.putExtra(EXTRA_STATION_ID, mStationID);
+//                        iconIntent.putExtra(EXTRA_STATION_ID, mStationId);
                         LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(iconIntent);
                         return true;
 
                     // CASE RENAME
                     case R.id.menu_rename:
                         // construct and run rename dialog
-                        DialogRename dialogRename = new DialogRename(mActivity, mStation, mStationID);
+                        DialogRename dialogRename = new DialogRename(mActivity, mStation);
                         dialogRename.show();
                         return true;
 
                     // CASE DELETE
                     case R.id.menu_delete:
                         // construct and run delete dialog
-                        DialogDelete dialogDelete = new DialogDelete(mActivity, mStation, mStationID);
+                        DialogDelete dialogDelete = new DialogDelete(mActivity, mStation);
                         dialogDelete.show();
                         return true;
 
