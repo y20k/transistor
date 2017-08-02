@@ -15,15 +15,14 @@
 package org.y20k.transistor.helpers;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
 import android.widget.Toast;
 
+import org.y20k.transistor.MainActivity;
 import org.y20k.transistor.R;
 import org.y20k.transistor.core.Station;
 
@@ -111,11 +110,7 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> impleme
         if (station != null && fetchResults != null && !fetchResults.getBoolean(RESULT_FETCH_ERROR) && mFolderExists) {
 
             // send local broadcast - adapter will save station
-            Intent i = new Intent();
-            i.setAction(ACTION_COLLECTION_CHANGED);
-            i.putExtra(EXTRA_COLLECTION_CHANGE, STATION_ADDED);
-            i.putExtra(EXTRA_STATION, station);
-            LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(i);
+            ((MainActivity)mActivity).handleStationAdd(station);
 
             LogHelper.v(LOG_TAG, "Station was successfully fetched: " + station.getStreamUri().toString());
         }

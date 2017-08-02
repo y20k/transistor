@@ -47,7 +47,6 @@ import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.DialogError;
 import org.y20k.transistor.helpers.ImageHelper;
 import org.y20k.transistor.helpers.LogHelper;
-import org.y20k.transistor.helpers.ShortcutHelper;
 import org.y20k.transistor.helpers.StationContextMenu;
 import org.y20k.transistor.helpers.TransistorKeys;
 
@@ -231,9 +230,6 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
                     .addToBackStack(null)
                     .commit();
         }
-
-        // save app state
-        saveAppState(mActivity);
     }
 
 
@@ -275,9 +271,11 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
     /* Loads app state from preferences */
     private void loadAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-//        mTwoPane = settings.getBoolean(PREF_TWO_PANE, false);
-//        mStationIdSelected = settings.getInt(PREF_STATION_ID_SELECTED, 0);
         mStationUrlLast = settings.getString(PREF_STATION_URL_LAST, null);
+        String stationUriSelectedString = settings.getString(PREF_STATION_URI_SELECTED, null);
+        if (stationUriSelectedString != null) {
+            mStationUriSelected = Uri.parse(stationUriSelectedString);
+        }
         LogHelper.v(LOG_TAG, "Loading state.");
     }
 
@@ -286,7 +284,7 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
     private void saveAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = settings.edit();
-//        editor.putInt(PREF_STATION_ID_SELECTED, mStationIdSelected);
+        editor.putString(PREF_STATION_URI_SELECTED, mStationUriSelected.toString());
         editor.apply();
         LogHelper.v(LOG_TAG, "Saving state.");
     }
@@ -412,112 +410,112 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
     }
 
 
-    /* Rename station within collection */
-    public int rename(String newStationName, Station station) {
+//    /* Rename station within collection */
+//    public int rename(String newStationName, Station station) {
+//
+//        // name of station is new
+//        if (station != null && !station.getStationName().equals(newStationName)) {
+//
+//            // create copy of main list of stations
+//            ArrayList<Station> newStationList = copyStationList(mStationList);
+//
+//            // get new station
+//            int newStationId = findStationId(station.getStreamUri(), newStationList);
+//
+//            // get reference to old files
+//            File oldStationPlaylistFile = mStationList.get(newStationId).getStationPlaylistFile();
+//            File oldStationImageFile = mStationList.get(newStationId).getStationImageFile();
+//
+//            // update new station
+//            mStationList.get(newStationId).setStationName(newStationName);
+//            mStationList.get(newStationId).setStationPlaylistFile(mFolder);
+//            mStationList.get(newStationId).setStationImageFile(mFolder);
+//
+//            // rename playlist file
+//            oldStationPlaylistFile.delete();
+//            mStationList.get(newStationId).writePlaylistFile(mFolder);
+//
+//            // rename image file
+//            oldStationImageFile.renameTo(mStationList.get(newStationId).getStationImageFile());
+//
+//            // sort list
+//            sortStationList(mStationList);
+//
+//            // update live data list of stations
+//            mCollectionViewModel.getStationList().setValue(newStationList);
+//
+//            // return id of changed station
+//            return findStationId(station.getStreamUri(), newStationList);
+//
+//        } else {
+//            // name of station is null or not new - notify user
+//            Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_rename_unsuccessful), Toast.LENGTH_LONG).show();
+//            return -1;
+//        }
+//
+//    }
+//
+//
+//    /* Delete station within collection */
+//    public int delete(Station station) {
+//
+//        boolean success = false;
+//        int stationId = findStationId(station.getStreamUri(), mStationList);
+//
+//        // delete playlist file
+//        File stationPlaylistFile = station.getStationPlaylistFile();
+//        if (stationPlaylistFile.exists() && stationPlaylistFile.delete()) {
+//            success = true;
+//        }
+//
+//        // delete station image file
+//        File stationImageFile = station.getStationImageFile();
+//        if (stationImageFile.exists() && stationImageFile.delete()) {
+//            success = true;
+//        }
+//
+//        // remove station and notify user
+//        if (success) {
+//            // create copy of main list of stations
+//            ArrayList<Station> newStationList = copyStationList(mStationList);
+//            // remove station from new station list
+//            newStationList.remove(stationId);
+//            // update live data list of stations
+//            mCollectionViewModel.getStationList().setValue(newStationList);
+//            // notify user
+//            Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_delete_successful), Toast.LENGTH_LONG).show();
+//        }
+//
+//        // delete station shortcut
+//        ShortcutHelper shortcutHelper = new ShortcutHelper(mActivity);
+//        shortcutHelper.removeShortcut(station);
+//
+//        if (mTwoPane) {
+//            // determine ID of next station to display in two pane mode
+//            if (mStationList.size() >= stationId) {
+//                stationId--;
+//            }
+//
+//            if (stationId >= 0) {
+//                // show next station
+//                Bundle args = new Bundle();
+//                args.putParcelable(ARG_STATION, mStationList.get(stationId));
+//                args.putInt(ARG_STATION_ID, stationId);
+//                args.putBoolean(ARG_TWO_PANE, mTwoPane);
+//                PlayerFragment playerFragment = new PlayerFragment();
+//                playerFragment.setArguments(args);
+//                ((AppCompatActivity)mActivity).getSupportFragmentManager().beginTransaction()
+//                        .replace(R.id.main_container, playerFragment, PLAYER_FRAGMENT_TAG)
+//                        .commit();
+//            }
+//        }
+//
+//        // return ID of next station
+//        return stationId;
+//    }
 
-        // name of station is new
-        if (station != null && !station.getStationName().equals(newStationName)) {
 
-            // create copy of main list of stations
-            ArrayList<Station> newStationList = copyStationList(mStationList);
-
-            // get new station
-            int newStationId = findStationId(station.getStreamUri(), newStationList);
-
-            // get reference to old files
-            File oldStationPlaylistFile = mStationList.get(newStationId).getStationPlaylistFile();
-            File oldStationImageFile = mStationList.get(newStationId).getStationImageFile();
-
-            // update new station
-            mStationList.get(newStationId).setStationName(newStationName);
-            mStationList.get(newStationId).setStationPlaylistFile(mFolder);
-            mStationList.get(newStationId).setStationImageFile(mFolder);
-
-            // rename playlist file
-            oldStationPlaylistFile.delete();
-            mStationList.get(newStationId).writePlaylistFile(mFolder);
-
-            // rename image file
-            oldStationImageFile.renameTo(mStationList.get(newStationId).getStationImageFile());
-
-            // sort list
-            sortStationList(mStationList);
-
-            // update live data list of stations
-            mCollectionViewModel.getStationList().setValue(newStationList);
-
-            // return id of changed station
-            return findStationId(station.getStreamUri(), newStationList);
-
-        } else {
-            // name of station is null or not new - notify user
-            Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_rename_unsuccessful), Toast.LENGTH_LONG).show();
-            return -1;
-        }
-
-    }
-
-
-    /* Delete station within collection */
-    public int delete(Station station) {
-
-        boolean success = false;
-        int stationId = findStationId(station.getStreamUri(), mStationList);
-
-        // delete playlist file
-        File stationPlaylistFile = station.getStationPlaylistFile();
-        if (stationPlaylistFile.exists() && stationPlaylistFile.delete()) {
-            success = true;
-        }
-
-        // delete station image file
-        File stationImageFile = station.getStationImageFile();
-        if (stationImageFile.exists() && stationImageFile.delete()) {
-            success = true;
-        }
-
-        // remove station and notify user
-        if (success) {
-            // create copy of main list of stations
-            ArrayList<Station> newStationList = copyStationList(mStationList);
-            // remove station from new station list
-            newStationList.remove(stationId);
-            // update live data list of stations
-            mCollectionViewModel.getStationList().setValue(newStationList);
-            // notify user
-            Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_delete_successful), Toast.LENGTH_LONG).show();
-        }
-
-        // delete station shortcut
-        ShortcutHelper shortcutHelper = new ShortcutHelper(mActivity);
-        shortcutHelper.removeShortcut(station);
-
-        if (mTwoPane) {
-            // determine ID of next station to display in two pane mode
-            if (mStationList.size() >= stationId) {
-                stationId--;
-            }
-
-            if (stationId >= 0) {
-                // show next station
-                Bundle args = new Bundle();
-                args.putParcelable(ARG_STATION, mStationList.get(stationId));
-                args.putInt(ARG_STATION_ID, stationId);
-                args.putBoolean(ARG_TWO_PANE, mTwoPane);
-                PlayerFragment playerFragment = new PlayerFragment();
-                playerFragment.setArguments(args);
-                ((AppCompatActivity)mActivity).getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.main_container, playerFragment, PLAYER_FRAGMENT_TAG)
-                        .commit();
-            }
-        }
-
-        // return ID of next station
-        return stationId;
-    }
-
-
-    /* Sorts the list of stations */
+    /* Sorts list of stations */
     private void sortStationList(ArrayList<Station> stationList) {
         Collections.sort(stationList, new Comparator<Station>() {
             @Override
@@ -649,6 +647,14 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
                     mStationUriSelected = newStationList.get(0).getStreamUri();
                     // todo set recyclerview selected
                 }
+
+                // check if mStationUriSelected corresponds with a station in list
+                int StationIdSelected = findStationId(mStationUriSelected, newStationList);
+                if (mTwoPane && StationIdSelected != -1) {
+                    mStationUriSelected = newStationList.get(0).getStreamUri();
+                    // todo set recyclerview selected
+                }
+
            }
         };
     }

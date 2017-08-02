@@ -17,12 +17,11 @@ package org.y20k.transistor.helpers;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
+import org.y20k.transistor.MainActivity;
 import org.y20k.transistor.R;
 import org.y20k.transistor.core.Station;
 
@@ -73,13 +72,16 @@ public final class DialogRename implements TransistorKeys {
                 // rename station
                 String stationNewName = inputField.getText().toString();
 
-                // send local broadcast
-                Intent i = new Intent();
-                i.setAction(ACTION_COLLECTION_CHANGED);
-                i.putExtra(EXTRA_COLLECTION_CHANGE, STATION_RENAMED);
-                i.putExtra(EXTRA_STATION, mStation);
-                i.putExtra(EXTRA_STATION_NEW_NAME, stationNewName);
-                LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(i);
+                // update station
+                if (stationNewName.length() > 0) {
+                    StorageHelper storageHelper = new StorageHelper(mActivity);
+                    mStation.setStationName(stationNewName);
+                    mStation.setStationPlaylistFile(storageHelper.getCollectionDirectory());
+                    mStation.setStationImageFile(storageHelper.getCollectionDirectory());
+                }
+
+                // hand updated station over to main activity
+                ((MainActivity)mActivity).handleStationRename(mStation);
 
             }
         });

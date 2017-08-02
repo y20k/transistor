@@ -17,9 +17,8 @@ package org.y20k.transistor.helpers;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.support.v4.content.LocalBroadcastManager;
 
+import org.y20k.transistor.MainActivity;
 import org.y20k.transistor.R;
 import org.y20k.transistor.core.Station;
 
@@ -57,12 +56,8 @@ public final class DialogDelete implements TransistorKeys {
             // listen for click on delete button
             public void onClick(DialogInterface arg0, int arg1) {
 
-                // send local broadcast
-                Intent i = new Intent();
-                i.setAction(ACTION_COLLECTION_CHANGED);
-                i.putExtra(EXTRA_COLLECTION_CHANGE, STATION_DELETED);
-                i.putExtra(EXTRA_STATION, mStation);
-                LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(i);
+                // hand station over to main activity
+                ((MainActivity)mActivity).handleStationDelete(mStation);
 
             }
         });

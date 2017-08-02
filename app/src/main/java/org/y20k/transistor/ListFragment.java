@@ -15,7 +15,6 @@
 package org.y20k.transistor;
 
 import android.app.Activity;
-import android.app.Application;
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -25,7 +24,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -52,18 +50,13 @@ import org.y20k.transistor.adapter.CollectionAdapter;
 import org.y20k.transistor.adapter.CollectionViewModel;
 import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.DialogAdd;
-import org.y20k.transistor.helpers.ImageHelper;
 import org.y20k.transistor.helpers.LogHelper;
-import org.y20k.transistor.helpers.NotificationHelper;
 import org.y20k.transistor.helpers.PermissionHelper;
 import org.y20k.transistor.helpers.SleepTimerService;
 import org.y20k.transistor.helpers.StationFetcher;
 import org.y20k.transistor.helpers.StorageHelper;
 import org.y20k.transistor.helpers.TransistorKeys;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
@@ -79,7 +72,6 @@ public final class ListFragment extends Fragment implements TransistorKeys {
 
 
     /* Main class variables */
-    private Application mApplication;
     private Activity mActivity;
     private StorageHelper mStorageHelper;
     private CollectionAdapter mCollectionAdapter = null;
@@ -89,18 +81,9 @@ public final class ListFragment extends Fragment implements TransistorKeys {
     private RecyclerView.LayoutManager mLayoutManager;
     private Parcelable mListState;
     private CollectionViewModel mCollectionViewModel;
-    private BroadcastReceiver mCollectionChangedReceiver;
-    private BroadcastReceiver mImageChangeRequestReceiver;
     private BroadcastReceiver mSleepTimerStartedReceiver;
-    private BroadcastReceiver mPlaybackStateChangedReceiver;
-//    private int mPlayback;
-    private int mStationIdSelected;
-    private int mTempStationId;
-    private String mStationUrlLast;
     private Station mStation;
-    private Station mTempStation;
     private Uri mNewStationUri;
-//    private boolean mPlaybackRequestFromIntent;
     private boolean mTwoPane;
     private boolean mSleepTimerRunning;
     private SleepTimerService mSleepTimerService;
@@ -122,7 +105,6 @@ public final class ListFragment extends Fragment implements TransistorKeys {
 
         // get activity and application contexts
         mActivity = getActivity();
-        mApplication = mActivity.getApplication();
 
         // get notification message
         mSleepTimerNotificationMessage = mActivity.getString(R.string.snackbar_message_timer_set) + " ";
@@ -132,8 +114,6 @@ public final class ListFragment extends Fragment implements TransistorKeys {
 
         // set initial values
         mListState = null;
-        mStationIdSelected = 0;
-        mTempStationId = -1;
 
         // initialize two pane
         Bundle args = getArguments();
@@ -195,7 +175,7 @@ public final class ListFragment extends Fragment implements TransistorKeys {
         mRecyclerView.setAdapter(mCollectionAdapter);
 
         // observe changes in LiveData
-        mCollectionViewModel = ViewModelProviders.of((AppCompatActivity)mActivity).get(CollectionViewModel.class);
+        mCollectionViewModel = ViewModelProviders.of((AppCompatActivity) mActivity).get(CollectionViewModel.class);
         mCollectionViewModel.getStationList().observe((LifecycleOwner) mActivity, createStationListObserver());
         mCollectionViewModel.getStation().observe((LifecycleOwner) mActivity, createStationObserver());
 
@@ -295,7 +275,7 @@ public final class ListFragment extends Fragment implements TransistorKeys {
                 InfosheetFragment aboutInfosheetFragment = new InfosheetFragment();
                 aboutInfosheetFragment.setArguments(aboutArgs);
 
-                ((AppCompatActivity)mActivity).getSupportFragmentManager().beginTransaction()
+                ((AppCompatActivity) mActivity).getSupportFragmentManager().beginTransaction()
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         .replace(R.id.main_container, aboutInfosheetFragment, INFOSHEET_FRAGMENT_TAG)
                         .addToBackStack(null)
@@ -313,7 +293,7 @@ public final class ListFragment extends Fragment implements TransistorKeys {
                 InfosheetFragment howtoInfosheetFragment = new InfosheetFragment();
                 howtoInfosheetFragment.setArguments(howtoArgs);
 
-                ((AppCompatActivity)mActivity).getSupportFragmentManager().beginTransaction()
+                ((AppCompatActivity) mActivity).getSupportFragmentManager().beginTransaction()
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         .replace(R.id.main_container, howtoInfosheetFragment, INFOSHEET_FRAGMENT_TAG)
                         .addToBackStack(null)
@@ -332,7 +312,7 @@ public final class ListFragment extends Fragment implements TransistorKeys {
                 mRecyclerView.setLayoutManager(mLayoutManager);
                 mCollectionAdapter.notifyDataSetChanged();
 
-                ((MainActivity)mActivity).togglePlayerContainerVisibility();
+                ((MainActivity) mActivity).togglePlayerContainerVisibility();
                 toggleActionCall();
 
                 // stop player service using intent
@@ -391,42 +371,6 @@ public final class ListFragment extends Fragment implements TransistorKeys {
                 }
                 break;
             }
-        }
-    }
-
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        // retrieve selected image Uri from image picker
-        Uri newImageUri = null;
-        if (null != data) {
-            newImageUri = data.getData();
-        }
-
-        if (requestCode == REQUEST_LOAD_IMAGE && resultCode == Activity.RESULT_OK && newImageUri != null) {
-
-            ImageHelper imageHelper = new ImageHelper(newImageUri, mActivity);
-            Bitmap newImage = imageHelper.getInputImage();
-
-            if (newImage != null && mTempStationId != -1) {
-                // write image to storage
-                File stationImageFile = mTempStation.getStationImageFile();
-                try (FileOutputStream out = new FileOutputStream(stationImageFile)) {
-                    newImage.compress(Bitmap.CompressFormat.PNG, 100, out);
-                } catch (IOException e) {
-                    LogHelper.e(LOG_TAG, "Unable to save: " + newImage.toString());
-                }
-                // update adapter
-                mCollectionAdapter.notifyItemChanged(mTempStationId);
-
-            } else {
-                LogHelper.e(LOG_TAG, "Unable to get image from media picker. Uri was:  " + newImageUri.toString());
-            }
-
-        } else {
-            LogHelper.e(LOG_TAG, "Unable to get image from media picker. Did not receive an Uri");
         }
     }
 
@@ -500,7 +444,7 @@ public final class ListFragment extends Fragment implements TransistorKeys {
             startPlayback = true;
         }
         // CASE: transistor received a last station intent
-        else if(intent.hasExtra(EXTRA_LAST_STATION)) {
+        else if (intent.hasExtra(EXTRA_LAST_STATION)) {
             // try to get last station from SharedPreferences
             String stationUrlLastString = PreferenceManager.getDefaultSharedPreferences(mActivity).getString(PREF_STATION_URL_LAST, null);
             loadAppState(mActivity);
@@ -598,7 +542,6 @@ public final class ListFragment extends Fragment implements TransistorKeys {
                 // stop sleep timer service
                 mSleepTimerService.startActionStop(mActivity);
                 mSleepTimerRunning = false;
-//                saveAppState(mActivity);
                 // notify user
                 Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_timer_cancelled), Toast.LENGTH_SHORT).show();
                 LogHelper.v(LOG_TAG, "Sleep timer cancelled.");
@@ -621,8 +564,6 @@ public final class ListFragment extends Fragment implements TransistorKeys {
     /* Loads app state from preferences */
     private void loadAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-        mStationIdSelected = settings.getInt(PREF_STATION_ID_SELECTED, 0);
-        mStationUrlLast = settings.getString(PREF_STATION_URL_LAST, null);
         mTwoPane = settings.getBoolean(PREF_TWO_PANE, false);
         mSleepTimerRunning = settings.getBoolean(PREF_TIMER_RUNNING, false);
         LogHelper.v(LOG_TAG, "Loading state.");
@@ -633,7 +574,6 @@ public final class ListFragment extends Fragment implements TransistorKeys {
     private void saveAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = settings.edit();
-//        editor.putBoolean(PREF_TIMER_RUNNING, mSleepTimerRunning);
         editor.apply();
         LogHelper.v(LOG_TAG, "Saving state.");
     }
@@ -652,38 +592,8 @@ public final class ListFragment extends Fragment implements TransistorKeys {
         return new Observer<ArrayList<Station>>() {
             @Override
             public void onChanged(@Nullable ArrayList<Station> newStationList) {
-
                 // toggle action call view if necessary
                 toggleActionCall();
-
-//                // check if intent requested playback
-//                Intent intent = mActivity.getIntent();
-//                if (mPlaybackRequestFromIntent && intent.hasExtra(ACTION_SHOW_PLAYER) && mCollectionAdapter.getItemCount() != 0) {
-//                    Station station = null;
-//
-//                    // CASE: playback requested via homescreen shortcut
-//                    if (intent.hasExtra(EXTRA_STREAM_URI)) {
-//                        // get Uri of station from home screen shortcut
-//                        station = mCollectionAdapter.findStation(Uri.parse(intent.getStringExtra(EXTRA_STREAM_URI)));
-//                    }
-//                    // CASE: transistor received a last station intent
-//                    else if (intent.hasExtra(EXTRA_LAST_STATION) && intent.getBooleanExtra(EXTRA_LAST_STATION, false)) {
-//                        // try to get last station from SharedPreferences
-//                        loadAppState(mActivity);
-//                        if (mStationUrlLast != null) {
-//                            Uri stationUriLast = Uri.parse(mStationUrlLast);
-//                            station = mCollectionAdapter.findStation(stationUriLast);
-//                        }
-//                    }
-//
-//                    // show player
-//                    showPlayer(station, true);
-//                    // clear the intent
-//                    intent.setAction("");
-//                    // reset mPlaybackRequestFromIntent
-//                    mPlaybackRequestFromIntent = false;
-//                }
-
             }
         };
     }
@@ -718,47 +628,6 @@ public final class ListFragment extends Fragment implements TransistorKeys {
 
     /* Initializes broadcast receivers for onCreate */
     private void initializeBroadcastReceivers() {
-
-        // RECEIVER: state of playback has changed
-        mPlaybackStateChangedReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                if (intent.hasExtra(EXTRA_PLAYBACK_STATE_CHANGE)) {
-                    handlePlaybackStateChanges(intent);
-                }
-            }
-        };
-        IntentFilter playbackStateChangedIntentFilter = new IntentFilter(ACTION_PLAYBACK_STATE_CHANGED);
-        LocalBroadcastManager.getInstance(mActivity).registerReceiver(mPlaybackStateChangedReceiver, playbackStateChangedIntentFilter);
-
-        // RECEIVER: station added, deleted, or changed
-        mCollectionChangedReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                if (intent != null && intent.hasExtra(EXTRA_COLLECTION_CHANGE)) {
-                    handleCollectionChanges(intent);
-                }
-            }
-        };
-        IntentFilter collectionChangedIntentFilter = new IntentFilter(ACTION_COLLECTION_CHANGED);
-        LocalBroadcastManager.getInstance(mApplication).registerReceiver(mCollectionChangedReceiver, collectionChangedIntentFilter);
-
-        // RECEIVER: listen for request to change station image
-        mImageChangeRequestReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                if (intent.hasExtra(EXTRA_STATION) && intent.hasExtra(EXTRA_STATION_ID)) {
-                    // get station and id from intent
-                    mTempStation = intent.getParcelableExtra(EXTRA_STATION);
-                    mTempStationId = intent.getIntExtra(EXTRA_STATION_ID, -1);
-                    // start image picker
-                    selectFromImagePicker();
-                }
-            }
-        };
-        IntentFilter imageChangeRequestIntentFilter = new IntentFilter(ACTION_IMAGE_CHANGE_REQUESTED);
-        LocalBroadcastManager.getInstance(mApplication).registerReceiver(mImageChangeRequestReceiver, imageChangeRequestIntentFilter);
-
         // RECEIVER: sleep timer service sends updates
         mSleepTimerStartedReceiver = new BroadcastReceiver() {
             @Override
@@ -778,15 +647,11 @@ public final class ListFragment extends Fragment implements TransistorKeys {
         };
         IntentFilter sleepTimerIntentFilter = new IntentFilter(ACTION_TIMER_RUNNING);
         LocalBroadcastManager.getInstance(mActivity).registerReceiver(mSleepTimerStartedReceiver, sleepTimerIntentFilter);
-
     }
 
 
     /* Unregisters broadcast receivers */
     private void unregisterBroadcastReceivers() {
-        LocalBroadcastManager.getInstance(mActivity).unregisterReceiver(mPlaybackStateChangedReceiver);
-        LocalBroadcastManager.getInstance(mActivity).unregisterReceiver(mCollectionChangedReceiver);
-        LocalBroadcastManager.getInstance(mActivity).unregisterReceiver(mImageChangeRequestReceiver);
         LocalBroadcastManager.getInstance(mActivity).unregisterReceiver(mSleepTimerStartedReceiver);
     }
 
@@ -805,89 +670,87 @@ public final class ListFragment extends Fragment implements TransistorKeys {
                 break;
         }
     }
-
-
-    /* Handles adding, deleting and renaming of station */
-    private void handleCollectionChanges(Intent intent) {
-
-        // load app state
-        loadAppState(mActivity);
-
-        int newStationPosition;
-
-        switch (intent.getIntExtra(EXTRA_COLLECTION_CHANGE, 1)) {
-
-            // CASE: station was added
-            case STATION_ADDED:
-                if (intent.hasExtra(EXTRA_STATION)) {
-
-                    // get station from intent
-                    Station station = intent.getParcelableExtra(EXTRA_STATION);
-
-                    // add station to adapter, scroll to new position and update adapter
-                    newStationPosition = mCollectionAdapter.add(station);
-
-                    if (mCollectionAdapter.getItemCount() > 0) {
-                        toggleActionCall();
-                    }
-
-                    mLayoutManager.scrollToPosition(newStationPosition);
-//                    mCollectionAdapter.setStationIdSelected(newStationPosition, mPlayback, false);
-                }
-                break;
-
-            // CASE: station was renamed
-            case STATION_RENAMED:
-                if (intent.hasExtra(EXTRA_STATION_NEW_NAME) && intent.hasExtra(EXTRA_STATION)) {
-
-                    // get new name, station and station ID from intent
-                    String newStationName = intent.getStringExtra(EXTRA_STATION_NEW_NAME);
-                    Station station = intent.getParcelableExtra(EXTRA_STATION);
-
-                    // update notification
-                    if (station.getPlaybackState() != PLAYBACK_STATE_STOPPED) {
-                        NotificationHelper.update(station, null);
-                    }
-
-                    // change station within in adapter, scroll to new position and update adapter
-                    newStationPosition = mCollectionAdapter.rename(newStationName, station);
-                    mLayoutManager.scrollToPosition(newStationPosition);
-//                    mCollectionAdapter.setStationIdSelected(newStationPosition, mPlayback, false);
-                }
-                break;
-
-            // CASE: station was deleted
-            case STATION_DELETED:
-                if (intent.hasExtra(EXTRA_STATION)) {
-
-                    // get station from intent
-                    Station station = intent.getParcelableExtra(EXTRA_STATION);
-
-                    // dismiss notification
-                    NotificationHelper.stop();
-
-                    if (station.getPlaybackState() == PLAYBACK_STATE_STARTED) {
-                        // stop player service and notification using intent
-                        Intent i = new Intent(mActivity, PlayerService.class);
-                        i.setAction(ACTION_DISMISS);
-                        mActivity.startService(i);
-                        LogHelper.v(LOG_TAG, "Stopping player service.");
-                    }
-
-                    // remove station from adapter and update
-                    newStationPosition = mCollectionAdapter.delete(station);
-                    if (newStationPosition == -1 || mCollectionAdapter.getItemCount() == 0) {
-                        // show call to action
-                        toggleActionCall();
-                    } else {
-                        // scroll to new position
-//                        mCollectionAdapter.setStationIdSelected(newStationPosition, mPlayback, false);
-                        mLayoutManager.scrollToPosition(newStationPosition);
-                    }
-                }
-                break;
-        }
-
-    }
-
 }
+
+//    /* Handles adding, deleting and renaming of station */
+//    private void handleCollectionChanges(Intent intent) {
+//
+//        // load app state
+//        loadAppState(mActivity);
+//
+//        int newStationPosition;
+//
+//        switch (intent.getIntExtra(EXTRA_COLLECTION_CHANGE, 1)) {
+//
+//            // CASE: station was added
+//            case STATION_ADDED:
+//                if (intent.hasExtra(EXTRA_STATION)) {
+//
+//                    // get station from intent
+//                    Station station = intent.getParcelableExtra(EXTRA_STATION);
+//
+//                    // add station to adapter, scroll to new position and update adapter
+//                    newStationPosition = mCollectionAdapter.add(station);
+//
+//                    if (mCollectionAdapter.getItemCount() > 0) {
+//                        toggleActionCall();
+//                    }
+//
+//                    mLayoutManager.scrollToPosition(newStationPosition);
+////                    mCollectionAdapter.setStationIdSelected(newStationPosition, mPlayback, false);
+//                }
+//                break;
+//
+//            // CASE: station was renamed
+//            case STATION_RENAMED:
+//                if (intent.hasExtra(EXTRA_STATION_NEW_NAME) && intent.hasExtra(EXTRA_STATION)) {
+//
+//                    // get new name, station and station ID from intent
+//                    String newStationName = intent.getStringExtra(EXTRA_STATION_NEW_NAME);
+//                    Station station = intent.getParcelableExtra(EXTRA_STATION);
+//
+//                    // update notification
+//                    if (station.getPlaybackState() != PLAYBACK_STATE_STOPPED) {
+//                        NotificationHelper.update(station, null);
+//                    }
+//
+//                    // change station within in adapter, scroll to new position and update adapter
+//                    newStationPosition = mCollectionAdapter.rename(newStationName, station);
+//                    mLayoutManager.scrollToPosition(newStationPosition);
+////                    mCollectionAdapter.setStationIdSelected(newStationPosition, mPlayback, false);
+//                }
+//                break;
+//
+//            // CASE: station was deleted
+//            case STATION_DELETED:
+//                if (intent.hasExtra(EXTRA_STATION)) {
+//
+//                    // get station from intent
+//                    Station station = intent.getParcelableExtra(EXTRA_STATION);
+//
+//                    // dismiss notification
+//                    NotificationHelper.stop();
+//
+//                    if (station.getPlaybackState() == PLAYBACK_STATE_STARTED) {
+//                        // stop player service and notification using intent
+//                        Intent i = new Intent(mActivity, PlayerService.class);
+//                        i.setAction(ACTION_DISMISS);
+//                        mActivity.startService(i);
+//                        LogHelper.v(LOG_TAG, "Stopping player service.");
+//                    }
+//
+//                    // remove station from adapter and update
+//                    newStationPosition = mCollectionAdapter.delete(station);
+//                    if (newStationPosition == -1 || mCollectionAdapter.getItemCount() == 0) {
+//                        // show call to action
+//                        toggleActionCall();
+//                    } else {
+//                        // scroll to new position
+////                        mCollectionAdapter.setStationIdSelected(newStationPosition, mPlayback, false);
+//                        mLayoutManager.scrollToPosition(newStationPosition);
+//                    }
+//                }
+//                break;
+//        }
+//
+//    }

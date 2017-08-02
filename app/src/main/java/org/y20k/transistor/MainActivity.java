@@ -14,6 +14,7 @@
 package org.y20k.transistor;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.Fragment;
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.LifecycleRegistry;
@@ -23,6 +24,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -37,11 +39,18 @@ import android.widget.Toast;
 
 import org.y20k.transistor.adapter.CollectionViewModel;
 import org.y20k.transistor.core.Station;
+import org.y20k.transistor.helpers.ImageHelper;
 import org.y20k.transistor.helpers.LogHelper;
+import org.y20k.transistor.helpers.ShortcutHelper;
 import org.y20k.transistor.helpers.StorageHelper;
 import org.y20k.transistor.helpers.TransistorKeys;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 
 /**
@@ -60,6 +69,7 @@ public final class MainActivity extends AppCompatActivity implements LifecycleRe
     private CollectionViewModel mCollectionViewModel;
     private final LifecycleRegistry mRegistry = new LifecycleRegistry(this);
     private ArrayList<Station> mStationList;
+    private Station mTempStation;
 
 
     @Override
@@ -71,6 +81,9 @@ public final class MainActivity extends AppCompatActivity implements LifecycleRe
 
         // initialize storage helper
         mStorageHelper = new StorageHelper(this);
+
+        // initialize temp station (used by image change requests)
+        mTempStation = null;
 
         // check if system/app has external storage access
         checkExternalStorageState();
@@ -149,8 +162,13 @@ public final class MainActivity extends AppCompatActivity implements LifecycleRe
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // make sure that ListFragment's onActivityResult() gets called
         super.onActivityResult(requestCode, resultCode, data);
-    }
 
+        // check if a station image change request was received
+        if (requestCode == REQUEST_LOAD_IMAGE && resultCode == Activity.RESULT_OK) {
+            handleStationImageChange(data);
+        }
+
+    }
 
 
     @TargetApi(Build.VERSION_CODES.M)
@@ -197,6 +215,152 @@ public final class MainActivity extends AppCompatActivity implements LifecycleRe
         }
     }
 
+    /* Setter for temp station */
+    public void setTempStation(Station tempStation) {
+        mTempStation = tempStation;
+    }
+
+
+    /* Puts new station in list and updates live data  */
+    public int handleStationAdd(Station station) {
+
+        if (station != null) {
+            // add station to list
+            mStationList.add(station);
+
+            // sort list
+            sortStationList(mStationList);
+
+            // update live data list of stations
+            mCollectionViewModel.getStationList().setValue(mStationList);
+
+            // return id of changed station
+            return findStationId(station.getStreamUri());
+        } else {
+            return -1;
+        }
+
+    }
+
+
+    /* Puts renamed station in list and updates live data */
+    public int handleStationRename (Station station) {
+
+        // get hold of previous state of this station
+        Station oldStation = findStation(station.getStreamUri());
+
+        // name of station is new
+        if (station != null && oldStation!= null && !station.getStationName().equals(oldStation.getStationName())) {
+
+            // todo check if a REAL copy of the list is needed
+
+            // get new station
+            int newStationId = findStationId(station.getStreamUri());
+
+            // rename playlist file
+            File oldStationPlaylistFile = oldStation.getStationPlaylistFile();
+            oldStationPlaylistFile.delete();
+            StorageHelper storageHelper = new StorageHelper(this);
+            mStationList.get(newStationId).writePlaylistFile(storageHelper.getCollectionDirectory());
+
+            // rename image file
+            File oldStationImageFile = oldStation.getStationImageFile();
+            oldStationImageFile.renameTo(station.getStationImageFile());
+
+            // update list
+            int stationID = findStationId(oldStation.getStreamUri());
+            mStationList.set(stationID, station);
+
+            // sort list
+            sortStationList(mStationList);
+
+            // update live data list of stations
+            mCollectionViewModel.getStationList().setValue(mStationList);
+
+            // return id of changed station
+            return findStationId(station.getStreamUri());
+
+        } else {
+            // name of station is null or not new - notify user
+            Toast.makeText(this, getString(R.string.toastalert_rename_unsuccessful), Toast.LENGTH_LONG).show();
+            return -1;
+        }
+
+    }
+
+
+    /* Removes given station from list and updates live data */
+    public boolean handleStationDelete (Station station) {
+
+        // todo check if a REAL copy of the list is needed
+
+        // remove station from list
+        int stationId = findStationId(station.getStreamUri());
+        mStationList.remove(stationId);
+
+        // delete m3u playlist file
+        File stationPlaylistFile = station.getStationPlaylistFile();
+        if (stationPlaylistFile != null) {
+            stationPlaylistFile.delete();
+        }
+
+        // delete png image file
+        File stationImageFile = station.getStationImageFile();
+        if (stationImageFile != null) {
+            stationImageFile.delete();
+        }
+
+        // delete station shortcut
+        ShortcutHelper shortcutHelper = new ShortcutHelper(this);
+        shortcutHelper.removeShortcut(station);
+
+        // update live data
+        mCollectionViewModel.getStationList().setValue(mStationList);
+
+        // notify user
+        Toast.makeText(this, getString(R.string.toastalert_delete_successful), Toast.LENGTH_LONG).show();
+
+        return true;
+    }
+
+
+    /* Saves and sets new station image and updates station list and live data */
+    private boolean handleStationImageChange (Intent data) {
+
+        // retrieve selected image Uri from image picker
+        Uri newImageUri = null;
+        Bitmap newImage = null;
+        if (null != data) {
+            newImageUri = data.getData();
+            ImageHelper imageHelper = new ImageHelper(newImageUri, this);
+            newImage = imageHelper.getInputImage();
+        }
+
+        if (newImage != null && mTempStation != null) {
+            // write image to storage
+            File stationImageFile = mTempStation.getStationImageFile();
+            try (FileOutputStream out = new FileOutputStream(stationImageFile)) {
+                newImage.compress(Bitmap.CompressFormat.PNG, 100, out);
+            } catch (IOException e) {
+                LogHelper.e(LOG_TAG, "Unable to save: " + newImage.toString());
+                return false;
+            }
+
+            // update list
+            int stationID = findStationId(mTempStation.getStreamUri());
+            mStationList.set(stationID, mTempStation);
+
+            // update live data
+            mCollectionViewModel.getStationList().setValue(mStationList);
+
+            return true;
+
+        } else {
+            LogHelper.e(LOG_TAG, "Unable to get image from media picker. Uri was:  " + newImageUri.toString());
+            return false;
+        }
+    }
+
 
     /* Checks if two-pane mode can be used */
     private boolean detectTwoPane() {
@@ -227,6 +391,9 @@ public final class MainActivity extends AppCompatActivity implements LifecycleRe
         return new Observer<ArrayList<Station>>() {
             @Override
             public void onChanged(@Nullable ArrayList<Station> newStationList) {
+                // update station list
+                mStationList = newStationList;
+
                 // show/hide player layout container
                 togglePlayerContainerVisibility();
             }
@@ -289,6 +456,18 @@ public final class MainActivity extends AppCompatActivity implements LifecycleRe
 //        LocalBroadcastManager.getInstance(this).unregisterReceiver(mPlaybackStateChangedReceiver);
 //        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMetadataChangedReceiver);
 //    }
+
+
+    /* Sorts list of stations */
+    private void sortStationList(ArrayList<Station> stationList) {
+        Collections.sort(stationList, new Comparator<Station>() {
+            @Override
+            public int compare(Station station1, Station station2) {
+                // Compares two stations: returns "1" if name if this station is greater than name of given station
+                return station1.getStationName().compareToIgnoreCase(station2.getStationName());
+            }
+        });
+    }
 
 
     /* Finds ID of station when given its Uri */

@@ -66,6 +66,7 @@ public interface TransistorKeys {
     String PREF_STATION_URL_LAST = "prefStationUrlLast";
     String PREF_STATION_ID_CURRENT = "prefStationIDCurrentlyPlaying";
     String PREF_STATION_ID_LAST = "prefStationIDLast";
+    String PREF_STATION_URI_SELECTED = "prefStationUriSelected";
     String PREF_STATION_ID_SELECTED = "prefStationIDSelected";
     String PREF_STATION_METADATA = "prefStationMetadata";
     String PREF_STATION_MIME_TYPE = "prefStationMimeType";
