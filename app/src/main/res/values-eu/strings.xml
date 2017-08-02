@@ -128,35 +128,35 @@
     <string name="infosheet_about_p_github">https://github.com/y20k/transistor</string>
     <string name="infosheet_about_p_license">https://opensource.org/licenses/MIT</string>
     <string name="infosheet_about_h2_permissions">Zentzu baimen behar ditu Transistorrek?</string>
-    <string name="infosheet_about_h3_shortcut"/>
+    <string name="infosheet_about_h3_shortcut">INSTALL_SHORTCUT eta UNINSTALL_SHORTCUT baimenak</string>
     <string name="infosheet_about_p_shortcut">Baimen hauek irratien laster-markak Androiden hasiera pantailan gehitu eta kentzeko dira.</string>
     <string name="infosheet_about_h3_internet">Baimena INTERNET</string>
     <string name="infosheet_about_p_internet">Transistor aplikazioak interneteko irratiak entzutea baimentzen dizu.</string>
-    <string name="infosheet_about_h3_external"/>
+    <string name="infosheet_about_h3_external">READ_EXTERNAL_STORAGE baimena</string>
     <string name="infosheet_about_p_external">Transistorrek irudiak, argazkiak eta dokumentuak atzitzeko baimena behar irratien ikonoak pertsonalizatzeko eta tokian gordetako erreprodukzio-zerrenda fitxategiak ireki ahal izateko.</string>
-    <string name="infosheet_about_h3_vibrate"/>
+    <string name="infosheet_about_h3_vibrate">VIBRATE baimena</string>
     <string name="infosheet_about_p_vibrate">Irrati estazio bat ukitu eta mantentzean bibrazio txiki bat gertatuko da.</string>
-    <string name="infosheet_about_h3_wakelock"/>
+    <string name="infosheet_about_h3_wakelock">WAKE_LOCK baimena</string>
     <string name="infosheet_about_p_wakelock">Erreprodukzioan zehar Transistorrek Android sistemak energia aurrezteko emanaldia etetea eragotziko du.</string>
 
     <!-- infosheet howto -->
     <string name="infosheet_howto_h1_howto">Nola erabili Transistor</string>
     <string name="infosheet_howto_h2_add">Nola gehitu irrati berri bat?</string>
-    <string name="infosheet_howto_p_add"/>
+    <string name="infosheet_howto_p_add">Irrati berri bat gehitzeko modu errazena webean jarioen estekak bilatzea da eta fitxategi mota hori beti Transistorrekin irekitzea aukeratu. (+) sinboloa sakatu dezakezu ere eta jarioen estekak zuzenean itsati. Kontuan hartzekoa: Transitorrek ez du inolako bilaketa funtziorik.</string>
     <string name="infosheet_howto_h2_play">Nola entzun irrati bat?</string>
     <string name="infosheet_howto_p_play">Sakatu erreprodukzio-botoi handia ;).</string>
     <string name="infosheet_howto_h2_stop">Nola gelditu erreprodukzioa?</string>
     <string name="infosheet_howto_p_stop">Sakatu Gelditu-botoi handia, edo deskonektatu aurikularrak, edo blokeo pantailako jakinarazpena kendu hatza pasatuz.</string>
     <string name="infosheet_howto_h2_sleep">Nola hasi atzera-kontaketa?</string>
-    <string name="infosheet_howto_p_sleep"/>
+    <string name="infosheet_howto_p_sleep">Erlojuaren ikonoa sakatzean 15 minutuko atzera kontaketa bat hasiko da eta bukatzean Transistor itzaliko da. Berriz sakatuz bero 15 minutu gehituko zaizkio erlojuari. Erreproduzitzen egon behar da atzera kontaketa aktibatzeko.</string>
     <string name="infosheet_howto_h2_shortcut">Nola jarri estazio baten laster-marka hasiera pantailan?</string>
-    <string name="infosheet_howto_p_shortcut"/>
+    <string name="infosheet_howto_p_shortcut">Hasiera pantailan irrati baterako lasterbidea jartzeko aukera irratiaren hiru puntutxoen menuan dago. Lasterbidean sakatzean Transistor irekiko da eta berehala erreproduzitzen hasiko da.</string>
     <string name="infosheet_howto_h2_edit">Nola aldatu izena irratiari edo nola ezabatu?</string>
-    <string name="infosheet_howto_p_edit"/>
+    <string name="infosheet_howto_p_edit">Izena aldatu eta ezabatu aukerak irratiaren laster menuan daude. Sakatu hiru puntutxoak. Fitxategi arakatzaile batekin ere alda dezakezu irratien zerrenda (ikusi hurrengo galdera).</string>
     <string name="infosheet_howto_h2_storage">Non gordetzen ditu Transistorrek irrati-estazio guztiak?</string>
     <string name="infosheet_howto_p_storage">Transistorrek ez ditu irratiak datu-base batean gordetzen. Estazioak .m3u fitxategi gisa gordetzen ditu gailuaren kanpo biltegian. Testu editore batekin ireki ditzakezu nahi baduzu. Fitxategiak /Android/data/org.y20k.transistor/files/Collection karpetan gordetzen dira.</string>
     <string name="infosheet_howto_h2_backup">Nola egin dezaket nire irratien babes-kopia?</string>
-    <string name="infosheet_howto_p_backup"/>
+    <string name="infosheet_howto_p_backup">Transistorrek babeskopia automatikorako euskarria du Android 6tik aurrera. Irratiak beti gordetzen dira zure Google kontuan eta berrinstalatzean berrezarriko dira. Android bertsio zaharragoak dituzten gailuek eskuz gorde eta berreskuratu behar duzu irratien karpeta.</string>
     <string name="infosheet_howto_h2_settings">Zergatik ez dago ezarpenik Transistorren?</string>
     <string name="infosheet_howto_p_settings">Ez dago ezer ezartzeko ;). Transistor oso aplikazio sinplea da. Zure ikuspuntuaren arabera sinple ona ala txara izan daiteke.</string>
 
