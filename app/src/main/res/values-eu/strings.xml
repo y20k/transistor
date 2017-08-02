@@ -8,7 +8,7 @@
     <!-- menu entries -->
     <string name="menu_about">Honi buruz</string>
     <string name="menu_howto">Nola erabili</string>
-    <string name="menu_refresh">Refresh list</string>
+    <string name="menu_refresh">Freskatu zerrenda</string>
     <string name="menu_timer">Itzaltzeko atzera kontaketa</string>
     <string name="menu_icon">Aldatu ikonoa</string>
     <string name="menu_add">Gehitu</string>
@@ -89,8 +89,8 @@
     <string name="toastmessage_long_press_playback_stopped">Erreprodukzioa gelditu da (sakatze luzea atzeman da)</string>
     <string name="toastmessage_long_press_playback_started">Erreprodukzioa hasi da (sakatze luzea atzeman da)</string>
     <string name="toastmessage_shortcut_created">Lasterbidea sortu da.</string>
-    <string name="toastmessage_shortcut_not_created">Shortcut not created. This device does not allow the creation of shortcuts.</string>
-    <string name="toastmessage_list_refreshed">Reloading list of stations.</string>
+    <string name="toastmessage_shortcut_not_created">Ez da lasterbidea sortu. Gailu honek ez du lasterbideak sortzea ahalbidetzen.</string>
+    <string name="toastmessage_list_refreshed">Irratien zerrenda birkargatzen.</string>
     <string name="toastmessage_copied_to_clipboard_url">Jarioaren URLa arbelera kopiatu da.</string>
     <string name="toastmessage_copied_to_clipboard_metadata">Metadatuak arbelera kopiatu dira.</string>
     <string name="toastmessage_station_copied">Estazioa arbelera kopiatu da.</string>
@@ -115,8 +115,8 @@
     <string name="notification_stop">Stop</string>
     <string name="notification_swipe_to_stop">Pasatu hatza gelditzeko</string>
     <string name="notification_playing">Erreprodukzioan</string>
-    <string name="notification_channel_playback_name">Playback Controls</string>
-    <string name="notification_channel_playback_description">Playback controls, station logo and now playing info.</string>
+    <string name="notification_channel_playback_name">Erreprodukzio kontrolak</string>
+    <string name="notification_channel_playback_description">Erreprodukzio kontrolak, irratiaren logoa eta unean jotzen ari denaren informazioa.</string>
 
     <!-- infosheet about -->
     <string name="infosheet_about_h1_about">Transistorri buruz</string>
