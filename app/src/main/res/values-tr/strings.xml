@@ -26,8 +26,8 @@
     <string name="toastmessage_long_press_playback_stopped">Oynatma durdurdu (uzun dokunuş algılandı)</string>
     <string name="toastmessage_long_press_playback_started">Oynatma başladı (uzun dokunuş algılandı)</string>
     <string name="toastmessage_shortcut_created">Kısayol oluşturuldu.</string>
-    <string name="toastmessage_shortcut_not_created">Shortcut not created. This device does not allow the creation of shortcuts.</string>
-    <string name="toastmessage_list_refreshed">Reloading list of stations.</string>
+    <string name="toastmessage_shortcut_not_created">Kısayol oluşturulmadı. Bu aygıt kısayolların oluşturulmasına izin vermiyor.</string>
+    <string name="toastmessage_list_refreshed">İstasyonların listesi ön yükleniyor.</string>
     <string name="toastmessage_copied_to_clipboard_url">Yayın URL\'si panoya kopyalandı.</string>
     <string name="toastmessage_copied_to_clipboard_metadata">Meta veri panoya kopyalandı.</string>
     <string name="toastmessage_station_copied">İstasyon panoya kopyalandı.</string>
@@ -102,7 +102,7 @@
 
     <string name="menu_about">Hakkında</string>
     <string name="menu_howto">Nasıl kullanılır</string>
-    <string name="menu_refresh">Refresh list</string>
+    <string name="menu_refresh">Listeyi yenile</string>
     <string name="menu_timer">Uyku zamanlayıcı</string>
     <string name="menu_icon">Simgeyi değiştir</string>
     <string name="menu_add">Ekle</string>
