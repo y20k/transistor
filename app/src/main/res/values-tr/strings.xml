@@ -58,7 +58,7 @@
     <!-- infosheet about -->
     <string name="infosheet_about_h1_about">Transistor Hakkında</string>
     <string name="infosheet_about_h2_radio">Android için radyo uygulaması</string>
-    <string name="infosheet_about_h3_version">Sürüm 2.2 (Sessiz Çağın Oğulları)</string>
+    <string name="infosheet_about_h3_version">Sürüm 2.3 (Kooks)</string>
     <string name="infosheet_about_p_bare">Transistor İnternet üzerinden radyo programlarını dinlemek için yalın bir uygulamadır. Uygulama, istasyonları aygıtınızın harici depolama alanına dosya olarak kaydeder. /Android/data/org.y20k.transistor/files/Collection içindeki m3u türündeki dosyalara bakın. Şu anda MP3, AAC ve Ogg/Opus ile kodlanmış yayınları anlar.</string>
     <string name="infosheet_about_p_note">Önemli not: Bu KİG (kendi istasyonunuzu getirin) türünde bir uygulamadır. Herhangi bir tür yerleşik arama özelliği içermez. Radyo istasyonlarını elle eklemeniz gerekecektir.</string>
     <string name="infosheet_about_p_free">Transistor özgür bir yazılımdır. MIT açık kaynak lisansı altında sunulmuştur. Kodunu GitHub\'da bulabilirsiniz. GitHub hataları bildirmek ve hatta, ilgileniyorsanız, katkıda bulunmak için de iyi bir yerdir.</string>

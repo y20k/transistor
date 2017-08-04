@@ -54,6 +54,7 @@ import org.y20k.transistor.helpers.LogHelper;
 import org.y20k.transistor.helpers.PermissionHelper;
 import org.y20k.transistor.helpers.SleepTimerService;
 import org.y20k.transistor.helpers.StationFetcher;
+import org.y20k.transistor.helpers.StationListHelper;
 import org.y20k.transistor.helpers.StorageHelper;
 import org.y20k.transistor.helpers.TransistorKeys;
 
@@ -177,7 +178,6 @@ public final class ListFragment extends Fragment implements TransistorKeys {
         // observe changes in LiveData
         mCollectionViewModel = ViewModelProviders.of((AppCompatActivity) mActivity).get(CollectionViewModel.class);
         mCollectionViewModel.getStationList().observe((LifecycleOwner) mActivity, createStationListObserver());
-        mCollectionViewModel.getStation().observe((LifecycleOwner) mActivity, createStationObserver());
 
         // show call to action, if necessary
         toggleActionCall();
@@ -440,7 +440,8 @@ public final class ListFragment extends Fragment implements TransistorKeys {
         // CASE: playback requested via homescreen shortcut
         else if (intent.hasExtra(EXTRA_STREAM_URI)) {
             // get Uri of station from home screen shortcut
-            station = mCollectionAdapter.findStation(Uri.parse(intent.getStringExtra(EXTRA_STREAM_URI)));
+            station = StationListHelper.findStation(mCollectionAdapter.getStationList(), Uri.parse(intent.getStringExtra(EXTRA_STREAM_URI)));
+//            station = mCollectionAdapter.findStation(Uri.parse(intent.getStringExtra(EXTRA_STREAM_URI)));
             startPlayback = true;
         }
         // CASE: transistor received a last station intent
@@ -449,7 +450,8 @@ public final class ListFragment extends Fragment implements TransistorKeys {
             String stationUrlLastString = PreferenceManager.getDefaultSharedPreferences(mActivity).getString(PREF_STATION_URL_LAST, null);
             loadAppState(mActivity);
             if (stationUrlLastString != null) {
-                station = mCollectionAdapter.findStation(Uri.parse(stationUrlLastString));
+                station = StationListHelper.findStation(mCollectionAdapter.getStationList(), Uri.parse(stationUrlLastString));
+//                station = mCollectionAdapter.findStation(Uri.parse(stationUrlLastString));
             }
             startPlayback = true;
         }
@@ -594,20 +596,6 @@ public final class ListFragment extends Fragment implements TransistorKeys {
             public void onChanged(@Nullable ArrayList<Station> newStationList) {
                 // toggle action call view if necessary
                 toggleActionCall();
-            }
-        };
-    }
-
-
-    /* Creates an observer for currently active stored as LiveData */
-    private Observer<Station> createStationObserver() {
-        return new Observer<Station>() {
-            @Override
-            public void onChanged(@Nullable Station newStation) {
-                mStation = newStation;
-                // todo check for
-                // a) new metadata
-                // b) playback state changes
             }
         };
     }

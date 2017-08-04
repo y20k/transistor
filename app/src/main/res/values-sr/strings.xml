@@ -121,7 +121,7 @@
     <!-- infosheet about -->
     <string name="infosheet_about_h1_about">О Транзистору</string>
     <string name="infosheet_about_h2_radio">Радио апликација за Андроид</string>
-    <string name="infosheet_about_h3_version">Издање 2.2 (Sons Of The Silent Age)</string>
+    <string name="infosheet_about_h3_version">Издање 2.3 (Kooks)</string>
     <string name="infosheet_about_p_bare">Транзистор је проста апликација за слушање радија преко интернета. Апликација складишти радио станице као фајлове на спољашњем складишту вашег уређаја. Потражите m3u фајлове у /Android/data/org.y20k.transistor/files/Collection. Тренутно су подржани MP3 и OGG кодирани токови.</string>
     <string name="infosheet_about_p_note">Важна напомена: ово је апликација типа ДСС (донесите своју станицу). Нема функције уграђене претраге. Станице морате ручно да додајете.</string>
     <string name="infosheet_about_p_free">Транзистор је слободан софтвер. Објављен је под МИТ лиценцом. Изворни кôд можете да нађете на Гитхабу, где такође можете да пријављујете грешке или помогнете програмирање, ако сте заинтересовани.</string>

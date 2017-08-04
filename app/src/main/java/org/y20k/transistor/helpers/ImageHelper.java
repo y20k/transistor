@@ -22,6 +22,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
+import android.provider.MediaStore;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.content.ContextCompat;
 
@@ -29,6 +30,7 @@ import org.y20k.transistor.R;
 
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 
 /**
@@ -61,7 +63,13 @@ public final class ImageHelper {
     /* Constructor when given an Uri */
     public ImageHelper(Uri inputImageUri, Context context) {
         mContext = context;
-        mInputImage = decodeSampledBitmapFromUri(inputImageUri, 72, 72);
+        mInputImage = null;
+        try {
+            mInputImage = MediaStore.Images.Media.getBitmap(mContext.getContentResolver(), inputImageUri);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        mInputImage = decodeSampledBitmapFromUri(inputImageUri, 72, 72);
     }
 
 

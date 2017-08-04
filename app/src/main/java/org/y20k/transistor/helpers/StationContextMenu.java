@@ -16,12 +16,11 @@ package org.y20k.transistor.helpers;
 
 import android.app.Activity;
 import android.app.DialogFragment;
-import android.content.Intent;
-import android.support.v4.content.LocalBroadcastManager;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
 
+import org.y20k.transistor.MainActivity;
 import org.y20k.transistor.R;
 import org.y20k.transistor.core.Station;
 
@@ -64,12 +63,8 @@ public final class StationContextMenu extends DialogFragment implements Transist
 
                     // CASE ICON
                     case R.id.menu_icon:
-                        // send local broadcast (needed by ListFragment)
-                        Intent iconIntent = new Intent();
-                        iconIntent.setAction(ACTION_IMAGE_CHANGE_REQUESTED);
-                        iconIntent.putExtra(EXTRA_STATION, mStation);
-//                        iconIntent.putExtra(EXTRA_STATION_ID, mStationId);
-                        LocalBroadcastManager.getInstance(mActivity.getApplication()).sendBroadcast(iconIntent);
+                        // get system picker for images
+                        ((MainActivity)mActivity).pickImage(mStation);
                         return true;
 
                     // CASE RENAME
@@ -89,7 +84,6 @@ public final class StationContextMenu extends DialogFragment implements Transist
                     // CASE SHORTCUT
                     case R.id.menu_shortcut: {
                         // create shortcut
-//                        ShortcutHelper shortcutHelper = new ShortcutHelper(mActivity);
                         ShortcutHelper shortcutHelper = new ShortcutHelper(mActivity.getApplication().getApplicationContext());
                         shortcutHelper.placeShortcut(mStation);
                         return true;

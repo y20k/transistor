@@ -64,8 +64,7 @@ public final class DialogAdd {
             public void onClick(DialogInterface dialog, int id) {
                 if (inputField.getText() != null) {
                     final String input = inputField.getText().toString();
-
-                    // download and add new station
+                    // download new station
                     StationFetcher stationFetcher = new StationFetcher(mActivity, mFolder, Uri.parse(input.trim()));
                     stationFetcher.execute();
                 }

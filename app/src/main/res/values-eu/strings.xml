@@ -121,7 +121,7 @@
     <!-- infosheet about -->
     <string name="infosheet_about_h1_about">Transistorri buruz</string>
     <string name="infosheet_about_h2_radio">Android irrati aplikazioa</string>
-    <string name="infosheet_about_h3_version">2.2 bertsioa (Sons Of The Silent Age)</string>
+    <string name="infosheet_about_h3_version">2.3 bertsioa (Kooks)</string>
     <string name="infosheet_about_p_bare">Transistor internet bidez irratia entzuteko programa sinple bat da. APlikazioak estazioak fitxategi gisa gordetzen ditu zure gailuaren kanpo biltegian. Bilatu m3u luzapena duten fitxategiak /Android/data/org.y20k.transistor/files/Collection karpetan. Oraingoz MP3, AAC eta Ogg/Opus formatuetan kodetutako jarioak ulertzen ditu.</string>
     <string name="infosheet_about_p_note">Ohar garrantzitsua: Aplikazio honek irratiak zuk gehitzea eskatzen du. Ez du bilaketa tresnarik. Eskuz gehitu behar dituzu irratiak.</string>
     <string name="infosheet_about_p_free">Transistor software librea da. MIT lizentziapean argitaratu da. Kodea GitHuben dago. GitHub arazoen berri emateko tokli egokia da ere, baita parte hartzeko, hala nahi baduzu.</string>

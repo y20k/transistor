@@ -13,18 +13,14 @@
 
 package org.y20k.transistor.adapter;
 
-import android.app.Activity;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
-import android.support.v7.util.SortedList;
-import android.widget.Toast;
 
 import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.LogHelper;
@@ -35,8 +31,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 /**
  * CollectionViewModel.class
@@ -49,9 +43,7 @@ public class CollectionViewModel extends AndroidViewModel implements TransistorK
 
     /* Main class variables */
     private MutableLiveData<ArrayList<Station>> mLiveStationList;
-    private MutableLiveData<Station> mStation;
     private MutableLiveData<Boolean> mTwoPane;
-    private MutableLiveData<Integer> mStationIdSelected;
 
     /* Constructor */
     public CollectionViewModel(Application application) {
@@ -59,9 +51,7 @@ public class CollectionViewModel extends AndroidViewModel implements TransistorK
 
         // initialize LiveData
         mLiveStationList = new MutableLiveData<ArrayList<Station>>();
-        mStation = new MutableLiveData<Station>();
         mTwoPane = new MutableLiveData<Boolean>();
-        mStationIdSelected =  new MutableLiveData<Integer>();
 
         // load state from shared preferences and set live data values
         loadAppState(application);
@@ -84,7 +74,6 @@ public class CollectionViewModel extends AndroidViewModel implements TransistorK
     private void loadAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         mTwoPane.setValue(settings.getBoolean(PREF_TWO_PANE, false));
-        mStationIdSelected.setValue(settings.getInt(PREF_STATION_ID_SELECTED, -1));
         LogHelper.v(LOG_TAG, "Loading state and updating live data.");
     }
 
@@ -95,24 +84,13 @@ public class CollectionViewModel extends AndroidViewModel implements TransistorK
     }
 
 
-    /* Getter for current station */
-    public MutableLiveData<Station> getStation() {
-        return mStation;
-    }
-
-
     /* Getter for TwoPane */
     public MutableLiveData<Boolean> getTwoPane() {
         return mTwoPane;
     }
 
 
-    /* Getter for ID of selected station */
-    public MutableLiveData<Integer> getStationIdSelected() {
-        return mStationIdSelected;
-    }
-
-
+    /* Load list of stations from storage */
     private ArrayList<Station> loadStationList(Application application) {
 
         StorageHelper storageHelper = new StorageHelper(application);

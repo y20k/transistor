@@ -121,7 +121,7 @@
     <!-- infosheet about -->
     <string name="infosheet_about_h1_about">Sobre Transistor</string>
     <string name="infosheet_about_h2_radio">Aplicació de ràdio per Android</string>
-    <string name="infosheet_about_h3_version">Versió 2.2 (Sons Of The Silent Age)</string>
+    <string name="infosheet_about_h3_version">Versió 2.3 (Kooks)</string>
     <string name="infosheet_about_p_bare">Transistor és una aplicació per escoltar programes de ràdio a través d\'Internet. L\'aplicació emmagatzema les emissores en fitxers dins del emmagatzematge extern. Pots cercar aquests fitxers M3U dins de /Android/data/org.y20k.transistor/files/Collection. En l\'actualitat pot reproduir fitxers en MP3 i OGG.</string>
     <string name="infosheet_about_p_note">Nota important: Aquesta és una aplicació de tipus \"BYOS\" (sigles de l\'anglés Bring Your Own Station (porta la teva propia emissora)). No ofereix cap tipus d\'opció de cerca incorporat. Vostè haurà d\'afegir manualment les emissores de ràdio.</string>
     <string name="infosheet_about_p_free">Transistor és programari lliure. Està publicat sota llicència de codi obert MIT. Pots trobar el codi font a GitHub. GitHub és també un bon lloc per presentar errors i fins i tot contribuir, si vosté està interessat.</string>
