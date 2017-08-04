@@ -44,16 +44,15 @@ import org.y20k.transistor.PlayerFragment;
 import org.y20k.transistor.PlayerService;
 import org.y20k.transistor.R;
 import org.y20k.transistor.core.Station;
-import org.y20k.transistor.helpers.DialogError;
 import org.y20k.transistor.helpers.ImageHelper;
 import org.y20k.transistor.helpers.LogHelper;
 import org.y20k.transistor.helpers.StationContextMenu;
+import org.y20k.transistor.helpers.StationListHelper;
 import org.y20k.transistor.helpers.TransistorKeys;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.List;
 
 
 /**
@@ -100,7 +99,6 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
         mCollectionViewModel = ViewModelProviders.of((AppCompatActivity)mActivity).get(CollectionViewModel.class);
         mCollectionViewModel.getStationList().observe((LifecycleOwner) mActivity, createStationListObserver());
         mCollectionViewModel.getTwoPane().observe((LifecycleOwner)mActivity, createTwoPaneObserver());
-//        mCollectionViewModel.getStation().observe((LifecycleOwner)mActivity, createStationObserver());
     }
 
 
@@ -133,31 +131,15 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
             holder.getListItemLayout().setSelected(false);
         }
 
-        // create station image
-        Bitmap stationImage;
-        Bitmap stationImageSmall = null;
-        if (station.getStationImageFile().exists()) {
-            stationImageSmall = BitmapFactory.decodeFile(station.getStationImageFile().toString());
-        }
-        ImageHelper imageHelper = new ImageHelper(stationImageSmall, mActivity);
-        stationImage = imageHelper.createCircularFramedImage(192, R.color.transistor_grey_lighter);
-
         // set station image
-        holder.getStationImageView().setImageBitmap(stationImage);
+        holder.getStationImageView().setImageBitmap(createStationImageBitmap(station));
 
         // set station name
         holder.getStationNameView().setText(station.getStationName());
 
         // set playback indicator - in phone view only
-        if (!mTwoPane && station.getPlaybackState() == PLAYBACK_STATE_LOADING_STATION) {
-            holder.getPlaybackIndicator().setBackgroundResource(R.drawable.ic_playback_indicator_small_loading_24dp);
-            holder.getPlaybackIndicator().setVisibility(View.VISIBLE);
-        } else if (!mTwoPane  && station.getPlaybackState() == PLAYBACK_STATE_STARTED) {
-            holder.getPlaybackIndicator().setBackgroundResource(R.drawable.ic_playback_indicator_small_started_24dp);
-            holder.getPlaybackIndicator().setVisibility(View.VISIBLE);
-        } else {
-            holder.getPlaybackIndicator().setVisibility(View.GONE);
-        }
+        togglePlaybackIndicator(holder, station);
+
 
         // attach three dots menu - in phone view only
         if (!mTwoPane) {
@@ -195,6 +177,41 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
 
 
     @Override
+    public void onBindViewHolder(CollectionAdapterViewHolder holder, int position, List<Object> payloads) {
+
+        if (payloads.isEmpty()) {
+            // call regular onBindViewHolder method
+            onBindViewHolder(holder, position);
+
+        } else {
+            // get station from position
+            final Station station = mStationList.get(holder.getAdapterPosition());
+
+            for (Object data : payloads) {
+                switch ((int) data) {
+                    case HOLDER_UPDATE_NAME:
+                        // set station name
+                        LogHelper.v(LOG_TAG, "List of station: Partial view update -> station name changed");
+                        holder.getStationNameView().setText(station.getStationName());
+                        break;
+                    case HOLDER_UPDATE_PLAYBACK_STATE:
+                        // set playback indicator
+                        LogHelper.v(LOG_TAG, "List of station: Partial view update -> playback state changed");
+                        togglePlaybackIndicator(holder, station);
+                        break;
+                    case HOLDER_UPDATE_IMAGE:
+                        // set station image
+                        LogHelper.v(LOG_TAG, "List of station: Partial view update -> station image changed");
+                        holder.getStationImageView().setImageBitmap(createStationImageBitmap(station));
+                        break;
+                }
+            }
+        }
+    }
+
+
+
+    @Override
     public long getItemId(int position) {
         return position;
     }
@@ -218,8 +235,8 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
         playerFragment.setArguments(args);
 
         if (mTwoPane) {
-            notifyItemChanged(findStationId(mStationUriSelected, mStationList));
-            notifyItemChanged(findStationId(station.getStreamUri(), mStationList));
+            notifyItemChanged(StationListHelper.findStationId(mStationList, mStationUriSelected));
+            notifyItemChanged(StationListHelper.findStationId(mStationList, station.getStreamUri()));
             ((AppCompatActivity)mActivity).getSupportFragmentManager().beginTransaction()
                     .replace(R.id.player_container, playerFragment, PLAYER_FRAGMENT_TAG)
                     .commit();
@@ -290,6 +307,30 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
     }
 
 
+    /* Create bitmap version of station image */
+    private Bitmap createStationImageBitmap(Station station) {
+        Bitmap stationImageSmall = null;
+        if (station.getStationImageFile().exists()) {
+            stationImageSmall = BitmapFactory.decodeFile(station.getStationImageFile().toString());
+        }
+        ImageHelper imageHelper = new ImageHelper(stationImageSmall, mActivity);
+        return imageHelper.createCircularFramedImage(192, R.color.transistor_grey_lighter);
+    }
+
+
+    private void togglePlaybackIndicator(CollectionAdapterViewHolder holder, Station station) {
+        if (!mTwoPane && station.getPlaybackState() == PLAYBACK_STATE_LOADING_STATION) {
+            holder.getPlaybackIndicator().setBackgroundResource(R.drawable.ic_playback_indicator_small_loading_24dp);
+            holder.getPlaybackIndicator().setVisibility(View.VISIBLE);
+        } else if (!mTwoPane  && station.getPlaybackState() == PLAYBACK_STATE_STARTED) {
+            holder.getPlaybackIndicator().setBackgroundResource(R.drawable.ic_playback_indicator_small_started_24dp);
+            holder.getPlaybackIndicator().setVisibility(View.VISIBLE);
+        } else {
+            holder.getPlaybackIndicator().setVisibility(View.GONE);
+        }
+    }
+
+
     /* Setter for image file within station object with given ID */
     public void setNewImageFile(int stationId, File stationImageFile) {
         mStationList.get(stationId).setStationImageFile(stationImageFile);
@@ -302,7 +343,7 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
 
 
         // update playback state
-        mStationList.get(findStationId(station.getStreamUri(), mStationList)).setPlaybackState(station.getPlaybackState());
+        mStationList.get(StationListHelper.findStationId(mStationList, station.getStreamUri())).setPlaybackState(station.getPlaybackState());
 
         if (mTwoPane) {
             showPlayerFragment(station, true);
@@ -336,194 +377,6 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
     /* Getter for Uri of selected station */
     public Uri getStationUriSelected() {
         return mStationUriSelected;
-    }
-
-
-    /* Finds station when given its Uri */
-    public Station findStation(Uri streamUri) {
-
-        // traverse list of stations
-        for (int i = 0; i < mStationList.size(); i++) {
-            Station station = mStationList.get(i);
-            if (station.getStreamUri().equals(streamUri)) {
-                return station;
-            }
-        }
-
-        // return null if nothing was found
-        LogHelper.v(LOG_TAG, "No station for given Uri found.");
-        return null;
-    }
-
-
-
-    /* Finds ID of station within list of stations when given its Uri */
-    public int findStationId(Uri streamUri, ArrayList<Station> stationList) {
-
-        if (stationList == null) {
-            stationList = mStationList;
-        }
-
-        // traverse list of stations
-        for (int i = 0; i < stationList.size(); i++) {
-            Station station = stationList.get(i);
-            if (station.getStreamUri().equals(streamUri)) {
-                return i;
-            }
-        }
-
-        // return -1 if nothing was found
-        LogHelper.v(LOG_TAG, "No station ID for given Uri found.");
-        return -1;
-    }
-
-
-    /* Getter for station of given ID */
-//    public Station getStation (int stationId) {
-//        return mStationList.get(stationId);
-//    }
-
-
-    /* Add station to collection */
-    public int add(Station station) {
-        if (station.getStationName() != null && station.getStreamUri() != null) {
-            // create copy of main list of stations
-            ArrayList<Station> newStationList = copyStationList(mStationList);
-            // add station to new list of stations
-            newStationList.add(station);
-            // sort list
-            sortStationList(mStationList);
-            // update live data list of stations
-            mCollectionViewModel.getStationList().setValue(newStationList);
-            // return new index
-            return findStationId(station.getStreamUri(), newStationList);
-        } else {
-            // notify user and log failure to add
-            String errorTitle = mActivity.getResources().getString(R.string.dialog_error_title_fetch_write);
-            String errorMessage = mActivity.getResources().getString(R.string.dialog_error_message_fetch_write);
-            String errorDetails = mActivity.getResources().getString(R.string.dialog_error_details_write);
-            DialogError dialogError = new DialogError(mActivity, errorTitle, errorMessage, errorDetails);
-            dialogError.show();
-            LogHelper.e(LOG_TAG, "Unable to add station to collection: Duplicate name and/or stream URL.");
-            return -1;
-        }
-    }
-
-
-//    /* Rename station within collection */
-//    public int rename(String newStationName, Station station) {
-//
-//        // name of station is new
-//        if (station != null && !station.getStationName().equals(newStationName)) {
-//
-//            // create copy of main list of stations
-//            ArrayList<Station> newStationList = copyStationList(mStationList);
-//
-//            // get new station
-//            int newStationId = findStationId(station.getStreamUri(), newStationList);
-//
-//            // get reference to old files
-//            File oldStationPlaylistFile = mStationList.get(newStationId).getStationPlaylistFile();
-//            File oldStationImageFile = mStationList.get(newStationId).getStationImageFile();
-//
-//            // update new station
-//            mStationList.get(newStationId).setStationName(newStationName);
-//            mStationList.get(newStationId).setStationPlaylistFile(mFolder);
-//            mStationList.get(newStationId).setStationImageFile(mFolder);
-//
-//            // rename playlist file
-//            oldStationPlaylistFile.delete();
-//            mStationList.get(newStationId).writePlaylistFile(mFolder);
-//
-//            // rename image file
-//            oldStationImageFile.renameTo(mStationList.get(newStationId).getStationImageFile());
-//
-//            // sort list
-//            sortStationList(mStationList);
-//
-//            // update live data list of stations
-//            mCollectionViewModel.getStationList().setValue(newStationList);
-//
-//            // return id of changed station
-//            return findStationId(station.getStreamUri(), newStationList);
-//
-//        } else {
-//            // name of station is null or not new - notify user
-//            Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_rename_unsuccessful), Toast.LENGTH_LONG).show();
-//            return -1;
-//        }
-//
-//    }
-//
-//
-//    /* Delete station within collection */
-//    public int delete(Station station) {
-//
-//        boolean success = false;
-//        int stationId = findStationId(station.getStreamUri(), mStationList);
-//
-//        // delete playlist file
-//        File stationPlaylistFile = station.getStationPlaylistFile();
-//        if (stationPlaylistFile.exists() && stationPlaylistFile.delete()) {
-//            success = true;
-//        }
-//
-//        // delete station image file
-//        File stationImageFile = station.getStationImageFile();
-//        if (stationImageFile.exists() && stationImageFile.delete()) {
-//            success = true;
-//        }
-//
-//        // remove station and notify user
-//        if (success) {
-//            // create copy of main list of stations
-//            ArrayList<Station> newStationList = copyStationList(mStationList);
-//            // remove station from new station list
-//            newStationList.remove(stationId);
-//            // update live data list of stations
-//            mCollectionViewModel.getStationList().setValue(newStationList);
-//            // notify user
-//            Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_delete_successful), Toast.LENGTH_LONG).show();
-//        }
-//
-//        // delete station shortcut
-//        ShortcutHelper shortcutHelper = new ShortcutHelper(mActivity);
-//        shortcutHelper.removeShortcut(station);
-//
-//        if (mTwoPane) {
-//            // determine ID of next station to display in two pane mode
-//            if (mStationList.size() >= stationId) {
-//                stationId--;
-//            }
-//
-//            if (stationId >= 0) {
-//                // show next station
-//                Bundle args = new Bundle();
-//                args.putParcelable(ARG_STATION, mStationList.get(stationId));
-//                args.putInt(ARG_STATION_ID, stationId);
-//                args.putBoolean(ARG_TWO_PANE, mTwoPane);
-//                PlayerFragment playerFragment = new PlayerFragment();
-//                playerFragment.setArguments(args);
-//                ((AppCompatActivity)mActivity).getSupportFragmentManager().beginTransaction()
-//                        .replace(R.id.main_container, playerFragment, PLAYER_FRAGMENT_TAG)
-//                        .commit();
-//            }
-//        }
-//
-//        // return ID of next station
-//        return stationId;
-//    }
-
-
-    /* Sorts list of stations */
-    private void sortStationList(ArrayList<Station> stationList) {
-        Collections.sort(stationList, new Comparator<Station>() {
-            @Override
-            public int compare(Station station1, Station station2) {
-                // Compares two stations: returns "1" if name if this station is greater than name of given station
-                return station1.getStationName().compareToIgnoreCase(station2.getStationName());
-            }
-        });
     }
 
 
@@ -564,16 +417,6 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
     }
 
 
-    /* Creates a real copy of given station list*/
-    private ArrayList<Station> copyStationList(ArrayList<Station> stationList) {
-        ArrayList<Station> newStationList = new ArrayList<Station>();
-        for (Station station : stationList) {
-            newStationList.add(new Station (station));
-        }
-        return newStationList;
-    }
-
-
     /* handles changes in metadata */
     private void handleMetadataChange(Intent intent) {
         // get new station from intent
@@ -584,8 +427,14 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
             return;
         }
 
-        // update station in live data
-        mCollectionViewModel.getStation().setValue(station);
+        // create copy of main list of stations
+        ArrayList<Station> newStationList = StationListHelper.copyStationList(mStationList);
+
+        int stationId = StationListHelper.findStationId(newStationList, station.getStreamUri());
+        newStationList.set(stationId, station);
+
+        // update live data station list
+        mCollectionViewModel.getStationList().setValue(newStationList);
     }
 
 
@@ -601,13 +450,13 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
         }
 
         // create copy of main list of stations
-        ArrayList<Station> newStationList = copyStationList(mStationList);
+        ArrayList<Station> newStationList = StationListHelper.copyStationList(mStationList);
 
         // try to set playback state of previous station
         if (intent.hasExtra(EXTRA_PLAYBACK_STATE_PREVIOUS_STATION)) {
             String previousStationUrlString = intent.getStringExtra(EXTRA_PLAYBACK_STATE_PREVIOUS_STATION);
             if (previousStationUrlString != null) {
-                int previousStationId = findStationId(Uri.parse(previousStationUrlString), newStationList);
+                int previousStationId = StationListHelper.findStationId(newStationList, Uri.parse(previousStationUrlString));
                 if (previousStationId != -1) {
                     newStationList.get(previousStationId).setPlaybackState(PLAYBACK_STATE_STOPPED);
                 }
@@ -615,16 +464,13 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
         }
 
         // set playback state for new station
-        int stationId = findStationId(station.getStreamUri(), newStationList);
+        int stationId = StationListHelper.findStationId(newStationList, station.getStreamUri());
         if (stationId != -1) {
             newStationList.get(stationId).setPlaybackState(station.getPlaybackState());
         }
 
         // update live data station list
         mCollectionViewModel.getStationList().setValue(newStationList);
-
-        // update live data station list
-        mCollectionViewModel.getStation().setValue(station);
     }
 
 
@@ -634,9 +480,10 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
             @Override
             public void onChanged(@Nullable ArrayList<Station> newStationList) {
                 LogHelper.v(LOG_TAG, "Observer for list of stations in CollectionAdapter: list has changed.");
-                sortStationList(newStationList);
+                StationListHelper.sortStationList(newStationList);
                 // calculate differences between new station list and current station list
                 DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new CollectionAdapterDiffUtilCallback(mStationList, newStationList), true);
+
                 // update current station list
                 mStationList = newStationList;
                 // inform this adapter about the changes
@@ -649,7 +496,7 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
                 }
 
                 // check if mStationUriSelected corresponds with a station in list
-                int StationIdSelected = findStationId(mStationUriSelected, newStationList);
+                int StationIdSelected = StationListHelper.findStationId(newStationList, mStationUriSelected);
                 if (mTwoPane && StationIdSelected != -1) {
                     mStationUriSelected = newStationList.get(0).getStreamUri();
                     // todo set recyclerview selected

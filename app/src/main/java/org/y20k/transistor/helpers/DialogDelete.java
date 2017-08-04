@@ -17,8 +17,10 @@ package org.y20k.transistor.helpers;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 
 import org.y20k.transistor.MainActivity;
+import org.y20k.transistor.PlayerService;
 import org.y20k.transistor.R;
 import org.y20k.transistor.core.Station;
 
@@ -46,6 +48,12 @@ public final class DialogDelete implements TransistorKeys {
 
     /* Construct and show dialog */
     public void show() {
+        // stop player service using intent
+        Intent intent = new Intent(mActivity, PlayerService.class);
+        intent.setAction(ACTION_DISMISS);
+        mActivity.startService(intent);
+        LogHelper.v(LOG_TAG, "Opening delete dialog. Stopping player service.");
+
         AlertDialog.Builder deleteDialog = new AlertDialog.Builder(mActivity);
 
         // add message to dialog

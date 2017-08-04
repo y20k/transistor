@@ -121,7 +121,7 @@
     <!-- infosheet about -->
     <string name="infosheet_about_h1_about">About Transistor</string>
     <string name="infosheet_about_h2_radio">Radio app for Android</string>
-    <string name="infosheet_about_h3_version">Version 2.2 (Sons Of The Silent Age)</string>
+    <string name="infosheet_about_h3_version">Version 2.3 (Kooks)</string>
     <string name="infosheet_about_p_bare">Transistor is a bare bones app for listening to radio programs over the internet. The app stores stations as files on your device\'s external storage. Look for files of type m3u within /Android/data/org.y20k.transistor/files/Collection. It currently understands streams encoded in MP3 and OGG.</string>
     <string name="infosheet_about_p_note">Important note: This is an app of type BYOS (&quot;bring your own station&quot;). It does not feature any kind of built-in search option. You will have to manually add radio stations.</string>
     <string name="infosheet_about_p_free">Transistor is free software. It is published under the MIT open source license. You can find the code on GitHub. GitHub is also a good place to file bugs or even to contribute, if you are interested.</string>

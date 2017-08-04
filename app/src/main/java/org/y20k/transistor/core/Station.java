@@ -58,6 +58,7 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
 
     /* Main class variables */
     private File mStationImageFile;
+    private long mStationImageSize;
     private String mStationName;
     private File mStationPlaylistFile;
     private Uri mStreamUri;
@@ -72,8 +73,9 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
 
 
     /* Generic Constructor */
-    public Station(File stationImageFile, String stationName, File stationPlaylistFile, Uri streamUri, String playlistFileContent, int playback, String metadata, String mimeType, int channelCount, int sampleRate, int bitrate, Bundle stationFetchResults) {
+    public Station(File stationImageFile, long stationImageSize, String stationName, File stationPlaylistFile, Uri streamUri, String playlistFileContent, int playback, String metadata, String mimeType, int channelCount, int sampleRate, int bitrate, Bundle stationFetchResults) {
         mStationImageFile = stationImageFile;
+        mStationImageSize = stationImageSize;
         mStationName = stationName;
         mStationPlaylistFile = stationPlaylistFile;
         mStreamUri = streamUri;
@@ -221,16 +223,17 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
         initializePlaybackMetadata();
     }
 
+
     /* Copy Constructor */
     public Station(Station station) {
-        this(station.getStationImageFile(), station.getStationName(), station.getStationPlaylistFile(), station.getStreamUri(), station.getplaylistFileContent(), station.getPlaybackState(), station.getMetadata(), station.getMimeType(), station.getChannelCount(), station.getSampleRate(), station.getBitrate(), station.getStationFetchResults());
+        this(station.getStationImageFile(), station.getStationImageSize(), station.getStationName(), station.getStationPlaylistFile(), station.getStreamUri(), station.getplaylistFileContent(), station.getPlaybackState(), station.getMetadata(), station.getMimeType(), station.getChannelCount(), station.getSampleRate(), station.getBitrate(), station.getStationFetchResults());
     }
-
 
 
     /* Constructor used by CREATOR */
     protected Station(Parcel in) {
         mStationImageFile = new File (in.readString());
+        mStationImageSize = in.readLong();
         mStationName = in.readString();
         mStationPlaylistFile = new File (in.readString());
         mStreamUri = in.readParcelable(Uri.class.getClassLoader());
@@ -614,6 +617,12 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
     }
 
 
+    /* Getter for size of station image */
+    public long getStationImageSize() {
+        return mStationImageSize;
+    }
+
+
     /* Getter for name of station */
     public String getStationName() {
         return mStationName;
@@ -687,6 +696,9 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
             // construct location of png image file from station name and folder
             String fileLocation = folder.toString() + "/" + stationNameCleaned + ".png";
             mStationImageFile = new File(fileLocation);
+            mStationImageSize = mStationImageFile.length();
+        } else {
+            mStationImageSize = 0;
         }
     }
 
@@ -760,6 +772,7 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(mStationImageFile.toString());
+        dest.writeLong(mStationImageSize);
         dest.writeString(mStationName);
         dest.writeString(mStationPlaylistFile.toString());
         dest.writeParcelable(mStreamUri, flags);

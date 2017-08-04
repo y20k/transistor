@@ -4,7 +4,7 @@ README
 Transistor - Radio App for Android
 ----------------------------------
 
-**Version 2.2.x ("Sons Of The Silent Age")**
+**Version 2.3.x ("Kooks")**
 
 Transistor is a bare bones app for listening to radio programs over the internet. The app stores stations as files on your device's external storage. It currently understands streams encoded in MP3, AAC and Ogg/Opus.
 

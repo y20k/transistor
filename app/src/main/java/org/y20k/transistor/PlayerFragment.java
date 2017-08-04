@@ -24,7 +24,6 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -58,8 +57,8 @@ import org.y20k.transistor.helpers.DialogDelete;
 import org.y20k.transistor.helpers.DialogRename;
 import org.y20k.transistor.helpers.ImageHelper;
 import org.y20k.transistor.helpers.LogHelper;
-import org.y20k.transistor.helpers.PermissionHelper;
 import org.y20k.transistor.helpers.ShortcutHelper;
+import org.y20k.transistor.helpers.StationListHelper;
 import org.y20k.transistor.helpers.TransistorKeys;
 
 import java.util.ArrayList;
@@ -103,6 +102,7 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
     private MediaControllerCompat mController;
     private boolean mTwoPane;
     private Station mStation;
+    private int mPlaybackState;
 
 
     /* Constructor (default) */
@@ -135,12 +135,18 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
                 mTwoPane = false;
             }
 
+            // store playback state
+            if (mStation != null) {
+                mPlaybackState = mStation.getPlaybackState();
+            } else {
+                mPlaybackState = PLAYBACK_STATE_STOPPED;
+            }
+
         }
 
         // observe changes in LiveData
         mCollectionViewModel = ViewModelProviders.of((AppCompatActivity)mActivity).get(CollectionViewModel.class);
         mCollectionViewModel.getStationList().observe((LifecycleOwner)mActivity, createStationListObserver());
-        mCollectionViewModel.getStation().observe((LifecycleOwner)mActivity, createStationCurrentObserver());
         mCollectionViewModel.getTwoPane().observe((LifecycleOwner)mActivity, createTwoPaneObserver());
 
         // fragment has options menu
@@ -315,24 +321,22 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
     public boolean onOptionsItemSelected(MenuItem item) {
         return handleMenuClick(item, super.onOptionsItemSelected(item));
     }
-
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // permission granted - get system picker for images
-                    Intent pickImageIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(pickImageIntent, REQUEST_LOAD_IMAGE);
-                } else {
-                    // permission denied
-                    Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_permission_denied) + " READ_EXTERNAL_STORAGE", Toast.LENGTH_LONG).show();
-                }
-            }
-        }
-    }
+//
+//
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        switch (requestCode) {
+//            case PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE: {
+//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    selectFromImagePicker();
+//                } else {
+//                    // permission denied
+//                    Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_permission_denied) + " READ_EXTERNAL_STORAGE", Toast.LENGTH_LONG).show();
+//                }
+//            }
+//        }
+//    }
 
 
     @Override
@@ -345,12 +349,6 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
 
     /* Starts player service */
     private void startPlayback() {
-        // set playback status
-        mStation.setPlaybackState(PLAYBACK_STATE_LOADING_STATION);
-
-        // rotate playback button
-        changeVisualState(mActivity);
-
         // start player service using intent
         Intent intent = new Intent(mActivity, PlayerService.class);
         intent.setAction(ACTION_PLAY);
@@ -362,12 +360,6 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
 
     /* Stops player service */
     private void stopPlayback() {
-        // set playback false
-        mStation.setPlaybackState(PLAYBACK_STATE_STOPPED);
-
-        // rotate playback button
-        changeVisualState(mActivity);
-
         // stop player service using intent
         Intent intent = new Intent(mActivity, PlayerService.class);
         intent.setAction(ACTION_STOP);
@@ -379,7 +371,7 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
     /* Handles tap on the big playback button */
     private void handlePlaybackButtonClick() {
         // playback stopped or new station - start playback
-        if (mStation.getPlaybackState() == PLAYBACK_STATE_STOPPED) {
+        if (mPlaybackState == PLAYBACK_STATE_STOPPED) {
             startPlayback();
         }
         // playback active - stop playback
@@ -403,23 +395,18 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
             // CASE ICON
             case R.id.menu_icon:
                 // get system picker for images
-                selectFromImagePicker();
+                ((MainActivity)mActivity).pickImage(mStation);
                 return true;
 
             // CASE RENAME
             case R.id.menu_rename:
                 // construct and run rename dialog
-                final DialogRename dialogRename = new DialogRename(mActivity, mStation);
+                DialogRename dialogRename = new DialogRename(mActivity, mStation);
                 dialogRename.show();
                 return true;
 
             // CASE DELETE
             case R.id.menu_delete:
-                // stop player service using intent
-                Intent intent = new Intent(mActivity, PlayerService.class);
-                intent.setAction(ACTION_DISMISS);
-                mActivity.startService(intent);
-                LogHelper.v(LOG_TAG, "Opening delete dialog. Stopping player service.");
                 // construct and run delete dialog
                 DialogDelete dialogDelete = new DialogDelete(mActivity, mStation);
                 dialogDelete.show();
@@ -442,12 +429,12 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
 
 
     /* Create Bitmap image for station */
-    private Bitmap createStationImage () {
+    private Bitmap createStationImage(Station station) {
         Bitmap stationImageSmall;
         ImageHelper imageHelper;
-        if (mStation != null &&  mStation.getStationImageFile().exists()) {
+        if (station != null &&  station.getStationImageFile().exists()) {
             // get image from collection
-            stationImageSmall = BitmapFactory.decodeFile(mStation.getStationImageFile().toString());
+            stationImageSmall = BitmapFactory.decodeFile(station.getStationImageFile().toString());
         } else {
             // get default image
             stationImageSmall = null;
@@ -501,37 +488,42 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
 
 
     /* Animate button and then set visual state */
-    private void changeVisualState(Context context) {
-        // get rotate animation from xml
-        Animation rotate;
-        if (mStation.getPlaybackState() == PLAYBACK_STATE_STOPPED) {
-            // if playback has been stopped get stop animation
-            rotate = AnimationUtils.loadAnimation(context, R.anim.rotate_counterclockwise_fast);
-        } else {
-            // if playback has been started get start animation
-            rotate = AnimationUtils.loadAnimation(context, R.anim.rotate_clockwise_slow);
-        }
+    private void changeVisualState(Station station) {
 
-        // attach listener for animation end
-        rotate.setAnimationListener(new Animation.AnimationListener() {
+        switch (station.getPlaybackState()) {
+            case PLAYBACK_STATE_STOPPED:
+                Animation rotateCounterClockwise = AnimationUtils.loadAnimation(mActivity, R.anim.rotate_counterclockwise_fast);;
+                rotateCounterClockwise.setAnimationListener(createAnimationListener());
+                mPlaybackButton.startAnimation(rotateCounterClockwise);
+                break;
+            case PLAYBACK_STATE_LOADING_STATION:
+                Animation rotateClockwise = AnimationUtils.loadAnimation(mActivity, R.anim.rotate_clockwise_slow);;
+                rotateClockwise.setAnimationListener(createAnimationListener());
+                mPlaybackButton.startAnimation(rotateClockwise);
+                break;
+            case PLAYBACK_STATE_STARTED:
+                setVisualState();
+                break;
+
+        }
+    }
+
+
+    /* Creates AnimationListener for playback button */
+    private Animation.AnimationListener createAnimationListener() {
+        return new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
             }
-
             @Override
             public void onAnimationEnd(Animation animation) {
                 // set up button symbol and playback indicator afterwards
                 setVisualState();
             }
-
             @Override
             public void onAnimationRepeat(Animation animation) {
             }
-        });
-
-        // start animation of button
-        mPlaybackButton.startAnimation(rotate);
-
+        };
     }
 
 
@@ -539,7 +531,7 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
     private void setVisualState() {
 
         // STATE: station loading
-        if (isResumed() && mStation != null && mStation.getPlaybackState() == PLAYBACK_STATE_LOADING_STATION) {
+        if (isAdded() && mStation != null && mPlaybackState == PLAYBACK_STATE_LOADING_STATION) {
             // change playback button image to stop
             mPlaybackButton.setImageResource(R.drawable.smbl_stop);
             // change playback indicator and metadata views
@@ -550,10 +542,10 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
             mStationMetadataView.setVisibility(View.VISIBLE);
             mStationMetadataView.setSelected(true);
             mStationDataSheetMetadataLayout.setVisibility(View.VISIBLE);
-            displayExtendedMetaData();
+            displayExtendedMetaData(mStation);
         }
         // STATE: playback started
-        else if (isResumed() && mStation != null && mStation.getPlaybackState() == PLAYBACK_STATE_STARTED) {
+        else if (isAdded() && mStation != null && mPlaybackState == PLAYBACK_STATE_STARTED) {
             // change playback button image to stop
             mPlaybackButton.setImageResource(R.drawable.smbl_stop);
             // change playback indicator and metadata views
@@ -564,10 +556,10 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
             mStationMetadataView.setVisibility(View.VISIBLE);
             mStationMetadataView.setSelected(true);
             mStationDataSheetMetadataLayout.setVisibility(View.VISIBLE);
-            displayExtendedMetaData();
+            displayExtendedMetaData(mStation);
         }
         // STATE: playback stopped
-        else if (isResumed()) {
+        else if (isAdded()) {
             // change playback button image to play
             mPlaybackButton.setImageResource(R.drawable.smbl_play);
             // change playback indicator
@@ -585,56 +577,38 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
 
     /* Updates this fragment's views with the current station */
     private void updateStationViews() {
-
-        // set station name
-        mStationNameView.setText(mStation.getStationName());
-
-        // set station image
-        Bitmap stationImage = createStationImage();
-        if (stationImage != null) {
-            mStationImageView.setImageBitmap(stationImage);
-        }
-
-        // show now playing metadata
-        if (mStation.getPlaybackState() != PLAYBACK_STATE_STOPPED && mStation.getMetadata() != null) {
-            mStationMetadataView.setText(mStation.getMetadata());
-            mStationMetadataView.setVisibility(View.VISIBLE);
-            mStationMetadataView.setSelected(true);
-            mStationDataSheetMetadata.setText( mStation.getMetadata());
-            mStationDataSheetMetadataLayout.setVisibility(View.VISIBLE);
-        }
-
-        // fill name and url
-        mStationDataSheetName.setText(mStation.getStationName());
+        // set name, image, metadata and url
+        updateStationNameView(mStation);
+        updateStationImageView(mStation);
+        updateStationMetadataView(mStation);
         mStationDataSheetStreamUrl.setText(mStation.getStreamUri().toString());
-
     }
 
 
     /* Fill the extended metadata sheez */
-    private void displayExtendedMetaData() {
+    private void displayExtendedMetaData(Station station) {
         // fill and show mime type bottom sheet view
-        if (mStation.getMimeType() != null) {
+        if (station.getMimeType() != null) {
             TextView stationDataSheetMimeTypeView = (TextView) mRootView.findViewById(R.id.station_data_sheet_mime_type);
-            stationDataSheetMimeTypeView.setText(mStation.getMimeType());
+            stationDataSheetMimeTypeView.setText(station.getMimeType());
             mStationDataSheetMimeTypeLayout.setVisibility(View.VISIBLE);
         }
         // fill and show channel count bottom sheet view
-        if (mStation.getChannelCount() > 0) {
+        if (station.getChannelCount() > 0) {
             TextView stationDataSheetChannelCountView = (TextView) mRootView.findViewById(R.id.station_data_sheet_channel_count);
-            stationDataSheetChannelCountView.setText(String.valueOf(mStation.getChannelCount()));
+            stationDataSheetChannelCountView.setText(String.valueOf(station.getChannelCount()));
             mStationDataSheetChannelCountLayout.setVisibility(View.VISIBLE);
         }
         // fill and show sample rate bottom sheet view
-        if (mStation.getSampleRate() > 0) {
+        if (station.getSampleRate() > 0) {
             TextView stationDataSheetSampleRateView = (TextView) mRootView.findViewById(R.id.station_data_sheet_sample_rate);
-            stationDataSheetSampleRateView.setText(String.valueOf(mStation.getSampleRate()));
+            stationDataSheetSampleRateView.setText(String.valueOf(station.getSampleRate()));
             mStationDataSheetSampleRateLayout.setVisibility(View.VISIBLE);
         }
         // fill and show bit rate bottom sheet view
-        if (mStation.getBitrate() > 0) {
+        if (station.getBitrate() > 0) {
             TextView stationDataSheetBitRateView = (TextView) mRootView.findViewById(R.id.station_data_sheet_bitrate);
-            stationDataSheetBitRateView.setText(String.valueOf(mStation.getBitrate()));
+            stationDataSheetBitRateView.setText(String.valueOf(station.getBitrate()));
             mStationDataSheetBitRateLayout.setVisibility(View.VISIBLE);
         }
     }
@@ -646,25 +620,41 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
     }
 
 
+
+    /* Update station name */
+    private void updateStationNameView(Station station) {
+        if (isAdded()) {
+            mStationNameView.setText(station.getStationName());
+            mStationDataSheetName.setText(station.getStationName());
+        }
+    }
+
+
+    /* Update station image */
+    private void updateStationImageView(Station station) {
+        if (isAdded()) {
+            Bitmap stationImage = createStationImage(station);
+            if (stationImage != null) {
+                mStationImageView.setImageBitmap(stationImage);
+            }
+        }
+    }
+
+
+    /* Update station metadata */
+    private void updateStationMetadataView(Station station) {
+        if (isAdded()) {
+            mStationMetadataView.setText(station.getMetadata());
+            mStationDataSheetMetadata.setText(station.getMetadata());
+        }
+    }
+
+
     /* Loads app state from preferences */
     private void loadAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         mTwoPane = settings.getBoolean(PREF_TWO_PANE, false);
         LogHelper.v(LOG_TAG, "Loading state.");
-    }
-
-
-    /* Check permissions and start image picker */
-    private void selectFromImagePicker() {
-        // request permissions
-        PermissionHelper permissionHelper = new PermissionHelper(mActivity, mRootView);
-        if (permissionHelper.requestReadExternalStorage(PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE)) {
-            // hand station to main activity
-            ((MainActivity)mActivity).setTempStation(mStation);
-            // get system picker for images
-            Intent pickImageIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(pickImageIntent, REQUEST_LOAD_IMAGE);
-        }
     }
 
 
@@ -711,45 +701,46 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
         return new Observer<ArrayList<Station>>() {
             @Override
             public void onChanged(@Nullable ArrayList<Station> newStationList) {
-                if (mStation == null && newStationList.size() != 0) {
-                    // get first station from list
-                    mStation = newStationList.get(0);
-                    // set up station information
-                    updateStationViews();
-                    // set up button symbol and playback indicator
-                    setVisualState();
+                // get this station from changed list
+                Station station = StationListHelper.findStation(newStationList, mStation.getStreamUri());
+
+                String name = station.getStationName();
+                long imageSize = station.getStationImageSize();
+                String metaData = station.getMetadata();
+
+                String oldName = mStation.getStationName();
+                long oldImageSize = mStation.getStationImageSize();
+                String oldMetaData = mStation.getMetadata();
+
+                // CASE: NAME
+                if (!(name.equals(oldName))) {
+                    updateStationNameView(station);
+                }
+                // CASE: IMAGE
+                else if (imageSize != oldImageSize) {
+                    updateStationImageView(station);
+                }
+                // CASE: METADATA
+                else if (!(metaData.equals(oldMetaData))) {
+                    updateStationMetadataView(station);
+                }
+                // CASE: PLAYBACK STATE
+                if (mPlaybackState != station.getPlaybackState()) {
+                    mPlaybackState = station.getPlaybackState();
+                    changeVisualState(station);
                 }
 
-                // todo check for
-                // a) rename, delete
-                // a) new metadata
-                // b) playback state changes
-                LogHelper.w(LOG_TAG, "Player says: Oh the list has changed. Lets see what I can do..."); // todo remove
-            }
-        };
-    }
+                // update mStation
+                mStation = station;
 
-
-    /* Creates an observer for currently active stored as LiveData */
-    private Observer<Station> createStationCurrentObserver() {
-        return new Observer<Station>() {
-            @Override
-            public void onChanged(@Nullable Station newStation) {
-                // todo check for
-                // a) new metadata
-                // b) playback state changes
-                LogHelper.w(LOG_TAG, "Player says: Oh the station has changed. Lets see what I can do..."); // todo remove
-
-                if (mStation == null) {
-                    // first start? todo
-                    mStation = newStation;
-                } else if (!(newStation.getStreamUri().equals(mStation.getStreamUri()))) {
-                    // another station was changed
-                } else {
-                    LogHelper.w(LOG_TAG, "Oh my. This station was changed. Lets really do something. For real."); // todo remove
-                    mStation = newStation;
-                    setVisualState();
-                }
+//                if (mStation == null && newStationList.size() != 0) {
+//                    // get first station from list
+//                    mStation = newStationList.get(0);
+//                    // set up station information
+//                    updateStationViews();
+//                    // set up button symbol and playback indicator
+//                    setVisualState();
+//                }
 
             }
         };

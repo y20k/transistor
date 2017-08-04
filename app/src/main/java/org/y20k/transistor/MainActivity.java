@@ -13,9 +13,6 @@
 
 package org.y20k.transistor;
 
-import android.annotation.TargetApi;
-import android.app.Activity;
-import android.app.Fragment;
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.LifecycleRegistry;
 import android.arch.lifecycle.LifecycleRegistryOwner;
@@ -24,9 +21,8 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
@@ -39,9 +35,12 @@ import android.widget.Toast;
 
 import org.y20k.transistor.adapter.CollectionViewModel;
 import org.y20k.transistor.core.Station;
+import org.y20k.transistor.helpers.DialogError;
 import org.y20k.transistor.helpers.ImageHelper;
 import org.y20k.transistor.helpers.LogHelper;
+import org.y20k.transistor.helpers.PermissionHelper;
 import org.y20k.transistor.helpers.ShortcutHelper;
+import org.y20k.transistor.helpers.StationListHelper;
 import org.y20k.transistor.helpers.StorageHelper;
 import org.y20k.transistor.helpers.TransistorKeys;
 
@@ -49,8 +48,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 
 /**
@@ -159,24 +156,36 @@ public final class MainActivity extends AppCompatActivity implements LifecycleRe
 
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    selectFromImagePicker();
+                } else {
+                    // permission denied
+                    Toast.makeText(this, getString(R.string.toastalert_permission_denied) + " READ_EXTERNAL_STORAGE", Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+    }
+
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // make sure that ListFragment's onActivityResult() gets called
         super.onActivityResult(requestCode, resultCode, data);
 
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_CANCELED) {
+            return;
+        }
+
         // check if a station image change request was received
-        if (requestCode == REQUEST_LOAD_IMAGE && resultCode == Activity.RESULT_OK) {
+        if (requestCode == REQUEST_LOAD_IMAGE) {
             handleStationImageChange(data);
         }
 
-    }
-
-
-    @TargetApi(Build.VERSION_CODES.M)
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        Fragment fragment = getFragmentManager().findFragmentById(R.id.main_container);
-        // hand results over to fragment main
-        fragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
 
@@ -215,28 +224,31 @@ public final class MainActivity extends AppCompatActivity implements LifecycleRe
         }
     }
 
-    /* Setter for temp station */
-    public void setTempStation(Station tempStation) {
-        mTempStation = tempStation;
-    }
-
 
     /* Puts new station in list and updates live data  */
     public int handleStationAdd(Station station) {
 
         if (station != null) {
-            // add station to list
-            mStationList.add(station);
 
+            // create copy of main list of stations
+            ArrayList<Station> newStationList = StationListHelper.copyStationList(mStationList);
+            // add station to new list of stations
+            newStationList.add(station);
             // sort list
-            sortStationList(mStationList);
-
+            StationListHelper.sortStationList(mStationList);
             // update live data list of stations
-            mCollectionViewModel.getStationList().setValue(mStationList);
-
-            // return id of changed station
-            return findStationId(station.getStreamUri());
+            mCollectionViewModel.getStationList().setValue(newStationList);
+            // return new index
+            return StationListHelper.findStationId(newStationList, station.getStreamUri());
         } else {
+            // notify user and log failure to add
+            String errorTitle = getResources().getString(R.string.dialog_error_title_fetch_write);
+            String errorMessage = getResources().getString(R.string.dialog_error_message_fetch_write);
+            String errorDetails = getResources().getString(R.string.dialog_error_details_write);
+            DialogError dialogError = new DialogError(this, errorTitle, errorMessage, errorDetails);
+            dialogError.show();
+            LogHelper.e(LOG_TAG, "Unable to add station to collection: Duplicate name and/or stream URL.");
+
             return -1;
         }
 
@@ -244,41 +256,44 @@ public final class MainActivity extends AppCompatActivity implements LifecycleRe
 
 
     /* Puts renamed station in list and updates live data */
-    public int handleStationRename (Station station) {
-
-        // get hold of previous state of this station
-        Station oldStation = findStation(station.getStreamUri());
+    public int handleStationRename(Station station, String newStationName) {
 
         // name of station is new
-        if (station != null && oldStation!= null && !station.getStationName().equals(oldStation.getStationName())) {
+        if (station != null && newStationName.length() > 0 && !station.getStationName().equals(newStationName)) {
 
-            // todo check if a REAL copy of the list is needed
-
-            // get new station
-            int newStationId = findStationId(station.getStreamUri());
-
-            // rename playlist file
-            File oldStationPlaylistFile = oldStation.getStationPlaylistFile();
-            oldStationPlaylistFile.delete();
+            // initialize StorageHelper
             StorageHelper storageHelper = new StorageHelper(this);
-            mStationList.get(newStationId).writePlaylistFile(storageHelper.getCollectionDirectory());
 
-            // rename image file
-            File oldStationImageFile = oldStation.getStationImageFile();
-            oldStationImageFile.renameTo(station.getStationImageFile());
+            // create copys of station and main list of stations
+            ArrayList<Station> newStationList = StationListHelper.copyStationList(mStationList);
+            Station newStation = new Station(station);
+
+            // get position of station in list
+            int stationID = StationListHelper.findStationId(newStationList, station.getStreamUri());
+
+            // set new name
+            newStation.setStationName(newStationName);
+
+            // delete old playlist file
+            File stationPlaylistFile = station.getStationPlaylistFile();
+            stationPlaylistFile.delete();
+            // set new playlist file - and write file
+            newStation.setStationPlaylistFile(storageHelper.getCollectionDirectory());
+            newStation.writePlaylistFile(storageHelper.getCollectionDirectory());
+
+            // rename existing image file
+            File stationImageFile = station.getStationImageFile();
+            newStation.setStationImageFile(storageHelper.getCollectionDirectory());
+            stationImageFile.renameTo(newStation.getStationImageFile());
 
             // update list
-            int stationID = findStationId(oldStation.getStreamUri());
-            mStationList.set(stationID, station);
-
-            // sort list
-            sortStationList(mStationList);
+            newStationList.set(stationID, newStation);
 
             // update live data list of stations
-            mCollectionViewModel.getStationList().setValue(mStationList);
+            mCollectionViewModel.getStationList().setValue(newStationList);
 
             // return id of changed station
-            return findStationId(station.getStreamUri());
+            return StationListHelper.findStationId(newStationList, newStation.getStreamUri());
 
         } else {
             // name of station is null or not new - notify user
@@ -290,73 +305,133 @@ public final class MainActivity extends AppCompatActivity implements LifecycleRe
 
 
     /* Removes given station from list and updates live data */
-    public boolean handleStationDelete (Station station) {
+    public int handleStationDelete(Station station) {
 
-        // todo check if a REAL copy of the list is needed
+        // keep track of delete success
+        boolean success = false;
 
-        // remove station from list
-        int stationId = findStationId(station.getStreamUri());
-        mStationList.remove(stationId);
-
-        // delete m3u playlist file
-        File stationPlaylistFile = station.getStationPlaylistFile();
-        if (stationPlaylistFile != null) {
-            stationPlaylistFile.delete();
-        }
+        // get position of station
+        int stationId = StationListHelper.findStationId(mStationList, station.getStreamUri());
 
         // delete png image file
         File stationImageFile = station.getStationImageFile();
-        if (stationImageFile != null) {
-            stationImageFile.delete();
+        if (stationImageFile != null && stationImageFile.exists() && stationImageFile.delete()) {
+            success = true;;
+        }
+
+        // delete m3u playlist file
+        File stationPlaylistFile = station.getStationPlaylistFile();
+        if (stationPlaylistFile != null && stationPlaylistFile.exists() && stationPlaylistFile.delete()) {
+            success = true;;
+        }
+
+        // remove station and notify user
+        if (success) {
+            // switch back to station list - if player is visible
+            if (!mTwoPane && getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                getSupportFragmentManager().popBackStack();
+            }
+
+            // create copy of main list of stations
+            ArrayList<Station> newStationList = StationListHelper.copyStationList(mStationList);
+            // remove station from new station list
+            newStationList.remove(stationId);
+            // determine ID of next station
+            if (newStationList.size() >= stationId) {
+                stationId--;
+            }
+
+            if (mTwoPane && stationId >= 0) {
+                // show next station
+                Bundle args = new Bundle();
+                args.putParcelable(ARG_STATION, newStationList.get(stationId));
+                args.putInt(ARG_STATION_ID, stationId);
+                args.putBoolean(ARG_TWO_PANE, mTwoPane);
+                PlayerFragment playerFragment = new PlayerFragment();
+                playerFragment.setArguments(args);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.main_container, playerFragment, PLAYER_FRAGMENT_TAG)
+                        .commit();
+            }
+
+            // update live data list of stations
+            mCollectionViewModel.getStationList().setValue(newStationList);
+
+            // notify user
+            Toast.makeText(this, getString(R.string.toastalert_delete_successful), Toast.LENGTH_LONG).show();
         }
 
         // delete station shortcut
         ShortcutHelper shortcutHelper = new ShortcutHelper(this);
         shortcutHelper.removeShortcut(station);
 
-        // update live data
-        mCollectionViewModel.getStationList().setValue(mStationList);
+        // return ID of station next to the deleted station station
+        return stationId;
+    }
 
-        // notify user
-        Toast.makeText(this, getString(R.string.toastalert_delete_successful), Toast.LENGTH_LONG).show();
 
-        return true;
+    /* Check permissions and start image picker */
+    public void pickImage(Station station) {
+        mTempStation = station;
+        View rootView = findViewById(android.R.id.content);
+        PermissionHelper permissionHelper = new PermissionHelper(this, rootView);
+        if (permissionHelper.requestReadExternalStorage(PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE)) {
+            selectFromImagePicker();
+        }
+    }
+
+
+    /* Start image picker */
+    private void selectFromImagePicker() {
+        // get system picker for images
+        Intent pickImageIntent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(pickImageIntent, REQUEST_LOAD_IMAGE);
     }
 
 
     /* Saves and sets new station image and updates station list and live data */
-    private boolean handleStationImageChange (Intent data) {
+    private boolean handleStationImageChange(Intent data) {
 
         // retrieve selected image Uri from image picker
-        Uri newImageUri = null;
         Bitmap newImage = null;
         if (null != data) {
-            newImageUri = data.getData();
-            ImageHelper imageHelper = new ImageHelper(newImageUri, this);
+            ImageHelper imageHelper = new ImageHelper(data.getData(), this);
             newImage = imageHelper.getInputImage();
         }
 
         if (newImage != null && mTempStation != null) {
             // write image to storage
-            File stationImageFile = mTempStation.getStationImageFile();
-            try (FileOutputStream out = new FileOutputStream(stationImageFile)) {
+            try (FileOutputStream out = new FileOutputStream(mTempStation.getStationImageFile())) {
                 newImage.compress(Bitmap.CompressFormat.PNG, 100, out);
             } catch (IOException e) {
                 LogHelper.e(LOG_TAG, "Unable to save: " + newImage.toString());
                 return false;
             }
 
+            // create copy of main list of stations
+            ArrayList<Station> newStationList = StationListHelper.copyStationList(mStationList);
+
+            // create a copy of mTempStation
+            Station newStation = new Station(mTempStation);
+
+            // set new station image file object
+            newStation.setStationImageFile(mStorageHelper.getCollectionDirectory());
+
             // update list
-            int stationID = findStationId(mTempStation.getStreamUri());
-            mStationList.set(stationID, mTempStation);
+            int stationID = StationListHelper.findStationId(mStationList, mTempStation.getStreamUri());
+            newStationList.set(stationID, newStation);
+
+            // reset mTemopStation
+            mTempStation = null;
 
             // update live data
-            mCollectionViewModel.getStationList().setValue(mStationList);
+            mCollectionViewModel.getStationList().setValue(newStationList);
 
             return true;
 
         } else {
-            LogHelper.e(LOG_TAG, "Unable to get image from media picker. Uri was:  " + newImageUri.toString());
+            LogHelper.e(LOG_TAG, "Unable to get image from media picker.");
             return false;
         }
     }
@@ -458,54 +533,66 @@ public final class MainActivity extends AppCompatActivity implements LifecycleRe
 //    }
 
 
-    /* Sorts list of stations */
-    private void sortStationList(ArrayList<Station> stationList) {
-        Collections.sort(stationList, new Comparator<Station>() {
-            @Override
-            public int compare(Station station1, Station station2) {
-                // Compares two stations: returns "1" if name if this station is greater than name of given station
-                return station1.getStationName().compareToIgnoreCase(station2.getStationName());
-            }
-        });
-    }
+//    /* Sorts list of stations */
+//    private void sortStationList(ArrayList<Station> stationList) {
+//        Collections.sort(stationList, new Comparator<Station>() {
+//            @Override
+//            public int compare(Station station1, Station station2) {
+//                // Compares two stations: returns "1" if name if this station is greater than name of given station
+//                return station1.getStationName().compareToIgnoreCase(station2.getStationName());
+//            }
+//        });
+//    }
+
+//
+//    /* Finds ID of station when given its Uri */
+//    private int findStationId(Uri streamUri) {
+//
+//        // make sure list and uri are not null
+//        if (mStationList == null || streamUri == null) {
+//            return -1;
+//        }
+//
+//        // traverse list of stations
+//        for (int i = 0; i < mStationList.size(); i++) {
+//            Station station = mStationList.get(i);
+//            if (station.getStreamUri().equals(streamUri)) {
+//                return i;
+//            }
+//        }
+//
+//        // return null if nothing was found
+//        return -1;
+//    }
 
 
-    /* Finds ID of station when given its Uri */
-    private int findStationId(Uri streamUri) {
-
-        // make sure list and uri are not null
-        if (mStationList == null || streamUri == null) {
-            return -1;
-        }
-
-        // traverse list of stations
-        for (int i = 0; i < mStationList.size(); i++) {
-            Station station = mStationList.get(i);
-            if (station.getStreamUri().equals(streamUri)) {
-                return i;
-            }
-        }
-
-        // return null if nothing was found
-        return -1;
-    }
+//
+//    /* Finds station when given its Uri */
+//    private Station findStation(Uri streamUri) {
+//
+//        // traverse list of stations
+//        for (int i = 0; i < mStationList.size(); i++) {
+//            Station station = mStationList.get(i);
+//            if (station.getStreamUri().equals(streamUri)) {
+//                return station;
+//            }
+//        }
+//
+//        // return null if nothing was found
+//        return null;
+//    }
 
 
 
-    /* Finds station when given its Uri */
-    private Station findStation(Uri streamUri) {
-
-        // traverse list of stations
-        for (int i = 0; i < mStationList.size(); i++) {
-            Station station = mStationList.get(i);
-            if (station.getStreamUri().equals(streamUri)) {
-                return station;
-            }
-        }
-
-        // return null if nothing was found
-        return null;
-    }
+//
+//    /* Creates a real copy of given station list*/
+//    private ArrayList<Station> copyStationList(ArrayList<Station> stationList) {
+//        ArrayList<Station> newStationList = new ArrayList<Station>();
+//        for (Station station : stationList) {
+//            newStationList.add(new Station (station));
+//        }
+//        return newStationList;
+//    }
 
 
 }

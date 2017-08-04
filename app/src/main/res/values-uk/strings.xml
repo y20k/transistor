@@ -121,7 +121,7 @@
     <!-- infosheet about -->
     <string name="infosheet_about_h1_about">Про Transistor</string>
     <string name="infosheet_about_h2_radio">Додаток інтернет радіо для Android</string>
-    <string name="infosheet_about_h3_version">Версія 2.2 (Sons Of The Silent Age)</string>
+    <string name="infosheet_about_h3_version">Версія 2.3 (Kooks)</string>
     <string name="infosheet_about_p_bare">Transistor is a bare bones app for listening to radio programs over the internet. The app stores stations as files on your device\'s external storage. Look for files of type m3u within /Android/data/org.y20k.transistor/files/Collection. It currently understands streams encoded in MP3 and OGG.</string>
     <string name="infosheet_about_p_note">Важливе зауваження: Додаток не містить функцій пошуку радіостанцій. Вам потрібно додавати їх вручну.</string>
     <string name="infosheet_about_p_free">Transistor - вільний програмний засіб. Він поширюється під ліцензією MIT. Ви можете знайти джерельний код на GitHub. Також на GitHub ви можете повідомити про вади, або ж допомогти з супроводом, якщо це Вас цікавить.</string>

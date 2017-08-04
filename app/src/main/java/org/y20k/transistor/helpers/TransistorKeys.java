@@ -112,6 +112,10 @@ public interface TransistorKeys {
     int PLAYBACK_STATE_CHANGE_TYPE_DEFAULT = 1;
     int PLAYBACK_STATE_CHANGE_TYPE_START_DURING_PLAYBACK = 2;
 
+    int HOLDER_UPDATE_NAME = 1;
+    int HOLDER_UPDATE_PLAYBACK_STATE = 2;
+    int HOLDER_UPDATE_IMAGE = 3;
+
     String NOTIFICATION_CHANEL_ID_PLAYBACK_CHANNEL ="notificationChannelIdPlaybackChannel";
     String INSTANCE_LIST_STATE = "instanceListState";
     String INSTANCE_STATION = "instanceStation";

@@ -70,18 +70,10 @@ public final class DialogRename implements TransistorKeys {
                 // TODO implement
 
                 // rename station
-                String stationNewName = inputField.getText().toString();
-
-                // update station
-                if (stationNewName.length() > 0) {
-                    StorageHelper storageHelper = new StorageHelper(mActivity);
-                    mStation.setStationName(stationNewName);
-                    mStation.setStationPlaylistFile(storageHelper.getCollectionDirectory());
-                    mStation.setStationImageFile(storageHelper.getCollectionDirectory());
-                }
+                String newStationName = inputField.getText().toString();
 
                 // hand updated station over to main activity
-                ((MainActivity)mActivity).handleStationRename(mStation);
+                ((MainActivity)mActivity).handleStationRename(mStation, newStationName);
 
             }
         });

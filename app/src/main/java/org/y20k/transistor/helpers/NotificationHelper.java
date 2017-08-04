@@ -23,11 +23,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.AudioAttributes;
 import android.os.Build;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.media.session.MediaSessionCompat;
-import android.support.v7.app.NotificationCompat;
 
 import org.y20k.transistor.MainActivity;
 import org.y20k.transistor.PlayerService;
@@ -56,8 +55,8 @@ public final class NotificationHelper implements TransistorKeys {
         mService = service;
         mSession = session;
 
-//        // create notification channel
-//        createNotificationChannel();
+        // create notification channel
+        createNotificationChannel();
 
         // build notification
         mNotification = getNotificationBuilder(station).build();
@@ -138,7 +137,7 @@ public final class NotificationHelper implements TransistorKeys {
         PendingIntent swipeActionPendingIntent = PendingIntent.getService(mService, 12, swipeActionIntent, 0);
 
         // create media style
-        NotificationCompat.MediaStyle style = new NotificationCompat.MediaStyle();
+        android.support.v4.media.app.NotificationCompat.MediaStyle style = new android.support.v4.media.app.NotificationCompat.MediaStyle();
         style.setMediaSession(mSession.getSessionToken());
         style.setShowActionsInCompactView(0);
         style.setShowCancelButton(true); // pre-Lollipop workaround
@@ -146,7 +145,7 @@ public final class NotificationHelper implements TransistorKeys {
 
         // construct notification in builder
         NotificationCompat.Builder builder;
-        builder = new NotificationCompat.Builder(mService);
+        builder = new NotificationCompat.Builder(mService, NOTIFICATION_CHANEL_ID_PLAYBACK_CHANNEL);
         builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
         builder.setSmallIcon(R.drawable.ic_notification_small_24dp);
         builder.setLargeIcon(getStationIcon(mService, station));
@@ -205,10 +204,6 @@ public final class NotificationHelper implements TransistorKeys {
             // create channel
             NotificationChannel channel = new NotificationChannel(id, name, importance);
             channel.setDescription(description);
-            channel.setSound(null, new AudioAttributes.Builder()
-                    .setUsage(AudioAttributes.USAGE_MEDIA)
-                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                    .build());
 
             NotificationManager mNotificationManager = (NotificationManager) mService.getSystemService(Context.NOTIFICATION_SERVICE);
             mNotificationManager.createNotificationChannel(channel);

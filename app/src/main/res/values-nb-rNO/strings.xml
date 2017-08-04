@@ -121,7 +121,7 @@
     <!-- infosheet about -->
     <string name="infosheet_about_h1_about">Om Transistor</string>
     <string name="infosheet_about_h2_radio">Radio-program for Android</string>
-    <string name="infosheet_about_h3_version">Versjon 2.2 (Sons Of The Silent Age)</string>
+    <string name="infosheet_about_h3_version">Versjon 2.3 (Kooks)</string>
     <string name="infosheet_about_p_bare">Transistor er et helt enkelt program for å lytte til radioprogrammer over Internett. Dette programmet lagrer stasjoner som filer på din enhets eksterne lagringsmedium. Se etter filer av typen m3u i /Android/data/org.y20k.transistor/files/Collection. Den forstår foreløpig strømmer kodet i MP3 og OGG.</string>
     <string name="infosheet_about_p_note">Viktig melding: Dette er et program der du må lage din egen radiostasjon. Det finnes ingen innebygd søkefunksjon, og du må legge inn radiostasjoner selv.</string>
     <string name="infosheet_about_p_free">Transistor er fri programvare. Det er lisensiert MIT. Du finner koden på Github, der du også kan melde fra om feil, eller bidra, hvis du er interessert.</string>
