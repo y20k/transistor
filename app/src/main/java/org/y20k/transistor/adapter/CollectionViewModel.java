@@ -83,6 +83,14 @@ public class CollectionViewModel extends AndroidViewModel implements TransistorK
     }
 
 
+    /* Forces a reload of Live Data - only used after a crash */
+    public void forceReload(Context context) {
+        loadAppState(context);
+        mPlayerServiceStationLiveData.setValue(null);
+        mStationListLiveData.setValue(loadStationList(context));
+    }
+
+
     /* Getter for StationList */
     public MutableLiveData<ArrayList<Station>> getStationList() {
         return mStationListLiveData;
@@ -102,7 +110,7 @@ public class CollectionViewModel extends AndroidViewModel implements TransistorK
 
 
     /* Load list of stations from storage */
-    private ArrayList<Station> loadStationList(Application application) {
+    private ArrayList<Station> loadStationList(Context application) {
 
         StorageHelper storageHelper = new StorageHelper(application);
         File folder = storageHelper.getCollectionDirectory();

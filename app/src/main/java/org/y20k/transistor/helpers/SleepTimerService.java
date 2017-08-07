@@ -15,7 +15,6 @@
 package org.y20k.transistor.helpers;
 
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.CountDownTimer;
@@ -124,27 +123,27 @@ public class SleepTimerService  extends Service implements TransistorKeys {
     }
 
 
-    /* Method to start sleep timer */
-    public void startActionStart(Context context, long duration) {
-        LogHelper.v(LOG_TAG, "Starting sleep timer. Duration: " + duration);
-
-        // start sleep timer service using intent
-        Intent intent = new Intent(context, SleepTimerService.class);
-        intent.setAction(ACTION_TIMER_START);
-        intent.putExtra(EXTRA_TIMER_DURATION, duration);
-        context.startService(intent);
-    }
-
-
-    /* Method to stop sleep timer */
-    public void startActionStop(Context context) {
-        LogHelper.v(LOG_TAG, "Stopping sleep timer.");
-
-        // stop sleep timer service using intent
-        Intent intent = new Intent(context, SleepTimerService.class);
-        intent.setAction(ACTION_TIMER_STOP);
-        context.startService(intent);
-    }
+//    /* Method to start sleep timer */
+//    public void startActionStart(Context context, long duration) {
+//        LogHelper.v(LOG_TAG, "Starting sleep timer. Duration: " + duration);
+//
+//        // start sleep timer service using intent
+//        Intent intent = new Intent(context, SleepTimerService.class);
+//        intent.setAction(ACTION_TIMER_START);
+//        intent.putExtra(EXTRA_TIMER_DURATION, duration);
+//        context.startService(intent);
+//    }
+//
+//
+//    /* Method to stop sleep timer */
+//    public void startActionStop(Context context) {
+//        LogHelper.v(LOG_TAG, "Stopping sleep timer.");
+//
+//        // stop sleep timer service using intent
+//        Intent intent = new Intent(context, SleepTimerService.class);
+//        intent.setAction(ACTION_TIMER_STOP);
+//        context.startService(intent);
+//    }
 
 
     /* Set sleep timer */
@@ -184,6 +183,9 @@ public class SleepTimerService  extends Service implements TransistorKeys {
                 i.setAction(ACTION_TIMER_RUNNING);
                 i.putExtra(EXTRA_TIMER_REMAINING, mTimerRemaining);
                 LocalBroadcastManager.getInstance(getApplication()).sendBroadcast(i);
+
+                // save timer state to preferences
+                saveTimerState(false);
 
                 LogHelper.v(LOG_TAG, "Sleep timer finished. Sweet dreams, dear user.");
             }

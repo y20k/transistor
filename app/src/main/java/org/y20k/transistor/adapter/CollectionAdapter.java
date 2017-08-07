@@ -196,7 +196,7 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
                         break;
                     case HOLDER_UPDATE_PLAYBACK_STATE:
                         // set playback indicator
-                        LogHelper.e(LOG_TAG, "List of station: Partial view update -> playback state changed | " + station.getPlaybackState()); // todo change back
+                        LogHelper.v(LOG_TAG, "List of station: Partial view update -> playback state changed");
                         togglePlaybackIndicator(holder, station);
                         break;
                     case HOLDER_UPDATE_IMAGE:
@@ -389,7 +389,10 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
             public void onReceive(Context context, Intent intent) {
                 if (intent.hasExtra(EXTRA_STATION)) {
                     handlePlaybackStateChange(intent);
+                } else if (intent.hasExtra(EXTRA_ERROR_OCCURED) && intent.getBooleanExtra(EXTRA_ERROR_OCCURED, false)) {
+                    handlePlaybackStateError();
                 }
+
             }
         };
         IntentFilter playbackStateChangedIntentFilter = new IntentFilter(ACTION_PLAYBACK_STATE_CHANGED);
@@ -457,7 +460,6 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
         Station newStation = new Station(station);
         ArrayList<Station> newStationList = StationListHelper.copyStationList(mStationList);
 
-
         // try to set playback state of previous station
         if (intent.hasExtra(EXTRA_PLAYBACK_STATE_PREVIOUS_STATION)) {
             String previousStationUrlString = intent.getStringExtra(EXTRA_PLAYBACK_STATE_PREVIOUS_STATION);
@@ -480,6 +482,13 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
 
         // update live data station list - used in CollectionAdapter (this)
         mCollectionViewModel.getStationList().setValue(newStationList);
+    }
+
+
+    /* Handles a playback state error that can occur when Transistor crashes during playback */
+    private void handlePlaybackStateError() {
+        LogHelper.e(LOG_TAG, "Forcing a reload of station list. Did Transistor crash?");
+        mCollectionViewModel.forceReload(mActivity);
     }
 
 

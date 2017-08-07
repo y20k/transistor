@@ -522,8 +522,15 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     /* Stops playback */
     private void stopPlayback() {
         // check for null - can happen after a crash during playback
-        if (mStation == null) {
+        if (mStation == null || !mExoPlayer.getPlayWhenReady()) {
             LogHelper.e(LOG_TAG, "Stopping playback. Station is null.");
+            saveAppState();
+            // send local broadcast: playback stopped
+            Intent intent = new Intent();
+            intent.setAction(ACTION_PLAYBACK_STATE_CHANGED);
+            intent.putExtra(EXTRA_ERROR_OCCURED, true);
+            LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(intent);
+
             stopSelf();
             return;
         } else {

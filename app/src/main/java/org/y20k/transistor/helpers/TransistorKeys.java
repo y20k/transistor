@@ -50,6 +50,7 @@ public interface TransistorKeys {
     String EXTRA_STREAM_URI = "STREAM_URI";
     String EXTRA_TIMER_DURATION = "TIMER_DURATION";
     String EXTRA_TIMER_REMAINING = "TIMER_REMAINING";
+    String EXTRA_ERROR_OCCURED = "ERROR_OCCURED";
 
     /* ARGS */
     String ARG_INFOSHEET_TITLE = "INFOSHEET_TITLE";
@@ -134,5 +135,8 @@ public interface TransistorKeys {
     int CONNECTION_TYPE_HLS = 1;
     int CONNECTION_TYPE_OTHER = 2;
     int CONNECTION_TYPE_ERROR = 3;
+
+    long FIFTEEN_MINUTES = 900000; // equals 15 minutes
+
 
 }

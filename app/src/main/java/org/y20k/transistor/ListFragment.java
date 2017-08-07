@@ -87,7 +87,6 @@ public final class ListFragment extends Fragment implements TransistorKeys {
     private Uri mNewStationUri;
     private boolean mTwoPane;
     private boolean mSleepTimerRunning;
-    private SleepTimerService mSleepTimerService;
     private String mSleepTimerNotificationMessage;
     private Snackbar mSleepTimerNotification;
 
@@ -111,7 +110,7 @@ public final class ListFragment extends Fragment implements TransistorKeys {
         mSleepTimerNotificationMessage = mActivity.getString(R.string.snackbar_message_timer_set) + " ";
 
         // initiate sleep timer service
-        mSleepTimerService = new SleepTimerService();
+//        mSleepTimerService = new SleepTimerService();
 
         // set initial values
         mListState = null;
@@ -470,11 +469,9 @@ public final class ListFragment extends Fragment implements TransistorKeys {
 
     /* Handles tap timer icon in actionbar */
     private void handleMenuSleepTimerClick() {
-        // load app state
-        loadAppState(mActivity);
-
         // set duration
-        long duration = 900000; // equals 15 minutes
+//        long duration = FIFTEEN_MINUTES;
+        long duration = 9000;
 
         // CASE: No station is playing, no timer is running
         if (mPlayerServiceStation == null || (mPlayerServiceStation.getPlaybackState() == PLAYBACK_STATE_STOPPED && !mSleepTimerRunning)) {
@@ -491,17 +488,16 @@ public final class ListFragment extends Fragment implements TransistorKeys {
             startSleepTimer(duration);
             Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_timer_duration_increased) + " [+" + getReadableTime(duration) + "]", Toast.LENGTH_SHORT).show();
         }
-
     }
 
 
     /* Starts timer service and notification */
     private void startSleepTimer(long duration) {
-        // start timer service
-        if (mSleepTimerService == null) {
-            mSleepTimerService = new SleepTimerService();
-        }
-        mSleepTimerService.startActionStart(mActivity, duration);
+        // start sleep timer service using intent
+        Intent intent = new Intent(mActivity, SleepTimerService.class);
+        intent.setAction(ACTION_TIMER_START);
+        intent.putExtra(EXTRA_TIMER_DURATION, duration);
+        mActivity.startService(intent);
 
         // show timer notification
         showSleepTimerNotification(duration);
@@ -512,10 +508,11 @@ public final class ListFragment extends Fragment implements TransistorKeys {
 
     /* Stops timer service and notification */
     private void stopSleepTimer() {
-        // stop timer service
-        if (mSleepTimerService != null) {
-            mSleepTimerService.startActionStop(mActivity);
-        }
+        // stop sleep timer service using intent
+        Intent intent = new Intent(mActivity, SleepTimerService.class);
+        intent.setAction(ACTION_TIMER_STOP);
+        mActivity.startService(intent);
+
         // cancel notification
         if (mSleepTimerNotification != null && mSleepTimerNotification.isShown()) {
             mSleepTimerNotification.dismiss();
@@ -542,8 +539,10 @@ public final class ListFragment extends Fragment implements TransistorKeys {
         mSleepTimerNotification.setAction(R.string.dialog_generic_button_cancel, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // stop sleep timer service
-                mSleepTimerService.startActionStop(mActivity);
+                // stop sleep timer service using intent
+                Intent intent = new Intent(mActivity, SleepTimerService.class);
+                intent.setAction(ACTION_TIMER_STOP);
+                mActivity.startService(intent);
                 mSleepTimerRunning = false;
                 // notify user
                 Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_timer_cancelled), Toast.LENGTH_SHORT).show();
@@ -621,9 +620,8 @@ public final class ListFragment extends Fragment implements TransistorKeys {
             @Override
             public void onChanged(@Nullable Station newStation) {
                 mPlayerServiceStation = newStation;
-
                 // stop sleep timer - if necessary
-                if (mSleepTimerRunning && mSleepTimerService != null && mPlayerServiceStation.getPlaybackState() == PLAYBACK_STATE_STOPPED) {
+                if (mSleepTimerRunning && mPlayerServiceStation != null && mPlayerServiceStation.getPlaybackState() == PLAYBACK_STATE_STOPPED) {
                     stopSleepTimer();
                 }
             }
