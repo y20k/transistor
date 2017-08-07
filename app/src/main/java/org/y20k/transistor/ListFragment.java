@@ -83,7 +83,7 @@ public final class ListFragment extends Fragment implements TransistorKeys {
     private Parcelable mListState;
     private CollectionViewModel mCollectionViewModel;
     private BroadcastReceiver mSleepTimerStartedReceiver;
-    private Station mStation;
+    private Station mPlayerServiceStation;
     private Uri mNewStationUri;
     private boolean mTwoPane;
     private boolean mSleepTimerRunning;
@@ -178,6 +178,7 @@ public final class ListFragment extends Fragment implements TransistorKeys {
         // observe changes in LiveData
         mCollectionViewModel = ViewModelProviders.of((AppCompatActivity) mActivity).get(CollectionViewModel.class);
         mCollectionViewModel.getStationList().observe((LifecycleOwner) mActivity, createStationListObserver());
+        mCollectionViewModel.getPlayerServiceStation().observe((LifecycleOwner) mActivity, createStationObserver());
 
         // show call to action, if necessary
         toggleActionCall();
@@ -476,17 +477,17 @@ public final class ListFragment extends Fragment implements TransistorKeys {
         long duration = 900000; // equals 15 minutes
 
         // CASE: No station is playing, no timer is running
-        if (mStation == null || (mStation.getPlaybackState() == PLAYBACK_STATE_STOPPED && !mSleepTimerRunning)) {
+        if (mPlayerServiceStation == null || (mPlayerServiceStation.getPlaybackState() == PLAYBACK_STATE_STOPPED && !mSleepTimerRunning)) {
             // unable to start timer
             Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_timer_start_unable), Toast.LENGTH_SHORT).show();
         }
         // CASE: A station is playing, no sleep timer is running
-        else if (mStation != null && mStation.getPlaybackState() != PLAYBACK_STATE_STOPPED && !mSleepTimerRunning) {
+        else if (mPlayerServiceStation != null && mPlayerServiceStation.getPlaybackState() != PLAYBACK_STATE_STOPPED && !mSleepTimerRunning) {
             startSleepTimer(duration);
             Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_timer_activated), Toast.LENGTH_SHORT).show();
         }
         // CASE: A station is playing, Sleep timer is running
-        else if (mStation != null && mStation.getPlaybackState() == PLAYBACK_STATE_STARTED) {
+        else if (mPlayerServiceStation != null && mPlayerServiceStation.getPlaybackState() == PLAYBACK_STATE_STARTED) {
             startSleepTimer(duration);
             Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_timer_duration_increased) + " [+" + getReadableTime(duration) + "]", Toast.LENGTH_SHORT).show();
         }
@@ -614,6 +615,22 @@ public final class ListFragment extends Fragment implements TransistorKeys {
     }
 
 
+    /* Creates an observer for station from player service stored as LiveData */
+    private Observer<Station> createStationObserver() {
+        return new Observer<Station>() {
+            @Override
+            public void onChanged(@Nullable Station newStation) {
+                mPlayerServiceStation = newStation;
+
+                // stop sleep timer - if necessary
+                if (mSleepTimerRunning && mSleepTimerService != null && mPlayerServiceStation.getPlaybackState() == PLAYBACK_STATE_STOPPED) {
+                    stopSleepTimer();
+                }
+            }
+        };
+    }
+
+
     /* Initializes broadcast receivers for onCreate */
     private void initializeBroadcastReceivers() {
         // RECEIVER: sleep timer service sends updates
@@ -643,21 +660,6 @@ public final class ListFragment extends Fragment implements TransistorKeys {
         LocalBroadcastManager.getInstance(mActivity).unregisterReceiver(mSleepTimerStartedReceiver);
     }
 
-
-    /* Handles changes in state of playback, eg. start, stop, loading stream */
-    private void handlePlaybackStateChanges(Intent intent) {
-        switch (intent.getIntExtra(EXTRA_PLAYBACK_STATE_CHANGE, 1)) {
-            // CASE: playback was stopped
-            case PLAYBACK_STATE_STOPPED:
-                // load app state
-                loadAppState(mActivity);
-                // stop sleep timer
-                if (mSleepTimerRunning && mSleepTimerService != null) {
-                    stopSleepTimer();
-                }
-                break;
-        }
-    }
 }
 
 //    /* Handles adding, deleting and renaming of station */

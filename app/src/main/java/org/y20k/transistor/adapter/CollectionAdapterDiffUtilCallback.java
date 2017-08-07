@@ -73,7 +73,6 @@ public class CollectionAdapterDiffUtilCallback extends DiffUtil.Callback impleme
         Station oldStation = mOldStations.get(oldItemPosition);
         Station newStation = mNewStations.get(newItemPosition);
         if (oldStation.getStationName().equals(newStation.getStationName()) &&
-//                oldStation.getStreamUri().equals(newStation.getStreamUri()) &&
                 oldStation.getPlaybackState() == newStation.getPlaybackState() &&
                 oldStation.getStationImageSize() == newStation.getStationImageSize()) {
             return true;

@@ -196,7 +196,7 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
                         break;
                     case HOLDER_UPDATE_PLAYBACK_STATE:
                         // set playback indicator
-                        LogHelper.v(LOG_TAG, "List of station: Partial view update -> playback state changed");
+                        LogHelper.e(LOG_TAG, "List of station: Partial view update -> playback state changed | " + station.getPlaybackState()); // todo change back
                         togglePlaybackIndicator(holder, station);
                         break;
                     case HOLDER_UPDATE_IMAGE:
@@ -427,13 +427,17 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
             return;
         }
 
-        // create copy of main list of stations
+        // create copies of station and of main list of stations
+        Station newStation = new Station(station);
         ArrayList<Station> newStationList = StationListHelper.copyStationList(mStationList);
 
-        int stationId = StationListHelper.findStationId(newStationList, station.getStreamUri());
-        newStationList.set(stationId, station);
+        int stationId = StationListHelper.findStationId(newStationList, newStation.getStreamUri());
+        newStationList.set(stationId, newStation);
 
-        // update live data station list
+        // update liva data station from PlayerService - used in PlayerFragment
+        mCollectionViewModel.getPlayerServiceStation().setValue(newStation);
+
+        // update live data station list - used in CollectionAdapter (this)
         mCollectionViewModel.getStationList().setValue(newStationList);
     }
 
@@ -449,8 +453,10 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
             return;
         }
 
-        // create copy of main list of stations
+        // create copies of station and of main list of stations
+        Station newStation = new Station(station);
         ArrayList<Station> newStationList = StationListHelper.copyStationList(mStationList);
+
 
         // try to set playback state of previous station
         if (intent.hasExtra(EXTRA_PLAYBACK_STATE_PREVIOUS_STATION)) {
@@ -464,12 +470,15 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
         }
 
         // set playback state for new station
-        int stationId = StationListHelper.findStationId(newStationList, station.getStreamUri());
+        int stationId = StationListHelper.findStationId(newStationList, newStation.getStreamUri());
         if (stationId != -1) {
-            newStationList.get(stationId).setPlaybackState(station.getPlaybackState());
+            newStationList.set(stationId, newStation);
         }
 
-        // update live data station list
+        // update liva data station from PlayerService - used in PlayerFragment
+        mCollectionViewModel.getPlayerServiceStation().setValue(newStation);
+
+        // update live data station list - used in CollectionAdapter (this)
         mCollectionViewModel.getStationList().setValue(newStationList);
     }
 

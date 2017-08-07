@@ -58,7 +58,6 @@ import org.y20k.transistor.helpers.DialogRename;
 import org.y20k.transistor.helpers.ImageHelper;
 import org.y20k.transistor.helpers.LogHelper;
 import org.y20k.transistor.helpers.ShortcutHelper;
-import org.y20k.transistor.helpers.StationListHelper;
 import org.y20k.transistor.helpers.TransistorKeys;
 
 import java.util.ArrayList;
@@ -101,7 +100,7 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
     private MediaBrowserCompat mBrowser;
     private MediaControllerCompat mController;
     private boolean mTwoPane;
-    private Station mStation;
+    private Station mThisStation;
     private int mPlaybackState;
 
 
@@ -123,7 +122,7 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
 
             // get station from arguments
             if (arguments.containsKey(ARG_STATION)) {
-                mStation = arguments.getParcelable(ARG_STATION);
+                mThisStation = arguments.getParcelable(ARG_STATION);
                 arguments.remove(ARG_STATION);
             }
 
@@ -136,8 +135,8 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
             }
 
             // store playback state
-            if (mStation != null) {
-                mPlaybackState = mStation.getPlaybackState();
+            if (mThisStation != null) {
+                mPlaybackState = mThisStation.getPlaybackState();
             } else {
                 mPlaybackState = PLAYBACK_STATE_STOPPED;
             }
@@ -146,7 +145,8 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
 
         // observe changes in LiveData
         mCollectionViewModel = ViewModelProviders.of((AppCompatActivity)mActivity).get(CollectionViewModel.class);
-        mCollectionViewModel.getStationList().observe((LifecycleOwner)mActivity, createStationListObserver());
+//        mCollectionViewModel.getStationList().observe((LifecycleOwner)mActivity, createStationListObserver());
+        mCollectionViewModel.getPlayerServiceStation().observe((LifecycleOwner)mActivity, createStationObserver());
         mCollectionViewModel.getTwoPane().observe((LifecycleOwner)mActivity, createTwoPaneObserver());
 
         // fragment has options menu
@@ -268,7 +268,7 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (mStation != null) {
+        if (mThisStation != null) {
             // set up station information
             updateStationViews();
             // set up button symbol and playback indicator
@@ -280,7 +280,7 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
         if (args != null && args.getBoolean(ARG_PLAYBACK, false)) {
             // check if this station is not already playing
             Station station = PlayerService.getStation();
-            if (station != null && station.getStreamUri().equals(mStation.getStreamUri()) && station.getPlaybackState() != PLAYBACK_STATE_STOPPED) {
+            if (station != null && station.getStreamUri().equals(mThisStation.getStreamUri()) && station.getPlaybackState() != PLAYBACK_STATE_STOPPED) {
                 LogHelper.v(LOG_TAG, "Try to start playback from shortcut, but station is already running.");
             } else {
                 startPlayback();
@@ -343,7 +343,7 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         // save current station
-        outState.putParcelable(INSTANCE_STATION, mStation);
+        outState.putParcelable(INSTANCE_STATION, mThisStation);
     }
 
 
@@ -352,7 +352,7 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
         // start player service using intent
         Intent intent = new Intent(mActivity, PlayerService.class);
         intent.setAction(ACTION_PLAY);
-        intent.putExtra(EXTRA_STATION, mStation);
+        intent.putExtra(EXTRA_STATION, mThisStation);
         mActivity.startService(intent);
         LogHelper.v(LOG_TAG, "Starting player service.");
     }
@@ -395,20 +395,20 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
             // CASE ICON
             case R.id.menu_icon:
                 // get system picker for images
-                ((MainActivity)mActivity).pickImage(mStation);
+                ((MainActivity)mActivity).pickImage(mThisStation);
                 return true;
 
             // CASE RENAME
             case R.id.menu_rename:
                 // construct and run rename dialog
-                DialogRename dialogRename = new DialogRename(mActivity, mStation);
+                DialogRename dialogRename = new DialogRename(mActivity, mThisStation);
                 dialogRename.show();
                 return true;
 
             // CASE DELETE
             case R.id.menu_delete:
                 // construct and run delete dialog
-                DialogDelete dialogDelete = new DialogDelete(mActivity, mStation);
+                DialogDelete dialogDelete = new DialogDelete(mActivity, mThisStation);
                 dialogDelete.show();
                 return true;
 
@@ -416,7 +416,7 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
             case R.id.menu_shortcut: {
                 // create shortcut
                 ShortcutHelper shortcutHelper = new ShortcutHelper(mActivity.getApplication().getApplicationContext());
-                shortcutHelper.placeShortcut(mStation);
+                shortcutHelper.placeShortcut(mThisStation);
                 return true;
             }
 
@@ -454,10 +454,10 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
         switch (contentType) {
             case COPY_STATION_ALL:
                 // set clip text
-                if ( mStation.getMetadata() != null) {
-                    clipboardText = mStation.getStationName() +  " - " +  mStation.getMetadata() + " (" +  mStation.getStreamUri().toString() + ")";
+                if ( mThisStation.getMetadata() != null) {
+                    clipboardText = mThisStation.getStationName() +  " - " +  mThisStation.getMetadata() + " (" +  mThisStation.getStreamUri().toString() + ")";
                 } else {
-                    clipboardText = mStation.getStationName() + " (" + mStation.getStreamUri().toString() + ")";
+                    clipboardText = mThisStation.getStationName() + " (" + mThisStation.getStreamUri().toString() + ")";
                 }
                 // notify user
                 Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_station_copied), Toast.LENGTH_SHORT).show();
@@ -465,13 +465,13 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
 
             case COPY_STATION_METADATA:
                 // set clip text and notify user
-                clipboardText =  mStation.getMetadata();
+                clipboardText =  mThisStation.getMetadata();
                 Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_copied_to_clipboard_metadata), Toast.LENGTH_SHORT).show();
                 break;
 
             case COPY_STREAM_URL:
                 // set clip text and notify user
-                clipboardText = mStation.getStreamUri().toString();
+                clipboardText = mThisStation.getStreamUri().toString();
                 Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_copied_to_clipboard_url), Toast.LENGTH_SHORT).show();
                 break;
 
@@ -531,7 +531,7 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
     private void setVisualState() {
 
         // STATE: station loading
-        if (isAdded() && mStation != null && mPlaybackState == PLAYBACK_STATE_LOADING_STATION) {
+        if (isAdded() && mThisStation != null && mPlaybackState == PLAYBACK_STATE_LOADING_STATION) {
             // change playback button image to stop
             mPlaybackButton.setImageResource(R.drawable.smbl_stop);
             // change playback indicator and metadata views
@@ -542,21 +542,21 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
             mStationMetadataView.setVisibility(View.VISIBLE);
             mStationMetadataView.setSelected(true);
             mStationDataSheetMetadataLayout.setVisibility(View.VISIBLE);
-            displayExtendedMetaData(mStation);
+            displayExtendedMetaData(mThisStation);
         }
         // STATE: playback started
-        else if (isAdded() && mStation != null && mPlaybackState == PLAYBACK_STATE_STARTED) {
+        else if (isAdded() && mThisStation != null && mPlaybackState == PLAYBACK_STATE_STARTED) {
             // change playback button image to stop
             mPlaybackButton.setImageResource(R.drawable.smbl_stop);
             // change playback indicator and metadata views
             mPlaybackIndicator.setBackgroundResource(R.drawable.ic_playback_indicator_started_24dp);
-            mStationMetadataView.setText(mStation.getMetadata());
-            mStationDataSheetMetadata.setText(mStation.getMetadata());
+            mStationMetadataView.setText(mThisStation.getMetadata());
+            mStationDataSheetMetadata.setText(mThisStation.getMetadata());
             // show metadata views
             mStationMetadataView.setVisibility(View.VISIBLE);
             mStationMetadataView.setSelected(true);
             mStationDataSheetMetadataLayout.setVisibility(View.VISIBLE);
-            displayExtendedMetaData(mStation);
+            displayExtendedMetaData(mThisStation);
         }
         // STATE: playback stopped
         else if (isAdded()) {
@@ -578,10 +578,10 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
     /* Updates this fragment's views with the current station */
     private void updateStationViews() {
         // set name, image, metadata and url
-        updateStationNameView(mStation);
-        updateStationImageView(mStation);
-        updateStationMetadataView(mStation);
-        mStationDataSheetStreamUrl.setText(mStation.getStreamUri().toString());
+        updateStationNameView(mThisStation);
+        updateStationImageView(mThisStation);
+        updateStationMetadataView(mThisStation);
+        mStationDataSheetStreamUrl.setText(mThisStation.getStreamUri().toString());
     }
 
 
@@ -701,41 +701,9 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
         return new Observer<ArrayList<Station>>() {
             @Override
             public void onChanged(@Nullable ArrayList<Station> newStationList) {
-                // get this station from changed list
-                Station station = StationListHelper.findStation(newStationList, mStation.getStreamUri());
-
-                String name = station.getStationName();
-                long imageSize = station.getStationImageSize();
-                String metaData = station.getMetadata();
-
-                String oldName = mStation.getStationName();
-                long oldImageSize = mStation.getStationImageSize();
-                String oldMetaData = mStation.getMetadata();
-
-                // CASE: NAME
-                if (!(name.equals(oldName))) {
-                    updateStationNameView(station);
-                }
-                // CASE: IMAGE
-                else if (imageSize != oldImageSize) {
-                    updateStationImageView(station);
-                }
-                // CASE: METADATA
-                else if (!(metaData.equals(oldMetaData))) {
-                    updateStationMetadataView(station);
-                }
-                // CASE: PLAYBACK STATE
-                if (mPlaybackState != station.getPlaybackState()) {
-                    mPlaybackState = station.getPlaybackState();
-                    changeVisualState(station);
-                }
-
-                // update mStation
-                mStation = station;
-
-//                if (mStation == null && newStationList.size() != 0) {
+//                if (mThisStation == null && newStationList.size() != 0) {
 //                    // get first station from list
-//                    mStation = newStationList.get(0);
+//                    mThisStation = newStationList.get(0);
 //                    // set up station information
 //                    updateStationViews();
 //                    // set up button symbol and playback indicator
@@ -745,6 +713,55 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
             }
         };
     }
+
+
+    /* Creates an observer for station from player service stored as LiveData */
+    private Observer<Station> createStationObserver() {
+        return new Observer<Station>() {
+            @Override
+            public void onChanged(@Nullable Station newStation) {
+
+                // check if this station parameters have changed
+                if (mThisStation != null && newStation!= null &&
+                        mThisStation.getStreamUri().equals(newStation.getStreamUri())) {
+
+                    String newName = newStation.getStationName();
+                    long newImageSize = newStation.getStationImageSize();
+                    String newMetaData = newStation.getMetadata();
+
+                    String oldName = mThisStation.getStationName();
+                    long oldImageSize = mThisStation.getStationImageSize();
+                    String oldMetaData = mThisStation.getMetadata();
+
+                    // CASE: NAME
+                    if (!(newName.equals(oldName))) {
+                        updateStationNameView(newStation);
+                    }
+                    // CASE: IMAGE
+                    else if (newImageSize != oldImageSize) {
+                        updateStationImageView(newStation);
+                    }
+                    // CASE: METADATA
+                    else if (!(newMetaData.equals(oldMetaData))) {
+                        updateStationMetadataView(newStation);
+                    }
+                    // CASE: PLAYBACK STATE
+                    if (mPlaybackState != newStation.getPlaybackState()) {
+                        mPlaybackState = newStation.getPlaybackState();
+                        changeVisualState(newStation);
+                    }
+
+                    // update this station
+                    mThisStation = newStation;
+
+                }
+            }
+        };
+    }
+
+
+
+
 
 
     /* Creates an observer for state of two pane layout stored as LiveData */

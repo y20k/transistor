@@ -42,22 +42,27 @@ public class CollectionViewModel extends AndroidViewModel implements TransistorK
 
 
     /* Main class variables */
-    private MutableLiveData<ArrayList<Station>> mLiveStationList;
-    private MutableLiveData<Boolean> mTwoPane;
+    private MutableLiveData<ArrayList<Station>> mStationListLiveData;
+    private MutableLiveData<Station> mPlayerServiceStationLiveData;
+    private MutableLiveData<Boolean> mTwoPaneLiveData;
 
     /* Constructor */
     public CollectionViewModel(Application application) {
         super(application);
 
         // initialize LiveData
-        mLiveStationList = new MutableLiveData<ArrayList<Station>>();
-        mTwoPane = new MutableLiveData<Boolean>();
+        mStationListLiveData = new MutableLiveData<ArrayList<Station>>();
+        mPlayerServiceStationLiveData = new MutableLiveData<Station>();
+        mTwoPaneLiveData = new MutableLiveData<Boolean>();
 
         // load state from shared preferences and set live data values
         loadAppState(application);
 
+        // set station from PlayerService to null
+        mPlayerServiceStationLiveData.setValue(null);
+
         // load station list from storage and set live data
-        mLiveStationList.setValue(loadStationList(application));
+        mStationListLiveData.setValue(loadStationList(application));
 
         // load station list and set live data in background -> not used because DiffResult.dispatchUpdatesTo is causing problems in Adapter
         // new LoadCollectionAsyncTask().execute(application);
@@ -73,20 +78,26 @@ public class CollectionViewModel extends AndroidViewModel implements TransistorK
     /* Loads app state from preferences and updates live data */
     private void loadAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-        mTwoPane.setValue(settings.getBoolean(PREF_TWO_PANE, false));
+        mTwoPaneLiveData.setValue(settings.getBoolean(PREF_TWO_PANE, false));
         LogHelper.v(LOG_TAG, "Loading state and updating live data.");
     }
 
 
     /* Getter for StationList */
     public MutableLiveData<ArrayList<Station>> getStationList() {
-        return mLiveStationList;
+        return mStationListLiveData;
+    }
+
+
+    /* Getter for station from PlayerService */
+    public MutableLiveData<Station> getPlayerServiceStation() {
+        return mPlayerServiceStationLiveData;
     }
 
 
     /* Getter for TwoPane */
     public MutableLiveData<Boolean> getTwoPane() {
-        return mTwoPane;
+        return mTwoPaneLiveData;
     }
 
 
@@ -171,7 +182,7 @@ public class CollectionViewModel extends AndroidViewModel implements TransistorK
         @Override
         protected void onPostExecute(ArrayList<Station> stationList) {
             // set live data
-            mLiveStationList.setValue(stationList);
+            mStationListLiveData.setValue(stationList);
         }
     }
     /**

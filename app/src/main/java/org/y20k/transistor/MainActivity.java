@@ -289,7 +289,10 @@ public final class MainActivity extends AppCompatActivity implements LifecycleRe
             // update list
             newStationList.set(stationID, newStation);
 
-            // update live data list of stations
+            // update liva data station from PlayerService - used in PlayerFragment
+            mCollectionViewModel.getPlayerServiceStation().setValue(newStation);
+
+            // update live data list of stations - used in CollectionAdapter
             mCollectionViewModel.getStationList().setValue(newStationList);
 
             // return id of changed station
@@ -354,7 +357,7 @@ public final class MainActivity extends AppCompatActivity implements LifecycleRe
                         .commit();
             }
 
-            // update live data list of stations
+            // update live data list of stations - used in CollectionAdapter
             mCollectionViewModel.getStationList().setValue(newStationList);
 
             // notify user
@@ -422,11 +425,14 @@ public final class MainActivity extends AppCompatActivity implements LifecycleRe
             int stationID = StationListHelper.findStationId(mStationList, mTempStation.getStreamUri());
             newStationList.set(stationID, newStation);
 
-            // reset mTemopStation
-            mTempStation = null;
+            // update liva data station from PlayerService - used in PlayerFragment
+            mCollectionViewModel.getPlayerServiceStation().setValue(newStation);
 
             // update live data
             mCollectionViewModel.getStationList().setValue(newStationList);
+
+            // reset mTemopStation
+            mTempStation = null;
 
             return true;
 
