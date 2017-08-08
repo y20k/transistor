@@ -28,6 +28,7 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -85,9 +86,8 @@ public final class MainActivity extends AppCompatActivity implements LifecycleRe
         // check if system/app has external storage access
         checkExternalStorageState();
 
-        // observe changes in LiveData
+        // initialize view model containing live data
         mCollectionViewModel = ViewModelProviders.of(this).get(CollectionViewModel.class);
-        mCollectionViewModel.getStationList().observe((LifecycleOwner)this, createStationListObserver());
 
         // set layout
         setContentView(R.layout.activity_main);
@@ -96,6 +96,9 @@ public final class MainActivity extends AppCompatActivity implements LifecycleRe
         mTwoPane = detectTwoPane();
         mCollectionViewModel.getTwoPane().setValue(mTwoPane);
 
+        // observe changes in LiveData
+        mCollectionViewModel.getStationList().observe((LifecycleOwner)this, createStationListObserver());
+
         Bundle args = new Bundle();
         args.putBoolean(ARG_TWO_PANE, mTwoPane);
 
@@ -103,17 +106,11 @@ public final class MainActivity extends AppCompatActivity implements LifecycleRe
         ListFragment listFragment = new ListFragment();
         listFragment.setArguments(args);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.main_container, listFragment, COLLECTION_FRAGMENT_TAG)
+                .replace(R.id.main_container, listFragment, LIST_FRAGMENT_TAG)
                 .commit();
 
         // put player in player container - two pane only
-        if (mTwoPane) {
-            PlayerFragment playerFragment = new PlayerFragment();
-            playerFragment.setArguments(args);
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.player_container, playerFragment, PLAYER_FRAGMENT_TAG)
-                    .commit();
-        }
+        // -> handled by CollectionAdapter
 
         // observe changes in backstack initiated by fragment transactions
         getSupportFragmentManager().addOnBackStackChangedListener(this);
@@ -224,18 +221,30 @@ public final class MainActivity extends AppCompatActivity implements LifecycleRe
         }
     }
 
-
     /* Puts new station in list and updates live data  */
-    public int handleStationAdd(Station station) {
+    public int handleStationAdd(Bundle stationDownloadBundle) {
 
-        if (station != null) {
+        // get station, station image and station URL from download bundle
+        Station station = null;
+        Bitmap stationBitmap = null;
+        if (stationDownloadBundle.containsKey(KEY_DOWNLOAD_STATION)) {
+            station = stationDownloadBundle.getParcelable(KEY_DOWNLOAD_STATION);
+        }
+        if (stationDownloadBundle.containsKey(KEY_DOWNLOAD_STATION_IMAGE)) {
+            stationBitmap = stationDownloadBundle.getParcelable(KEY_DOWNLOAD_STATION_IMAGE);
+        }
 
+        // check is station is valid and unique
+        if (station != null && StationListHelper.findStationId(mStationList, station.getStreamUri()) == -1) {
+            // write playlist file and station image - if available
+            station.writePlaylistFile(mStorageHelper.getCollectionDirectory());
+            if (stationBitmap != null) {
+                station.writeImageFile(stationBitmap);
+            }
             // create copy of main list of stations
             ArrayList<Station> newStationList = StationListHelper.copyStationList(mStationList);
             // add station to new list of stations
             newStationList.add(station);
-            // sort list
-            StationListHelper.sortStationList(mStationList);
             // update live data list of stations
             mCollectionViewModel.getStationList().setValue(newStationList);
             // return new index
@@ -344,17 +353,14 @@ public final class MainActivity extends AppCompatActivity implements LifecycleRe
                 stationId--;
             }
 
-            if (mTwoPane && stationId >= 0) {
-                // show next station
-                Bundle args = new Bundle();
-                args.putParcelable(ARG_STATION, newStationList.get(stationId));
-                args.putInt(ARG_STATION_ID, stationId);
-                args.putBoolean(ARG_TWO_PANE, mTwoPane);
-                PlayerFragment playerFragment = new PlayerFragment();
-                playerFragment.setArguments(args);
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.main_container, playerFragment, PLAYER_FRAGMENT_TAG)
-                        .commit();
+            Fragment listFragment = getSupportFragmentManager().findFragmentByTag(LIST_FRAGMENT_TAG);
+            if (listFragment!= null && listFragment.isAdded()) {
+                ((ListFragment)listFragment).updateListAfterDelete(mStationList.get(stationId), stationId);
+            }
+
+            Fragment playerFragment = getSupportFragmentManager().findFragmentByTag(PLAYER_FRAGMENT_TAG);
+            if (playerFragment!= null && playerFragment.isAdded()) {
+                ((PlayerFragment)playerFragment).updatePlayerAfterDelete(mStationList.get(stationId));
             }
 
             // update live data list of stations - used in CollectionAdapter
@@ -454,6 +460,7 @@ public final class MainActivity extends AppCompatActivity implements LifecycleRe
             LogHelper.v(LOG_TAG, "Small screen detected. Choosing single pane layout.");
             return false;
         }
+
     }
 
 
@@ -498,107 +505,5 @@ public final class MainActivity extends AppCompatActivity implements LifecycleRe
             System.exit(1);
         }
     }
-
-
-//    /* Initializes broadcast receivers for onCreate */
-//    private void initializeBroadcastReceivers() {
-//
-//        // RECEIVER: state of playback has changed
-//        mPlaybackStateChangedReceiver = new BroadcastReceiver() {
-//            @Override
-//            public void onReceive(Context context, Intent intent) {
-//                if (intent.hasExtra(EXTRA_STATION)) {
-//                    handlePlaybackStateChange(intent);
-//                }
-//            }
-//        };
-//        IntentFilter playbackStateChangedIntentFilter = new IntentFilter(ACTION_PLAYBACK_STATE_CHANGED);
-//        LocalBroadcastManager.getInstance(this).registerReceiver(mPlaybackStateChangedReceiver, playbackStateChangedIntentFilter);
-//
-//        // RECEIVER: station metadata has changed
-//        mMetadataChangedReceiver = new BroadcastReceiver() {
-//            @Override
-//            public void onReceive(Context context, Intent intent) {
-//                if (intent.hasExtra(EXTRA_STATION)) {
-//                    handleMetadataChange(intent);
-//                }
-//            }
-//        };
-//        IntentFilter metadataChangedIntentFilter = new IntentFilter(ACTION_METADATA_CHANGED);
-//        LocalBroadcastManager.getInstance(this).registerReceiver(mMetadataChangedReceiver, metadataChangedIntentFilter);
-//    }
-//
-//
-//
-//
-//
-//    /* Unregisters broadcast receivers */
-//    private void unregisterBroadcastReceivers() {
-//        LocalBroadcastManager.getInstance(this).unregisterReceiver(mPlaybackStateChangedReceiver);
-//        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMetadataChangedReceiver);
-//    }
-
-
-//    /* Sorts list of stations */
-//    private void sortStationList(ArrayList<Station> stationList) {
-//        Collections.sort(stationList, new Comparator<Station>() {
-//            @Override
-//            public int compare(Station station1, Station station2) {
-//                // Compares two stations: returns "1" if name if this station is greater than name of given station
-//                return station1.getStationName().compareToIgnoreCase(station2.getStationName());
-//            }
-//        });
-//    }
-
-//
-//    /* Finds ID of station when given its Uri */
-//    private int findStationId(Uri streamUri) {
-//
-//        // make sure list and uri are not null
-//        if (mStationList == null || streamUri == null) {
-//            return -1;
-//        }
-//
-//        // traverse list of stations
-//        for (int i = 0; i < mStationList.size(); i++) {
-//            Station station = mStationList.get(i);
-//            if (station.getStreamUri().equals(streamUri)) {
-//                return i;
-//            }
-//        }
-//
-//        // return null if nothing was found
-//        return -1;
-//    }
-
-
-//
-//    /* Finds station when given its Uri */
-//    private Station findStation(Uri streamUri) {
-//
-//        // traverse list of stations
-//        for (int i = 0; i < mStationList.size(); i++) {
-//            Station station = mStationList.get(i);
-//            if (station.getStreamUri().equals(streamUri)) {
-//                return station;
-//            }
-//        }
-//
-//        // return null if nothing was found
-//        return null;
-//    }
-
-
-
-//
-//    /* Creates a real copy of given station list*/
-//    private ArrayList<Station> copyStationList(ArrayList<Station> stationList) {
-//        ArrayList<Station> newStationList = new ArrayList<Station>();
-//        for (Station station : stationList) {
-//            newStationList.add(new Station (station));
-//        }
-//        return newStationList;
-//    }
-
 
 }

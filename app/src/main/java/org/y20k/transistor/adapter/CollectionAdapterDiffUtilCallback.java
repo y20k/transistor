@@ -36,11 +36,7 @@ public class CollectionAdapterDiffUtilCallback extends DiffUtil.Callback impleme
     private ArrayList<Station> mNewStations;
 
     /* Constructor */
-//    public CollectionAdapterDiffUtilCallback(ArrayList<Station> oldStations, ArrayList<Station> newStations, int type) {
     public CollectionAdapterDiffUtilCallback(ArrayList<Station> oldStations, ArrayList<Station> newStations) {
-
-        // todo type: look for type -> eg just playback changes. or just renames etc.
-
         mOldStations = oldStations;
         mNewStations = newStations;
     }

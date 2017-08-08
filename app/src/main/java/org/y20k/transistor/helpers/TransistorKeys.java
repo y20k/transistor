@@ -83,6 +83,10 @@ public interface TransistorKeys {
     String RESULT_STREAM_TYPE = "STREAM_TYPE";
     String RESULT_FILE_CONTENT = "FILE_CONTENT";
 
+    /* DOWNLOAD BUNDLE KEYS */
+    String KEY_DOWNLOAD_STATION = "DOWNLOAD_STATION";
+    String KEY_DOWNLOAD_STATION_IMAGE = "DOWNLOAD_STATION_IMAGE";
+
     /* SUPPORTED AUDIO FILE CONTENT TYPES */
     String[] CONTENT_TYPES_MPEG = {"audio/mpeg"};
     String[] CONTENT_TYPES_OGG = {"audio/ogg", "application/ogg", "audio/opus"};
@@ -123,7 +127,7 @@ public interface TransistorKeys {
     String INSTANCE_STATION_SELECTED = "instanceStationSelected";
     String INSTANCE_STATION_ID = "instanceStationID";
     String INSTANCE_PLAYBACK = "instancePlayback";
-    String COLLECTION_FRAGMENT_TAG = "CFTAG";
+    String LIST_FRAGMENT_TAG = "CFTAG";
     String PLAYER_FRAGMENT_TAG = "PFTAG";
     String INFOSHEET_FRAGMENT_TAG = "PFTAG";
     String SHOUTCAST_STREAM_TITLE_HEADER = "StreamTitle";

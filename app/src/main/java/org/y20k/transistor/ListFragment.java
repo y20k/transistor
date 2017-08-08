@@ -156,9 +156,6 @@ public final class ListFragment extends Fragment implements TransistorKeys {
         // get reference to recycler list view from inflated root view
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.list_recyclerview);
 
-        // use this setting to improve performance if you know that changes in content do not change the layout size of the RecyclerView
-        mRecyclerView.setHasFixedSize(true);
-
         // set animator
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
@@ -204,14 +201,6 @@ public final class ListFragment extends Fragment implements TransistorKeys {
         // refresh app state
         loadAppState(mActivity);
 
-//        // update collection adapter
-//        if (mCollectionAdapter != null) {
-//            mCollectionAdapter.setTwoPane(mTwoPane);
-////            if (mCollectionAdapter.getItemCount() > 0) {
-////                mCollectionAdapter.setStationIdSelected(mStationIdSelected, mPlayback, false);
-////            }
-//        }
-
         // handles the activity's intent
         Intent intent = mActivity.getIntent();
         if (Intent.ACTION_VIEW.equals(intent.getAction())) {
@@ -219,17 +208,6 @@ public final class ListFragment extends Fragment implements TransistorKeys {
         } else if (ACTION_SHOW_PLAYER.equals(intent.getAction())) {
             handleShowPlayer(intent);
         }
-
-        // check if folder content has been changed // todo rewrite
-//        int folderSize = mFolder.listFiles().length;
-//        if (mFolderSize != mFolder.listFiles().length) {
-//            mFolderSize = folderSize;
-//            mCollectionAdapter = new CollectionAdapter(mActivity, mFolder, mStationList);
-//            mRecyclerView.setAdapter(mCollectionAdapter);
-//        }
-
-        // show call to action, if necessary
-        // toggleActionCall();
 
         // show notification bar if timer is running
         if (mSleepTimerRunning) {
@@ -329,17 +307,15 @@ public final class ListFragment extends Fragment implements TransistorKeys {
             default:
                 return super.onOptionsItemSelected(item);
         }
-
     }
+
 
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         // save list view position
         mListState = mLayoutManager.onSaveInstanceState();
-        Uri stationUriSelected = mCollectionAdapter.getStationUriSelected();
         outState.putParcelable(INSTANCE_LIST_STATE, mListState);
-        outState.putParcelable(INSTANCE_STATION_SELECTED, stationUriSelected);
         super.onSaveInstanceState(outState);
     }
 
@@ -375,6 +351,15 @@ public final class ListFragment extends Fragment implements TransistorKeys {
     }
 
 
+    /* Updates list state after delete */
+    public void updateListAfterDelete(Station newStation, int stationId) {
+        mCollectionAdapter.setStationUriSelected(newStation.getStreamUri());
+        if (mTwoPane) {
+            mCollectionAdapter.notifyItemChanged(stationId);
+        }
+    }
+
+
     /* Show or hide call to action view if necessary */
     private void toggleActionCall() {
         if (mStorageHelper.storageHasStationPlaylistFiles()) {
@@ -383,18 +368,6 @@ public final class ListFragment extends Fragment implements TransistorKeys {
         } else {
             mActionCallView.setVisibility(View.VISIBLE);
             mRecyclerView.setVisibility(View.GONE);
-        }
-    }
-
-
-    /* Check permissions and start image picker */
-    private void selectFromImagePicker() {
-        // request read permissions
-        PermissionHelper permissionHelper = new PermissionHelper(mActivity, mRootView);
-        if (permissionHelper.requestReadExternalStorage(PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE)) {
-            // get system picker for images
-            Intent pickImageIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(pickImageIntent, REQUEST_LOAD_IMAGE);
         }
     }
 
@@ -470,8 +443,7 @@ public final class ListFragment extends Fragment implements TransistorKeys {
     /* Handles tap timer icon in actionbar */
     private void handleMenuSleepTimerClick() {
         // set duration
-//        long duration = FIFTEEN_MINUTES;
-        long duration = 9000;
+        long duration = FIFTEEN_MINUTES;
 
         // CASE: No station is playing, no timer is running
         if (mPlayerServiceStation == null || (mPlayerServiceStation.getPlaybackState() == PLAYBACK_STATE_STOPPED && !mSleepTimerRunning)) {
@@ -609,6 +581,10 @@ public final class ListFragment extends Fragment implements TransistorKeys {
                 LogHelper.v(LOG_TAG, "Observer for two pane layout in ListFragment: layout has changed. ");
                 mTwoPane = twoPane;
                 // todo change layout
+//                if (!mTwoPane) {
+//                    startActivity();
+//                }
+
             }
         };
     }
@@ -660,85 +636,3 @@ public final class ListFragment extends Fragment implements TransistorKeys {
 
 }
 
-//    /* Handles adding, deleting and renaming of station */
-//    private void handleCollectionChanges(Intent intent) {
-//
-//        // load app state
-//        loadAppState(mActivity);
-//
-//        int newStationPosition;
-//
-//        switch (intent.getIntExtra(EXTRA_COLLECTION_CHANGE, 1)) {
-//
-//            // CASE: station was added
-//            case STATION_ADDED:
-//                if (intent.hasExtra(EXTRA_STATION)) {
-//
-//                    // get station from intent
-//                    Station station = intent.getParcelableExtra(EXTRA_STATION);
-//
-//                    // add station to adapter, scroll to new position and update adapter
-//                    newStationPosition = mCollectionAdapter.add(station);
-//
-//                    if (mCollectionAdapter.getItemCount() > 0) {
-//                        toggleActionCall();
-//                    }
-//
-//                    mLayoutManager.scrollToPosition(newStationPosition);
-////                    mCollectionAdapter.setStationIdSelected(newStationPosition, mPlayback, false);
-//                }
-//                break;
-//
-//            // CASE: station was renamed
-//            case STATION_RENAMED:
-//                if (intent.hasExtra(EXTRA_STATION_NEW_NAME) && intent.hasExtra(EXTRA_STATION)) {
-//
-//                    // get new name, station and station ID from intent
-//                    String newStationName = intent.getStringExtra(EXTRA_STATION_NEW_NAME);
-//                    Station station = intent.getParcelableExtra(EXTRA_STATION);
-//
-//                    // update notification
-//                    if (station.getPlaybackState() != PLAYBACK_STATE_STOPPED) {
-//                        NotificationHelper.update(station, null);
-//                    }
-//
-//                    // change station within in adapter, scroll to new position and update adapter
-//                    newStationPosition = mCollectionAdapter.rename(newStationName, station);
-//                    mLayoutManager.scrollToPosition(newStationPosition);
-////                    mCollectionAdapter.setStationIdSelected(newStationPosition, mPlayback, false);
-//                }
-//                break;
-//
-//            // CASE: station was deleted
-//            case STATION_DELETED:
-//                if (intent.hasExtra(EXTRA_STATION)) {
-//
-//                    // get station from intent
-//                    Station station = intent.getParcelableExtra(EXTRA_STATION);
-//
-//                    // dismiss notification
-//                    NotificationHelper.stop();
-//
-//                    if (station.getPlaybackState() == PLAYBACK_STATE_STARTED) {
-//                        // stop player service and notification using intent
-//                        Intent i = new Intent(mActivity, PlayerService.class);
-//                        i.setAction(ACTION_DISMISS);
-//                        mActivity.startService(i);
-//                        LogHelper.v(LOG_TAG, "Stopping player service.");
-//                    }
-//
-//                    // remove station from adapter and update
-//                    newStationPosition = mCollectionAdapter.delete(station);
-//                    if (newStationPosition == -1 || mCollectionAdapter.getItemCount() == 0) {
-//                        // show call to action
-//                        toggleActionCall();
-//                    } else {
-//                        // scroll to new position
-////                        mCollectionAdapter.setStationIdSelected(newStationPosition, mPlayback, false);
-//                        mLayoutManager.scrollToPosition(newStationPosition);
-//                    }
-//                }
-//                break;
-//        }
-//
-//    }

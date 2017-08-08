@@ -16,7 +16,6 @@ package org.y20k.transistor.helpers;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -26,11 +25,7 @@ import org.y20k.transistor.MainActivity;
 import org.y20k.transistor.R;
 import org.y20k.transistor.core.Station;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -38,7 +33,7 @@ import java.net.URL;
 /**
  * StationFetcher class
  */
-public final class StationFetcher extends AsyncTask<Void, Void, Station> implements TransistorKeys {
+public final class StationFetcher extends AsyncTask<Void, Void, Bundle> implements TransistorKeys {
 
     /* Define log tag */
     private static final String LOG_TAG = StationFetcher.class.getSimpleName();
@@ -57,10 +52,11 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> impleme
     /* Constructor */
     public StationFetcher(Activity activity, File folder, Uri stationUri) {
         mActivity = activity;
-        mStationUri = stationUri;
-        mStationUriScheme = stationUri.getScheme();
         mFolder = folder;
+        mStationUri = stationUri;
+
         mFolderExists = mFolder.exists();
+        mStationUriScheme = stationUri.getScheme();
 
         if (stationUri != null && mStationUriScheme != null && mStationUriScheme.startsWith("http")) {
             Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_add_download_started), Toast.LENGTH_LONG).show();
@@ -69,38 +65,83 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> impleme
         }
 
     }
+//
+//
+//    /* Background thread: download station */
+//    @Override
+//    public Station doInBackground(Void... params) {
+//
+//        Station newStation = null;
+//
+//        if (mFolderExists && mStationUriScheme != null && mStationUriScheme.startsWith("http")  && urlCleanup()) {
+//            // download new station,
+//            newStation = new Station(mFolder, mStationURL);
+////            // write playlist file and favicon based image file
+////            newStation.writePlaylistFile(mFolder);
+////            newStation.writeImageFile(mStationURL);
+//
+//            return newStation;
+//
+//        } else if (mFolderExists && mStationUriScheme != null && mStationUriScheme.startsWith("file")) {
+//            // read file and return new station
+//            newStation =  new Station(mFolder, mStationUri);
+////            // write playlist file
+////            newStation.writePlaylistFile(mFolder);
+//
+//            return newStation;
+//
+//        } else {
+//            return newStation;
+//        }
+//    }
 
 
     /* Background thread: download station */
     @Override
-    public Station doInBackground(Void... params) {
+    public Bundle doInBackground(Void... params) {
+
+        Bundle stationDownloadBundle = new Bundle();
+        Station station = null;
+        Bitmap stationImage = null;
 
         if (mFolderExists && mStationUriScheme != null && mStationUriScheme.startsWith("http")  && urlCleanup()) {
             // download new station,
-            Station newStation = new Station(mFolder, mStationURL);
-//            // write playlist file and favicon based image file
-            newStation.writePlaylistFile(mFolder);
-            newStation.writeImageFile(mStationURL);
+            station = new Station(mFolder, mStationURL);
+            // download new station image
+            stationImage = station.fetchImageFile(mStationURL);
 
-            return newStation;
+            // pack bundle
+            stationDownloadBundle.putParcelable(KEY_DOWNLOAD_STATION, station);
+            stationDownloadBundle.putParcelable(KEY_DOWNLOAD_STATION_IMAGE, stationImage);
+
+            return stationDownloadBundle;
 
         } else if (mFolderExists && mStationUriScheme != null && mStationUriScheme.startsWith("file")) {
             // read file and return new station
-            Station newStation =  new Station(mFolder, mStationUri);
-//            // write playlist file
-//            newStation.writePlaylistFile(mFolder);
-            return newStation;
+            station =  new Station(mFolder, mStationUri);
+
+            // pack bundle
+            stationDownloadBundle.putParcelable(KEY_DOWNLOAD_STATION, station);
+
+            return stationDownloadBundle;
 
         } else {
-            return null;
+            return stationDownloadBundle;
         }
     }
 
 
     /* Main thread: set station and activate listener */
     @Override
-    protected void onPostExecute(Station station) {
+    protected void onPostExecute(Bundle stationDownloadBundle) {
 
+        // get station from download bundle
+        Station station = null;
+        if (stationDownloadBundle.containsKey(KEY_DOWNLOAD_STATION)) {
+            station = stationDownloadBundle.getParcelable(KEY_DOWNLOAD_STATION);
+        }
+
+        // get fetch results from station
         Bundle fetchResults = null;
         if (station != null) {
             fetchResults = station.getStationFetchResults();
@@ -110,7 +151,7 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> impleme
         if (station != null && fetchResults != null && !fetchResults.getBoolean(RESULT_FETCH_ERROR) && mFolderExists) {
 
             // send local broadcast - adapter will save station
-            ((MainActivity)mActivity).handleStationAdd(station);
+            ((MainActivity)mActivity).handleStationAdd(stationDownloadBundle);
 
             LogHelper.v(LOG_TAG, "Station was successfully fetched: " + station.getStreamUri().toString());
         }
@@ -260,126 +301,4 @@ public final class StationFetcher extends AsyncTask<Void, Void, Station> impleme
         return sb.toString();
 
     }
-
-
-    private Bitmap downloadStationBitmap(URL fileLocation, File stationImageFile) {
-        LogHelper.v(LOG_TAG, "Saving favicon: " + stationImageFile.toString());
-
-        Bitmap stationImage = null;
-
-        // get domain
-        String host = fileLocation.getHost();
-
-        // strip subdomain and add www if necessary
-
-        if (!host.startsWith("www")) {
-            int index = host.indexOf(".");
-            host = "www" + host.substring(index);
-        }
-
-
-        String faviconUrlString = "http://" + host + "/favicon.ico";
-
-        LogHelper.v(LOG_TAG, "Downloading favicon: " + faviconUrlString);
-//        try (InputStream in = new URL(faviconUrlString).openStream()) {
-//            LogHelper.e(LOG_TAG, "InputStream: " + in.available()); // todo remove
-//            stationImage = BitmapFactory.decodeStream(in);
-//        } catch (IOException e) {
-//            LogHelper.e(LOG_TAG, "Error downloading: " + faviconUrlString);
-//        }
-
-        InputStream in = null;
-        try {
-            in = new URL(faviconUrlString).openStream();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BufferedInputStream buffer=new BufferedInputStream(in);
-        BitmapFactory.decodeStream(buffer,null,options);
-        try {
-            buffer.reset();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // Calculate inSampleSize
-        options.inSampleSize = calculateInSampleSize(options, 100, 100);
-
-        // Decode bitmap with inSampleSize set
-        options.inJustDecodeBounds = false;
-        stationImage = BitmapFactory.decodeStream(buffer,null,options);
-
-
-
-
-         return stationImage;
-    }
-
-
-    /* Writes station image as png to storage */
-    private void writeImageFile(URL fileLocation, File stationImageFile) {
-
-        LogHelper.v(LOG_TAG, "Saving favicon: " + stationImageFile.toString());
-
-        Bitmap stationImage = null;
-
-        // get domain
-        String host = fileLocation.getHost();
-
-        // strip subdomain and add www if necessary
-
-        if (!host.startsWith("www")) {
-            int index = host.indexOf(".");
-            host = "www" + host.substring(index);
-        }
-
-
-        String faviconUrlString = "http://" + host + "/favicon.ico";
-
-        LogHelper.v(LOG_TAG, "Downloading favicon: " + faviconUrlString);
-        try (InputStream in = new URL(faviconUrlString).openStream()) {
-            LogHelper.e(LOG_TAG, "InputStream: " + in.available()); // todo remove
-            stationImage = BitmapFactory.decodeStream(in);
-        } catch (IOException e) {
-            LogHelper.e(LOG_TAG, "Error downloading: " + faviconUrlString);
-        }
-
-        // write image to storage
-        try (FileOutputStream out = new FileOutputStream(stationImageFile)) {
-            stationImage.compress(Bitmap.CompressFormat.PNG, 100, out);
-        } catch (IOException e) {
-            LogHelper.e(LOG_TAG, "Unable to save favicon: " + stationImage.toString());
-        }
-
-    }
-
-
-
-
-    private static int calculateInSampleSize(
-            BitmapFactory.Options options, int reqWidth, int reqHeight) {
-        // Raw height and width of image
-        final int height = options.outHeight;
-        final int width = options.outWidth;
-        int inSampleSize = 1;
-
-        if (height > reqHeight || width > reqWidth) {
-
-            final int halfHeight = height / 2;
-            final int halfWidth = width / 2;
-
-            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
-            // height and width larger than the requested height and width.
-            while ((halfHeight / inSampleSize) >= reqHeight
-                    && (halfWidth / inSampleSize) >= reqWidth) {
-                inSampleSize *= 2;
-            }
-        }
-
-        return inSampleSize;
-    }
-
 }

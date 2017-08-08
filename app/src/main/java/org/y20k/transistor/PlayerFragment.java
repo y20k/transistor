@@ -146,8 +146,9 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
         // observe changes in LiveData
         mCollectionViewModel = ViewModelProviders.of((AppCompatActivity)mActivity).get(CollectionViewModel.class);
 //        mCollectionViewModel.getStationList().observe((LifecycleOwner)mActivity, createStationListObserver());
-        mCollectionViewModel.getPlayerServiceStation().observe((LifecycleOwner)mActivity, createStationObserver());
         mCollectionViewModel.getTwoPane().observe((LifecycleOwner)mActivity, createTwoPaneObserver());
+        mCollectionViewModel.getPlayerServiceStation().observe((LifecycleOwner)mActivity, createStationObserver());
+
 
         // fragment has options menu
         setHasOptionsMenu(!mTwoPane);
@@ -344,6 +345,14 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
         super.onSaveInstanceState(outState);
         // save current station
         outState.putParcelable(INSTANCE_STATION, mThisStation);
+    }
+
+
+    /* Updates the player UI after delete */
+    public void updatePlayerAfterDelete(Station station) {
+        mThisStation = station;
+        updateStationViews();
+        setVisualState();
     }
 
 

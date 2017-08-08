@@ -72,7 +72,7 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
     private BroadcastReceiver mMetadataChangedReceiver;
     private Station mStation;
     private Uri mStationUriSelected;
-    private String mStationUrlLast;
+//    private String mStationUrlLast;
     private boolean mTwoPane;
     private ArrayList<Station> mStationList;
 
@@ -89,16 +89,18 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
         // create empty station list
         mStationList = new ArrayList<Station>();
 
-        // load state
-        loadAppState(mActivity);
+//        // load state
+//        loadAppState(mActivity);
 
         // initialize BroadcastReceiver that listens for playback changes
         initializeBroadcastReceivers();
 
         // observe changes in LiveData
         mCollectionViewModel = ViewModelProviders.of((AppCompatActivity)mActivity).get(CollectionViewModel.class);
-        mCollectionViewModel.getStationList().observe((LifecycleOwner) mActivity, createStationListObserver());
         mCollectionViewModel.getTwoPane().observe((LifecycleOwner)mActivity, createTwoPaneObserver());
+        mCollectionViewModel.getStationList().observe((LifecycleOwner) mActivity, createStationListObserver());
+
+
     }
 
 
@@ -169,7 +171,7 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
                     //  SINGLE TAP in tablet mode
                     showPlayerFragment(mStationList.get(pos), false);
                 }
-                mStationUriSelected = mStationList.get(pos).getStreamUri();
+//                mStationUriSelected = mStationList.get(pos).getStreamUri();
             }
         });
 
@@ -210,7 +212,6 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
     }
 
 
-
     @Override
     public long getItemId(int position) {
         return position;
@@ -223,9 +224,17 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
     }
 
 
+    /* Setter for mStationUriSelected */
+    public void setStationUriSelected(Uri stationUriSelected) {
+        mStationUriSelected = stationUriSelected;
+        saveAppState(mActivity);
+    }
+
+
     /* Shows player fragment with given station */
     public void showPlayerFragment(Station station, boolean startPlayback) {
 
+        // prepare arguments for fragment
         Bundle args = new Bundle();
         args.putParcelable(ARG_STATION, station);
         args.putBoolean(ARG_TWO_PANE, mTwoPane);
@@ -247,13 +256,22 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
                     .addToBackStack(null)
                     .commit();
         }
+
+        // update mStationUriSelected
+        mStationUriSelected = station.getStreamUri();
+
+        // save app state
+        saveAppState(mActivity);
     }
 
 
     /* Handles long click on list item */
     private void startPlayback(int position) {
 
-        if (mStationList.get(position).getPlaybackState() != PLAYBACK_STATE_STOPPED) {
+        // retrieve station
+        Station station = mStationList.get(position);
+
+        if (station.getPlaybackState() != PLAYBACK_STATE_STOPPED) {
             // stop player service using intent
             Intent intent = new Intent(mActivity, PlayerService.class);
             intent.setAction(ACTION_STOP);
@@ -266,7 +284,7 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
             // start player service using intent
             Intent intent = new Intent(mActivity, PlayerService.class);
             intent.setAction(ACTION_PLAY);
-            intent.putExtra(EXTRA_STATION, mStationList.get(position));
+            intent.putExtra(EXTRA_STATION, station);
             mActivity.startService(intent);
             LogHelper.v(LOG_TAG, "Starting player service.");
 
@@ -279,16 +297,17 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
         v.vibrate(50);
 //        v.vibrate(VibrationEffect.createOneShot(50, DEFAULT_AMPLITUDE)); // todo check if there is a support library vibrator
 
+        // update mStationUriSelected
+        mStationUriSelected = station.getStreamUri();
+
         // save app state
         saveAppState(mActivity);
-
     }
 
 
     /* Loads app state from preferences */
     private void loadAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-        mStationUrlLast = settings.getString(PREF_STATION_URL_LAST, null);
         String stationUriSelectedString = settings.getString(PREF_STATION_URI_SELECTED, null);
         if (stationUriSelectedString != null) {
             mStationUriSelected = Uri.parse(stationUriSelectedString);
@@ -337,35 +356,28 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
     }
 
 
-    /* Setter for ID of currently selected station */
-    public void setStationSelected(Station station, boolean startPlayback) {
-        mStationUriSelected = station.getStreamUri();
-
-
-        // update playback state
-        mStationList.get(StationListHelper.findStationId(mStationList, station.getStreamUri())).setPlaybackState(station.getPlaybackState());
-
-        if (mTwoPane) {
-            showPlayerFragment(station, true);
-        }
-
-        // startPlayback is set, if started from shortcut
-        if (startPlayback) {
-            // start player service using intent
-            Intent intent = new Intent(mActivity, PlayerService.class);
-            intent.setAction(ACTION_PLAY);
-            intent.putExtra(EXTRA_STATION, station);
-            mActivity.startService(intent);
-            LogHelper.v(LOG_TAG, "Starting player service. Special case: Transistor was started by an Intent");
-        }
-    }
-
-
-    /* Updates list of stations */
-    public void updateStationList(ArrayList<Station> stationList) {
-        mStationList.clear();
-        mStationList.addAll(stationList);
-    }
+//    /* Setter for ID of currently selected station */
+//    public void setStationSelected(Station station, boolean startPlayback) {
+//        mStationUriSelected = station.getStreamUri();
+//
+//
+//        // update playback state
+//        mStationList.get(StationListHelper.findStationId(mStationList, station.getStreamUri())).setPlaybackState(station.getPlaybackState());
+//
+//        if (mTwoPane) {
+//            showPlayerFragment(station, true);
+//        }
+//
+//        // startPlayback is set, if started from shortcut
+//        if (startPlayback) {
+//            // start player service using intent
+//            Intent intent = new Intent(mActivity, PlayerService.class);
+//            intent.setAction(ACTION_PLAY);
+//            intent.putExtra(EXTRA_STATION, station);
+//            mActivity.startService(intent);
+//            LogHelper.v(LOG_TAG, "Starting player service. Special case: Transistor was started by an Intent");
+//        }
+//    }
 
 
     /* Getter for list of stations */
@@ -374,10 +386,10 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
     }
 
 
-    /* Getter for Uri of selected station */
-    public Uri getStationUriSelected() {
-        return mStationUriSelected;
-    }
+//    /* Getter for Uri of selected station */
+//    public Uri getStationUriSelected() {
+//        return mStationUriSelected;
+//    }
 
 
     /* Initializes and registers broadcast receivers */
@@ -507,13 +519,20 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
                 // inform this adapter about the changes
                 diffResult.dispatchUpdatesTo(CollectionAdapter.this);
 
-                // first run: get mStationUrlSelected
-                if (mStationUriSelected == null && newStationList.size() != 0) {
-                    mStationUriSelected = newStationList.get(0).getStreamUri();
-                    // todo set recyclerview selected
+                // FIRST RUN:
+                if (mTwoPane && mStationUriSelected == null && newStationList.size() != 0) {
+                    // load state - get mStationUrlSelected
+                    loadAppState(mActivity);
+                    // if mStationUrlSelected still null
+                    if (mStationUriSelected == null) {
+                        mStationUriSelected = newStationList.get(0).getStreamUri();
+                        showPlayerFragment(newStationList.get(0), false);
+                    } else if (StationListHelper.findStationId(newStationList, mStationUriSelected) != -1) {
+                        showPlayerFragment(StationListHelper.findStation(newStationList, mStationUriSelected), false);
+                    }
                 }
 
-                // check if mStationUriSelected corresponds with a station in list
+                // check if mStationUriSelected still corresponds with a station in list
                 int StationIdSelected = StationListHelper.findStationId(newStationList, mStationUriSelected);
                 if (mTwoPane && StationIdSelected != -1) {
                     mStationUriSelected = newStationList.get(0).getStreamUri();

@@ -531,15 +531,12 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
     }
 
 
-    /* Writes station image as png to storage */
-    public void writeImageFile(URL stationURL) {
+    /* Fetches station image from the internet */
+    public Bitmap fetchImageFile(URL stationURL) {
 
-        LogHelper.v(LOG_TAG, "Saving favicon: " + mStationImageFile.toString());
+        LogHelper.v(LOG_TAG, "fetching favicon: " + mStationImageFile.toString());
 
-        // initialize image object
-        Bitmap image = null;
-
-        // Step 1: Get favicon address
+        // Get favicon address
         String host = stationURL.getHost();
         if (!host.startsWith("www")) {
             int index = host.indexOf(".");
@@ -547,7 +544,7 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
         }
         String faviconUrlString = "http://" + host + "/favicon.ico";
 
-        // Step 2: try to get image from favicon location
+        // Try to get image from favicon location
         try {
             // open connection
             HttpURLConnection connection = (HttpURLConnection)(new URL(faviconUrlString).openConnection());
@@ -569,22 +566,27 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
 
             // get image daata and decode stream
             InputStream inputStream = connection.getInputStream();
-            image = BitmapFactory.decodeStream(inputStream);
+            return BitmapFactory.decodeStream(inputStream);
 
         } catch (IOException e) {
             LogHelper.e(LOG_TAG, "Unable to load favicon from URL: " + faviconUrlString);
             e.printStackTrace();
+            return null;
         }
+    }
 
 
-        // Step 3: Write image to storage
-        if (image != null) {
+    /* Writes given station image as png to storage */
+    public void writeImageFile(Bitmap stationImage) {
+
+        if (stationImage != null) {
+            // write image to storage
             try (FileOutputStream out = new FileOutputStream(mStationImageFile)) {
-                image.compress(Bitmap.CompressFormat.PNG, 100, out);
+                stationImage.compress(Bitmap.CompressFormat.PNG, 100, out);
                 LogHelper.v(LOG_TAG, "Writing favicon to storage.");
             } catch (IOException e) {
                 e.printStackTrace();
-                LogHelper.e(LOG_TAG, "Unable to write favicon to storage: " + image.toString());
+                LogHelper.e(LOG_TAG, "Unable to write favicon to storage.");
             }
         } else {
             LogHelper.e(LOG_TAG, "Favicon not available (null).");

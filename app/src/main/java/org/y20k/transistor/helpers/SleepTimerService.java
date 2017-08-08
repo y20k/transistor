@@ -123,29 +123,6 @@ public class SleepTimerService  extends Service implements TransistorKeys {
     }
 
 
-//    /* Method to start sleep timer */
-//    public void startActionStart(Context context, long duration) {
-//        LogHelper.v(LOG_TAG, "Starting sleep timer. Duration: " + duration);
-//
-//        // start sleep timer service using intent
-//        Intent intent = new Intent(context, SleepTimerService.class);
-//        intent.setAction(ACTION_TIMER_START);
-//        intent.putExtra(EXTRA_TIMER_DURATION, duration);
-//        context.startService(intent);
-//    }
-//
-//
-//    /* Method to stop sleep timer */
-//    public void startActionStop(Context context) {
-//        LogHelper.v(LOG_TAG, "Stopping sleep timer.");
-//
-//        // stop sleep timer service using intent
-//        Intent intent = new Intent(context, SleepTimerService.class);
-//        intent.setAction(ACTION_TIMER_STOP);
-//        context.startService(intent);
-//    }
-
-
     /* Set sleep timer */
     private void setSleepTimer(long duration) {
 
