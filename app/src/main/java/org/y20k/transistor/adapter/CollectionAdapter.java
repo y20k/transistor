@@ -171,7 +171,7 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
                     //  SINGLE TAP in tablet mode
                     showPlayerFragment(mStationList.get(pos), false);
                 }
-//                mStationUriSelected = mStationList.get(pos).getStreamUri();
+                mStationUriSelected = mStationList.get(pos).getStreamUri();
             }
         });
 
@@ -243,9 +243,14 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
         PlayerFragment playerFragment = new PlayerFragment();
         playerFragment.setArguments(args);
 
+        // update mStationUriSelected
+        Uri previousStationUriSelected = mStationUriSelected;
+        mStationUriSelected = station.getStreamUri();
+        saveAppState(mActivity);
+
         if (mTwoPane) {
+            notifyItemChanged(StationListHelper.findStationId(mStationList, previousStationUriSelected));
             notifyItemChanged(StationListHelper.findStationId(mStationList, mStationUriSelected));
-            notifyItemChanged(StationListHelper.findStationId(mStationList, station.getStreamUri()));
             ((AppCompatActivity)mActivity).getSupportFragmentManager().beginTransaction()
                     .replace(R.id.player_container, playerFragment, PLAYER_FRAGMENT_TAG)
                     .commit();
@@ -256,12 +261,6 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
                     .addToBackStack(null)
                     .commit();
         }
-
-        // update mStationUriSelected
-        mStationUriSelected = station.getStreamUri();
-
-        // save app state
-        saveAppState(mActivity);
     }
 
 
@@ -296,9 +295,6 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
         Vibrator v = (Vibrator) mActivity.getSystemService(Context.VIBRATOR_SERVICE);
         v.vibrate(50);
 //        v.vibrate(VibrationEffect.createOneShot(50, DEFAULT_AMPLITUDE)); // todo check if there is a support library vibrator
-
-        // update mStationUriSelected
-        mStationUriSelected = station.getStreamUri();
 
         // save app state
         saveAppState(mActivity);
@@ -337,11 +333,13 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
     }
 
 
+
+    /* Manipulates state of playback indicator */
     private void togglePlaybackIndicator(CollectionAdapterViewHolder holder, Station station) {
-        if (!mTwoPane && station.getPlaybackState() == PLAYBACK_STATE_LOADING_STATION) {
+        if (station.getPlaybackState() == PLAYBACK_STATE_LOADING_STATION) {
             holder.getPlaybackIndicator().setBackgroundResource(R.drawable.ic_playback_indicator_small_loading_24dp);
             holder.getPlaybackIndicator().setVisibility(View.VISIBLE);
-        } else if (!mTwoPane  && station.getPlaybackState() == PLAYBACK_STATE_STARTED) {
+        } else if (station.getPlaybackState() == PLAYBACK_STATE_STARTED) {
             holder.getPlaybackIndicator().setBackgroundResource(R.drawable.ic_playback_indicator_small_started_24dp);
             holder.getPlaybackIndicator().setVisibility(View.VISIBLE);
         } else {
@@ -356,40 +354,10 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
     }
 
 
-//    /* Setter for ID of currently selected station */
-//    public void setStationSelected(Station station, boolean startPlayback) {
-//        mStationUriSelected = station.getStreamUri();
-//
-//
-//        // update playback state
-//        mStationList.get(StationListHelper.findStationId(mStationList, station.getStreamUri())).setPlaybackState(station.getPlaybackState());
-//
-//        if (mTwoPane) {
-//            showPlayerFragment(station, true);
-//        }
-//
-//        // startPlayback is set, if started from shortcut
-//        if (startPlayback) {
-//            // start player service using intent
-//            Intent intent = new Intent(mActivity, PlayerService.class);
-//            intent.setAction(ACTION_PLAY);
-//            intent.putExtra(EXTRA_STATION, station);
-//            mActivity.startService(intent);
-//            LogHelper.v(LOG_TAG, "Starting player service. Special case: Transistor was started by an Intent");
-//        }
-//    }
-
-
     /* Getter for list of stations */
     public ArrayList<Station> getStationList() {
         return mStationList;
     }
-
-
-//    /* Getter for Uri of selected station */
-//    public Uri getStationUriSelected() {
-//        return mStationUriSelected;
-//    }
 
 
     /* Initializes and registers broadcast receivers */
@@ -534,9 +502,8 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
 
                 // check if mStationUriSelected still corresponds with a station in list
                 int StationIdSelected = StationListHelper.findStationId(newStationList, mStationUriSelected);
-                if (mTwoPane && StationIdSelected != -1) {
+                if (mTwoPane && StationIdSelected == -1) {
                     mStationUriSelected = newStationList.get(0).getStreamUri();
-                    // todo set recyclerview selected
                 }
 
            }
@@ -551,7 +518,6 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
             public void onChanged(@Nullable Boolean twoPane) {
                 LogHelper.v(LOG_TAG, "Observer for two pane layout in CollectionAdapter: layout has changed. State mTwoPane:" + twoPane);
                 mTwoPane = twoPane;
-                // todo change layout
             }
         };
     }

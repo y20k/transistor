@@ -710,14 +710,6 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
         return new Observer<ArrayList<Station>>() {
             @Override
             public void onChanged(@Nullable ArrayList<Station> newStationList) {
-//                if (mThisStation == null && newStationList.size() != 0) {
-//                    // get first station from list
-//                    mThisStation = newStationList.get(0);
-//                    // set up station information
-//                    updateStationViews();
-//                    // set up button symbol and playback indicator
-//                    setVisualState();
-//                }
 
             }
         };
@@ -769,10 +761,6 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
     }
 
 
-
-
-
-
     /* Creates an observer for state of two pane layout stored as LiveData */
     private Observer<Boolean> createTwoPaneObserver() {
         return new Observer<Boolean>() {
@@ -780,7 +768,7 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
             public void onChanged(@Nullable Boolean twoPane) {
                 LogHelper.v(LOG_TAG, "Observer for two pane layout in PlayerFragment: layout has changed. TwoPane -> " + mTwoPane + twoPane);
                 mTwoPane = twoPane;
-                // todo change layout
+                // toggle home button in action bar
                 ((AppCompatActivity)mActivity).getSupportActionBar().setDisplayShowHomeEnabled(!mTwoPane);
                 ((AppCompatActivity)mActivity).getSupportActionBar().setHomeButtonEnabled(!mTwoPane);
             }

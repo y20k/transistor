@@ -26,7 +26,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -80,7 +79,6 @@ public final class ListFragment extends Fragment implements TransistorKeys {
     private View mActionCallView;
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
-    private Parcelable mListState;
     private CollectionViewModel mCollectionViewModel;
     private BroadcastReceiver mSleepTimerStartedReceiver;
     private Station mPlayerServiceStation;
@@ -109,12 +107,6 @@ public final class ListFragment extends Fragment implements TransistorKeys {
         // get notification message
         mSleepTimerNotificationMessage = mActivity.getString(R.string.snackbar_message_timer_set) + " ";
 
-        // initiate sleep timer service
-//        mSleepTimerService = new SleepTimerService();
-
-        // set initial values
-        mListState = null;
-
         // initialize two pane
         Bundle args = getArguments();
         if (args != null && args.containsKey(ARG_TWO_PANE)) {
@@ -129,9 +121,6 @@ public final class ListFragment extends Fragment implements TransistorKeys {
         // load playback state
         loadAppState(mActivity);
 
-        // get uri of selected station from saved instance
-        // todo implememt
-
         // create collection adapter
         mCollectionAdapter = new CollectionAdapter(mActivity, mStorageHelper.getCollectionDirectory(), mTwoPane, null);
 
@@ -142,10 +131,6 @@ public final class ListFragment extends Fragment implements TransistorKeys {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // get list state from saved instance
-        if (savedInstanceState != null) {
-            mListState = savedInstanceState.getParcelable(INSTANCE_LIST_STATE);
-        }
 
         // inflate root view from xml
         mRootView = inflater.inflate(R.layout.fragment_list, container, false);
@@ -310,16 +295,6 @@ public final class ListFragment extends Fragment implements TransistorKeys {
     }
 
 
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        // save list view position
-        mListState = mLayoutManager.onSaveInstanceState();
-        outState.putParcelable(INSTANCE_LIST_STATE, mListState);
-        super.onSaveInstanceState(outState);
-    }
-
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -414,7 +389,6 @@ public final class ListFragment extends Fragment implements TransistorKeys {
         else if (intent.hasExtra(EXTRA_STREAM_URI)) {
             // get Uri of station from home screen shortcut
             station = StationListHelper.findStation(mCollectionAdapter.getStationList(), Uri.parse(intent.getStringExtra(EXTRA_STREAM_URI)));
-//            station = mCollectionAdapter.findStation(Uri.parse(intent.getStringExtra(EXTRA_STREAM_URI)));
             startPlayback = true;
         }
         // CASE: transistor received a last station intent
@@ -424,7 +398,6 @@ public final class ListFragment extends Fragment implements TransistorKeys {
             loadAppState(mActivity);
             if (stationUrlLastString != null) {
                 station = StationListHelper.findStation(mCollectionAdapter.getStationList(), Uri.parse(stationUrlLastString));
-//                station = mCollectionAdapter.findStation(Uri.parse(stationUrlLastString));
             }
             startPlayback = true;
         }
@@ -581,10 +554,6 @@ public final class ListFragment extends Fragment implements TransistorKeys {
                 LogHelper.v(LOG_TAG, "Observer for two pane layout in ListFragment: layout has changed. ");
                 mTwoPane = twoPane;
                 // todo change layout
-//                if (!mTwoPane) {
-//                    startActivity();
-//                }
-
             }
         };
     }

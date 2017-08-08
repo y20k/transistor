@@ -471,9 +471,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             previousStationUrlString = null;
         }
 
-        // todo
-        // additionally check for playback state
-
         // set and save state
         mStationMetadataReceived = false;
         mStation.setPlaybackState(PLAYBACK_STATE_LOADING_STATION);
