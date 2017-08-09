@@ -18,7 +18,6 @@ package com.google.android.exoplayer2.upstream.cache;
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.upstream.cache.Cache.CacheException;
 import com.google.android.exoplayer2.util.Assertions;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;

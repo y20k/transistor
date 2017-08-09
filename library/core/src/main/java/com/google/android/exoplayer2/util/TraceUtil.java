@@ -16,7 +16,6 @@
 package com.google.android.exoplayer2.util;
 
 import android.annotation.TargetApi;
-
 import com.google.android.exoplayer2.ExoPlayerLibraryInfo;
 
 /**

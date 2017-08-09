@@ -16,7 +16,6 @@
 package com.google.android.exoplayer2.extractor.ts;
 
 import android.support.annotation.IntDef;
-
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.audio.Ac3Util;
@@ -25,7 +24,6 @@ import com.google.android.exoplayer2.extractor.TrackOutput;
 import com.google.android.exoplayer2.extractor.ts.TsPayloadReader.TrackIdGenerator;
 import com.google.android.exoplayer2.util.ParsableBitArray;
 import com.google.android.exoplayer2.util.ParsableByteArray;
-
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 

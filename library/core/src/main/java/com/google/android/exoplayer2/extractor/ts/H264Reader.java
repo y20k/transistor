@@ -16,7 +16,6 @@
 package com.google.android.exoplayer2.extractor.ts;
 
 import android.util.SparseArray;
-
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.extractor.ExtractorOutput;
@@ -27,7 +26,6 @@ import com.google.android.exoplayer2.util.NalUnitUtil;
 import com.google.android.exoplayer2.util.NalUnitUtil.SpsData;
 import com.google.android.exoplayer2.util.ParsableByteArray;
 import com.google.android.exoplayer2.util.ParsableNalUnitBitArray;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -318,7 +316,7 @@ public final class H264Reader implements ElementaryStreamReader {
       if (!bitArray.canReadBits(8)) {
         return;
       }
-      bitArray.skipBits(1); // forbidden_zero_bit
+      bitArray.skipBit(); // forbidden_zero_bit
       int nalRefIdc = bitArray.readBits(2);
       bitArray.skipBits(5); // nal_unit_type
 

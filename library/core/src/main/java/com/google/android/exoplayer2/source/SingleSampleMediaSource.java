@@ -17,14 +17,12 @@ package com.google.android.exoplayer2.source;
 
 import android.net.Uri;
 import android.os.Handler;
-
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.upstream.Allocator;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.util.Assertions;
-
 import java.io.IOException;
 
 /**
@@ -97,8 +95,8 @@ public final class SingleSampleMediaSource implements MediaSource {
   }
 
   @Override
-  public MediaPeriod createPeriod(int index, Allocator allocator, long positionUs) {
-    Assertions.checkArgument(index == 0);
+  public MediaPeriod createPeriod(MediaPeriodId id, Allocator allocator) {
+    Assertions.checkArgument(id.periodIndex == 0);
     return new SingleSampleMediaPeriod(uri, dataSourceFactory, format, minLoadableRetryCount,
         eventHandler, eventListener, eventSourceId);
   }

@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 apply plugin: 'com.android.library'
+//apply from: '../../constants.gradle'
+
 
 android {
     compileSdkVersion project.ext.compileSdkVersion
@@ -23,15 +25,16 @@ android {
     }
 
     buildTypes {
-//        debug {
-//            testCoverageEnabled = true
-//        }
+        // Re-enable test coverage when the following issue is fixed:
+        // https://issuetracker.google.com/issues/37019591
+        // debug {
+        //    testCoverageEnabled = true
+        // }
     }
 }
 
 dependencies {
-    compile project(":library:core")
-//    compile project(':library-core')
+    compile project(modulePrefix + 'library:core')
     compile 'com.android.support:support-annotations:' + supportLibraryVersion
 //    androidTestCompile 'com.google.dexmaker:dexmaker:' + dexmakerVersion
 //    androidTestCompile 'com.google.dexmaker:dexmaker-mockito:' + dexmakerVersion

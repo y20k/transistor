@@ -16,10 +16,8 @@
 package com.google.android.exoplayer2.trackselection;
 
 import android.os.SystemClock;
-
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.source.TrackGroup;
-
 import java.util.Random;
 
 /**

@@ -23,6 +23,7 @@ import android.media.MediaCrypto;
 import android.media.MediaFormat;
 import android.os.Looper;
 import android.os.SystemClock;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.google.android.exoplayer2.BaseRenderer;
@@ -32,7 +33,9 @@ import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.FormatHolder;
 import com.google.android.exoplayer2.decoder.DecoderCounters;
 import com.google.android.exoplayer2.decoder.DecoderInputBuffer;
+import com.google.android.exoplayer2.drm.DrmInitData;
 import com.google.android.exoplayer2.drm.DrmSession;
+import com.google.android.exoplayer2.drm.DrmSession.DrmSessionException;
 import com.google.android.exoplayer2.drm.DrmSessionManager;
 import com.google.android.exoplayer2.drm.FrameworkMediaCrypto;
 import com.google.android.exoplayer2.mediacodec.MediaCodecUtil.DecoderQueryException;
@@ -177,10 +180,10 @@ public abstract class MediaCodecRenderer extends BaseRenderer {
   private final MediaCodec.BufferInfo outputBufferInfo;
 
   private Format format;
-  private MediaCodec codec;
   private DrmSession<FrameworkMediaCrypto> drmSession;
   private DrmSession<FrameworkMediaCrypto> pendingDrmSession;
-  private boolean codecIsAdaptive;
+  private MediaCodec codec;
+  private MediaCodecInfo codecInfo;
   private boolean codecNeedsDiscardToSpsWorkaround;
   private boolean codecNeedsFlushWorkaround;
   private boolean codecNeedsAdaptationWorkaround;
@@ -239,14 +242,21 @@ public abstract class MediaCodecRenderer extends BaseRenderer {
   }
 
   @Override
-  public final int supportsMixedMimeTypeAdaptation() throws ExoPlaybackException {
+  public final int supportsMixedMimeTypeAdaptation() {
     return ADAPTIVE_NOT_SEAMLESS;
   }
 
   @Override
   public final int supportsFormat(Format format) throws ExoPlaybackException {
     try {
-      return supportsFormat(mediaCodecSelector, format);
+      int formatSupport = supportsFormat(mediaCodecSelector, format);
+      if ((formatSupport & FORMAT_SUPPORT_MASK) > FORMAT_UNSUPPORTED_DRM
+          && !isDrmSchemeSupported(drmSessionManager, format.drmInitData)) {
+        // The renderer advertises higher support than FORMAT_UNSUPPORTED_DRM but the DRM scheme is
+        // not supported. The format support is truncated to reflect this.
+        formatSupport = (formatSupport & ~FORMAT_SUPPORT_MASK) | FORMAT_UNSUPPORTED_DRM;
+      }
+      return formatSupport;
     } catch (DecoderQueryException e) {
       throw ExoPlaybackException.createForRenderer(e, getIndex());
     }
@@ -293,55 +303,60 @@ public abstract class MediaCodecRenderer extends BaseRenderer {
 
   @SuppressWarnings("deprecation")
   protected final void maybeInitCodec() throws ExoPlaybackException {
-    if (!shouldInitCodec()) {
+    if (codec != null || format == null) {
+      // We have a codec already, or we don't have a format with which to instantiate one.
       return;
     }
 
     drmSession = pendingDrmSession;
     String mimeType = format.sampleMimeType;
-    MediaCrypto mediaCrypto = null;
+    MediaCrypto wrappedMediaCrypto = null;
     boolean drmSessionRequiresSecureDecoder = false;
     if (drmSession != null) {
-      @DrmSession.State int drmSessionState = drmSession.getState();
-      if (drmSessionState == DrmSession.STATE_ERROR) {
-        throw ExoPlaybackException.createForRenderer(drmSession.getError(), getIndex());
-      } else if (drmSessionState == DrmSession.STATE_OPENED
-          || drmSessionState == DrmSession.STATE_OPENED_WITH_KEYS) {
-        mediaCrypto = drmSession.getMediaCrypto().getWrappedMediaCrypto();
-        drmSessionRequiresSecureDecoder = drmSession.requiresSecureDecoderComponent(mimeType);
-      } else {
+      FrameworkMediaCrypto mediaCrypto = drmSession.getMediaCrypto();
+      if (mediaCrypto == null) {
+        DrmSessionException drmError = drmSession.getError();
+        if (drmError != null) {
+          throw ExoPlaybackException.createForRenderer(drmError, getIndex());
+        }
         // The drm session isn't open yet.
         return;
       }
+      wrappedMediaCrypto = mediaCrypto.getWrappedMediaCrypto();
+      drmSessionRequiresSecureDecoder = mediaCrypto.requiresSecureDecoderComponent(mimeType);
     }
 
-    MediaCodecInfo decoderInfo = null;
-    try {
-      decoderInfo = getDecoderInfo(mediaCodecSelector, format, drmSessionRequiresSecureDecoder);
-      if (decoderInfo == null && drmSessionRequiresSecureDecoder) {
-        // The drm session indicates that a secure decoder is required, but the device does not have
-        // one. Assuming that supportsFormat indicated support for the media being played, we know
-        // that it does not require a secure output path. Most CDM implementations allow playback to
-        // proceed with a non-secure decoder in this case, so we try our luck.
-        decoderInfo = getDecoderInfo(mediaCodecSelector, format, false);
-        if (decoderInfo != null) {
-          Log.w(TAG, "Drm session requires secure decoder for " + mimeType + ", but "
-              + "no secure decoder available. Trying to proceed with " + decoderInfo.name + ".");
+    if (codecInfo == null) {
+      try {
+        codecInfo = getDecoderInfo(mediaCodecSelector, format, drmSessionRequiresSecureDecoder);
+        if (codecInfo == null && drmSessionRequiresSecureDecoder) {
+          // The drm session indicates that a secure decoder is required, but the device does not
+          // have one. Assuming that supportsFormat indicated support for the media being played, we
+          // know that it does not require a secure output path. Most CDM implementations allow
+          // playback to proceed with a non-secure decoder in this case, so we try our luck.
+          codecInfo = getDecoderInfo(mediaCodecSelector, format, false);
+          if (codecInfo != null) {
+            Log.w(TAG, "Drm session requires secure decoder for " + mimeType + ", but "
+                + "no secure decoder available. Trying to proceed with " + codecInfo.name + ".");
+          }
         }
+      } catch (DecoderQueryException e) {
+        throwDecoderInitError(new DecoderInitializationException(format, e,
+            drmSessionRequiresSecureDecoder, DecoderInitializationException.DECODER_QUERY_ERROR));
       }
-    } catch (DecoderQueryException e) {
-      throwDecoderInitError(new DecoderInitializationException(format, e,
-          drmSessionRequiresSecureDecoder, DecoderInitializationException.DECODER_QUERY_ERROR));
+
+      if (codecInfo == null) {
+        throwDecoderInitError(new DecoderInitializationException(format, null,
+            drmSessionRequiresSecureDecoder,
+            DecoderInitializationException.NO_SUITABLE_DECODER_ERROR));
+      }
     }
 
-    if (decoderInfo == null) {
-      throwDecoderInitError(new DecoderInitializationException(format, null,
-          drmSessionRequiresSecureDecoder,
-          DecoderInitializationException.NO_SUITABLE_DECODER_ERROR));
+    if (!shouldInitCodec(codecInfo)) {
+      return;
     }
 
-    String codecName = decoderInfo.name;
-    codecIsAdaptive = decoderInfo.adaptive && !codecNeedsDisableAdaptationWorkaround(codecName);
+    String codecName = codecInfo.name;
     codecNeedsDiscardToSpsWorkaround = codecNeedsDiscardToSpsWorkaround(codecName, format);
     codecNeedsFlushWorkaround = codecNeedsFlushWorkaround(codecName);
     codecNeedsAdaptationWorkaround = codecNeedsAdaptationWorkaround(codecName);
@@ -355,7 +370,7 @@ public abstract class MediaCodecRenderer extends BaseRenderer {
       codec = MediaCodec.createByCodecName(codecName);
       TraceUtil.endSection();
       TraceUtil.beginSection("configureCodec");
-      configureCodec(decoderInfo, codec, format, mediaCrypto);
+      configureCodec(codecInfo, codec, format, wrappedMediaCrypto);
       TraceUtil.endSection();
       TraceUtil.beginSection("startCodec");
       codec.start();
@@ -382,12 +397,16 @@ public abstract class MediaCodecRenderer extends BaseRenderer {
     throw ExoPlaybackException.createForRenderer(e, getIndex());
   }
 
-  protected boolean shouldInitCodec() {
-    return codec == null && format != null;
+  protected boolean shouldInitCodec(MediaCodecInfo codecInfo) {
+    return true;
   }
 
   protected final MediaCodec getCodec() {
     return codec;
+  }
+
+  protected final MediaCodecInfo getCodecInfo() {
+    return codecInfo;
   }
 
   @Override
@@ -428,31 +447,31 @@ public abstract class MediaCodecRenderer extends BaseRenderer {
   }
 
   protected void releaseCodec() {
+    codecHotswapDeadlineMs = C.TIME_UNSET;
+    inputIndex = C.INDEX_UNSET;
+    outputIndex = C.INDEX_UNSET;
+    waitingForKeys = false;
+    shouldSkipOutputBuffer = false;
+    decodeOnlyPresentationTimestamps.clear();
+    inputBuffers = null;
+    outputBuffers = null;
+    codecInfo = null;
+    codecReconfigured = false;
+    codecReceivedBuffers = false;
+    codecNeedsDiscardToSpsWorkaround = false;
+    codecNeedsFlushWorkaround = false;
+    codecNeedsAdaptationWorkaround = false;
+    codecNeedsEosPropagationWorkaround = false;
+    codecNeedsEosFlushWorkaround = false;
+    codecNeedsMonoChannelCountWorkaround = false;
+    codecNeedsAdaptationWorkaroundBuffer = false;
+    shouldSkipAdaptationWorkaroundOutputBuffer = false;
+    codecReceivedEos = false;
+    codecReconfigurationState = RECONFIGURATION_STATE_NONE;
+    codecReinitializationState = REINITIALIZATION_STATE_NONE;
+    buffer.data = null;
     if (codec != null) {
-      codecHotswapDeadlineMs = C.TIME_UNSET;
-      inputIndex = C.INDEX_UNSET;
-      outputIndex = C.INDEX_UNSET;
-      waitingForKeys = false;
-      shouldSkipOutputBuffer = false;
-      decodeOnlyPresentationTimestamps.clear();
-      inputBuffers = null;
-      outputBuffers = null;
-      codecReconfigured = false;
-      codecReceivedBuffers = false;
-      codecIsAdaptive = false;
-      codecNeedsDiscardToSpsWorkaround = false;
-      codecNeedsFlushWorkaround = false;
-      codecNeedsAdaptationWorkaround = false;
-      codecNeedsEosPropagationWorkaround = false;
-      codecNeedsEosFlushWorkaround = false;
-      codecNeedsMonoChannelCountWorkaround = false;
-      codecNeedsAdaptationWorkaroundBuffer = false;
-      shouldSkipAdaptationWorkaroundOutputBuffer = false;
-      codecReceivedEos = false;
-      codecReconfigurationState = RECONFIGURATION_STATE_NONE;
-      codecReinitializationState = REINITIALIZATION_STATE_NONE;
       decoderCounters.decoderReleaseCount++;
-      buffer.data = null;
       try {
         codec.stop();
       } finally {
@@ -729,15 +748,14 @@ public abstract class MediaCodecRenderer extends BaseRenderer {
   }
 
   private boolean shouldWaitForKeys(boolean bufferEncrypted) throws ExoPlaybackException {
-    if (drmSession == null) {
+    if (drmSession == null || (!bufferEncrypted && playClearSamplesWithoutKeys)) {
       return false;
     }
     @DrmSession.State int drmSessionState = drmSession.getState();
     if (drmSessionState == DrmSession.STATE_ERROR) {
       throw ExoPlaybackException.createForRenderer(drmSession.getError(), getIndex());
     }
-    return drmSessionState != DrmSession.STATE_OPENED_WITH_KEYS
-        && (bufferEncrypted || !playClearSamplesWithoutKeys);
+    return drmSessionState != DrmSession.STATE_OPENED_WITH_KEYS;
   }
 
   /**
@@ -783,7 +801,7 @@ public abstract class MediaCodecRenderer extends BaseRenderer {
     }
 
     if (pendingDrmSession == drmSession && codec != null
-        && canReconfigureCodec(codec, codecIsAdaptive, oldFormat, format)) {
+        && canReconfigureCodec(codec, codecInfo.adaptive, oldFormat, format)) {
       codecReconfigured = true;
       codecReconfigurationState = RECONFIGURATION_STATE_WRITE_PENDING;
       codecNeedsAdaptationWorkaroundBuffer = codecNeedsAdaptationWorkaround
@@ -1068,6 +1086,25 @@ public abstract class MediaCodecRenderer extends BaseRenderer {
   }
 
   /**
+   * Returns whether the encryption scheme is supported, or true if {@code drmInitData} is null.
+   *
+   * @param drmSessionManager The drm session manager associated with the renderer.
+   * @param drmInitData {@link DrmInitData} of the format to check for support.
+   * @return Whether the encryption scheme is supported, or true if {@code drmInitData} is null.
+   */
+  private static boolean isDrmSchemeSupported(DrmSessionManager drmSessionManager,
+      @Nullable DrmInitData drmInitData) {
+    if (drmInitData == null) {
+      // Content is unencrypted.
+      return true;
+    } else if (drmSessionManager == null) {
+      // Content is encrypted, but no drm session manager is available.
+      return false;
+    }
+    return drmSessionManager.canAcquireSession(drmInitData);
+  }
+
+  /**
    * Returns whether the decoder is known to fail when flushed.
    * <p>
    * If true is returned, the renderer will work around the issue by releasing the decoder and
@@ -1188,20 +1225,6 @@ public abstract class MediaCodecRenderer extends BaseRenderer {
   private static boolean codecNeedsMonoChannelCountWorkaround(String name, Format format) {
     return Util.SDK_INT <= 18 && format.channelCount == 1
         && "OMX.MTK.AUDIO.DECODER.MP3".equals(name);
-  }
-
-  /**
-   * Returns whether the decoder is known to fail when adapting, despite advertising itself as an
-   * adaptive decoder.
-   * <p>
-   * If true is returned then we explicitly disable adaptation for the decoder.
-   *
-   * @param name The decoder name.
-   * @return True if the decoder is known to fail when adapting.
-   */
-  private static boolean codecNeedsDisableAdaptationWorkaround(String name) {
-    return Util.SDK_INT <= 19 && Util.MODEL.equals("ODROID-XU3")
-        && ("OMX.Exynos.AVC.Decoder".equals(name) || "OMX.Exynos.AVC.Decoder.secure".equals(name));
   }
 
 }

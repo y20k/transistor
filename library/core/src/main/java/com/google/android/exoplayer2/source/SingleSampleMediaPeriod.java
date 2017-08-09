@@ -81,7 +81,7 @@ import java.util.Arrays;
   }
 
   @Override
-  public void prepare(Callback callback) {
+  public void prepare(Callback callback, long positionUs) {
     callback.onPrepared(this);
   }
 

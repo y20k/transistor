@@ -23,7 +23,6 @@ import com.google.android.exoplayer2.text.SubtitleDecoderException;
 import com.google.android.exoplayer2.text.SubtitleInputBuffer;
 import com.google.android.exoplayer2.text.SubtitleOutputBuffer;
 import com.google.android.exoplayer2.util.Assertions;
-
 import java.util.LinkedList;
 import java.util.TreeSet;
 

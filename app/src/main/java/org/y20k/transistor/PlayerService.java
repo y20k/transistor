@@ -51,6 +51,7 @@ import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.LoadControl;
 import com.google.android.exoplayer2.PlaybackParameters;
+import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
@@ -276,6 +277,12 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
                 break;
 
         }
+    }
+
+
+    @Override
+    public void onRepeatModeChanged(@Player.RepeatMode int repeatMode) {
+
     }
 
 
@@ -615,7 +622,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         } else {
             dataSourceFactory = new CustomDefaultHttpDataSourceFactory(mUserAgent, bandwidthMeter, true, playerCallback);
             ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
-            mediaSource = new ExtractorMediaSource(mStation.getStreamUri(), dataSourceFactory, extractorsFactory, 32, null, null, null); // todo attach listener here
+            mediaSource = new ExtractorMediaSource(mStation.getStreamUri(), dataSourceFactory, extractorsFactory, 32, null, null, null, (1024 * 1024)); // todo attach listener here
         }
         // prepare player with source.
         mExoPlayer.prepare(mediaSource);

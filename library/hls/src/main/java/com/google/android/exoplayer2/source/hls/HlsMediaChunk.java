@@ -212,7 +212,7 @@ import java.util.concurrent.atomic.AtomicInteger;
       // According to spec, for packed audio, initDataSpec is expected to be null.
       return;
     }
-    DataSpec initSegmentDataSpec = Util.getRemainderDataSpec(initDataSpec, initSegmentBytesLoaded);
+    DataSpec initSegmentDataSpec = initDataSpec.subrange(initSegmentBytesLoaded);
     try {
       ExtractorInput input = new DefaultExtractorInput(initDataSource,
           initSegmentDataSpec.absoluteStreamPosition, initDataSource.open(initSegmentDataSpec));
@@ -241,7 +241,7 @@ import java.util.concurrent.atomic.AtomicInteger;
       loadDataSpec = dataSpec;
       skipLoadedBytes = bytesLoaded != 0;
     } else {
-      loadDataSpec = Util.getRemainderDataSpec(dataSpec, bytesLoaded);
+      loadDataSpec = dataSpec.subrange(bytesLoaded);
       skipLoadedBytes = false;
     }
     if (!isMasterTimestampSource) {
@@ -398,7 +398,7 @@ import java.util.concurrent.atomic.AtomicInteger;
     } else if (lastPathSegment.endsWith(MP3_FILE_EXTENSION)) {
       extractor = new Mp3Extractor(0, startTimeUs);
     } else {
-      throw new IllegalArgumentException("Unkown extension for audio file: " + lastPathSegment);
+      throw new IllegalArgumentException("Unknown extension for audio file: " + lastPathSegment);
     }
     extractor.init(extractorOutput);
     return extractor;

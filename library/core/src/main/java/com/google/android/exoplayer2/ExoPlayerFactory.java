@@ -16,7 +16,6 @@
 package com.google.android.exoplayer2;
 
 import android.content.Context;
-
 import com.google.android.exoplayer2.drm.DrmSessionManager;
 import com.google.android.exoplayer2.drm.FrameworkMediaCrypto;
 import com.google.android.exoplayer2.trackselection.TrackSelector;

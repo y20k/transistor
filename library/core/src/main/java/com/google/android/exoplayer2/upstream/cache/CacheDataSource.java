@@ -18,7 +18,6 @@ package com.google.android.exoplayer2.upstream.cache;
 import android.net.Uri;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
-
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.upstream.DataSink;
 import com.google.android.exoplayer2.upstream.DataSource;
@@ -27,7 +26,6 @@ import com.google.android.exoplayer2.upstream.DataSpec;
 import com.google.android.exoplayer2.upstream.FileDataSource;
 import com.google.android.exoplayer2.upstream.TeeDataSource;
 import com.google.android.exoplayer2.upstream.cache.Cache.CacheException;
-
 import java.io.IOException;
 import java.io.InterruptedIOException;
 import java.lang.annotation.Retention;

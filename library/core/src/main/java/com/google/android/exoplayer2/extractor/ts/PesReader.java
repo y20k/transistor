@@ -16,7 +16,6 @@
 package com.google.android.exoplayer2.extractor.ts;
 
 import android.util.Log;
-
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.extractor.ExtractorOutput;
 import com.google.android.exoplayer2.util.ParsableBitArray;

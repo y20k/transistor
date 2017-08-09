@@ -16,9 +16,7 @@
 package com.google.android.exoplayer2.upstream.cache;
 
 import android.support.annotation.NonNull;
-
 import com.google.android.exoplayer2.C;
-
 import java.io.File;
 
 /**

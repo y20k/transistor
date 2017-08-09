@@ -17,7 +17,6 @@ package com.google.android.exoplayer2.metadata;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import java.util.Arrays;
 import java.util.List;
 

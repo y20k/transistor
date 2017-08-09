@@ -29,6 +29,7 @@ allprojects {
         buildToolsVersion = '26.0.0'
         supportLibraryVersion = '26.0.0'
         archLifecycleVersion = '1.0.0-alpha8'
+        modulePrefix = ':'
 
     }
     if (it.hasProperty('externalBuildDir')) {
