@@ -468,7 +468,7 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
     /* Handles a playback state error that can occur when Transistor crashes during playback */
     private void handlePlaybackStateError() {
         LogHelper.e(LOG_TAG, "Forcing a reload of station list. Did Transistor crash?");
-        mCollectionViewModel.forceReload(mActivity);
+        mCollectionViewModel.getStationList().setValue(StationListHelper.loadStationListFromStorage(mActivity));
     }
 
 

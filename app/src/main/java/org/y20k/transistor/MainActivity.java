@@ -353,13 +353,15 @@ public final class MainActivity extends AppCompatActivity implements LifecycleRe
                 stationId--;
             }
 
+            // show next station in list
             Fragment listFragment = getSupportFragmentManager().findFragmentByTag(LIST_FRAGMENT_TAG);
-            if (listFragment!= null && listFragment.isAdded()) {
+            if (mTwoPane && listFragment!= null && listFragment.isAdded() && stationId > 0) {
                 ((ListFragment)listFragment).updateListAfterDelete(mStationList.get(stationId), stationId);
             }
 
+            // show next station in player view
             Fragment playerFragment = getSupportFragmentManager().findFragmentByTag(PLAYER_FRAGMENT_TAG);
-            if (playerFragment!= null && playerFragment.isAdded()) {
+            if (mTwoPane && playerFragment!= null && playerFragment.isAdded() && stationId > 0) {
                 ((PlayerFragment)playerFragment).updatePlayerAfterDelete(mStationList.get(stationId));
             }
 

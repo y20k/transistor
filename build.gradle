@@ -26,8 +26,8 @@ allprojects {
         minSdkVersion = 19
         compileSdkVersion = 26
         targetSdkVersion = 26
-        buildToolsVersion = '26.0.0'
-        supportLibraryVersion = '26.0.0'
+        buildToolsVersion = '26.0.1'
+        supportLibraryVersion = '26.0.1'
         archLifecycleVersion = '1.0.0-alpha8'
         modulePrefix = ':'
 

@@ -14,10 +14,15 @@
 
 package org.y20k.transistor.helpers;
 
+import android.content.Context;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 
 import org.y20k.transistor.core.Station;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -26,8 +31,10 @@ import java.util.Comparator;
 /**
  * StationListHelper class
  */
-public final class StationListHelper {
+public final class StationListHelper implements TransistorKeys {
 
+    /* Define log tag */
+    private static final String LOG_TAG = StationListHelper.class.getSimpleName();
 
     /* Creates a real copy of given station list*/
     public static ArrayList<Station> copyStationList(ArrayList<Station> stationList) {
@@ -108,6 +115,65 @@ public final class StationListHelper {
     }
 
 
+    /* Load list of stations from storage */
+    public static ArrayList<Station> loadStationListFromStorage(Context context) {
+
+        StorageHelper storageHelper = new StorageHelper(context);
+        File folder = storageHelper.getCollectionDirectory();
+
+        // create folder if necessary
+        if (!folder.exists()) {
+            LogHelper.v(LOG_TAG, "Creating mFolder new folder: " + folder.toString());
+            folder.mkdir();
+        }
+
+        // create nomedia file to prevent media scanning
+        File nomedia = new File(folder, ".nomedia");
+        if (!nomedia.exists()) {
+            LogHelper.v(LOG_TAG, "Creating .nomedia file in folder: " + folder.toString());
+            try (FileOutputStream noMediaOutStream = new FileOutputStream(nomedia)) {
+                noMediaOutStream.write(0);
+            } catch (IOException e) {
+                LogHelper.e(LOG_TAG, "Unable to write .nomedia file in folder: " + folder.toString());
+            }
+        }
+
+        // create array of Files from folder
+        File[] listOfFiles = folder.listFiles();
+
+        // initialize list
+        ArrayList<Station> stationList = new ArrayList<Station>();
+
+        // get Uri of currently playing station - CASE: PlayerService is active, but Activity has been killed
+        String urlString = PreferenceManager.getDefaultSharedPreferences(context).getString(PREF_STATION_URL, null);
+        Uri uri = null;
+        if (urlString != null) {
+            uri = Uri.parse(urlString);
+        }
+
+        // fill list of stations
+        if (listOfFiles != null) {
+            for (File file : listOfFiles) {
+                if (file.isFile() && file.toString().endsWith(".m3u")) {
+                    // create new station from file
+                    Station newStation = new Station(file);
+                    if (newStation.getStreamUri() != null) {
+                        // recreate playback state - if Activity was killed
+                        if (newStation.getStreamUri().equals(uri)) {
+                            // set playback state and set mStation value
+                            LogHelper.v(LOG_TAG, "Shared preferences has playback information for " + newStation.getStationName() + ": Playback running.");
+                            newStation.setPlaybackState(PLAYBACK_STATE_STARTED);
+                        }
+                        // add new station to list
+                        stationList.add(newStation);
+                    }
+                }
+            }
+        }
+
+        LogHelper.v(LOG_TAG, "Finished initial read operation from storage. Stations found: " + stationList.size());
+        return stationList;
+    }
 
 
 }

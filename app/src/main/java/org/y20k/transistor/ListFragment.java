@@ -265,16 +265,10 @@ public final class ListFragment extends Fragment implements TransistorKeys {
 
             // CASE REFRESH LIST
             case R.id.menu_refresh:
-                // manually refresh list of stations - useful when editing playlist files manually outside of Transistor
-                mRecyclerView.setAdapter(null); // todo check if necessary
-                mRecyclerView.setLayoutManager(null); // todo check if necessary
-                mCollectionAdapter.notifyDataSetChanged(); // todo check if necessary
+                // manually refresh list of stations (force reload) - useful when editing playlist files manually outside of Transistor
+                mCollectionViewModel.getStationList().setValue(StationListHelper.loadStationListFromStorage(mActivity));
 
-                mCollectionAdapter = new CollectionAdapter(mActivity, mStorageHelper.getCollectionDirectory(), mTwoPane, null);
-                mRecyclerView.setAdapter(mCollectionAdapter);
-                mRecyclerView.setLayoutManager(mLayoutManager);
-                mCollectionAdapter.notifyDataSetChanged();
-
+                // check list if is empty and show action call if so
                 ((MainActivity) mActivity).togglePlayerContainerVisibility();
                 toggleActionCall();
 
@@ -329,7 +323,7 @@ public final class ListFragment extends Fragment implements TransistorKeys {
     /* Updates list state after delete */
     public void updateListAfterDelete(Station newStation, int stationId) {
         mCollectionAdapter.setStationUriSelected(newStation.getStreamUri());
-        if (mTwoPane) {
+        if (mTwoPane && mCollectionAdapter.getItemCount() > stationId) {
             mCollectionAdapter.notifyItemChanged(stationId);
         }
     }
