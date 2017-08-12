@@ -190,11 +190,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             if (mStation != null && mStation.getPlaybackState() != PLAYBACK_STATE_STOPPED) {
                 mController.getTransportControls().stop();
             }
-
-            // dismiss notification
-            NotificationHelper.stop();
-            // set media session in-active
-            mSession.setActive(false);
         }
 
         // listen for media button
@@ -321,7 +316,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             state = "Media source is currently NOT being loaded.";
 //            // update controller - stop playback
 //            if (mPlayback) {
-//                mController.getTransportControls().stop();
+//                mController.getTransportControls().pause();
 //            }
         }
         LogHelper.v(LOG_TAG, "State of loading has changed: " + state);
@@ -402,14 +397,14 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             // loss of audio focus of unknown duration
             case AudioManager.AUDIOFOCUS_LOSS:
                 if (mStation.getPlaybackState() != PLAYBACK_STATE_STOPPED && mExoPlayer.getPlayWhenReady()) {
-                    mController.getTransportControls().stop();
+                    mController.getTransportControls().pause();
                 }
                 break;
             // transient loss of audio focus - e.g. phone call
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
                 if (mStation.getPlaybackState() != PLAYBACK_STATE_STOPPED && mExoPlayer != null && mExoPlayer.getPlayWhenReady()) {
                     mAudioFocusLossTransient = true;
-                    mController.getTransportControls().stop();
+                    mController.getTransportControls().pause();;
                 }
                 else if (mStation.getPlaybackState() == PLAYBACK_STATE_STOPPED && mExoPlayer != null && mExoPlayer.getPlayWhenReady()) {
                     mAudioFocusLossTransient = true;
@@ -524,7 +519,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
 
     /* Stops playback */
-    private void stopPlayback() {
+    private void stopPlayback(boolean dismissNotification) {
         // check for null - can happen after a crash during playback
         if (mStation == null || !mExoPlayer.getPlayWhenReady() || mSession== null) {
             LogHelper.e(LOG_TAG, "Stopping playback. Station is null.");
@@ -565,11 +560,17 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         // update playback state
         mSession.setPlaybackState(getSessionPlaybackState());
 
-        // update notification
-        NotificationHelper.update(mStation, mSession);
-
-        // keep media session active
-        mSession.setActive(true);
+        if (dismissNotification) {
+            // dismiss notification
+            NotificationHelper.stop();
+            // don't keep media session active
+            mSession.setActive(false);
+        } else {
+            // update notification
+            NotificationHelper.update(mStation, mSession);
+            // keep media session active
+            mSession.setActive(true);
+        }
 
         // send local broadcast: playback stopped
         Intent intent = new Intent();
@@ -760,7 +761,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             if (mStation.getPlaybackState() != PLAYBACK_STATE_STOPPED && AudioManager.ACTION_AUDIO_BECOMING_NOISY.equals(intent.getAction())) {
                 LogHelper.v(LOG_TAG, "Headphones unplugged. Stopping playback.");
                 // stop playback
-                mController.getTransportControls().stop();
+                mController.getTransportControls().pause();
                 // notify user
                 Toast.makeText(context, context.getString(R.string.toastalert_headphones_unplugged), Toast.LENGTH_LONG).show();
             }
@@ -786,13 +787,13 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         @Override
         public void onPause() {
             // stop playback
-            stopPlayback();
+            stopPlayback(false);
         }
 
         @Override
         public void onStop() {
             // stop playback
-            stopPlayback();
+            stopPlayback(true);
         }
 
     }
@@ -809,10 +810,9 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         @Override
         protected Integer doInBackground(Void... voids) {
             String contentType = "";
-            URLConnection connection = null;
 
             try {
-                connection = new URL(mStation.getStreamUri().toString()).openConnection();
+                URLConnection connection = new URL(mStation.getStreamUri().toString()).openConnection();
                 connection.connect();
                 contentType = connection.getContentType();
                 if (contentType == null) {
@@ -846,7 +846,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         protected void onPostExecute(Integer connectionType) {
             if (connectionType == CONNECTION_TYPE_ERROR) {
                 Toast.makeText(PlayerService.this, getString(R.string.toastalert_unable_to_connect), Toast.LENGTH_LONG).show();
-                stopPlayback();
+                stopPlayback(false);
             } else {
                 // prepare player
                 prepareExoPLayer(connectionType);
@@ -908,13 +908,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
                 i.putExtra(EXTRA_STATION, mStation);
                 LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(i);
                 LogHelper.v(LOG_TAG, "LocalBroadcast: ACTION_METADATA_CHANGED -> EXTRA_STATION");
-
-//            // save metadata to shared preferences
-//            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-//            SharedPreferences.Editor editor = settings.edit();
-//            editor.putBoolean()
-//            editor.putString(PREF_STATION_METADATA,  mStationMetadata);
-//            editor.apply();
 
                 // update media session metadata
                 mSession.setMetadata(getSessionMetadata(getApplicationContext(), mStation));

@@ -265,17 +265,24 @@ public final class ListFragment extends Fragment implements TransistorKeys {
 
             // CASE REFRESH LIST
             case R.id.menu_refresh:
+                // stop player service using intent
+                Intent intent = new Intent(mActivity, PlayerService.class);
+                intent.setAction(ACTION_DISMISS);
+                mActivity.startService(intent);
+
                 // manually refresh list of stations (force reload) - useful when editing playlist files manually outside of Transistor
-                mCollectionViewModel.getStationList().setValue(StationListHelper.loadStationListFromStorage(mActivity));
+                ArrayList<Station> newStationList = StationListHelper.loadStationListFromStorage(mActivity);
+                mCollectionViewModel.getStationList().setValue(newStationList);
+
+                // update player fragment in tablet mode
+                if (mTwoPane && newStationList.size() > 0) {
+                    mCollectionAdapter.showPlayerFragment(newStationList.get(0), false);
+                }
 
                 // check list if is empty and show action call if so
                 ((MainActivity) mActivity).togglePlayerContainerVisibility();
                 toggleActionCall();
 
-                // stop player service using intent
-                Intent intent = new Intent(mActivity, PlayerService.class);
-                intent.setAction(ACTION_DISMISS);
-                mActivity.startService(intent);
 
                 // notify user
                 Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_list_refreshed), Toast.LENGTH_LONG).show();
@@ -294,18 +301,6 @@ public final class ListFragment extends Fragment implements TransistorKeys {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         switch (requestCode) {
-            case PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // permission granted - get system picker for images
-                    Intent pickImageIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    mActivity.startActivityForResult(pickImageIntent, REQUEST_LOAD_IMAGE);
-                } else {
-                    // permission denied
-                    Toast.makeText(mActivity, mActivity.getString(R.string.toastalert_permission_denied) + " READ_EXTERNAL_STORAGE", Toast.LENGTH_LONG).show();
-                }
-                break;
-            }
-
             case PERMISSION_REQUEST_STATION_FETCHER_READ_EXTERNAL_STORAGE: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission granted - fetch station from given Uri
@@ -323,9 +318,6 @@ public final class ListFragment extends Fragment implements TransistorKeys {
     /* Updates list state after delete */
     public void updateListAfterDelete(Station newStation, int stationId) {
         mCollectionAdapter.setStationUriSelected(newStation.getStreamUri());
-        if (mTwoPane && mCollectionAdapter.getItemCount() > stationId) {
-            mCollectionAdapter.notifyItemChanged(stationId);
-        }
     }
 
 
@@ -362,7 +354,7 @@ public final class ListFragment extends Fragment implements TransistorKeys {
         }
         // unsuccessful - log failure
         else {
-            LogHelper.v(LOG_TAG, "Received an empty intent");
+            LogHelper.i(LOG_TAG, "Received an empty intent");
         }
     }
 

@@ -163,6 +163,15 @@ public final class MainActivity extends AppCompatActivity implements LifecycleRe
                     // permission denied
                     Toast.makeText(this, getString(R.string.toastalert_permission_denied) + " READ_EXTERNAL_STORAGE", Toast.LENGTH_LONG).show();
                 }
+                break;
+            }
+            case PERMISSION_REQUEST_STATION_FETCHER_READ_EXTERNAL_STORAGE: {
+                // let list fragment handle the request
+                Fragment listFragment = getSupportFragmentManager().findFragmentByTag(LIST_FRAGMENT_TAG);
+                if (listFragment != null) {
+                    listFragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
+                }
+                break;
             }
         }
     }
@@ -334,7 +343,7 @@ public final class MainActivity extends AppCompatActivity implements LifecycleRe
         // delete m3u playlist file
         File stationPlaylistFile = station.getStationPlaylistFile();
         if (stationPlaylistFile != null && stationPlaylistFile.exists() && stationPlaylistFile.delete()) {
-            success = true;;
+            success = true;
         }
 
         // remove station and notify user
@@ -349,20 +358,22 @@ public final class MainActivity extends AppCompatActivity implements LifecycleRe
             // remove station from new station list
             newStationList.remove(stationId);
             // determine ID of next station
-            if (newStationList.size() >= stationId) {
+            if (newStationList.size() >= stationId && stationId > 0) {
                 stationId--;
+            } else {
+                stationId = 0;
             }
 
             // show next station in list
             Fragment listFragment = getSupportFragmentManager().findFragmentByTag(LIST_FRAGMENT_TAG);
-            if (mTwoPane && listFragment!= null && listFragment.isAdded() && stationId > 0) {
-                ((ListFragment)listFragment).updateListAfterDelete(mStationList.get(stationId), stationId);
+            if (mTwoPane && listFragment!= null && listFragment.isAdded() && newStationList.size() > 0) {
+                ((ListFragment)listFragment).updateListAfterDelete(newStationList.get(stationId), stationId);
             }
 
             // show next station in player view
             Fragment playerFragment = getSupportFragmentManager().findFragmentByTag(PLAYER_FRAGMENT_TAG);
-            if (mTwoPane && playerFragment!= null && playerFragment.isAdded() && stationId > 0) {
-                ((PlayerFragment)playerFragment).updatePlayerAfterDelete(mStationList.get(stationId));
+            if (mTwoPane && playerFragment!= null && playerFragment.isAdded() && newStationList.size() > 0) {
+                ((PlayerFragment)playerFragment).updatePlayerAfterDelete(newStationList.get(stationId));
             }
 
             // update live data list of stations - used in CollectionAdapter
