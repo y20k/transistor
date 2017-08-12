@@ -45,21 +45,20 @@ public final class NotificationHelper implements TransistorKeys {
 
     /* Main class variables */
     private static Notification mNotification;
-    private static Service mService;
+//    private static Service mService;
     private static MediaSessionCompat mSession;
 
 
     /* Create and put up notification */
-    public static void show(final Service service, MediaSessionCompat session, Station station) {
+    public static void show(Service service, MediaSessionCompat session, Station station) {
         // save service and session
-        mService = service;
         mSession = session;
 
         // create notification channel
-        createNotificationChannel();
+        createNotificationChannel(service);
 
         // build notification
-        mNotification = getNotificationBuilder(station).build();
+        mNotification = getNotificationBuilder(service, station).build();
 
         // display notification
         service.startForeground(PLAYER_SERVICE_NOTIFICATION_ID, mNotification);
@@ -67,7 +66,7 @@ public final class NotificationHelper implements TransistorKeys {
 
 
     /* Updates the notification */
-    public static void update(Station station, MediaSessionCompat session) {
+    public static void update(final Service service, Station station, MediaSessionCompat session) {
 
         // session can be null on update - happens when currently playing station was renamed
         if (session != null) {
@@ -76,51 +75,51 @@ public final class NotificationHelper implements TransistorKeys {
         }
 
         // build notification
-        mNotification = getNotificationBuilder(station).build();
+        mNotification = getNotificationBuilder(service, station).build();
 
         // display updated notification
-        NotificationManager notificationManager = (NotificationManager) mService.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) service.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(PLAYER_SERVICE_NOTIFICATION_ID, mNotification);
 
         if (station.getPlaybackState() == PLAYBACK_STATE_STOPPED) {
             // make notification swipe-able
-            mService.stopForeground(false);
+            service.stopForeground(false);
         }
 
     }
 
 
     /* Stop displaying notification */
-    public static void stop() {
-        if (mService != null) {
-            mService.stopForeground(true);
+    public static void stop(Service service) {
+        if (service != null) {
+            service.stopForeground(true);
         }
     }
 
 
     /* Creates a notification builder */
-    private static NotificationCompat.Builder getNotificationBuilder(Station station) {
+    private static NotificationCompat.Builder getNotificationBuilder(Context context, Station station) {
 
         // explicit intent for notification tap
-        Intent tapActionIntent = new Intent(mService, MainActivity.class);
+        Intent tapActionIntent = new Intent(context, MainActivity.class);
         tapActionIntent.setAction(ACTION_SHOW_PLAYER);
         tapActionIntent.putExtra(EXTRA_STATION, station);
 
         // explicit intent for stopping playback
-        Intent stopActionIntent = new Intent(mService, PlayerService.class);
+        Intent stopActionIntent = new Intent(context, PlayerService.class);
         stopActionIntent.setAction(ACTION_STOP);
 
         // explicit intent for starting playback
-        Intent playActionIntent = new Intent(mService, PlayerService.class);
+        Intent playActionIntent = new Intent(context, PlayerService.class);
         playActionIntent.setAction(ACTION_PLAY);
 
         // explicit intent for swiping notification
-        Intent swipeActionIntent = new Intent(mService, PlayerService.class);
+        Intent swipeActionIntent = new Intent(context, PlayerService.class);
         swipeActionIntent.setAction(ACTION_DISMISS);
 
         // artificial back stack for started Activity.
         // -> navigating backward from the Activity leads to Home screen.
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(mService);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
 //        // backstack: adds back stack for Intent (but not the Intent itself)
 //        stackBuilder.addParentStack(MainActivity.class);
         // backstack: add explicit intent for notification tap
@@ -130,11 +129,11 @@ public final class NotificationHelper implements TransistorKeys {
         PendingIntent tapActionPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 //        PendingIntent tapActionPendingIntent = PendingIntent.getService(mService, 0, tapActionIntent, 0);
         // pending intent wrapper for notification stop action
-        PendingIntent stopActionPendingIntent = PendingIntent.getService(mService, 10, stopActionIntent, 0);
+        PendingIntent stopActionPendingIntent = PendingIntent.getService(context, 10, stopActionIntent, 0);
         // pending intent wrapper for notification start action
-        PendingIntent playActionPendingIntent = PendingIntent.getService(mService, 11, playActionIntent, 0);
+        PendingIntent playActionPendingIntent = PendingIntent.getService(context, 11, playActionIntent, 0);
         // pending intent wrapper for notification swipe action
-        PendingIntent swipeActionPendingIntent = PendingIntent.getService(mService, 12, swipeActionIntent, 0);
+        PendingIntent swipeActionPendingIntent = PendingIntent.getService(context, 12, swipeActionIntent, 0);
 
         // create media style
         android.support.v4.media.app.NotificationCompat.MediaStyle style = new android.support.v4.media.app.NotificationCompat.MediaStyle();
@@ -145,10 +144,10 @@ public final class NotificationHelper implements TransistorKeys {
 
         // construct notification in builder
         NotificationCompat.Builder builder;
-        builder = new NotificationCompat.Builder(mService, NOTIFICATION_CHANEL_ID_PLAYBACK_CHANNEL);
+        builder = new NotificationCompat.Builder(context, NOTIFICATION_CHANEL_ID_PLAYBACK_CHANNEL);
         builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
         builder.setSmallIcon(R.drawable.ic_notification_small_24dp);
-        builder.setLargeIcon(getStationIcon(mService, station));
+        builder.setLargeIcon(getStationIcon(context, station));
         builder.setContentTitle(station.getStationName());
         builder.setContentText(station.getMetadata());
         builder.setShowWhen(false);
@@ -158,9 +157,9 @@ public final class NotificationHelper implements TransistorKeys {
         builder.setDeleteIntent(swipeActionPendingIntent);
 
         if (station.getPlaybackState() != PLAYBACK_STATE_STOPPED) {
-            builder.addAction(R.drawable.ic_stop_white_36dp, mService.getString(R.string.notification_stop), stopActionPendingIntent);
+            builder.addAction(R.drawable.ic_stop_white_36dp, context.getString(R.string.notification_stop), stopActionPendingIntent);
         } else {
-            builder.addAction(R.drawable.ic_play_arrow_white_36dp, mService.getString(R.string.notification_play), playActionPendingIntent);
+            builder.addAction(R.drawable.ic_play_arrow_white_36dp, context.getString(R.string.notification_play), playActionPendingIntent);
         }
 
         return builder;
@@ -192,20 +191,20 @@ public final class NotificationHelper implements TransistorKeys {
 
 
     /* Create a notification channel */
-    private static boolean createNotificationChannel() {
+    private static boolean createNotificationChannel(Context context) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // API level 26 ("Android O") supports notification channels.
             String id = NOTIFICATION_CHANEL_ID_PLAYBACK_CHANNEL;
-            CharSequence name = mService.getString(R.string.notification_channel_playback_name);
-            String description = mService.getString(R.string.notification_channel_playback_description);
+            CharSequence name = context.getString(R.string.notification_channel_playback_name);
+            String description = context.getString(R.string.notification_channel_playback_description);
             int importance = NotificationManager.IMPORTANCE_LOW;
 
             // create channel
             NotificationChannel channel = new NotificationChannel(id, name, importance);
             channel.setDescription(description);
 
-            NotificationManager mNotificationManager = (NotificationManager) mService.getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             mNotificationManager.createNotificationChannel(channel);
             return true;
 

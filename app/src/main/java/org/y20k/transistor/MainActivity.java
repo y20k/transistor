@@ -337,7 +337,7 @@ public final class MainActivity extends AppCompatActivity implements LifecycleRe
         // delete png image file
         File stationImageFile = station.getStationImageFile();
         if (stationImageFile != null && stationImageFile.exists() && stationImageFile.delete()) {
-            success = true;;
+            success = true;
         }
 
         // delete m3u playlist file

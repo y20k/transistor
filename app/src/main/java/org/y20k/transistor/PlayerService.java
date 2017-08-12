@@ -54,6 +54,7 @@ import com.google.android.exoplayer2.PlaybackParameters;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.Timeline;
+import com.google.android.exoplayer2.audio.AudioAttributes;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
 import com.google.android.exoplayer2.extractor.ExtractorsFactory;
 import com.google.android.exoplayer2.metadata.Metadata;
@@ -87,10 +88,10 @@ import java.util.List;
 import static com.google.android.exoplayer2.ExoPlaybackException.TYPE_RENDERER;
 import static com.google.android.exoplayer2.ExoPlaybackException.TYPE_SOURCE;
 import static com.google.android.exoplayer2.ExoPlaybackException.TYPE_UNEXPECTED;
-import static com.google.android.exoplayer2.ExoPlayer.STATE_BUFFERING;
-import static com.google.android.exoplayer2.ExoPlayer.STATE_ENDED;
-import static com.google.android.exoplayer2.ExoPlayer.STATE_IDLE;
-import static com.google.android.exoplayer2.ExoPlayer.STATE_READY;
+import static com.google.android.exoplayer2.Player.STATE_BUFFERING;
+import static com.google.android.exoplayer2.Player.STATE_ENDED;
+import static com.google.android.exoplayer2.Player.STATE_IDLE;
+import static com.google.android.exoplayer2.Player.STATE_READY;
 
 
 /**
@@ -221,7 +222,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
                 // update notification
                 mStation.setMetadata(this.getString(R.string.descr_station_stream_loading));
-                NotificationHelper.update(mStation, mSession);
+                NotificationHelper.update(this, mStation, mSession);
 
                 // send local broadcast: buffering
                 Intent intentStateBuffering = new Intent();
@@ -263,7 +264,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
                 }
 
                 // update notification
-                NotificationHelper.update(mStation, mSession);
+                NotificationHelper.update(this, mStation, mSession);
 
                 break;
 
@@ -404,7 +405,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
                 if (mStation.getPlaybackState() != PLAYBACK_STATE_STOPPED && mExoPlayer != null && mExoPlayer.getPlayWhenReady()) {
                     mAudioFocusLossTransient = true;
-                    mController.getTransportControls().pause();;
+                    mController.getTransportControls().pause();
                 }
                 else if (mStation.getPlaybackState() == PLAYBACK_STATE_STOPPED && mExoPlayer != null && mExoPlayer.getPlayWhenReady()) {
                     mAudioFocusLossTransient = true;
@@ -562,12 +563,12 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
         if (dismissNotification) {
             // dismiss notification
-            NotificationHelper.stop();
+            NotificationHelper.stop(this);
             // don't keep media session active
             mSession.setActive(false);
         } else {
             // update notification
-            NotificationHelper.update(mStation, mSession);
+            NotificationHelper.update(this, mStation, mSession);
             // keep media session active
             mSession.setActive(true);
         }
@@ -855,7 +856,11 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
                 mExoPlayer.addListener(PlayerService.this);
 
                 // set content type
-                mExoPlayer.setAudioStreamType(C.STREAM_TYPE_MUSIC);
+                mExoPlayer.setAudioAttributes(new AudioAttributes.Builder()
+                                .setUsage(C.USAGE_MEDIA)
+                                .setContentType(C.CONTENT_TYPE_MUSIC)
+                                .build()
+                        );
             }
         }
 
@@ -913,7 +918,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
                 mSession.setMetadata(getSessionMetadata(getApplicationContext(), mStation));
 
                 // update notification
-                NotificationHelper.update(mStation, mSession);
+                NotificationHelper.update(PlayerService.this, mStation, mSession);
 
             }
         }

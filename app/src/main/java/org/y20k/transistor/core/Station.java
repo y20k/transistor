@@ -178,7 +178,7 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
         // set playback state
         mPlayback = PLAYBACK_STATE_STOPPED;
 
-        // initialize variables that are set during playback to defaul values
+        // initialize variables that are set during playback to default values
         initializePlaybackMetadata();
     }
 
@@ -219,14 +219,14 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
         // set playback state
         mPlayback = PLAYBACK_STATE_STOPPED;
 
-        // initialize variables that are set during playback to defaul values
+        // initialize variables that are set during playback to default values
         initializePlaybackMetadata();
     }
 
 
     /* Copy Constructor */
     public Station(Station station) {
-        this(station.getStationImageFile(), station.getStationImageSize(), station.getStationName(), station.getStationPlaylistFile(), station.getStreamUri(), station.getplaylistFileContent(), station.getPlaybackState(), station.getMetadata(), station.getMimeType(), station.getChannelCount(), station.getSampleRate(), station.getBitrate(), station.getStationFetchResults());
+        this(station.getStationImageFile(), station.getStationImageSize(), station.getStationName(), station.getStationPlaylistFile(), station.getStreamUri(), station.getPlaylistFileContent(), station.getPlaybackState(), station.getMetadata(), station.getMimeType(), station.getChannelCount(), station.getSampleRate(), station.getBitrate(), station.getStationFetchResults());
     }
 
 
@@ -568,7 +568,7 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
                 connection = (HttpURLConnection) new URL(newUrl).openConnection();
             }
 
-            // get image daata and decode stream
+            // get image data and decode stream
             InputStream inputStream = connection.getInputStream();
             stationImage = BitmapFactory.decodeStream(inputStream);
 
@@ -654,7 +654,7 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
 
 
     /* Getter for Content of playlist file */
-    public String getplaylistFileContent() {
+    public String getPlaylistFileContent() {
         return mPlaylistFileContent;
     }
 

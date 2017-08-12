@@ -69,8 +69,8 @@ public final class InfosheetFragment extends Fragment implements TransistorKeys 
                 mActivity.setTitle(arguments.getString(ARG_INFOSHEET_TITLE));
             }
             // set view
-            View aboutView = rootView.findViewById(R.id.infosheet_content_about);;
-            View howtoView = rootView.findViewById(R.id.infosheet_content_howto);;
+            View aboutView = rootView.findViewById(R.id.infosheet_content_about);
+            View howtoView = rootView.findViewById(R.id.infosheet_content_howto);
             if (arguments.containsKey(ARG_INFOSHEET_CONTENT) && arguments.getInt(ARG_INFOSHEET_CONTENT) == (INFOSHEET_CONTENT_ABOUT)) {
                 aboutView.setVisibility(View.VISIBLE);
                 howtoView.setVisibility(View.GONE);

@@ -122,7 +122,7 @@ public final class ListFragment extends Fragment implements TransistorKeys {
         loadAppState(mActivity);
 
         // create collection adapter
-        mCollectionAdapter = new CollectionAdapter(mActivity, mStorageHelper.getCollectionDirectory(), mTwoPane, null);
+        mCollectionAdapter = new CollectionAdapter(mActivity, mTwoPane, null);
 
         // initialize broadcast receivers
         initializeBroadcastReceivers();

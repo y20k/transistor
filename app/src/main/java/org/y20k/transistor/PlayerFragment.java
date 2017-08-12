@@ -501,12 +501,12 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
 
         switch (station.getPlaybackState()) {
             case PLAYBACK_STATE_STOPPED:
-                Animation rotateCounterClockwise = AnimationUtils.loadAnimation(mActivity, R.anim.rotate_counterclockwise_fast);;
+                Animation rotateCounterClockwise = AnimationUtils.loadAnimation(mActivity, R.anim.rotate_counterclockwise_fast);
                 rotateCounterClockwise.setAnimationListener(createAnimationListener());
                 mPlaybackButton.startAnimation(rotateCounterClockwise);
                 break;
             case PLAYBACK_STATE_LOADING_STATION:
-                Animation rotateClockwise = AnimationUtils.loadAnimation(mActivity, R.anim.rotate_clockwise_slow);;
+                Animation rotateClockwise = AnimationUtils.loadAnimation(mActivity, R.anim.rotate_clockwise_slow);
                 rotateClockwise.setAnimationListener(createAnimationListener());
                 mPlaybackButton.startAnimation(rotateClockwise);
                 break;
@@ -594,7 +594,7 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
     }
 
 
-    /* Fill the extended metadata sheez */
+    /* Fill the extended metadata sheet */
     private void displayExtendedMetaData(Station station) {
         // fill and show mime type bottom sheet view
         if (station.getMimeType() != null) {

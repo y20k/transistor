@@ -66,25 +66,20 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
 
     /* Main class variables */
     private Activity mActivity;
-    private final File mFolder;
     private CollectionViewModel mCollectionViewModel;
     private BroadcastReceiver mPlaybackStateChangedReceiver;
     private BroadcastReceiver mMetadataChangedReceiver;
-    private Station mStation;
     private Uri mStationUriSelected;
-//    private String mStationUrlLast;
     private boolean mTwoPane;
     private ArrayList<Station> mStationList;
 
 
     /* Constructor */
-    public CollectionAdapter(Activity activity, File folder, boolean twoPane, Uri stationUriSelected) {
+    public CollectionAdapter(Activity activity, boolean twoPane, Uri stationUriSelected) {
         // set initial values
         mActivity = activity;
-        mFolder = folder;
         mTwoPane = twoPane;
         mStationUriSelected = stationUriSelected;
-        mStation = null;
 
         // create empty station list
         mStationList = new ArrayList<Station>();
