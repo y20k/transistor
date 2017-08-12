@@ -93,7 +93,7 @@
     <string name="toastmessage_list_refreshed">Reloading list of stations.</string>
     <string name="toastmessage_copied_to_clipboard_url">Stream URL copied to clipboard.</string>
     <string name="toastmessage_copied_to_clipboard_metadata">Metadata copied to clipboard.</string>
-    <string name="toastmessage_station_copied">Station copiée.</string>
+    <string name="toastmessage_station_copied">Station copiée dans le presse-papier.</string>
     <string name="toastmessage_stream_may_not_work">Format audio non pris en charge détecté. La lecture du flux peut ne pas fonctionner correctement.</string>
     <string name="toastmessage_timer_activated">Minuteur de veille activé.</string>
     <string name="toastmessage_timer_cancelled">Minuteur de veille annulé.</string>
