@@ -8,7 +8,7 @@
     <!-- menu entries -->
     <string name="menu_about">О програму</string>
     <string name="menu_howto">Како се користи</string>
-    <string name="menu_refresh">Refresh list</string>
+    <string name="menu_refresh">Освежи списак</string>
     <string name="menu_timer">Тајмер</string>
     <string name="menu_icon">Промени икону</string>
     <string name="menu_add">Додај</string>
@@ -44,9 +44,9 @@
     <string name="player_sheet_h1_station_metadata">Тренутно пуштање</string>
     <string name="player_sheet_h1_stream_url">УРЛ тока</string>
     <string name="player_sheet_p_station_metadata">нема доступних метаподатака</string>
-    <string name="player_sheet_h1_station_mime_type">MIME type</string>
-    <string name="player_sheet_h1_station_channel_count">Channel count</string>
-    <string name="player_sheet_h1_station_sample_rate">Sample rate</string>
+    <string name="player_sheet_h1_station_mime_type">МИМЕ тип</string>
+    <string name="player_sheet_h1_station_channel_count">Број канала</string>
+    <string name="player_sheet_h1_station_sample_rate">Узорковање</string>
     <string name="player_sheet_h1_station_bitrate">Bitrate</string>
 
     <!-- dialogs -->
@@ -89,8 +89,8 @@
     <string name="toastmessage_long_press_playback_stopped">Пуштање заустављено (примећен дуги тап)</string>
     <string name="toastmessage_long_press_playback_started">Пуштање почето (примећен дуги тап)</string>
     <string name="toastmessage_shortcut_created">Пречица направљена.</string>
-    <string name="toastmessage_shortcut_not_created">Shortcut not created. This device does not allow the creation of shortcuts.</string>
-    <string name="toastmessage_list_refreshed">Reloading list of stations.</string>
+    <string name="toastmessage_shortcut_not_created">Пречица није направљена. Овај уређај не допушта прављење пречица.</string>
+    <string name="toastmessage_list_refreshed">Поново учитавам списак станица.</string>
     <string name="toastmessage_copied_to_clipboard_url">УРЛ тока копиран на клипборд.</string>
     <string name="toastmessage_copied_to_clipboard_metadata">Метаподаци копирани на клипборд.</string>
     <string name="toastmessage_station_copied">Станица копирана на клипборд.</string>
@@ -99,7 +99,7 @@
     <string name="toastmessage_timer_cancelled">Тајмер отказан.</string>
     <string name="toastmessage_timer_duration_increased">Трајање повећано.</string>
     <string name="toastmessage_timer_start_unable">Најпре почните пуштање.</string>
-    <string name="toastalert_unable_to_connect">Unable to connect. Device does not have an internet connection or stream may be outdated.</string>
+    <string name="toastalert_unable_to_connect">Не могу да се повежем. Уређај нема везу са интернетом или је ток застарио.</string>
     <string name="toastalert_rename_unsuccessful">Не могох да преименујем станицу. Унесите други назив.</string>
     <string name="toastalert_delete_successful">Станица је уклоњена.</string>
     <string name="toastalert_no_external_storage">Не могох да приступим спољашњем складишту.</string>
@@ -115,8 +115,8 @@
     <string name="notification_stop">Заустави</string>
     <string name="notification_swipe_to_stop">Превуците да зауставите</string>
     <string name="notification_playing">Пуштам</string>
-    <string name="notification_channel_playback_name">Playback Controls</string>
-    <string name="notification_channel_playback_description">Playback controls, station logo and now playing info.</string>
+    <string name="notification_channel_playback_name">Контроле пуштања</string>
+    <string name="notification_channel_playback_description">Контроле пуштања, лого станице и подаци о тренутно пуштеном.</string>
 
     <!-- infosheet about -->
     <string name="infosheet_about_h1_about">О Транзистору</string>
