@@ -6,7 +6,7 @@ Transistor - Radio App for Android
 
 **Version 2.3.x ("Kooks")**
 
-Transistor is a bare bones app for listening to radio programs over the internet. The app stores stations as files on your device's external storage. It currently understands streams encoded in MP3, AAC and Ogg/Opus.
+Transistor is a bare bones app for listening to radio programs over the internet. The app stores stations as files on your device's external storage. It currently understands streams encoded in MP3, AAC and Ogg/Opus(*).
 
 Important note: This is an app of type BYOS ("bring your own station"). It does not feature any kind of built-in search option. You will have to manually add radio stations.
 
@@ -66,3 +66,5 @@ Tapping and holding a radio station will toggle a tiny vibration.
 
 ### Permission "WAKE_LOCK"
 During Playback Transistor acquires a so called partial wake lock. That prevents the Android system to stop playback for power saving reasons.
+
+(*) Opus playback is only supported on devices running Android 5.0+

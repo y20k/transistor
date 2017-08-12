@@ -89,9 +89,6 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
         // create empty station list
         mStationList = new ArrayList<Station>();
 
-//        // load state
-//        loadAppState(mActivity);
-
         // initialize BroadcastReceiver that listens for playback changes
         initializeBroadcastReceivers();
 
@@ -99,7 +96,6 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
         mCollectionViewModel = ViewModelProviders.of((AppCompatActivity)mActivity).get(CollectionViewModel.class);
         mCollectionViewModel.getTwoPane().observe((LifecycleOwner)mActivity, createTwoPaneObserver());
         mCollectionViewModel.getStationList().observe((LifecycleOwner) mActivity, createStationListObserver());
-
 
     }
 
@@ -227,6 +223,12 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
     /* Setter for mStationUriSelected */
     public void setStationUriSelected(Uri stationUriSelected) {
         mStationUriSelected = stationUriSelected;
+        if (mTwoPane) {
+            int stationID = StationListHelper.findStationId(mStationList, stationUriSelected);
+            if (stationID >= 0 && stationID < mStationList.size()) {
+                notifyItemChanged(stationID);
+            }
+        }
         saveAppState(mActivity);
     }
 
@@ -487,23 +489,20 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
                 // inform this adapter about the changes
                 diffResult.dispatchUpdatesTo(CollectionAdapter.this);
 
-                // FIRST RUN:
-                if (mTwoPane && mStationUriSelected == null && newStationList.size() != 0) {
+                // FIRST RUN: retrieve mStationUriSelected
+                if (mStationUriSelected == null && newStationList.size() != 0) {
                     // load state - get mStationUrlSelected
                     loadAppState(mActivity);
-                    // if mStationUrlSelected still null
-                    if (mStationUriSelected == null) {
+                    // check if mStationUrlSelected still is null or if station is not in list
+                    if (mStationUriSelected == null || StationListHelper.findStationId(newStationList, mStationUriSelected) == -1) {
+                        // set first station as selected
                         mStationUriSelected = newStationList.get(0).getStreamUri();
-                        showPlayerFragment(newStationList.get(0), false);
-                    } else if (StationListHelper.findStationId(newStationList, mStationUriSelected) != -1) {
+                    }
+                    // tablet mode
+                    if (mTwoPane && mStationUriSelected != null) {
+                        // show player fragment with station corresponding to mStationUriSelected
                         showPlayerFragment(StationListHelper.findStation(newStationList, mStationUriSelected), false);
                     }
-                }
-
-                // check if mStationUriSelected still corresponds with a station in list
-                int StationIdSelected = StationListHelper.findStationId(newStationList, mStationUriSelected);
-                if (mTwoPane && StationIdSelected == -1) {
-                    mStationUriSelected = newStationList.get(0).getStreamUri();
                 }
 
            }

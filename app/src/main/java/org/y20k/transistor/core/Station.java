@@ -536,6 +536,10 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
 
         LogHelper.v(LOG_TAG, "fetching favicon: " + mStationImageFile.toString());
 
+        //
+        Bitmap stationImage = null;
+
+
         // Get favicon address
         String host = stationURL.getHost();
         if (!host.startsWith("www")) {
@@ -566,12 +570,18 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
 
             // get image daata and decode stream
             InputStream inputStream = connection.getInputStream();
-            return BitmapFactory.decodeStream(inputStream);
+            stationImage = BitmapFactory.decodeStream(inputStream);
+
+            // close stream and disconnect connection
+            inputStream.close();
+            connection.disconnect();
+
+            return stationImage;
 
         } catch (IOException e) {
             LogHelper.e(LOG_TAG, "Unable to load favicon from URL: " + faviconUrlString);
             e.printStackTrace();
-            return null;
+            return stationImage;
         }
     }
 
