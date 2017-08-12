@@ -7,7 +7,7 @@
 
     <!-- app shortcuts -->
     <string name="shortcut_last_station_short_label">Last station</string>
-    <string name="shortcut_last_station_long_label">Play last station</string>
+    <string name="shortcut_last_station_long_label">Пусти претходну станицу</string>
     <string name="shortcut_last_station_disabled_message">Shortcut for playback of last station disabled.</string>
 
     <!-- menu entries -->
