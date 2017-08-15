@@ -529,7 +529,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             Intent intent = new Intent();
             intent.setAction(ACTION_PLAYBACK_STATE_CHANGED);
             intent.putExtra(EXTRA_ERROR_OCCURED, true);
-            LocalBroadcastManager.getInstance(this.getApplication()).sendBroadcast(intent);
+            LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 
             stopSelf();
             return;

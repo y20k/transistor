@@ -121,8 +121,6 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
 
         // determine content type of remote file
         ContentType contentType = getContentType(fileLocation);
-        LogHelper.v(LOG_TAG, "Content type of given file is " + contentType);
-
 
         // content type is raw audio file
         if (isAudioFile(contentType)) {
@@ -156,7 +154,7 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
             }
 
         // content type is none of the above
-        } else if (contentType != null) {
+        } else if (contentType != null && contentType.type != null) {
             // save results and return
             mStationFetchResults.putParcelable(RESULT_STREAM_TYPE, contentType);
             mStationFetchResults.putBoolean(RESULT_FETCH_ERROR, true);
@@ -398,6 +396,7 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
             }
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
         return null;
     }
@@ -405,7 +404,7 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
 
     /* Determines if given content type is a playlist */
     private boolean isPlaylist(ContentType contentType) {
-        if (contentType != null) {
+        if (contentType != null && contentType.type != null) {
             for (String[] array : new String[][]{CONTENT_TYPES_PLS, CONTENT_TYPES_M3U, CONTENT_TYPES_HLS}) {
                 if (Arrays.asList(array).contains(contentType.type)) {
                     return true;
@@ -418,7 +417,7 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
 
     /* Determines if given content type is an audio file */
     private boolean isAudioFile(ContentType contentType) {
-        if (contentType != null) {
+        if (contentType != null && contentType.type != null) {
             for (String[] array : new String[][]{CONTENT_TYPES_MPEG, CONTENT_TYPES_OGG, CONTENT_TYPES_AAC}) {
                 if (Arrays.asList(array).contains(contentType.type)) {
                     return true;
@@ -807,9 +806,10 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
         String type;
         String charset;
 
-
-        /* Constructor (default) */
+        /* Constructor */
         public ContentType() {
+            type = null;
+            charset = null;
         }
 
         /* Constructor used by CREATOR */
@@ -844,7 +844,19 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
 
         @Override
         public String toString() {
-            return "ContentType{type='" + type + "'" + ", charset='" + charset + "'}";
+            String typeString;
+            String charsetString;
+            if (type == null) {
+                typeString = "NULL";
+            } else {
+                typeString = type;
+            }
+            if (charset == null) {
+                charsetString = "NULL";
+            } else {
+                charsetString = charset;
+            }
+            return "ContentType{type='" + typeString + "'" + ", charset='" + charsetString + "'}";
         }
 
     }

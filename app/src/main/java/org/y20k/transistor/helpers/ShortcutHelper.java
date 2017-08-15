@@ -16,12 +16,12 @@ package org.y20k.transistor.helpers;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ShortcutInfo;
-import android.content.pm.ShortcutManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Icon;
 import android.os.Build;
+import android.support.v4.content.pm.ShortcutInfoCompat;
+import android.support.v4.content.pm.ShortcutManagerCompat;
+import android.support.v4.graphics.drawable.IconCompat;
 import android.widget.Toast;
 
 import org.y20k.transistor.MainActivity;
@@ -51,34 +51,19 @@ public class ShortcutHelper implements TransistorKeys {
     /* Places shortcut on Home screen */
     public void placeShortcut(Station station) {
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            // from API level 26 ("Android O") on shortcuts are handled by ShortcutManager
-            ShortcutManager shortcutManager = mContext.getSystemService(ShortcutManager.class);
-            if (shortcutManager.isRequestPinShortcutSupported()) {
-                ShortcutInfo shortcut = new ShortcutInfo.Builder(mContext, station.getStationName())
-                        .setShortLabel(station.getStationName())
-                        .setLongLabel(station.getStationName())
-                        .setIcon(Icon.createWithBitmap(createShortcutIcon(station)))
-                        .setIntent(createShortcutIntent(station))
-                        .build();
-                shortcutManager.requestPinShortcut(shortcut, null);
-                Toast.makeText(mContext, mContext.getString(R.string.toastmessage_shortcut_created), Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(mContext, mContext.getString(R.string.toastmessage_shortcut_not_created), Toast.LENGTH_LONG).show();
-            }
-
-         } else {
-            // the pre 26 way: create and launch intent put shortcut on Home screen
-            Intent addIntent = new Intent();
-            addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, station.getStationName());
-            addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON, createShortcutIcon(station));
-            addIntent.putExtra("duplicate", false);
-            addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, createShortcutIntent(station));
-            addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
-            mContext.getApplicationContext().sendBroadcast(addIntent);
+        // credit: https://medium.com/@BladeCoder/using-support-library-26-0-0-you-can-do-bb75911e01e8
+        if (ShortcutManagerCompat.isRequestPinShortcutSupported(mContext)) {
+            ShortcutInfoCompat shortcut = new ShortcutInfoCompat.Builder(mContext, station.getStationName())
+                    .setShortLabel(station.getStationName())
+                    .setLongLabel(station.getStationName())
+                    .setIcon(IconCompat.createWithBitmap(createShortcutIcon(station)))
+                    .setIntent(createShortcutIntent(station))
+                    .build();
+            ShortcutManagerCompat.requestPinShortcut(mContext, shortcut, null);
             Toast.makeText(mContext, mContext.getString(R.string.toastmessage_shortcut_created), Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(mContext, mContext.getString(R.string.toastmessage_shortcut_not_created), Toast.LENGTH_LONG).show();
         }
-
 
     }
 

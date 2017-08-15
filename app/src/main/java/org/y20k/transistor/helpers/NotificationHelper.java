@@ -45,7 +45,6 @@ public final class NotificationHelper implements TransistorKeys {
 
     /* Main class variables */
     private static Notification mNotification;
-//    private static Service mService;
     private static MediaSessionCompat mSession;
 
 
@@ -152,7 +151,6 @@ public final class NotificationHelper implements TransistorKeys {
         builder.setContentText(station.getMetadata());
         builder.setShowWhen(false);
         builder.setStyle(style);
-//        builder.setChannelId(NOTIFICATION_CHANEL_ID_PLAYBACK_CHANNEL);
         builder.setContentIntent(tapActionPendingIntent);
         builder.setDeleteIntent(swipeActionPendingIntent);
 

@@ -100,7 +100,6 @@ public interface TransistorKeys {
     int HOLDER_UPDATE_IMAGE = 3;
 
     /* SAVED INSTANCE STATE */
-    String INSTANCE_LIST_STATE = "instanceListState";
     String INSTANCE_STATION = "instanceStation";
 
     /* CLIPBOARD COPY TYPES */
@@ -108,7 +107,7 @@ public interface TransistorKeys {
     int COPY_STATION_METADATA = 2;
     int COPY_STREAM_URL = 3;
 
-    /* CCONNECTION TYPES */
+    /* CONNECTION TYPES */
     int CONNECTION_TYPE_HLS = 1;
     int CONNECTION_TYPE_OTHER = 2;
     int CONNECTION_TYPE_ERROR = 3;
