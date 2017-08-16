@@ -522,19 +522,17 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     /* Stops playback */
     private void stopPlayback(boolean dismissNotification) {
         // check for null - can happen after a crash during playback
-        if (mStation == null || !mExoPlayer.getPlayWhenReady() || mSession== null) {
-            LogHelper.e(LOG_TAG, "Stopping playback. Station is null.");
+        if (mStation == null || mExoPlayer == null || !mExoPlayer.getPlayWhenReady() || mSession == null) {
+            LogHelper.e(LOG_TAG, "Stopping playback. An error occurred. Station is probably NULL.");
             saveAppState();
             // send local broadcast: playback stopped
             Intent intent = new Intent();
             intent.setAction(ACTION_PLAYBACK_STATE_CHANGED);
             intent.putExtra(EXTRA_ERROR_OCCURED, true);
             LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
-
+            // stop player service
             stopSelf();
             return;
-        } else {
-            LogHelper.v(LOG_TAG, "Stopping playback. Station name:" + mStation.getStationName());
         }
 
         // set and save state
@@ -554,6 +552,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         // stop playback
         mExoPlayer.setPlayWhenReady(false); // todo empty buffer
         mExoPlayer.stop();
+        LogHelper.v(LOG_TAG, "Stopping playback. Station name:" + mStation.getStationName());
 
         // give up audio focus
         giveUpAudioFocus();

@@ -362,7 +362,6 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
             // determine content type of remote file
             URL streamURL = new URL(streamUri.toString());
             return getContentType(streamURL);
-
         } catch (MalformedURLException e) {
             e.printStackTrace();
             return null;
@@ -533,11 +532,14 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
     /* Fetches station image from the internet */
     public Bitmap fetchImageFile(URL stationURL) {
 
-        LogHelper.v(LOG_TAG, "fetching favicon: " + mStationImageFile.toString());
+        // check image file and url for null
+        if (mStationImageFile == null || stationURL == null) {
+            LogHelper.e(LOG_TAG, "Unable to fetch favicon.");
+            return null;
+        }
 
-        //
+        // initialize stationImage to NULL
         Bitmap stationImage = null;
-
 
         // Get favicon address
         String host = stationURL.getHost();
@@ -548,6 +550,7 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
         String faviconUrlString = "http://" + host + "/favicon.ico";
 
         // Try to get image from favicon location
+        LogHelper.v(LOG_TAG, "fetching favicon " + mStationImageFile.toString() + "from " + faviconUrlString);
         try {
             // open connection
             HttpURLConnection connection = (HttpURLConnection)(new URL(faviconUrlString).openConnection());
@@ -687,6 +690,7 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
         return mBitrate;
     }
 
+
     /* Setter for playlist file object of station */
     public void setStationPlaylistFile(File folder) {
         if (mStationName != null) {
@@ -695,6 +699,8 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
             // construct location of m3u playlist file from station name and folder
             String fileLocation = folder.toString() + "/" + stationNameCleaned + ".m3u";
             mStationPlaylistFile = new File(fileLocation);
+        } else {
+            mStationPlaylistFile = null;
         }
     }
 
@@ -709,6 +715,7 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
             mStationImageFile = new File(fileLocation);
             mStationImageSize = mStationImageFile.length();
         } else {
+            mStationImageFile = null;
             mStationImageSize = 0;
         }
     }
