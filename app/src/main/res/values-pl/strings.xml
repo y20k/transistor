@@ -1,6 +1,16 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources><string name="title_activity_infosheet">Informacje</string>
+<resources>
+    <!-- activities -->
+    <string name="app_name">Transistor</string><!-- please do not translate app_name - transcription into different alphabet types is fine though -->
+    <string name="title_fragment_player">Odtwarzanie</string>
+    <string name="title_activity_infosheet">Informacje</string>
 
+    <!-- app shortcuts -->
+    <string name="shortcut_last_station_short_label">Last Station</string>
+    <string name="shortcut_last_station_long_label">Start playback of last station</string>
+    <string name="shortcut_last_station_disabled_message">Shortcut for Last Station playback disabled.</string>
+
+    <!-- menu entries -->
     <string name="menu_about">O aplikacji</string>
     <string name="menu_howto">Instrukcja obsługi</string>
     <string name="menu_refresh">Refresh list</string>
@@ -11,9 +21,11 @@
     <string name="menu_rename">Zmień nazwę</string>
     <string name="menu_shortcut">Dodaj do ekranu głównego</string>
 
+    <!-- headers -->
     <string name="header_about">O aplikacji</string>
     <string name="header_howto">Instrukcja obsługi</string>
 
+    <!-- descriptions -->
     <string name="descr_arrow_actioncall">Strzałka wskazująca na przycisk dodawania stacji</string>
     <string name="descr_overflow_button">Wyświetl opcje dla stacji</string>
     <string name="descr_station_icon">Ikona stacji</string>
@@ -32,6 +44,7 @@
     <string name="descr_player_sheet_p_station_metadata">Metadane wybranej stacji</string>
     <string name="descr_player_sheet_p_stream_url">URL strumienia wybranej stacji</string>
 
+    <!-- player -->
     <string name="player_sheet_h1_station_name">Stacja</string>
     <string name="player_sheet_h1_station_metadata">Currently Playing</string>
     <string name="player_sheet_h1_stream_url">URL strumienia</string>
@@ -41,6 +54,7 @@
     <string name="player_sheet_h1_station_sample_rate">Sample rate</string>
     <string name="player_sheet_h1_station_bitrate">Bitrate</string>
 
+    <!-- dialogs -->
     <string name="dialog_generic_button_okay">Okej</string>
     <string name="dialog_generic_button_cancel">Anuluj</string>
     <string name="dialog_add_station_button">Dodaj</string>
@@ -53,6 +67,7 @@
     <string name="dialog_rename_station_message">Zmień nazwę stacji</string>
     <string name="dialog_button_rename">Zmień nazwę</string>
 
+    <!-- error dialogs -->
     <string name="dialog_error_title_default">Błąd</string>
     <string name="dialog_error_message_default">Wystąpił błąd</string>
     <string name="dialog_error_details_button_default">Pokaż szczegóły</string>
@@ -72,6 +87,7 @@
     <string name="dialog_error_message_fetch_read_file_location">Lokalizacja pliku:</string>
     <string name="dialog_error_message_fetch_write">Transistor próbował z całych sił, ale nie był w stanie zapisać podanej stacji do pamięci.</string>
 
+    <!-- messages -->
     <string name="actioncall_message_start_here">Dodaj nową stację</string>
     <string name="toastmessage_add_download_started">Pobieranie rozpoczęte.</string>
     <string name="toastmessage_add_open_file_started">Otwieranie pliku.</string>
@@ -99,6 +115,7 @@
     <string name="snackbar_request_storage_access">Transistor potrzebuje uprawnień odczytu w celu uzyskania dostępu do danych z pamięci zewnętrznej.</string>
     <string name="snackbar_message_timer_set">Wyłącznik czasowy ustawiony na</string>
 
+    <!-- notification -->
     <string name="notification_play">Play</string>
     <string name="notification_stop">Stop</string>
     <string name="notification_swipe_to_stop">Przesuń palcem, aby zatrzymać</string>
@@ -106,6 +123,7 @@
     <string name="notification_channel_playback_name">Playback Controls</string>
     <string name="notification_channel_playback_description">Playback controls, station logo and now playing info.</string>
 
+    <!-- infosheet about -->
     <string name="infosheet_about_h1_about">O Transistorze</string>
     <string name="infosheet_about_h2_radio">Aplikacja radiowa dla Androida</string>
     <string name="infosheet_about_h3_version">Wersja 2.3 (Kooks)</string>
@@ -126,6 +144,7 @@
     <string name="infosheet_about_h3_wakelock">Uprawnienie WAKE_LOCK</string>
     <string name="infosheet_about_p_wakelock">Podczas odtwarzania, Transistor używa częściowego \'wake locka\'. To sprawia, że Android nie będzie zatrzymywał odtwarzania, aby oszczędzić baterię.</string>
 
+    <!-- infosheet howto -->
     <string name="infosheet_howto_h1_howto">Instrukcja obsługi Transistora</string>
     <string name="infosheet_howto_h2_add">Jak dodać nową stację?</string>
     <string name="infosheet_howto_p_add">Najprostszym sposobem dodania nowej stacji jest wyszukiwanie linków strumieni w internecie i wybór Transistora jako domyślnej aplikacji obsługującej te typy plików. Możesz również stuknąć w symbol (+) w górnym pasku i bezpośrednio wkleić linki strumieniu. Uwaga: Transistor nie posiada żadnej opcji wyszukiwania.</string>
@@ -146,5 +165,4 @@
     <string name="infosheet_howto_h2_settings">Dlaczego Transistor nie ma żadnych ustawień?</string>
     <string name="infosheet_howto_p_settings">Nie ma nic do ustawiania ;). Transistor jest bardzo prostą aplikacją. W zależności od Twojego punktu widzenia to będzie albo świetne, albo słabe.</string>
 
-    <string name="app_name">Transistor</string> <string name="title_fragment_player">Odtwarzanie</string>
-    </resources>
+</resources>

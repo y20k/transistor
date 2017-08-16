@@ -74,6 +74,12 @@
                 <data android:pathPattern=".*\\.pls" />
             </intent-filter>
 
+
+            <!-- App Shortcuts -->
+            <meta-data android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+
+
         </activity>
 
         <!-- PLAYER SERVICE -->

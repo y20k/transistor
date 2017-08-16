@@ -5,6 +5,11 @@
     <string name="title_fragment_player">正在播放</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
     <string name="title_activity_infosheet">信息表</string>
 
+    <!-- app shortcuts -->
+    <string name="shortcut_last_station_short_label">Last Station</string>
+    <string name="shortcut_last_station_long_label">Start playback of last station</string>
+    <string name="shortcut_last_station_disabled_message">Shortcut for Last Station playback disabled.</string>
+
     <!-- menu entries -->
     <string name="menu_about">关于</string>
     <string name="menu_howto">如何使用</string>

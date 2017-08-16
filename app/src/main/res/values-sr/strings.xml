@@ -5,6 +5,11 @@
     <string name="title_fragment_player">Тренутно пуштање</string>
     <string name="title_activity_infosheet">Страница са подацима</string>
 
+    <!-- app shortcuts -->
+    <string name="shortcut_last_station_short_label">Last Station</string>
+    <string name="shortcut_last_station_long_label">Start playback of last station</string>
+    <string name="shortcut_last_station_disabled_message">Shortcut for Last Station playback disabled.</string>
+
     <!-- menu entries -->
     <string name="menu_about">О програму</string>
     <string name="menu_howto">Како се користи</string>
