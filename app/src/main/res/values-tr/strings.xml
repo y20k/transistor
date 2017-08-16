@@ -6,9 +6,9 @@
     <string name="descr_playback_indicator_started">Yürütülen oynatma için gösterge</string>
 
     <!-- app shortcuts -->
-    <string name="shortcut_last_station_short_label">Last Station</string>
-    <string name="shortcut_last_station_long_label">Last Station Playback</string>
-    <string name="shortcut_last_station_disabled_message">Shortcut for Last Station playback disabled.</string>
+    <string name="shortcut_last_station_short_label">Last station</string>
+    <string name="shortcut_last_station_long_label">Play last station</string>
+    <string name="shortcut_last_station_disabled_message">Shortcut for playback of last station disabled.</string>
 
     <!-- error dialogs -->
     <string name="dialog_error_details_default">Kullanılabilir ayrıntı yok</string>
