@@ -6,14 +6,14 @@
     <string name="title_activity_infosheet">情報シート</string>
 
     <!-- app shortcuts -->
-    <string name="shortcut_last_station_short_label">Last station</string>
+    <string name="shortcut_last_station_short_label">最後に聞いた局</string>
     <string name="shortcut_last_station_long_label">最後に聞いた局を再生</string>
-    <string name="shortcut_last_station_disabled_message">Shortcut for playback of last station disabled.</string>
+    <string name="shortcut_last_station_disabled_message">最後に聞いた局を再生するショートカットは無効です。</string>
 
     <!-- menu entries -->
     <string name="menu_about">アプリについて</string>
     <string name="menu_howto">使用方法</string>
-    <string name="menu_refresh">Refresh list</string>
+    <string name="menu_refresh">リストを更新</string>
     <string name="menu_timer">スリープタイマー</string>
     <string name="menu_icon">アイコンの変更</string>
     <string name="menu_add">追加</string>
@@ -94,8 +94,8 @@
     <string name="toastmessage_long_press_playback_stopped">再生が停止しました (長押しを検出しました)</string>
     <string name="toastmessage_long_press_playback_started">再生を開始しました (長押しを検出しました)</string>
     <string name="toastmessage_shortcut_created">ショートカットを作成しました。</string>
-    <string name="toastmessage_shortcut_not_created">Shortcut not created. This device does not allow the creation of shortcuts.</string>
-    <string name="toastmessage_list_refreshed">Reloading list of stations.</string>
+    <string name="toastmessage_shortcut_not_created">ショートカットは作成されません。このデバイスは、ショートカットの作成を許可していません。</string>
+    <string name="toastmessage_list_refreshed">局のリストを再読み込みしています。</string>
     <string name="toastmessage_copied_to_clipboard_url">ストリーム URL をクリップボードにコピーしました。</string>
     <string name="toastmessage_copied_to_clipboard_metadata">メタデータをクリップボードにコピーしました。</string>
     <string name="toastmessage_station_copied">放送局をクリップボードにコピーしました。</string>
@@ -104,7 +104,7 @@
     <string name="toastmessage_timer_cancelled">スリープタイマーを取り消しました。</string>
     <string name="toastmessage_timer_duration_increased">時間を追加しました。</string>
     <string name="toastmessage_timer_start_unable">まず再生を開始してください。</string>
-    <string name="toastalert_unable_to_connect">Unable to connect. Device does not have an internet connection or stream may be outdated.</string>
+    <string name="toastalert_unable_to_connect">接続できません。デバイスがインターネットに接続されていない、またはストリームが古い可能性があります。</string>
     <string name="toastalert_rename_unsuccessful">放送局の名前を変更できません。別の名前を選択してください。</string>
     <string name="toastalert_delete_successful">放送局が削除されました。</string>
     <string name="toastalert_no_external_storage">外部ストレージにアクセスできません。</string>
@@ -120,8 +120,8 @@
     <string name="notification_stop">Stop</string>
     <string name="notification_swipe_to_stop">スワイプすると停止</string>
     <string name="notification_playing">再生中</string>
-    <string name="notification_channel_playback_name">Playback Controls</string>
-    <string name="notification_channel_playback_description">Playback controls, station logo and now playing info.</string>
+    <string name="notification_channel_playback_name">再生コントロール</string>
+    <string name="notification_channel_playback_description">再生コントロール、局のロゴ、今再生中の情報。</string>
 
     <!-- infosheet about -->
     <string name="infosheet_about_h1_about">トランジスターについて</string>
