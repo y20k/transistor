@@ -7,7 +7,7 @@
 
     <!-- app shortcuts -->
     <string name="shortcut_last_station_short_label">Last station</string>
-    <string name="shortcut_last_station_long_label">Play last station</string>
+    <string name="shortcut_last_station_long_label">Reproducir última estación</string>
     <string name="shortcut_last_station_disabled_message">Shortcut for playback of last station disabled.</string>
 
     <!-- menu entries -->
@@ -72,7 +72,7 @@
     <string name="dialog_error_message_default">Un error ha ocurrido</string>
     <string name="dialog_error_details_button_default">Mostrar detalles</string>
     <string name="dialog_error_details_default">No hay detalles disponibles</string>
-    <string name="dialog_error_details_write">Estación está probablemente duplicada o si no deberías comprobar tu almacenamiento externo.</string>
+    <string name="dialog_error_details_write">Estación está probablemente duplicada si no deberías comprobar tu almacenamiento externo.</string>
     <string name="dialog_error_title_fetch_download">Descargar asunto</string>
     <string name="dialog_error_title_fetch_read">Leer asunto</string>
     <string name="dialog_error_title_fetch_write">Escribir asunto</string>
@@ -106,7 +106,7 @@
     <string name="toastmessage_timer_start_unable">Por favor inicia primero la reproducción.</string>
     <string name="toastalert_unable_to_connect">Unable to connect. Device does not have an internet connection or stream may be outdated.</string>
     <string name="toastalert_rename_unsuccessful">No se ha podido renombrar la estación. Por favor elija un nombre diferente.</string>
-    <string name="toastalert_delete_successful">Estación borrada.</string>
+    <string name="toastalert_delete_successful">Estación fue borrada.</string>
     <string name="toastalert_no_external_storage">No se ha podido acceder al almacenamiento externo.</string>
     <string name="toastalert_headphones_unplugged">Auriculares desconectados. Reproducción detenida.</string>
     <string name="toastalert_permission_denied">Permiso denegado:</string>
@@ -133,8 +133,8 @@
     <string name="infosheet_about_p_github">https://github.com/y20k/transistor</string>
     <string name="infosheet_about_p_license">https://opensource.org/licenses/MIT</string>
     <string name="infosheet_about_h2_permissions">¿Qué permisos necesita Transistor?</string>
-    <string name="infosheet_about_h3_shortcut">Permiso INSTALL_SHORTCUT y UNINSTALL_SHORTCUT</string>
-    <string name="infosheet_about_p_shortcut">Este permiso es necesario para instalar y desinstalar accesos directos a estaciones de radio en la pantalla principal de Android.</string>
+    <string name="infosheet_about_h3_shortcut">Permisos INSTALL_SHORTCUT y UNINSTALL_SHORTCUT</string>
+    <string name="infosheet_about_p_shortcut">Estos permisos son necesarios para que los accesos directos a estaciones de radio puedan ser instalados y desinstalados de la pantalla principal de Android.</string>
     <string name="infosheet_about_h3_internet">Permiso INTERNET</string>
     <string name="infosheet_about_p_internet">Transistor retransmisión de estaciones de radio a través de internet.</string>
     <string name="infosheet_about_h3_external">Permiso READ_EXTERNAL_STORAGE</string>
