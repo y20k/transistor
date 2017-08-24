@@ -46,7 +46,6 @@ import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlaybackException;
-import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.LoadControl;
@@ -55,6 +54,7 @@ import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.audio.AudioAttributes;
+import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
 import com.google.android.exoplayer2.extractor.ExtractorsFactory;
 import com.google.android.exoplayer2.metadata.Metadata;
@@ -97,7 +97,7 @@ import static com.google.android.exoplayer2.Player.STATE_READY;
 /**
  * PlayerService class
  */
-public final class PlayerService extends MediaBrowserServiceCompat implements TransistorKeys, AudioManager.OnAudioFocusChangeListener, ExoPlayer.EventListener, MetadataRenderer.Output {
+public final class PlayerService extends MediaBrowserServiceCompat implements TransistorKeys, AudioManager.OnAudioFocusChangeListener, Player.EventListener, MetadataRenderer.Output, MediaSessionConnector.PlaybackController {
 
     /* Define log tag */
     private static final String LOG_TAG = PlayerService.class.getSimpleName();
@@ -113,7 +113,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     private HeadphoneUnplugReceiver mHeadphoneUnplugReceiver;
     private WifiManager.WifiLock mWifiLock;
     private PowerManager.WakeLock mWakeLock;
-    private SimpleExoPlayer mExoPlayer;
+    private SimpleExoPlayer mPlayer;
     private String mUserAgent;
 
 
@@ -147,8 +147,8 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             e.printStackTrace();
         }
 
-        // get instance of mExoPlayer
-        createExoPlayer();
+        // get instance of mPlayer
+        createPlayer();
     }
 
 
@@ -214,7 +214,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         switch (playbackState) {
             case STATE_BUFFERING:
                 // player is not able to immediately play from the current position.
-                LogHelper.v(LOG_TAG, "State of ExoPlayer has changed: BUFFERING");
+                LogHelper.v(LOG_TAG, "State of Player has changed: BUFFERING");
 
                 // set playback state
                 mStation.setPlaybackState(PLAYBACK_STATE_LOADING_STATION);
@@ -234,17 +234,17 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
             case STATE_ENDED:
                 // player has finished playing the media.
-                LogHelper.v(LOG_TAG, "State of ExoPlayer has changed: ENDED");
+                LogHelper.v(LOG_TAG, "State of Player has changed: ENDED");
                 break;
 
             case STATE_IDLE:
                 // player does not have a source to play, so it is neither buffering nor ready to play.
-                LogHelper.v(LOG_TAG, "State of ExoPlayer has changed: IDLE");
+                LogHelper.v(LOG_TAG, "State of Player has changed: IDLE");
                 break;
 
             case STATE_READY:
                 // player is able to immediately play from the current position.
-                LogHelper.v(LOG_TAG, "State of ExoPlayer has changed: READY");
+                LogHelper.v(LOG_TAG, "State of Player has changed: READY");
 
                 if (mStation.getPlaybackState() == PLAYBACK_STATE_LOADING_STATION) {
                     // update playback state
@@ -386,36 +386,36 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
                     mAudioFocusLossTransient = false;
                 } else if (mStation.getPlaybackState() != PLAYBACK_STATE_STOPPED) {
                     // AUDIOFOCUS_GAIN after AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> raise volume again
-                    if (mExoPlayer == null) {
-                        initializeExoPlayer();
-                        mExoPlayer.setPlayWhenReady(true);
-                    } else if (mExoPlayer.getPlayWhenReady()) {
-                        mExoPlayer.setPlayWhenReady(true);
+                    if (mPlayer == null) {
+                        initializePlayer();
+                        mPlayer.setPlayWhenReady(true);
+                    } else if (mPlayer.getPlayWhenReady()) {
+                        mPlayer.setPlayWhenReady(true);
                     }
-                    mExoPlayer.setVolume(1.0f);
+                    mPlayer.setVolume(1.0f);
                 }
                 break;
             // loss of audio focus of unknown duration
             case AudioManager.AUDIOFOCUS_LOSS:
-                if (mStation.getPlaybackState() != PLAYBACK_STATE_STOPPED && mExoPlayer.getPlayWhenReady()) {
+                if (mStation.getPlaybackState() != PLAYBACK_STATE_STOPPED && mPlayer.getPlayWhenReady()) {
                     mController.getTransportControls().pause();
                 }
                 break;
             // transient loss of audio focus - e.g. phone call
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
-                if (mStation.getPlaybackState() != PLAYBACK_STATE_STOPPED && mExoPlayer != null && mExoPlayer.getPlayWhenReady()) {
+                if (mStation.getPlaybackState() != PLAYBACK_STATE_STOPPED && mPlayer != null && mPlayer.getPlayWhenReady()) {
                     mAudioFocusLossTransient = true;
                     mController.getTransportControls().pause();
                 }
-                else if (mStation.getPlaybackState() == PLAYBACK_STATE_STOPPED && mExoPlayer != null && mExoPlayer.getPlayWhenReady()) {
+                else if (mStation.getPlaybackState() == PLAYBACK_STATE_STOPPED && mPlayer != null && mPlayer.getPlayWhenReady()) {
                     mAudioFocusLossTransient = true;
-                    mExoPlayer.setPlayWhenReady(false);
+                    mPlayer.setPlayWhenReady(false);
                 }
                 break;
             // temporary external request of audio focus
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
-                if (mExoPlayer != null && mExoPlayer.getPlayWhenReady()){
-                    mExoPlayer.setVolume(0.1f);
+                if (mPlayer != null && mPlayer.getPlayWhenReady()){
+                    mPlayer.setVolume(0.1f);
                 }
                 break;
         }
@@ -442,13 +442,59 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             mSession.release();
         }
 
-        // release ExoPlayer
-        if (mExoPlayer != null) {
-            releaseExoPlayer();
+        // release player
+        if (mPlayer != null) {
+            releasePlayer();
         }
 
         // cancel notification
         stopForeground(true);
+    }
+
+
+    @Override
+    public long getSupportedPlaybackActions(@Nullable Player player) {
+        // overwrites method in MediaSessionConnector.PlaybackController
+        return PlaybackStateCompat.ACTION_PLAY + PlaybackStateCompat.ACTION_STOP + PlaybackStateCompat.ACTION_PAUSE;
+    }
+
+
+    @Override
+    public void onPlay(Player player) {
+        // overwrites method in MediaSessionConnector.PlaybackController
+        startPlayback();
+    }
+
+
+    @Override
+    public void onPause(Player player) {
+        // overwrites method in MediaSessionConnector.PlaybackController
+        stopPlayback(false);
+    }
+
+
+    @Override
+    public void onSeekTo(Player player, long position) {
+        // overwrites method in MediaSessionConnector.PlaybackController
+    }
+
+
+    @Override
+    public void onFastForward(Player player) {
+        // overwrites method in MediaSessionConnector.PlaybackController
+    }
+
+
+    @Override
+    public void onRewind(Player player) {
+        // overwrites method in MediaSessionConnector.PlaybackController
+    }
+
+
+    @Override
+    public void onStop(Player player) {
+        // overwrites method in MediaSessionConnector.PlaybackController
+        stopPlayback(true);
     }
 
 
@@ -465,10 +511,10 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         // string representation of the stream uri of the previous station
         String previousStationUrlString;
 
-        // stop running mExoPlayer, if necessary - set type playback change accordingly
-        if (mExoPlayer.getPlayWhenReady()) {
-            mExoPlayer.setPlayWhenReady(false);
-            mExoPlayer.stop();
+        // stop running mPlayer, if necessary - set type playback change accordingly
+        if (mPlayer.getPlayWhenReady()) {
+            mPlayer.setPlayWhenReady(false);
+            mPlayer.stop();
             previousStationUrlString = PreferenceManager.getDefaultSharedPreferences(getApplication()).getString(PREF_STATION_URL, null);
         } else {
             previousStationUrlString = null;
@@ -487,11 +533,11 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             mWakeLock.acquire(); // needs android.permission.WAKE_LOCK
         }
 
-        // request focus and initialize media mExoPlayer
+        // request focus and initialize media mPlayer
         if (mStation.getStreamUri() != null && requestFocus()) {
             // initialize player and start playback
-            initializeExoPlayer();
-            mExoPlayer.setPlayWhenReady(true);
+            initializePlayer();
+            mPlayer.setPlayWhenReady(true);
 
             // update MediaSession
             mSession.setPlaybackState(getSessionPlaybackState());
@@ -522,7 +568,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     /* Stops playback */
     private void stopPlayback(boolean dismissNotification) {
         // check for null - can happen after a crash during playback
-        if (mStation == null || mExoPlayer == null || !mExoPlayer.getPlayWhenReady() || mSession == null) {
+        if (mStation == null || mPlayer == null || !mPlayer.getPlayWhenReady() || mSession == null) {
             LogHelper.e(LOG_TAG, "Stopping playback. An error occurred. Station is probably NULL.");
             saveAppState();
             // send local broadcast: playback stopped
@@ -550,8 +596,8 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         }
 
         // stop playback
-        mExoPlayer.setPlayWhenReady(false); // todo empty buffer
-        mExoPlayer.stop();
+        mPlayer.setPlayWhenReady(false); // todo empty buffer
+        mPlayer.stop();
         LogHelper.v(LOG_TAG, "Stopping playback. Station name:" + mStation.getStationName());
 
         // give up audio focus
@@ -589,10 +635,10 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
 
     /* Creates an instance of SimpleExoPlayer */
-    private void createExoPlayer() {
+    private void createPlayer() {
 
-        if (mExoPlayer != null) {
-            releaseExoPlayer();
+        if (mPlayer != null) {
+            releasePlayer();
         }
 
         // create default TrackSelector
@@ -602,12 +648,16 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         LoadControl loadControl = new DefaultLoadControl(new DefaultAllocator(true, C.DEFAULT_BUFFER_SEGMENT_SIZE * 2));
 
         // create the player
-        mExoPlayer = ExoPlayerFactory.newSimpleInstance(new DefaultRenderersFactory(getApplicationContext()), trackSelector, loadControl);
+        mPlayer = ExoPlayerFactory.newSimpleInstance(new DefaultRenderersFactory(getApplicationContext()), trackSelector, loadControl);
+
+        // connect player and media session
+        MediaSessionConnector mediaSessionConnector = new MediaSessionConnector(mSession, this);
+        mediaSessionConnector.setPlayer(mPlayer, null);
     }
 
 
-    /* Add a media source to the ExoPlayer */
-    private void prepareExoPLayer(int connectionType) {
+    /* Add a media source to player */
+    private void preparePLayer(int connectionType) {
         // create MediaSource
         MediaSource mediaSource;
         // create BandwidthMeter for DataSource.Factory
@@ -626,21 +676,21 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             mediaSource = new ExtractorMediaSource(mStation.getStreamUri(), dataSourceFactory, extractorsFactory, 32, null, null, null, (1024 * 1024)); // todo attach listener here
         }
         // prepare player with source.
-        mExoPlayer.prepare(mediaSource);
+        mPlayer.prepare(mediaSource);
     }
 
 
-    /* Releases the ExoPlayer */
-    private void releaseExoPlayer() {
-        mExoPlayer.release();
-        mExoPlayer = null;
+    /* Releases player */
+    private void releasePlayer() {
+        mPlayer.release();
+        mPlayer = null;
     }
 
 
-    /* Set up the media mExoPlayer */
-    private void initializeExoPlayer() {
-        InitializeExoPlayerHelper initializeExoPlayerHelper = new InitializeExoPlayerHelper();
-        initializeExoPlayerHelper.execute();
+    /* Set up the media mPlayer */
+    private void initializePlayer() {
+        InitializePlayerHelper initializePlayerHelper = new InitializePlayerHelper();
+        initializePlayerHelper.execute();
     }
 
 
@@ -672,7 +722,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         MediaSessionCompat session = new MediaSessionCompat(context, LOG_TAG);
         session.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS | MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
         session.setPlaybackState(getSessionPlaybackState());
-        session.setCallback(new MediaSessionCallback());
         setSessionToken(session.getSessionToken());
 
         return session;
@@ -773,39 +822,9 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
 
     /**
-     * Inner class: Handles callback from active media session ***
-     */
-    private final class MediaSessionCallback extends MediaSessionCompat.Callback  {
-        @Override
-        public void onPlay() {
-            // start playback
-            if (mStation != null) {
-                startPlayback();
-            }
-        }
-
-        @Override
-        public void onPause() {
-            // stop playback
-            stopPlayback(false);
-        }
-
-        @Override
-        public void onStop() {
-            // stop playback
-            stopPlayback(true);
-        }
-
-    }
-    /**
-     * End of inner class
-     */
-
-
-    /**
      * Inner class: Checks for HTTP Live Streaming (HLS) before playing
      */
-    private class InitializeExoPlayerHelper extends AsyncTask<Void, Void, Integer> {
+    private class InitializePlayerHelper extends AsyncTask<Void, Void, Integer> {
 
         @Override
         protected Integer doInBackground(Void... voids) {
@@ -849,13 +868,13 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
                 stopPlayback(false);
             } else {
                 // prepare player
-                prepareExoPLayer(connectionType);
+                preparePLayer(connectionType);
 
                 // add listener
-                mExoPlayer.addListener(PlayerService.this);
+                mPlayer.addListener(PlayerService.this);
 
                 // set content type
-                mExoPlayer.setAudioAttributes(new AudioAttributes.Builder()
+                mPlayer.setAudioAttributes(new AudioAttributes.Builder()
                                 .setUsage(C.USAGE_MEDIA)
                                 .setContentType(C.CONTENT_TYPE_MUSIC)
                                 .build()

@@ -22,13 +22,13 @@ allprojects {
     project.ext {
         applicationId = 'org.y20k.transistor'
         versionCode = 43
-        versionName = '2.3.1 (Kooks)'
+        versionName = '2.3.2 (Kooks)'
         minSdkVersion = 19
         compileSdkVersion = 26
         targetSdkVersion = 26
         buildToolsVersion = '26.0.1'
         supportLibraryVersion = '26.0.1'
-        archLifecycleVersion = '1.0.0-alpha8'
+        archLifecycleVersion = '1.0.0-alpha9'
         modulePrefix = ':'
 
     }

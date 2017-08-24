@@ -27,8 +27,10 @@ dependencies {
     compile 'com.android.support:appcompat-v7:' + supportLibraryVersion
     compile 'com.android.support:design:' + supportLibraryVersion
     compile 'com.android.support:support-media-compat:' + supportLibraryVersion
-    compile project(":library:core")
-    compile project(":library:hls")
+
+    compile project(':exoplayer-library-core')
+    compile project(':exoplayer-library-hls')
+    compile project(':exoplayer-extension-mediasession')
 
     compile 'android.arch.lifecycle:extensions:' + archLifecycleVersion;
     annotationProcessor 'android.arch.lifecycle:compiler:' + archLifecycleVersion;
