@@ -77,11 +77,13 @@ import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.CustomDefaultHttpDataSourceFactory;
 import org.y20k.transistor.helpers.LogHelper;
 import org.y20k.transistor.helpers.NotificationHelper;
+import org.y20k.transistor.helpers.StationListProvider;
 import org.y20k.transistor.helpers.TransistorKeys;
 
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -92,6 +94,8 @@ import static com.google.android.exoplayer2.Player.STATE_BUFFERING;
 import static com.google.android.exoplayer2.Player.STATE_ENDED;
 import static com.google.android.exoplayer2.Player.STATE_IDLE;
 import static com.google.android.exoplayer2.Player.STATE_READY;
+import static org.y20k.transistor.helpers.StationListProvider.MEDIA_ID_EMPTY_ROOT;
+import static org.y20k.transistor.helpers.StationListProvider.MEDIA_ID_ROOT;
 
 
 /**
@@ -105,6 +109,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
     /* Main class variables */
     private static Station mStation;
+    private StationListProvider mStationListProvider;
     private AudioManager mAudioManager;
     private static MediaSessionCompat mSession;
     private static MediaControllerCompat mController;
@@ -138,6 +143,8 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         mWifiLock = ((WifiManager) this.getSystemService(Context.WIFI_SERVICE)).createWifiLock(WifiManager.WIFI_MODE_FULL, "Transistor_wifi_lock");
         PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
         mWakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "Transistor_wake_lock");
+
+        mStationListProvider = new StationListProvider();
 
         // create media controller
         try {
@@ -358,20 +365,83 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        if (SERVICE_INTERFACE.equals(intent.getAction())) {
+            LogHelper.v(LOG_TAG, "onBind called. SERVICE_INTERFACE"); // todo remove
+            return super.onBind(intent);
+        } else {
+            LogHelper.v(LOG_TAG, "onBind called. ELSE"); // todo remove
+            return null;
+        }
     }
 
 
     @Nullable
     @Override
     public BrowserRoot onGetRoot(@NonNull String clientPackageName, int clientUid, @Nullable Bundle rootHints) {
-        return new BrowserRoot(getString(R.string.app_name), null);
+
+        // Verify the client is authorized to browse media and return the root that
+        // makes the most sense here. In this example we simply verify the package name
+        // is the same as ours, but more complicated checks, and responses, are possible
+        if (!clientPackageName.equals(getPackageName())) {
+            // Allow the client to connect, but not browse, by returning an empty root
+            return new BrowserRoot(MEDIA_ID_EMPTY_ROOT, null);
+        }
+        return new BrowserRoot(MEDIA_ID_ROOT, null);
+//        return new BrowserRoot(getString(R.string.app_name), null);
     }
 
 
     @Override
-    public void onLoadChildren(@NonNull String rootId, @NonNull Result<List<MediaBrowserCompat.MediaItem>> result) {
+    public void onLoadChildren(@NonNull final String parentMediaId, @NonNull final Result<List<MediaBrowserCompat.MediaItem>> result) {
+        LogHelper.v(LOG_TAG, "OnLoadChildren called.");
+
+        if (!mStationListProvider.isInitialized()) {
+            // Use result.detach to allow calling result.sendResult from another thread:
+            result.detach();
+
+            mStationListProvider.retrieveMediaAsync(this, new StationListProvider.Callback() {
+                @Override
+                public void onStationListReady(boolean success) {
+                    if (success) {
+                        loadChildren(parentMediaId, result);
+//                    } else {
+//                        updatePlaybackState(getString(R.string.error_no_metadata));
+//                        result.sendResult(Collections.<MediaBrowserCompat.MediaItem>emptyList());
+                    }
+                }
+            });
+
+        } else {
+            // If our music catalog is already loaded/cached, load them into result immediately
+            loadChildren(parentMediaId, result);
+        }
+
         result.sendResult(null);
+
+    }
+
+
+    /* Actual implementation of onLoadChildren that assumes that MusicProvider is already initialized */
+    private void loadChildren(@NonNull final String parentMediaId, final Result<List<MediaBrowserCompat.MediaItem>> result) {
+        List<MediaBrowserCompat.MediaItem> mediaItems = new ArrayList<>();
+
+        switch (parentMediaId) {
+            case MEDIA_ID_ROOT:
+                for (MediaMetadataCompat track : mStationListProvider.getAllMusics()) {
+                    MediaBrowserCompat.MediaItem bItem =
+                            new MediaBrowserCompat.MediaItem(track.getDescription(),
+                                    MediaBrowserCompat.MediaItem.FLAG_PLAYABLE);
+                    mediaItems.add(bItem);
+                }
+                break;
+            case MEDIA_ID_EMPTY_ROOT:
+                // since the client provided the empty root we'll just send back an empty list
+                break;
+            default:
+                LogHelper.w(LOG_TAG, "Skipping unmatched parentMediaId: " + parentMediaId);
+                break;
+        }
+        result.sendResult(mediaItems);
     }
 
 
