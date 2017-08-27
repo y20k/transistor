@@ -12,6 +12,9 @@ android {
         versionName project.ext.versionName
 
         vectorDrawables.useSupportLibrary = true
+
+        resConfigs "en", "ca", "nb-rNO", "de", "pl", "en-rUS", "ru", "zh-rCN", "es", "sl", "eu", "sr", "fr", "tr", "ja", "uk", "v21", "v24", "w820dp"
+
     }
     buildTypes {
         release {
@@ -19,6 +22,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    lintOptions {
+        disable 'MissingTranslation'
+    }
+
 }
 
 
