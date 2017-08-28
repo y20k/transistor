@@ -77,6 +77,7 @@ import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.CustomDefaultHttpDataSourceFactory;
 import org.y20k.transistor.helpers.LogHelper;
 import org.y20k.transistor.helpers.NotificationHelper;
+import org.y20k.transistor.helpers.PackageValidator;
 import org.y20k.transistor.helpers.StationListProvider;
 import org.y20k.transistor.helpers.TransistorKeys;
 
@@ -87,6 +88,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static android.support.v4.media.session.PlaybackStateCompat.ACTION_PREPARE_FROM_MEDIA_ID;
 import static com.google.android.exoplayer2.ExoPlaybackException.TYPE_RENDERER;
 import static com.google.android.exoplayer2.ExoPlaybackException.TYPE_SOURCE;
 import static com.google.android.exoplayer2.ExoPlaybackException.TYPE_UNEXPECTED;
@@ -109,7 +111,9 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
     /* Main class variables */
     private static Station mStation;
+    private PackageValidator mPackageValidator;
     private StationListProvider mStationListProvider;
+    private MediaBrowserCompat mMediaBrowser;
     private AudioManager mAudioManager;
     private static MediaSessionCompat mSession;
     private static MediaControllerCompat mController;
@@ -144,7 +148,9 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
         mWakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "Transistor_wake_lock");
 
+        // objects used by the unfinished Android Auto implementation
         mStationListProvider = new StationListProvider();
+        mPackageValidator = new PackageValidator(this);
 
         // create media controller
         try {
@@ -378,16 +384,17 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     @Nullable
     @Override
     public BrowserRoot onGetRoot(@NonNull String clientPackageName, int clientUid, @Nullable Bundle rootHints) {
-
-        // Verify the client is authorized to browse media and return the root that
-        // makes the most sense here. In this example we simply verify the package name
-        // is the same as ours, but more complicated checks, and responses, are possible
-        if (!clientPackageName.equals(getPackageName())) {
-            // Allow the client to connect, but not browse, by returning an empty root
-            return new BrowserRoot(MEDIA_ID_EMPTY_ROOT, null);
+        // Credit: https://github.com/googlesamples/android-UniversalMusicPlayer (->  MusicService)
+        LogHelper.v(LOG_TAG, "OnGetRoot: clientPackageName=" + clientPackageName + "; clientUid=" + clientUid + " ; rootHints=" + rootHints);
+        // to ensure you are not allowing any arbitrary app to browse your app's contents, you need to check the origin:
+        if (!mPackageValidator.isCallerAllowed(this, clientPackageName, clientUid)) {
+            // request comes from an untrusted package
+            LogHelper.i(LOG_TAG, "OnGetRoot: Browsing NOT ALLOWED for unknown caller. "
+                    + "Returning empty browser root so all apps can use MediaController."
+                    + clientPackageName);
+            return new MediaBrowserServiceCompat.BrowserRoot(MEDIA_ID_EMPTY_ROOT, null);
         }
         return new BrowserRoot(MEDIA_ID_ROOT, null);
-//        return new BrowserRoot(getString(R.string.app_name), null);
     }
 
 
@@ -396,7 +403,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         LogHelper.v(LOG_TAG, "OnLoadChildren called.");
 
         if (!mStationListProvider.isInitialized()) {
-            // Use result.detach to allow calling result.sendResult from another thread:
+            // use result.detach to allow calling result.sendResult from another thread:
             result.detach();
 
             mStationListProvider.retrieveMediaAsync(this, new StationListProvider.Callback() {
@@ -412,36 +419,10 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             });
 
         } else {
-            // If our music catalog is already loaded/cached, load them into result immediately
+            // if our music catalog is already loaded/cached, load them into result immediately
             loadChildren(parentMediaId, result);
         }
 
-        result.sendResult(null);
-
-    }
-
-
-    /* Actual implementation of onLoadChildren that assumes that MusicProvider is already initialized */
-    private void loadChildren(@NonNull final String parentMediaId, final Result<List<MediaBrowserCompat.MediaItem>> result) {
-        List<MediaBrowserCompat.MediaItem> mediaItems = new ArrayList<>();
-
-        switch (parentMediaId) {
-            case MEDIA_ID_ROOT:
-                for (MediaMetadataCompat track : mStationListProvider.getAllMusics()) {
-                    MediaBrowserCompat.MediaItem bItem =
-                            new MediaBrowserCompat.MediaItem(track.getDescription(),
-                                    MediaBrowserCompat.MediaItem.FLAG_PLAYABLE);
-                    mediaItems.add(bItem);
-                }
-                break;
-            case MEDIA_ID_EMPTY_ROOT:
-                // since the client provided the empty root we'll just send back an empty list
-                break;
-            default:
-                LogHelper.w(LOG_TAG, "Skipping unmatched parentMediaId: " + parentMediaId);
-                break;
-        }
-        result.sendResult(mediaItems);
     }
 
 
@@ -610,7 +591,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             mPlayer.setPlayWhenReady(true);
 
             // update MediaSession
-            mSession.setPlaybackState(getSessionPlaybackState());
+            mSession.setPlaybackState(createSessionPlaybackState());
             mSession.setMetadata(getSessionMetadata(getApplicationContext(), mStation));
             mSession.setActive(true);
 
@@ -674,7 +655,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         giveUpAudioFocus();
 
         // update playback state
-        mSession.setPlaybackState(getSessionPlaybackState());
+        mSession.setPlaybackState(createSessionPlaybackState());
 
         if (dismissNotification) {
             // dismiss notification
@@ -791,15 +772,15 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         // create a media session
         MediaSessionCompat session = new MediaSessionCompat(context, LOG_TAG);
         session.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS | MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
-        session.setPlaybackState(getSessionPlaybackState());
+        session.setPlaybackState(createSessionPlaybackState());
         setSessionToken(session.getSessionToken());
 
         return session;
     }
 
 
-    /* Creates playback state depending on mPlayback */
-    private PlaybackStateCompat getSessionPlaybackState() {
+    /* Creates playback state */
+    private PlaybackStateCompat createSessionPlaybackState() {
 
         if (mStation == null || mStation.getPlaybackState() == PLAYBACK_STATE_STOPPED) {
             // define action for playback state to be used in media session callback
@@ -811,7 +792,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             // define action for playback state to be used in media session callback
             return new PlaybackStateCompat.Builder()
                     .setState(PlaybackStateCompat.STATE_PLAYING, 0, 0)
-                    .setActions(PlaybackStateCompat.ACTION_STOP | PlaybackStateCompat.ACTION_PAUSE)
+                    .setActions(PlaybackStateCompat.ACTION_STOP | PlaybackStateCompat.ACTION_PAUSE | ACTION_PREPARE_FROM_MEDIA_ID)
                     .build();
         }
     }
@@ -840,6 +821,30 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         } else {
             return null;
         }
+    }
+
+
+    /* Loads media items into result - assumes that StationListProvider is initialized */
+    private void loadChildren(@NonNull final String parentMediaId, final Result<List<MediaBrowserCompat.MediaItem>> result) {
+        List<MediaBrowserCompat.MediaItem> mediaItems = new ArrayList<>();
+
+        switch (parentMediaId) {
+            case MEDIA_ID_ROOT:
+                for (MediaMetadataCompat track : mStationListProvider.getAllMusics()) {
+                    MediaBrowserCompat.MediaItem item =
+                            new MediaBrowserCompat.MediaItem(track.getDescription(),
+                                    MediaBrowserCompat.MediaItem.FLAG_PLAYABLE);
+                    mediaItems.add(item);
+                }
+                break;
+            case MEDIA_ID_EMPTY_ROOT:
+                // since the client provided the empty root we'll just send back an empty list
+                break;
+            default:
+                LogHelper.w(LOG_TAG, "Skipping unmatched parentMediaId: " + parentMediaId);
+                break;
+        }
+        result.sendResult(mediaItems);
     }
 
 

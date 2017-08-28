@@ -2,7 +2,7 @@
  * StationListProvider.java
  * Implements the StationListProvider class
  * A StationListProvider provides a list of stations as MediaMetadata items
- * Credit: https://github.com/googlesamples/android-MediaBrowserService/blob/master/Application/src/main/java/com/example/android/mediabrowserservice/model/MusicProvider.java
+ * Credit: https://github.com/googlesamples/android-MediaBrowserService/ (-> MusicProvider)
  *
  * This file is part of
  * TRANSISTOR - Radio App for Android
@@ -89,7 +89,7 @@ public class StationListProvider {
     public void retrieveMediaAsync(final Context context, final Callback callback) {
         LogHelper.v(LOG_TAG, "retrieveMediaAsync called");
         if (mCurrentState == State.INITIALIZED) {
-            // Already initialized, so call back immediately.
+            // already initialized, so call back immediately.
             callback.onStationListReady(true);
             return;
         }
