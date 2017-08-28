@@ -366,7 +366,7 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
             public void onReceive(Context context, Intent intent) {
                 if (intent.hasExtra(EXTRA_STATION)) {
                     handlePlaybackStateChange(intent);
-                } else if (intent.hasExtra(EXTRA_ERROR_OCCURED) && intent.getBooleanExtra(EXTRA_ERROR_OCCURED, false)) {
+                } else if (intent.hasExtra(EXTRA_ERROR_OCCURRED) && intent.getBooleanExtra(EXTRA_ERROR_OCCURRED, false)) {
                     handlePlaybackStateError();
                 }
 

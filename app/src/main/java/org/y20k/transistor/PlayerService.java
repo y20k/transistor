@@ -625,7 +625,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             // send local broadcast: playback stopped
             Intent intent = new Intent();
             intent.setAction(ACTION_PLAYBACK_STATE_CHANGED);
-            intent.putExtra(EXTRA_ERROR_OCCURED, true);
+            intent.putExtra(EXTRA_ERROR_OCCURRED, true);
             LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
             // stop player service
             stopSelf();
