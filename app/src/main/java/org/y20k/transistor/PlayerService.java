@@ -54,7 +54,6 @@ import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.audio.AudioAttributes;
-import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
 import com.google.android.exoplayer2.extractor.ExtractorsFactory;
 import com.google.android.exoplayer2.metadata.Metadata;
@@ -103,7 +102,7 @@ import static org.y20k.transistor.helpers.StationListProvider.MEDIA_ID_ROOT;
 /**
  * PlayerService class
  */
-public final class PlayerService extends MediaBrowserServiceCompat implements TransistorKeys, AudioManager.OnAudioFocusChangeListener, Player.EventListener, MetadataRenderer.Output, MediaSessionConnector.PlaybackController {
+public final class PlayerService extends MediaBrowserServiceCompat implements TransistorKeys, AudioManager.OnAudioFocusChangeListener, Player.EventListener, MetadataRenderer.Output {
 
     /* Define log tag */
     private static final String LOG_TAG = PlayerService.class.getSimpleName();
@@ -503,52 +502,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     }
 
 
-    @Override
-    public long getSupportedPlaybackActions(@Nullable Player player) {
-        // overwrites method in MediaSessionConnector.PlaybackController
-        return PlaybackStateCompat.ACTION_PLAY + PlaybackStateCompat.ACTION_STOP + PlaybackStateCompat.ACTION_PAUSE;
-    }
-
-
-    @Override
-    public void onPlay(Player player) {
-        // overwrites method in MediaSessionConnector.PlaybackController
-        startPlayback();
-    }
-
-
-    @Override
-    public void onPause(Player player) {
-        // overwrites method in MediaSessionConnector.PlaybackController
-        stopPlayback(false);
-    }
-
-
-    @Override
-    public void onSeekTo(Player player, long position) {
-        // overwrites method in MediaSessionConnector.PlaybackController
-    }
-
-
-    @Override
-    public void onFastForward(Player player) {
-        // overwrites method in MediaSessionConnector.PlaybackController
-    }
-
-
-    @Override
-    public void onRewind(Player player) {
-        // overwrites method in MediaSessionConnector.PlaybackController
-    }
-
-
-    @Override
-    public void onStop(Player player) {
-        // overwrites method in MediaSessionConnector.PlaybackController
-        stopPlayback(true);
-    }
-
-
     /* Getter for current station */
     public static Station getStation() {
         return mStation;
@@ -557,7 +510,19 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
     /* Starts playback */
     private void startPlayback() {
-        LogHelper.v(LOG_TAG, "Starting playback. Station name:" + mStation.getStationName());
+        // check for null - can happen after a crash during playback
+        if (mStation == null || mPlayer == null ||  mSession == null) {
+            LogHelper.e(LOG_TAG, "Unable to start playback. An error occurred. Station is probably NULL.");
+            saveAppState();
+            // send local broadcast: playback stopped
+            Intent intent = new Intent();
+            intent.setAction(ACTION_PLAYBACK_STATE_CHANGED);
+            intent.putExtra(EXTRA_ERROR_OCCURRED, true);
+            LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+            // stop player service
+            stopSelf();
+            return;
+        }
 
         // string representation of the stream uri of the previous station
         String previousStationUrlString;
@@ -589,6 +554,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             // initialize player and start playback
             initializePlayer();
             mPlayer.setPlayWhenReady(true);
+            LogHelper.v(LOG_TAG, "Starting playback. Station name:" + mStation.getStationName());
 
             // update MediaSession
             mSession.setPlaybackState(createSessionPlaybackState());
@@ -700,10 +666,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
         // create the player
         mPlayer = ExoPlayerFactory.newSimpleInstance(new DefaultRenderersFactory(getApplicationContext()), trackSelector, loadControl);
-
-        // connect player and media session
-        MediaSessionConnector mediaSessionConnector = new MediaSessionConnector(mSession, this);
-        mediaSessionConnector.setPlayer(mPlayer, null);
     }
 
 
@@ -773,6 +735,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         MediaSessionCompat session = new MediaSessionCompat(context, LOG_TAG);
         session.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS | MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
         session.setPlaybackState(createSessionPlaybackState());
+        session.setCallback(new MediaSessionCallback());
         setSessionToken(session.getSessionToken());
 
         return session;
@@ -873,6 +836,37 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 //        mStationIdLast = settings.getInt(PREF_STATION_ID_LAST, -1);
 //        LogHelper.v(LOG_TAG, "Loading state ("+  mStationIdCurrent + " / " + mStationIdLast + ")");
 //    }
+
+
+    /**
+     * Inner class: Handles callback from active media session ***
+     */
+    private final class MediaSessionCallback extends MediaSessionCompat.Callback  {
+        // note: this can be replaced by MediaSessionConnector.PlaybackController (ExoPlayer)
+        @Override
+        public void onPlay() {
+            // start playback
+            if (mStation != null) {
+                startPlayback();
+            }
+        }
+
+        @Override
+        public void onPause() {
+            // stop playback
+            stopPlayback(false);
+        }
+
+        @Override
+        public void onStop() {
+            // stop playback
+            stopPlayback(true);
+        }
+
+    }
+    /**
+     * End of inner class
+     */
 
 
     /**
