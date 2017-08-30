@@ -851,6 +851,18 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             }
         }
 
+
+        @Override
+        public void onPlayFromMediaId(String mediaId, Bundle extras) {
+            super.onPlayFromMediaId(mediaId, extras);
+            MediaMetadataCompat stationMediaMetadata = mStationListProvider.getStationMediaMetadata(mediaId);
+
+            // re-construct station from stationMediaMetadata
+            mStation = new Station(stationMediaMetadata);
+            startPlayback();
+        }
+
+
         @Override
         public void onPause() {
             // stop playback

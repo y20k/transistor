@@ -21,8 +21,8 @@ allprojects {
     }
     project.ext {
         applicationId = 'org.y20k.transistor'
-        versionCode = 45
-        versionName = '2.3.3'
+        versionCode = 46
+        versionName = '2.3.4'
         minSdkVersion = 19
         compileSdkVersion = 26
         targetSdkVersion = 26

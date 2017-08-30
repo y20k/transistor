@@ -20,12 +20,11 @@
 
         <!-- ANDROID AUTO SUPPORT -->
         <!--  https://developer.android.com/training/auto/audio/ -->
-        <!--
+
         <meta-data android:name="com.google.android.gms.car.application"
             android:resource="@xml/automotive_app_desc"/>
         <meta-data android:name="com.google.android.gms.car.notification.SmallIcon"
             android:resource="@mipmap/ic_launcher" />
-            -->
 
         <!-- MEDIA BUTTON RECEIVER -->
         <receiver android:name="android.support.v4.media.session.MediaButtonReceiver">
@@ -89,7 +88,7 @@
         <!-- android:exported="true" if used with Android Auto -->
         <service
             android:name=".PlayerService"
-            android:exported="false">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.media.browse.MediaBrowserService"/>
             </intent-filter>

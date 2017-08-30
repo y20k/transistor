@@ -29,7 +29,7 @@ import java.util.LinkedHashMap;
 /**
  * StationListProvider.class
  */
-public class StationListProvider {
+public class StationListProvider implements TransistorKeys {
 
     /* Define log tag */
     private static final String LOG_TAG = StationListProvider.class.getSimpleName();
@@ -65,7 +65,7 @@ public class StationListProvider {
 
 
     /* Return the MediaMetadata for given ID */
-    public MediaMetadataCompat getMusic(String stationId) {
+    public MediaMetadataCompat getStationMediaMetadata(String stationId) {
         return mStationListById.containsKey(stationId) ? mStationListById.get(stationId) : null;
     }
 
@@ -140,12 +140,14 @@ public class StationListProvider {
                 .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, id)
                 .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI, station.getStreamUri().toString())
 //                .putString(MediaMetadataCompat.METADATA_KEY_ALBUM, station.getStationName())
-                .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, station.getStationName())
+//                .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, station.getStationName())
                 .putString(MediaMetadataCompat.METADATA_KEY_GENRE, "Radio")
 //                .putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI, iconUrl)
                 .putString(MediaMetadataCompat.METADATA_KEY_TITLE,  station.getStationName())
 //                .putLong(MediaMetadataCompat.METADATA_KEY_TRACK_NUMBER, trackNumber)
 //                .putLong(MediaMetadataCompat.METADATA_KEY_NUM_TRACKS, totalTrackCount)
+                .putString(METADATA_CUSTOM_KEY_IMAGE_FILE, station.getStationImageFile().getPath())
+                .putString(METADATA_CUSTOM_KEY_PLAYLIST_FILE, station.getStationPlaylistFile().getPath())
                 .build();
     }
 

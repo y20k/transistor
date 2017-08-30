@@ -38,7 +38,6 @@ dependencies {
 
     compile project(':exoplayer-library-core')
     compile project(':exoplayer-library-hls')
-    compile project(':exoplayer-extension-mediasession')
 
     compile 'android.arch.lifecycle:extensions:' + archLifecycleVersion;
     annotationProcessor 'android.arch.lifecycle:compiler:' + archLifecycleVersion;
