@@ -1,2 +1,99 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<?xml version='1.0' encoding='UTF-8'?>
+<resources><string name="app_name">Το Τρανζιστοράκι</string> <string name="title_fragment_player">Παίζει Τώρα</string>
+    <string name="title_activity_infosheet">Δελτίο Πληροφοριών</string>
+
+    <string name="shortcut_last_station_short_label">Τελευταίος σταθμός</string>
+    <string name="shortcut_last_station_long_label">Παίξε τον τελευταίο σταθμό</string>
+    <string name="shortcut_last_station_disabled_message">Η συντόμευση για την αναπαραγωγή του τελευταίου σταθμού έχει απενεργοποιηθεί.</string>
+
+    <string name="menu_about">Σχετικά με</string>
+    <string name="menu_howto">Οδηγίες χρήσης</string>
+    <string name="menu_refresh">Ανανέωση της λίστας</string>
+    <string name="menu_icon">Αλλαγή εικονιδίου</string>
+    <string name="menu_add">Προσθήκη</string>
+    <string name="menu_delete">Διαγραφή</string>
+    <string name="menu_rename">Μετονομασία</string>
+    <string name="menu_shortcut">Τοποθέτηση στην Σπιτική οθόνη</string>
+
+    <string name="header_about">Σχετικά με</string>
+    <string name="header_howto">Οδηγίες χρήσης</string>
+
+    <string name="descr_arrow_actioncall">Βέλος που δείχνει προς το σύμβολο προσθήκης σταθμού</string>
+    <string name="descr_overflow_button">Προβολή των επιλογών για το ραδιοσταθμό</string>
+    <string name="descr_station_icon">Εικονίδιο του ραδιοσταθμού</string>
+    <string name="descr_station_name">Το όνομα του ραδιοσταθμού</string>
+    <string name="descr_station_metadata">Μεταδεδομένα (Καλλιτέχνης/ Τίτλος) του ραδιοσταθμού που παίζει τώρα</string>
+    <string name="descr_station_name_example">Παράδειγμα FM</string>
+    <string name="descr_station_metadata_example">Καλλιτέχνης - Τίτλος</string>
+    <string name="descr_station_stream_loading">Φορτώνεται η ροή …</string>
+    <string name="descr_playback_button">Μεγάλο κομβίον αναπαραγωγής</string>
+    <string name="descr_playback_indicator">Δείκτης για την κατάσταση της αναπαραγωγής</string>
+    <string name="descr_playback_indicator_started">Δείκτης για την κατάσταση της αναπαραγωγής</string>
+    <string name="descr_player_sheet_information_icon">Εικονίδιο Πληροφοριών</string>
+    <string name="descr_player_sheet_content_copy_icon">Εικονίδιο αντιγραφής του περιεχομένου</string>
+    <string name="descr_player_sheet_p_station_name">Το όνομα του επιλεγμένου ραδιοσταθμού</string>
+    <string name="descr_player_sheet_p_station_metadata">Μεταδεδομένα από τον επιλεγμένο ραδιοσταθμό</string>
+    <string name="descr_player_sheet_p_stream_url">Η διεύθυνση URL του επιλεγμένου ραδιοσταθμού</string>
+
+    <string name="player_sheet_h1_station_name">Σταθμός</string>
+    <string name="player_sheet_h1_station_metadata">Παίζει Τώρα</string>
+    <string name="player_sheet_h1_stream_url">Διεύθυνση URL της Ροής</string>
+    <string name="player_sheet_p_station_metadata">δεν υπάρχουν διαθέσιμα μεταδεδομένα</string>
+    <string name="player_sheet_h1_station_mime_type">Μορφή MIME</string>
+    <string name="player_sheet_h1_station_channel_count">Καταμέτρηση καναλιών</string>
+    <string name="player_sheet_h1_station_sample_rate">Ρυθμός δειγματοληψίας</string>
+    <string name="player_sheet_h1_station_bitrate">Ρυθμός μπιτιών</string>
+
+    <string name="dialog_generic_button_okay">Εντάξει</string>
+    <string name="dialog_generic_button_cancel">Ακύρωση</string>
+    <string name="dialog_add_station_button">Προσθήκη</string>
+    <string name="dialog_add_station_input_hint">Επικόλληση της διεύθυνσης URL της ροής</string>
+    <string name="dialog_add_station_message">Προσθήκη νέου σταθμού</string>
+    <string name="dialog_add_station_howto">Μπορείς να προσθέσεις ροές ηλεκτρονικού ήχου, οι οποίες έχουν συσκευαστεί σε MP3, AAC ή Ogg/Opus . Επίσης, καί ροές, οι οποίες έχουν συσκευαστεί σε αρχεία PLS ή M3U . Εναλλακτικά, μπορείς να προσθέσεις νέους σταθμούς, αγγίζοντας τους δεσμούς ροών (.pls ή .m3u) στον πλοηγό του διαδικτύου, που χρησιμοποιείς.</string>
+    <string name="dialog_delete_station_message">Διαγραφή σταθμού</string>
+    <string name="dialog_button_delete">Διαγραφή</string>
+    <string name="dialog_rename_station_input_hint">Προσθήκη ενός νέου ονόματος</string>
+    <string name="dialog_rename_station_message">Μετονομασία του σταθμού</string>
+    <string name="dialog_button_rename">Μετονομασία</string>
+
+    <string name="dialog_error_title_default">Σφάλμα</string>
+    <string name="dialog_error_message_default">Συνέβη ένα σφάλμα</string>
+    <string name="dialog_error_details_button_default">Εμφάνιση των λεπτομερειών</string>
+    <string name="dialog_error_details_default">Δεν υπάρχουν διαθέσιμες κάποιες λεπτομέρειες</string>
+    <string name="dialog_error_details_write">Αυτός ο σταθμός, μάλλον, είναι διπλότυπος, ή διαφορετικά, ίσως να θες να ελέγξεις την εξωτερική αποθήκη σου.</string>
+    <string name="dialog_error_title_fetch_download">Δυσκολία στη Λήψη</string>
+    <string name="dialog_error_title_fetch_read">Δυσκολία στην Ανάγνωση</string>
+    <string name="dialog_error_title_fetch_write">Δυσκολία στην Εγγραφή</string>
+    <string name="dialog_error_message_fetch_general_external_storage">Εξωτερική αποθήκη:</string>
+    <string name="dialog_error_message_fetch_general_hint_m3u">Επισήμανση: Το Τρανζιστοράκι μπορεί να επεξεργαστεί μόνο ροές κωδικοποιημένες σε MP3, AAC και Ogg/Opus, καθώς και διευθύνσεις URL οι οποίες τελειώνουν σε .m3u ή .pls .</string>
+    <string name="dialog_error_message_fetch_general_playlist_type">Μορφή MIME του αρχείου:</string>
+    <string name="dialog_error_message_fetch_general_stream_type">Μορφή MIME της ροής:</string>
+    <string name="dialog_error_message_fetch_general_file_content">Περιεχόμενο του αρχείου:</string>
+    <string name="toastmessage_station_copied">Ο σταθμός αντιγράφηκε στο πρόχειρο.</string>
+    <string name="toastmessage_stream_may_not_work">Εντοπίστηκε μη υποστηριζόμενη μορφή ηλεκτρονικού ήχου. Ίσως να μην δουλέψει κανονικά η αναπαραγωγή της ροής.</string>
+    <string name="toastmessage_timer_duration_increased">Αυξήθηκε η διάρκεια.</string>
+    <string name="toastmessage_timer_start_unable">Παρακαλώ, ξεκίνα πρώτα την αναπαραγωγή.</string>
+    <string name="toastalert_unable_to_connect">Αδυναμία σύνδεσης. Η συσκευή δεν έχει σύνδεση στο διαδίκτυο, ή, ίσως, ροή να είναι απαρχαιωμένη.</string>
+    <string name="toastalert_rename_unsuccessful">Αδυναμία μετονομασίας του σταθμού. Παρακαλώ, επέλεξε ένα διαφορετικό όνομα.</string>
+    <string name="toastalert_delete_successful">Ο σταθμός απομακρύνθηκε.</string>
+    <string name="toastalert_no_external_storage">Αδυναμία πρόσβασης στην εξωτερική αποθήκη.</string>
+    <string name="toastalert_headphones_unplugged">Τα ακουστικά αποσυνδέθηκαν. Η αναπαραγωγή σταμάτησε.</string>
+    <string name="toastalert_permission_denied">Άρνηση δικαιώματος:</string>
+    <string name="toastalert_station_not_found">Αδυναμία εύρεσης του σταθμού.</string>
+    <string name="toastalert_stream_not_found">Το Τρανζιστοράκι δεν αναγνωρίζει αυτό το σταθμό. Παρακαλώ, διέγραψέ τον, και πρόσθεσέ τον ξανά στην Σπιτική οθόνη.</string>
+    <string name="snackbar_request_storage_access">Θα πρέπει να παραχωρηθούν δικαιώματα ανάγνωσης στο Τρανζιστοράκι, ώστε να μπορεί να έχει πρόσβαση σε δεδομένα στην εξωτερική αποθήκη.</string>
+    <string name="notification_play">Παίξε</string>
+    <string name="notification_stop">Σταμάτημα</string>
+    <string name="notification_playing">Παίζει</string>
+    <string name="notification_channel_playback_name">Ρυθμιστικά Αναπαραγωγής</string>
+    <string name="notification_channel_playback_description">Οι ρυθμιστές αναπαραγωγής, το λογότυπο του σταθμού, και οι πληροφορίες της τωρινής αναπαραγωγής.</string>
+
+    <string name="infosheet_about_h1_about">Σχετικά με το Τρανζιστοράκι</string>
+    <string name="infosheet_about_h2_radio">Ραδιοφωνική εφαρμογή για το Ανντρόιντ</string>
+    <string name="infosheet_about_h3_version">Έκδοση 2.3 (Kooks)</string>
+    <string name="infosheet_about_p_github">https://github.com/y20k/transistor</string>
+    <string name="infosheet_about_p_license">https://opensource.org/licenses/MIT</string>
+    <string name="infosheet_about_h2_permissions">Ποια δικαιώματα χρειάζεται το Τρανζιστοράκι;</string>
+    <string name="infosheet_about_h3_shortcut">Διακαιώματα INSTALL_SHORTCUT και UNINSTALL_SHORTCUT</string>
+    <string name="infosheet_howto_h2_edit">Πώς να μετονομάσεις ή να διαγράψεις ένα σταθμό;</string>
+    </resources>
