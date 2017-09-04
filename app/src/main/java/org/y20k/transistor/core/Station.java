@@ -401,6 +401,7 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
             String contentTypeHeader = connection.getContentType();
 
             if (contentTypeHeader != null) {
+                LogHelper.i(LOG_TAG, "Getting content type. Result: " + contentTypeHeader);
                 Matcher matcher = CONTENT_TYPE_PATTERN.matcher(contentTypeHeader.trim().toLowerCase(Locale.ENGLISH));
                 if (matcher.matches()) {
                     ContentType contentType = new ContentType();
@@ -427,7 +428,7 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
     /* Determines if given content type is a playlist */
     private boolean isPlaylist(ContentType contentType) {
         if (contentType != null && contentType.type != null) {
-            for (String[] array : new String[][]{CONTENT_TYPES_PLS, CONTENT_TYPES_M3U, CONTENT_TYPES_HLS}) {
+            for (String[] array : new String[][]{CONTENT_TYPES_PLS, CONTENT_TYPES_M3U}) {
                 if (Arrays.asList(array).contains(contentType.type)) {
                     return true;
                 }
@@ -440,7 +441,7 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
     /* Determines if given content type is an audio file */
     private boolean isAudioFile(ContentType contentType) {
         if (contentType != null && contentType.type != null) {
-            for (String[] array : new String[][]{CONTENT_TYPES_MPEG, CONTENT_TYPES_OGG, CONTENT_TYPES_AAC}) {
+            for (String[] array : new String[][]{CONTENT_TYPES_MPEG, CONTENT_TYPES_OGG, CONTENT_TYPES_AAC, CONTENT_TYPES_HLS}) {
                 if (Arrays.asList(array).contains(contentType.type)) {
                     return true;
                 }
@@ -790,6 +791,7 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
     public void setBitrate(int bitrate) {
         mBitrate = bitrate;
     }
+
 
     @Override
     public int compareTo(@NonNull Station otherStation) {

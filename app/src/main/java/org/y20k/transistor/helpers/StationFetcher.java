@@ -65,35 +65,6 @@ public final class StationFetcher extends AsyncTask<Void, Void, Bundle> implemen
         }
 
     }
-//
-//
-//    /* Background thread: download station */
-//    @Override
-//    public Station doInBackground(Void... params) {
-//
-//        Station newStation = null;
-//
-//        if (mFolderExists && mStationUriScheme != null && mStationUriScheme.startsWith("http")  && urlCleanup()) {
-//            // download new station,
-//            newStation = new Station(mFolder, mStationURL);
-////            // write playlist file and favicon based image file
-////            newStation.writePlaylistFile(mFolder);
-////            newStation.writeImageFile(mStationURL);
-//
-//            return newStation;
-//
-//        } else if (mFolderExists && mStationUriScheme != null && mStationUriScheme.startsWith("file")) {
-//            // read file and return new station
-//            newStation =  new Station(mFolder, mStationUri);
-////            // write playlist file
-////            newStation.writePlaylistFile(mFolder);
-//
-//            return newStation;
-//
-//        } else {
-//            return newStation;
-//        }
-//    }
 
 
     /* Background thread: download station */
