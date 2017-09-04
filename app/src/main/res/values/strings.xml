@@ -42,12 +42,12 @@
     <string name="descr_player_sheet_content_copy_icon">Content copy icon</string>
     <string name="descr_player_sheet_p_station_name">Name of selected radio station</string>
     <string name="descr_player_sheet_p_station_metadata">Metadata from selected radio station</string>
-    <string name="descr_player_sheet_p_stream_url">Stream URL of selected radio station</string>
+    <string name="descr_player_sheet_p_stream_url">Streaming link of selected radio station</string>
 
     <!-- player -->
     <string name="player_sheet_h1_station_name">Station</string>
     <string name="player_sheet_h1_station_metadata">Currently Playing</string>
-    <string name="player_sheet_h1_stream_url">Stream URL</string>
+    <string name="player_sheet_h1_stream_url">Streaming link</string>
     <string name="player_sheet_p_station_metadata">no metadata available</string>
     <string name="player_sheet_h1_station_mime_type">MIME type</string>
     <string name="player_sheet_h1_station_channel_count">Channel count</string>
@@ -58,7 +58,7 @@
     <string name="dialog_generic_button_okay">Okay</string>
     <string name="dialog_generic_button_cancel">Cancel</string>
     <string name="dialog_add_station_button">Add</string>
-    <string name="dialog_add_station_input_hint">Paste stream URL</string>
+    <string name="dialog_add_station_input_hint">Paste streaming link</string>
     <string name="dialog_add_station_message">Add new station</string>
     <string name="dialog_add_station_howto">You can add raw audio streams encoded in MP3, AAC and Ogg/Opus as well as streams encapsulated in PLS or M3U files. Alternatively you can add new stations by tapping on streaming links (.pls or .m3u) in your web browser.</string>
     <string name="dialog_delete_station_message">Delete station</string>
@@ -77,12 +77,12 @@
     <string name="dialog_error_title_fetch_read">Read Issue</string>
     <string name="dialog_error_title_fetch_write">Write Issue</string>
     <string name="dialog_error_message_fetch_general_external_storage">External storage:</string>
-    <string name="dialog_error_message_fetch_general_hint_m3u">Hint: Transistor can only process MP3, AAC and Ogg/Opus encoded streams or URLs ending in .m3u or .pls.</string>
+    <string name="dialog_error_message_fetch_general_hint_m3u">Hint: Transistor can only process MP3, AAC and Ogg/Opus encoded streams or links ending in .m3u or .pls.</string>
     <string name="dialog_error_message_fetch_general_playlist_type">MIME type of file:</string>
     <string name="dialog_error_message_fetch_general_stream_type">MIME type of stream:</string>
     <string name="dialog_error_message_fetch_general_file_content">Content of file:</string>
     <string name="dialog_error_message_fetch_download">Transistor tried hard but could not make sense of the link.</string>
-    <string name="dialog_error_message_fetch_download_station_url">URL of station:</string>
+    <string name="dialog_error_message_fetch_download_station_url">Streaming link of station:</string>
     <string name="dialog_error_message_fetch_read">Transistor tried hard but could not make sense of the file.</string>
     <string name="dialog_error_message_fetch_read_file_location">Location of file:</string>
     <string name="dialog_error_message_fetch_write">Transistor tried hard but could not save the station.</string>
@@ -96,7 +96,7 @@
     <string name="toastmessage_shortcut_created">Shortcut created.</string>
     <string name="toastmessage_shortcut_not_created">Shortcut not created. This device does not allow the creation of shortcuts.</string>
     <string name="toastmessage_list_refreshed">Reloading list of stations.</string>
-    <string name="toastmessage_copied_to_clipboard_url">Stream URL copied to clipboard.</string>
+    <string name="toastmessage_copied_to_clipboard_url">Streaming link copied to clipboard.</string>
     <string name="toastmessage_copied_to_clipboard_metadata">Metadata copied to clipboard.</string>
     <string name="toastmessage_station_copied">Station copied to clipboard.</string>
     <string name="toastmessage_stream_may_not_work">Unsupported audio format detected. Playback of stream may not work properly.</string>
