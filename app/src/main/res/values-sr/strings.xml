@@ -6,9 +6,9 @@
     <string name="title_activity_infosheet">Страница са подацима</string>
 
     <!-- app shortcuts -->
-    <string name="shortcut_last_station_short_label">Last station</string>
+    <string name="shortcut_last_station_short_label">Претходна станица</string>
     <string name="shortcut_last_station_long_label">Пусти претходну станицу</string>
-    <string name="shortcut_last_station_disabled_message">Shortcut for playback of last station disabled.</string>
+    <string name="shortcut_last_station_disabled_message">Пречица за пуштање претходне станице искључена.</string>
 
     <!-- menu entries -->
     <string name="menu_about">О програму</string>
