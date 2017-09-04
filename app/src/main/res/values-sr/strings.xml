@@ -1,19 +1,17 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- activities -->
-    <string name="app_name">Транзистор</string>  <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
-
+    <string name="app_name">Транзистор</string>
+    <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
     <!-- app shortcuts -->
     <string name="shortcut_last_station_short_label">Претходна станица</string>
     <string name="shortcut_last_station_long_label">Пусти претходну станицу</string>
     <string name="shortcut_last_station_disabled_message">Пречица за пуштање претходне станице искључена.</string>
-
     <!-- menu entries -->
     <string name="menu_icon">Промени икону</string>
     <string name="menu_delete">Обриши</string>
     <string name="menu_rename">Преименуј</string>
     <string name="menu_shortcut">Постави на почетни екран</string>
-
     <!-- descriptions -->
     <string name="descr_app_icon">Икона апликације која означава стари радио</string>
     <string name="descr_station_options_button">Прикажи опције за радио станицу</string>
@@ -29,7 +27,6 @@
     <string name="descr_player_sheet_p_stream_url">Веза тока изабране радио станице</string>
     <!--<string name="descr_list_add_new"></string>-->
     <!--<string name="descr_list_add_select_stream_dropdown"></string>-->
-
     <!-- player -->
     <!--<string name="player_sheet_h1_details"></string>-->
     <!--<string name="player_sheet_h2_current_session"></string>-->
@@ -39,7 +36,6 @@
     <string name="player_sheet_h2_station_channel_count">Број канала</string>
     <string name="player_sheet_h2_station_sample_rate">Узорковање</string>
     <!--<string name="player_sheet_h2_station_bitrate"></string>-->
-
     <!-- dialogs -->
     <string name="dialog_generic_button_okay">У реду</string>
     <string name="dialog_generic_button_cancel">Одустани</string>
@@ -55,7 +51,6 @@
     <!-- <string name="dialog_add_station_choose_stream_heading"></string>-->
     <!--<string name="dialog_add_station_choose_stream_message"></string>-->
     <!--<string name="dialog_add_station_choose_stream_button"></string>-->
-
     <!-- error dialogs -->
     <string name="dialog_error_title_default">Грешка</string>
     <string name="dialog_error_message_default">Десила се грешка</string>
@@ -75,7 +70,6 @@
     <string name="dialog_error_message_fetch_read">Транзистор није успио да рашчлани дати фајл.</string>
     <string name="dialog_error_message_fetch_read_file_location">Локација фајла:</string>
     <string name="dialog_error_message_fetch_write">Транзистор није успио да сачува станицу.</string>
-
     <!-- messages -->
     <string name="toastmessage_add_download_started">Преузимање започето.</string>
     <string name="toastmessage_add_open_file_started">Отварам фајл.</string>
@@ -105,19 +99,15 @@
     <string name="toastalert_station_not_found">Не могох да нађем станицу.</string>
     <string name="snackbar_request_storage_access">Транзистору треба приступ читања да би могао да приступи подацима са спољашњег складишта.</string>
     <string name="snackbar_message_timer_set">Тајмер постављен на</string>
-
     <!-- notification -->
     <string name="notification_play">Пусти</string>
     <string name="notification_stop">Заустави</string>
     <string name="notification_channel_playback_name">Контроле пуштања</string>
     <string name="notification_channel_playback_description">Контроле пуштања, лого станице и подаци о тренутно пуштеном.</string>
-
     <!-- onboarding -->
     <!--<string name="onboarding_app_description"></string>-->
     <!--<string name="onboarding_app_get_started"></string>-->
-
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7
     https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
-
 </resources>
