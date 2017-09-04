@@ -42,12 +42,12 @@
     <string name="descr_player_sheet_content_copy_icon">Icono de copia de contenido</string>
     <string name="descr_player_sheet_p_station_name">Nombre de la emisora de radio seleccionada</string>
     <string name="descr_player_sheet_p_station_metadata">Metadatos de la emisora de radio seleccionada</string>
-    <string name="descr_player_sheet_p_stream_url">Stream URL de la emisora de radio seleccionada</string>
+    <string name="descr_player_sheet_p_stream_url">Enlace Stream de la emisora de radio seleccionada</string>
 
     <!-- player -->
     <string name="player_sheet_h1_station_name">Emisora</string>
     <string name="player_sheet_h1_station_metadata">Reproducción en curso</string>
-    <string name="player_sheet_h1_stream_url">URL de retransmisión</string>
+    <string name="player_sheet_h1_stream_url">Enlace de retransmisión</string>
     <string name="player_sheet_p_station_metadata">Sin metadatos disponibles</string>
     <string name="player_sheet_h1_station_mime_type">Tipo MIME</string>
     <string name="player_sheet_h1_station_channel_count">Número de canales</string>
@@ -58,7 +58,7 @@
     <string name="dialog_generic_button_okay">Aceptar</string>
     <string name="dialog_generic_button_cancel">Cancelar</string>
     <string name="dialog_add_station_button">Añadir</string>
-    <string name="dialog_add_station_input_hint">Pegar URL de retransmisión</string>
+    <string name="dialog_add_station_input_hint">Pegar enlace de streaming</string>
     <string name="dialog_add_station_message">Añadir nueva emisora</string>
     <string name="dialog_add_station_howto">Puedes añadir una retransmisión de audio codificado en MP3, AAC y Ogg/Opus además de retransmisiones encapsuladas en archivos PLS o M3U. Alternativamente puedes añadir nuevas emisoras pulsando en los enlaces de retransmisión (.pls o .m3u) en tu navegador web.</string>
     <string name="dialog_delete_station_message">Borrar emisora</string>
@@ -77,11 +77,11 @@
     <string name="dialog_error_title_fetch_read">Leer asunto</string>
     <string name="dialog_error_title_fetch_write">Escribir asunto</string>
     <string name="dialog_error_message_fetch_general_external_storage">Almacenamiento externo:</string>
-    <string name="dialog_error_message_fetch_general_hint_m3u">Consejo: Transistor solo puede procesar retransmisiones codificadas en MP3, AAC y Ogg/Opus o URLs que terminen en .m3u o .pls.</string>
+    <string name="dialog_error_message_fetch_general_hint_m3u">Consejo: Transistor solo puede procesar retransmisiones codificadas en MP3, AAC y Ogg/Opus o enlaces que terminen en .m3u o .pls.</string>
     <string name="dialog_error_message_fetch_general_playlist_type">Tipo de archivo MIME:</string>
     <string name="dialog_error_message_fetch_general_stream_type">Tipo de stream MIME:</string>
     <string name="dialog_error_message_fetch_general_file_content">Contenido del archivo:</string>
-    <string name="dialog_error_message_fetch_download_station_url">URL de la emisora:</string>
+    <string name="dialog_error_message_fetch_download_station_url">Enlace streaming de la emisora:</string>
     <string name="dialog_error_message_fetch_download">Transistor lo intentó todo pero no pudo entender el enlace.</string>
     <string name="dialog_error_message_fetch_read">Transistor lo intentó todo pero no pudo entender el archivo.</string>
     <string name="dialog_error_message_fetch_read_file_location">Ubicación del archivo:</string>
@@ -96,7 +96,7 @@
     <string name="toastmessage_shortcut_created">Acceso directo creado.</string>
     <string name="toastmessage_shortcut_not_created">Atajo no creado. Este dispositivo no permite la creación de accesos directos.</string>
     <string name="toastmessage_list_refreshed">Recargando lista de emisoras.</string>
-    <string name="toastmessage_copied_to_clipboard_url">URL de retransmisión copiada al portapapeles.</string>
+    <string name="toastmessage_copied_to_clipboard_url">Enlace de streaming copiada al portapapeles.</string>
     <string name="toastmessage_copied_to_clipboard_metadata">Metadatos copiados al portapapeles.</string>
     <string name="toastmessage_station_copied">Emisora copiada al portapapeles.</string>
     <string name="toastmessage_stream_may_not_work">Detectado formato de audio no soportado. La reproducción de la retransmisión quizás no funcione correctamente.</string>
