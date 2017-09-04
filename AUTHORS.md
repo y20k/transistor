@@ -15,6 +15,8 @@ French version: [M2ck](https://github.com/M2ck)
 
 German version: [y20k](https://github.com/y20k)
 
+Greek version: [nikoss](https://github.com/nikoss)
+
 Japanese version: [naofum](https://github.com/naofum)
 
 Norwegian version: [comradekingu](https://github.com/comradekingu)
