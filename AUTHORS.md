@@ -7,7 +7,7 @@ Transistor is designed, developed and maintained by: [y20k](https://github.com/y
 Contributing developer(s): [azixMcAze](https://github.com/azixMcAze) & [meonwax](https://github.com/meonwax) & [pelya](https://github.com/mpelya)
 
 ### Translations
-Basque version [osoitz](https://github.com/osoitz)
+Basque version: [osoitz](https://github.com/osoitz)
 
 Catalan version: [Zagur](https://github.com/Zagur)
 
