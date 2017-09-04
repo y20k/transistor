@@ -42,12 +42,12 @@
     <string name="descr_player_sheet_content_copy_icon">Икона копирања садржаја</string>
     <string name="descr_player_sheet_p_station_name">Назив изабране радио станице</string>
     <string name="descr_player_sheet_p_station_metadata">Метаподаци изабране радио станице</string>
-    <string name="descr_player_sheet_p_stream_url">УРЛ тока изабране радио станице</string>
+    <string name="descr_player_sheet_p_stream_url">Веза тока изабране радио станице</string>
 
     <!-- player -->
     <string name="player_sheet_h1_station_name">Станица</string>
     <string name="player_sheet_h1_station_metadata">Тренутно пуштање</string>
-    <string name="player_sheet_h1_stream_url">УРЛ тока</string>
+    <string name="player_sheet_h1_stream_url">Веза тока</string>
     <string name="player_sheet_p_station_metadata">нема доступних метаподатака</string>
     <string name="player_sheet_h1_station_mime_type">МИМЕ тип</string>
     <string name="player_sheet_h1_station_channel_count">Број канала</string>
@@ -58,7 +58,7 @@
     <string name="dialog_generic_button_okay">У реду</string>
     <string name="dialog_generic_button_cancel">Одустани</string>
     <string name="dialog_add_station_button">Додај</string>
-    <string name="dialog_add_station_input_hint">Унесите УРЛ тока</string>
+    <string name="dialog_add_station_input_hint">Унесите везу тока</string>
     <string name="dialog_add_station_message">Додавање нове станице</string>
     <string name="dialog_add_station_howto">Можете да додајете везе аудио тока кодиране као МП3, ААЦ или Огг/Опус али и токове уграђене у .m3u или .pls фајлове. Алтернативно можете да додате нову станицу тапом на везе токова у вашем веб прегледачу.</string>
     <string name="dialog_delete_station_message">Брисање станице</string>
@@ -82,10 +82,10 @@
     <string name="dialog_error_message_fetch_general_stream_type">МИМЕ тип тока:</string>
     <string name="dialog_error_message_fetch_general_file_content">Садржај удаљеног фајла:</string>
     <string name="dialog_error_message_fetch_download">Транзистор није успио да рашчлани дату везу.</string>
-    <string name="dialog_error_message_fetch_download_station_url">Адреса станице:</string>
+    <string name="dialog_error_message_fetch_download_station_url">Веза тока станице:</string>
     <string name="dialog_error_message_fetch_read">Транзистор није успио да рашчлани дати фајл.</string>
     <string name="dialog_error_message_fetch_read_file_location">Локација фајла:</string>
-    <string name="dialog_error_message_fetch_write">Транзистор није успио да упише задату станицу у складиште.</string>
+    <string name="dialog_error_message_fetch_write">Транзистор није успио да сачува станицу.</string>
 
     <!-- messages -->
     <string name="actioncall_message_start_here">Додајте нову станицу</string>
@@ -96,7 +96,7 @@
     <string name="toastmessage_shortcut_created">Пречица направљена.</string>
     <string name="toastmessage_shortcut_not_created">Пречица није направљена. Овај уређај не допушта прављење пречица.</string>
     <string name="toastmessage_list_refreshed">Поново учитавам списак станица.</string>
-    <string name="toastmessage_copied_to_clipboard_url">УРЛ тока копиран на клипборд.</string>
+    <string name="toastmessage_copied_to_clipboard_url">Веза тока копирана на клипборд.</string>
     <string name="toastmessage_copied_to_clipboard_metadata">Метаподаци копирани на клипборд.</string>
     <string name="toastmessage_station_copied">Станица копирана на клипборд.</string>
     <string name="toastmessage_stream_may_not_work">Откривен неподржани формат звука. Пуштање тока можда неће радити исправно.</string>
@@ -127,22 +127,22 @@
     <string name="infosheet_about_h1_about">О Транзистору</string>
     <string name="infosheet_about_h2_radio">Радио апликација за Андроид</string>
     <string name="infosheet_about_h3_version">Издање 2.3 (Kooks)</string>
-    <string name="infosheet_about_p_bare">Транзистор је проста апликација за слушање радија преко интернета. Апликација складишти радио станице као фајлове на спољашњем складишту вашег уређаја. Потражите m3u фајлове у /Android/data/org.y20k.transistor/files/Collection. Тренутно су подржани MP3, AAC и Ogg/Opus кодирани токови.</string>
+    <string name="infosheet_about_p_bare">Транзистор је проста апликација за слушање радија преко интернета. Апликација складишти радио станице као фајлове на спољашњем складишту вашег уређаја. Потражите .m3u фајлове у /Android/data/org.y20k.transistor/files/Collection. Тренутно су подржани MP3, AAC и Ogg/Opus кодирани токови.</string>
     <string name="infosheet_about_p_note">Важна напомена: ово је апликација типа ДСС (донесите своју станицу). Нема функције уграђене претраге. Станице морате ручно да додајете.</string>
     <string name="infosheet_about_p_free">Транзистор је слободан софтвер. Објављен је под МИТ лиценцом. Изворни кôд можете да нађете на Гитхабу, где такође можете да пријављујете грешке или помогнете програмирање, ако сте заинтересовани.</string>
     <string name="infosheet_about_p_github">https://github.com/y20k/transistor</string>
     <string name="infosheet_about_p_license">https://opensource.org/licenses/MIT</string>
     <string name="infosheet_about_h2_permissions">Које су дозволе потребне Транзистору?</string>
-    <string name="infosheet_about_h3_shortcut">Дозволе INSTALL_SHORTCUT и UNINSTALL_SHORTCUT</string>
-    <string name="infosheet_about_p_shortcut">Ове дозволе су потребне за инсталирање и уклањање пречице радио станице на почетном екрану.</string>
-    <string name="infosheet_about_h3_internet">Дозвола INTERNET</string>
+    <string name="infosheet_about_h3_shortcut">INSTALL_SHORTCUT и UNINSTALL_SHORTCUT</string>
+    <string name="infosheet_about_p_shortcut">Ово је потребно за инсталирање и уклањање пречице радио станице на почетном екрану.</string>
+    <string name="infosheet_about_h3_internet">INTERNET</string>
     <string name="infosheet_about_p_internet">Транзистор пушта токове радио станица са интернета.</string>
-    <string name="infosheet_about_h3_external">Дозвола READ_EXTERNAL_STORAGE</string>
+    <string name="infosheet_about_h3_external">READ_EXTERNAL_STORAGE</string>
     <string name="infosheet_about_p_external">Транзистор захтева приступ сликама, фотографијама и документима да би могао да прилагоди иконе радио станица и отвори локално сачуване фајлове листи нумера.</string>
-    <string name="infosheet_about_h3_vibrate">Дозвола VIBRATE</string>
+    <string name="infosheet_about_h3_vibrate">VIBRATE</string>
     <string name="infosheet_about_p_vibrate">Тап и држање радио станице ће окинути лагану вибрацију.</string>
-    <string name="infosheet_about_h3_wakelock">Дозвола WAKE_LOCK</string>
-    <string name="infosheet_about_p_wakelock">Током пуштања Транзистор узима тзв. „блокаду буђења“ (wake lock). Ово спречава Андроид да заустави пуштање због уштеде енергије.</string>
+    <string name="infosheet_about_h3_wakelock">WAKE_LOCK</string>
+    <string name="infosheet_about_p_wakelock">Током пуштања Транзистор узима тзв. „блокаду буђења“ (wake lock), спречавајући Андроид да заустави пуштање због уштеде енергије.</string>
 
     <!-- infosheet howto -->
     <string name="infosheet_howto_h1_howto">Како користити Транзистор</string>
