@@ -42,12 +42,12 @@
     <string name="descr_player_sheet_content_copy_icon">コンテンツ コピー アイコン</string>
     <string name="descr_player_sheet_p_station_name">選択したラジオ局の名前</string>
     <string name="descr_player_sheet_p_station_metadata">選択したラジオ局からのメタデータ</string>
-    <string name="descr_player_sheet_p_stream_url">選択したラジオ局のストリーム URL</string>
+    <string name="descr_player_sheet_p_stream_url">選択したラジオ局のストリームのリンク</string>
 
     <!-- player -->
     <string name="player_sheet_h1_station_name">放送局</string>
     <string name="player_sheet_h1_station_metadata">現在再生中</string>
-    <string name="player_sheet_h1_stream_url">ストリーム URL</string>
+    <string name="player_sheet_h1_stream_url">ストリームのリンク</string>
     <string name="player_sheet_p_station_metadata">メタデータがありません</string>
     <string name="player_sheet_h1_station_mime_type">MIME タイプ</string>
     <string name="player_sheet_h1_station_channel_count">チャンネル数</string>
@@ -58,7 +58,7 @@
     <string name="dialog_generic_button_okay">OK</string>
     <string name="dialog_generic_button_cancel">キャンセル</string>
     <string name="dialog_add_station_button">追加</string>
-    <string name="dialog_add_station_input_hint">ストリーミング URL を貼り付けてください</string>
+    <string name="dialog_add_station_input_hint">ストリーミングのリンクを貼り付けてください</string>
     <string name="dialog_add_station_message">新しい放送局を追加</string>
     <string name="dialog_add_station_howto">MP3、AAC、Ogg/Opus にエンコードされた素のオーディオストリームと同様に、PLS または M3U ファイルにカプセル化されたストリームを追加できます。また、Web ブラウザーでストリーミングのリンク (.pls または .m3u) をタップして新しい局を追加できます。</string>
     <string name="dialog_delete_station_message">放送局を削除</string>
@@ -77,15 +77,15 @@
     <string name="dialog_error_title_fetch_read">問題を読む</string>
     <string name="dialog_error_title_fetch_write">問題を書き込む</string>
     <string name="dialog_error_message_fetch_general_external_storage">外部ストレージ:</string>
-    <string name="dialog_error_message_fetch_general_hint_m3u">ヒント: トランジスターは MP3、AAC、Ogg/Opus でエンコードされたストリームや .m3u または .pls で終わる URL のみ処理することができます。</string>
+    <string name="dialog_error_message_fetch_general_hint_m3u">ヒント: トランジスターは MP3、AAC、Ogg/Opus でエンコードされたストリームや .m3u または .pls で終わるリンクのみ処理することができます。</string>
     <string name="dialog_error_message_fetch_general_playlist_type">ファイルの MIME タイプ:</string>
     <string name="dialog_error_message_fetch_general_stream_type">ストリームの MIME タイプ:</string>
     <string name="dialog_error_message_fetch_general_file_content">リモート ファイルのコンテンツ:</string>
     <string name="dialog_error_message_fetch_download">トランジスターの努力にもかかわらず、リンクが意味をなさない可能性があります。</string>
-    <string name="dialog_error_message_fetch_download_station_url">放送局の URL:</string>
-    <string name="dialog_error_message_fetch_read">トランジスターは努力しましたが、与えられた報告は意味をなさない可能性があります。</string>
+    <string name="dialog_error_message_fetch_download_station_url">放送局のストリームのリンク:</string>
+    <string name="dialog_error_message_fetch_read">トランジスターは努力しましたが、ファイルは意味がない可能性があります。</string>
     <string name="dialog_error_message_fetch_read_file_location">ファイルの場所:</string>
-    <string name="dialog_error_message_fetch_write">トランジスターは努力しましたが、指定された局をストレージに保存できませんでした。</string>
+    <string name="dialog_error_message_fetch_write">トランジスターは努力しましたが、放送局を保存できませんでした。</string>
 
     <!-- messages -->
     <string name="actioncall_message_start_here">新しい放送局を追加</string>
@@ -96,7 +96,7 @@
     <string name="toastmessage_shortcut_created">ショートカットを作成しました。</string>
     <string name="toastmessage_shortcut_not_created">ショートカットは作成されません。このデバイスは、ショートカットの作成を許可していません。</string>
     <string name="toastmessage_list_refreshed">局のリストを再読み込みしています。</string>
-    <string name="toastmessage_copied_to_clipboard_url">ストリーム URL をクリップボードにコピーしました。</string>
+    <string name="toastmessage_copied_to_clipboard_url">ストリームのリンクをクリップボードにコピーしました。</string>
     <string name="toastmessage_copied_to_clipboard_metadata">メタデータをクリップボードにコピーしました。</string>
     <string name="toastmessage_station_copied">放送局をクリップボードにコピーしました。</string>
     <string name="toastmessage_stream_may_not_work">サポートされていないオーディオ形式が検出されました。ストリームの再生が正しく動作しない場合があります。</string>
@@ -127,21 +127,21 @@
     <string name="infosheet_about_h1_about">トランジスターについて</string>
     <string name="infosheet_about_h2_radio">Android 向けラジオアプリ</string>
     <string name="infosheet_about_h3_version">バージョン 2.3 (Kooks)</string>
-    <string name="infosheet_about_p_bare">トランジスターは、インターネット上のラジオ番組を聴くためのベアボーン アプリです。アプリは、デバイスの外部ストレージ上にファイルとして局を格納します。/Android/data/org.y20k.transistor/files/Collection 内の m3u のファイルを探します。現在、MP3、AAC、Ogg/Opus でエンコードされたストリームを認識します。</string>
+    <string name="infosheet_about_p_bare">トランジスターは、インターネット上のラジオ番組を聴くためのベアボーン アプリです。アプリは、デバイスの外部ストレージ上にファイルとして放送局を格納します。/Android/data/org.y20k.transistor/files/Collection 内の .m3u ファイルを探します。現在、MP3、AAC、Ogg/Opus でエンコードされたストリームを認識します。</string>
     <string name="infosheet_about_p_note">重要事項: これは BYOS (自分のラジオ局を持ち歩く) タイプのアプリです。検索機能は何も内蔵していません。ラジオ局を手動で追加する必要があります。</string>
     <string name="infosheet_about_p_free">トランジスターはフリー ソフトウェアです。MIT オープン ソース ライセンスの下で公開されます。コードは GitHub 上で参照することができます。GitHub は、バグの報告、興味があれば貢献することもできる場所です。</string>
     <string name="infosheet_about_p_github">https://github.com/y20k/transistor</string>
     <string name="infosheet_about_p_license">https://opensource.org/licenses/MIT</string>
     <string name="infosheet_about_h2_permissions">トランジスターが必要なアクセス許可は?</string>
-    <string name="infosheet_about_h3_shortcut">アクセス許可 INSTALL_SHORTCUT と UNINSTALL_SHORTCUT</string>
-    <string name="infosheet_about_p_shortcut">このアクセス許可は、Android のホーム画面上にラジオ局のショートカットをインストール、アンインストールするために必要です。</string>
-    <string name="infosheet_about_h3_internet">アクセス許可 INTERNET</string>
+    <string name="infosheet_about_h3_shortcut">INSTALL_SHORTCUT と UNINSTALL_SHORTCUT</string>
+    <string name="infosheet_about_p_shortcut">これらは、Android のホーム画面上にラジオ局のショートカットをインストール、アンインストールするために必要です。</string>
+    <string name="infosheet_about_h3_internet">INTERNET</string>
     <string name="infosheet_about_p_internet">トランジ スターはインターネット上のラジオ局をストリームします。</string>
-    <string name="infosheet_about_h3_external">アクセス許可 READ_EXTERNAL_STORAGE</string>
+    <string name="infosheet_about_h3_external">READ_EXTERNAL_STORAGE</string>
     <string name="infosheet_about_p_external">トランジスターは、ラジオ局のアイコンをカスタマイズするために、画像、写真、ドキュメントにアクセスしたり、ローカルに保存されたプレイリスト ファイルを開くことができる必要があります。</string>
-    <string name="infosheet_about_h3_vibrate">アクセス許可 VIBRATE</string>
+    <string name="infosheet_about_h3_vibrate">VIBRATE</string>
     <string name="infosheet_about_p_vibrate">ラジオ局を長押しすると、小さく振動します。</string>
-    <string name="infosheet_about_h3_wakelock">アクセス許可 WAKE_LOCK</string>
+    <string name="infosheet_about_h3_wakelock">WAKE_LOCK</string>
     <string name="infosheet_about_p_wakelock">再生中、トランジスターはいわゆる部分的なウェイクロックを取得します。省電力のために Android のシステムが再生を停止するのを防止します。</string>
 
     <!-- infosheet howto -->
