@@ -6,14 +6,14 @@
     <string name="title_activity_infosheet">Infoblad</string>
 
     <!-- app shortcuts -->
-    <string name="shortcut_last_station_short_label">Last station</string>
+    <string name="shortcut_last_station_short_label">Siste stasjon</string>
     <string name="shortcut_last_station_long_label">Spill siste stasjon</string>
-    <string name="shortcut_last_station_disabled_message">Shortcut for playback of last station disabled.</string>
+    <string name="shortcut_last_station_disabled_message">Snarvei for avspilling av siste stasjon avskrudd.</string>
 
     <!-- menu entries -->
     <string name="menu_about">Om</string>
     <string name="menu_howto">Bruksanvisning</string>
-    <string name="menu_refresh">Refresh list</string>
+    <string name="menu_refresh">Oppdater liste</string>
     <string name="menu_timer">Tidsavbrudd</string>
     <string name="menu_icon">Endre miniatyrbilde</string>
     <string name="menu_add">Legg til</string>
@@ -94,8 +94,8 @@
     <string name="toastmessage_long_press_playback_stopped">Avspilling stoppet (enset langt trykk)</string>
     <string name="toastmessage_long_press_playback_started">Avspilling startet (langt trykk enset)</string>
     <string name="toastmessage_shortcut_created">Snarvei opprettet.</string>
-    <string name="toastmessage_shortcut_not_created">Shortcut not created. This device does not allow the creation of shortcuts.</string>
-    <string name="toastmessage_list_refreshed">Reloading list of stations.</string>
+    <string name="toastmessage_shortcut_not_created">Snarveien ble ikke opprettet. Denne enheten tillater ikke opprettelse av snarveier.</string>
+    <string name="toastmessage_list_refreshed">Laster inn stasjonsliste igjen.</string>
     <string name="toastmessage_copied_to_clipboard_url">Strømningslenke kopiert til utklippstavle.</string>
     <string name="toastmessage_copied_to_clipboard_metadata">Metadata kopiert til utklippstavle.</string>
     <string name="toastmessage_station_copied">Stasjon kopiert til utklippstavle.</string>
@@ -104,7 +104,7 @@
     <string name="toastmessage_timer_cancelled">Tidsavbrudd avbrutt.</string>
     <string name="toastmessage_timer_duration_increased">Varighet økt.</string>
     <string name="toastmessage_timer_start_unable">Start avspilling først.</string>
-    <string name="toastalert_unable_to_connect">Unable to connect. Device does not have an internet connection or stream may be outdated.</string>
+    <string name="toastalert_unable_to_connect">Kunne ikke koble til. Enheten mangler internettilknytning, eller så er strømmen utdatert.</string>
     <string name="toastalert_rename_unsuccessful">Kunne ikke endre navn på stasjon. Velg et annet navn.</string>
     <string name="toastalert_delete_successful">Stasjonen ble fjernet.</string>
     <string name="toastalert_no_external_storage">Fikk ikke tilgang til eksternt lagringsmedium.</string>
@@ -120,8 +120,8 @@
     <string name="notification_stop">Stopp</string>
     <string name="notification_swipe_to_stop">Sveip for å stoppe</string>
     <string name="notification_playing">Spiller av</string>
-    <string name="notification_channel_playback_name">Playback Controls</string>
-    <string name="notification_channel_playback_description">Playback controls, station logo and now playing info.</string>
+    <string name="notification_channel_playback_name">Avspillingskontroller</string>
+    <string name="notification_channel_playback_description">Avspillingskontroller, stasjonslogo og info om hva som spilles.</string>
 
     <!-- infosheet about -->
     <string name="infosheet_about_h1_about">Om Transistor</string>
