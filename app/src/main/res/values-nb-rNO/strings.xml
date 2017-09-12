@@ -7,7 +7,7 @@
 
     <!-- app shortcuts -->
     <string name="shortcut_last_station_short_label">Last station</string>
-    <string name="shortcut_last_station_long_label">Play last station</string>
+    <string name="shortcut_last_station_long_label">Spill siste stasjon</string>
     <string name="shortcut_last_station_disabled_message">Shortcut for playback of last station disabled.</string>
 
     <!-- menu entries -->
@@ -42,12 +42,12 @@
     <string name="descr_player_sheet_content_copy_icon">Ikon for innholdskopiering</string>
     <string name="descr_player_sheet_p_station_name">Navn på valgt radiostasjon</string>
     <string name="descr_player_sheet_p_station_metadata">Metadata fra valgt radiostasjon</string>
-    <string name="descr_player_sheet_p_stream_url">Strømningsnettadresse fra valgt radiostasjon</string>
+    <string name="descr_player_sheet_p_stream_url">Strømningslenke for valgt radiostasjon</string>
 
     <!-- player -->
     <string name="player_sheet_h1_station_name">Stasjon</string>
     <string name="player_sheet_h1_station_metadata">Spilles nå</string>
-    <string name="player_sheet_h1_stream_url">Strømningsnettadresse</string>
+    <string name="player_sheet_h1_stream_url">Strømningslenke</string>
     <string name="player_sheet_p_station_metadata">ingen metadata tilgjengelig</string>
     <string name="player_sheet_h1_station_mime_type">MIME-type</string>
     <string name="player_sheet_h1_station_channel_count">Kanalantall</string>
@@ -58,9 +58,9 @@
     <string name="dialog_generic_button_okay">Godta</string>
     <string name="dialog_generic_button_cancel">Avbryt</string>
     <string name="dialog_add_station_button">Legg til</string>
-    <string name="dialog_add_station_input_hint">Lim inn nettadresse til strøm</string>
+    <string name="dialog_add_station_input_hint">Lim inn lenkestrøm</string>
     <string name="dialog_add_station_message">Legg til en ny stasjon</string>
-    <string name="dialog_add_station_howto">Du kan legge til råe lydstrømmer kodet som MP3 og OGG sågar også strømmer innkapslet i PLS- eller M3U -filer. Alternativt kan du legge til nye stasjoner ved å trykke på strømmingslenker (.pls eller .m3u) i nettleseren din.</string>
+    <string name="dialog_add_station_howto">Du kan legge til råe lydstrømmer kodet som MP3, AAC og OGG/Opus sågar også strømmer innkapslet i PLS- eller M3U -filer. Alternativt kan du legge til nye stasjoner ved å trykke på strømmingslenker (.pls eller .m3u) i nettleseren din.</string>
     <string name="dialog_delete_station_message">Slett stasjon</string>
     <string name="dialog_button_delete">Slett</string>
     <string name="dialog_rename_station_input_hint">Skriv inn nytt navn</string>
@@ -72,20 +72,20 @@
     <string name="dialog_error_message_default">En feil inntraff</string>
     <string name="dialog_error_details_button_default">Vis detaljer</string>
     <string name="dialog_error_details_default">Ingen detaljer tilgjengelig</string>
-    <string name="dialog_error_details_write">Stasjonen er antageligvis et duplikat, eller så bør du kanskje sjekke eksternt lagringsmedium.</string>
+    <string name="dialog_error_details_write">Denne stasjonen er antageligvis et duplikat, eller så bør du kanskje sjekke ditt eksterne lagringsmedium.</string>
     <string name="dialog_error_title_fetch_download">Last ned feilmelding</string>
     <string name="dialog_error_title_fetch_read">Les feilmelding</string>
     <string name="dialog_error_title_fetch_write">Skriv feilmelding</string>
     <string name="dialog_error_message_fetch_general_external_storage">Eksternt lagringsmedium:</string>
-    <string name="dialog_error_message_fetch_general_hint_m3u">Hint: Transistor kan bare behandle MP3- og OGG-kodede strømmer eller nettadresser som slutter med .m3u eller .pls.</string>
+    <string name="dialog_error_message_fetch_general_hint_m3u">Hint: Transistor kan bare behandle MP3- AAC- og OGG/Opus-kodede strømmer eller nettadresser som slutter med .m3u eller .pls.</string>
     <string name="dialog_error_message_fetch_general_playlist_type">Filas MIME-type:</string>
     <string name="dialog_error_message_fetch_general_stream_type">Strømmens MIME-type:</string>
     <string name="dialog_error_message_fetch_general_file_content">Filinnhold:</string>
-    <string name="dialog_error_message_fetch_download">Transistor prøvde hardt, men kunne ikke fortolke noen mening ut av den angitte lenken.</string>
-    <string name="dialog_error_message_fetch_download_station_url">Nettadressen til stasjonen:</string>
-    <string name="dialog_error_message_fetch_read">Transistor prøvde hardt, men kunne ikke skjønne seg på angitt fil.</string>
+    <string name="dialog_error_message_fetch_download">Transistor prøvde hardt, men kunne ikke fortolke noen mening ut av lenken.</string>
+    <string name="dialog_error_message_fetch_download_station_url">Strømningslenken til stasjonen:</string>
+    <string name="dialog_error_message_fetch_read">Transistor prøvde hardt, men kunne ikke skjønne seg på fila.</string>
     <string name="dialog_error_message_fetch_read_file_location">Filens plassering:</string>
-    <string name="dialog_error_message_fetch_write">Transistor prøvde hardt, men kunne ikke lagre angitt stasjon til lagringsmedium.</string>
+    <string name="dialog_error_message_fetch_write">Transistor prøvde hardt, men kunne ikke lagre stasjonen.</string>
 
     <!-- messages -->
     <string name="actioncall_message_start_here">Legg til ny stasjon</string>
@@ -96,7 +96,7 @@
     <string name="toastmessage_shortcut_created">Snarvei opprettet.</string>
     <string name="toastmessage_shortcut_not_created">Shortcut not created. This device does not allow the creation of shortcuts.</string>
     <string name="toastmessage_list_refreshed">Reloading list of stations.</string>
-    <string name="toastmessage_copied_to_clipboard_url">Strømningsnettadresse kopiert til utklippstavle.</string>
+    <string name="toastmessage_copied_to_clipboard_url">Strømningslenke kopiert til utklippstavle.</string>
     <string name="toastmessage_copied_to_clipboard_metadata">Metadata kopiert til utklippstavle.</string>
     <string name="toastmessage_station_copied">Stasjon kopiert til utklippstavle.</string>
     <string name="toastmessage_stream_may_not_work">Ustøttet lydformat oppdaget. Avspilling av strømmen kan bli skadelidende.</string>
@@ -106,7 +106,7 @@
     <string name="toastmessage_timer_start_unable">Start avspilling først.</string>
     <string name="toastalert_unable_to_connect">Unable to connect. Device does not have an internet connection or stream may be outdated.</string>
     <string name="toastalert_rename_unsuccessful">Kunne ikke endre navn på stasjon. Velg et annet navn.</string>
-    <string name="toastalert_delete_successful">Stasjon fjernet.</string>
+    <string name="toastalert_delete_successful">Stasjonen ble fjernet.</string>
     <string name="toastalert_no_external_storage">Fikk ikke tilgang til eksternt lagringsmedium.</string>
     <string name="toastalert_headphones_unplugged">Hodetelefoner frakoblet. Avspilling stoppet.</string>
     <string name="toastalert_permission_denied">Tilgang nektet:</string>
@@ -127,22 +127,22 @@
     <string name="infosheet_about_h1_about">Om Transistor</string>
     <string name="infosheet_about_h2_radio">Radio-program for Android</string>
     <string name="infosheet_about_h3_version">Versjon 2.3 (Kooks)</string>
-    <string name="infosheet_about_p_bare">Transistor er et helt enkelt program for å lytte til radioprogrammer over Internett. Dette programmet lagrer stasjoner som filer på din enhets eksterne lagringsmedium. Se etter filer av typen m3u i /Android/data/org.y20k.transistor/files/Collection. Den forstår foreløpig strømmer kodet i MP3 og OGG.</string>
+    <string name="infosheet_about_p_bare">Transistor er et helt enkelt program for å lytte til radioprogrammer over Internett. Dette programmet lagrer stasjoner som filer på din enhets eksterne lagringsmedium. Se etter .m3u-filer i /Android/data/org.y20k.transistor/files/Collection. Den forstår foreløpig strømmer kodet i MP3, AAC og OGG/Opus.</string>
     <string name="infosheet_about_p_note">Viktig melding: Dette er et program der du må lage din egen radiostasjon. Det finnes ingen innebygd søkefunksjon, og du må legge inn radiostasjoner selv.</string>
     <string name="infosheet_about_p_free">Transistor er fri programvare. Det er lisensiert MIT. Du finner koden på Github, der du også kan melde fra om feil, eller bidra, hvis du er interessert.</string>
     <string name="infosheet_about_p_github">https://github.com/y20k/transistor</string>
     <string name="infosheet_about_p_license">https://opensource.org/licenses/MIT</string>
     <string name="infosheet_about_h2_permissions">Hvilke tilganger trenger Transistor?</string>
-    <string name="infosheet_about_h3_shortcut">Tilganger INSTALL_SHORTCUT og UNINSTALL_SHORTCUT</string>
-    <string name="infosheet_about_p_shortcut">Disse tilgangene trengs for å installere og avinstallere radiostasjonssnarveier på Androids hjemmeskjerm.</string>
-    <string name="infosheet_about_h3_internet">Tilgang INTERNET</string>
+    <string name="infosheet_about_h3_shortcut">INSTALL_SHORTCUT og UNINSTALL_SHORTCUT</string>
+    <string name="infosheet_about_p_shortcut">Disse trengs for å installere og avinstallere radiostasjonssnarveier på Androids hjemmeskjerm.</string>
+    <string name="infosheet_about_h3_internet">INTERNET</string>
     <string name="infosheet_about_p_internet">Transistor strømmer radiostasjoner over Internett.</string>
-    <string name="infosheet_about_h3_external">Tilgang READ_EXTERNAL_STORAGE</string>
+    <string name="infosheet_about_h3_external">READ_EXTERNAL_STORAGE</string>
     <string name="infosheet_about_p_external">Tilgang trenger tilgang til bilder og dokumenter for å kunne skreddersy radiostasjoners miniatyrbilder, og for å kunne åpne lokalt lagrede spilleliste-filer.</string>
-    <string name="infosheet_about_h3_vibrate">Tilgang VIBRATE</string>
+    <string name="infosheet_about_h3_vibrate">VIBRATE</string>
     <string name="infosheet_about_p_vibrate">Å trykke og holde en vilkårlig radiostasjon vil utløse en liten vibrasjon.</string>
-    <string name="infosheet_about_h3_wakelock">Tilgang WAKE_LOCK</string>
-    <string name="infosheet_about_p_wakelock">Ved avspilling innhenter Transistor en såkalt delvis oppvåkningslås. Dette forhindrer Android-systemet i å stoppe avspilling for å spare strøm.</string>
+    <string name="infosheet_about_h3_wakelock">WAKE_LOCK</string>
+    <string name="infosheet_about_p_wakelock">Ved avspilling innhenter Transistor en såkalt delvis oppvåkningslås, som forhindrer Android-systemet i å stoppe avspilling for å spare strøm.</string>
 
     <!-- infosheet howto -->
     <string name="infosheet_howto_h1_howto">Hvordan bruke Transistor</string>
@@ -161,7 +161,7 @@
     <string name="infosheet_howto_h2_storage">Hvor lagrer Transistor sine stasjoner?</string>
     <string name="infosheet_howto_p_storage">Transistor lagrer ikke stasjonslisten i en database. Istedenfor lagres stasjoner som m3u-filer på din enhets lagringsmedium. Du kan tukle med disse filene som du vil ved bruk av en tekstbehandler. FIlene lagres i /Android/data/org.y20k.transistor/files/Collection.</string>
     <string name="infosheet_howto_h2_backup">Hvordan kan jeg sikkerhetskopiere og overføre mine radiostasjoner?</string>
-    <string name="infosheet_howto_p_backup">Transistor har støtte for funksjonen \'automatisk sikkerhetskopiering\' i Android 6. Radiostasjoner blir alltid synkronisert til din Google-konto og blir gjenopprettet ved nye installasjoner. På enheter som kjører eldre versjoner av Android må du manuelt lagre og gjennopprette mappen med din samling.</string>
+    <string name="infosheet_howto_p_backup">Transistor har støtte for funksjonen \'automatisk sikkerhetskopiering\' i Android 6. Radiostasjoner blir alltid synkronisert til din Google-konto og blir gjenopprettet ved gjentatte nyinstallasjoner. På enheter som kjører eldre versjoner av Android må du manuelt lagre og gjennopprette mappen med din samling.</string>
     <string name="infosheet_howto_h2_sleep">Hvordan starte tidsavbrudd?</string>
     <string name="infosheet_howto_p_sleep">Trykk på klokkesymbolet for å igangsette et kvarters nedtelling. Når denne fullføres vil Transistor stoppe all avspilling. Ytterligere trykk utsetter tidsavbruddet med ytterligere 15 minutter. Noe må spilles av for å kunne aktivere tidsavbrudd.</string>
 
