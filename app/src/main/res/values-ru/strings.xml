@@ -7,8 +7,8 @@
 
     <!-- app shortcuts -->
     <string name="shortcut_last_station_short_label">Последняя станция</string>
-    <string name="shortcut_last_station_long_label">Play last station</string>
-    <string name="shortcut_last_station_disabled_message">Shortcut for playback of last station disabled.</string>
+    <string name="shortcut_last_station_long_label">Воспроизвести последнюю станцию</string>
+    <string name="shortcut_last_station_disabled_message">Ярлык для воспроизведения последней станции отключен.</string>
 
     <!-- menu entries -->
     <string name="menu_about">О программе</string>
@@ -77,7 +77,7 @@
     <string name="dialog_error_title_fetch_read">Проблема чтения</string>
     <string name="dialog_error_title_fetch_write">Проблема записи</string>
     <string name="dialog_error_message_fetch_general_external_storage">Внешнее хранилище:</string>
-    <string name="dialog_error_message_fetch_general_hint_m3u">Подсказка: Transistor может работать только с потоками, закодированными в MP3, AAC и Ogg/Opus, или с адресами, заканчивающимися на .m3u или .pls.</string>
+    <string name="dialog_error_message_fetch_general_hint_m3u">Подсказка: Transistor может работать только с потоками, закодированными в MP3, AAC и Ogg/Opus, или с ссылками, заканчивающимися на .m3u или .pls.</string>
     <string name="dialog_error_message_fetch_general_playlist_type">MIME-тип файла:</string>
     <string name="dialog_error_message_fetch_general_stream_type">MIME-тип потока:</string>
     <string name="dialog_error_message_fetch_general_file_content">Содержание файла:</string>
@@ -85,7 +85,7 @@
     <string name="dialog_error_message_fetch_download_station_url">Адрес станции:</string>
     <string name="dialog_error_message_fetch_read">Transistor не может обработать этот файл.</string>
     <string name="dialog_error_message_fetch_read_file_location">Расположение файла:</string>
-    <string name="dialog_error_message_fetch_write">Transistor не смог сохранить эту станцию в хранилище.</string>
+    <string name="dialog_error_message_fetch_write">Transistor не смог сохранить эту станцию.</string>
 
     <!-- messages -->
     <string name="actioncall_message_start_here">Добавить новую станцию</string>
@@ -142,7 +142,7 @@
     <string name="infosheet_about_h3_vibrate">VIBRATE</string>
     <string name="infosheet_about_p_vibrate">Долгое нажатие на названии радиостанции вызывает небольшую вибрацию.</string>
     <string name="infosheet_about_h3_wakelock">WAKE_LOCK</string>
-    <string name="infosheet_about_p_wakelock">Во время воспроизведения приложение не даёт устройству полностью \"заснуть\". Это предотвращает остановку воспроизведения когда Android активирует функцию энергосбережения.</string>
+    <string name="infosheet_about_p_wakelock">Во время воспроизведения приложение не даёт устройству полностью \"заснуть\", предотвращая остановку воспроизведения, когда Android активирует функцию энергосбережения.</string>
 
     <!-- infosheet howto -->
     <string name="infosheet_howto_h1_howto">Как использовать Transistor</string>
