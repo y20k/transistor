@@ -48,7 +48,7 @@
     <string name="player_sheet_h1_details">Details</string>
     <string name="player_sheet_h2_current_session">Current session</string>
     <string name="player_sheet_h2_station_name">Sender</string>
-    <string name="player_sheet_h2_station_metadata">Aktuelle Wiedergabe</string>
+    <string name="player_sheet_h2_station_metadata">Momentan läuft</string>
     <string name="player_sheet_h2_stream_url">Streaming-Adresse</string>
     <string name="player_sheet_p_station_metadata">Metadaten nicht verfügbar</string>
     <string name="player_sheet_h2_station_mime_type">MIME-Typ</string>
