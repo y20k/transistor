@@ -118,6 +118,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     private static MediaControllerCompat mController;
     private boolean mStationMetadataReceived;
     private boolean mAudioFocusLossTransient;
+    private boolean mPlayerInitLock;
     private HeadphoneUnplugReceiver mHeadphoneUnplugReceiver;
     private WifiManager.WifiLock mWifiLock;
     private PowerManager.WakeLock mWakeLock;
@@ -137,6 +138,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         mAudioFocusLossTransient = false;
         mStationMetadataReceived = false;
+        mPlayerInitLock = false;
         mSession = createMediaSession(this);
 
         // set user agent
@@ -702,8 +704,10 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
     /* Set up the media mPlayer */
     private void initializePlayer() {
-        InitializePlayerHelper initializePlayerHelper = new InitializePlayerHelper();
-        initializePlayerHelper.execute();
+        if (!mPlayerInitLock) {
+            InitializePlayerHelper initializePlayerHelper = new InitializePlayerHelper();
+            initializePlayerHelper.execute();
+        }
     }
 
 
@@ -909,6 +913,8 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
         @Override
         protected Integer doInBackground(Void... voids) {
+            mPlayerInitLock = true;
+
             String contentType = "";
 
             try {
@@ -960,6 +966,8 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
                                 .setContentType(C.CONTENT_TYPE_MUSIC)
                                 .build()
                         );
+
+                mPlayerInitLock = false;
             }
         }
 

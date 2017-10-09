@@ -13,9 +13,7 @@
 
 package org.y20k.transistor;
 
-import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.LifecycleRegistry;
-import android.arch.lifecycle.LifecycleRegistryOwner;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -54,7 +52,7 @@ import java.util.ArrayList;
 /**
  * MainActivity class
  */
-public final class MainActivity extends AppCompatActivity implements LifecycleRegistryOwner, FragmentManager.OnBackStackChangedListener, TransistorKeys {
+public final class MainActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener, TransistorKeys {
 
     /* Define log tag */
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
@@ -97,7 +95,7 @@ public final class MainActivity extends AppCompatActivity implements LifecycleRe
         mCollectionViewModel.getTwoPane().setValue(mTwoPane);
 
         // observe changes in LiveData
-        mCollectionViewModel.getStationList().observe((LifecycleOwner)this, createStationListObserver());
+        mCollectionViewModel.getStationList().observe(this, createStationListObserver());
 
         Bundle args = new Bundle();
         args.putBoolean(ARG_TWO_PANE, mTwoPane);
