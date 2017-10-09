@@ -380,13 +380,22 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
     /* Handles tap on the big playback button */
     private void handlePlaybackButtonClick() {
         // playback stopped or new station - start playback
-        if (mPlaybackState != PLAYBACK_STATE_STARTED) {
+//        if (mPlaybackState != PLAYBACK_STATE_STARTED) {
+//            startPlayback();
+//        }
+//        // playback active - stop playback
+//        else {
+//            stopPlayback();
+//        }
+
+        if (mPlaybackState == PLAYBACK_STATE_STOPPED) {
             startPlayback();
         }
         // playback active - stop playback
         else {
             stopPlayback();
         }
+
     }
 
 
@@ -749,7 +758,6 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
                     // CASE: PLAYBACK STATE
 //                    if (mThisStation.getStreamUri().equals(newStation.getStreamUri()) && mPlaybackState != newStation.getPlaybackState()) { // todo remove
                     if (mPlaybackState != newStation.getPlaybackState()) {
-                        LogHelper.w(LOG_TAG, "Just a debug check... Station: " + newStation.getStationName() + " | Playback state: " + newStation.getPlaybackState()); // todo remove
                         mPlaybackState = newStation.getPlaybackState();
                         changeVisualState(newStation);
                     }

@@ -587,7 +587,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     /* Stops playback */
     private void stopPlayback(boolean dismissNotification) {
         // check for null - can happen after a crash during playback
-        if (mStation == null || mPlayer == null || !mPlayer.getPlayWhenReady() || mSession == null) {
+        if (mStation == null || mPlayer == null || mSession == null) {
             LogHelper.e(LOG_TAG, "Stopping playback. An error occurred. Station is probably NULL.");
             saveAppState();
             // send local broadcast: playback stopped
@@ -953,7 +953,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             if (connectionType == CONNECTION_TYPE_ERROR) {
                 Toast.makeText(PlayerService.this, getString(R.string.toastalert_unable_to_connect), Toast.LENGTH_LONG).show();
                 stopPlayback(false);
-            } else {
+            } else if (mStation.getPlaybackState() != PLAYBACK_STATE_STOPPED) {
                 // prepare player
                 preparePLayer(connectionType);
 
@@ -966,9 +966,11 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
                                 .setContentType(C.CONTENT_TYPE_MUSIC)
                                 .build()
                         );
-
-                mPlayerInitLock = false;
             }
+
+            // release init lock
+            mPlayerInitLock = false;
+
         }
 
     }
