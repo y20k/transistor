@@ -31,7 +31,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -227,41 +226,41 @@ public final class ListFragment extends Fragment implements TransistorKeys {
                 dialog.show();
                 return true;
 
-            // CASE ABOUT
-            case R.id.menu_about:
-                // put title and content into arguments and start fragment transaction
-                String aboutTitle = mActivity.getString(R.string.header_about);
-                Bundle aboutArgs = new Bundle();
-                aboutArgs.putString(ARG_INFOSHEET_TITLE, aboutTitle);
-                aboutArgs.putInt(ARG_INFOSHEET_CONTENT, INFOSHEET_CONTENT_ABOUT);
-
-                InfosheetFragment aboutInfosheetFragment = new InfosheetFragment();
-                aboutInfosheetFragment.setArguments(aboutArgs);
-
-                ((AppCompatActivity) mActivity).getSupportFragmentManager().beginTransaction()
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .replace(R.id.main_container, aboutInfosheetFragment, INFOSHEET_FRAGMENT_TAG)
-                        .addToBackStack(null)
-                        .commit();
-                return true;
-
-            // CASE HOWTO
-            case R.id.menu_howto:
-                // put title and content into arguments and start fragment transaction
-                String howToTitle = mActivity.getString(R.string.header_howto);
-                Bundle howtoArgs = new Bundle();
-                howtoArgs.putString(ARG_INFOSHEET_TITLE, howToTitle);
-                howtoArgs.putInt(ARG_INFOSHEET_CONTENT, INFOSHEET_CONTENT_ABOUT);
-
-                InfosheetFragment howtoInfosheetFragment = new InfosheetFragment();
-                howtoInfosheetFragment.setArguments(howtoArgs);
-
-                ((AppCompatActivity) mActivity).getSupportFragmentManager().beginTransaction()
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .replace(R.id.main_container, howtoInfosheetFragment, INFOSHEET_FRAGMENT_TAG)
-                        .addToBackStack(null)
-                        .commit();
-                return true;
+//            // CASE ABOUT
+//            case R.id.menu_about:
+//                // put title and content into arguments and start fragment transaction
+//                String aboutTitle = mActivity.getString(R.string.header_about);
+//                Bundle aboutArgs = new Bundle();
+//                aboutArgs.putString(ARG_INFOSHEET_TITLE, aboutTitle);
+//                aboutArgs.putInt(ARG_INFOSHEET_CONTENT, INFOSHEET_CONTENT_ABOUT);
+//
+//                InfosheetFragment aboutInfosheetFragment = new InfosheetFragment();
+//                aboutInfosheetFragment.setArguments(aboutArgs);
+//
+//                ((AppCompatActivity) mActivity).getSupportFragmentManager().beginTransaction()
+//                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+//                        .replace(R.id.main_container, aboutInfosheetFragment, INFOSHEET_FRAGMENT_TAG)
+//                        .addToBackStack(null)
+//                        .commit();
+//                return true;
+//
+//            // CASE HOWTO
+//            case R.id.menu_howto:
+//                // put title and content into arguments and start fragment transaction
+//                String howToTitle = mActivity.getString(R.string.header_howto);
+//                Bundle howtoArgs = new Bundle();
+//                howtoArgs.putString(ARG_INFOSHEET_TITLE, howToTitle);
+//                howtoArgs.putInt(ARG_INFOSHEET_CONTENT, INFOSHEET_CONTENT_HOWTO);
+//
+//                InfosheetFragment howtoInfosheetFragment = new InfosheetFragment();
+//                howtoInfosheetFragment.setArguments(howtoArgs);
+//
+//                ((AppCompatActivity) mActivity).getSupportFragmentManager().beginTransaction()
+//                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+//                        .replace(R.id.main_container, howtoInfosheetFragment, INFOSHEET_FRAGMENT_TAG)
+//                        .addToBackStack(null)
+//                        .commit();
+//                return true;
 
             // CASE REFRESH LIST
             case R.id.menu_refresh:

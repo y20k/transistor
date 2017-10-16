@@ -1,7 +1,7 @@
 /**
  * MainActivity.java
  * Implements the app's main activity
- * The main activity sets up the main view end inflates a menu bar menu
+ * The main activity sets up the main view end inflates an action bar menu
  *
  * This file is part of
  * TRANSISTOR - Radio App for Android
@@ -28,7 +28,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -149,6 +151,52 @@ public final class MainActivity extends AppCompatActivity implements FragmentMan
         setIntent(intent);
     }
 
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            // CASE ABOUT
+            case R.id.menu_about:
+                // put title and content into arguments and start fragment transaction
+                String aboutTitle = getString(R.string.header_about);
+                Bundle aboutArgs = new Bundle();
+                aboutArgs.putString(ARG_INFOSHEET_TITLE, aboutTitle);
+                aboutArgs.putInt(ARG_INFOSHEET_CONTENT, INFOSHEET_CONTENT_ABOUT);
+
+                InfosheetFragment aboutInfosheetFragment = new InfosheetFragment();
+                aboutInfosheetFragment.setArguments(aboutArgs);
+
+                getSupportFragmentManager().beginTransaction()
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .replace(R.id.main_container, aboutInfosheetFragment, INFOSHEET_FRAGMENT_TAG)
+                        .addToBackStack(null)
+                        .commit();
+                return true;
+
+            // CASE HOWTO
+            case R.id.menu_howto:
+                // put title and content into arguments and start fragment transaction
+                String howToTitle = getString(R.string.header_howto);
+                Bundle howtoArgs = new Bundle();
+                howtoArgs.putString(ARG_INFOSHEET_TITLE, howToTitle);
+                howtoArgs.putInt(ARG_INFOSHEET_CONTENT, INFOSHEET_CONTENT_HOWTO);
+
+                InfosheetFragment howtoInfosheetFragment = new InfosheetFragment();
+                howtoInfosheetFragment.setArguments(howtoArgs);
+
+                getSupportFragmentManager().beginTransaction()
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .replace(R.id.main_container, howtoInfosheetFragment, INFOSHEET_FRAGMENT_TAG)
+                        .addToBackStack(null)
+                        .commit();
+                return true;
+
+            // CASE DEFAULT
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
