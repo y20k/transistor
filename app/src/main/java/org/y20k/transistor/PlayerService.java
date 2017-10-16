@@ -846,7 +846,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
      * Inner class: Handles callback from active media session ***
      */
     private final class MediaSessionCallback extends MediaSessionCompat.Callback  {
-        // note: this can be replaced by MediaSessionConnector.PlaybackController (ExoPlayer)
         @Override
         public void onPlay() {
             // start playback
@@ -854,7 +853,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
                 startPlayback();
             }
         }
-
 
         @Override
         public void onPlayFromMediaId(String mediaId, Bundle extras) {
@@ -866,7 +864,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             startPlayback();
         }
 
-
         @Override
         public void onPause() {
             // stop playback
@@ -877,6 +874,24 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         public void onStop() {
             // stop playback
             stopPlayback(true);
+        }
+
+        @Override
+        public void onPlayFromSearch(String query, Bundle extras) {
+            super.onPlayFromSearch(query, extras);
+            // handle requests to begin playback from a search query (eg. Assistant, Android Auto, etc.)
+        }
+
+        @Override
+        public void onSkipToNext() {
+            super.onSkipToNext();
+            // handle requests to skip to the next media item
+        }
+
+        @Override
+        public void onSkipToPrevious() {
+            super.onSkipToPrevious();
+            // handle requests to skip to the previous media item
         }
 
     }

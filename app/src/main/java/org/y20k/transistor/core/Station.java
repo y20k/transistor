@@ -228,7 +228,6 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
 
     /* Constructor when given MediaMetadata (e.g. from Android Auto)  */
     public Station (MediaMetadataCompat stationMediaMetadata) {
-        // todo implement
         mStationImageFile = new File(stationMediaMetadata.getString(METADATA_CUSTOM_KEY_IMAGE_FILE));
         mStationImageSize = mStationImageFile.length();
         mStationName = stationMediaMetadata.getString(METADATA_KEY_TITLE);

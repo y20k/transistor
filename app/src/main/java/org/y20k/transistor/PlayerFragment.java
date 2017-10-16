@@ -472,7 +472,7 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
         switch (contentType) {
             case COPY_STATION_ALL:
                 // set clip text
-                if ( mThisStation.getMetadata() != null) {
+                if (mThisStation.getMetadata() != null) {
                     clipboardText = mThisStation.getStationName() +  " - " +  mThisStation.getMetadata() + " (" +  mThisStation.getStreamUri().toString() + ")";
                 } else {
                     clipboardText = mThisStation.getStationName() + " (" + mThisStation.getStreamUri().toString() + ")";
@@ -483,13 +483,17 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
 
             case COPY_STATION_METADATA:
                 // set clip text and notify user
-                clipboardText =  mThisStation.getMetadata();
+                if (mThisStation.getMetadata() != null) {
+                    clipboardText =  mThisStation.getMetadata();
+                }
                 Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_copied_to_clipboard_metadata), Toast.LENGTH_SHORT).show();
                 break;
 
             case COPY_STREAM_URL:
                 // set clip text and notify user
-                clipboardText = mThisStation.getStreamUri().toString();
+                if (mThisStation.getStreamUri() != null) {
+                    clipboardText = mThisStation.getStreamUri().toString();
+                }
                 Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_copied_to_clipboard_url), Toast.LENGTH_SHORT).show();
                 break;
 
@@ -756,7 +760,6 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
                         updateStationMetadataView(newStation);
                     }
                     // CASE: PLAYBACK STATE
-//                    if (mThisStation.getStreamUri().equals(newStation.getStreamUri()) && mPlaybackState != newStation.getPlaybackState()) { // todo remove
                     if (mPlaybackState != newStation.getPlaybackState()) {
                         mPlaybackState = newStation.getPlaybackState();
                         changeVisualState(newStation);

@@ -466,14 +466,6 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
     private void handlePlaybackStateError(Intent intent) {
         LogHelper.e(LOG_TAG, "Forcing a reload of station list. Did Transistor crash?");
 
-        // todo remove
-//        // check if a station has been transmitted
-//        if (intent != null && intent.hasExtra(EXTRA_STATION) && intent.getParcelableExtra(EXTRA_STATION) != null) {
-//            Station newStation = intent.getParcelableExtra(EXTRA_STATION);
-//            newStation.setPlaybackState(PLAYBACK_STATE_STOPPED);
-//            mCollectionViewModel.getPlayerServiceStation().setValue(newStation);
-//        }
-
         mCollectionViewModel.getStationList().setValue(StationListHelper.loadStationListFromStorage(mActivity));
 
     }

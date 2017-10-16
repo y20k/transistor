@@ -280,7 +280,7 @@ public final class MainActivity extends AppCompatActivity implements FragmentMan
             // initialize StorageHelper
             StorageHelper storageHelper = new StorageHelper(this);
 
-            // create copys of station and main list of stations
+            // create copies of station and main list of stations
             ArrayList<Station> newStationList = StationListHelper.copyStationList(mStationList);
             Station newStation = new Station(station);
 
