@@ -228,13 +228,17 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
 
     /* Constructor when given MediaMetadata (e.g. from Android Auto)  */
     public Station (MediaMetadataCompat stationMediaMetadata) {
-        mStationImageFile = new File(stationMediaMetadata.getString(METADATA_CUSTOM_KEY_IMAGE_FILE));
-        mStationImageSize = mStationImageFile.length();
         mStationName = stationMediaMetadata.getString(METADATA_KEY_TITLE);
-        mStationPlaylistFile = new File(stationMediaMetadata.getString(METADATA_CUSTOM_KEY_PLAYLIST_FILE));
         mStreamUri = Uri.parse(stationMediaMetadata.getString(METADATA_KEY_MEDIA_URI));
-//        mPlaylistFileContent = "";
         mPlayback = PLAYBACK_STATE_STOPPED;
+        if (stationMediaMetadata.getString(METADATA_CUSTOM_KEY_IMAGE_FILE) != null) {
+            mStationImageFile = new File(stationMediaMetadata.getString(METADATA_CUSTOM_KEY_IMAGE_FILE));
+            mStationImageSize = mStationImageFile.length();
+        }
+        if (stationMediaMetadata.getString(METADATA_CUSTOM_KEY_PLAYLIST_FILE) != null) {
+            mStationPlaylistFile = new File(stationMediaMetadata.getString(METADATA_CUSTOM_KEY_PLAYLIST_FILE));
+        }
+//        mPlaylistFileContent = "";
 //        mMetadata = "";
 //        mMimeType = "";
 //        mChannelCount = 0;

@@ -856,7 +856,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
         @Override
         public void onPlayFromMediaId(String mediaId, Bundle extras) {
-            super.onPlayFromMediaId(mediaId, extras);
             MediaMetadataCompat stationMediaMetadata = mStationListProvider.getStationMediaMetadata(mediaId);
 
             // re-construct station from stationMediaMetadata
@@ -878,20 +877,30 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
         @Override
         public void onPlayFromSearch(String query, Bundle extras) {
-            super.onPlayFromSearch(query, extras);
             // handle requests to begin playback from a search query (eg. Assistant, Android Auto, etc.)
             LogHelper.i(LOG_TAG, "playFromSearch  query=" + query + " extras="+ extras);
+            // try to match station name and voice query
+            for (MediaMetadataCompat stationMetadata : mStationListProvider.getAllMusics()) {
+                if (query != null && query.contains(stationMetadata.METADATA_KEY_TITLE)) {
+                    mStation = new Station(stationMetadata);
+                }
+            }
+
+            // if not match was found
+            if (mStation == null) {
+                mStation = new Station(mStationListProvider.getFirstStation());
+            }
+
+            startPlayback();
         }
 
         @Override
         public void onSkipToNext() {
-            super.onSkipToNext();
             // handle requests to skip to the next media item // todo implement
         }
 
         @Override
         public void onSkipToPrevious() {
-            super.onSkipToPrevious();
             // handle requests to skip to the previous media item // todo implement
         }
 

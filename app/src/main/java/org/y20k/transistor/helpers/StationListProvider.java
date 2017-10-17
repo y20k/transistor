@@ -64,6 +64,34 @@ public class StationListProvider implements TransistorKeys {
     }
 
 
+    /* Return the first station in list */
+    public MediaMetadataCompat getFirstStation() {
+        MediaMetadataCompat firstStationMetaData = null;
+        firstStationMetaData = mStationListById.entrySet().iterator().next().getValue();
+
+        if (firstStationMetaData != null) {
+            return firstStationMetaData;
+        } else {
+            // stupid hack: only if mStationListById is empty
+            String stationName = "KCSB";
+            String stationUri = "http://live.kcsb.org:80/KCSB_128\n";
+            return new MediaMetadataCompat.Builder()
+                    .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, String.valueOf(stationUri.hashCode()))
+                    .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI, stationUri)
+                    .putString(MediaMetadataCompat.METADATA_KEY_GENRE, "Radio")
+                    .putString(MediaMetadataCompat.METADATA_KEY_TITLE, stationName)
+//                    .putString(MediaMetadataCompat.METADATA_KEY_ALBUM, stationName)
+//                    .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, stationName)
+//                    .putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI, iconUrl)
+//                    .putLong(MediaMetadataCompat.METADATA_KEY_TRACK_NUMBER, trackNumber)
+//                    .putLong(MediaMetadataCompat.METADATA_KEY_NUM_TRACKS, totalTrackCount)
+//                    .putString(METADATA_CUSTOM_KEY_IMAGE_FILE, station.getStationImageFile().getPath())
+//                    .putString(METADATA_CUSTOM_KEY_PLAYLIST_FILE, station.getStationPlaylistFile().getPath())
+                    .build();
+        }
+    }
+
+
     /* Return the MediaMetadata for given ID */
     public MediaMetadataCompat getStationMediaMetadata(String stationId) {
         return mStationListById.containsKey(stationId) ? mStationListById.get(stationId) : null;
