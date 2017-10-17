@@ -879,9 +879,10 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         public void onPlayFromSearch(String query, Bundle extras) {
             // handle requests to begin playback from a search query (eg. Assistant, Android Auto, etc.)
             LogHelper.i(LOG_TAG, "playFromSearch  query=" + query + " extras="+ extras);
+
             // try to match station name and voice query
             for (MediaMetadataCompat stationMetadata : mStationListProvider.getAllMusics()) {
-                if (query != null && query.contains(stationMetadata.METADATA_KEY_TITLE)) {
+                if (query != null && query.length() == 0 && query.contains(stationMetadata.getString(MediaMetadataCompat.METADATA_KEY_TITLE))) {
                     mStation = new Station(stationMetadata);
                 }
             }
@@ -891,6 +892,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
                 mStation = new Station(mStationListProvider.getFirstStation());
             }
 
+            // start playback
             startPlayback();
         }
 
