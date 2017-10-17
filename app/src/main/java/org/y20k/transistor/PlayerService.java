@@ -880,18 +880,19 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         public void onPlayFromSearch(String query, Bundle extras) {
             super.onPlayFromSearch(query, extras);
             // handle requests to begin playback from a search query (eg. Assistant, Android Auto, etc.)
+            LogHelper.i(LOG_TAG, "playFromSearch  query=" + query + " extras="+ extras);
         }
 
         @Override
         public void onSkipToNext() {
             super.onSkipToNext();
-            // handle requests to skip to the next media item
+            // handle requests to skip to the next media item // todo implement
         }
 
         @Override
         public void onSkipToPrevious() {
             super.onSkipToPrevious();
-            // handle requests to skip to the previous media item
+            // handle requests to skip to the previous media item // todo implement
         }
 
     }
