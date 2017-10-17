@@ -902,11 +902,13 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
         @Override
         public void onSkipToNext() {
+            super.onSkipToNext();
             // handle requests to skip to the next media item // todo implement
         }
 
         @Override
         public void onSkipToPrevious() {
+            super.onSkipToPrevious();
             // handle requests to skip to the previous media item // todo implement
         }
 
