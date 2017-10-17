@@ -40,6 +40,7 @@ import android.support.v4.media.session.MediaButtonReceiver;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.google.android.exoplayer2.C;
@@ -880,16 +881,19 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             // handle requests to begin playback from a search query (eg. Assistant, Android Auto, etc.)
             LogHelper.i(LOG_TAG, "playFromSearch  query=" + query + " extras="+ extras);
 
-            // try to match station name and voice query
-            for (MediaMetadataCompat stationMetadata : mStationListProvider.getAllMusics()) {
-                if (query != null && query.length() == 0 && query.contains(stationMetadata.getString(MediaMetadataCompat.METADATA_KEY_TITLE))) {
-                    mStation = new Station(stationMetadata);
-                }
-            }
-
-            // if not match was found
-            if (mStation == null) {
+            if (TextUtils.isEmpty(query)) {
+                // user provided generic string e.g. 'Play music'
                 mStation = new Station(mStationListProvider.getFirstStation());
+            } else {
+                // try to match station name and voice query
+                for (MediaMetadataCompat stationMetadata : mStationListProvider.getAllMusics()) {
+                    String[] words = query.split(" ");
+                    for (String word : words) {
+                        if (stationMetadata.getString(MediaMetadataCompat.METADATA_KEY_TITLE).toLowerCase().contains(word.toLowerCase())) {
+                            mStation = new Station(stationMetadata);
+                        }
+                    }
+                }
             }
 
             // start playback
