@@ -67,4 +67,9 @@
     <string name="dialog_error_details_default">Ulac talqayt</string>
     <string name="dialog_error_title_fetch_download">Tuccḍa n usider</string>
     <string name="dialog_error_title_fetch_write">Tuccḍa n tira</string>
+    <string name="infosheet_howto_h1_howto">Amek iteddu Transistor ?</string>
+    <string name="infosheet_howto_h2_add">Amek ad ternuḍ amaṭṭaf amaynut ?</string>
+    <string name="infosheet_howto_h2_stop">Amek ad tseseḍ urar yefren ?</string>
+    <string name="infosheet_howto_h2_shortcut">Amek ad ternuḍ anegzum n umaṭṭaf deg ugdil agejdan?</string>
+    <string name="infosheet_howto_h2_storage">Anda ad isekles Transistor imaṭṭafen ?</string>
     </resources>
