@@ -280,4 +280,5 @@
     <string name="sample_text_station_name" translatable="false"></string>
     <string name="toastmessage_updating_collection"></string>
     <string name="toastalert_station_not_found"></string>
+    <string name="toastalert_permission_denied"></string>
 </resources>
