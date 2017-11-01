@@ -35,4 +35,36 @@
     <string name="notification_stop">Seḥbes</string>
     <string name="infosheet_about_h1_about">Ɣef Transistor</string>
     <string name="infosheet_about_h3_internet">INTERNET</string>
+    <string name="app_name">Transistor</string> <string name="title_fragment_player">Taɣuri tetteddu</string>
+    <string name="title_activity_infosheet">Tiferkit n telɣut</string>
+
+    <string name="shortcut_last_station_short_label">Ṛṛadyu taneggaru</string>
+    <string name="shortcut_last_station_long_label">Urar ṛṛadyyu taneggarut</string>
+    <string name="menu_shortcut">Sers deg ugdil agejdan</string>
+
+    <string name="descr_overflow_button">Iɣewwaṛen n uskan n ṛṛadyu</string>
+    <string name="descr_station_icon">Tignit n ṛṛadyu</string>
+    <string name="descr_station_name">Isem n ṛṛadyu</string>
+    <string name="descr_station_metadata">Iɣef-isefka (Anazuṛ / Azwel) n ṛṛadyu yetturaren</string>
+    <string name="descr_station_stream_loading">Asali…</string>
+    <string name="descr_playback_button">Taqeffalt tameqqrant n tɣuri</string>
+    <string name="descr_playback_indicator">Anammal n tɣuri iteddun</string>
+    <string name="descr_playback_indicator_started">Anammal n tɣuri iteddun</string>
+    <string name="descr_timer_indicator_started">Anammal n uselkem n umesnakud n ugani</string>
+    <string name="descr_player_sheet_content_copy_icon">Tignit n unɣel n ugbur</string>
+    <string name="descr_player_sheet_p_station_name">Isem n ṛṛadyu yettwafernen</string>
+    <string name="descr_player_sheet_p_station_metadata">Iɣef-isefka si ṛṛadyu yettwafernen</string>
+    <string name="descr_player_sheet_p_stream_url">Aseɣwen n usuddem n ṛṛadyu yettwafernen</string>
+
+    <string name="player_sheet_h1_station_metadata">Yetturar tura</string>
+    <string name="player_sheet_h1_stream_url">Aseɣwen n usuddem</string>
+    <string name="player_sheet_p_station_metadata">ulac iɣef-isefka</string>
+    <string name="player_sheet_h1_station_channel_count">Amḍan n ṛṛadyuwat</string>
+    <string name="player_sheet_h1_station_sample_rate">Amedya n tezmilt</string>
+    <string name="dialog_generic_button_okay">IH</string>
+    <string name="dialog_add_station_input_hint">Senteḍ aseɣwen n usuddem</string>
+    <string name="dialog_rename_station_message">Beddel isem n ṛṛadyu</string>
+    <string name="dialog_error_details_default">Ulac talqayt</string>
+    <string name="dialog_error_title_fetch_download">Tuccḍa n usider</string>
+    <string name="dialog_error_title_fetch_write">Tuccḍa n tira</string>
     </resources>
