@@ -1,2 +1,38 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<?xml version='1.0' encoding='UTF-8'?>
+<resources><string name="menu_about">Γef</string>
+    <string name="menu_howto">Amek ara tesqedceḍ</string>
+    <string name="menu_refresh">Smiren tabdart</string>
+    <string name="menu_icon">Beddel tignit</string>
+    <string name="menu_add">Rnu</string>
+    <string name="menu_delete">Kkes</string>
+    <string name="menu_rename">Snifel isem</string>
+    <string name="header_about">Γef</string>
+    <string name="header_howto">Amek ara tesqedceḍ</string>
+
+    <string name="descr_station_name_example">"Amedya  FM"</string>
+    <string name="descr_station_metadata_example">Anazur- Azwel</string>
+    <string name="descr_player_sheet_information_icon">Tignit n telɣut</string>
+    <string name="player_sheet_h1_station_name">Ṛṛadyu</string>
+    <string name="player_sheet_h1_station_mime_type">Anaw n MIME</string>
+    <string name="player_sheet_h1_station_bitrate">Aktum</string>
+
+    <string name="dialog_generic_button_cancel">Sefsex</string>
+    <string name="dialog_add_station_button">Rnu</string>
+    <string name="dialog_add_station_message">Rnu ṛṛadyu tamaynut</string>
+    <string name="dialog_delete_station_message">Kkes ṛṛadyu</string>
+    <string name="dialog_button_delete">Kkes</string>
+    <string name="dialog_rename_station_input_hint">Sekcem isem amaynut</string>
+    <string name="dialog_button_rename">Snifel isem</string>
+
+    <string name="dialog_error_title_default">Tuccḍa</string>
+    <string name="dialog_error_message_default">Teḍra-d tuccḍa</string>
+    <string name="dialog_error_details_button_default">Sken talqayt</string>
+    <string name="dialog_error_title_fetch_read">Ɣer ugur</string>
+    <string name="actioncall_message_start_here">Rnu ṛṛadyu tamaynut</string>
+    <string name="toastmessage_add_open_file_started">Tuccḍa di tulya n ufaylu.</string>
+    <string name="toastalert_permission_denied">Anekcum yegdel:</string>
+    <string name="notification_play">Urar</string>
+    <string name="notification_stop">Seḥbes</string>
+    <string name="infosheet_about_h1_about">Ɣef Transistor</string>
+    <string name="infosheet_about_h3_internet">INTERNET</string>
+    </resources>
