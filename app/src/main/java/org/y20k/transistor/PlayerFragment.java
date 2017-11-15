@@ -252,7 +252,7 @@ public final class PlayerFragment extends Fragment implements TransistorKeys {
         }
 
         // construct big playback button
-        mPlaybackButton = (ImageButton)mRootView.findViewById(R.id.player_playback_button);
+        mPlaybackButton = (ImageButton)mRootView.findViewById(R.id.player_button_playback);
         mPlaybackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

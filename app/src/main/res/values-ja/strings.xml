@@ -45,14 +45,14 @@
     <string name="descr_player_sheet_p_stream_url">選択したラジオ局のストリームのリンク</string>
 
     <!-- player -->
-    <string name="player_sheet_h1_station_name">放送局</string>
-    <string name="player_sheet_h1_station_metadata">現在再生中</string>
-    <string name="player_sheet_h1_stream_url">ストリームのリンク</string>
+    <string name="player_sheet_h2_station_name">放送局</string>
+    <string name="player_sheet_h2_station_metadata">現在再生中</string>
+    <string name="player_sheet_h2_stream_url">ストリームのリンク</string>
     <string name="player_sheet_p_station_metadata">メタデータがありません</string>
-    <string name="player_sheet_h1_station_mime_type">MIME タイプ</string>
-    <string name="player_sheet_h1_station_channel_count">チャンネル数</string>
-    <string name="player_sheet_h1_station_sample_rate">サンプルレート</string>
-    <string name="player_sheet_h1_station_bitrate">Bitrate</string>
+    <string name="player_sheet_h2_station_mime_type">MIME タイプ</string>
+    <string name="player_sheet_h2_station_channel_count">チャンネル数</string>
+    <string name="player_sheet_h2_station_sample_rate">サンプルレート</string>
+    <string name="player_sheet_h2_station_bitrate">Bitrate</string>
 
     <!-- dialogs -->
     <string name="dialog_generic_button_okay">OK</string>

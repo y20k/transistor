@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="FloatingMusicActionButton">
+        <attr name="mode" format="enum">
+            <enum name="playToPause" value="0" />
+            <enum name="playToStop" value="1"/>
+            <enum name="pauseToPlay" value="2" />
+            <enum name="stopToPlay" value="3"/>
+        </attr>
+    </declare-styleable>
+</resources>

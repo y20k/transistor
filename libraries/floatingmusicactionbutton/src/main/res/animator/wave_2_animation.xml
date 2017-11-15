@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <objectAnimator
+        android:duration="@integer/animation_wave_2_part_1"
+        android:interpolator="@android:anim/accelerate_decelerate_interpolator"
+        android:propertyName="translateY"
+        android:valueFrom="100"
+        android:valueTo="50"
+        android:valueType="floatType"/>
+    <objectAnimator
+        android:duration="@integer/animation_wave_2_part_2"
+        android:interpolator="@android:anim/accelerate_decelerate_interpolator"
+        android:propertyName="translateY"
+        android:startOffset="@integer/animation_wave_2_part_1"
+        android:valueFrom="50"
+        android:valueTo="100"
+        android:valueType="floatType"/>
+</set>

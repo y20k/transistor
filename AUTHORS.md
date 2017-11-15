@@ -21,6 +21,8 @@ Greek version: [nikoss](https://github.com/nikoss)
 
 Japanese version: [naofum](https://github.com/naofum)
 
+Kabyle version: [SlimaneAmiri](https://github.com/SlimaneAmiri)
+
 Norwegian version: [comradekingu](https://github.com/comradekingu)
 
 Polish version: [woodypl](https://github.com/woodypl)

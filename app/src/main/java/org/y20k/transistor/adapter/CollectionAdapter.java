@@ -60,6 +60,11 @@ import java.util.List;
  */
 public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapterViewHolder> implements TransistorKeys {
 
+    /* Listener Interface */
+    public interface CollectionAdapterListener {
+        void itemSelected (Station station);
+    }
+
     /* Define log tag */
     private static final String LOG_TAG = CollectionAdapter.class.getSimpleName();
 
@@ -69,6 +74,7 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
     private CollectionViewModel mCollectionViewModel;
     private BroadcastReceiver mPlaybackStateChangedReceiver;
     private BroadcastReceiver mMetadataChangedReceiver;
+    private CollectionAdapterListener mCollectionAdapterListener;
     private Uri mStationUriSelected;
     private boolean mTwoPane;
     private ArrayList<Station> mStationList;
@@ -83,6 +89,9 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
 
         // create empty station list
         mStationList = new ArrayList<Station>();
+
+        // initialize listener
+        mCollectionAdapterListener = null;
 
         // initialize BroadcastReceiver that listens for playback changes
         initializeBroadcastReceivers();
@@ -154,13 +163,16 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
             public void onClick(View view, int pos, boolean isLongClick) {
                 if (isLongClick && !mTwoPane) {
                     // LONG PRESS in phone mode
+                    mCollectionAdapterListener.itemSelected(mStationList.get(pos));
                     startPlayback(pos);
                 } else if (!isLongClick && !mTwoPane) {
                     // SINGLE TAP in phone mode
-                    showPlayerFragment(mStationList.get(pos), false);
+                    mCollectionAdapterListener.itemSelected(mStationList.get(pos));
+//                    showPlayerFragment(mStationList.get(pos), false); // todo remove
                 } else {
                     //  SINGLE TAP in tablet mode
-                    showPlayerFragment(mStationList.get(pos), false);
+                    mCollectionAdapterListener.itemSelected(mStationList.get(pos));
+//                    showPlayerFragment(mStationList.get(pos), false); // todo remove
                 }
                 mStationUriSelected = mStationList.get(pos).getStreamUri();
             }
@@ -212,6 +224,12 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
     @Override
     public int getItemCount() {
         return mStationList.size();
+    }
+
+
+    /* Setter for CollectionAdapterListener */
+    public void setCollectionAdapterListener(CollectionAdapterListener collectionAdapterListener) {
+        mCollectionAdapterListener = collectionAdapterListener;
     }
 
 

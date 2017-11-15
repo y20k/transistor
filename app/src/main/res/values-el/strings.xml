@@ -45,14 +45,14 @@
     <string name="descr_player_sheet_p_stream_url">Ο δεσμός της ροής του επιλεγμένου ραδιοσταθμού</string>
 
     <!-- player -->
-    <string name="player_sheet_h1_station_name">Σταθμός</string>
-    <string name="player_sheet_h1_station_metadata">Παίζει Τώρα</string>
-    <string name="player_sheet_h1_stream_url">Ο δεσμός της ροής</string>
+    <string name="player_sheet_h2_station_name">Σταθμός</string>
+    <string name="player_sheet_h2_station_metadata">Παίζει Τώρα</string>
+    <string name="player_sheet_h2_stream_url">Ο δεσμός της ροής</string>
     <string name="player_sheet_p_station_metadata">δεν υπάρχουν διαθέσιμα μεταδεδομένα</string>
-    <string name="player_sheet_h1_station_mime_type">Μορφή MIME</string>
-    <string name="player_sheet_h1_station_channel_count">Καταμέτρηση καναλιών</string>
-    <string name="player_sheet_h1_station_sample_rate">Ρυθμός δειγματοληψίας</string>
-    <string name="player_sheet_h1_station_bitrate">Ρυθμός μπιτιών</string>
+    <string name="player_sheet_h2_station_mime_type">Μορφή MIME</string>
+    <string name="player_sheet_h2_station_channel_count">Καταμέτρηση καναλιών</string>
+    <string name="player_sheet_h2_station_sample_rate">Ρυθμός δειγματοληψίας</string>
+    <string name="player_sheet_h2_station_bitrate">Ρυθμός μπιτιών</string>
 
     <!-- dialogs -->
     <string name="dialog_generic_button_okay">Εντάξει</string>

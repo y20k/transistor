@@ -21,8 +21,6 @@ package org.y20k.transistor.helpers;
 import com.google.android.exoplayer2.upstream.DataSpec;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource;
 import com.google.android.exoplayer2.util.Predicate;
-import com.spoledge.aacdecoder.IcyInputStream;
-import com.spoledge.aacdecoder.PlayerCallback;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -135,14 +135,14 @@
     <string name="descr_player_sheet_p_station_metadata">Seçili radyo istasyonundan meta veri</string>
     <string name="descr_player_sheet_p_stream_url">Seçili radyo istasyonunun yayın bağlantısı</string>
 
-    <string name="player_sheet_h1_station_name">İstasyon</string>
-    <string name="player_sheet_h1_station_metadata">Şimdi Oynatılıyor</string>
-    <string name="player_sheet_h1_stream_url">Yayın bağlantısı</string>
+    <string name="player_sheet_h2_station_name">İstasyon</string>
+    <string name="player_sheet_h2_station_metadata">Şimdi Oynatılıyor</string>
+    <string name="player_sheet_h2_stream_url">Yayın bağlantısı</string>
     <string name="player_sheet_p_station_metadata">kullanılabilir meta veri yok</string>
-    <string name="player_sheet_h1_station_mime_type">MIME türü</string>
-    <string name="player_sheet_h1_station_channel_count">Kanal sayısı</string>
-    <string name="player_sheet_h1_station_sample_rate">Örnekleme hızı</string>
-    <string name="player_sheet_h1_station_bitrate">Bit hızı</string>
+    <string name="player_sheet_h2_station_mime_type">MIME türü</string>
+    <string name="player_sheet_h2_station_channel_count">Kanal sayısı</string>
+    <string name="player_sheet_h2_station_sample_rate">Örnekleme hızı</string>
+    <string name="player_sheet_h2_station_bitrate">Bit hızı</string>
 
     <string name="dialog_generic_button_okay">Tamam</string>
     <string name="dialog_generic_button_cancel">İptal</string>

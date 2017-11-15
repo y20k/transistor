@@ -19,16 +19,22 @@ import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.BroadcastReceiver;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.Group;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
@@ -42,12 +48,16 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.y20k.transistor.adapter.CollectionAdapter;
 import org.y20k.transistor.adapter.CollectionViewModel;
 import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.DialogAdd;
+import org.y20k.transistor.helpers.ImageHelper;
 import org.y20k.transistor.helpers.LogHelper;
 import org.y20k.transistor.helpers.PermissionHelper;
 import org.y20k.transistor.helpers.SleepTimerService;
@@ -59,6 +69,8 @@ import org.y20k.transistor.helpers.TransistorKeys;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
+
+import be.rijckaert.tim.animatedvector.FloatingMusicActionButton;
 
 
 /**
@@ -76,10 +88,30 @@ public final class ListFragment extends Fragment implements TransistorKeys {
     private CollectionAdapter mCollectionAdapter = null;
     private View mRootView;
     private View mActionCallView;
+    private View mPlayerBottomSheet;
+    private ImageView mPlayerStationImage;
+    private TextView mPlayerStationName;
+    private TextView mPlayerStationMetadata;
+    private FloatingMusicActionButton mPlayerPlaybackButton;
+    private ImageButton mPlayerExpandButton;
+    private Group mPlaybackActiveViews;
+    private Group mPlayerSheetMetadataViews;
+    private Group mPlayerSheetStreamUrlViews;
+    private ImageButton mPlayerSheetMetadataCopyButton;
+    private ImageButton mPlayerSheetStreamUrlCopyButton;
+    private TextView mPlayerSessionValue;
+    private TextView mPlayerSheetMetadataValue;
+    private TextView mPlayerSheetStreamUrlValue;
+    private TextView mPlayerSheetChannelCountValue;
+    private TextView mPlayerSheetSamplerateValue;
+    private TextView mPlayerSheetBitrateValue;
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private CollectionViewModel mCollectionViewModel;
+    private BottomSheetBehavior mPlayerBottomSheetBehavior;
     private BroadcastReceiver mSleepTimerStartedReceiver;
+    private String mCurrentStationUrl;
+    private Station mCurrentStation = null;
     private Station mPlayerServiceStation;
     private Uri mNewStationUri;
     private boolean mTwoPane;
@@ -98,7 +130,8 @@ public final class ListFragment extends Fragment implements TransistorKeys {
         super.onCreate(savedInstanceState);
 
         // fragment has options menu
-        setHasOptionsMenu(true);
+//        setHasOptionsMenu(true); // TODO just a test
+//        setHasOptionsMenu(false);
 
         // get activity and application contexts
         mActivity = getActivity();
@@ -134,16 +167,29 @@ public final class ListFragment extends Fragment implements TransistorKeys {
         // inflate root view from xml
         mRootView = inflater.inflate(R.layout.fragment_list, container, false);
 
-        // get reference to action call view from inflated root view
+        // get needed references to views
         mActionCallView = mRootView.findViewById(R.id.collection_actioncall_layout);
+        mRecyclerView = mRootView.findViewById(R.id.list_recyclerview);
+        mPlayerExpandButton = mRootView.findViewById(R.id.player_button_expand);
+        mPlayerStationImage = mRootView.findViewById(R.id.player_station_image);
+        mPlayerStationName = mRootView.findViewById(R.id.player_station_name);
+        mPlayerStationMetadata = mRootView.findViewById(R.id.player_station_metadata);
+        mPlayerPlaybackButton = mRootView.findViewById(R.id.player_button_playback);
+        mPlaybackActiveViews = mRootView.findViewById(R.id.playback_active_views);
+        mPlayerBottomSheet = mRootView.findViewById(R.id.player_sheet);
+        mPlayerSheetMetadataViews = mRootView.findViewById(R.id.player_sheet_metadata_views);
+        mPlayerSheetStreamUrlViews = mRootView.findViewById(R.id.player_sheet_stream_url_views);
+        mPlayerSheetMetadataCopyButton = mRootView.findViewById(R.id.player_sheet_metadata_copy_button);
+        mPlayerSheetStreamUrlCopyButton = mRootView.findViewById(R.id.player_sheet_stream_url_copy_button);
+        mPlayerSessionValue = mRootView.findViewById(R.id.player_sheet_p_session);
+        mPlayerSheetMetadataValue = mRootView.findViewById(R.id.player_sheet_p_metadata);
+        mPlayerSheetStreamUrlValue = mRootView.findViewById(R.id.player_sheet_p_stream_url);
+        mPlayerSheetChannelCountValue = mRootView.findViewById(R.id.player_sheet_p_channels);
+        mPlayerSheetSamplerateValue = mRootView.findViewById(R.id.player_sheet_p_samplerate);
+        mPlayerSheetBitrateValue = mRootView.findViewById(R.id.player_sheet_p_bitrate);
 
-        // get reference to recycler list view from inflated root view
-        mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.list_recyclerview);
-
-        // set animator
+        // setuo RecyclerView
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        // use a linear layout manager - turn PredictiveItemAnimations on
         mLayoutManager = new LinearLayoutManager(mActivity) {
             @Override
             public boolean supportsPredictiveItemAnimations() {
@@ -151,9 +197,18 @@ public final class ListFragment extends Fragment implements TransistorKeys {
             }
         };
         mRecyclerView.setLayoutManager(mLayoutManager);
-
-        // associate RecyclerView with CollectionAdapter
         mRecyclerView.setAdapter(mCollectionAdapter);
+
+
+        // listen for taps on list
+        mCollectionAdapter.setCollectionAdapterListener(new CollectionAdapter.CollectionAdapterListener() {
+            @Override
+            public void itemSelected(Station station) {
+                mCurrentStation = station;
+                setupPlayer(station);
+            }
+        });
+
 
         // observe changes in LiveData
         mCollectionViewModel = ViewModelProviders.of((AppCompatActivity) mActivity).get(CollectionViewModel.class);
@@ -161,7 +216,41 @@ public final class ListFragment extends Fragment implements TransistorKeys {
         mCollectionViewModel.getPlayerServiceStation().observe((LifecycleOwner) mActivity, createStationObserver());
 
         // show call to action, if necessary
-        toggleActionCall();
+        toggleActionCall(); // todo remove
+
+        // set up and show station data sheet
+        mPlayerBottomSheetBehavior = BottomSheetBehavior.from(mPlayerBottomSheet);
+        mPlayerBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        mPlayerBottomSheetBehavior.setBottomSheetCallback(getPlayerBottomSheetCallback());
+        mPlayerExpandButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mPlayerBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+                    mPlayerBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                } else {
+                    mPlayerBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                }
+            }
+        });
+
+        // attach listeners (for clipboard copy)
+        mPlayerSheetMetadataCopyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                copyToClipboard(COPY_STATION_METADATA);
+                mPlayerBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            }
+        });
+        mPlayerSheetStreamUrlCopyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                copyToClipboard(COPY_STREAM_URL);
+                mPlayerBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            }
+        });
+
+        // initial set-up of player
+        setupPlayer(mCurrentStation);
 
         return mRootView;
     }
@@ -171,7 +260,7 @@ public final class ListFragment extends Fragment implements TransistorKeys {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         // inflate the menu items for use in action bar
-        inflater.inflate(R.menu.menu_list_actionbar, menu);
+        // inflater.inflate(R.menu.menu_list_actionbar, menu);
     }
 
 
@@ -389,12 +478,100 @@ public final class ListFragment extends Fragment implements TransistorKeys {
 
         // show player and clear the intent
         if (station != null) {
-            mCollectionAdapter.showPlayerFragment(station, startPlayback);
+            // todo implement
+//            mCollectionAdapter.showPlayerFragment(station, startPlayback);
             intent.setAction("");
         } else {
             Toast.makeText(mActivity, getString(R.string.toastalert_station_not_found), Toast.LENGTH_LONG).show();
         }
 
+    }
+
+
+    /* Setup player visually */
+    private void setupPlayer(Station station) {
+
+        if (station != null) {
+            // show player
+            // todo implement
+
+            // set station name, image and stream url
+            mPlayerStationName.setText(station.getStationName());
+            mPlayerStationImage.setImageBitmap(createStationImage(station));
+            mPlayerSheetStreamUrlValue.setText(station.getStreamUri().toString());
+
+            // toggle views depending on playback state
+            if (station.getPlaybackState() == PLAYBACK_STATE_STOPPED) {
+                mPlayerPlaybackButton.changeMode(FloatingMusicActionButton.Mode.PLAY_TO_STOP);
+                mPlaybackActiveViews.setVisibility(View.GONE);
+            } else {
+                mPlayerPlaybackButton.changeMode(FloatingMusicActionButton.Mode.STOP_TO_PLAY);
+                mPlaybackActiveViews.setVisibility(View.VISIBLE);
+            }
+        } else {
+            // hide player
+            // todo implement
+        }
+    }
+
+
+    /* Update the playback state name */
+    private void updateStationPlaybackState(Station station) {
+        if (isAdded()) {
+            if (station.getPlaybackState() == PLAYBACK_STATE_STOPPED) {
+                mPlayerPlaybackButton.changeMode(FloatingMusicActionButton.Mode.PLAY_TO_STOP);
+                mPlaybackActiveViews.setVisibility(View.GONE);
+            } else {
+                mPlayerPlaybackButton.changeMode(FloatingMusicActionButton.Mode.STOP_TO_PLAY);
+                mPlaybackActiveViews.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+
+    /* Update station name */
+    private void updateStationNameView(Station station) {
+        if (isAdded()) {
+            mPlayerStationName.setText(station.getStationName());
+            // mStationDataSheetName.setText(station.getStationName()); // todo remove
+        }
+    }
+
+
+    /* Update station image */
+    private void updateStationImageView(Station station) {
+        if (isAdded()) {
+            Bitmap stationImage = createStationImage(station);
+            if (stationImage != null) {
+                mPlayerStationImage.setImageBitmap(stationImage);
+            }
+        }
+    }
+
+
+    /* Update station metadata */
+    private void updateStationMetadataView(Station station) {
+        if (isAdded()) {
+            mPlayerStationMetadata.setText(station.getMetadata());
+            mPlayerSheetMetadataValue.setText(station.getMetadata());
+        }
+    }
+
+
+    /* Create Bitmap image for station */
+    private Bitmap createStationImage(Station station) {
+        Bitmap stationImageSmall;
+        ImageHelper imageHelper;
+        if (station != null &&  station.getStationImageFile().exists()) {
+            // get image from collection
+            stationImageSmall = BitmapFactory.decodeFile(station.getStationImageFile().toString());
+        } else {
+            // get default image
+            stationImageSmall = null;
+        }
+        imageHelper = new ImageHelper(stationImageSmall, mActivity);
+
+        return imageHelper.createCircularFramedImage(192, R.color.transistor_grey_lighter);
     }
 
 
@@ -496,6 +673,7 @@ public final class ListFragment extends Fragment implements TransistorKeys {
     /* Loads app state from preferences */
     private void loadAppState(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
+        mCurrentStationUrl = settings.getString(PREF_STATION_URI_SELECTED, null);
         mTwoPane = settings.getBoolean(PREF_TWO_PANE, false);
         mSleepTimerRunning = settings.getBoolean(PREF_TIMER_RUNNING, false);
         LogHelper.v(LOG_TAG, "Loading state.");
@@ -519,13 +697,118 @@ public final class ListFragment extends Fragment implements TransistorKeys {
     }
 
 
+    /* Creates BottomSheetCallback for the player sheet - needed in onCreateView */
+    private BottomSheetBehavior.BottomSheetCallback getPlayerBottomSheetCallback() {
+        return new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                // react to state change
+                switch (newState) {
+                    case BottomSheetBehavior.STATE_EXPANDED:
+                        // details sheet expanded
+                        mPlayerExpandButton.setImageResource(R.drawable.ic_minimize_white_24dp);
+                        break;
+                    case BottomSheetBehavior.STATE_COLLAPSED:
+                        // details sheet collapsed
+                        mPlayerExpandButton.setImageResource(R.drawable.ic_expand_white_24dp);
+                        break;
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        // statistics sheet hidden
+                        mPlayerBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                // react to dragging events
+                if (slideOffset < 0.125f) {
+                    // change expand button
+                    mPlayerExpandButton.setImageResource(R.drawable.ic_expand_white_24dp);
+                } else {
+                    // change expand button
+                    mPlayerExpandButton.setImageResource(R.drawable.ic_minimize_white_24dp);
+                }
+
+            }
+        };
+    }
+
+
+    /* Todo describe */
+    private Station findStationByUri(Uri streamUri, ArrayList<Station> stationList) {
+        for (Station station :  stationList) {
+            if (station.getStreamUri().equals(streamUri)) {
+                // found matching station
+                return station;
+            }
+        }
+        // default return
+        return null;
+    }
+
+
+    /* Copy station data to system clipboard */
+    private void copyToClipboard(int contentType) {
+
+        String clipboardText = null;
+        ClipData clip;
+
+        switch (contentType) {
+            case COPY_STATION_ALL:
+                // set clip text // todo implement
+//                if (mCurrentStation.getMetadata() != null) {
+//                    clipboardText = mCurrentStation.getStationName() +  " - " +  mCurrentStation.getMetadata() + " (" +  mCurrentStation.getStreamUri().toString() + ")";
+//                } else {
+//                    clipboardText = mCurrentStation.getStationName() + " (" + mCurrentStation.getStreamUri().toString() + ")";
+//                }
+                // notify user
+                Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_station_copied), Toast.LENGTH_SHORT).show();
+                break;
+
+            case COPY_STATION_METADATA:
+                // set clip text and notify user
+                clipboardText = mPlayerSheetMetadataValue.getText().toString();
+                Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_copied_to_clipboard_metadata), Toast.LENGTH_SHORT).show();
+                break;
+
+            case COPY_STREAM_URL:
+                // set clip text and notify user
+                clipboardText = mPlayerSheetStreamUrlValue.getText().toString();
+                Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_copied_to_clipboard_url), Toast.LENGTH_SHORT).show();
+                break;
+
+        }
+
+        // create clip and to clipboard
+        if (clipboardText != null) {
+            clip = ClipData.newPlainText("simple text", clipboardText);
+            ClipboardManager cm = (ClipboardManager) mActivity.getSystemService(Context.CLIPBOARD_SERVICE);
+            cm.setPrimaryClip(clip);
+        }
+
+    }
+
+
     /* Creates an observer for collection of stations stored as LiveData */
     private Observer<ArrayList<Station>> createStationListObserver() {
         return new Observer<ArrayList<Station>>() {
             @Override
             public void onChanged(@Nullable ArrayList<Station> newStationList) {
-                // toggle action call view if necessary
-                toggleActionCall();
+                if (newStationList.size() == 0) {
+                    // hide player
+                    setupPlayer(null);
+                } else if (mCurrentStation == null) {
+                    // restore last station
+                    if (mCurrentStationUrl != null) {
+                        mCurrentStation = findStationByUri(Uri.parse(mCurrentStationUrl), newStationList);
+                    } else {
+                        mCurrentStation = newStationList.get(0);
+                    }
+                    // setup and show player
+                    setupPlayer(mCurrentStation);
+                }
             }
         };
     }
@@ -554,6 +837,43 @@ public final class ListFragment extends Fragment implements TransistorKeys {
                 if (mSleepTimerRunning && mPlayerServiceStation != null && mPlayerServiceStation.getPlaybackState() == PLAYBACK_STATE_STOPPED) {
                     stopSleepTimer();
                 }
+                // check if this station parameters have changed
+                if (mCurrentStation != null && newStation!= null &&
+                        mCurrentStation.getStreamUri().equals(newStation.getStreamUri())) {
+
+                    String newName = newStation.getStationName();
+                    long newImageSize = newStation.getStationImageSize();
+                    String newMetaData = newStation.getMetadata();
+
+                    String oldName = mCurrentStation.getStationName();
+                    long oldImageSize = mCurrentStation.getStationImageSize();
+                    String oldMetaData = mCurrentStation.getMetadata();
+
+                    // CASE: NAME
+                    if (!(newName.equals(oldName))) {
+                        updateStationNameView(newStation);
+                    }
+                    // CASE: IMAGE
+                    else if (newImageSize != oldImageSize) {
+                        updateStationImageView(newStation);
+                    }
+                    // CASE: METADATA
+                    else if (!(newMetaData.equals(oldMetaData))) {
+                        updateStationMetadataView(newStation);
+                    }
+                    // CASE: PLAYBACK STATE
+                    if (mCurrentStation.getPlaybackState() != newStation.getPlaybackState()) {
+                        updateStationPlaybackState(newStation);
+                    }
+//                    if (mPlaybackState != newStation.getPlaybackState()) { // todo remove
+//                        mPlaybackState = newStation.getPlaybackState();
+//                        changeVisualState(newStation);
+//                    }
+
+                    // update this station
+                    mCurrentStation = newStation;
+
+                }
             }
         };
     }
@@ -575,7 +895,6 @@ public final class ListFragment extends Fragment implements TransistorKeys {
                     mSleepTimerNotification.dismiss();
                     mSleepTimerRunning = false;
                 }
-
             }
         };
         IntentFilter sleepTimerIntentFilter = new IntentFilter(ACTION_TIMER_RUNNING);

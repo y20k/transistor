@@ -2,7 +2,7 @@
 <resources>
 
     <color name="transistor_red">#FFE53935</color>
-    <color name="transistor_red_dark">#FFB71C1C</color>
+    <color name="transistor_red_dark">#b71c1c</color>
 
     <color name="transistor_grey">#FF99918A</color>
     <color name="transistor_grey_light">#FFBFBBB8</color>
@@ -17,6 +17,8 @@
     <color name="transistor_gold_dark">#FFCC9933</color>
 
     <color name="transistor_white">#FFFFFFFF</color>
-    <color name="transistor_transparent">#00FFFFFF</color>
+    <color name="transistor_transparent">#00ffffff</color>
+
+    <color name="transistor_text_inverted">?android:attr/textColorSecondaryInverse</color>
 
 </resources>

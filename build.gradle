@@ -1,11 +1,13 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
+    ext.kotlin_version = '1.1.60'
     repositories {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'com.android.tools.build:gradle:3.0.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -17,23 +19,29 @@ allprojects {
         jcenter()
         maven {
             url "https://maven.google.com"
-            project.ext {
-                applicationId = 'org.y20k.transistor'
-                versionCode = 49
-                versionName = '2.3.7'
-                minSdkVersion = 19
-                compileSdkVersion = 26
-                targetSdkVersion = 26
-                buildToolsVersion = '26.0.2'
-                supportLibraryVersion = '26.1.0'
-                archLifecycleVersion = '1.0.0-beta2'
-            }
+        }
+        maven {
+            url "https://jitpack.io"
         }
     }
+
+    project.ext {
+        applicationId = 'org.y20k.transistor'
+        versionCode = 50
+        versionName = '3.0.0'
+        minSdkVersion = 19
+        compileSdkVersion = 26
+        targetSdkVersion = 26
+        buildToolsVersion = '26.0.2'
+        supportLibraryVersion = '26.1.0'
+        archLifecycleVersion = '1.0.0'
+    }
+
     if (it.hasProperty('externalBuildDir')) {
         if (!new File(externalBuildDir).isAbsolute()) {
             externalBuildDir = new File(rootDir, externalBuildDir)
         }
         buildDir = "${externalBuildDir}/${project.name}"
     }
+
 }

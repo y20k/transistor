@@ -99,7 +99,7 @@
             android:layout_margin="8dp">
 
             <ImageButton
-                android:id="@+id/player_playback_button"
+                android:id="@+id/player_button_playback"
                 android:contentDescription="@string/descr_playback_button"
                 android:adjustViewBounds="true"
                 android:background="@drawable/selector_playback_button"

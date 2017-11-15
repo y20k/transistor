@@ -34,7 +34,7 @@
     <string name="descr_station_name_example">FM-Beispiel</string>
     <string name="descr_station_metadata_example">Interpret - Titel</string>
     <string name="descr_station_stream_loading">Lade Stream …</string>
-    <string name="descr_playback_button">Großer Play-Knopf</string>
+    <string name="descr_playback_button">Goldener Play-Knopf</string>
     <string name="descr_playback_indicator">Symbol für Playback Status</string>
     <string name="descr_playback_indicator_started">Symbol für Playback Aktivität</string>
     <string name="descr_timer_indicator_started">Symbol für Sleeptimer Aktivität</string>
@@ -45,14 +45,14 @@
     <string name="descr_player_sheet_p_stream_url">Streaming-Adresse des gewählten Radiosenders</string>
 
     <!-- player -->
-    <string name="player_sheet_h1_station_name">Sender</string>
-    <string name="player_sheet_h1_station_metadata">Aktuelle Wiedergabe</string>
-    <string name="player_sheet_h1_stream_url">Streaming-Adresse</string>
+    <string name="player_sheet_h2_station_name">Sender</string>
+    <string name="player_sheet_h2_station_metadata">Aktuelle Wiedergabe</string>
+    <string name="player_sheet_h2_stream_url">Streaming-Adresse</string>
     <string name="player_sheet_p_station_metadata">Metadaten nicht verfügbar</string>
-    <string name="player_sheet_h1_station_mime_type">MIME-Typ</string>
-    <string name="player_sheet_h1_station_channel_count">Kanäle</string>
-    <string name="player_sheet_h1_station_sample_rate">Samplerate</string>
-    <string name="player_sheet_h1_station_bitrate">Bitrate</string>
+    <string name="player_sheet_h2_station_mime_type">MIME-Typ</string>
+    <string name="player_sheet_h2_station_channel_count">Kanäle</string>
+    <string name="player_sheet_h2_station_sample_rate">Samplerate</string>
+    <string name="player_sheet_h2_station_bitrate">Bitrate</string>
 
     <!-- dialogs -->
     <string name="dialog_generic_button_okay">Bestätigen</string>

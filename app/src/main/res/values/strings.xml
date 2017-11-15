@@ -34,9 +34,10 @@
     <string name="descr_station_name_example">Example FM</string>
     <string name="descr_station_metadata_example">Artist - Title</string>
     <string name="descr_station_stream_loading">Loading stream …</string>
-    <string name="descr_playback_button">Big playback button</string>
+    <string name="descr_playback_button">Golden playback button</string>
     <string name="descr_playback_indicator">Indicator for running playback</string>
     <string name="descr_playback_indicator_started">Indicator for running playback</string>
+    <string name="descr_timer_icon">Sleep timer icon</string>
     <string name="descr_timer_indicator_started">Indicator for running sleep timer</string>
     <string name="descr_player_sheet_information_icon">Information Icon</string>
     <string name="descr_player_sheet_content_copy_icon">Content copy icon</string>
@@ -45,14 +46,16 @@
     <string name="descr_player_sheet_p_stream_url">Streaming link of selected radio station</string>
 
     <!-- player -->
-    <string name="player_sheet_h1_station_name">Station</string>
-    <string name="player_sheet_h1_station_metadata">Currently Playing</string>
-    <string name="player_sheet_h1_stream_url">Streaming link</string>
+    <string name="player_sheet_h1_details">Details</string>
+    <string name="player_sheet_h2_current_session">Current session</string>
+    <string name="player_sheet_h2_station_name">Station</string>
+    <string name="player_sheet_h2_station_metadata">Currently Playing</string>
+    <string name="player_sheet_h2_stream_url">Streaming link</string>
     <string name="player_sheet_p_station_metadata">no metadata available</string>
-    <string name="player_sheet_h1_station_mime_type">MIME type</string>
-    <string name="player_sheet_h1_station_channel_count">Channel count</string>
-    <string name="player_sheet_h1_station_sample_rate">Sample rate</string>
-    <string name="player_sheet_h1_station_bitrate">Bitrate</string>
+    <string name="player_sheet_h2_station_mime_type">MIME type</string>
+    <string name="player_sheet_h2_station_channel_count">Channel count</string>
+    <string name="player_sheet_h2_station_sample_rate">Sample rate</string>
+    <string name="player_sheet_h2_station_bitrate">Bitrate</string>
 
     <!-- dialogs -->
     <string name="dialog_generic_button_okay">Okay</string>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v4.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/station_data_sheet"
     android:layout_width="@dimen/bottom_sheet_width"
     android:layout_height="match_parent"
@@ -10,7 +10,8 @@
     android:background="@color/transistor_transparent"
     app:behavior_hideable="true"
     app:behavior_peekHeight="48dp"
-    app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
+    app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
+    tools:showIn="@layout/fragment_player">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -47,7 +48,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
                     android:textAllCaps="true"
-                    android:text="@string/player_sheet_h1_station_name"
+                    android:text="@string/player_sheet_h2_station_name"
                     android:textAppearance="@android:style/TextAppearance.Small.Inverse" />
                 <TextView
                     android:id="@+id/station_data_sheet_name"
@@ -76,7 +77,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAllCaps="true"
-                        android:text="@string/player_sheet_h1_station_metadata"
+                        android:text="@string/player_sheet_h2_station_metadata"
                         android:textAppearance="@android:style/TextAppearance.Small.Inverse" />
                     <TextView
                         android:id="@+id/station_data_sheet_metadata"
@@ -112,7 +113,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAllCaps="true"
-                        android:text="@string/player_sheet_h1_stream_url"
+                        android:text="@string/player_sheet_h2_stream_url"
                         android:textAppearance="@android:style/TextAppearance.Small.Inverse" />
                     <TextView
                         android:id="@+id/station_data_sheet_stream_url"
@@ -142,7 +143,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
                     android:textAllCaps="true"
-                    android:text="@string/player_sheet_h1_station_mime_type"
+                    android:text="@string/player_sheet_h2_station_mime_type"
                     android:textAppearance="@android:style/TextAppearance.Small.Inverse" />
                 <TextView
                     android:id="@+id/station_data_sheet_mime_type"
@@ -165,7 +166,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
                     android:textAllCaps="true"
-                    android:text="@string/player_sheet_h1_station_channel_count"
+                    android:text="@string/player_sheet_h2_station_channel_count"
                     android:textAppearance="@android:style/TextAppearance.Small.Inverse" />
                 <TextView
                     android:id="@+id/station_data_sheet_channel_count"
@@ -188,7 +189,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
                     android:textAllCaps="true"
-                    android:text="@string/player_sheet_h1_station_sample_rate"
+                    android:text="@string/player_sheet_h2_station_sample_rate"
                     android:textAppearance="@android:style/TextAppearance.Small.Inverse" />
                 <TextView
                     android:id="@+id/station_data_sheet_sample_rate"
@@ -212,7 +213,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
                     android:textAllCaps="true"
-                    android:text="@string/player_sheet_h1_station_bitrate"
+                    android:text="@string/player_sheet_h2_station_bitrate"
                     android:textAppearance="@android:style/TextAppearance.Small.Inverse" />
                 <TextView
                     android:id="@+id/station_data_sheet_bitrate"

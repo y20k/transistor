@@ -71,13 +71,13 @@ import com.google.android.exoplayer2.upstream.DefaultAllocator;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
-import com.spoledge.aacdecoder.PlayerCallback;
 
 import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.CustomDefaultHttpDataSourceFactory;
 import org.y20k.transistor.helpers.LogHelper;
 import org.y20k.transistor.helpers.NotificationHelper;
 import org.y20k.transistor.helpers.PackageValidator;
+import org.y20k.transistor.helpers.PlayerCallback;
 import org.y20k.transistor.helpers.StationListProvider;
 import org.y20k.transistor.helpers.TransistorKeys;
 
