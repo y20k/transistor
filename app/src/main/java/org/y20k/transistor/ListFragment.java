@@ -53,6 +53,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.jetbrains.annotations.NotNull;
 import org.y20k.transistor.adapter.CollectionAdapter;
 import org.y20k.transistor.adapter.CollectionViewModel;
 import org.y20k.transistor.core.Station;
@@ -249,8 +250,30 @@ public final class ListFragment extends Fragment implements TransistorKeys {
             }
         });
 
+        // attach listener to playback button
+        mPlayerPlaybackButton.setOnMusicFabClickListener(new FloatingMusicActionButton.OnMusicFabClickListener() {
+            @Override
+            public void onClick(@NotNull View view) {
+                switch (mPlayerPlaybackButton.getCurrentMode()) {
+                    case PLAY_TO_STOP: {
+                        LogHelper.w(LOG_TAG, "!!! tapped on start"); // todo remove
+                        setupPlayer(mCurrentStation);
+                        startPlayback(mCurrentStation);
+                        break;
+                    }
+                    case STOP_TO_PLAY: {
+                        LogHelper.w(LOG_TAG, "!!! tapped on stop"); // todo remove
+//                        mCurrentStation.setPlaybackState(PLAYBACK_STATE_STOPPED);
+//                        setupPlayer(mCurrentStation);
+                        stopPlayback();
+                        break;
+                    }
+                }
+            }
+        });
+
         // initial set-up of player
-        setupPlayer(mCurrentStation);
+//        setupPlayer(mCurrentStation, mCurrentStation.getPlaybackState());
 
         return mRootView;
     }
@@ -447,6 +470,25 @@ public final class ListFragment extends Fragment implements TransistorKeys {
     }
 
 
+    /* start player service using intent */
+    private void startPlayback(Station station) {
+        Intent intent = new Intent(mActivity, PlayerService.class);
+        intent.setAction(ACTION_PLAY);
+        intent.putExtra(EXTRA_STATION, station);
+        mActivity.startService(intent);
+        LogHelper.v(LOG_TAG, "Starting player service.");
+    }
+
+
+    /* Stop player service using intent */
+    private void stopPlayback() {
+        Intent intent = new Intent(mActivity, PlayerService.class);
+        intent.setAction(ACTION_STOP);
+        mActivity.startService(intent);
+        LogHelper.v(LOG_TAG, "Stopping player service.");
+    }
+
+
     /* Handles intent to show player from notification or from shortcut */
     private void handleShowPlayer(Intent intent) {
 
@@ -495,19 +537,27 @@ public final class ListFragment extends Fragment implements TransistorKeys {
             // show player
             // todo implement
 
+            LogHelper.w(LOG_TAG, "!!! setting up player. state = " + station.getPlaybackState()); // todo remove
+
             // set station name, image and stream url
             mPlayerStationName.setText(station.getStationName());
             mPlayerStationImage.setImageBitmap(createStationImage(station));
             mPlayerSheetStreamUrlValue.setText(station.getStreamUri().toString());
 
             // toggle views depending on playback state
-            if (station.getPlaybackState() == PLAYBACK_STATE_STOPPED) {
-                mPlayerPlaybackButton.changeMode(FloatingMusicActionButton.Mode.PLAY_TO_STOP);
-                mPlaybackActiveViews.setVisibility(View.GONE);
-            } else {
-                mPlayerPlaybackButton.changeMode(FloatingMusicActionButton.Mode.STOP_TO_PLAY);
-                mPlaybackActiveViews.setVisibility(View.VISIBLE);
-            }
+            updateStationPlaybackState(station);
+//            if (playbackState == PLAYBACK_STATE_STOPPED) {
+//                updateStationPlaybackState(station);
+//                mPlaybackActiveViews.setVisibility(View.GONE);
+//                if (mPlayerPlaybackButton.getCurrentMode() == FloatingMusicActionButton.Mode.PLAY_TO_STOP){
+//                    mPlayerPlaybackButton.changeMode(FloatingMusicActionButton.Mode.STOP_TO_PLAY);
+//                }
+//            } else {
+//                mPlaybackActiveViews.setVisibility(View.VISIBLE);
+//                if (mPlayerPlaybackButton.getCurrentMode() == FloatingMusicActionButton.Mode.STOP_TO_PLAY){
+//                    mPlayerPlaybackButton.changeMode(FloatingMusicActionButton.Mode.PLAY_TO_STOP);
+//                }
+//            }
         } else {
             // hide player
             // todo implement
@@ -518,13 +568,36 @@ public final class ListFragment extends Fragment implements TransistorKeys {
     /* Update the playback state name */
     private void updateStationPlaybackState(Station station) {
         if (isAdded()) {
-            if (station.getPlaybackState() == PLAYBACK_STATE_STOPPED) {
-                mPlayerPlaybackButton.changeMode(FloatingMusicActionButton.Mode.PLAY_TO_STOP);
-                mPlaybackActiveViews.setVisibility(View.GONE);
-            } else {
-                mPlayerPlaybackButton.changeMode(FloatingMusicActionButton.Mode.STOP_TO_PLAY);
-                mPlaybackActiveViews.setVisibility(View.VISIBLE);
+            LogHelper.w(LOG_TAG, "!!! updating playbackstate = " + station.getPlaybackState()); // todo remove
+
+            // toggle views needed for active playback
+            switch (station.getPlaybackState()) {
+                case PLAYBACK_STATE_STOPPED: {
+                    mPlaybackActiveViews.setVisibility(View.GONE);
+                    if (mPlayerPlaybackButton.getCurrentMode() == FloatingMusicActionButton.Mode.STOP_TO_PLAY) {
+                        LogHelper.w(LOG_TAG, "!!! PLAYBACK_STATE_STOPPED & changing button mode"); // todo remove
+                        mPlayerPlaybackButton.changeMode(FloatingMusicActionButton.Mode.PLAY_TO_STOP);
+                    }
+                    break;
+                }
+                case PLAYBACK_STATE_LOADING_STATION: {
+                    mPlaybackActiveViews.setVisibility(View.VISIBLE);
+                    if (mPlayerPlaybackButton.getCurrentMode() == FloatingMusicActionButton.Mode.PLAY_TO_STOP) {
+                        LogHelper.w(LOG_TAG, "!!! PLAYBACK_STATE_LOADING_STATION & changing button mode"); // todo remove
+                        mPlayerPlaybackButton.changeMode(FloatingMusicActionButton.Mode.STOP_TO_PLAY);
+                    }
+                    break;
+                }
+                case PLAYBACK_STATE_STARTED: {
+                    mPlaybackActiveViews.setVisibility(View.VISIBLE);
+                    if (mPlayerPlaybackButton.getCurrentMode() == FloatingMusicActionButton.Mode.PLAY_TO_STOP) {
+                        LogHelper.w(LOG_TAG, "!!! PLAYBACK_STATE_STARTED & changing button mode"); // todo remove
+                        mPlayerPlaybackButton.changeMode(FloatingMusicActionButton.Mode.STOP_TO_PLAY);
+                    }
+                    break;
+                }
             }
+
         }
     }
 

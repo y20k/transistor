@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
+//import be.rijckaert.tim.vector.sample.library.R
 
 
 class FloatingMusicActionButton : FloatingActionButton {

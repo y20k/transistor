@@ -1,4 +1,4 @@
-include ':app'
+include ':app', ':libraries:musicfab'
 
 gradle.ext.exoplayerRoot = 'libraries/ExoPlayer-r2.5.4'
 gradle.ext.exoplayerModulePrefix = 'exoplayer-'

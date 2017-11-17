@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.widget.ImageView
+//import be.rijckaert.tim.vector.sample.library.R
 
 class PlayingIndicationView : ImageView {
 

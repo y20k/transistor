@@ -1,17 +1,15 @@
 apply plugin: 'com.android.library'
-
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion project.ext.compileSdkVersion
     buildToolsVersion project.ext.buildToolsVersion
-//    compileSdkVersion 26
-
 
     defaultConfig {
         minSdkVersion project.ext.minSdkVersion
         targetSdkVersion project.ext.targetSdkVersion
         versionCode 1
-        versionName "1.0"
+        versionName "1.0-transistor"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         vectorDrawables.useSupportLibrary = true
@@ -19,35 +17,31 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
+
     lintOptions {
         abortOnError false
     }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.android.support:appcompat-v7:' + supportLibraryVersion
-    implementation 'com.android.support:design:' + supportLibraryVersion
+    compile 'org.jetbrains.kotlin:kotlin-stdlib:' + kotlin_version
+    compile 'com.android.support:appcompat-v7:' + supportLibraryVersion
+    compile 'com.android.support:design:' + supportLibraryVersion
 
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-
-//    testImplementation 'junit:junit:4.12'
-//    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-//    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-
+    testCompile "junit:junit:$junit_version"
 }
-//repositories {
-//    mavenCentral()
-//    maven {
-//        url 'https://maven.google.com/'
-//        name 'Google'
-//    }
-//}
+
+repositories {
+    google()
+    jcenter()
+}

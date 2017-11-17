@@ -19,6 +19,7 @@ android {
     buildTypes {
         release {
             minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -38,9 +39,8 @@ dependencies {
 
     compile 'com.android.support.constraint:constraint-layout:1.1.0-beta3'
 
-    compile 'com.github.timrijckaert:FloatingMusicActionButton:v2.0.4'
-
-//    compile project(':libraries:floatingmusicactionbutton')
+//    compile 'com.github.timrijckaert:FloatingMusicActionButton:v2.0.4'
+    compile project(':libraries:musicfab')
 
     compile project(':exoplayer-library-core')
     compile project(':exoplayer-library-hls')
