@@ -34,7 +34,7 @@
     <string name="descr_station_name_example">Ejemplo FM</string>
     <string name="descr_station_metadata_example">Artista - Título</string>
     <string name="descr_station_stream_loading">Cargando retransmisión …</string>
-    <string name="descr_playback_button">Botón grande de reproducción</string>
+    <string name="descr_playback_button">Botón dorado de reproducción</string>
     <string name="descr_playback_indicator">Indicador para el funcionamiento de la reproducción</string>
     <string name="descr_playback_indicator_started">Indicador para el funcionamiento de la reproducción</string>
     <string name="descr_timer_indicator_started">Indicador para el funcionamiento del temporizador de apagado</string>
@@ -175,4 +175,7 @@
     https://github.com/y20k/transistor/tree/1e51dd8666194353427ca074f2092b6c20cfacd6/app/src/main/res 
     -->
 
-</resources>
+<string name="descr_timer_icon">Icono de temporizador de reposo</string>
+    <string name="player_sheet_h1_details">Detalles</string>
+    <string name="player_sheet_h2_current_session">Sesión actual</string>
+    </resources>
