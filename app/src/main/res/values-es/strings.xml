@@ -178,4 +178,5 @@
 <string name="descr_timer_icon">Icono de temporizador de reposo</string>
     <string name="player_sheet_h1_details">Detalles</string>
     <string name="player_sheet_h2_current_session">Sesión actual</string>
+    <string name="descr_player_sheet_button_expand">Botón para expandir y minimizar el reproductor de radio</string>
     </resources>
