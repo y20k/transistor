@@ -27,7 +27,7 @@
 
     <!-- descriptions -->
     <string name="descr_arrow_actioncall">Strzałka wskazująca na przycisk dodawania stacji</string>
-    <string name="descr_overflow_button">Wyświetl opcje dla stacji</string>
+    <string name="descr_station_options_button">Wyświetl opcje dla stacji</string>
     <string name="descr_station_icon">Ikona stacji</string>
     <string name="descr_station_name">Nazwa stacji</string>
     <string name="descr_station_metadata">Metadane (Wykonawca / Tytuł) odtwarzanej stacji</string>

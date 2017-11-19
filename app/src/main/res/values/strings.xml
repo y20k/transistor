@@ -27,7 +27,7 @@
 
     <!-- descriptions -->
     <string name="descr_arrow_actioncall">Arrow pointing towards the add station symbol</string>
-    <string name="descr_overflow_button">Display options for radio station</string>
+    <string name="descr_station_options_button">Display options for radio station</string>
     <string name="descr_station_icon">Icon of radio station</string>
     <string name="descr_station_name">Name of radio station</string>
     <string name="descr_station_metadata">Metadata (Artist / Title) of currently playing radio station</string>
@@ -39,6 +39,7 @@
     <string name="descr_playback_indicator_started">Indicator for running playback</string>
     <string name="descr_timer_icon">Sleep timer icon</string>
     <string name="descr_timer_indicator_started">Indicator for running sleep timer</string>
+    <string name="descr_player_sheet_button_expand">Button to expand and minimize the radio player</string>
     <string name="descr_player_sheet_information_icon">Information Icon</string>
     <string name="descr_player_sheet_content_copy_icon">Content copy icon</string>
     <string name="descr_player_sheet_p_station_name">Name of selected radio station</string>
@@ -49,7 +50,7 @@
     <string name="player_sheet_h1_details">Details</string>
     <string name="player_sheet_h2_current_session">Current session</string>
     <string name="player_sheet_h2_station_name">Station</string>
-    <string name="player_sheet_h2_station_metadata">Currently Playing</string>
+    <string name="player_sheet_h2_station_metadata">Currently playing</string>
     <string name="player_sheet_h2_stream_url">Streaming link</string>
     <string name="player_sheet_p_station_metadata">no metadata available</string>
     <string name="player_sheet_h2_station_mime_type">MIME type</string>

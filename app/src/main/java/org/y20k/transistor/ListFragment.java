@@ -62,6 +62,7 @@ import org.y20k.transistor.helpers.ImageHelper;
 import org.y20k.transistor.helpers.LogHelper;
 import org.y20k.transistor.helpers.PermissionHelper;
 import org.y20k.transistor.helpers.SleepTimerService;
+import org.y20k.transistor.helpers.StationContextMenu;
 import org.y20k.transistor.helpers.StationFetcher;
 import org.y20k.transistor.helpers.StationListHelper;
 import org.y20k.transistor.helpers.StorageHelper;
@@ -98,6 +99,8 @@ public final class ListFragment extends Fragment implements TransistorKeys {
     private Group mPlaybackActiveViews;
     private Group mPlayerSheetMetadataViews;
     private Group mPlayerSheetStreamUrlViews;
+    private ImageButton mPlayerSheetSleepTimerButton;
+    private ImageButton mPlayerSheetStationOptionsButton;
     private ImageButton mPlayerSheetMetadataCopyButton;
     private ImageButton mPlayerSheetStreamUrlCopyButton;
     private TextView mPlayerSessionValue;
@@ -180,6 +183,8 @@ public final class ListFragment extends Fragment implements TransistorKeys {
         mPlayerBottomSheet = mRootView.findViewById(R.id.player_sheet);
         mPlayerSheetMetadataViews = mRootView.findViewById(R.id.player_sheet_metadata_views);
         mPlayerSheetStreamUrlViews = mRootView.findViewById(R.id.player_sheet_stream_url_views);
+        mPlayerSheetSleepTimerButton = mRootView.findViewById(R.id.player_sheet_timer_button);
+        mPlayerSheetStationOptionsButton = mRootView.findViewById(R.id.player_sheet_station_options_button);
         mPlayerSheetMetadataCopyButton = mRootView.findViewById(R.id.player_sheet_metadata_copy_button);
         mPlayerSheetStreamUrlCopyButton = mRootView.findViewById(R.id.player_sheet_stream_url_copy_button);
         mPlayerSessionValue = mRootView.findViewById(R.id.player_sheet_p_session);
@@ -250,25 +255,30 @@ public final class ListFragment extends Fragment implements TransistorKeys {
             }
         });
 
+        // attach listener for sleep timer tap
+        mPlayerSheetSleepTimerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                handleSleepTimerTap();
+                mPlayerBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            }
+        });
+
+        // attach listener for option menu
+        mPlayerSheetStationOptionsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                StationContextMenu menu = new StationContextMenu();
+                menu.initialize(mActivity, view, mCurrentStation);
+                menu.show();
+            }
+        });
+
         // attach listener to playback button
         mPlayerPlaybackButton.setOnMusicFabClickListener(new FloatingMusicActionButton.OnMusicFabClickListener() {
             @Override
             public void onClick(@NotNull View view) {
-                switch (mPlayerPlaybackButton.getCurrentMode()) {
-                    case PLAY_TO_STOP: {
-                        LogHelper.w(LOG_TAG, "!!! tapped on start"); // todo remove
-                        setupPlayer(mCurrentStation);
-                        startPlayback(mCurrentStation);
-                        break;
-                    }
-                    case STOP_TO_PLAY: {
-                        LogHelper.w(LOG_TAG, "!!! tapped on stop"); // todo remove
-//                        mCurrentStation.setPlaybackState(PLAYBACK_STATE_STOPPED);
-//                        setupPlayer(mCurrentStation);
-                        stopPlayback();
-                        break;
-                    }
-                }
+                handlePlaybackButtonTap();
             }
         });
 
@@ -328,7 +338,7 @@ public final class ListFragment extends Fragment implements TransistorKeys {
 
             // CASE TIMER
             case R.id.menu_timer:
-                handleMenuSleepTimerClick();
+                handleSleepTimerTap();
                 return true;
 
             // CASE ADD
@@ -530,6 +540,28 @@ public final class ListFragment extends Fragment implements TransistorKeys {
     }
 
 
+
+    /* Handles playback button taps */
+    private void handlePlaybackButtonTap() {
+        switch (mPlayerPlaybackButton.getCurrentMode()) {
+            case PLAY_TO_STOP: {
+                LogHelper.w(LOG_TAG, "!!! tapped on start"); // todo remove
+                startPlayback(mCurrentStation);
+                mPlayerPlaybackButton.changeMode(FloatingMusicActionButton.Mode.STOP_TO_PLAY);
+                break;
+            }
+            case STOP_TO_PLAY: {
+                LogHelper.w(LOG_TAG, "!!! tapped on stop"); // todo remove
+                // stop playback and collapse bottom sheet
+                stopPlayback();
+                mPlayerPlaybackButton.changeMode(FloatingMusicActionButton.Mode.PLAY_TO_STOP);
+                mPlayerBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                break;
+            }
+        }
+    }
+
+
     /* Setup player visually */
     private void setupPlayer(Station station) {
 
@@ -546,18 +578,7 @@ public final class ListFragment extends Fragment implements TransistorKeys {
 
             // toggle views depending on playback state
             updateStationPlaybackState(station);
-//            if (playbackState == PLAYBACK_STATE_STOPPED) {
-//                updateStationPlaybackState(station);
-//                mPlaybackActiveViews.setVisibility(View.GONE);
-//                if (mPlayerPlaybackButton.getCurrentMode() == FloatingMusicActionButton.Mode.PLAY_TO_STOP){
-//                    mPlayerPlaybackButton.changeMode(FloatingMusicActionButton.Mode.STOP_TO_PLAY);
-//                }
-//            } else {
-//                mPlaybackActiveViews.setVisibility(View.VISIBLE);
-//                if (mPlayerPlaybackButton.getCurrentMode() == FloatingMusicActionButton.Mode.STOP_TO_PLAY){
-//                    mPlayerPlaybackButton.changeMode(FloatingMusicActionButton.Mode.PLAY_TO_STOP);
-//                }
-//            }
+
         } else {
             // hide player
             // todo implement
@@ -649,7 +670,7 @@ public final class ListFragment extends Fragment implements TransistorKeys {
 
 
     /* Handles tap timer icon in actionbar */
-    private void handleMenuSleepTimerClick() {
+    private void handleSleepTimerTap() {
         // set duration
         long duration = FIFTEEN_MINUTES;
 

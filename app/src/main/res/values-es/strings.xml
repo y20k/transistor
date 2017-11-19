@@ -27,7 +27,7 @@
 
     <!-- descriptions -->
     <string name="descr_arrow_actioncall">Flecha apuntando hacia el símbolo de añadir emisora</string>
-    <string name="descr_overflow_button">Mostrar las opciones para la emisora de radio</string>
+    <string name="descr_station_options_button">Mostrar las opciones para la emisora de radio</string>
     <string name="descr_station_icon">Icono de emisora de radio</string>
     <string name="descr_station_name">Nombre de emisora de radio</string>
     <string name="descr_station_metadata">Metadata (Artista / Títulos) de la reproducción de la actual emisora de radio</string>

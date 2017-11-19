@@ -27,7 +27,7 @@
 
     <!-- descriptions -->
     <string name="descr_arrow_actioncall">Pil som peker mot symbolet for tillegg av stasjon</string>
-    <string name="descr_overflow_button">Vis valg for radiostasjon</string>
+    <string name="descr_station_options_button">Vis valg for radiostasjon</string>
     <string name="descr_station_icon">Miniatrybilde tilhørende radiostasjon</string>
     <string name="descr_station_name">Navn på radiostasjon</string>
     <string name="descr_station_metadata">Metadata (Artist / Låt) for radiostasjonen som spilles</string>

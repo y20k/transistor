@@ -27,7 +27,7 @@
 
     <!-- descriptions -->
     <string name="descr_arrow_actioncall">追加する放送局のシンボルに矢印が向きます</string>
-    <string name="descr_overflow_button">ラジオ局の表示オプション</string>
+    <string name="descr_station_options_button">ラジオ局の表示オプション</string>
     <string name="descr_station_icon">ラジオ局のアイコン</string>
     <string name="descr_station_name">ラジオ局の名前</string>
     <string name="descr_station_metadata">現在再生中のラジオ局のメタデータ (アーティスト/タイトル)</string>

@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Play Pause Stop</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Play Icon -->
+    <string name="play_icon_upper_path_data">M 44 32 L 44 64 L 100 64 L 100 64 Z</string>
+    <string name="play_icon_bottom_path_data">M 44 96 L 44 64 L 100 64 L 100 64 Z</string>
+
+    <!-- Pause Icon -->
+    <string name="pause_icon_upper_path_data">M 32 40 L 32 56  L 96 56 L 96 40 Z</string>
+    <string name="pause_icon_bottom_path_data">M 32 88 L 32 72 L 96 72 L 96 88 Z</string>
+
+    <!-- Stop Icon -->
+    <string name="stop_icon_upper_path_data">M 32 32 L 32 64 L 96 64 L 96 32 Z</string>
+    <string name="stop_icon_bottom_path_data">M 32 96 L 32 64 L 96 64 L 96 96 Z</string>
+
+    <!-- Groups -->
+    <string name="play_icon_group_top">upperpart</string>
+    <string name="play_icon_group_bottom">bottompart</string>
+    <string name="play_icon_group_parts">parts</string>
+
+    <!-- Path Name -->
+    <string name="play_icon_top_path_name">upper</string>
+    <string name="play_icon_bottom_path_name">bottom</string>
+
+    <!-- Waves -->
+    <string name="wave_1_path_data">M 17.502 3.5 L 14.701 3.5 C 10.99 3.5 8 5.675 8 9.455 L 8 127.75 L 24 127.75 L 24 9.455 C 24 5.675 21.213 3.5 17.502 3.5 Z</string>
+    <string name="wave_2_path_data">M 49.502 3.5 L 46.701 3.5 C 42.99 3.5 40 5.675 40 9.455 L 40 127.75 L 56 127.75 L 56 9.455 C 56 5.675 53.213 3.5 49.502 3.5 Z</string>
+    <string name="wave_3_path_data">M 81.502 3.5 L 78.701 3.5 C 74.99 3.5 72 5.675 72 9.455 L 72 127.75 L 88 127.75 L 88 9.455 C 88 5.675 85.213 3.5 81.502 3.5 Z</string>
+    <string name="wave_4_path_data">M 113.502 3.5 L 110.701 3.5 C 106.99 3.5 104 5.675 104 9.455 L 104 127.75 L 120 127.75 L 120 9.455 C 120 5.675 117.213 3.5 113.502 3.5 Z</string>
+
+    <string name="playing_identifier_group_wave_1">wave1</string>
+    <string name="playing_identifier_group_wave_2">wave2</string>
+    <string name="playing_identifier_group_wave_3">wave3</string>
+    <string name="playing_identifier_group_wave_4">wave4</string>
+</resources>

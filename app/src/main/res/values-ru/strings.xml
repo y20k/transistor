@@ -27,7 +27,7 @@
 
     <!-- descriptions -->
     <string name="descr_arrow_actioncall">Стрелка, указывающая на иконку добавления станции</string>
-    <string name="descr_overflow_button">Показать опции радиостанции</string>
+    <string name="descr_station_options_button">Показать опции радиостанции</string>
     <string name="descr_station_icon">Иконка радиостанции</string>
     <string name="descr_station_name">Название радиостанции</string>
     <string name="descr_station_metadata">Метаданные (Исполнитель / Название) проигрываемой радиостанции</string>

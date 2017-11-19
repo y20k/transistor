@@ -27,7 +27,7 @@
 
     <!-- descriptions -->
     <string name="descr_arrow_actioncall">Pfeil, der auf das Symbol für Station hinzufügen zeigt</string>
-    <string name="descr_overflow_button">Optionen für Radiosender anzeigen</string>
+    <string name="descr_station_options_button">Optionen für Radiosender anzeigen</string>
     <string name="descr_station_icon">Logo der Radiosender</string>
     <string name="descr_station_name">Name des Radiosenders</string>
     <string name="descr_station_metadata">Metadaten (Interpret / Titel) des derzeit aktiven Radiosenders</string>

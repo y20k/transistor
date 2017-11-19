@@ -119,7 +119,7 @@
     <string name="header_about">Hakkında</string>
     <string name="header_howto">Nasıl kullanılır</string>
 
-    <string name="descr_overflow_button">Radyo istasyonu için seçenekleri göster</string>
+    <string name="descr_station_options_button">Radyo istasyonu için seçenekleri göster</string>
     <string name="descr_station_icon">Radyo istasyonunun simgesi</string>
     <string name="descr_station_name">Radyo istasyonunun ismi</string>
     <string name="descr_station_metadata">Şu anda oynatılan radyo istasyonunun meta verisi (Sanatçı / Başlık)</string>

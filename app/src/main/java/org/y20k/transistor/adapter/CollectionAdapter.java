@@ -143,7 +143,7 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
         togglePlaybackIndicator(holder, station);
 
 
-        // attach three dots menu - in phone view only
+        // attach three dots menu - in phone view only // todo remove
         if (!mTwoPane) {
             holder.getStationMenuView().setOnClickListener(new View.OnClickListener() {
                 @Override

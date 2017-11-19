@@ -27,7 +27,7 @@
 
     <!-- descriptions -->
     <string name="descr_arrow_actioncall">Gehitu irratia sinbolora begira dagoen gezia</string>
-    <string name="descr_overflow_button">Bistaratu irrati estazioaren aukerak</string>
+    <string name="descr_station_options_button">Bistaratu irrati estazioaren aukerak</string>
     <string name="descr_station_icon">Irrati estazioaren ikonoa</string>
     <string name="descr_station_name">Irrati estazioaren izena</string>
     <string name="descr_station_metadata">Orain jotzen ari den irratiaren metadatuak (Artista / Titulua)</string>

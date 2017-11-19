@@ -42,7 +42,7 @@
     <string name="shortcut_last_station_long_label">Urar ṛṛadyyu taneggarut</string>
     <string name="menu_shortcut">Sers deg ugdil agejdan</string>
 
-    <string name="descr_overflow_button">Iɣewwaṛen n uskan n ṛṛadyu</string>
+    <string name="descr_station_options_button">Iɣewwaṛen n uskan n ṛṛadyu</string>
     <string name="descr_station_icon">Tignit n ṛṛadyu</string>
     <string name="descr_station_name">Isem n ṛṛadyu</string>
     <string name="descr_station_metadata">Iɣef-isefka (Anazuṛ / Azwel) n ṛṛadyu yetturaren</string>

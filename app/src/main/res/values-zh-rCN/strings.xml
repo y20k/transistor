@@ -27,7 +27,7 @@
 
     <!-- descriptions -->
     <string name="descr_arrow_actioncall">箭头指向添加电梯符号</string>
-    <string name="descr_overflow_button">显示电台选项</string>
+    <string name="descr_station_options_button">显示电台选项</string>
     <string name="descr_station_icon">电台图标</string>
     <string name="descr_station_name">电台名称</string>
     <string name="descr_station_metadata">Metadata (Artist / Title) of currently playing radio station</string>

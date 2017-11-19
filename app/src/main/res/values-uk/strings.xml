@@ -27,7 +27,7 @@
 
     <!-- descriptions -->
     <string name="descr_arrow_actioncall">Стрілка вказує на піктограму додавання станції</string>
-    <string name="descr_overflow_button">Показ параметрів радіостанції</string>
+    <string name="descr_station_options_button">Показ параметрів радіостанції</string>
     <string name="descr_station_icon">Піктограма для радіостанції</string>
     <string name="descr_station_name">Назва радіостанції</string>
     <string name="descr_station_metadata">Метадані (Артист / Заголовок) поточної станції</string>

@@ -47,7 +47,7 @@
 
     <ImageButton
         android:id="@+id/list_item_more_button"
-        android:contentDescription="@string/descr_overflow_button"
+        android:contentDescription="@string/descr_station_options_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/ic_more_vert_black_24dp"

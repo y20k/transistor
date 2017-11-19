@@ -27,7 +27,7 @@
 
     <!-- descriptions -->
     <string name="descr_arrow_actioncall">Βέλος που δείχνει προς το σύμβολο προσθήκης σταθμού</string>
-    <string name="descr_overflow_button">Προβολή των επιλογών για το ραδιοσταθμό</string>
+    <string name="descr_station_options_button">Προβολή των επιλογών για το ραδιοσταθμό</string>
     <string name="descr_station_icon">Εικονίδιο του ραδιοσταθμού</string>
     <string name="descr_station_name">Το όνομα του ραδιοσταθμού</string>
     <string name="descr_station_metadata">Μεταδεδομένα (Καλλιτέχνης/ Τίτλος) του ραδιοσταθμού που παίζει τώρα</string>
