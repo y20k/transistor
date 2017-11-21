@@ -34,7 +34,7 @@
     <string name="descr_station_name_example">Eksempel FM</string>
     <string name="descr_station_metadata_example">Artist - Tittel</string>
     <string name="descr_station_stream_loading">Laster strøm …</string>
-    <string name="descr_playback_button">Stor avspillingsknapp</string>
+    <string name="descr_playback_button">Gylden avspillingsknapp</string>
     <string name="descr_playback_indicator">Indikator for avspillingsfremdrift</string>
     <string name="descr_playback_indicator_started">Indikator for avspillingsaktivitet</string>
     <string name="descr_timer_indicator_started">Aktiv tidsavbruddsindikator</string>
@@ -165,4 +165,8 @@
     <string name="infosheet_howto_h2_sleep">Hvordan starte tidsavbrudd?</string>
     <string name="infosheet_howto_p_sleep">Trykk på klokkesymbolet for å igangsette et kvarters nedtelling. Når denne fullføres vil Transistor stoppe all avspilling. Ytterligere trykk utsetter tidsavbruddet med ytterligere 15 minutter. Noe må spilles av for å kunne aktivere tidsavbrudd.</string>
 
-</resources>
+<string name="descr_timer_icon">Ikon for slumreknapp</string>
+    <string name="descr_player_sheet_button_expand">Knapp for å utvide og minimere radiospilleren</string>
+    <string name="player_sheet_h1_details">Detaljer</string>
+    <string name="player_sheet_h2_current_session">Gjeldende økt</string>
+    </resources>
