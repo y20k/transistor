@@ -27,6 +27,7 @@ import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.content.ContextCompat;
 
 import org.y20k.transistor.R;
+import org.y20k.transistor.core.Station;
 
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
@@ -48,11 +49,11 @@ public final class ImageHelper {
 
 
     /* Constructor when given a Bitmap */
-    public ImageHelper(Bitmap inputImage, Context context) {
+    public ImageHelper(Station station, Context context) {
         mContext = context;
-
-        if (inputImage != null) {
-            mInputImage = inputImage;
+        if (station != null && station.getStationImageFile() != null && station.getStationImageFile().exists()) {
+            // get station image
+            mInputImage = BitmapFactory.decodeFile(station.getStationImageFile().toString());
         } else {
             // set default station image
             mInputImage = getBitmap(R.drawable.ic_notesymbol_36dp);
@@ -95,7 +96,6 @@ public final class ImageHelper {
         // compose images
         return composeImages(background, size);
     }
-
 
 
     /* Creates station image on a circular background */

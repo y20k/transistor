@@ -2,8 +2,6 @@
 <resources>
     <!-- activities -->
     <string name="app_name">Транзистор</string>  <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
-    <string name="title_fragment_player">Тренутно пуштање</string>
-    <string name="title_activity_infosheet">Страница са подацима</string>
 
     <!-- app shortcuts -->
     <string name="shortcut_last_station_short_label">Претходна станица</string>
@@ -26,7 +24,6 @@
     <string name="header_howto">Како се користи</string>
 
     <!-- descriptions -->
-    <string name="descr_arrow_actioncall">Стрелица која показује ка дугмету за додавање станице</string>
     <string name="descr_station_options_button">Прикажи опције за радио станицу</string>
     <string name="descr_station_icon">Икона радио станице</string>
     <string name="descr_station_name">Назив радио станице</string>
@@ -123,56 +120,9 @@
     <string name="notification_channel_playback_name">Контроле пуштања</string>
     <string name="notification_channel_playback_description">Контроле пуштања, лого станице и подаци о тренутно пуштеном.</string>
 
-    <!-- infosheet about -->
-    <string name="infosheet_about_h1_about">О Транзистору</string>
-    <string name="infosheet_about_h2_radio">Радио апликација за Андроид</string>
-    <string name="infosheet_about_h3_version">Издање 2.3 (Kooks)</string>
-    <string name="infosheet_about_p_bare">Транзистор је проста апликација за слушање радија преко интернета. Апликација складишти радио станице као фајлове на спољашњем складишту вашег уређаја. Потражите .m3u фајлове у /Android/data/org.y20k.transistor/files/Collection. Тренутно су подржани MP3, AAC и Ogg/Opus кодирани токови.</string>
-    <string name="infosheet_about_p_note">Важна напомена: ово је апликација типа ДСС (донесите своју станицу). Нема функције уграђене претраге. Станице морате ручно да додајете.</string>
-    <string name="infosheet_about_p_free">Транзистор је слободан софтвер. Објављен је под МИТ лиценцом. Изворни кôд можете да нађете на Гитхабу, где такође можете да пријављујете грешке или помогнете програмирање, ако сте заинтересовани.</string>
-    <string name="infosheet_about_p_github">https://github.com/y20k/transistor</string>
-    <string name="infosheet_about_p_license">https://opensource.org/licenses/MIT</string>
-    <string name="infosheet_about_h2_permissions">Које су дозволе потребне Транзистору?</string>
-    <string name="infosheet_about_h3_shortcut">INSTALL_SHORTCUT и UNINSTALL_SHORTCUT</string>
-    <string name="infosheet_about_p_shortcut">Ово је потребно за инсталирање и уклањање пречице радио станице на почетном екрану.</string>
-    <string name="infosheet_about_h3_internet">INTERNET</string>
-    <string name="infosheet_about_p_internet">Транзистор пушта токове радио станица са интернета.</string>
-    <string name="infosheet_about_h3_external">READ_EXTERNAL_STORAGE</string>
-    <string name="infosheet_about_p_external">Транзистор захтева приступ сликама, фотографијама и документима да би могао да прилагоди иконе радио станица и отвори локално сачуване фајлове листи нумера.</string>
-    <string name="infosheet_about_h3_vibrate">VIBRATE</string>
-    <string name="infosheet_about_p_vibrate">Тап и држање радио станице ће окинути лагану вибрацију.</string>
-    <string name="infosheet_about_h3_wakelock">WAKE_LOCK</string>
-    <string name="infosheet_about_p_wakelock">Током пуштања Транзистор узима тзв. „блокаду буђења“ (wake lock), спречавајући Андроид да заустави пуштање због уштеде енергије.</string>
 
-    <!-- infosheet howto -->
-    <string name="infosheet_howto_h1_howto">Како користити Транзистор</string>
-    <string name="infosheet_howto_h2_add">Како додати нову радио станицу?</string>
-    <string name="infosheet_howto_p_add">Најлакши начин додавања радио станице је да тражите на вебу везе тока и онда одредите Транзистор за руковаоца тим типовима фајлова. Такође можете да тапнете знак (+) на горњој траци и налепите везе тока директно. Напомена: Транзистор нема уграђену функцију претраге.</string>
-    <string name="infosheet_howto_h2_play">Како пустити радио станицу?</string>
-    <string name="infosheet_howto_p_play">Тапните велико Пусти дугме ;).</string>
-    <string name="infosheet_howto_h2_stop">Како зауставити пуштање?</string>
-    <string name="infosheet_howto_p_stop">Тапните велико Стоп дугме, ископчајте ваше слушалице или превуците обавештење са закључаног екрана.</string>
-    <string name="infosheet_howto_h2_sleep">Како покренути тајмер спавања?</string>
-    <string name="infosheet_howto_p_sleep">Тапом на икону сата отпочиње 15-минутно одбројавање након чега Транзистор зауставља пуштање. Други тап додаје 15 минута. За активирање тајмера спавања пуштање мора бити у току.</string>
-    <string name="infosheet_howto_h2_shortcut">Како поставити пречицу станице на почетни екран?</string>
-    <string name="infosheet_howto_p_shortcut">Опцији за постављање пречице за станицу на почетном екрану приступате тапом на три тачкице на приказу станице. Тапом на пречицу отварате Транзистор и пуштање одмах почиње.</string>
-    <string name="infosheet_howto_h2_edit">Како преименовати или обрисати станицу?</string>
-    <string name="infosheet_howto_p_edit">Опцијама за преименовање и брисање можете да приступите из контекстног менија станице. Само тапните на три тачкице. Можете да управљате списком станица такође у прегледачу фајлова (погледајте следеће питање).</string>
-    <string name="infosheet_howto_h2_storage">Где Транзистор смешта станице?</string>
-    <string name="infosheet_howto_p_storage">Транзистор не смешта списак станица у базу података, већ их уписује као .m3u фајлове на спољашњем складишту вашег уређаја. Слободно их отворите било којим уређивачем текста. Фајлови се налазе у /Android/data/org.y20k.transistor/files/Collection.</string>
-    <string name="infosheet_howto_h2_backup">Како да направим резерву и пренесем своје радио станице?</string>
-    <string name="infosheet_howto_p_backup">Транзистор подржава функцију аутоматских резерви у Андроиду 6. Резервна копија радио станица се смешта на ваш Гугл налог и биће враћена по реинсталацији. На уређајима са старијим издањем Андроида морате ручно да сачувате и вратите фасциклу „Collection“.</string>
-    <string name="infosheet_howto_h2_settings">Зашто нема поставки у Транзистору?</string>
-    <string name="infosheet_howto_p_settings">Нема шта да се подешава ;). Транзистор је једноставна апликација. У зависности од ваше тачке гледишта, или је сјајна или безвезе.</string>
 
-    <!-- 
-    +++ IMPORTANT NOTE +++
-    The HTML strings previously found here were replaced by multiple non-HTML strings 
-    (infosheet_about_... & infosheet_howto_...). This should make translations easier - 
-    see GitHub issue #69 (https://github.com/y20k/transistor/issues/69). If you are 
-    looking for the old HTML strings. They still can be found here in their respective 
-    "values" folders:
-    https://github.com/y20k/transistor/tree/1e51dd8666194353427ca074f2092b6c20cfacd6/app/src/main/res 
-    -->
+
+
 
 </resources>

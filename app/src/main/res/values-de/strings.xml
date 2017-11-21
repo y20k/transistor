@@ -2,8 +2,6 @@
 <resources>
     <!-- activities -->
     <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
-    <string name="title_fragment_player">Jetzt hören</string>
-    <string name="title_activity_infosheet">Informationsanzeige</string>
 
     <!-- app shortcuts -->
     <string name="shortcut_last_station_short_label">Letzter Sender</string>
@@ -26,7 +24,6 @@
     <string name="header_howto">Wie Transistor funktioniert</string>
 
     <!-- descriptions -->
-    <string name="descr_arrow_actioncall">Pfeil, der auf das Symbol für Station hinzufügen zeigt</string>
     <string name="descr_station_options_button">Optionen für Radiosender anzeigen</string>
     <string name="descr_station_icon">Logo der Radiosender</string>
     <string name="descr_station_name">Name des Radiosenders</string>
@@ -123,56 +120,9 @@
     <string name="notification_channel_playback_name">Playback-Steuerung</string>
     <string name="notification_channel_playback_description">Playback-Steuerung, Sender Logo und Infos über Programminformationen.</string>
 
-    <!-- infosheet about -->
-    <string name="infosheet_about_h1_about">Über Transistor</string>
-    <string name="infosheet_about_h2_radio">Radio App für Android</string>
-    <string name="infosheet_about_h3_version">Version 2.3 (Kooks)</string>
-    <string name="infosheet_about_p_bare">Transistor ist eine minimalistische App, um über das Internet Radio hören zu können. Die App speichert Sender als Textdateien im externen Gerätespeicher. Die Dateien befinden sich hier: /Android/data/org.y20k.transistor/files/Collection. Transistor spielt Streams in den Formaten MP3, AAC und Ogg/Opus ab.</string>
-    <string name="infosheet_about_p_note">Wichtiger Hinweis: Dies ist eine App vom Typ BYOS (bring your own station). Es gibt keine interne Suchfunktion. Radiosender müssen manuell hinzugefügt werden.</string>
-    <string name="infosheet_about_p_free">Transistor ist Freie Software. Die App ist unter der MIT Open Source Lizenz veröffentlicht. Der Quellcode liegt auf GitHub. GitHub ist auch ein guter Ort, um Bugs zu melden oder um sich an der Weiterentwicklung zu beteiligen.</string>
-    <string name="infosheet_about_p_github">https://github.com/y20k/transistor</string>
-    <string name="infosheet_about_p_license">https://opensource.org/licenses/MIT</string>
-    <string name="infosheet_about_h2_permissions">Welche Berechtigungen braucht Transistor?</string>
-    <string name="infosheet_about_h3_shortcut">INSTALL_SHORTCUT und UNINSTALL_SHORTCUT</string>
-    <string name="infosheet_about_p_shortcut">Diese werden benötigt, damit die Radiostation Verknüpfungen auf dem Android-Startbildschirm ablegen oder wieder entfernen können.</string>
-    <string name="infosheet_about_h3_internet">INTERNET</string>
-    <string name="infosheet_about_p_internet">Transistor streamt Radiosender über das Internet.</string>
-    <string name="infosheet_about_h3_external">READ_EXTERNAL_STORAGE</string>
-    <string name="infosheet_about_p_external">Transistor braucht Zugriff auf Bilder, Fotos und Dokumente, um Radiosender-Icons anpassen zu können und lokal gespeicherte Playlist-Dateien zu öffnen.</string>
-    <string name="infosheet_about_h3_vibrate">VIBRATE</string>
-    <string name="infosheet_about_p_vibrate">Das Antippen und Halten eines Radiosenders aktiviert eine kurze Vibration.</string>
-    <string name="infosheet_about_h3_wakelock">WAKE_LOCK</string>
-    <string name="infosheet_about_p_wakelock">Während der Wiedergabe erhält Transistor eine sogenannte partielle Wake-Lock-Funktion, die verhindert, dass das Android-System die Wiedergabe stoppt, um Strom zu sparen.</string>
 
-    <!-- infosheet howto -->
-    <string name="infosheet_howto_h1_howto">Wie man Transistor benutzt</string>
-    <string name="infosheet_howto_h2_add">Wie füge ich einen neuen Radiosender hinzu?</string>
-    <string name="infosheet_howto_p_add">Die einfachste Variante einen neuen Sender hinzuzufügen ist: Im Web nach Streaming-Adressen zu suchen und diese dann mit Transistor zu öffnen. Man kann zudem auch auf das (+)-Symbol tippen und Streaming-Adressen via Copy und Paste direkt eingeben. Hinweis: Transistor hat keine interne Suchfunktion.</string>
-    <string name="infosheet_howto_h2_play">Wie schalte ich einen Radiosender ein?</string>
-    <string name="infosheet_howto_p_play">Den großen Play-Knopf drücken ;).</string>
-    <string name="infosheet_howto_h2_stop">Wie schalte ich die Wiedergabe wieder aus?</string>
-    <string name="infosheet_howto_p_stop">Den großen Stopp-Knopf drücken oder das Kopfhörerkabel abziehen oder die Benachrichtigung der App ausblenden.</string>
-    <string name="infosheet_howto_h2_sleep">Wie starte ich den Sleeptimer?</string>
-    <string name="infosheet_howto_p_sleep">Über den Knopf mit dem Uhr-Symbol kann ein 15-minütiger Countdown aktiviert werden - wenn der abläuft, stoppt Transistor die Wiedergabe. Wiederholtes Tippen verlängert den Countdown um 15 Minuten. Der Sleeptimer kann nur aktiviert werden, wenn die Wiedergabe eines Senders läuft.</string>
-    <string name="infosheet_howto_h2_shortcut">Wie speichere ich einen Radiosender auf dem Startbildschirm?</string>
-    <string name="infosheet_howto_p_shortcut">Die Option einen Sender auf dem Startbildschirm zu speichern, erreicht man über das Drei-Punkte-Menü des jeweiligen Senders. Mit der Verknüpfung dieses Senders kann Transistor aufgerufen und die Wiedergabe umgehend gestartet werden.</string>
-    <string name="infosheet_howto_h2_edit">Wie kann ich einen Sender löschen oder umbenennen?</string>
-    <string name="infosheet_howto_p_edit">Die Optionen für Löschen und Umbenennen finden sich im Kontextmenü des jeweiligen Senders – dazu einfach auf das Drei-Punkte-Symbol tippen. Es ist zudem möglich, die Liste der Sender direkt mit einem Datei-Browser zu bearbeiten (siehe nächste Frage).</string>
-    <string name="infosheet_howto_h2_storage">Wo speichert Transistor seine Radiosender?</string>
-    <string name="infosheet_howto_p_storage">Transistor speichert seine Sender nicht in einer Datenbank. Stattdessen werden die Sender als M3U-Dateien im externen Gerätespeicher gespeichert. Diese können auch manuell mit Hilfe eines Texteditors bearbeitet werden. Die Dateien befinden sich hier: /Android/data/org.y20k.transistor/files/Collection.</string>
-    <string name="infosheet_howto_h2_backup">Wie kann ich meine Radiosender sichern und wiederherstellen?</string>
-    <string name="infosheet_howto_p_backup">Transistor unterstützt die Auto Backup Funktion von Android 6. Alle Radiostationen werden im Google-Konto gespeichert. Bei einer Neu-Installation der App werden sie automatisch wiederhergestellt. Auf Geräten mit älteren Android-Versionen muss man den Ordner Collection manuell sichern und gegebenenfalls zurück kopieren.</string>
-    <string name="infosheet_howto_h2_settings">Warum hat Transistor keine Einstellungen?</string>
-    <string name="infosheet_howto_p_settings">Es gibt schlicht nichts einzustellen ;). Transistor ist eine sehr einfache App. Abhängig vom eigenen Standpunkt ist entweder großartig oder mies.</string>
 
-    <!-- 
-    +++ IMPORTANT NOTE +++
-    The HTML strings previously found here were replaced by multiple non-HTML strings 
-    (infosheet_about_... & infosheet_howto_...). This should make translations easier - 
-    see GitHub issue #69 (https://github.com/y20k/transistor/issues/69). If you are 
-    looking for the old HTML strings. They still can be found here in their respective 
-    "values" folders:
-    https://github.com/y20k/transistor/tree/1e51dd8666194353427ca074f2092b6c20cfacd6/app/src/main/res 
-    -->
+
+
 
 </resources>

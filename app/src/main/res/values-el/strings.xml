@@ -2,8 +2,6 @@
 <resources>
     <!-- activities -->
     <string name="app_name">Το Τρανζιστοράκι</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
-    <string name="title_fragment_player">Παίζει Τώρα</string>
-    <string name="title_activity_infosheet">Δελτίο Πληροφοριών</string>
 
     <!-- app shortcuts -->
     <string name="shortcut_last_station_short_label">Τελευταίος σταθμός</string>
@@ -26,7 +24,6 @@
     <string name="header_howto">Οδηγίες χρήσης</string>
 
     <!-- descriptions -->
-    <string name="descr_arrow_actioncall">Βέλος που δείχνει προς το σύμβολο προσθήκης σταθμού</string>
     <string name="descr_station_options_button">Προβολή των επιλογών για το ραδιοσταθμό</string>
     <string name="descr_station_icon">Εικονίδιο του ραδιοσταθμού</string>
     <string name="descr_station_name">Το όνομα του ραδιοσταθμού</string>
@@ -123,47 +120,8 @@
     <string name="notification_channel_playback_name">Ρυθμιστικά Αναπαραγωγής</string>
     <string name="notification_channel_playback_description">Οι ρυθμιστές αναπαραγωγής, το λογότυπο του σταθμού, και οι πληροφορίες της τωρινής αναπαραγωγής.</string>
 
-    <!-- infosheet about -->
-    <string name="infosheet_about_h1_about">Σχετικά με το Τρανζιστοράκι</string>
-    <string name="infosheet_about_h2_radio">Ραδιοφωνική εφαρμογή για το Ανντρόιντ</string>
-    <string name="infosheet_about_h3_version">Έκδοση 2.3 (Kooks)</string>
-    <string name="infosheet_about_p_bare">Το Τρανζιστοράκι είναι μία λιτή εφαρμογή σχεδιασμένη για την ακρόαση ραδιοφωνικών σταθμών, μέσω του διαδικτύου. Η εφαρμογή αποθηκεύει τους σταθμούς ως αρχεία στην εξωτερική αποθήκη της συσκευής σου. Μπορείς να ψάξεις για αρχεία .m3u στη διαδρομή /Android/data/org.y20k.transistor/files/Collection . Για την ώρα λειτουργεί με ροές κωδικοποιημένες σε MP3, σε AAC και σε Ogg ή Opus.</string>
-    <string name="infosheet_about_p_note">Σημαντική σημείωση: Αυτή είναι μία εφαρμογή του τύπου BYOS («φέρε το δικό σου σταθμό»). Δεν έχει κάποια λειτουργία ενσωματωμένης επιλογής αναζήτησης. Θα χρειαστεί να ενσωματώσεις ραδιοσταθμούς, χειροκίνητα.</string>
-    <string name="infosheet_about_p_free">Το Τρανζιστοράκι είναι ελεύθερο λογισμικό. Δημοσιεύεται υπό την άδεια ανοιχτού κώδικα MIT. Μπορείς να βρεις τον κώδικα στο ΓκιτΧάμπ (GitHub.) Το ΓκιτΧάμπ είναι επίσης το μέρος, όπου μπορείς να υποβάλεις δυσλειτουργίες, ή ακόμη και να συνεισφέρεις, αν ενδιαφέρεσαι.</string>
-    <string name="infosheet_about_p_github">https://github.com/y20k/transistor</string>
-    <string name="infosheet_about_p_license">https://opensource.org/licenses/MIT</string>
-    <string name="infosheet_about_h2_permissions">Ποια δικαιώματα χρειάζεται το Τρανζιστοράκι;</string>
-    <string name="infosheet_about_h3_shortcut">INSTALL_SHORTCUT και UNINSTALL_SHORTCUT</string>
-    <string name="infosheet_about_p_shortcut">"Αυτά χρειάζονται ώστε να μπορέσει να γίνει εγκατάσταση ή απεγκατάσταση  συντομεύσεων ραδιοφωνικών σταθμών στην Αρχική Οθόνη του Ανντρόιντ."</string>
-    <string name="infosheet_about_h3_internet">INTERNET</string>
-    <string name="infosheet_about_p_internet">Το Τρανζιστοράκι συντονίζεται σε ροές ραδιοσταθμών, μέσω του διαδικτύου.</string>
-    <string name="infosheet_about_h3_external">READ_EXTERNAL_STORAGE</string>
-    <string name="infosheet_about_p_external">Το Τρανζιστοράκι χρειάζεται την πρόσβαση στις εικόνες, τις φωτογραφίες και τα έγγραφα, ώστε να μπορεί να προσαρμόσει τα εικονίδια των ραδιοσταθμών, και να μπορεί να ανοίγει τοπικά αποθηκευμένα αρχεία κατάστιχων αναπαραγωγής.</string>
-    <string name="infosheet_about_h3_vibrate">VIBRATE</string>
-    <string name="infosheet_about_p_vibrate">Ρόπωτας και κράτημα ενός ραδιοσταθμού θα ενεργοποιήσει μία μικροσκοπική δόνηση.</string>
-    <string name="infosheet_about_h3_wakelock">WAKE_LOCK</string>
-    <string name="infosheet_about_p_wakelock">"Κατά την αναπαραγωγή, το Τρανζιστοράκι αποκτά μερικό κλείδωμα του ξυπνήματος. Αυτό εμποδίζει το σύστημα του Ανντρόιντ  να σταματήσει την αναπαραγωγή με σκοπό την εξοικονόμηση ενέργειας."</string>
 
-    <!-- infosheet howto -->
-    <string name="infosheet_howto_h1_howto">Πώς να χρησιμοποιείς το Τρανζιστοράκι</string>
-    <string name="infosheet_howto_h2_add">Πώς να προσθέσω ένα νέο ραδιοσταθμό;</string>
-    <string name="infosheet_howto_p_add">Ο καλύτερος τρόπος για να προσθέσεις ένα σταθμό, είναι να κάνεις αναζήτηση στο διαδίκτυο για δεσμούς ροής, και μετά να επιλέξεις το Τρανζιστοράκι, ως τον προεπιλεγμένο διαχειριστή αυτών των τύπων των αρχείων. Μπορείς, επίσης, να αγγίξεις το σύμβολο (+), στην επάνω γραμμή εργαλείων, και να επικολλήσεις, κατευθείαν, ένα δεσμό ροής. Έχε υπόψιν σου, πως το Τρανζιστοράκι δεν έχει κάποια λειτουργία ενσωματωμένης επιλογής αναζήτησης.</string>
-    <string name="infosheet_howto_h2_play">Πώς να παίξω ένα ραδιοσταθμό;</string>
-    <string name="infosheet_howto_p_play">Άγγιξε το μεγάλο κομβίον Παιξίματος ;).</string>
-    <string name="infosheet_howto_h2_stop">Πώς σταματώ την αναπαραγωγή;</string>
-    <string name="infosheet_howto_p_stop">Άγγιξε το μεγάλο κομβίον Σταματήματος, ή αποσύνδεσε τα ακουστικά σου, ή τράβηξε την ειδοποίηση, για να φύγει από την οθόνη κλειδώματος.</string>
-    <string name="infosheet_howto_h2_sleep">Πώς ξεκινώ το χρονοδιακόπτη νανουρίσματος;</string>
-    <string name="infosheet_howto_p_sleep">Αν αγγίξεις το σύμβολο του Ρολογιού, θα ξεκινήσει μία αντίστροφη μέτρηση 15 λεπτών, μετά το πέρας της οποίας το Τρανζιστοράκι θα σταματήσει την αναπαραγωγή. Ένα επιπλέον άγγιγμα, θα προσθέσει ακόμη 15 λεπτά στο ρολόι. Θα πρέπει να τρέχει η αναπαραγωγή, ώστε να είναι δυνατή η ενεργοποίηση της λειτουργίας του χρονοδιακόπτη νανουρίσματος.</string>
-    <string name="infosheet_howto_h2_shortcut">Πώς να τοποθετήσω μία συντόμευση σταθμού στην Σπιτική οθόνη;</string>
-    <string name="infosheet_howto_p_shortcut">Στην επιλογή της τοποθέτησης μιας συντόμευσης, κάποιου σταθμού, στην Σπιτική οθόνη, μπορείς να έχει πρόσβαση μέσω του μενού του σταθμού με τις τρεις τελείες. Ένα άγγιγμα στη συντόμευση θα τρέξει το Τρανζιστοράκι, και αμέσως θα αρχίσει η αναπαραγωγή.</string>
-    <string name="infosheet_howto_h2_edit">Πώς να μετονομάσεις ή να διαγράψεις ένα σταθμό;</string>
-    <string name="infosheet_howto_p_edit">Καί η επιλογή μετονομασίας, καί η επιλογή διαγραφής είναι προσβάσιμες, από το παραπλήσιο μενού του σταθμού. Απλά άγγιξε το σύμβολο των τριών τελείων. Επίσης, μπορείς να διαχειριστείς το κατάλογο των σταθμών, χρησιμοποιώντας ένα διαχειριστή αρχείων (δες το επόμενο ερώτημα).</string>
-    <string name="infosheet_howto_h2_storage">Πού αποθηκεύει το Τρανζιστοράκι τους σταθμούς του;</string>
-    <string name="infosheet_howto_p_storage">Το Τρανζιστοράκι δεν αποθηκεύει το κατάστιχο, με τους σταθμούς του, σε κάποια βάση δεδομένων. Αντ\' αυτού, αποθηκεύει τους σταθμούς στην εξωτερική αποθήκη της συσκευής σου, ως αρχεία .m3u. Μπορείς, αν θες, να σκαλίσεις αυτά τα αρχεία, χρησιμοποιώντας τον επεξεργαστή κειμένου, που προτιμάς. Τα εν λόγω αρχεία αποθηκεύονται στο /Android/data/org.y20k.transistor/files/Collection .</string>
-    <string name="infosheet_howto_h2_backup">Πώς παίρνω αντίγραφο ασφαλείας, και πώς μεταφέρω τους ραδιοσταθμούς μου;</string>
-    <string name="infosheet_howto_p_backup">"Το Τρανζιστοράκι υποστηρίζει την λειτουργία  Αυτόματης Λήψης Αντίγραφου Ασφαλείας του Ανντρόιντ 6. Οι ραδιοφωνικοί σταθμοί αποθηκεύονται, πάντα, στο Γκουγκλ λογαριασμό σου, και θα γίνει επαναφορά τους σε όποια μελλοντική επανεγκατάσταση. Σε συσκευές, που τρέχουν παλαιότερες εκδόσεις του Ανντρόιντ, θα πρέπει να αποθηκεύσεις και να επαναφέρεις το φάκελο της συλλογής (Collection), χειροκίνητα."</string>
-    <string name="infosheet_howto_h2_settings">Γιατί δεν υπάρχουν κάποιες ρυθμίσεις στο Τρανζιστοράκι;</string>
-    <string name="infosheet_howto_p_settings">"Δεν υπάρχει κάτι προς ρύθμιση ;).  Το Τρανζιστοράκι είναι μία πολύ απλή εφαρμογή. Ανάλογα με το πώς το βλέπει κανείς, το απλό είναι είτε σπουδαίο, είτε πτωχό."</string>
+
 
     <!--
     +++ IMPORTANT NOTE +++

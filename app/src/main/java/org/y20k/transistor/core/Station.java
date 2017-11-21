@@ -108,10 +108,6 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
             setStationImageFile(folder);
         }
 
-        // set playback state
-        mPlayback = PLAYBACK_STATE_STOPPED;
-
-
         // initialize variables that are set during playback to default values
         initializePlaybackMetadata();
     }
@@ -177,9 +173,6 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
         // set Transistor's image file object
         setStationImageFile(folder);
 
-        // set playback state
-        mPlayback = PLAYBACK_STATE_STOPPED;
-
         // initialize variables that are set during playback to default values
         initializePlaybackMetadata();
     }
@@ -217,9 +210,6 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
 
         // set Transistor's image file object
         setStationImageFile(folder);
-
-        // set playback state
-        mPlayback = PLAYBACK_STATE_STOPPED;
 
         // initialize variables that are set during playback to default values
         initializePlaybackMetadata();
@@ -287,11 +277,17 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
     };
 
 
+    /* Resets state of station */
+    public void resetState() {
+        initializePlaybackMetadata();
+    }
+
 
     /* Initializes variables that are set during playback */
     private void initializePlaybackMetadata() {
-        mMetadata = mStationName;
-        mMimeType = null;
+        mPlayback = PLAYBACK_STATE_STOPPED;
+        mMetadata = "";
+        mMimeType = "";
         mChannelCount = -1;
         mSampleRate = -1;
         mBitrate = -1;

@@ -22,15 +22,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Vibrator;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.util.DiffUtil;
@@ -38,16 +34,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import org.y20k.transistor.PlayerFragment;
 import org.y20k.transistor.PlayerService;
 import org.y20k.transistor.R;
 import org.y20k.transistor.core.Station;
+import org.y20k.transistor.helpers.DialogAdd;
 import org.y20k.transistor.helpers.ImageHelper;
 import org.y20k.transistor.helpers.LogHelper;
-import org.y20k.transistor.helpers.StationContextMenu;
 import org.y20k.transistor.helpers.StationListHelper;
+import org.y20k.transistor.helpers.StorageHelper;
 import org.y20k.transistor.helpers.TransistorKeys;
 
 import java.io.File;
@@ -58,11 +56,11 @@ import java.util.List;
 /**
  * CollectionAdapter class
  */
-public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapterViewHolder> implements TransistorKeys {
+public final class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements TransistorKeys {
 
     /* Listener Interface */
     public interface CollectionAdapterListener {
-        void itemSelected (Station station);
+        void itemSelected(Station station, boolean isLongPress);
     }
 
     /* Define log tag */
@@ -75,17 +73,13 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
     private BroadcastReceiver mPlaybackStateChangedReceiver;
     private BroadcastReceiver mMetadataChangedReceiver;
     private CollectionAdapterListener mCollectionAdapterListener;
-    private Uri mStationUriSelected;
-    private boolean mTwoPane;
     private ArrayList<Station> mStationList;
 
 
     /* Constructor */
-    public CollectionAdapter(Activity activity, boolean twoPane, Uri stationUriSelected) {
+    public CollectionAdapter(Activity activity, Uri stationUriSelected) {
         // set initial values
         mActivity = activity;
-        mTwoPane = twoPane;
-        mStationUriSelected = stationUriSelected;
 
         // create empty station list
         mStationList = new ArrayList<Station>();
@@ -98,7 +92,6 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
 
         // observe changes in LiveData
         mCollectionViewModel = ViewModelProviders.of((AppCompatActivity)mActivity).get(CollectionViewModel.class);
-        mCollectionViewModel.getTwoPane().observe((LifecycleOwner)mActivity, createTwoPaneObserver());
         mCollectionViewModel.getStationList().observe((LifecycleOwner) mActivity, createStationListObserver());
 
     }
@@ -111,103 +104,109 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
 
 
     @Override
-    public CollectionAdapterViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
-
-        // get view
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_collection, parent, false);
-
-        // put view into holder and return
-        return new CollectionAdapterViewHolder(v);
+    public RecyclerView.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
+        switch (viewType) {
+            case VIEW_TYPE_ADD_NEW: {
+                // get view, put view into holder and return
+                View v = LayoutInflater.from (parent.getContext ()).inflate (R.layout.list_item_add_new, parent, false);
+                return new AddNewViewHolder(v);
+            }
+            case VIEW_TYPE_STATION: {
+                // get view, put view into holder and return
+                View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_station, parent, false);
+                return new StationViewHolder(v);
+            }
+            default: {
+                return null;
+            }
+        }
     }
 
 
     @Override
-    public void onBindViewHolder(CollectionAdapterViewHolder holder, final int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
-        // get station from position
-        final Station station = mStationList.get(holder.getAdapterPosition());
-
-        if (mTwoPane && station.getStreamUri().equals(mStationUriSelected)) {
-            holder.getListItemLayout().setSelected(true);
-        } else {
-            holder.getListItemLayout().setSelected(false);
-        }
-
-        // set station image
-        holder.getStationImageView().setImageBitmap(createStationImageBitmap(station));
-
-        // set station name
-        holder.getStationNameView().setText(station.getStationName());
-
-        // set playback indicator - in phone view only
-        togglePlaybackIndicator(holder, station);
-
-
-        // attach three dots menu - in phone view only // todo remove
-        if (!mTwoPane) {
-            holder.getStationMenuView().setOnClickListener(new View.OnClickListener() {
+        // CASE ADD NEW
+        if (holder instanceof AddNewViewHolder) {
+            // get referece to AddNewViewHolder and listen for taps
+            AddNewViewHolder addNewViewHolder = (AddNewViewHolder) holder;
+            addNewViewHolder.getLListItemAddNewLayout().setOnClickListener (new View.OnClickListener () {
                 @Override
-                public void onClick(View view) {
-                    StationContextMenu menu = new StationContextMenu();
-                    menu.initialize(mActivity, view, station);
-                    menu.show();
+                public void onClick (View view) {
+                    StorageHelper storageHelper = new StorageHelper(mActivity);
+                    DialogAdd dialog = new DialogAdd(mActivity, storageHelper.getCollectionDirectory());
+                    dialog.show();
                 }
             });
-        } else {
-            holder.getStationMenuView().setVisibility(View.GONE);
         }
 
-        // attach click listener
-        holder.setClickListener(new CollectionAdapterViewHolder.ClickListener() {
-            @Override
-            public void onClick(View view, int pos, boolean isLongClick) {
-                if (isLongClick && !mTwoPane) {
-                    // LONG PRESS in phone mode
-                    mCollectionAdapterListener.itemSelected(mStationList.get(pos));
-                    startPlayback(pos);
-                } else if (!isLongClick && !mTwoPane) {
-                    // SINGLE TAP in phone mode
-                    mCollectionAdapterListener.itemSelected(mStationList.get(pos));
-//                    showPlayerFragment(mStationList.get(pos), false); // todo remove
-                } else {
-                    //  SINGLE TAP in tablet mode
-                    mCollectionAdapterListener.itemSelected(mStationList.get(pos));
-//                    showPlayerFragment(mStationList.get(pos), false); // todo remove
-                }
-                mStationUriSelected = mStationList.get(pos).getStreamUri();
-            }
-        });
+        // CASE STATION
+        else if (holder instanceof StationViewHolder) {
+            // get station from position
+            final Station station = mStationList.get(holder.getAdapterPosition());
 
+            // get reference to StationViewHolder
+            StationViewHolder stationViewHolder = (StationViewHolder) holder;
+
+            // set station image
+            stationViewHolder.getStationImageView().setImageBitmap(createStationImageBitmap(station));
+
+            // set station name
+            stationViewHolder.getStationNameView().setText(station.getStationName());
+
+            // set playback indicator - in phone view only
+            togglePlaybackIndicator(stationViewHolder, station);
+
+            // listen for taps
+            stationViewHolder.getListItemLayout().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // notify and update player sheet
+                    mCollectionAdapterListener.itemSelected(mStationList.get(position), false);
+                }
+            });
+            stationViewHolder.getListItemLayout().setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    // notify and update player sheet - and start playback
+                    mCollectionAdapterListener.itemSelected(mStationList.get(position), true);
+                    return true;
+                }
+            });
+        }
     }
 
 
     @Override
-    public void onBindViewHolder(CollectionAdapterViewHolder holder, int position, List<Object> payloads) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List<Object> payloads) {
 
         if (payloads.isEmpty()) {
             // call regular onBindViewHolder method
             onBindViewHolder(holder, position);
 
-        } else {
+        } else if (holder instanceof StationViewHolder) {
             // get station from position
             final Station station = mStationList.get(holder.getAdapterPosition());
+
+            // get reference to StationViewHolder
+            StationViewHolder stationViewHolder = (StationViewHolder) holder;
 
             for (Object data : payloads) {
                 switch ((int) data) {
                     case HOLDER_UPDATE_NAME:
                         // set station name
                         LogHelper.v(LOG_TAG, "List of station: Partial view update -> station name changed");
-                        holder.getStationNameView().setText(station.getStationName());
+                        stationViewHolder.getStationNameView().setText(station.getStationName());
                         break;
                     case HOLDER_UPDATE_PLAYBACK_STATE:
                         // set playback indicator
                         LogHelper.v(LOG_TAG, "List of station: Partial view update -> playback state changed");
-                        togglePlaybackIndicator(holder, station);
+                        togglePlaybackIndicator(stationViewHolder, station);
                         break;
                     case HOLDER_UPDATE_IMAGE:
                         // set station image
                         LogHelper.v(LOG_TAG, "List of station: Partial view update -> station image changed");
-                        holder.getStationImageView().setImageBitmap(createStationImageBitmap(station));
+                        stationViewHolder.getStationImageView().setImageBitmap(createStationImageBitmap(station));
                         break;
                 }
             }
@@ -216,14 +215,23 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
 
 
     @Override
-    public long getItemId(int position) {
-        return position;
+    public int getItemViewType (int position) {
+        if(isPositionFooter (position)) {
+            return VIEW_TYPE_ADD_NEW;
+        }
+        return VIEW_TYPE_STATION;
     }
 
 
     @Override
     public int getItemCount() {
-        return mStationList.size();
+        return mStationList.size() + 1;
+    }
+
+
+    /* Determines if position is last */
+    private boolean isPositionFooter (int position) {
+        return position == mStationList.size();
     }
 
 
@@ -233,132 +241,23 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
     }
 
 
-    /* Setter for mStationUriSelected */
-    public void setStationUriSelected(Uri stationUriSelected) {
-        mStationUriSelected = stationUriSelected;
-        if (mTwoPane) {
-            int stationID = StationListHelper.findStationId(mStationList, stationUriSelected);
-            if (stationID >= 0 && stationID < mStationList.size()) {
-                notifyItemChanged(stationID);
-            }
-        }
-        saveAppState(mActivity);
-    }
-
-
-    /* Shows player fragment with given station */
-    public void showPlayerFragment(Station station, boolean startPlayback) {
-
-        // prepare arguments for fragment
-        Bundle args = new Bundle();
-        args.putParcelable(ARG_STATION, station);
-        args.putBoolean(ARG_TWO_PANE, mTwoPane);
-        args.putBoolean(ARG_PLAYBACK, startPlayback);
-
-        PlayerFragment playerFragment = new PlayerFragment();
-        playerFragment.setArguments(args);
-
-        // update mStationUriSelected
-        Uri previousStationUriSelected = mStationUriSelected;
-        mStationUriSelected = station.getStreamUri();
-        saveAppState(mActivity);
-
-        if (mTwoPane) {
-            notifyItemChanged(StationListHelper.findStationId(mStationList, previousStationUriSelected));
-            notifyItemChanged(StationListHelper.findStationId(mStationList, mStationUriSelected));
-            ((AppCompatActivity)mActivity).getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.player_container, playerFragment, PLAYER_FRAGMENT_TAG)
-                    .commit();
-        } else {
-            ((AppCompatActivity)mActivity).getSupportFragmentManager().beginTransaction()
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .replace(R.id.main_container, playerFragment, PLAYER_FRAGMENT_TAG)
-                    .addToBackStack(null)
-                    .commit();
-        }
-    }
-
-
-    /* Handles long click on list item */
-    private void startPlayback(int position) {
-
-        // retrieve station
-        Station station = mStationList.get(position);
-
-        if (station.getPlaybackState() != PLAYBACK_STATE_STOPPED) {
-            // stop player service using intent
-            Intent intent = new Intent(mActivity, PlayerService.class);
-            intent.setAction(ACTION_STOP);
-            mActivity.startService(intent);
-            LogHelper.v(LOG_TAG, "Stopping player service.");
-
-            // inform user
-            Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_long_press_playback_stopped), Toast.LENGTH_LONG).show();
-        } else {
-            // start player service using intent
-            Intent intent = new Intent(mActivity, PlayerService.class);
-            intent.setAction(ACTION_PLAY);
-            intent.putExtra(EXTRA_STATION, station);
-            mActivity.startService(intent);
-            LogHelper.v(LOG_TAG, "Starting player service.");
-
-            // inform user
-            Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_long_press_playback_started), Toast.LENGTH_LONG).show();
-        }
-
-        // vibrate 50 milliseconds
-        Vibrator v = (Vibrator) mActivity.getSystemService(Context.VIBRATOR_SERVICE);
-        v.vibrate(50);
-//        v.vibrate(VibrationEffect.createOneShot(50, DEFAULT_AMPLITUDE)); // todo check if there is a support library vibrator
-
-        // save app state
-        saveAppState(mActivity);
-    }
-
-
-    /* Loads app state from preferences */
-    private void loadAppState(Context context) {
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-        String stationUriSelectedString = settings.getString(PREF_STATION_URI_SELECTED, null);
-        if (stationUriSelectedString != null) {
-            mStationUriSelected = Uri.parse(stationUriSelectedString);
-        }
-        LogHelper.v(LOG_TAG, "Loading state.");
-    }
-
-
-    /* Saves app state to SharedPreferences */
-    private void saveAppState(Context context) {
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putString(PREF_STATION_URI_SELECTED, mStationUriSelected.toString());
-        editor.apply();
-        LogHelper.v(LOG_TAG, "Saving state.");
-    }
-
-
     /* Create bitmap version of station image */
     private Bitmap createStationImageBitmap(Station station) {
-        Bitmap stationImageSmall = null;
-        if (station.getStationImageFile().exists()) {
-            stationImageSmall = BitmapFactory.decodeFile(station.getStationImageFile().toString());
-        }
-        ImageHelper imageHelper = new ImageHelper(stationImageSmall, mActivity);
+        ImageHelper imageHelper = new ImageHelper(station, mActivity);
         return imageHelper.createCircularFramedImage(192, R.color.transistor_grey_lighter);
     }
 
 
-
     /* Manipulates state of playback indicator */
-    private void togglePlaybackIndicator(CollectionAdapterViewHolder holder, Station station) {
+    private void togglePlaybackIndicator(StationViewHolder holder, Station station) {
         if (station.getPlaybackState() == PLAYBACK_STATE_LOADING_STATION) {
-            holder.getPlaybackIndicator().setBackgroundResource(R.drawable.ic_playback_indicator_small_loading_24dp);
+            holder.getPlaybackIndicator().setImageResource(R.drawable.ic_playback_indicator_small_loading_24dp);
             holder.getPlaybackIndicator().setVisibility(View.VISIBLE);
         } else if (station.getPlaybackState() == PLAYBACK_STATE_STARTED) {
-            holder.getPlaybackIndicator().setBackgroundResource(R.drawable.ic_playback_indicator_small_started_24dp);
+            holder.getPlaybackIndicator().setImageResource(R.drawable.ic_playback_indicator_small_started_24dp);
             holder.getPlaybackIndicator().setVisibility(View.VISIBLE);
         } else {
-            holder.getPlaybackIndicator().setVisibility(View.GONE);
+            holder.getPlaybackIndicator().setVisibility(View.INVISIBLE);
         }
     }
 
@@ -483,9 +382,7 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
     /* Handles a playback state error that can occur when Transistor crashes during playback */
     private void handlePlaybackStateError(Intent intent) {
         LogHelper.e(LOG_TAG, "Forcing a reload of station list. Did Transistor crash?");
-
         mCollectionViewModel.getStationList().setValue(StationListHelper.loadStationListFromStorage(mActivity));
-
     }
 
 
@@ -503,37 +400,73 @@ public final class CollectionAdapter extends RecyclerView.Adapter<CollectionAdap
                 mStationList = newStationList;
                 // inform this adapter about the changes
                 diffResult.dispatchUpdatesTo(CollectionAdapter.this);
-
-                // FIRST RUN: retrieve mStationUriSelected
-                if (mStationUriSelected == null && newStationList.size() != 0) {
-                    // load state - get mStationUrlSelected
-                    loadAppState(mActivity);
-                    // check if mStationUrlSelected still is null or if station is not in list
-                    if (mStationUriSelected == null || StationListHelper.findStationId(newStationList, mStationUriSelected) == -1) {
-                        // set first station as selected
-                        mStationUriSelected = newStationList.get(0).getStreamUri();
-                    }
-                    // tablet mode
-                    if (mTwoPane && mStationUriSelected != null) {
-                        // show player fragment with station corresponding to mStationUriSelected
-                        showPlayerFragment(StationListHelper.findStation(newStationList, mStationUriSelected), false);
-                    }
-                }
-
            }
         };
     }
 
 
-    /* Creates an observer for state of two pane layout stored as LiveData */
-    private Observer<Boolean> createTwoPaneObserver() {
-        return new Observer<Boolean>() {
-            @Override
-            public void onChanged(@Nullable Boolean twoPane) {
-                LogHelper.v(LOG_TAG, "Observer for two pane layout in CollectionAdapter: layout has changed. State mTwoPane:" + twoPane);
-                mTwoPane = twoPane;
-            }
-        };
+    /**
+     * Inner class: ViewHolder for the Add New Station action
+     */
+    private class AddNewViewHolder extends RecyclerView.ViewHolder {
+        private final View listItemAddNewLayout;
+
+        /* Constructor */
+        AddNewViewHolder(View itemView) {
+            super(itemView);
+            this.listItemAddNewLayout = itemView;
+        }
+
+        /* Getter for parent list item layout */
+        View getLListItemAddNewLayout() {
+            return this.listItemAddNewLayout;
+        }
     }
+    /**
+     * End of inner class
+     */
+
+
+    /**
+     * Inner class: ViewHolder for a station
+     */
+    private class StationViewHolder extends RecyclerView.ViewHolder {
+        private final View listItemLayout;
+        private final ImageView stationImageView;
+        private final TextView stationNameView;
+        private final ImageView playbackIndicator;
+
+        /* Constructor */
+        public StationViewHolder(View itemView) {
+            super(itemView);
+            this.listItemLayout = itemView;
+            this.stationImageView = itemView.findViewById(R.id.list_item_station_icon);
+            this.stationNameView = itemView.findViewById(R.id.list_item_textview);
+            this.playbackIndicator = itemView.findViewById(R.id.list_item_playback_indicator);
+        }
+
+        /* Getter for parent list item layout */
+        public View getListItemLayout() {
+            return this.listItemLayout;
+        }
+
+        /* Getter for station image view */
+        public ImageView getStationImageView() {
+            return this.stationImageView;
+        }
+
+        /* Getter for station name view */
+        public TextView getStationNameView() {
+            return this.stationNameView;
+        }
+
+        /* Getter for station playback indicator */
+        public ImageView getPlaybackIndicator() {
+            return this.playbackIndicator;
+        }
+    }
+    /**
+     * End of inner class
+     */
 
 }

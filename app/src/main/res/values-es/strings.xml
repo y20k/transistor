@@ -2,8 +2,6 @@
 <resources>
     <!-- activities -->
     <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
-    <string name="title_fragment_player">Reproduciendo ahora</string>
-    <string name="title_activity_infosheet">Hoja de información</string>
 
     <!-- app shortcuts -->
     <string name="shortcut_last_station_short_label">Última emisora</string>
@@ -26,7 +24,6 @@
     <string name="header_howto">Cómo utilizar</string>
 
     <!-- descriptions -->
-    <string name="descr_arrow_actioncall">Flecha apuntando hacia el símbolo de añadir emisora</string>
     <string name="descr_station_options_button">Mostrar las opciones para la emisora de radio</string>
     <string name="descr_station_icon">Icono de emisora de radio</string>
     <string name="descr_station_name">Nombre de emisora de radio</string>
@@ -123,57 +120,10 @@
     <string name="notification_channel_playback_name">Controles de reproducción</string>
     <string name="notification_channel_playback_description">Controles de reproducción, logo de la emisora e información de reproducción actual.</string>
 
-    <!-- infosheet about -->
-    <string name="infosheet_about_h1_about">Acerca de Transistor</string>
-    <string name="infosheet_about_h2_radio">Aplicación de radio para Android</string>
-    <string name="infosheet_about_h3_version">Versión 2.3 (Kooks)</string>
-    <string name="infosheet_about_p_bare">Transistor es una aplicación simple para escuchar programas de radio por internet. La aplicación almacena las emisoras como archivos en el almacenamiento externo de tu dispositivo. Busca los archivos m3u en /Android/data/org.y20k.transistor/files/Collection. Actualmente soporta retransmisiones codificadas en MP3, AAC y Ogg/Opus.</string>
-    <string name="infosheet_about_p_note">Nota importante: Esta es una aplicación del tipo BYOS (trae tu propia emisora). No ofrece ningún tipo de opción de búsqueda integrada. Tienes que añadir manualmente las emisoras de radio.</string>
-    <string name="infosheet_about_p_free">Transistor es software libre. Está publicado bajo la licencia de software libre MIT. Puedes encontrar el código en GitHub. GitHub es también un buen sitio para registrar fallos o incluso contribuir, si estás interesado.</string>
-    <string name="infosheet_about_p_github">https://github.com/y20k/transistor</string>
-    <string name="infosheet_about_p_license">https://opensource.org/licenses/MIT</string>
-    <string name="infosheet_about_h2_permissions">¿Qué permisos necesita Transistor?</string>
-    <string name="infosheet_about_h3_shortcut">INSTALL_SHORTCUT y UNINSTALL_SHORTCUT</string>
-    <string name="infosheet_about_p_shortcut">Estos son necesarios para que los accesos directos a emisoras de radio puedan ser instalados y desinstalados de la pantalla principal de Android.</string>
-    <string name="infosheet_about_h3_internet">INTERNET</string>
-    <string name="infosheet_about_p_internet">Transistor retransmisión de emisoras de radio a través de internet.</string>
-    <string name="infosheet_about_h3_external">READ_EXTERNAL_STORAGE</string>
-    <string name="infosheet_about_p_external">Transistor necesita acceder a imágenes, fotos y documentos para poder personalizar los iconos de las emisoras de radio y guardar los archivos localmente de las listas de reproducción.</string>
-    <string name="infosheet_about_h3_vibrate">VIBRATE</string>
-    <string name="infosheet_about_p_vibrate">Manteniendo pulsada una emisora de radio se activará una pequeña vibración.</string>
-    <string name="infosheet_about_h3_wakelock">WAKE_LOCK</string>
-    <string name="infosheet_about_p_wakelock">Durante la reproducción Transistor obtiene llamadas parciales wake lock, previniendo que el sistema Android detenga la reproducción por motivos de ahorro de energía.</string>
 
-    <!-- infosheet howto -->
-    <string name="infosheet_howto_h1_howto">Cómo utilizar Transistor</string>
-    <string name="infosheet_howto_h2_add">¿Cómo añadir una nueva emisora de radio?</string>
-    <string name="infosheet_howto_p_add">La manera más fácil de añadir una nueva emisora de radio es buscar en la web enlaces de retransmisiones de radio y elegir Transistor como la aplicación por defecto para este tipo de archivos. También puedes pulsar el símbolo (+) en la barra superior y pegar el enlace de retransmisión directamente. Tenga en cuenta: Transistor no dispone de ningún tipo de opción de búsqueda integrado.</string>
-    <string name="infosheet_howto_h2_play">¿Cómo reproducir una emisora de radio?</string>
-    <string name="infosheet_howto_p_play">Pulsa el botón grande de reproducción ;).</string>
-    <string name="infosheet_howto_h2_stop">¿Como detener la reproducción?</string>
-    <string name="infosheet_howto_p_stop">Pulsa el botón grande de detener o desenchufa los auriculares o elimina la notificación deslizándola en la pantalla de bloqueo.</string>
-    <string name="infosheet_howto_h2_sleep">¿Cómo iniciar el temporizador de apagado?</string>
-    <string name="infosheet_howto_p_sleep">Al pulsar el símbolo del reloj comienza una cuenta atrás de 15 minutos tras lo cual Transistor detiene la reproducción. Cada pulsación en el reloj añade 15 minutos. La reproducción debe estar en marcha para poder activar el temporizador de apagado.</string>
-    <string name="infosheet_howto_h2_shortcut">¿Cómo colocar un acceso directo a una emisora en la pantalla principal?</string>
-    <string name="infosheet_howto_p_shortcut">La opción para colocar un acceso directo a una emisora en la pantalla principal se puede acceder desde el menú con los tres puntos de la emisora. Pulsando en el acceso directo abrirá Transistor - la reproducción comenzará inmediatamente.</string>
-    <string name="infosheet_howto_h2_edit">¿Cómo renombrar o borrar una emisora?</string>
-    <string name="infosheet_howto_p_edit">Se puede acceder a las opciones de renombrado y borrado desde la lista de emisoras y desde la pantalla de reproduciendo ahora. Solo pulsa sobre el símbolo de los tres puntos. También puedes manejar la lista de emisoras desde el navegador de archivos (mira la siguiente pregunta).</string>
-    <string name="infosheet_howto_h2_storage">¿Donde almacena Transistor sus emisoras?</string>
-    <string name="infosheet_howto_p_storage">Transistor no guarda la lista de emisoras en una base de datos. En lugar de eso almacena las emisoras como archivos .m3u en el almacenamiento externo de tu dispositivo. Eres libre de trastear esos archivos usando el editor de texto de tu dispositivo. Los archivos están almacenados en /Android/data/org.y20k.transistor/files/Collection.</string>
-    <string name="infosheet_howto_h2_backup">¿Cómo puedo hacer una copia de seguridad de mis emisoras de radio?</string>
-    <string name="infosheet_howto_p_backup">Transistor tiene soporte para la función Auto Backup en Android 6. Las emisoras de radio siempre se guardan en la cuenta de Google y se restablecerán al reinstalarlas. En los dispositivos que se ejecutan versiones antiguas de Android, debe guardar y restaurar manualmente la carpeta Colección.</string>
-    <string name="infosheet_howto_h2_settings">¿Por qué no hay configuraciones en Transistor?</string>
-    <string name="infosheet_howto_p_settings">No hay nada que configurar ;). Transistor es una aplicación muy simple. Dependiendo de tu punto de vista simple es o estupendo o defectuoso.</string>
 
-    <!-- 
-    +++ IMPORTANT NOTE +++
-    The HTML strings previously found here were replaced by multiple non-HTML strings 
-    (infosheet_about_... & infosheet_howto_...). This should make translations easier - 
-    see GitHub issue #69 (https://github.com/y20k/transistor/issues/69). If you are 
-    looking for the old HTML strings. They still can be found here in their respective 
-    "values" folders:
-    https://github.com/y20k/transistor/tree/1e51dd8666194353427ca074f2092b6c20cfacd6/app/src/main/res 
-    -->
+
+
 
 <string name="descr_timer_icon">Icono de temporizador de reposo</string>
     <string name="player_sheet_h1_details">Detalles</string>

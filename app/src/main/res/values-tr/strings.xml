@@ -1,7 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
     <!-- activities -->
-    <string name="descr_arrow_actioncall">İstasyon ekle sembolünü gösteren ok</string>
     <string name="descr_playback_indicator">Yürütülen oynatma için gösterge</string>
     <string name="descr_playback_indicator_started">Yürütülen oynatma için gösterge</string>
 
@@ -61,50 +60,8 @@
     <string name="notification_channel_playback_name">Oynatma Kontrolleri</string>
     <string name="notification_channel_playback_description">Oynatma kontrolleri, istasyon logosu ve şimdi yürütülüyor bilgisi.</string>
 
-    <!-- infosheet about -->
-    <string name="infosheet_about_h1_about">Transistor Hakkında</string>
-    <string name="infosheet_about_h2_radio">Android için radyo uygulaması</string>
-    <string name="infosheet_about_h3_version">Sürüm 2.3 (Kooks)</string>
-    <string name="infosheet_about_p_bare">Transistor İnternet üzerinden radyo programlarını dinlemek için yalın bir uygulamadır. Uygulama, istasyonları aygıtınızın harici depolama alanına dosya olarak kaydeder. /Android/data/org.y20k.transistor/files/Collection içindeki .m3u dosyalarına bakın. Şu anda MP3, AAC ve Ogg/Opus ile kodlanmış yayınları anlar.</string>
-    <string name="infosheet_about_p_note">Önemli not: Bu KİG (kendi istasyonunuzu getirin) türünde bir uygulamadır. Herhangi bir tür yerleşik arama özelliği içermez. Radyo istasyonlarını elle eklemeniz gerekecektir.</string>
-    <string name="infosheet_about_p_free">Transistor özgür bir yazılımdır. MIT açık kaynak lisansı altında sunulmuştur. Kodunu GitHub\'da bulabilirsiniz. GitHub hataları bildirmek ve hatta, ilgileniyorsanız, katkıda bulunmak için de iyi bir yerdir.</string>
-    <string name="infosheet_about_p_github">https://github.com/y20k/transistor</string>
-    <string name="infosheet_about_p_license">https://opensource.org/licenses/MIT</string>
-    <string name="infosheet_about_h2_permissions">Transistor hangi İzinlere gerek duyar?</string>
-    <string name="infosheet_about_h3_shortcut">INSTALL_SHORTCUT ve UNINSTALL_SHORTCUT</string>
-    <string name="infosheet_about_p_shortcut">Bunlar radyo istasyonu kısayollarını Android Ana ekranı üstüne kurmak ve üstünden kaldırmak için gereklidir.</string>
-    <string name="infosheet_about_h3_internet">INTERNET</string>
-    <string name="infosheet_about_p_internet">Transistor radyo istasyonlarının yayınını internet üstünden alır.</string>
-    <string name="infosheet_about_h3_external">READ_EXTERNAL_STORAGE</string>
-    <string name="infosheet_about_p_external">Transistor radyo istasyon simgelerini özelleştirmek ve yerel kayıtlı çalma listelerini açmak için resimlere, fotoğraflara ve belgelere erişmeye gerek duyar.</string>
-    <string name="infosheet_about_h3_vibrate">VIBRATE</string>
-    <string name="infosheet_about_p_vibrate">Bir radyo istasyonuna dokunmak ve basılı tutmak hafif bir titreşimi tetikleyecektir.</string>
-    <string name="infosheet_about_h3_wakelock">WAKE_LOCK</string>
-    <string name="infosheet_about_p_wakelock">Oynatma sırasında Transistor telefonunuzun uyanık kalmasını sağlar, Android sisteminin güç tasarrufu için oynatmayı durdurmasını engeller.</string>
 
-    <!-- infosheet howto -->
-    <string name="infosheet_howto_h1_howto">Transistor nasıl kullanılır</string>
-    <string name="infosheet_howto_h2_add">Yeni bir radyo istasyonu nasıl eklenir?</string>
-    <string name="infosheet_howto_p_add">Yeni bir istasyon eklemenin en kolay yolu web\'de yayın bağlantılarını aramak ve bu dosya türleri için Transistor\'ü öntanımlı uygulama olarak seçmektir. Ayrıca üst çubuktaki (+) sembolüne dokunabilir ve yayın bağlantılarını doğrudan yapıştırabilirsiniz. Lütfen dikkat: Transistor herhangi bir tür yerleşik arama özelliği içermez.</string>
-    <string name="infosheet_howto_h2_play">Bir radyo istasyonu nasıl oynatılır?</string>
-    <string name="infosheet_howto_p_play">Büyük Oynat düğmesine dokunun ;).</string>
-    <string name="infosheet_howto_h2_stop">Oynatma nasıl durdurulur?</string>
-    <string name="infosheet_howto_p_stop">Büyük Dur düğmesine dokunun veya kulaklığınızı çıkarın ya da kilit ekranında bildirimini dışa kaydırın.</string>
-    <string name="infosheet_howto_h2_sleep">Uyku zamanlayıcısı nasıl başlatılır?</string>
-    <string name="infosheet_howto_p_sleep">Saat sembolüne dokunmak Transistor\'ün bitiminde oynatmayı durduracağı 15 dakikalık bir geri sayım başlatır. Her ek dokunuş saate 15 dakika ekler. Uyku zamanlayıcısını etkinleştirebilmek için oynatmanın yürütülüyor olması gerekir.</string>
-    <string name="infosheet_howto_h2_shortcut">Nasıl ana ekrana bir istasyon kısayolu ekleyebilirim?</string>
-    <string name="infosheet_howto_p_shortcut">Ana ekrana bir istasyon için kısayol ekleme seçeneğine istasyonun üç nokta menüsünden ulaşılabilir. Bu kısayola dokunmak Transistor\'ü açar - oynatma hemen başlayacaktır.</string>
-    <string name="infosheet_howto_h2_edit">Bir istayonu nasıl yeniden adladırır veya silerim?</string>
-    <string name="infosheet_howto_p_edit">Yeniden adlandırma ve silme seçeneklerinin her ikisine de istasyonun bağlam menüsünden ulaşılabilir. Sadece üç nokta sembolününe dokunun. İstasyonların listesini bir dosya tarayıcısından (sonraki soruya bakın) da yönetebilirsiniz.</string>
-    <string name="infosheet_howto_h2_storage">Transistor istasyonlarını nerede saklar?</string>
-    <string name="infosheet_howto_p_storage">Transistor istasyonların listesini bir veritabanında kaydetmez. Bunun yerine istasyonları aygıtınızın harici depolamasında .m3u dosyaları olarak saklar. Seçtiğiniz bir metin düzenleyici ile bu dosyalarla oynamaktan çekinmeyin. Bu dosyalar /Android/data/org.y20k.transistor/files/Collection içinde saklanır.</string>
-    <string name="infosheet_howto_h2_backup">Radyo istasyonlarımı nasıl yedeklerim ve aktarırım?</string>
-    <string name="infosheet_howto_p_backup">Transistor Android 6\'daki Kendiliğinden Yedekleme özelliğini destekler. Radyo istasyonları her zaman Google hesabınıza yedeklenir ve yeniden kurulduğunda geri yüklenir. Android\'in eski sürümlerini çalıştıran aygıtlarda Collection klasörünü elle kaydetmeniz ve geri yüklemeniz gerekir.</string>
-    <string name="infosheet_howto_h2_settings">Neden Transistor\'de hiçbir ayar yok?</string>
-    <string name="infosheet_howto_p_settings">"Ayarlanacak hiçbir şey yok ;). Transistor çok basit bir uygulamadır. Bakış açınıza bağlı olarak basit ya harikadır ya da  işe yaramazdır."</string>
 
-    <string name="title_fragment_player">Şimdi Oynatılıyor</string>
-    <string name="title_activity_infosheet">Bilgi Formu</string>
 
     <string name="menu_about">Hakkında</string>
     <string name="menu_howto">Nasıl kullanılır</string>

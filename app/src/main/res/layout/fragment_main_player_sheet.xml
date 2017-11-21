@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/player_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/transistor_grey_dark"
+    android:paddingBottom="16dp"
+    android:visibility="visible"
+    android:focusable="true"
+    android:clickable="true"
+    app:behavior_hideable="false"
+    app:behavior_peekHeight="84dp"
+    app:layout_behavior="@string/bottom_sheet_behavior"
+    tools:layout_editor_absoluteY="25dp"
+    tools:showIn="@layout/fragment_main">
+
+    <!--<android.support.constraint.Group-->
+        <!--android:id="@+id/playback_active_views"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="0dp"-->
+        <!--app:constraint_referenced_ids="player_station_metadata,player_sheet_h2_session,player_sheet_p_session,player_sheet_h2_mime,player_sheet_p_mime,player_sheet_h2_samplerate,player_sheet_p_samplerate,player_sheet_h2_channels,player_sheet_p_channels,player_sheet_h2_bitrate,player_sheet_p_bitrate,player_sheet_metadata_views" />-->
+
+    <View
+        android:id="@+id/player_background_red"
+        android:layout_width="0dp"
+        android:layout_height="84dp"
+        android:background="@color/transistor_red_dark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/player_button_expand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:background="@color/transistor_transparent"
+        android:contentDescription="@string/descr_player_sheet_button_expand"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_expand_white_24dp" />
+
+    <ImageView
+        android:id="@+id/player_station_image"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/descr_station_icon"
+        app:layout_constraintStart_toEndOf="@+id/player_button_expand"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_notesymbol_36dp" />
+
+    <be.rijckaert.tim.animatedvector.FloatingMusicActionButton
+        android:id="@+id/player_button_playback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/descr_playback_button"
+        app:backgroundTint="@color/transistor_gold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:mode="playToStop" />
+
+    <TextView
+        android:id="@+id/player_station_name"
+        android:layout_width="0dp"
+        android:layout_height="29dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/descr_station_name_example"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:text="@string/descr_station_name_example"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse"
+        app:layout_constraintBottom_toTopOf="@+id/player_station_metadata"
+        app:layout_constraintEnd_toStartOf="@+id/player_button_playback"
+        app:layout_constraintStart_toEndOf="@+id/player_station_image"
+        app:layout_constraintTop_toTopOf="@+id/player_background_red" />
+
+    <TextView
+        android:id="@+id/player_station_metadata"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:contentDescription="@string/descr_station_metadata_example"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:text="@string/descr_station_metadata_example"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/player_background_red"
+        app:layout_constraintEnd_toStartOf="@+id/player_button_playback"
+        app:layout_constraintStart_toEndOf="@+id/player_station_image"
+        app:layout_constraintTop_toBottomOf="@+id/player_station_name" />
+
+    <TextView
+        android:id="@+id/player_sheet_h1_details"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="96dp"
+        android:text="@string/player_sheet_h1_details"
+        android:textAllCaps="true"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium.Inverse"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/player_button_expand" />
+
+    <ImageButton
+        android:id="@+id/player_sheet_timer_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:background="@color/transistor_transparent"
+        android:contentDescription="@string/descr_timer_icon"
+        android:paddingBottom="8dp"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:paddingTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/player_button_expand"
+        app:srcCompat="@drawable/ic_timer_inverted_24dp" />
+
+    <ImageButton
+        android:id="@+id/player_sheet_station_options_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:background="@color/transistor_transparent"
+        android:contentDescription="@string/descr_station_options_button"
+        android:paddingBottom="8dp"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:paddingTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/player_button_expand"
+        app:srcCompat="@drawable/ic_more_vert_inverted_24dp" />
+
+    <TextView
+        android:id="@+id/player_sheet_h2_session"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/player_sheet_h2_current_session"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/player_sheet_h1_details" />
+
+    <TextView
+        android:id="@+id/player_sheet_p_session"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/player_sheet_p_no_data"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium.Inverse"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/player_sheet_h2_session"
+        app:layout_constraintTop_toBottomOf="@+id/player_sheet_h2_session" />
+
+
+    <TextView
+        android:id="@+id/player_sheet_h2_metadata"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/player_sheet_h2_station_metadata"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/player_sheet_p_session" />
+
+    <TextView
+        android:id="@+id/player_sheet_p_metadata"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/descr_player_sheet_p_station_metadata"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:text="@string/player_sheet_p_no_data"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium.Inverse"
+        app:layout_constraintEnd_toStartOf="@+id/player_sheet_metadata_copy_button"
+        app:layout_constraintStart_toStartOf="@+id/player_sheet_h2_metadata"
+        app:layout_constraintTop_toBottomOf="@+id/player_sheet_h2_metadata" />
+
+    <ImageButton
+        android:id="@+id/player_sheet_metadata_copy_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/transistor_transparent"
+        android:contentDescription="@string/descr_player_sheet_content_copy_icon"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/player_sheet_p_metadata"
+        app:srcCompat="@drawable/ic_content_copy_inverted_24dp" />
+
+    <TextView
+        android:id="@+id/player_sheet_h2_stream_url"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/player_sheet_h2_stream_url"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/player_sheet_p_metadata" />
+
+    <TextView
+        android:id="@+id/player_sheet_p_stream_url"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/descr_player_sheet_p_stream_url"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:text="@string/player_sheet_p_no_data"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium.Inverse"
+        app:layout_constraintEnd_toStartOf="@+id/player_sheet_stream_url_copy_button"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/player_sheet_h2_stream_url"
+        app:layout_constraintTop_toBottomOf="@+id/player_sheet_h2_stream_url" />
+
+    <ImageButton
+        android:id="@+id/player_sheet_stream_url_copy_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/transistor_transparent"
+        android:contentDescription="@string/descr_player_sheet_content_copy_icon"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/player_sheet_p_stream_url"
+        app:srcCompat="@drawable/ic_content_copy_inverted_24dp" />
+
+    <TextView
+        android:id="@+id/player_sheet_h2_mime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/player_sheet_h2_station_mime_type"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/player_sheet_p_stream_url" />
+
+    <TextView
+        android:id="@+id/player_sheet_p_mime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/player_sheet_p_no_data"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium.Inverse"
+        app:layout_constraintStart_toStartOf="@+id/player_sheet_h2_mime"
+        app:layout_constraintTop_toBottomOf="@+id/player_sheet_h2_mime" />
+
+    <TextView
+        android:id="@+id/player_sheet_h2_samplerate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/player_sheet_h2_station_sample_rate"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/player_sheet_p_mime" />
+
+    <TextView
+        android:id="@+id/player_sheet_p_samplerate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text="@string/player_sheet_p_no_data"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium.Inverse"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/player_sheet_h2_samplerate"
+        app:layout_constraintTop_toBottomOf="@+id/player_sheet_h2_samplerate" />
+
+    <TextView
+        android:id="@+id/player_sheet_h2_channels"
+        android:layout_width="wrap_content"
+        android:layout_height="15dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/player_sheet_h2_station_channel_count"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/player_sheet_p_stream_url" />
+
+    <TextView
+        android:id="@+id/player_sheet_p_channels"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/player_sheet_p_no_data"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium.Inverse"
+        app:layout_constraintStart_toStartOf="@+id/player_sheet_h2_channels"
+        app:layout_constraintTop_toBottomOf="@+id/player_sheet_h2_channels" />
+
+    <TextView
+        android:id="@+id/player_sheet_h2_bitrate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/player_sheet_h2_station_bitrate"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small.Inverse"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/player_sheet_p_channels"
+        app:layout_constraintTop_toBottomOf="@+id/player_sheet_p_channels" />
+
+    <TextView
+        android:id="@+id/player_sheet_p_bitrate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/player_sheet_p_no_data"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium.Inverse"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/player_sheet_h2_bitrate"
+        app:layout_constraintTop_toBottomOf="@+id/player_sheet_h2_bitrate" />
+
+</android.support.constraint.ConstraintLayout>

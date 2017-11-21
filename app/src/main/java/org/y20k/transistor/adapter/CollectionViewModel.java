@@ -91,12 +91,6 @@ public class CollectionViewModel extends AndroidViewModel implements TransistorK
     }
 
 
-    /* Getter for TwoPane */
-    public MutableLiveData<Boolean> getTwoPane() {
-        return mTwoPaneLiveData;
-    }
-
-
     /**
      * Inner class: AsyncTask that loads list in background
      */

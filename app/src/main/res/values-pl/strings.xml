@@ -2,8 +2,6 @@
 <resources>
     <!-- activities -->
     <string name="app_name">Transistor</string><!-- please do not translate app_name - transcription into different alphabet types is fine though -->
-    <string name="title_fragment_player">Odtwarzanie</string>
-    <string name="title_activity_infosheet">Informacje</string>
 
     <!-- app shortcuts -->
     <string name="shortcut_last_station_short_label">Last station</string>
@@ -26,7 +24,6 @@
     <string name="header_howto">Instrukcja obsługi</string>
 
     <!-- descriptions -->
-    <string name="descr_arrow_actioncall">Strzałka wskazująca na przycisk dodawania stacji</string>
     <string name="descr_station_options_button">Wyświetl opcje dla stacji</string>
     <string name="descr_station_icon">Ikona stacji</string>
     <string name="descr_station_name">Nazwa stacji</string>
@@ -123,46 +120,7 @@
     <string name="notification_channel_playback_name">Playback Controls</string>
     <string name="notification_channel_playback_description">Playback controls, station logo and now playing info.</string>
 
-    <!-- infosheet about -->
-    <string name="infosheet_about_h1_about">O Transistorze</string>
-    <string name="infosheet_about_h2_radio">Aplikacja radiowa dla Androida</string>
-    <string name="infosheet_about_h3_version">Wersja 2.3 (Kooks)</string>
-    <string name="infosheet_about_p_bare">Transistor jest prostą aplikacją służącą do słuchania programów radiowych przez internet. Aplikacja przechowuje stacje jako pliki na pamięci zewnętrznej Twojego urządzenia. Poszukaj plików typu m3u pod /Android/data/org.y20k.transistor/files/Collection. Aplikacja obecnie obsługuje strumienie zapisane w MP3 i OGG.</string>
-    <string name="infosheet_about_p_note">Ważna informacja: To jest aplikacja typu BYOS (przynieś własną stację - bring your own station). Nie posiada żadnej opcji szukania stacji - musisz je dodać samodzielnie.</string>
-    <string name="infosheet_about_p_free">Transistor jest wolnym oprogramowaniem, opublikowanym na licencji MIT. Kod źródłowy jest na GitHubie. GitHub jest również dobrym miejscem do zgłaszania błędów (lub nawet pomocy w rozwoju aplikacji, jeśli masz ochotę).</string>
-    <string name="infosheet_about_p_github">https://github.com/y20k/transistor</string>
-    <string name="infosheet_about_p_license">https://opensource.org/licenses/MIT</string>
-    <string name="infosheet_about_h2_permissions">Jakich Uprawnień potrzebuje Transistor?</string>
-    <string name="infosheet_about_h3_shortcut">Uprawnienia INSTALL_SHORTCUT oraz UNINSTALL_SHORTCUT</string>
-    <string name="infosheet_about_p_shortcut">To uprawnienie jest potrzebne do (de)instalacji skrótów do stacji na ekranie głównym Androida.</string>
-    <string name="infosheet_about_h3_internet">Uprawnienie INTERNET</string>
-    <string name="infosheet_about_p_internet">Transistor odtwarza stacje radiowe przez internet.</string>
-    <string name="infosheet_about_h3_external">Uprawnienie READ_EXTERNAL_STORAGE</string>
-    <string name="infosheet_about_p_external">Transistor potrzebuje dostępu do obrazków, zdjęć i dokumentów, aby móc dostosować ikony stacji oraz otwierać lokalnie zapisane listy odtwarzania.</string>
-    <string name="infosheet_about_h3_vibrate">Uprawnienie VIBRATE</string>
-    <string name="infosheet_about_p_vibrate">Stuknięcie i przytrzymanie stacji wywoła lekkie wibracje.</string>
-    <string name="infosheet_about_h3_wakelock">Uprawnienie WAKE_LOCK</string>
-    <string name="infosheet_about_p_wakelock">Podczas odtwarzania, Transistor używa częściowego \'wake locka\'. To sprawia, że Android nie będzie zatrzymywał odtwarzania, aby oszczędzić baterię.</string>
 
-    <!-- infosheet howto -->
-    <string name="infosheet_howto_h1_howto">Instrukcja obsługi Transistora</string>
-    <string name="infosheet_howto_h2_add">Jak dodać nową stację?</string>
-    <string name="infosheet_howto_p_add">Najprostszym sposobem dodania nowej stacji jest wyszukiwanie linków strumieni w internecie i wybór Transistora jako domyślnej aplikacji obsługującej te typy plików. Możesz również stuknąć w symbol (+) w górnym pasku i bezpośrednio wkleić linki strumieniu. Uwaga: Transistor nie posiada żadnej opcji wyszukiwania.</string>
-    <string name="infosheet_howto_h2_play">Jak uruchomić odtwarzanie stacji?</string>
-    <string name="infosheet_howto_p_play">Stuknij wielki przycisk Play ;).</string>
-    <string name="infosheet_howto_h2_stop">Jak zatrzymać odtwarzanie?</string>
-    <string name="infosheet_howto_p_stop">Stuknij w wielki przycisk Stop lub odłącz słuchawki albo usuń powiadomienie z zablokowanego ekranu, przesuwając palcem.</string>
-    <string name="infosheet_howto_h2_sleep">Jak uruchomić wyłącznik czasowy?</string>
-    <string name="infosheet_howto_p_sleep">Stuknięcie symbolu Zegara uruchamia odliczanie 15 minut, po których Transistor zatrzyma odtwarzanie. Każde dodatkowe stuknięcie dodaje 15 minut do odliczania. Odtwarzanie musi być w toku, aby można było uruchomić wyłącznik.</string>
-    <string name="infosheet_howto_h2_shortcut">Jak dodać skrót do stacji do ekranu głównego?</string>
-    <string name="infosheet_howto_p_shortcut">Opcja dodania skrótu do stacji do ekranu głównego jest dostępna z poziomu menu stacji (wielokropka). Stuknięcie w skrót otworzy Transistor, który od razu uruchomi odtwarzanie.</string>
-    <string name="infosheet_howto_h2_edit">Jak zmienić nazwę stacji lub ją usunąć?</string>
-    <string name="infosheet_howto_p_edit">Opcje zmiany nazwy i usuwania są dostępne z poziomu menu kontekstowego stacji. Stuknij symbol wielokropka. Możesz zarządzać listami stacji również z poziomu przeglądarki plików (patrz następne pytanie).</string>
-    <string name="infosheet_howto_h2_storage">Gdzie Transistor przechowuje stacje?</string>
-    <string name="infosheet_howto_p_storage">Transistor nie zapisuje swojej listy stacji do bazy danych. Zamiast tego, przechowuje stacje jako pliki m3u w pamięci zewnętrznej Twojego urządzenia. Możesz śmiało eksperymentować z tymi plikami używając dowolnego edytora tekstu. Pliki są zapisywane w folderze /data/org.y20k.transistor/files/Collection.</string>
-    <string name="infosheet_howto_h2_backup">Jak zrobić kopię zapasową lub przenieść moje stacje?</string>
-    <string name="infosheet_howto_p_backup">Transistor obsługuje funkcję Automatycznej Kopii Zapasowej w Androidzie 6. Stacje są zawsze kopiowane na Twoje konto Google i zostanę odtworzone przy reinstalacji. Na urządzeniach ze starszymi wersjami Androida musisz samodzielnie skopiować i odtworzyć folder Collections.</string>
-    <string name="infosheet_howto_h2_settings">Dlaczego Transistor nie ma żadnych ustawień?</string>
-    <string name="infosheet_howto_p_settings">Nie ma nic do ustawiania ;). Transistor jest bardzo prostą aplikacją. W zależności od Twojego punktu widzenia to będzie albo świetne, albo słabe.</string>
+
 
 </resources>

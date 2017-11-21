@@ -61,7 +61,6 @@ public final class MainActivity extends AppCompatActivity implements FragmentMan
 
 
     /* Main class variables */
-    private boolean mTwoPane;
     private StorageHelper mStorageHelper;
     private View mContainer;
     private CollectionViewModel mCollectionViewModel;
@@ -92,25 +91,14 @@ public final class MainActivity extends AppCompatActivity implements FragmentMan
         // set layout
         setContentView(R.layout.activity_main);
 
-        // check if app is running in two pane mode
-        mTwoPane = detectTwoPane();
-        mCollectionViewModel.getTwoPane().setValue(mTwoPane);
-
         // observe changes in LiveData
         mCollectionViewModel.getStationList().observe(this, createStationListObserver());
 
-        Bundle args = new Bundle();
-        args.putBoolean(ARG_TWO_PANE, mTwoPane);
-
         // put collection list in main container
-        ListFragment listFragment = new ListFragment();
-        listFragment.setArguments(args);
+        MainActivityFragment listFragment = new MainActivityFragment();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.main_container, listFragment, LIST_FRAGMENT_TAG)
                 .commit();
-
-        // put player in player container - two pane only
-        // -> handled by CollectionAdapter
 
         // observe changes in backstack initiated by fragment transactions
         getSupportFragmentManager().addOnBackStackChangedListener(this);
@@ -131,72 +119,6 @@ public final class MainActivity extends AppCompatActivity implements FragmentMan
         super.onDestroy();
     }
 
-
-    @Override
-    public void onMultiWindowModeChanged(boolean isInMultiWindowMode) {
-        super.onMultiWindowModeChanged(isInMultiWindowMode);
-        // check if two pane mode can be used
-        mTwoPane = detectTwoPane();
-        // update live data
-        mCollectionViewModel.getTwoPane().setValue(mTwoPane);
-        // save change
-        saveAppState(this);
-    }
-
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        // activity opened for second time set intent to new intent
-        setIntent(intent);
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            // CASE ABOUT
-            case R.id.menu_about:
-                // put title and content into arguments and start fragment transaction
-                String aboutTitle = getString(R.string.header_about);
-                Bundle aboutArgs = new Bundle();
-                aboutArgs.putString(ARG_INFOSHEET_TITLE, aboutTitle);
-                aboutArgs.putInt(ARG_INFOSHEET_CONTENT, INFOSHEET_CONTENT_ABOUT);
-
-                InfosheetFragment aboutInfosheetFragment = new InfosheetFragment();
-                aboutInfosheetFragment.setArguments(aboutArgs);
-
-                getSupportFragmentManager().beginTransaction()
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .replace(R.id.main_container, aboutInfosheetFragment, INFOSHEET_FRAGMENT_TAG)
-                        .addToBackStack(null)
-                        .commit();
-                return true;
-
-            // CASE HOWTO
-            case R.id.menu_howto:
-                // put title and content into arguments and start fragment transaction
-                String howToTitle = getString(R.string.header_howto);
-                Bundle howtoArgs = new Bundle();
-                howtoArgs.putString(ARG_INFOSHEET_TITLE, howToTitle);
-                howtoArgs.putInt(ARG_INFOSHEET_CONTENT, INFOSHEET_CONTENT_HOWTO);
-
-                InfosheetFragment howtoInfosheetFragment = new InfosheetFragment();
-                howtoInfosheetFragment.setArguments(howtoArgs);
-
-                getSupportFragmentManager().beginTransaction()
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .replace(R.id.main_container, howtoInfosheetFragment, INFOSHEET_FRAGMENT_TAG)
-                        .addToBackStack(null)
-                        .commit();
-                return true;
-
-            // CASE DEFAULT
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -225,7 +147,7 @@ public final class MainActivity extends AppCompatActivity implements FragmentMan
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // make sure that ListFragment's onActivityResult() gets called
+        // make sure that MainActivityFragment's onActivityResult() gets called
         super.onActivityResult(requestCode, resultCode, data);
 
         super.onActivityResult(requestCode, resultCode, data);
@@ -264,17 +186,6 @@ public final class MainActivity extends AppCompatActivity implements FragmentMan
         }
     }
 
-
-    /* Show/hide player layout container - two pane layout only */
-    public void togglePlayerContainerVisibility() {
-        if (mTwoPane && mContainer != null && !mStorageHelper.storageHasStationPlaylistFiles()) {
-            // make room for action call - hide player container
-            mContainer.setVisibility(View.GONE);
-        } else if (mTwoPane && mContainer != null) {
-            // show player container
-            mContainer.setVisibility(View.VISIBLE);
-        }
-    }
 
     /* Puts new station in list and updates live data  */
     public int handleStationAdd(Bundle stationDownloadBundle) {
@@ -353,7 +264,7 @@ public final class MainActivity extends AppCompatActivity implements FragmentMan
             // update list
             newStationList.set(stationID, newStation);
 
-            // update liva data station from PlayerService - used in PlayerFragment
+            // update liva data station from PlayerService - used in MainActivityFragment
             mCollectionViewModel.getPlayerServiceStation().setValue(newStation);
 
             // update live data list of stations - used in CollectionAdapter
@@ -394,39 +305,40 @@ public final class MainActivity extends AppCompatActivity implements FragmentMan
 
         // remove station and notify user
         if (success) {
-            // switch back to station list - if player is visible
-            if (!mTwoPane && getSupportFragmentManager().getBackStackEntryCount() > 0) {
-                getSupportFragmentManager().popBackStack();
-            }
-
-            // create copy of main list of stations
-            ArrayList<Station> newStationList = StationListHelper.copyStationList(mStationList);
-            // remove station from new station list
-            newStationList.remove(stationId);
-            // determine ID of next station
-            if (newStationList.size() >= stationId && stationId > 0) {
-                stationId--;
-            } else {
-                stationId = 0;
-            }
-
-            // show next station in list
-            Fragment listFragment = getSupportFragmentManager().findFragmentByTag(LIST_FRAGMENT_TAG);
-            if (mTwoPane && listFragment!= null && listFragment.isAdded() && newStationList.size() > 0) {
-                ((ListFragment)listFragment).updateListAfterDelete(newStationList.get(stationId), stationId);
-            }
-
-            // show next station in player view
-            Fragment playerFragment = getSupportFragmentManager().findFragmentByTag(PLAYER_FRAGMENT_TAG);
-            if (mTwoPane && playerFragment!= null && playerFragment.isAdded() && newStationList.size() > 0) {
-                ((PlayerFragment)playerFragment).updatePlayerAfterDelete(newStationList.get(stationId));
-            }
-
-            // update live data list of stations - used in CollectionAdapter
-            mCollectionViewModel.getStationList().setValue(newStationList);
-
-            // notify user
-            Toast.makeText(this, getString(R.string.toastalert_delete_successful), Toast.LENGTH_LONG).show();
+            // todo rework
+//            // switch back to station list - if player is visible
+//            if (!mTwoPane && getSupportFragmentManager().getBackStackEntryCount() > 0) {
+//                getSupportFragmentManager().popBackStack();
+//            }
+//
+//            // create copy of main list of stations
+//            ArrayList<Station> newStationList = StationListHelper.copyStationList(mStationList);
+//            // remove station from new station list
+//            newStationList.remove(stationId);
+//            // determine ID of next station
+//            if (newStationList.size() >= stationId && stationId > 0) {
+//                stationId--;
+//            } else {
+//                stationId = 0;
+//            }
+//
+//            // show next station in list
+//            Fragment listFragment = getSupportFragmentManager().findFragmentByTag(LIST_FRAGMENT_TAG);
+//            if (mTwoPane && listFragment!= null && listFragment.isAdded() && newStationList.size() > 0) {
+//                ((MainActivityFragment)listFragment).updateListAfterDelete(newStationList.get(stationId), stationId);
+//            }
+//
+//            // show next station in player view
+//            Fragment playerFragment = getSupportFragmentManager().findFragmentByTag(PLAYER_FRAGMENT_TAG);
+//            if (mTwoPane && playerFragment!= null && playerFragment.isAdded() && newStationList.size() > 0) {
+//                ((PlayerFragment)playerFragment).updatePlayerAfterDelete(newStationList.get(stationId));
+//            }
+//
+//            // update live data list of stations - used in CollectionAdapter
+//            mCollectionViewModel.getStationList().setValue(newStationList);
+//
+//            // notify user
+//            Toast.makeText(this, getString(R.string.toastalert_delete_successful), Toast.LENGTH_LONG).show();
         }
 
         // delete station shortcut
@@ -508,31 +420,6 @@ public final class MainActivity extends AppCompatActivity implements FragmentMan
     }
 
 
-    /* Checks if two-pane mode can be used */
-    private boolean detectTwoPane() {
-        mContainer = findViewById(R.id.player_container);
-        // if player_container is present two-pane layout can be used
-        if (mContainer != null) {
-            LogHelper.v(LOG_TAG, "Large screen detected. Choosing two pane layout.");
-            return true;
-        } else {
-            LogHelper.v(LOG_TAG, "Small screen detected. Choosing single pane layout.");
-            return false;
-        }
-
-    }
-
-
-    /* Saves app state to SharedPreferences */
-    private void saveAppState(Context context) {
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putBoolean(PREF_TWO_PANE, mTwoPane);
-        editor.apply();
-        LogHelper.v(LOG_TAG, "Saving state. Two Pane = " + mTwoPane);
-    }
-
-
     /* Creates an observer for collection of stations stored as LiveData */
     private Observer<ArrayList<Station>> createStationListObserver() {
         return new Observer<ArrayList<Station>>() {
@@ -540,9 +427,6 @@ public final class MainActivity extends AppCompatActivity implements FragmentMan
             public void onChanged(@Nullable ArrayList<Station> newStationList) {
                 // update station list
                 mStationList = newStationList;
-
-                // show/hide player layout container
-                togglePlayerContainerVisibility();
             }
         };
     }

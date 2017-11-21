@@ -2,8 +2,6 @@
 <resources>
     <!-- activities -->
     <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
-    <string name="title_fragment_player">Reproduint ara</string>
-    <string name="title_activity_infosheet">Full d\'informació</string>
 
     <!-- app shortcuts -->
     <string name="shortcut_last_station_short_label">Last station</string>
@@ -26,7 +24,6 @@
     <string name="header_howto">Com utilitzar</string>
 
     <!-- descriptions -->
-    <string name="descr_arrow_actioncall">Fletxa que apunta cap al símbol d\'afegir nova emissora</string>
     <string name="descr_station_options_button">Mostra les opcions per l\'estació de ràdio</string>
     <string name="descr_station_icon">Icona de l\'emissora de ràdio</string>
     <string name="descr_station_name">Nom de l\'emissora de ràdio</string>
@@ -122,57 +119,5 @@
     <string name="notification_playing">Reproduint</string>
     <string name="notification_channel_playback_name">Playback Controls</string>
     <string name="notification_channel_playback_description">Playback controls, station logo and now playing info.</string>
-
-    <!-- infosheet about -->
-    <string name="infosheet_about_h1_about">Sobre Transistor</string>
-    <string name="infosheet_about_h2_radio">Aplicació de ràdio per Android</string>
-    <string name="infosheet_about_h3_version">Versió 2.3 (Kooks)</string>
-    <string name="infosheet_about_p_bare">Transistor és una aplicació per escoltar programes de ràdio a través d\'Internet. L\'aplicació emmagatzema les emissores en fitxers dins del emmagatzematge extern. Pots cercar aquests fitxers M3U dins de /Android/data/org.y20k.transistor/files/Collection. En l\'actualitat pot reproduir fitxers en MP3 i OGG.</string>
-    <string name="infosheet_about_p_note">Nota important: Aquesta és una aplicació de tipus \"BYOS\" (sigles de l\'anglés Bring Your Own Station (porta la teva propia emissora)). No ofereix cap tipus d\'opció de cerca incorporat. Vostè haurà d\'afegir manualment les emissores de ràdio.</string>
-    <string name="infosheet_about_p_free">Transistor és programari lliure. Està publicat sota llicència de codi obert MIT. Pots trobar el codi font a GitHub. GitHub és també un bon lloc per presentar errors i fins i tot contribuir, si vosté està interessat.</string>
-    <string name="infosheet_about_p_github">https://github.com/y20k/transistor</string>
-    <string name="infosheet_about_p_license">https://opensource.org/licenses/MIT</string>
-    <string name="infosheet_about_h2_permissions">Quins permisos necessita Transistor?</string>
-    <string name="infosheet_about_h3_shortcut">Permisos per INSTAL·LAR DRECERES i DESINSTAL·LAR DRECERES</string>
-    <string name="infosheet_about_p_shortcut">Es necessita aquest permís per instal·lar i desinstal·lar dreceres d\'emissores de ràdio a la pantalla d\'inici d\'Android.</string>
-    <string name="infosheet_about_h3_internet">Permisos d\'ACCÉS TOTAL A LA XARXA</string>
-    <string name="infosheet_about_p_internet">Transistor utilitza el flux de dades per carregar el contingut de les emissores de ràdio a Internet.</string>
-    <string name="infosheet_about_h3_external">Permisos de LECTURA DEL CONTINGUT A LA TARGETA SD</string>
-    <string name="infosheet_about_p_external">Transistor necessita tenir accés a imatges, fotografies i documents per poder oferir una millor personalització a les icones de les emissores i per a poder obrir arxius locals guardats en una llista de reproducció.</string>
-    <string name="infosheet_about_h3_vibrate">Permisos CONTROL DE VIBRACIÓ</string>
-    <string name="infosheet_about_p_vibrate">Tocar i mantenir polsat una emissora de ràdio, farà que s\'activi una petita vibració.</string>
-    <string name="infosheet_about_h3_wakelock">Permisos per IMPEDIR QUE EL TELÈFON ENTRI EN MODE REPÒS</string>
-    <string name="infosheet_about_p_wakelock">Durant la reproducció, Transistor adquireix un toc d\'atenció de bloqueig parcial. Això impedeix que el sistema Android aturi la reproducció per raons d\'estalvi d\'energia.</string>
-
-    <!-- infosheet howto -->
-    <string name="infosheet_howto_h1_howto">Com utilitzar Transistor</string>
-    <string name="infosheet_howto_h2_add">Com afegir una nova emissora?</string>
-    <string name="infosheet_howto_p_add">La manera més fàcil d\'afegir una nova emissora és la recerca d\'enllaços de transmissió (m3u i pls) i després triar Transistor com el seu gestor per als tipus de fitxer. També pots fer un toc al símbol (+) a la barra superior i enganxar els enllaços m3u directament. Nota: Transistor no disposa cap tipus d\'opció per recerca d\'emissores.</string>
-    <string name="infosheet_howto_h2_play">Com puc reproduir una emissora?</string>
-    <string name="infosheet_howto_p_play">Selecciona l\'emissora i fes un toc al botó gran de reproducció ;).</string>
-    <string name="infosheet_howto_h2_stop">Com puc aturar la reproducció?</string>
-    <string name="infosheet_howto_p_stop">Fes un toc al botó gran d\'aturar o desconnecta els teus auriculars o bé fes llista la notificació.</string>
-    <string name="infosheet_howto_h2_sleep">Com iniciar el temporitzador d\'apagat?</string>
-    <string name="infosheet_howto_p_sleep">En tocar el símbol de rellotge comença un compte enrere de 15 minuts després en acabar el temps es deté la reproducció de Transistor. Un toc addicional afegeix 15 minuts per al rellotge. La reproducció ha d\'estar en execució per poder activar el temporitzador d\'apagat.</string>
-    <string name="infosheet_howto_h2_shortcut">Com afegir una drecera d\'una emissora en la pantalla inicial?</string>
-    <string name="infosheet_howto_p_shortcut">L\'opció de col·locar una drecera d\'una emissora a la pantalla d\'inici es pot accedir des del menú de tres punts de l\'emissora. En tocar a una drecera s\'obrirà Transistor - la reproducció s\'iniciarà immediatament.</string>
-    <string name="infosheet_howto_h2_edit">Com canviar el nom o eliminar l\'emissora?</string>
-    <string name="infosheet_howto_p_edit">Les opcions de canviar nom i suprimir emissora les pots trobar tant des de la llista d\'emissores com des de la pantalla de reproducció. Només has de prémer en el símbol dels tres punts. Pots administrar la llista d\'emissions també des d\'un explorador d\'arxius (veure la següent pregunta).</string>
-    <string name="infosheet_howto_h2_storage">On emmagatzema Transistor les seves emissores?</string>
-    <string name="infosheet_howto_p_storage">Transistor no desa la seva llista d\'emissores en una base de dades. En lloc d\'emmagatzemar les emissores en bases de dades, Transistor desa les emissores en fitxers dins del seu emmagatzematge extern. Senti\'s lliure de jugar amb aquests fitxers utilitzant un editor de text. Els fitxers s\'emmagatzemen a /Android/data/org.y20k.transistor/files/Collection.</string>
-    <string name="infosheet_howto_h2_backup">Com puc fer una còpia de seguretat i transferir les meves emissores?</string>
-    <string name="infosheet_howto_p_backup">Transistor és compatible amb la funció de còpia de seguretat d\'Android 6. Les estacions de ràdio sempre es copien al seu compte de Google i es restaura a la reinstal·lació. En els dispositius amb versions anteriors a Android 6 s\'ha de guardar manualment la carpeta \"Collection\".</string>
-    <string name="infosheet_howto_h2_settings">Per què no hi ha cap paràmetre a Transistor?</string>
-    <string name="infosheet_howto_p_settings">No hi ha res a ajustar :). Transistor és una aplicació molt simple. És una aplicació senzilla i fàcil d\'utilitzar.</string>
-
-    <!-- 
-    +++ IMPORTANT NOTE +++
-    The HTML strings previously found here were replaced by multiple non-HTML strings 
-    (infosheet_about_... & infosheet_howto_...). This should make translations easier - 
-    see GitHub issue #69 (https://github.com/y20k/transistor/issues/69). If you are 
-    looking for the old HTML strings. They still can be found here in their respective 
-    "values" folders:
-    https://github.com/y20k/transistor/tree/1e51dd8666194353427ca074f2092b6c20cfacd6/app/src/main/res 
-    -->
 
 </resources>

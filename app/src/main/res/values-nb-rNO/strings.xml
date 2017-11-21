@@ -2,8 +2,6 @@
 <resources>
     <!-- activities -->
     <string name="app_name">Transistor</string>
-    <string name="title_fragment_player">Spilles nå</string>
-    <string name="title_activity_infosheet">Infoblad</string>
 
     <!-- app shortcuts -->
     <string name="shortcut_last_station_short_label">Siste stasjon</string>
@@ -26,7 +24,6 @@
     <string name="header_howto">Bruksanvisning</string>
 
     <!-- descriptions -->
-    <string name="descr_arrow_actioncall">Pil som peker mot symbolet for tillegg av stasjon</string>
     <string name="descr_station_options_button">Vis valg for radiostasjon</string>
     <string name="descr_station_icon">Miniatrybilde tilhørende radiostasjon</string>
     <string name="descr_station_name">Navn på radiostasjon</string>
@@ -123,46 +120,7 @@
     <string name="notification_channel_playback_name">Avspillingskontroller</string>
     <string name="notification_channel_playback_description">Avspillingskontroller, stasjonslogo og info om hva som spilles.</string>
 
-    <!-- infosheet about -->
-    <string name="infosheet_about_h1_about">Om Transistor</string>
-    <string name="infosheet_about_h2_radio">Radio-program for Android</string>
-    <string name="infosheet_about_h3_version">Versjon 2.3 (Kooks)</string>
-    <string name="infosheet_about_p_bare">Transistor er et helt enkelt program for å lytte til radioprogrammer over Internett. Dette programmet lagrer stasjoner som filer på din enhets eksterne lagringsmedium. Se etter .m3u-filer i /Android/data/org.y20k.transistor/files/Collection. Den forstår foreløpig strømmer kodet i MP3, AAC og OGG/Opus.</string>
-    <string name="infosheet_about_p_note">Viktig melding: Dette er et program der du må lage din egen radiostasjon. Det finnes ingen innebygd søkefunksjon, og du må legge inn radiostasjoner selv.</string>
-    <string name="infosheet_about_p_free">Transistor er fri programvare. Det er lisensiert MIT. Du finner koden på Github, der du også kan melde fra om feil, eller bidra, hvis du er interessert.</string>
-    <string name="infosheet_about_p_github">https://github.com/y20k/transistor</string>
-    <string name="infosheet_about_p_license">https://opensource.org/licenses/MIT</string>
-    <string name="infosheet_about_h2_permissions">Hvilke tilganger trenger Transistor?</string>
-    <string name="infosheet_about_h3_shortcut">INSTALL_SHORTCUT og UNINSTALL_SHORTCUT</string>
-    <string name="infosheet_about_p_shortcut">Disse trengs for å installere og avinstallere radiostasjonssnarveier på Androids hjemmeskjerm.</string>
-    <string name="infosheet_about_h3_internet">INTERNET</string>
-    <string name="infosheet_about_p_internet">Transistor strømmer radiostasjoner over Internett.</string>
-    <string name="infosheet_about_h3_external">READ_EXTERNAL_STORAGE</string>
-    <string name="infosheet_about_p_external">Tilgang trenger tilgang til bilder og dokumenter for å kunne skreddersy radiostasjoners miniatyrbilder, og for å kunne åpne lokalt lagrede spilleliste-filer.</string>
-    <string name="infosheet_about_h3_vibrate">VIBRATE</string>
-    <string name="infosheet_about_p_vibrate">Å trykke og holde en vilkårlig radiostasjon vil utløse en liten vibrasjon.</string>
-    <string name="infosheet_about_h3_wakelock">WAKE_LOCK</string>
-    <string name="infosheet_about_p_wakelock">Ved avspilling innhenter Transistor en såkalt delvis oppvåkningslås, som forhindrer Android-systemet i å stoppe avspilling for å spare strøm.</string>
 
-    <!-- infosheet howto -->
-    <string name="infosheet_howto_h1_howto">Hvordan bruke Transistor</string>
-    <string name="infosheet_howto_h2_add">Hvordan legge til en ny radiostasjon?</string>
-    <string name="infosheet_howto_h2_settings">Hvorfor har ikke Transistor noen innstillinger?</string>
-    <string name="infosheet_howto_p_settings">Det er ikke noe å stille inn ;). Transistor er et veldig simpelt program. Avhengig av ditt ståsted er dette enten flott eller teit.</string>
-    <string name="infosheet_howto_p_add">Den enkleste måten å legge til en ny stasjon er å søke på nettet etter strømningslenker for så å velge Transistor som forvalgt behandler for denne typen filer. Du kan også trykke på (+) symbolet i toppfeltet og lime inn lenker direkte. Merk: Transistor har ingen innebygget søkefunksjon.</string>
-    <string name="infosheet_howto_h2_play">Hvordan spille av en radiostasjon?</string>
-    <string name="infosheet_howto_p_play">Trykk på den store avspillingsknappen ;).</string>
-    <string name="infosheet_howto_h2_stop">Hvordan stanse avspilling?</string>
-    <string name="infosheet_howto_p_stop">Trykk på den store stopp-knappen, koble fra hodetelefonene dine, eller sveip merknaden vekk fra låseskjermen.</string>
-    <string name="infosheet_howto_h2_shortcut">Hvordan plassere en snarvei til en stasjon på hjemmeskjermen?</string>
-    <string name="infosheet_howto_p_shortcut">Valget for å plassere en snarvei til en radiostasjon på hjemmeskjermen kan nås fra stasjonens ellipse-meny. Ett trykk vil åpne Transistor - avspilling igangsettes omgående.</string>
-    <string name="infosheet_howto_h2_edit">Hvordan endre navn på eller slette en stasjon?</string>
-    <string name="infosheet_howto_p_edit">Navneendring og sletting finnes i stasjonens kontekst-meny. Trykk på ellipsen. Du kan bruke en filutforsker til å behandle stasjonslisten (se neste spørsmål).</string>
-    <string name="infosheet_howto_h2_storage">Hvor lagrer Transistor sine stasjoner?</string>
-    <string name="infosheet_howto_p_storage">Transistor lagrer ikke stasjonslisten i en database. Istedenfor lagres stasjoner som m3u-filer på din enhets lagringsmedium. Du kan tukle med disse filene som du vil ved bruk av en tekstbehandler. FIlene lagres i /Android/data/org.y20k.transistor/files/Collection.</string>
-    <string name="infosheet_howto_h2_backup">Hvordan kan jeg sikkerhetskopiere og overføre mine radiostasjoner?</string>
-    <string name="infosheet_howto_p_backup">Transistor har støtte for funksjonen \'automatisk sikkerhetskopiering\' i Android 6. Radiostasjoner blir alltid synkronisert til din Google-konto og blir gjenopprettet ved gjentatte nyinstallasjoner. På enheter som kjører eldre versjoner av Android må du manuelt lagre og gjennopprette mappen med din samling.</string>
-    <string name="infosheet_howto_h2_sleep">Hvordan starte tidsavbrudd?</string>
-    <string name="infosheet_howto_p_sleep">Trykk på klokkesymbolet for å igangsette et kvarters nedtelling. Når denne fullføres vil Transistor stoppe all avspilling. Ytterligere trykk utsetter tidsavbruddet med ytterligere 15 minutter. Noe må spilles av for å kunne aktivere tidsavbrudd.</string>
+
 
 </resources>

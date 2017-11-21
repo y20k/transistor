@@ -106,15 +106,7 @@ public class ShortcutHelper implements TransistorKeys {
 
     /* Create shortcut icon */
     private Bitmap createShortcutIcon(Station station) {
-        Bitmap stationImage;
-        if (station.getStationImageFile().exists()) {
-            // use station image
-            stationImage = BitmapFactory.decodeFile(station.getStationImageFile().toString());
-        } else {
-            stationImage = null;
-        }
-
-        ImageHelper imageHelper = new ImageHelper(stationImage, mContext);
+        ImageHelper imageHelper = new ImageHelper(station, mContext);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // only return the station image
             return imageHelper.getInputImage();

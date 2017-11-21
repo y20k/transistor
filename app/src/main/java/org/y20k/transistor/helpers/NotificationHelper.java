@@ -169,22 +169,9 @@ public final class NotificationHelper implements TransistorKeys {
         if (station == null) {
             return null;
         }
-
-        // create station image icon
-        ImageHelper imageHelper;
-        Bitmap stationImage;
-        Bitmap stationIcon;
-
-        if (station.getStationImageFile().exists()) {
-            // use station image
-            stationImage = BitmapFactory.decodeFile(station.getStationImageFile().toString());
-        } else {
-            stationImage = null;
-        }
-        imageHelper = new ImageHelper(stationImage, context);
-        stationIcon = imageHelper.createStationIcon(512);
-
-        return stationIcon;
+        // create and return station image icon
+        ImageHelper imageHelper = new ImageHelper(station, context);
+        return imageHelper.createStationIcon(512);
     }
 
 
