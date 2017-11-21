@@ -14,7 +14,7 @@
     <string name="menu_about">Om</string>
     <string name="menu_howto">Bruksanvisning</string>
     <string name="menu_refresh">Oppdater liste</string>
-    <string name="menu_timer">Tidsavbrudd</string>
+    <string name="menu_timer">tidsavbruddsindikator</string>
     <string name="menu_icon">Endre miniatyrbilde</string>
     <string name="menu_add">Legg til</string>
     <string name="menu_delete">Slett</string>
@@ -165,7 +165,7 @@
     <string name="infosheet_howto_h2_sleep">Hvordan starte tidsavbrudd?</string>
     <string name="infosheet_howto_p_sleep">Trykk på klokkesymbolet for å igangsette et kvarters nedtelling. Når denne fullføres vil Transistor stoppe all avspilling. Ytterligere trykk utsetter tidsavbruddet med ytterligere 15 minutter. Noe må spilles av for å kunne aktivere tidsavbrudd.</string>
 
-<string name="descr_timer_icon">Ikon for slumreknapp</string>
+<string name="descr_timer_icon">Ikon for tidsavbruddsindikator</string>
     <string name="descr_player_sheet_button_expand">Knapp for å utvide og minimere radiospilleren</string>
     <string name="player_sheet_h1_details">Detaljer</string>
     <string name="player_sheet_h2_current_session">Gjeldende økt</string>
