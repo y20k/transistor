@@ -34,7 +34,9 @@
     <string name="descr_playback_button">Дугме за пуштање</string>
     <string name="descr_playback_indicator">Показивач тренутног пуштања</string>
     <string name="descr_playback_indicator_started">Показивач тренутног пуштања</string>
+    <string name="descr_timer_icon">Sleep timer icon</string>
     <string name="descr_timer_indicator_started">Индикатор покренутог тајмера</string>
+    <string name="descr_player_sheet_button_expand">Button to expand and minimize the radio player</string>
     <string name="descr_player_sheet_information_icon">Information Icon</string>
     <string name="descr_player_sheet_content_copy_icon">Икона копирања садржаја</string>
     <string name="descr_player_sheet_p_station_name">Назив изабране радио станице</string>
@@ -42,6 +44,8 @@
     <string name="descr_player_sheet_p_stream_url">Веза тока изабране радио станице</string>
 
     <!-- player -->
+    <string name="player_sheet_h1_details">Details</string>
+    <string name="player_sheet_h2_current_session">Current session</string>
     <string name="player_sheet_h2_station_name">Станица</string>
     <string name="player_sheet_h2_station_metadata">Тренутно пуштање</string>
     <string name="player_sheet_h2_stream_url">Веза тока</string>
@@ -120,9 +124,8 @@
     <string name="notification_channel_playback_name">Контроле пуштања</string>
     <string name="notification_channel_playback_description">Контроле пуштања, лого станице и подаци о тренутно пуштеном.</string>
 
-
-
-
-
+    <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
+    The last version containing those strings is v2.3.7
+    https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
 
 </resources>

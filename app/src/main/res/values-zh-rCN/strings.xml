@@ -35,7 +35,9 @@
     <string name="descr_playback_button">大播放按钮</string>
     <string name="descr_playback_indicator">播放中指示器</string>
     <string name="descr_playback_indicator_started">播放中指示器</string>
+    <string name="descr_timer_icon">Sleep timer icon</string>
     <string name="descr_timer_indicator_started">睡眠定时器指示器</string>
+    <string name="descr_player_sheet_button_expand">Button to expand and minimize the radio player</string>
     <string name="descr_player_sheet_information_icon">Information Icon</string>
     <string name="descr_player_sheet_content_copy_icon">Content copy icon</string>
     <string name="descr_player_sheet_p_station_name">Name of selected radio station</string>
@@ -43,6 +45,8 @@
     <string name="descr_player_sheet_p_stream_url">Stream URL of selected radio station</string>
 
     <!-- player -->
+    <string name="player_sheet_h1_details">Details</string>
+    <string name="player_sheet_h2_current_session">Current session</string>
     <string name="player_sheet_h2_station_name">Station</string>
     <string name="player_sheet_h2_station_metadata">Currently Playing</string>
     <string name="player_sheet_h2_stream_url">Stream URL</string>
@@ -121,9 +125,8 @@
     <string name="notification_channel_playback_name">Playback Controls</string>
     <string name="notification_channel_playback_description">Playback controls, station logo and now playing info.</string>
 
-
-
-
-
+    <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
+    The last version containing those strings is v2.3.7
+    https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
 
 </resources>

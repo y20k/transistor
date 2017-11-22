@@ -34,7 +34,9 @@
     <string name="descr_playback_button">Gylden avspillingsknapp</string>
     <string name="descr_playback_indicator">Indikator for avspillingsfremdrift</string>
     <string name="descr_playback_indicator_started">Indikator for avspillingsaktivitet</string>
+    <string name="descr_timer_icon">Ikon for tidsavbruddsindikator</string>
     <string name="descr_timer_indicator_started">Aktiv tidsavbruddsindikator</string>
+    <string name="descr_player_sheet_button_expand">Knapp for å utvide og minimere radiospilleren</string>
     <string name="descr_player_sheet_information_icon">Information Icon</string>
     <string name="descr_player_sheet_content_copy_icon">Ikon for innholdskopiering</string>
     <string name="descr_player_sheet_p_station_name">Navn på valgt radiostasjon</string>
@@ -42,6 +44,8 @@
     <string name="descr_player_sheet_p_stream_url">Strømningslenke for valgt radiostasjon</string>
 
     <!-- player -->
+    <string name="player_sheet_h1_details">Detaljer</string>
+    <string name="player_sheet_h2_current_session">Gjeldende økt</string>
     <string name="player_sheet_h2_station_name">Stasjon</string>
     <string name="player_sheet_h2_station_metadata">Spilles nå</string>
     <string name="player_sheet_h2_stream_url">Strømningslenke</string>
@@ -120,11 +124,8 @@
     <string name="notification_channel_playback_name">Avspillingskontroller</string>
     <string name="notification_channel_playback_description">Avspillingskontroller, stasjonslogo og info om hva som spilles.</string>
 
+    <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
+    The last version containing those strings is v2.3.7
+    https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
 
-
-
-<string name="descr_timer_icon">Ikon for tidsavbruddsindikator</string>
-    <string name="descr_player_sheet_button_expand">Knapp for å utvide og minimere radiospilleren</string>
-    <string name="player_sheet_h1_details">Detaljer</string>
-    <string name="player_sheet_h2_current_session">Gjeldende økt</string>
-    </resources>
+</resources>

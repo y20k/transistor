@@ -1,19 +1,83 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
     <!-- activities -->
-    <string name="descr_playback_indicator">Yürütülen oynatma için gösterge</string>
-    <string name="descr_playback_indicator_started">Yürütülen oynatma için gösterge</string>
+    <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
 
     <!-- app shortcuts -->
     <string name="shortcut_last_station_short_label">Son istasyon</string>
     <string name="shortcut_last_station_long_label">En son istasyonu oynat</string>
     <string name="shortcut_last_station_disabled_message">En son istasyonun oynatılması için kısayol devre dışı.</string>
 
+    <!-- menu entries -->
+    <string name="menu_about">Hakkında</string>
+    <string name="menu_howto">Nasıl kullanılır</string>
+    <string name="menu_refresh">Listeyi yenile</string>
+    <string name="menu_timer">Uyku zamanlayıcı</string>
+    <string name="menu_icon">Simgeyi değiştir</string>
+    <string name="menu_add">Ekle</string>
+    <string name="menu_delete">Sil</string>
+    <string name="menu_rename">Yeniden adlandır</string>
+    <string name="menu_shortcut">Ana ekrana ekle</string>
+
+    <!-- headers -->
+    <string name="header_about">Hakkında</string>
+    <string name="header_howto">Nasıl kullanılır</string>
+
+    <!-- descriptions -->
+    <string name="descr_station_options_button">Radyo istasyonu için seçenekleri göster</string>
+    <string name="descr_station_icon">Radyo istasyonunun simgesi</string>
+    <string name="descr_station_name">Radyo istasyonunun ismi</string>
+    <string name="descr_station_metadata">Şu anda oynatılan radyo istasyonunun meta verisi (Sanatçı / Başlık)</string>
+    <string name="descr_station_name_example">Örnek FM</string>
+    <string name="descr_station_metadata_example">Sanatçı - Başlık</string>
+    <string name="descr_station_stream_loading">Yayın yükleniyor…</string>
+    <string name="descr_playback_button">Büyük oynatma düğmesi</string>
+    <string name="descr_playback_indicator">Yürütülen oynatma için gösterge</string>
+    <string name="descr_playback_indicator_started">Yürütülen oynatma için gösterge</string>
+    <string name="descr_timer_icon">Sleep timer icon</string>
+    <string name="descr_timer_indicator_started">Yürütülen uyku zamanlayıcı için gösterge</string>
+    <string name="descr_player_sheet_button_expand">Button to expand and minimize the radio player</string>
+    <string name="descr_player_sheet_information_icon">Bilgi Simgesi</string>
+    <string name="descr_player_sheet_content_copy_icon">İçerik kopyalama simgesi</string>
+    <string name="descr_player_sheet_p_station_name">Seçili radyo istasyonunun adı</string>
+    <string name="descr_player_sheet_p_station_metadata">Seçili radyo istasyonundan meta veri</string>
+    <string name="descr_player_sheet_p_stream_url">Seçili radyo istasyonunun yayın bağlantısı</string>
+
+    <!-- player -->
+    <string name="player_sheet_h1_details">Details</string>
+    <string name="player_sheet_h2_current_session">Current session</string>
+    <string name="player_sheet_h2_station_name">İstasyon</string>
+    <string name="player_sheet_h2_station_metadata">Şimdi Oynatılıyor</string>
+    <string name="player_sheet_h2_stream_url">Yayın bağlantısı</string>
+    <string name="player_sheet_p_station_metadata">kullanılabilir meta veri yok</string>
+    <string name="player_sheet_h2_station_mime_type">MIME türü</string>
+    <string name="player_sheet_h2_station_channel_count">Kanal sayısı</string>
+    <string name="player_sheet_h2_station_sample_rate">Örnekleme hızı</string>
+    <string name="player_sheet_h2_station_bitrate">Bit hızı</string>
+
+    <!-- dialogs -->
+    <string name="dialog_generic_button_okay">Tamam</string>
+    <string name="dialog_generic_button_cancel">İptal</string>
+    <string name="dialog_add_station_button">Ekle</string>
+    <string name="dialog_add_station_input_hint">Yayın bağlantısını yapıştırın</string>
+    <string name="dialog_add_station_message">Yeni istasyon ekle</string>
+    <string name="dialog_add_station_howto">MP3, AAC ve Ogg/Opus ile kodlanmış ham ses yayınlarını ekleyebileceğiniz gibi PLS veya M3U dosyalarında tutulan yayınları da ekleyebilirsiniz. Alternatif olarak web tarayıcınızdan yayın bağlantılarına (.pls veya .m3u) dokunarak yeni istasyonlar ekleyebilirsiniz.</string>
+    <string name="dialog_delete_station_message">İstasyonu sil</string>
+    <string name="dialog_button_delete">Sil</string>
+    <string name="dialog_rename_station_input_hint">Yeni isim girin</string>
+    <string name="dialog_rename_station_message">İstasyonunu yeniden adlandır</string>
+    <string name="dialog_button_rename">Yeniden adlandır</string>
+
     <!-- error dialogs -->
+    <string name="dialog_error_title_default">Hata</string>
+    <string name="dialog_error_message_default">Bir hata oluştu</string>
+    <string name="dialog_error_details_button_default">Detayları göster</string>
     <string name="dialog_error_details_default">Kullanılabilir ayrıntı yok</string>
     <string name="dialog_error_details_write">Bu istasyon muhtemelen zaten var ya da yoksa, harici depolamanızı doğrulamak isteyebilirsiniz.</string>
     <string name="dialog_error_title_fetch_download">İndirme Sorunu</string>
+    <string name="dialog_error_title_fetch_read">Okuma Sorunu</string>
     <string name="dialog_error_title_fetch_write">Yazma Sorunu</string>
+    <string name="dialog_error_message_fetch_general_external_storage">External storage:</string>
     <string name="dialog_error_message_fetch_general_hint_m3u">İpucu: Transistor sadece MP3, AAC ve Ogg/Opus ile kodlanmış yayınları veya .m3u veya .pls ile biten bağlantıları işleyebilir.</string>
     <string name="dialog_error_message_fetch_general_playlist_type">Dosyanın MIME türü:</string>
     <string name="dialog_error_message_fetch_general_stream_type">Yayının MIME türü:</string>
@@ -60,64 +124,8 @@
     <string name="notification_channel_playback_name">Oynatma Kontrolleri</string>
     <string name="notification_channel_playback_description">Oynatma kontrolleri, istasyon logosu ve şimdi yürütülüyor bilgisi.</string>
 
-
-
-
-    <string name="menu_about">Hakkında</string>
-    <string name="menu_howto">Nasıl kullanılır</string>
-    <string name="menu_refresh">Listeyi yenile</string>
-    <string name="menu_timer">Uyku zamanlayıcı</string>
-    <string name="menu_icon">Simgeyi değiştir</string>
-    <string name="menu_add">Ekle</string>
-    <string name="menu_delete">Sil</string>
-    <string name="menu_rename">Yeniden adlandır</string>
-    <string name="menu_shortcut">Ana ekrana ekle</string>
-
-    <string name="header_about">Hakkında</string>
-    <string name="header_howto">Nasıl kullanılır</string>
-
-    <string name="descr_station_options_button">Radyo istasyonu için seçenekleri göster</string>
-    <string name="descr_station_icon">Radyo istasyonunun simgesi</string>
-    <string name="descr_station_name">Radyo istasyonunun ismi</string>
-    <string name="descr_station_metadata">Şu anda oynatılan radyo istasyonunun meta verisi (Sanatçı / Başlık)</string>
-    <string name="descr_station_name_example">Örnek FM</string>
-    <string name="descr_station_metadata_example">Sanatçı - Başlık</string>
-    <string name="app_name">Transistor</string>
-    <string name="descr_station_stream_loading">Yayın yükleniyor…</string>
-    <string name="descr_playback_button">Büyük oynatma düğmesi</string>
-    <string name="descr_timer_indicator_started">Yürütülen uyku zamanlayıcı için gösterge</string>
-    <string name="descr_player_sheet_information_icon">Bilgi Simgesi</string>
-    <string name="descr_player_sheet_content_copy_icon">İçerik kopyalama simgesi</string>
-    <string name="descr_player_sheet_p_station_name">Seçili radyo istasyonunun adı</string>
-    <string name="descr_player_sheet_p_station_metadata">Seçili radyo istasyonundan meta veri</string>
-    <string name="descr_player_sheet_p_stream_url">Seçili radyo istasyonunun yayın bağlantısı</string>
-
-    <string name="player_sheet_h2_station_name">İstasyon</string>
-    <string name="player_sheet_h2_station_metadata">Şimdi Oynatılıyor</string>
-    <string name="player_sheet_h2_stream_url">Yayın bağlantısı</string>
-    <string name="player_sheet_p_station_metadata">kullanılabilir meta veri yok</string>
-    <string name="player_sheet_h2_station_mime_type">MIME türü</string>
-    <string name="player_sheet_h2_station_channel_count">Kanal sayısı</string>
-    <string name="player_sheet_h2_station_sample_rate">Örnekleme hızı</string>
-    <string name="player_sheet_h2_station_bitrate">Bit hızı</string>
-
-    <string name="dialog_generic_button_okay">Tamam</string>
-    <string name="dialog_generic_button_cancel">İptal</string>
-    <string name="dialog_add_station_button">Ekle</string>
-    <string name="dialog_add_station_input_hint">Yayın bağlantısını yapıştırın</string>
-    <string name="dialog_add_station_message">Yeni istasyon ekle</string>
-    <string name="dialog_add_station_howto">MP3, AAC ve Ogg/Opus ile kodlanmış ham ses yayınlarını ekleyebileceğiniz gibi PLS veya M3U dosyalarında tutulan yayınları da ekleyebilirsiniz. Alternatif olarak web tarayıcınızdan yayın bağlantılarına (.pls veya .m3u) dokunarak yeni istasyonlar ekleyebilirsiniz.</string>
-    <string name="dialog_delete_station_message">İstasyonu sil</string>
-    <string name="dialog_button_delete">Sil</string>
-    <string name="dialog_rename_station_input_hint">Yeni isim girin</string>
-    <string name="dialog_rename_station_message">İstasyonunu yeniden adlandır</string>
-    <string name="dialog_button_rename">Yeniden adlandır</string>
-
-    <string name="dialog_error_title_default">Hata</string>
-    <string name="dialog_error_message_default">Bir hata oluştu</string>
-    <string name="dialog_error_details_button_default">Detayları göster</string>
-    <string name="dialog_error_title_fetch_read">Okuma Sorunu</string>
-    <string name="dialog_error_message_fetch_general_external_storage">Harici depolama:</string>
-
+    <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
+    The last version containing those strings is v2.3.7
+    https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
 
 </resources>

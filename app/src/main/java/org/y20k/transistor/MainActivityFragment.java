@@ -258,8 +258,16 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
 
     /* Updates list state after delete */ // todo check if necessary
     public void updateListAfterDelete(Station newStation, int stationId) {
-        // todo implement
+        // mCollectionAdapter.setStationUriSelected(newStation.getStreamUri());
     }
+
+
+    /* Updates the player UI after delete */
+    public void updatePlayerAfterDelete(Station station) {
+        mCurrentStation = station;
+        setupPlayer(station);
+    }
+
 
 
     /* Refreshes list of stations - used by pull to refesh */

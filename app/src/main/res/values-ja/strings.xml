@@ -34,7 +34,9 @@
     <string name="descr_playback_button">ゴールドの再生ボタン</string>
     <string name="descr_playback_indicator">再生中のインジケーター</string>
     <string name="descr_playback_indicator_started">再生中のインジケーター</string>
+    <string name="descr_timer_icon">スリープタイマー アイコン</string>
     <string name="descr_timer_indicator_started">スリープタイマー実行中のインジケーター</string>
+    <string name="descr_player_sheet_button_expand">Button to expand and minimize the radio player</string>
     <string name="descr_player_sheet_information_icon">Information Icon</string>
     <string name="descr_player_sheet_content_copy_icon">コンテンツ コピー アイコン</string>
     <string name="descr_player_sheet_p_station_name">選択したラジオ局の名前</string>
@@ -42,6 +44,8 @@
     <string name="descr_player_sheet_p_stream_url">選択したラジオ局のストリームのリンク</string>
 
     <!-- player -->
+    <string name="player_sheet_h1_details">詳細</string>
+    <string name="player_sheet_h2_current_session">現在のセッション</string>
     <string name="player_sheet_h2_station_name">放送局</string>
     <string name="player_sheet_h2_station_metadata">現在再生中</string>
     <string name="player_sheet_h2_stream_url">ストリームのリンク</string>
@@ -120,12 +124,8 @@
     <string name="notification_channel_playback_name">再生コントロール</string>
     <string name="notification_channel_playback_description">再生コントロール、局のロゴ、今再生中の情報。</string>
 
+    <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
+    The last version containing those strings is v2.3.7
+    https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
 
-
-
-
-
-<string name="descr_timer_icon">スリープタイマー アイコン</string>
-    <string name="player_sheet_h1_details">詳細</string>
-    <string name="player_sheet_h2_current_session">現在のセッション</string>
-    </resources>
+</resources>

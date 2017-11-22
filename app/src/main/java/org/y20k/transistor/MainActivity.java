@@ -16,21 +16,16 @@ package org.y20k.transistor;
 import android.arch.lifecycle.LifecycleRegistry;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -97,7 +92,7 @@ public final class MainActivity extends AppCompatActivity implements FragmentMan
         // put collection list in main container
         MainActivityFragment listFragment = new MainActivityFragment();
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.main_container, listFragment, LIST_FRAGMENT_TAG)
+                .replace(R.id.main_container, listFragment, MAIN_ACTIVITY_FRAGMENT_TAG)
                 .commit();
 
         // observe changes in backstack initiated by fragment transactions
@@ -135,7 +130,7 @@ public final class MainActivity extends AppCompatActivity implements FragmentMan
             }
             case PERMISSION_REQUEST_STATION_FETCHER_READ_EXTERNAL_STORAGE: {
                 // let list fragment handle the request
-                Fragment listFragment = getSupportFragmentManager().findFragmentByTag(LIST_FRAGMENT_TAG);
+                Fragment listFragment = getSupportFragmentManager().findFragmentByTag(MAIN_ACTIVITY_FRAGMENT_TAG);
                 if (listFragment != null) {
                     listFragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
                 }
@@ -305,40 +300,30 @@ public final class MainActivity extends AppCompatActivity implements FragmentMan
 
         // remove station and notify user
         if (success) {
-            // todo rework
-//            // switch back to station list - if player is visible
-//            if (!mTwoPane && getSupportFragmentManager().getBackStackEntryCount() > 0) {
-//                getSupportFragmentManager().popBackStack();
-//            }
-//
-//            // create copy of main list of stations
-//            ArrayList<Station> newStationList = StationListHelper.copyStationList(mStationList);
-//            // remove station from new station list
-//            newStationList.remove(stationId);
-//            // determine ID of next station
-//            if (newStationList.size() >= stationId && stationId > 0) {
-//                stationId--;
-//            } else {
-//                stationId = 0;
-//            }
-//
-//            // show next station in list
-//            Fragment listFragment = getSupportFragmentManager().findFragmentByTag(LIST_FRAGMENT_TAG);
-//            if (mTwoPane && listFragment!= null && listFragment.isAdded() && newStationList.size() > 0) {
-//                ((MainActivityFragment)listFragment).updateListAfterDelete(newStationList.get(stationId), stationId);
-//            }
-//
-//            // show next station in player view
-//            Fragment playerFragment = getSupportFragmentManager().findFragmentByTag(PLAYER_FRAGMENT_TAG);
-//            if (mTwoPane && playerFragment!= null && playerFragment.isAdded() && newStationList.size() > 0) {
-//                ((PlayerFragment)playerFragment).updatePlayerAfterDelete(newStationList.get(stationId));
-//            }
-//
-//            // update live data list of stations - used in CollectionAdapter
-//            mCollectionViewModel.getStationList().setValue(newStationList);
-//
-//            // notify user
-//            Toast.makeText(this, getString(R.string.toastalert_delete_successful), Toast.LENGTH_LONG).show();
+
+            // create copy of main list of stations
+            ArrayList<Station> newStationList = StationListHelper.copyStationList(mStationList);
+            // remove station from new station list
+            newStationList.remove(stationId);
+            // determine ID of next station
+            if (newStationList.size() >= stationId && stationId > 0) {
+                stationId--;
+            } else {
+                stationId = 0;
+            }
+
+            // show next station in list && show next station in player view
+            Fragment mainActivityFragment = getSupportFragmentManager().findFragmentByTag(MAIN_ACTIVITY_FRAGMENT_TAG);
+            if (mainActivityFragment!= null && mainActivityFragment.isAdded() && newStationList.size() > 0) {
+                ((MainActivityFragment)mainActivityFragment).updateListAfterDelete(newStationList.get(stationId), stationId);
+                ((MainActivityFragment)mainActivityFragment).updatePlayerAfterDelete(newStationList.get(stationId));
+            }
+
+            // update live data list of stations - used in CollectionAdapter
+            mCollectionViewModel.getStationList().setValue(newStationList);
+
+            // notify user
+            Toast.makeText(this, getString(R.string.toastalert_delete_successful), Toast.LENGTH_LONG).show();
         }
 
         // delete station shortcut

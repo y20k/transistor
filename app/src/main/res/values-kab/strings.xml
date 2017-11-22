@@ -1,67 +1,131 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources><string name="menu_about">Γef</string>
+<resources>
+    <!-- activities -->
+    <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
+
+    <!-- app shortcuts -->
+    <string name="shortcut_last_station_short_label">Ṛṛadyu taneggaru</string>
+    <string name="shortcut_last_station_long_label">Urar ṛṛadyyu taneggarut</string>
+    <string name="shortcut_last_station_disabled_message">Shortcut for playback of last station disabled.</string>
+
+    <!-- menu entries -->
+    <string name="menu_about">Γef</string>
     <string name="menu_howto">Amek ara tesqedceḍ</string>
     <string name="menu_refresh">Smiren tabdart</string>
+    <string name="menu_timer">Sleep timer</string>
     <string name="menu_icon">Beddel tignit</string>
     <string name="menu_add">Rnu</string>
     <string name="menu_delete">Kkes</string>
     <string name="menu_rename">Snifel isem</string>
+    <string name="menu_shortcut">Sers deg ugdil agejdan</string>
+
+    <!-- headers -->
     <string name="header_about">Γef</string>
     <string name="header_howto">Amek ara tesqedceḍ</string>
 
-    <string name="descr_station_name_example">"Amedya  FM"</string>
-    <string name="descr_station_metadata_example">Anazur- Azwel</string>
-    <string name="descr_player_sheet_information_icon">Tignit n telɣut</string>
-    <string name="player_sheet_h2_station_name">Ṛṛadyu</string>
-    <string name="player_sheet_h2_station_mime_type">Anaw n MIME</string>
-    <string name="player_sheet_h2_station_bitrate">Aktum</string>
-
-    <string name="dialog_generic_button_cancel">Sefsex</string>
-    <string name="dialog_add_station_button">Rnu</string>
-    <string name="dialog_add_station_message">Rnu ṛṛadyu tamaynut</string>
-    <string name="dialog_delete_station_message">Kkes ṛṛadyu</string>
-    <string name="dialog_button_delete">Kkes</string>
-    <string name="dialog_rename_station_input_hint">Sekcem isem amaynut</string>
-    <string name="dialog_button_rename">Snifel isem</string>
-
-    <string name="dialog_error_title_default">Tuccḍa</string>
-    <string name="dialog_error_message_default">Teḍra-d tuccḍa</string>
-    <string name="dialog_error_details_button_default">Sken talqayt</string>
-    <string name="dialog_error_title_fetch_read">Ɣer ugur</string>
-    <string name="actioncall_message_start_here">Rnu ṛṛadyu tamaynut</string>
-    <string name="toastmessage_add_open_file_started">Tuccḍa di tulya n ufaylu.</string>
-    <string name="toastalert_permission_denied">Anekcum yegdel:</string>
-    <string name="notification_play">Urar</string>
-    <string name="notification_stop">Seḥbes</string>
-    <string name="app_name">Transistor</string>
-
-    <string name="shortcut_last_station_short_label">Ṛṛadyu taneggaru</string>
-    <string name="shortcut_last_station_long_label">Urar ṛṛadyyu taneggarut</string>
-    <string name="menu_shortcut">Sers deg ugdil agejdan</string>
-
+    <!-- descriptions -->
     <string name="descr_station_options_button">Iɣewwaṛen n uskan n ṛṛadyu</string>
     <string name="descr_station_icon">Tignit n ṛṛadyu</string>
     <string name="descr_station_name">Isem n ṛṛadyu</string>
     <string name="descr_station_metadata">Iɣef-isefka (Anazuṛ / Azwel) n ṛṛadyu yetturaren</string>
+    <string name="descr_station_name_example">"Amedya  FM"</string>
+    <string name="descr_station_metadata_example">Anazur- Azwel</string>
     <string name="descr_station_stream_loading">Asali…</string>
     <string name="descr_playback_button">Taqeffalt tameqqrant n tɣuri</string>
     <string name="descr_playback_indicator">Anammal n tɣuri iteddun</string>
     <string name="descr_playback_indicator_started">Anammal n tɣuri iteddun</string>
+    <string name="descr_timer_icon">Sleep timer icon</string>
     <string name="descr_timer_indicator_started">Anammal n uselkem n umesnakud n ugani</string>
+    <string name="descr_player_sheet_button_expand">Button to expand and minimize the radio player</string>
+    <string name="descr_player_sheet_information_icon">Tignit n telɣut</string>
     <string name="descr_player_sheet_content_copy_icon">Tignit n unɣel n ugbur</string>
     <string name="descr_player_sheet_p_station_name">Isem n ṛṛadyu yettwafernen</string>
     <string name="descr_player_sheet_p_station_metadata">Iɣef-isefka si ṛṛadyu yettwafernen</string>
     <string name="descr_player_sheet_p_stream_url">Aseɣwen n usuddem n ṛṛadyu yettwafernen</string>
 
+    <!-- player -->
+    <string name="player_sheet_h1_details">Details</string>
+    <string name="player_sheet_h2_current_session">Current session</string>
+    <string name="player_sheet_h2_station_name">Ṛṛadyu</string>
     <string name="player_sheet_h2_station_metadata">Yetturar tura</string>
     <string name="player_sheet_h2_stream_url">Aseɣwen n usuddem</string>
     <string name="player_sheet_p_station_metadata">ulac iɣef-isefka</string>
+    <string name="player_sheet_h2_station_mime_type">Anaw n MIME</string>
     <string name="player_sheet_h2_station_channel_count">Amḍan n ṛṛadyuwat</string>
     <string name="player_sheet_h2_station_sample_rate">Amedya n tezmilt</string>
+    <string name="player_sheet_h2_station_bitrate">Aktum</string>
+
+    <!-- dialogs -->
     <string name="dialog_generic_button_okay">IH</string>
+    <string name="dialog_generic_button_cancel">Sefsex</string>
+    <string name="dialog_add_station_button">Rnu</string>
     <string name="dialog_add_station_input_hint">Senteḍ aseɣwen n usuddem</string>
+    <string name="dialog_add_station_message">Rnu ṛṛadyu tamaynut</string>
+    <string name="dialog_add_station_howto">You can add raw audio streams encoded in MP3, AAC and Ogg/Opus as well as streams encapsulated in PLS or M3U files. Alternatively you can add new stations by tapping on streaming links (.pls or .m3u) in your web browser.</string>
+    <string name="dialog_delete_station_message">Kkes ṛṛadyu</string>
+    <string name="dialog_button_delete">Kkes</string>
+    <string name="dialog_rename_station_input_hint">Sekcem isem amaynut</string>
     <string name="dialog_rename_station_message">Beddel isem n ṛṛadyu</string>
+    <string name="dialog_button_rename">Snifel isem</string>
+
+    <!-- error dialogs -->
+    <string name="dialog_error_title_default">Tuccḍa</string>
+    <string name="dialog_error_message_default">Teḍra-d tuccḍa</string>
+    <string name="dialog_error_details_button_default">Sken talqayt</string>
     <string name="dialog_error_details_default">Ulac talqayt</string>
+    <string name="dialog_error_details_write">This station is probably a duplicate or else you might want to check your external storage.</string>
     <string name="dialog_error_title_fetch_download">Tuccḍa n usider</string>
+    <string name="dialog_error_title_fetch_read">Ɣer ugur</string>
     <string name="dialog_error_title_fetch_write">Tuccḍa n tira</string>
+    <string name="dialog_error_message_fetch_general_external_storage">External storage:</string>
+    <string name="dialog_error_message_fetch_general_hint_m3u">Hint: Transistor can only process MP3, AAC and Ogg/Opus encoded streams or links ending in .m3u or .pls.</string>
+    <string name="dialog_error_message_fetch_general_playlist_type">MIME type of file:</string>
+    <string name="dialog_error_message_fetch_general_stream_type">MIME type of stream:</string>
+    <string name="dialog_error_message_fetch_general_file_content">Content of file:</string>
+    <string name="dialog_error_message_fetch_download">Transistor tried hard but could not make sense of the link.</string>
+    <string name="dialog_error_message_fetch_download_station_url">Streaming link of station:</string>
+    <string name="dialog_error_message_fetch_read">Transistor tried hard but could not make sense of the file.</string>
+    <string name="dialog_error_message_fetch_read_file_location">Location of file:</string>
+    <string name="dialog_error_message_fetch_write">Transistor tried hard but could not save the station.</string>
+
+    <!-- messages -->
+    <string name="actioncall_message_start_here">Rnu ṛṛadyu tamaynut</string>
+    <string name="toastmessage_add_download_started">Download started.</string>
+    <string name="toastmessage_add_open_file_started">Tuccḍa di tulya n ufaylu.</string>
+    <string name="toastmessage_long_press_playback_stopped">Playback stopped (long press detected)</string>
+    <string name="toastmessage_long_press_playback_started">Playback started (long press detected)</string>
+    <string name="toastmessage_shortcut_created">Shortcut created.</string>
+    <string name="toastmessage_shortcut_not_created">Shortcut not created. This device does not allow the creation of shortcuts.</string>
+    <string name="toastmessage_list_refreshed">Reloading list of stations.</string>
+    <string name="toastmessage_copied_to_clipboard_url">Streaming link copied to clipboard.</string>
+    <string name="toastmessage_copied_to_clipboard_metadata">Metadata copied to clipboard.</string>
+    <string name="toastmessage_station_copied">Station copied to clipboard.</string>
+    <string name="toastmessage_stream_may_not_work">Unsupported audio format detected. Playback of stream may not work properly.</string>
+    <string name="toastmessage_timer_activated">Sleep timer activated.</string>
+    <string name="toastmessage_timer_cancelled">Sleep timer cancelled.</string>
+    <string name="toastmessage_timer_duration_increased">Duration increased.</string>
+    <string name="toastmessage_timer_start_unable">Please start playback first.</string>
+    <string name="toastalert_unable_to_connect">Unable to connect. Device does not have an internet connection or stream may be outdated.</string>
+    <string name="toastalert_rename_unsuccessful">Unable to rename station. Please choose a different name.</string>
+    <string name="toastalert_delete_successful">The station was removed.</string>
+    <string name="toastalert_no_external_storage">Unable to access external storage.</string>
+    <string name="toastalert_headphones_unplugged">Headphones unplugged. Playback stopped.</string>
+    <string name="toastalert_permission_denied">Anekcum yegdel:</string>
+    <string name="toastalert_station_not_found">Unable to find station.</string>
+    <string name="toastalert_stream_not_found">Transistor does not recognize this station. Please delete and add it again to the Home screen.</string>
+    <string name="snackbar_request_storage_access">Transistor needs to be granted read permissions to be able access data from external storage.</string>
+    <string name="snackbar_message_timer_set">Sleep timer set to</string>
+
+    <!-- notification -->
+    <string name="notification_play">Urar</string>
+    <string name="notification_stop">Seḥbes</string>
+    <string name="notification_swipe_to_stop">Swipe to stop</string>
+    <string name="notification_playing">Playing</string>
+    <string name="notification_channel_playback_name">Playback Controls</string>
+    <string name="notification_channel_playback_description">Playback controls, station logo and now playing info.</string>
+
+    <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
+    The last version containing those strings is v2.3.7
+    https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
+
 </resources>

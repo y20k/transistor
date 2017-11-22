@@ -34,7 +34,9 @@
     <string name="descr_playback_button">Μεγάλο κομβίον αναπαραγωγής</string>
     <string name="descr_playback_indicator">Ένδειξη για την κατάσταση της αναπαραγωγής</string>
     <string name="descr_playback_indicator_started">Ένδειξη για την κατάσταση της αναπαραγωγής</string>
+    <string name="descr_timer_icon">Sleep timer icon</string>
     <string name="descr_timer_indicator_started">Ένδειξη για το τρέξιμο του χρονοδιακόπτη νανουρίσματος</string>
+    <string name="descr_player_sheet_button_expand">Button to expand and minimize the radio player</string>
     <string name="descr_player_sheet_information_icon">Εικονίδιο Πληροφοριών</string>
     <string name="descr_player_sheet_content_copy_icon">Εικονίδιο αντιγραφής του περιεχομένου</string>
     <string name="descr_player_sheet_p_station_name">Το όνομα του επιλεγμένου ραδιοσταθμού</string>
@@ -42,6 +44,8 @@
     <string name="descr_player_sheet_p_stream_url">Ο δεσμός της ροής του επιλεγμένου ραδιοσταθμού</string>
 
     <!-- player -->
+    <string name="player_sheet_h1_details">Details</string>
+    <string name="player_sheet_h2_current_session">Current session</string>
     <string name="player_sheet_h2_station_name">Σταθμός</string>
     <string name="player_sheet_h2_station_metadata">Παίζει Τώρα</string>
     <string name="player_sheet_h2_stream_url">Ο δεσμός της ροής</string>
@@ -120,17 +124,8 @@
     <string name="notification_channel_playback_name">Ρυθμιστικά Αναπαραγωγής</string>
     <string name="notification_channel_playback_description">Οι ρυθμιστές αναπαραγωγής, το λογότυπο του σταθμού, και οι πληροφορίες της τωρινής αναπαραγωγής.</string>
 
-
-
-
-    <!--
-    +++ IMPORTANT NOTE +++
-    The HTML strings previously found here were replaced by multiple non-HTML strings
-    (infosheet_about_... & infosheet_howto_...). This should make translations easier -
-    see GitHub issue #69 (https://github.com/y20k/transistor/issues/69). If you are
-    looking for the old HTML strings. They still can be found here in their respective
-    "values" folders:
-    https://github.com/y20k/transistor/tree/1e51dd8666194353427ca074f2092b6c20cfacd6/app/src/main/res
-    -->
+    <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
+    The last version containing those strings is v2.3.7
+    https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
 
 </resources>

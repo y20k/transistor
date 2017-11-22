@@ -34,7 +34,9 @@
     <string name="descr_playback_button">Botón dorado de reproducción</string>
     <string name="descr_playback_indicator">Indicador para el funcionamiento de la reproducción</string>
     <string name="descr_playback_indicator_started">Indicador para el funcionamiento de la reproducción</string>
+    <string name="descr_timer_icon">Icono de temporizador de reposo</string>
     <string name="descr_timer_indicator_started">Indicador para el funcionamiento del temporizador de apagado</string>
+    <string name="descr_player_sheet_button_expand">Botón para expandir y minimizar el reproductor de radio</string>
     <string name="descr_player_sheet_information_icon">Information Icon</string>
     <string name="descr_player_sheet_content_copy_icon">Icono de copia de contenido</string>
     <string name="descr_player_sheet_p_station_name">Nombre de la emisora de radio seleccionada</string>
@@ -42,6 +44,8 @@
     <string name="descr_player_sheet_p_stream_url">Enlace Stream de la emisora de radio seleccionada</string>
 
     <!-- player -->
+    <string name="player_sheet_h1_details">Detalles</string>
+    <string name="player_sheet_h2_current_session">Sesión actual</string>
     <string name="player_sheet_h2_station_name">Emisora</string>
     <string name="player_sheet_h2_station_metadata">Reproducción en curso</string>
     <string name="player_sheet_h2_stream_url">Enlace de retransmisión</string>
@@ -120,13 +124,8 @@
     <string name="notification_channel_playback_name">Controles de reproducción</string>
     <string name="notification_channel_playback_description">Controles de reproducción, logo de la emisora e información de reproducción actual.</string>
 
+    <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
+    The last version containing those strings is v2.3.7
+    https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
 
-
-
-
-
-<string name="descr_timer_icon">Icono de temporizador de reposo</string>
-    <string name="player_sheet_h1_details">Detalles</string>
-    <string name="player_sheet_h2_current_session">Sesión actual</string>
-    <string name="descr_player_sheet_button_expand">Botón para expandir y minimizar el reproductor de radio</string>
-    </resources>
+</resources>
