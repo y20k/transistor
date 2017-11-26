@@ -4,18 +4,16 @@ import android.content.Context
 import android.graphics.drawable.Animatable
 import android.graphics.drawable.Drawable
 import android.support.design.widget.FloatingActionButton
-import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
-//import be.rijckaert.tim.vector.sample.library.R
 
 
 class FloatingMusicActionButton : FloatingActionButton {
 
-    private val playToPauseDrawable: Drawable by lazy { ContextCompat.getDrawable(context, R.drawable.play_to_pause_animation) }
-    private val pauseToPlayDrawable: Drawable by lazy { ContextCompat.getDrawable(context, R.drawable.pause_to_play_animation) }
-    private val playToStopDrawable: Drawable by lazy { ContextCompat.getDrawable(context, R.drawable.play_to_stop_animation) }
-    private val stopToPlayDrawable: Drawable by lazy { ContextCompat.getDrawable(context, R.drawable.stop_to_play_animation) }
+    private val playToPauseDrawable: Drawable by lazy { context.resources.getDrawable(R.drawable.play_to_pause_animation, context.theme) }
+    private val pauseToPlayDrawable: Drawable by lazy { context.resources.getDrawable(R.drawable.pause_to_play_animation, context.theme) }
+    private val playToStopDrawable: Drawable by lazy { context.resources.getDrawable(R.drawable.play_to_stop_animation, context.theme) }
+    private val stopToPlayDrawable: Drawable by lazy { context.resources.getDrawable(R.drawable.stop_to_play_animation, context.theme) }
     private val maximumAnimationDuration by lazy { context.resources.getInteger(R.integer.play_button_animation_duration).toLong() }
 
     private var listener: OnMusicFabClickListener? = null

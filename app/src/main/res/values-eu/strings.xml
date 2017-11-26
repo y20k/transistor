@@ -42,6 +42,7 @@
     <string name="descr_player_sheet_p_station_name">Aukeratutako irrati estazioaren izena</string>
     <string name="descr_player_sheet_p_station_metadata">Aukeratutako irrati estazioaren metadatuak</string>
     <string name="descr_player_sheet_p_stream_url">Aukeratutako irrati estazioaren jarioaren URLa</string>
+    <string name="descr_list_add_new">Add a new station</string>
 
     <!-- player -->
     <string name="player_sheet_h1_details">Details</string>

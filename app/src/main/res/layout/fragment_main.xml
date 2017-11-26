@@ -5,6 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/transistor_white"
     tools:context="org.y20k.transistor.MainActivityFragment">
 
     <android.support.v4.widget.SwipeRefreshLayout
@@ -18,7 +19,6 @@
             android:id="@+id/list_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/transistor_grey_lighter"
             android:visibility="visible" />
 
     </android.support.v4.widget.SwipeRefreshLayout>

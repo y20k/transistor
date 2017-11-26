@@ -19,6 +19,4 @@
     <color name="transistor_white">#FFFFFFFF</color>
     <color name="transistor_transparent">#00ffffff</color>
 
-    <color name="transistor_text_inverted">?android:attr/textColorSecondaryInverse</color>
-
 </resources>

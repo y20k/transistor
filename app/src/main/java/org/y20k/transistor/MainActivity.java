@@ -315,8 +315,9 @@ public final class MainActivity extends AppCompatActivity implements FragmentMan
             // show next station in list && show next station in player view
             Fragment mainActivityFragment = getSupportFragmentManager().findFragmentByTag(MAIN_ACTIVITY_FRAGMENT_TAG);
             if (mainActivityFragment!= null && mainActivityFragment.isAdded() && newStationList.size() > 0) {
-                ((MainActivityFragment)mainActivityFragment).updateListAfterDelete(newStationList.get(stationId), stationId);
                 ((MainActivityFragment)mainActivityFragment).updatePlayerAfterDelete(newStationList.get(stationId));
+//            } else if (newStationList.size() == 0) {
+//                ((MainActivityFragment)mainActivityFragment).updatePlayerAfterDelete(null);
             }
 
             // update live data list of stations - used in CollectionAdapter

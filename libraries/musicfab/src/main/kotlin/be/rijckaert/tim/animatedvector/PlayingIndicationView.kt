@@ -3,14 +3,14 @@ package be.rijckaert.tim.animatedvector
 import android.content.Context
 import android.graphics.drawable.Animatable
 import android.graphics.drawable.Drawable
-import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.widget.ImageView
+
 //import be.rijckaert.tim.vector.sample.library.R
 
 class PlayingIndicationView : ImageView {
 
-    private val playAnimation: Drawable by lazy { ContextCompat.getDrawable(context, R.drawable.avd_playing_identifier) }
+    private val playAnimation: Drawable by lazy { context.resources.getDrawable(R.drawable.avd_playing_identifier, context.theme) }
     private val maximumAnimationDuration by lazy { getMaxAnimationDuration() }
     private val animationResetFunction = { resetAnimation() }
     private fun getMaxAnimationDuration(): Long {

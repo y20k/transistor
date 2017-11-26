@@ -42,6 +42,7 @@
     <string name="descr_player_sheet_p_station_name">選択したラジオ局の名前</string>
     <string name="descr_player_sheet_p_station_metadata">選択したラジオ局からのメタデータ</string>
     <string name="descr_player_sheet_p_stream_url">選択したラジオ局のストリームのリンク</string>
+    <string name="descr_list_add_new">Add a new station</string>
 
     <!-- player -->
     <string name="player_sheet_h1_details">詳細</string>

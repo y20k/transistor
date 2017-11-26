@@ -40,12 +40,15 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -106,7 +109,8 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
     private TextView mStationDataSheetSampleRate;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private LinearLayoutManager mLayoutManager;
+//    private RecyclerView.LayoutManager mLayoutManager; // todo remove
     private CollectionViewModel mCollectionViewModel;
     private BottomSheetBehavior mPlayerBottomSheetBehavior;
     private BroadcastReceiver mSleepTimerStartedReceiver;
@@ -173,7 +177,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
         mStationDataSheetChannelCount = mRootView.findViewById(R.id.player_sheet_p_channels);
         mStationDataSheetSampleRate = mRootView.findViewById(R.id.player_sheet_p_samplerate);
 
-        // setuo RecyclerView
+        // set up RecyclerView
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mLayoutManager = new LinearLayoutManager(mActivity) {
             @Override
@@ -182,6 +186,8 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
             }
         };
         mRecyclerView.setLayoutManager(mLayoutManager);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(), mLayoutManager.getOrientation());
+        mRecyclerView.addItemDecoration(dividerItemDecoration);
         mRecyclerView.setAdapter(mCollectionAdapter);
 
         // set up and show station data sheet
@@ -253,12 +259,6 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
                 break;
             }
         }
-    }
-
-
-    /* Updates list state after delete */ // todo check if necessary
-    public void updateListAfterDelete(Station newStation, int stationId) {
-        // mCollectionAdapter.setStationUriSelected(newStation.getStreamUri());
     }
 
 
@@ -385,6 +385,8 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
                     togglePlayback(mCurrentStation, true);
                 }
                 setupPlayer(station);
+                Animation animation = AnimationUtils.loadAnimation(mActivity, R.anim.wiggle);
+                mPlayerStationImage.startAnimation(animation);
             }
         });
 
@@ -551,7 +553,9 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
                 mPlayerStationMetadata.setVisibility(View.VISIBLE);
             }
             mPlayerStationMetadata.setText(stationMetadata);
+            mPlayerStationMetadata.setSelected(true); // triggers the marquee
             mPlayerSheetMetadata.setText(stationMetadata);
+            mPlayerSheetMetadata.setSelected(true); // triggers the marquee
         }
     }
 
@@ -714,11 +718,13 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
 
     /* Saves app state to SharedPreferences */
     private void saveAppState(Context context) {
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putString(PREF_STATION_URI_SELECTED, mCurrentStation.getStreamUri().toString());
-        editor.apply();
-        LogHelper.v(LOG_TAG, "Saving state.");
+        if (mCurrentStation != null) {
+            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putString(PREF_STATION_URI_SELECTED, mCurrentStation.getStreamUri().toString());
+            editor.apply();
+            LogHelper.v(LOG_TAG, "Saving state.");
+        }
     }
 
 
