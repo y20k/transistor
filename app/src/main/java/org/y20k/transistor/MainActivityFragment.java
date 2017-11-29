@@ -94,7 +94,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
     private TextView mPlayerStationName;
     private TextView mPlayerStationMetadata;
     private FloatingMusicActionButton mPlayerPlaybackButton;
-    private ImageButton mPlayerExpandButton;
+    private ImageButton mPlayerExpandButton; // todo check -> remove?
     private ImageButton mPlayerSheetSleepTimerButton;
     private ImageButton mPlayerSheetStationOptionsButton;
     private ImageButton mPlayerSheetMetadataCopyButton;
@@ -269,10 +269,10 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
 
     /* Refreshes list of stations - used by pull to refesh */
     private void refreshList() {
-        // stop player service using intent
-        Intent intent = new Intent(mActivity, PlayerService.class);
-        intent.setAction(ACTION_DISMISS);
-        mActivity.startService(intent);
+//        // stop player service using intent
+//        Intent intent = new Intent(mActivity, PlayerService.class);
+//        intent.setAction(ACTION_DISMISS);
+//        mActivity.startService(intent);
 
         // manually refresh list of stations (force reload) - useful when editing playlist files manually outside of Transistor
         ArrayList<Station> newStationList = StationListHelper.loadStationListFromStorage(mActivity);
@@ -396,7 +396,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
         });
 
         // expand player sheet
-        mPlayerExpandButton.setOnClickListener(new View.OnClickListener() {
+        mPlayerSheet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mPlayerBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {

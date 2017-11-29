@@ -49,6 +49,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/list_item_textview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/list_item_textview"
-        app:srcCompat="@drawable/ic_playback_indicator_small_loading_24dp" />
+        app:srcCompat="@drawable/ic_playback_indicator_loading_24dp" />
 
 </android.support.constraint.ConstraintLayout>

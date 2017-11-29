@@ -23,9 +23,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Vibrator;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
@@ -36,9 +34,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.y20k.transistor.PlayerService;
 import org.y20k.transistor.R;
 import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.DialogAdd;
@@ -251,10 +247,10 @@ public final class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.V
     /* Manipulates state of playback indicator */
     private void togglePlaybackIndicator(StationViewHolder holder, Station station) {
         if (station.getPlaybackState() == PLAYBACK_STATE_LOADING_STATION) {
-            holder.getPlaybackIndicator().setImageResource(R.drawable.ic_playback_indicator_small_loading_24dp);
+            holder.getPlaybackIndicator().setImageResource(R.drawable.ic_playback_indicator_loading_24dp);
             holder.getPlaybackIndicator().setVisibility(View.VISIBLE);
         } else if (station.getPlaybackState() == PLAYBACK_STATE_STARTED) {
-            holder.getPlaybackIndicator().setImageResource(R.drawable.ic_playback_indicator_small_started_24dp);
+            holder.getPlaybackIndicator().setImageResource(R.drawable.ic_playback_indicator_started_24dp);
             holder.getPlaybackIndicator().setVisibility(View.VISIBLE);
         } else {
             holder.getPlaybackIndicator().setVisibility(View.INVISIBLE);
