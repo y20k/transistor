@@ -1,7 +1,7 @@
 /**
  * MainActivity.java
  * Implements the app's main activity
- * The main activity sets up the main view end inflates an action bar menu
+ * The main activity sets up the main view
  *
  * This file is part of
  * TRANSISTOR - Radio App for Android
@@ -49,7 +49,7 @@ import java.util.ArrayList;
 /**
  * MainActivity class
  */
-public final class MainActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener, TransistorKeys {
+public final class MainActivity extends AppCompatActivity implements TransistorKeys {
 
     /* Define log tag */
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
@@ -94,9 +94,6 @@ public final class MainActivity extends AppCompatActivity implements FragmentMan
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.main_container, listFragment, MAIN_ACTIVITY_FRAGMENT_TAG)
                 .commit();
-
-        // observe changes in backstack initiated by fragment transactions
-        getSupportFragmentManager().addOnBackStackChangedListener(this);
     }
 
 
@@ -161,24 +158,6 @@ public final class MainActivity extends AppCompatActivity implements FragmentMan
     @Override
     public LifecycleRegistry getLifecycle() {
         return mRegistry;
-    }
-
-
-    @Override
-    public void onBackStackChanged() {
-        toggleDisplayHomeUp();
-    }
-
-
-    /* Hides / shows the Home/Up navigation in ActionBar */
-    public void toggleDisplayHomeUp() {
-        // toggle "back" icon
-        boolean back = getSupportFragmentManager().getBackStackEntryCount() > 0;
-        getSupportActionBar().setDisplayHomeAsUpEnabled(back);
-        // reset title of activity in ActionBar, if backstack is empty
-        if (!back) {
-            setTitle(R.string.app_name);
-        }
     }
 
 
@@ -388,7 +367,7 @@ public final class MainActivity extends AppCompatActivity implements FragmentMan
             int stationID = StationListHelper.findStationId(mStationList, mTempStation.getStreamUri());
             newStationList.set(stationID, newStation);
 
-            // update liva data station from PlayerService - used in PlayerFragment
+            // update liva data station from PlayerService
             mCollectionViewModel.getPlayerServiceStation().setValue(newStation);
 
             // update live data

@@ -45,19 +45,19 @@
 
 <ImageView
     android:id="@+id/player_station_image"
-    android:layout_width="56dp"
-    android:layout_height="56dp"
+    android:layout_width="@dimen/design_fab_size_normal"
+    android:layout_height="@dimen/design_fab_size_normal"
     android:layout_marginStart="8dp"
     android:layout_marginTop="16dp"
     android:contentDescription="@string/descr_station_icon"
     app:layout_constraintStart_toEndOf="@+id/player_button_expand"
     app:layout_constraintTop_toTopOf="parent"
-    app:srcCompat="@drawable/ic_notesymbol_36dp" />
+    app:srcCompat="@drawable/ic_circle_large_grey_36dp" />
 
 <be.rijckaert.tim.animatedvector.FloatingMusicActionButton
     android:id="@+id/player_button_playback"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="@dimen/design_fab_size_normal"
+    android:layout_height="@dimen/design_fab_size_normal"
     android:layout_gravity="center_vertical"
     android:layout_marginEnd="16dp"
     android:layout_marginTop="16dp"

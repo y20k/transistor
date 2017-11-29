@@ -22,7 +22,6 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
@@ -145,7 +144,7 @@ public final class NotificationHelper implements TransistorKeys {
         NotificationCompat.Builder builder;
         builder = new NotificationCompat.Builder(context, NOTIFICATION_CHANEL_ID_PLAYBACK_CHANNEL);
         builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
-        builder.setSmallIcon(R.drawable.ic_notification_small_24dp);
+        builder.setSmallIcon(R.drawable.ic_app_icon_white_24dp);
         builder.setLargeIcon(getStationIcon(context, station));
         builder.setContentTitle(station.getStationName());
         builder.setContentText(station.getMetadata());

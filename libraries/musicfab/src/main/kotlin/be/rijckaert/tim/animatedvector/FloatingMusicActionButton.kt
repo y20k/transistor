@@ -41,7 +41,8 @@ class FloatingMusicActionButton : FloatingActionButton {
         }
 
         this.setOnClickListener {
-            playAnimation()
+            // playAnimation not necessary for Transistor (Transistor changes button state in reaction to changes in player servide state)
+            // playAnimation()
             listener?.onClick(this)
         }
 

@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/list_item_station_icon"
-        android:layout_width="?android:attr/listPreferredItemHeight"
-        android:layout_height="?android:attr/listPreferredItemHeight"
+        android:layout_width="@dimen/design_fab_size_normal"
+        android:layout_height="@dimen/design_fab_size_normal"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -21,7 +21,7 @@
         app:layout_constraintEnd_toStartOf="@+id/list_item_textview"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_notesymbol_36dp" />
+        app:srcCompat="@drawable/ic_music_note_black_36dp" />
 
     <TextView
         android:id="@+id/list_item_textview"

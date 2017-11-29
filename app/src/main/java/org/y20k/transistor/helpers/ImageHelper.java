@@ -56,7 +56,7 @@ public final class ImageHelper {
             mInputImage = BitmapFactory.decodeFile(station.getStationImageFile().toString());
         } else {
             // set default station image
-            mInputImage = getBitmap(R.drawable.ic_notesymbol_36dp);
+            mInputImage = getBitmap(R.drawable.ic_music_note_black_36dp);
         }
     }
 
@@ -90,7 +90,7 @@ public final class ImageHelper {
     public Bitmap createStationIcon(int size) {
 
         // get scaled background bitmap
-        Bitmap background = getBitmap(R.drawable.ic_notification_large_bg_128dp);
+        Bitmap background = getBitmap(R.drawable.ic_notification_large_bg_grey_128dp);
         background = Bitmap.createScaledBitmap(background, size, size, false);
 
         // compose images

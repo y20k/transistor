@@ -1,7 +1,7 @@
 /**
  * MainActivityFragment.java
  * Implements the main fragment of the main activity
- * This fragment implements a RecyclerView list of radio stations
+ * This fragment implements a RecyclerView list of radio stations and a bottom sheet player
  *
  * This file is part of
  * TRANSISTOR - Radio App for Android
@@ -95,9 +95,6 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
     private TextView mPlayerStationMetadata;
     private FloatingMusicActionButton mPlayerPlaybackButton;
     private ImageButton mPlayerExpandButton;
-//    private Group mPlaybackActiveViews;
-//    private Group mPlayerSheetMetadataViews;
-//    private Group mPlayerSheetStreamUrlViews;
     private ImageButton mPlayerSheetSleepTimerButton;
     private ImageButton mPlayerSheetStationOptionsButton;
     private ImageButton mPlayerSheetMetadataCopyButton;
@@ -110,7 +107,6 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
-//    private RecyclerView.LayoutManager mLayoutManager; // todo remove
     private CollectionViewModel mCollectionViewModel;
     private BottomSheetBehavior mPlayerBottomSheetBehavior;
     private BroadcastReceiver mSleepTimerStartedReceiver;
@@ -227,6 +223,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
             showSleepTimerNotification(-1);
         }
     }
+
 
     @Override
     public void onPause() {
@@ -520,21 +517,25 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
     }
 
 
-    /* Setup the playback state name */
+    /* Setup playback button state */
     private void setupStationPlaybackButtonState(Station station) {
         if (isAdded()) {
             // toggle views needed for active playback
+            LogHelper.w(LOG_TAG, "!!! Playback Button for: "+ station.getStationName() + " State = " + station.getPlaybackState()); // todo remove
             switch (station.getPlaybackState()) {
                 case PLAYBACK_STATE_STOPPED: {
                     mPlayerPlaybackButton.changeMode(FloatingMusicActionButton.Mode.PLAY_TO_STOP);
+                    LogHelper.w(LOG_TAG, "!!! Playback Button - changing mode: PLAY icon"); // todo remove
                     break;
                 }
                 case PLAYBACK_STATE_LOADING_STATION: {
                     mPlayerPlaybackButton.changeMode(FloatingMusicActionButton.Mode.STOP_TO_PLAY);
+                    LogHelper.w(LOG_TAG, "!!! Playback Button - changing mode: STOP icon"); // todo remove
                     break;
                 }
                 case PLAYBACK_STATE_STARTED: {
                     mPlayerPlaybackButton.changeMode(FloatingMusicActionButton.Mode.STOP_TO_PLAY);
+                    LogHelper.w(LOG_TAG, "!!! Playback Button - changing mode: STOP icon"); // todo remove
                     break;
                 }
             }

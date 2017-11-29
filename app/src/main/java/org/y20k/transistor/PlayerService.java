@@ -180,6 +180,17 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         else if (intent.getAction().equals(ACTION_PLAY)) {
             LogHelper.v(LOG_TAG, "Service received command: PLAY");
 
+            // reset current station if necessary
+            if (mStation != null && mStation.getPlaybackState() != PLAYBACK_STATE_STOPPED) {
+                mStation.resetState();
+                // send local broadcast: stopped
+                Intent intentStateBuffering = new Intent();
+                intentStateBuffering.setAction(ACTION_PLAYBACK_STATE_CHANGED);
+                intentStateBuffering.putExtra(EXTRA_STATION, mStation);
+                LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intentStateBuffering);
+                LogHelper.v(LOG_TAG, "LocalBroadcast: ACTION_PLAYBACK_STATE_CHANGED -> PLAYBACK_STATE_STOPPED");
+            }
+
             // get URL of station from intent
             if (intent.hasExtra(EXTRA_STATION)) {
                 mStation = intent.getParcelableExtra(EXTRA_STATION);
