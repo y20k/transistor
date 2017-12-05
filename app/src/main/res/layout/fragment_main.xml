@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="2dp"
-        android:layout_marginBottom="84dp">
+        android:layout_marginBottom="72dp">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/list_recyclerview"

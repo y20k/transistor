@@ -430,14 +430,14 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
             @Override
             public void onClick(View v) {
                 copyToClipboard(COPY_STATION_METADATA);
-                mPlayerBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+//                mPlayerBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED); // todo remove
             }
         });
         mPlayerSheetStreamUrlCopyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 copyToClipboard(COPY_STREAM_URL);
-                mPlayerBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+//                mPlayerBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED); // todo remove
             }
         });
 

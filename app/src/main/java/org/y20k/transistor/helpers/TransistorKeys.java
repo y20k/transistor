@@ -96,7 +96,7 @@ public interface TransistorKeys {
     int VIEW_TYPE_ADD_NEW = 1;
 
     /* PLAYER SHEET PEEK HEIGHT (IN DP) */
-    int PLAYER_SHEET_PEEK_HEIGHT = 84;
+    int PLAYER_SHEET_PEEK_HEIGHT = 72;
 
     /* CLIPBOARD COPY TYPES */
     int COPY_STATION_ALL = 1;
