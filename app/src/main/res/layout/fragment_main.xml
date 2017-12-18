@@ -8,6 +8,7 @@
     android:background="@color/transistor_white"
     tools:context="org.y20k.transistor.MainActivityFragment">
 
+    <!-- LIST -->
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
@@ -26,7 +27,7 @@
     <!-- BOTTOM SHEET -->
     <include layout="@layout/fragment_main_player_sheet" />
 
-    </android.support.design.widget.CoordinatorLayout>
+</android.support.design.widget.CoordinatorLayout>
 
 
 

@@ -232,6 +232,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
         saveAppState(mActivity);
     }
 
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -265,6 +266,16 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
         setupPlayer(station);
     }
 
+
+    /* Minimizes player sheet if necessary - used by onBackPressed */
+    public boolean minimizePlayer() {
+        if (mPlayerBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
+            return false;
+        } else {
+            mPlayerBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            return true;
+        }
+    }
 
 
     /* Refreshes list of stations - used by pull to refesh */
@@ -430,14 +441,24 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
             @Override
             public void onClick(View v) {
                 copyToClipboard(COPY_STATION_METADATA);
-//                mPlayerBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED); // todo remove
+            }
+        });
+        mPlayerSheetMetadata.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                copyToClipboard(COPY_STATION_METADATA);
             }
         });
         mPlayerSheetStreamUrlCopyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 copyToClipboard(COPY_STREAM_URL);
-//                mPlayerBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED); // todo remove
+            }
+        });
+        mPlayerSheetStreamUrl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                copyToClipboard(COPY_STREAM_URL);
             }
         });
 
@@ -683,7 +704,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
                 // make room for notification
                 int notificationHeight = mSleepTimerNotification.getView().getHeight();
                 mPlayerBottomSheetBehavior.setPeekHeight(convertDpToPx(PLAYER_SHEET_PEEK_HEIGHT) + notificationHeight);
-                mPlayerBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+//                mPlayerBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED); // todo remove
                 mStationDataSheetSampleRate.setPadding(0,0,0,notificationHeight);
             }
             @Override
@@ -765,10 +786,10 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
                 // react to dragging events
                 if (slideOffset < 0.125f) {
                     // change expand button
-                    mPlayerExpandButton.setImageResource(R.drawable.ic_expand_white_24dp);
+                    mPlayerExpandButton.setImageResource(R.drawable.ic_expand_white_24dp); // todo remove
                 } else {
                     // change expand button
-                    mPlayerExpandButton.setImageResource(R.drawable.ic_minimize_white_24dp);
+                    mPlayerExpandButton.setImageResource(R.drawable.ic_minimize_white_24dp); // todo remove
                 }
 
             }
