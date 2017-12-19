@@ -19,10 +19,14 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/list_recyclerview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:visibility="visible" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
+
+
+    <!-- ONBOARDING -->
+    <include layout="@layout/fragment_main_onboarding" />
 
     <!-- BOTTOM SHEET -->
     <include layout="@layout/fragment_main_player_sheet" />

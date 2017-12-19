@@ -33,6 +33,7 @@ import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -104,6 +105,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
     private TextView mStationDataSheetMimeType;
     private TextView mStationDataSheetChannelCount;
     private TextView mStationDataSheetSampleRate;
+    private ConstraintLayout mOnboardingLayout;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
@@ -155,6 +157,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
         mRootView = inflater.inflate(R.layout.fragment_main, container, false);
 
         // get needed references to views
+        mOnboardingLayout = mRootView.findViewById(R.id.onboarding_layout);
         mRecyclerView = mRootView.findViewById(R.id.list_recyclerview);
         mSwipeRefreshLayout = mRootView.findViewById(R.id.swipeRefreshLayout);
         mPlayerExpandButton = mRootView.findViewById(R.id.player_button_expand);
@@ -509,9 +512,10 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
             mCurrentStation = station;
 
             if (station != null) {
-                // show player
+                // show player & hide onboarding
                 if (mPlayerBottomSheetBehavior.getPeekHeight() == 0) {
                     mPlayerBottomSheetBehavior.setPeekHeight(convertDpToPx(PLAYER_SHEET_PEEK_HEIGHT));
+                    mOnboardingLayout.setVisibility(View.GONE);
                 }
 
                 // setup all views
@@ -521,8 +525,9 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
                 setupExtendedMetaDataViews(station);
 
             } else {
-                // hide player
+                // hide player & show onboarding
                 mPlayerBottomSheetBehavior.setPeekHeight(0);
+                mOnboardingLayout.setVisibility(View.VISIBLE);
             }
         }
     }
