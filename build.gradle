@@ -32,10 +32,10 @@ allprojects {
         versionCode = 50
         versionName = '3.0.0'
         minSdkVersion = 21
-        compileSdkVersion = 26
-        targetSdkVersion = 26
-        buildToolsVersion = '27.0.1'
-        supportLibraryVersion = '27.0.1'
+        compileSdkVersion = 27
+        targetSdkVersion = 27
+        buildToolsVersion = '27.0.2'
+        supportLibraryVersion = '27.0.2'
         archLifecycleVersion = '1.0.0'
         junit_version = "4.12"
     }

@@ -715,8 +715,9 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
                 mStationDataSheetSampleRate.setPadding(0,0,0,0);
             }
         });
+        // stretch Snackbar
+        (mSleepTimerNotification.getView()).getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;;
         mSleepTimerNotification.show();
-
     }
 
 
