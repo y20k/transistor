@@ -125,7 +125,13 @@
     <string name="notification_channel_playback_name">Playback Controls</string>
     <string name="notification_channel_playback_description">Playback controls, station logo and now playing info.</string>
 
+    <!-- onboarding -->
+    <string name="onboarding_app_description">Radio App</string>
+    <string name="onboarding_app_get_started">Get started</string>
+
     <!-- do not translate -->
+    <string name="onboarding_app_rodriguez_quote_1" translatable="false">It started out with butterflies</string>
+    <string name="onboarding_app_rodriguez_quote_2" translatable="false">On a velvet afternoon</string>
     <string name="player_sheet_p_no_data" translatable="false">-</string>
 
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.

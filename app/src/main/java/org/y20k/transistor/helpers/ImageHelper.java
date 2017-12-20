@@ -18,6 +18,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.net.Uri;
@@ -25,6 +26,7 @@ import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.graphics.Palette;
 
 import org.y20k.transistor.R;
 import org.y20k.transistor.core.Station;
@@ -98,10 +100,47 @@ public final class ImageHelper {
     }
 
 
-    /* Creates station image on a circular background */
+    /* Extracts color from station icon */
+    public int getStationImageColor() {
+
+        // extract color palette from station image
+        Palette palette = Palette.from(mInputImage).generate();
+        // get musted and vibrant swatches
+        Palette.Swatch vibrantSwatch = palette.getVibrantSwatch();
+        Palette.Swatch mutedSwatch = palette.getMutedSwatch();
+
+        if (vibrantSwatch != null) {
+            // return vibrant color
+            int rgb = vibrantSwatch.getRgb();
+            return Color.argb(255, Color.red(rgb), Color.green(rgb), Color.blue(rgb));
+        } else if (mutedSwatch != null) {
+            // return muted color
+            int rgb = mutedSwatch.getRgb();
+            return Color.argb(255, Color.red(rgb), Color.green(rgb), Color.blue(rgb));
+        } else {
+            // default return
+            return mContext.getResources().getColor(R.color.transistor_grey_lighter);
+        }
+    }
+
+
+
+    /* Creates station image on a circular background with defaukt color */
+    public Bitmap createCircularFramedImage(int size) {
+        // get default color
+        int color = ContextCompat.getColor(mContext, R.color.transistor_grey_lighter);
+        return createCircularFramedImage(size, color);
+    }
+
+
+    /* Creates station image on a circular background with given color */
     public Bitmap createCircularFramedImage(int size, int color) {
 
-        Paint background = createBackground(color);
+        // create background
+        Paint background = new Paint();
+        background.setColor(color);
+        background.setStyle(Paint.Style.FILL);
+
 
         // create empty bitmap and canvas
         Bitmap outputImage = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
@@ -132,28 +171,6 @@ public final class ImageHelper {
         canvas.drawBitmap(mInputImage, createTransformationMatrix(size), null);
 
         return outputImage;
-    }
-
-
-    /* Setter for color of background */
-    private Paint createBackground(int color) {
-
-        // get background color value in the form 0xAARRGGBB
-        int backgroundColor;
-        try {
-            backgroundColor = ContextCompat.getColor(mContext, color);
-        } catch (Exception e) {
-            // set default background color white
-            backgroundColor = ContextCompat.getColor(mContext, R.color.transistor_white);
-            e.printStackTrace();
-        }
-
-        // construct circular background
-        Paint background = new Paint();
-        background.setColor(backgroundColor);
-        background.setStyle(Paint.Style.FILL);
-
-        return background;
     }
 
 

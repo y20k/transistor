@@ -536,7 +536,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
     /*  Setup station name, image and stream url */
     private void setupStationMainViews(Station station) {
         ImageHelper imageHelper = new ImageHelper(station, mActivity);
-        Bitmap stationImage = imageHelper.createCircularFramedImage(192, R.color.transistor_grey_lighter);
+        Bitmap stationImage = imageHelper.createCircularFramedImage(192);
         mPlayerStationName.setText(station.getStationName());
         mPlayerStationImage.setImageBitmap(stationImage);
         mPlayerSheetStreamUrl.setText(station.getStreamUri().toString());
@@ -903,7 +903,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
                     // CASE: IMAGE
                     else if (newImageSize != oldImageSize) {
                         ImageHelper imageHelper = new ImageHelper(newStation, mActivity);
-                        Bitmap stationImage = imageHelper.createCircularFramedImage(192, R.color.transistor_grey_lighter);
+                        Bitmap stationImage = imageHelper.createCircularFramedImage(192);
                         mPlayerStationImage.setImageBitmap(stationImage);
                     }
                     // CASE: METADATA

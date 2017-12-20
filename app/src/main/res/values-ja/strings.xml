@@ -125,6 +125,10 @@
     <string name="notification_channel_playback_name">再生コントロール</string>
     <string name="notification_channel_playback_description">再生コントロール、局のロゴ、今再生中の情報。</string>
 
+    <!-- onboarding -->
+    <string name="onboarding_app_description">Radio App</string>
+    <string name="onboarding_app_get_started">Get started</string>
+
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7
     https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->

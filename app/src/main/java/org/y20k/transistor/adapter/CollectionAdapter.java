@@ -240,7 +240,7 @@ public final class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.V
     /* Create bitmap version of station image */
     private Bitmap createStationImageBitmap(Station station) {
         ImageHelper imageHelper = new ImageHelper(station, mActivity);
-        return imageHelper.createCircularFramedImage(192, R.color.transistor_grey_lighter);
+        return imageHelper.createCircularFramedImage(192);
     }
 
 

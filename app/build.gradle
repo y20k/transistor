@@ -32,20 +32,19 @@ android {
 
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:' + supportLibraryVersion
-    compile 'com.android.support:design:' + supportLibraryVersion
-    compile 'com.android.support:support-media-compat:' + supportLibraryVersion
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:' + supportLibraryVersion
+    implementation 'com.android.support:design:' + supportLibraryVersion
+    implementation 'com.android.support:support-media-compat:' + supportLibraryVersion
+    implementation 'com.android.support:palette-v7:' + supportLibraryVersion
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0-beta4'
 
-    compile 'com.android.support.constraint:constraint-layout:1.1.0-beta3'
+    implementation project(':libraries:musicfab')
 
-//    compile 'com.github.timrijckaert:FloatingMusicActionButton:v2.0.4'
-    compile project(':libraries:musicfab')
+    implementation project(':exoplayer-library-core')
+    implementation project(':exoplayer-library-hls')
 
-    compile project(':exoplayer-library-core')
-    compile project(':exoplayer-library-hls')
-
-    compile 'android.arch.lifecycle:extensions:' + archLifecycleVersion;
+    implementation 'android.arch.lifecycle:extensions:' + archLifecycleVersion;
     annotationProcessor 'android.arch.lifecycle:compiler:' + archLifecycleVersion;
 
 }
