@@ -116,7 +116,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     private AudioManager mAudioManager;
     private static MediaSessionCompat mSession;
     private static MediaControllerCompat mController;
-    private boolean mStationMetadataReceived; // todo remove
+    private boolean mStationMetadataReceived;
     private boolean mAudioFocusLossTransient;
     private boolean mPlayerInitLock;
     private HeadphoneUnplugReceiver mHeadphoneUnplugReceiver;
@@ -284,9 +284,9 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
                 }
 
                 // check for race between onPlayerStateChanged and MetadataHelper
-//                if (!mStationMetadataReceived) {
-//                    mStation.setMetadata(mStation.getStationName());
-//                }
+                if (!mStationMetadataReceived && mStation.getPlaybackState() != PLAYBACK_STATE_STOPPED) {
+                    mStation.setMetadata(mStation.getStationName());
+                }
 
                 // update notification
                 NotificationHelper.update(this, mStation, mSession);

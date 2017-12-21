@@ -4,7 +4,7 @@ README
 Transistor - Radio App for Android
 ----------------------------------
 
-**Version 2.3.x ("Kooks")**
+**Version 3.0.x BETA ("Oh! You Pretty Things")**
 
 Transistor is a bare bones app for listening to radio programs over the internet. The app stores stations as files on your device's external storage. It currently understands streams encoded in MP3, AAC and Ogg/Opus(*).
 
@@ -22,24 +22,23 @@ Install Transistor
 
 How to use Transistor
 ---------------------
-Vew a short video on how to use Transistor on [Vimeo](https://vimeo.com/181179583).
 ### How to add a new radio station?
 The easiest way to add a new station is to search for streaming links and then choose Transistor as a your default handler for those file types. You can also tap the (+) symbol in the top bar and paste in streaming links directly. Please note: Transistor does not feature any kind of built-in search option.
 
 ### How to play back a radio station?
-Tap the big Play button ;).
+Tap the Play button ;).
 
 ### How to stop playback?
-Tap the big Stop button or unplug your headphones or swipe off the notification from the lock screen.
+Tap the Stop button within the app or on the notification - or just unplug your headphones.
 
 ### How to start the sleep timer?
-Tapping the Clock symbol starts a 15 minute countdown after which Transistor stops playback. An additional tap adds 15 minutes to the clock. Playback must be running to be able to activate the sleep timer. 
+Tapping the Clock symbol in the stations detail screen starts a 15 minute countdown after which Transistor stops playback. An additional tap adds 15 minutes to the clock. Playback must be running to be able to activate the sleep timer.
 
 ### How to place a station shortcut on the Home screen?
 The option to place a shortcut for a station on the Home screen can be accessed from the station's three dots menu. A tap on a shortcut will open Transistor - playback will start immediately.
 
 ### How to rename or delete a station?
-The rename and delete options can be accessed both from the station's context menu. Just tap on the three dots symbol. You can manage the list of stations also from a file browser (see next question).
+The rename and delete options can be accessed both from the station's detail screen. Just tap on the three dots symbol. You can manage the list of stations also from a file browser (see next question).
 
 ### Where does Transistor store its stations?
 Transistor does not save its list of stations in a database. Instead it stores stations as M3U files on your device's external storage. Feel free to tinker with those files using the text editor of your choice. The files are stored in /Android/data/org.y20k.transistor/files/Collection.
@@ -68,3 +67,13 @@ Tapping and holding a radio station will toggle a tiny vibration.
 During Playback Transistor acquires a so called partial wake lock. That prevents the Android system to stop playback for power saving reasons.
 
 (*) Opus playback is only supported on devices running Android 5.0+
+
+Screenshots (v3.0)
+---------------------
+[<img src="https://user-images.githubusercontent.com/9103935/34250985-d89e79f6-e63e-11e7-9610-ff7987243841.png" width="240">](https://user-images.githubusercontent.com/9103935/34250985-d89e79f6-e63e-11e7-9610-ff7987243841.png)
+[<img src="https://user-images.githubusercontent.com/9103935/34250986-d8b6f0bc-e63e-11e7-921a-809aa73a089f.png" width="240">](https://user-images.githubusercontent.com/9103935/34250986-d8b6f0bc-e63e-11e7-921a-809aa73a089f.png)
+[<img src="https://user-images.githubusercontent.com/9103935/34250987-d8d03784-e63e-11e7-9edc-1992fd764a39.png" width="240">](https://user-images.githubusercontent.com/9103935/34250987-d8d03784-e63e-11e7-9edc-1992fd764a39.png)
+
+[<img src="https://user-images.githubusercontent.com/9103935/34250988-d8eaa5b0-e63e-11e7-9d72-6bbb37b227db.png" width="240">](https://user-images.githubusercontent.com/9103935/34250988-d8eaa5b0-e63e-11e7-9d72-6bbb37b227db.png)
+[<img src="https://user-images.githubusercontent.com/9103935/34250989-d9048a16-e63e-11e7-886d-419ae55de0eb.png" width="240">](https://user-images.githubusercontent.com/9103935/34250989-d9048a16-e63e-11e7-886d-419ae55de0eb.png)
+[<img src="https://user-images.githubusercontent.com/9103935/34257749-68c2f270-e65b-11e7-97be-815fca8d6529.png" width="240">](https://user-images.githubusercontent.com/9103935/34257749-68c2f270-e65b-11e7-97be-815fca8d6529.png)

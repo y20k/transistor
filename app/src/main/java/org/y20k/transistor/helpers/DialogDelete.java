@@ -63,10 +63,8 @@ public final class DialogDelete implements TransistorKeys {
         deleteDialog.setPositiveButton(R.string.dialog_button_delete, new DialogInterface.OnClickListener() {
             // listen for click on delete button
             public void onClick(DialogInterface arg0, int arg1) {
-
                 // hand station over to main activity
                 ((MainActivity)mActivity).handleStationDelete(mStation);
-
             }
         });
 

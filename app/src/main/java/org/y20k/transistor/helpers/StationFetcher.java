@@ -45,7 +45,6 @@ public final class StationFetcher extends AsyncTask<Void, Void, Bundle> implemen
     private final Uri mStationUri;
     private final String mStationUriScheme;
     private URL mStationURL;
-    private Bitmap mStationBitmap;
     private final boolean mFolderExists;
 
 

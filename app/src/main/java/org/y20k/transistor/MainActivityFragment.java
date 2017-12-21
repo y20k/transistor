@@ -55,7 +55,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.jetbrains.annotations.NotNull;
 import org.y20k.transistor.adapter.CollectionAdapter;
 import org.y20k.transistor.adapter.CollectionViewModel;
 import org.y20k.transistor.core.Station;
@@ -72,8 +71,6 @@ import org.y20k.transistor.helpers.TransistorKeys;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
-
-import be.rijckaert.tim.animatedvector.FloatingMusicActionButton;
 
 
 /**
@@ -94,8 +91,8 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
     private ImageView mPlayerStationImage;
     private TextView mPlayerStationName;
     private TextView mPlayerStationMetadata;
-    private FloatingMusicActionButton mPlayerPlaybackButton;
-    private ImageButton mPlayerExpandButton; // todo check -> remove?
+//    private FloatingMusicActionButton mPlayerPlaybackButton;
+    private ImageButton mPlayerPlaybackButton2;
     private ImageButton mPlayerSheetSleepTimerButton;
     private ImageButton mPlayerSheetStationOptionsButton;
     private ImageButton mPlayerSheetMetadataCopyButton;
@@ -160,11 +157,11 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
         mOnboardingLayout = mRootView.findViewById(R.id.onboarding_layout);
         mRecyclerView = mRootView.findViewById(R.id.list_recyclerview);
         mSwipeRefreshLayout = mRootView.findViewById(R.id.swipeRefreshLayout);
-        mPlayerExpandButton = mRootView.findViewById(R.id.player_button_expand);
         mPlayerStationImage = mRootView.findViewById(R.id.player_station_image);
         mPlayerStationName = mRootView.findViewById(R.id.player_station_name);
         mPlayerStationMetadata = mRootView.findViewById(R.id.player_station_metadata);
-        mPlayerPlaybackButton = mRootView.findViewById(R.id.player_button_playback);
+//        mPlayerPlaybackButton = mRootView.findViewById(R.id.player_button_playback);
+        mPlayerPlaybackButton2 = mRootView.findViewById(R.id.player_playback_button);
         mPlayerSheet = mRootView.findViewById(R.id.player_sheet);
         mPlayerSheetSleepTimerButton = mRootView.findViewById(R.id.player_sheet_timer_button);
         mPlayerSheetStationOptionsButton = mRootView.findViewById(R.id.player_sheet_station_options_button);
@@ -191,8 +188,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
 
         // set up and show station data sheet
         mPlayerBottomSheetBehavior = BottomSheetBehavior.from(mPlayerSheet);
-        mPlayerBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-        mPlayerBottomSheetBehavior.setBottomSheetCallback(getPlayerBottomSheetCallback());
+        minimizePlayer();
 
         // attach listeners to buttons
         setTapListeners();
@@ -402,9 +398,15 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
         });
 
         // playback button
-        mPlayerPlaybackButton.setOnMusicFabClickListener(new FloatingMusicActionButton.OnMusicFabClickListener() {
+//        mPlayerPlaybackButton.setOnMusicFabClickListener(new FloatingMusicActionButton.OnMusicFabClickListener() {
+//            @Override
+//            public void onClick(@NotNull View view) {
+//                togglePlayback(mCurrentStation, false);
+//            }
+//        });
+        mPlayerPlaybackButton2.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(@NotNull View view) {
+            public void onClick(View view) {
                 togglePlayback(mCurrentStation, false);
             }
         });
@@ -413,10 +415,10 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
         mPlayerSheet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mPlayerBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
-                    mPlayerBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                } else {
+                if (mPlayerBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
                     mPlayerBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                } else {
+                    mPlayerBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 }
             }
         });
@@ -527,6 +529,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
             } else {
                 // hide player & show onboarding
                 mPlayerBottomSheetBehavior.setPeekHeight(0);
+                minimizePlayer();
                 mOnboardingLayout.setVisibility(View.VISIBLE);
             }
         }
@@ -547,25 +550,53 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
     private void setupStationPlaybackButtonState(Station station) {
         if (isAdded()) {
             // toggle views needed for active playback
-            LogHelper.w(LOG_TAG, "!!! Playback Button for: "+ station.getStationName() + " State = " + station.getPlaybackState()); // todo remove
             switch (station.getPlaybackState()) {
                 case PLAYBACK_STATE_STOPPED: {
-                    mPlayerPlaybackButton.changeMode(FloatingMusicActionButton.Mode.PLAY_TO_STOP);
-                    LogHelper.w(LOG_TAG, "!!! Playback Button - changing mode: PLAY icon"); // todo remove
+                    Animation rotateCounterClockwise = AnimationUtils.loadAnimation(mActivity, R.anim.rotate_counterclockwise_fast);
+                    rotateCounterClockwise.setAnimationListener(createAnimationListener(PLAYBACK_STATE_STOPPED));
+                    mPlayerPlaybackButton2.startAnimation(rotateCounterClockwise);
+//                    mPlayerPlaybackButton.changeMode(FloatingMusicActionButton.Mode.PLAY_TO_STOP);
                     break;
                 }
                 case PLAYBACK_STATE_LOADING_STATION: {
-                    mPlayerPlaybackButton.changeMode(FloatingMusicActionButton.Mode.STOP_TO_PLAY);
-                    LogHelper.w(LOG_TAG, "!!! Playback Button - changing mode: STOP icon"); // todo remove
+                    Animation rotateClockwise = AnimationUtils.loadAnimation(mActivity, R.anim.rotate_clockwise_slow);
+                    rotateClockwise.setAnimationListener(createAnimationListener(PLAYBACK_STATE_LOADING_STATION));
+                    mPlayerPlaybackButton2.startAnimation(rotateClockwise);
+//                    mPlayerPlaybackButton.changeMode(FloatingMusicActionButton.Mode.STOP_TO_PLAY);
                     break;
                 }
                 case PLAYBACK_STATE_STARTED: {
-                    mPlayerPlaybackButton.changeMode(FloatingMusicActionButton.Mode.STOP_TO_PLAY);
-                    LogHelper.w(LOG_TAG, "!!! Playback Button - changing mode: STOP icon"); // todo remove
+                    mPlayerPlaybackButton2.setImageResource(R.drawable.ic_stop_white_36dp);
+//                    mPlayerPlaybackButton.changeMode(FloatingMusicActionButton.Mode.STOP_TO_PLAY);
                     break;
                 }
             }
         }
+    }
+
+
+    /* Creates AnimationListener for playback button */
+    private Animation.AnimationListener createAnimationListener(final int targetState) {
+        return new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                // set up button symbol and playback indicator afterwards
+                switch (targetState) {
+                    case PLAYBACK_STATE_STOPPED:
+                        mPlayerPlaybackButton2.setImageResource(R.drawable.ic_play_arrow_white_36dp);
+                        break;
+                    case PLAYBACK_STATE_LOADING_STATION:
+                        mPlayerPlaybackButton2.setImageResource(R.drawable.ic_stop_white_36dp);
+                        break;
+                }
+            }
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        };
     }
 
 
@@ -709,7 +740,6 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
                 // make room for notification
                 int notificationHeight = mSleepTimerNotification.getView().getHeight();
                 mPlayerBottomSheetBehavior.setPeekHeight(convertDpToPx(PLAYER_SHEET_PEEK_HEIGHT) + notificationHeight);
-//                mPlayerBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED); // todo remove
                 mStationDataSheetSampleRate.setPadding(0,0,0,notificationHeight);
             }
             @Override
@@ -761,45 +791,6 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
         // download and add new station
         StationFetcher stationFetcher = new StationFetcher(mActivity, mStorageHelper.getCollectionDirectory(), stationUri);
         stationFetcher.execute();
-    }
-
-
-    /* Creates BottomSheetCallback for the player sheet - needed in onCreateView */
-    private BottomSheetBehavior.BottomSheetCallback getPlayerBottomSheetCallback() {
-        return new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                // react to state change
-                switch (newState) {
-                    case BottomSheetBehavior.STATE_EXPANDED:
-                        // details sheet expanded
-                        mPlayerExpandButton.setImageResource(R.drawable.ic_minimize_white_24dp);
-                        break;
-                    case BottomSheetBehavior.STATE_COLLAPSED:
-                        // details sheet collapsed
-                        mPlayerExpandButton.setImageResource(R.drawable.ic_expand_white_24dp);
-                        break;
-                    case BottomSheetBehavior.STATE_HIDDEN:
-                        // statistics sheet hidden
-                        mPlayerBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                        break;
-                    default:
-                        break;
-                }
-            }
-            @Override
-            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-                // react to dragging events
-                if (slideOffset < 0.125f) {
-                    // change expand button
-                    mPlayerExpandButton.setImageResource(R.drawable.ic_expand_white_24dp); // todo remove
-                } else {
-                    // change expand button
-                    mPlayerExpandButton.setImageResource(R.drawable.ic_minimize_white_24dp); // todo remove
-                }
-
-            }
-        };
     }
 
 
@@ -899,21 +890,23 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
                     // CASE: NAME
                     if (!(newName.equals(oldName))) {
                         mPlayerStationName.setText(newStation.getStationName());
+                        minimizePlayer();
                     }
                     // CASE: IMAGE
                     else if (newImageSize != oldImageSize) {
                         ImageHelper imageHelper = new ImageHelper(newStation, mActivity);
                         Bitmap stationImage = imageHelper.createCircularFramedImage(192);
                         mPlayerStationImage.setImageBitmap(stationImage);
+                        minimizePlayer();
                     }
                     // CASE: METADATA
                     else if (!(newMetaData.equals(oldMetaData))) {
-                        LogHelper.w(LOG_TAG, "!!! new metadata"); // todo remove
+                        LogHelper.e(LOG_TAG, "!!! new metadata --> " + newMetaData); // todo remove
                         setupStationMetadataViews(newStation);
                     }
                     // CASE: PLAYBACK STATE
                     if (mCurrentStation.getPlaybackState() != newStation.getPlaybackState()) {
-                        LogHelper.w(LOG_TAG, "!!! new playbackstate"); // todo remov
+                        LogHelper.e(LOG_TAG, "!!! new playbackstate: " + mCurrentStation.getPlaybackState()); // todo remove
                         setupStationPlaybackButtonState(newStation);
                         setupStationMetadataViews(newStation);
                         setupExtendedMetaDataViews(newStation);

@@ -53,14 +53,27 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
-            <!-- MIME Type -->
+            <!-- handle file extension intent from web browser -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <data android:scheme="http"/>
+                <data android:scheme="http" />
                 <data android:scheme="https" />
-                <data android:scheme="file" />
+                <data android:host="*" />
+                <data android:pathPattern=".*\\.m3u" />
+                <data android:pathPattern=".*\\.m3u8" />
+                <data android:pathPattern=".*\\.pls" />
+            </intent-filter>
+
+            <!-- handle mimetype intent from web browser -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data android:host="*" />
                 <data android:mimeType="audio/x-scpls" />
                 <data android:mimeType="audio/mpegurl" />
                 <data android:mimeType="audio/x-mpegurl" />
@@ -69,13 +82,10 @@
                 <data android:mimeType="application/vnd.apple.mpegurl.audio" />
             </intent-filter>
 
-            <!-- File extensions -->
+            <!-- handle file extension intent from file browser -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <data android:scheme="http"/>
-                <data android:scheme="https" />
                 <data android:scheme="file" />
                 <data android:host="*" />
                 <data android:pathPattern=".*\\.m3u" />

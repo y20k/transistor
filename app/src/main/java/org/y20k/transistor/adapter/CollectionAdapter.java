@@ -325,7 +325,9 @@ public final class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.V
         ArrayList<Station> newStationList = StationListHelper.copyStationList(mStationList);
 
         int stationId = StationListHelper.findStationId(newStationList, newStation.getStreamUri());
-        newStationList.set(stationId, newStation);
+        if (stationId != -1) {
+            newStationList.set(stationId, newStation);
+        }
 
         // update liva data station from PlayerService - used in PlayerFragment
         mCollectionViewModel.getPlayerServiceStation().setValue(newStation);
@@ -393,7 +395,7 @@ public final class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.V
                 DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new CollectionAdapterDiffUtilCallback(mStationList, newStationList), true);
 
                 // update current station list
-                mStationList = newStationList;
+                mStationList = StationListHelper.copyStationList(newStationList);
                 // inform this adapter about the changes
                 diffResult.dispatchUpdatesTo(CollectionAdapter.this);
            }

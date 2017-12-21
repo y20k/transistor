@@ -17,7 +17,6 @@ package org.y20k.transistor.helpers;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.support.v4.content.pm.ShortcutInfoCompat;
 import android.support.v4.content.pm.ShortcutManagerCompat;
@@ -107,13 +106,16 @@ public class ShortcutHelper implements TransistorKeys {
     /* Create shortcut icon */
     private Bitmap createShortcutIcon(Station station) {
         ImageHelper imageHelper = new ImageHelper(station, mContext);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            // only return the station image
-            return imageHelper.getInputImage();
-        } else {
-            // return station image in circular frame
-            return imageHelper.createShortcut(192);
-        }
+        return imageHelper.createShortcut(192);
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            // only return the station image
+//            return imageHelper.getInputImage();
+//        } else {
+//            // return station image in circular frame
+//            return imageHelper.createShortcut(192);
+//        }
+
     }
 
 }

@@ -300,7 +300,7 @@ public final class MainActivity extends AppCompatActivity implements TransistorK
                 stationId = 0;
             }
 
-            // show next station in list && show next station in player view
+            // show next station in list & show next station in player & minimize player
             Fragment mainActivityFragment = getSupportFragmentManager().findFragmentByTag(MAIN_ACTIVITY_FRAGMENT_TAG);
             if (mainActivityFragment!= null && mainActivityFragment.isAdded() && newStationList.size() > 0) {
                 ((MainActivityFragment)mainActivityFragment).updatePlayerAfterDelete(newStationList.get(stationId));
