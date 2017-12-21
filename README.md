@@ -71,9 +71,9 @@ During Playback Transistor acquires a so called partial wake lock. That prevents
 Screenshots (v3.0)
 ---------------------
 [<img src="https://user-images.githubusercontent.com/9103935/34250985-d89e79f6-e63e-11e7-9610-ff7987243841.png" width="240">](https://user-images.githubusercontent.com/9103935/34250985-d89e79f6-e63e-11e7-9610-ff7987243841.png)
-[<img src="https://user-images.githubusercontent.com/9103935/34250986-d8b6f0bc-e63e-11e7-921a-809aa73a089f.png" width="240">](https://user-images.githubusercontent.com/9103935/34250986-d8b6f0bc-e63e-11e7-921a-809aa73a089f.png)
-[<img src="https://user-images.githubusercontent.com/9103935/34250987-d8d03784-e63e-11e7-9edc-1992fd764a39.png" width="240">](https://user-images.githubusercontent.com/9103935/34250987-d8d03784-e63e-11e7-9edc-1992fd764a39.png)
+[<img src="https://user-images.githubusercontent.com/9103935/34267758-5754c16c-e67e-11e7-953d-dee955850aa7.png" width="240">](https://user-images.githubusercontent.com/9103935/34267758-5754c16c-e67e-11e7-953d-dee955850aa7.png)
+[<img src="https://user-images.githubusercontent.com/9103935/34267759-576f6b84-e67e-11e7-883f-3f6acfedea5b.png" width="240">](https://user-images.githubusercontent.com/9103935/34267759-576f6b84-e67e-11e7-883f-3f6acfedea5b.png)
 
-[<img src="https://user-images.githubusercontent.com/9103935/34250988-d8eaa5b0-e63e-11e7-9d72-6bbb37b227db.png" width="240">](https://user-images.githubusercontent.com/9103935/34250988-d8eaa5b0-e63e-11e7-9d72-6bbb37b227db.png)
+[<img src="https://user-images.githubusercontent.com/9103935/34267760-578a3086-e67e-11e7-8cce-98ca4a238be5.png" width="240">](https://user-images.githubusercontent.com/9103935/34267760-578a3086-e67e-11e7-8cce-98ca4a238be5.png)
 [<img src="https://user-images.githubusercontent.com/9103935/34250989-d9048a16-e63e-11e7-886d-419ae55de0eb.png" width="240">](https://user-images.githubusercontent.com/9103935/34250989-d9048a16-e63e-11e7-886d-419ae55de0eb.png)
 [<img src="https://user-images.githubusercontent.com/9103935/34257749-68c2f270-e65b-11e7-97be-815fca8d6529.png" width="240">](https://user-images.githubusercontent.com/9103935/34257749-68c2f270-e65b-11e7-97be-815fca8d6529.png)
