@@ -91,8 +91,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
     private ImageView mPlayerStationImage;
     private TextView mPlayerStationName;
     private TextView mPlayerStationMetadata;
-//    private FloatingMusicActionButton mPlayerPlaybackButton;
-    private ImageButton mPlayerPlaybackButton2;
+    private ImageButton mPlayerPlaybackButton;
     private ImageButton mPlayerSheetSleepTimerButton;
     private ImageButton mPlayerSheetStationOptionsButton;
     private ImageButton mPlayerSheetMetadataCopyButton;
@@ -160,8 +159,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
         mPlayerStationImage = mRootView.findViewById(R.id.player_station_image);
         mPlayerStationName = mRootView.findViewById(R.id.player_station_name);
         mPlayerStationMetadata = mRootView.findViewById(R.id.player_station_metadata);
-//        mPlayerPlaybackButton = mRootView.findViewById(R.id.player_button_playback);
-        mPlayerPlaybackButton2 = mRootView.findViewById(R.id.player_playback_button);
+        mPlayerPlaybackButton = mRootView.findViewById(R.id.player_playback_button);
         mPlayerSheet = mRootView.findViewById(R.id.player_sheet);
         mPlayerSheetSleepTimerButton = mRootView.findViewById(R.id.player_sheet_timer_button);
         mPlayerSheetStationOptionsButton = mRootView.findViewById(R.id.player_sheet_station_options_button);
@@ -398,13 +396,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
         });
 
         // playback button
-//        mPlayerPlaybackButton.setOnMusicFabClickListener(new FloatingMusicActionButton.OnMusicFabClickListener() {
-//            @Override
-//            public void onClick(@NotNull View view) {
-//                togglePlayback(mCurrentStation, false);
-//            }
-//        });
-        mPlayerPlaybackButton2.setOnClickListener(new View.OnClickListener() {
+        mPlayerPlaybackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 togglePlayback(mCurrentStation, false);
@@ -552,22 +544,40 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
             // toggle views needed for active playback
             switch (station.getPlaybackState()) {
                 case PLAYBACK_STATE_STOPPED: {
+                    mPlayerPlaybackButton.setImageResource(R.drawable.ic_play_arrow_white_36dp);
+                    break;
+                }
+                case PLAYBACK_STATE_LOADING_STATION: {
+                    mPlayerPlaybackButton.setImageResource(R.drawable.ic_stop_white_36dp);
+                    break;
+                }
+                case PLAYBACK_STATE_STARTED: {
+                    mPlayerPlaybackButton.setImageResource(R.drawable.ic_stop_white_36dp);
+                    break;
+                }
+            }
+        }
+    }
+
+
+    private void animatePlaybackButtonStateTransition(Station station) {
+        if (isAdded()) {
+            // toggle views needed for active playback
+            switch (station.getPlaybackState()) {
+                case PLAYBACK_STATE_STOPPED: {
                     Animation rotateCounterClockwise = AnimationUtils.loadAnimation(mActivity, R.anim.rotate_counterclockwise_fast);
-                    rotateCounterClockwise.setAnimationListener(createAnimationListener(PLAYBACK_STATE_STOPPED));
-                    mPlayerPlaybackButton2.startAnimation(rotateCounterClockwise);
-//                    mPlayerPlaybackButton.changeMode(FloatingMusicActionButton.Mode.PLAY_TO_STOP);
+                    rotateCounterClockwise.setAnimationListener(createAnimationListener(station));
+                    mPlayerPlaybackButton.startAnimation(rotateCounterClockwise);
                     break;
                 }
                 case PLAYBACK_STATE_LOADING_STATION: {
                     Animation rotateClockwise = AnimationUtils.loadAnimation(mActivity, R.anim.rotate_clockwise_slow);
-                    rotateClockwise.setAnimationListener(createAnimationListener(PLAYBACK_STATE_LOADING_STATION));
-                    mPlayerPlaybackButton2.startAnimation(rotateClockwise);
-//                    mPlayerPlaybackButton.changeMode(FloatingMusicActionButton.Mode.STOP_TO_PLAY);
+                    rotateClockwise.setAnimationListener(createAnimationListener(station));
+                    mPlayerPlaybackButton.startAnimation(rotateClockwise);
                     break;
                 }
                 case PLAYBACK_STATE_STARTED: {
-                    mPlayerPlaybackButton2.setImageResource(R.drawable.ic_stop_white_36dp);
-//                    mPlayerPlaybackButton.changeMode(FloatingMusicActionButton.Mode.STOP_TO_PLAY);
+                    setupStationPlaybackButtonState(station);
                     break;
                 }
             }
@@ -576,7 +586,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
 
 
     /* Creates AnimationListener for playback button */
-    private Animation.AnimationListener createAnimationListener(final int targetState) {
+    private Animation.AnimationListener createAnimationListener(final Station station) {
         return new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -584,14 +594,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
             @Override
             public void onAnimationEnd(Animation animation) {
                 // set up button symbol and playback indicator afterwards
-                switch (targetState) {
-                    case PLAYBACK_STATE_STOPPED:
-                        mPlayerPlaybackButton2.setImageResource(R.drawable.ic_play_arrow_white_36dp);
-                        break;
-                    case PLAYBACK_STATE_LOADING_STATION:
-                        mPlayerPlaybackButton2.setImageResource(R.drawable.ic_stop_white_36dp);
-                        break;
-                }
+                setupStationPlaybackButtonState(station);
             }
             @Override
             public void onAnimationRepeat(Animation animation) {
@@ -907,7 +910,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
                     // CASE: PLAYBACK STATE
                     if (mCurrentStation.getPlaybackState() != newStation.getPlaybackState()) {
                         LogHelper.e(LOG_TAG, "!!! new playbackstate: " + mCurrentStation.getPlaybackState()); // todo remove
-                        setupStationPlaybackButtonState(newStation);
+                        animatePlaybackButtonStateTransition(newStation);
                         setupStationMetadataViews(newStation);
                         setupExtendedMetaDataViews(newStation);
                     }

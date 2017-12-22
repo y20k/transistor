@@ -39,8 +39,6 @@ dependencies {
     implementation 'com.android.support:palette-v7:' + supportLibraryVersion
     implementation 'com.android.support.constraint:constraint-layout:1.1.0-beta4'
 
-    implementation project(':libraries:musicfab')
-
     implementation project(':exoplayer-library-core')
     implementation project(':exoplayer-library-hls')
 
