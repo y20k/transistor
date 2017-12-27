@@ -30,7 +30,7 @@ allprojects {
         applicationId = 'org.y20k.transistor'
         versionCode = 50
         versionName = '3.0.0'
-        minSdkVersion = 21
+        minSdkVersion = 19
         compileSdkVersion = 27
         targetSdkVersion = 27
         buildToolsVersion = '27.0.2'

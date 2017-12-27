@@ -144,7 +144,7 @@ public final class NotificationHelper implements TransistorKeys {
         NotificationCompat.Builder builder;
         builder = new NotificationCompat.Builder(context, NOTIFICATION_CHANEL_ID_PLAYBACK_CHANNEL);
         builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
-        builder.setSmallIcon(R.drawable.ic_app_icon_white_24dp);
+        builder.setSmallIcon(R.drawable.ic_notification_app_icon_white_24dp);
         builder.setLargeIcon(getStationIcon(context, station));
         builder.setContentTitle(station.getStationName());
         builder.setContentText(station.getMetadata());
@@ -154,9 +154,9 @@ public final class NotificationHelper implements TransistorKeys {
         builder.setDeleteIntent(swipeActionPendingIntent);
 
         if (station.getPlaybackState() != PLAYBACK_STATE_STOPPED) {
-            builder.addAction(R.drawable.ic_stop_white_36dp, context.getString(R.string.notification_stop), stopActionPendingIntent);
+            builder.addAction(R.drawable.ic_notification_stop_white_36dp, context.getString(R.string.notification_stop), stopActionPendingIntent);
         } else {
-            builder.addAction(R.drawable.ic_play_arrow_white_36dp, context.getString(R.string.notification_play), playActionPendingIntent);
+            builder.addAction(R.drawable.ic_notification_play_arrow_white_36dp, context.getString(R.string.notification_play), playActionPendingIntent);
         }
 
         return builder;
