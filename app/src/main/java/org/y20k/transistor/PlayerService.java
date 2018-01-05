@@ -306,6 +306,11 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
     }
 
+    @Override
+    public void onShuffleModeEnabledChanged(boolean shuffleModeEnabled) {
+
+    }
+
 
     @Override
     public void onPlayerError(ExoPlaybackException error) {
@@ -329,6 +334,11 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
                 LogHelper.w(LOG_TAG, "An error occurred. Type OTHER ERROR.");
                 break;
         }
+
+    }
+
+    @Override
+    public void onPositionDiscontinuity(int reason) {
 
     }
 
@@ -369,13 +379,12 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
 
     @Override
-    public void onPositionDiscontinuity() {
+    public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {
 
     }
 
-
     @Override
-    public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {
+    public void onSeekProcessed() {
 
     }
 
