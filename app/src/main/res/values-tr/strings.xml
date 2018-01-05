@@ -31,7 +31,7 @@
     <string name="descr_station_name_example">Örnek FM</string>
     <string name="descr_station_metadata_example">Sanatçı - Başlık</string>
     <string name="descr_station_stream_loading">Yayın yükleniyor…</string>
-    <string name="descr_playback_button">Büyük oynatma düğmesi</string>
+    <string name="descr_playback_button">Altın oynatma düğmesi</string>
     <string name="descr_playback_indicator">Yürütülen oynatma için gösterge</string>
     <string name="descr_playback_indicator_started">Yürütülen oynatma için gösterge</string>
     <string name="descr_timer_icon">Sleep timer icon</string>
@@ -48,7 +48,7 @@
     <string name="player_sheet_h1_details">Details</string>
     <string name="player_sheet_h2_current_session">Current session</string>
     <string name="player_sheet_h2_station_name">İstasyon</string>
-    <string name="player_sheet_h2_station_metadata">Şimdi Oynatılıyor</string>
+    <string name="player_sheet_h2_station_metadata">Şimdi oynatılıyor</string>
     <string name="player_sheet_h2_stream_url">Yayın bağlantısı</string>
     <string name="player_sheet_p_station_metadata">kullanılabilir meta veri yok</string>
     <string name="player_sheet_h2_station_mime_type">MIME türü</string>
