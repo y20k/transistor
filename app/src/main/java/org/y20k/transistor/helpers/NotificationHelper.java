@@ -6,7 +6,7 @@
  * This file is part of
  * TRANSISTOR - Radio App for Android
  *
- * Copyright (c) 2015-17 - Y20K.org
+ * Copyright (c) 2015-18 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
  */

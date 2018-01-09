@@ -6,7 +6,7 @@
  * This file is part of
  * TRANSISTOR - Radio App for Android
  *
- * Copyright (c) 2015-17 - Y20K.org
+ * Copyright (c) 2015-18 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
  */
@@ -27,6 +27,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -203,6 +204,9 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
     @Override
     public void onResume() {
         super.onResume();
+
+        // switch volume control from ringtone to music
+        mActivity.setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
         // refresh app state
         loadAppState(mActivity);
@@ -904,12 +908,10 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
                     }
                     // CASE: METADATA
                     else if (!(newMetaData.equals(oldMetaData))) {
-                        LogHelper.e(LOG_TAG, "!!! new metadata --> " + newMetaData); // todo remove
                         setupStationMetadataViews(newStation);
                     }
                     // CASE: PLAYBACK STATE
                     if (mCurrentStation.getPlaybackState() != newStation.getPlaybackState()) {
-                        LogHelper.e(LOG_TAG, "!!! new playbackstate: " + mCurrentStation.getPlaybackState()); // todo remove
                         animatePlaybackButtonStateTransition(newStation);
                         setupStationMetadataViews(newStation);
                         setupExtendedMetaDataViews(newStation);
