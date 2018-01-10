@@ -4,9 +4,9 @@
     <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
 
     <!-- app shortcuts -->
-    <string name="shortcut_last_station_short_label">Last station</string>
+    <string name="shortcut_last_station_short_label">Azken irratia</string>
     <string name="shortcut_last_station_long_label">Jo azken irratia</string>
-    <string name="shortcut_last_station_disabled_message">Shortcut for playback of last station disabled.</string>
+    <string name="shortcut_last_station_disabled_message">Azken irratia erreproduzitzeko laster-marka desgaituta.</string>
 
     <!-- menu entries -->
     <string name="menu_about">Honi buruz</string>
@@ -34,19 +34,19 @@
     <string name="descr_playback_button">Urrezko erreproduzitu botoia</string>
     <string name="descr_playback_indicator">Erreprodukzioa martxan adierazlea</string>
     <string name="descr_playback_indicator_started">Erreprodukzioa martxan adierazlea</string>
-    <string name="descr_timer_icon">Sleep timer icon</string>
+    <string name="descr_timer_icon">Atzera kontaketaren ikonoa</string>
     <string name="descr_timer_indicator_started">Atzera kontaketa martxan adierazlea</string>
-    <string name="descr_player_sheet_button_expand">Button to expand and minimize the radio player</string>
+    <string name="descr_player_sheet_button_expand">Irrati erreproduzigailua hedatu eta minimizatzeko botoia</string>
     <string name="descr_player_sheet_information_icon">Information Icon</string>
     <string name="descr_player_sheet_content_copy_icon">Edukia kopiatzeko ikonoa</string>
     <string name="descr_player_sheet_p_station_name">Aukeratutako irrati estazioaren izena</string>
     <string name="descr_player_sheet_p_station_metadata">Aukeratutako irrati estazioaren metadatuak</string>
     <string name="descr_player_sheet_p_stream_url">Aukeratutako irrati estazioaren jarioaren esteka</string>
-    <string name="descr_list_add_new">Add a new station</string>
+    <string name="descr_list_add_new">Gehitu irrati berria</string>
 
     <!-- player -->
     <string name="player_sheet_h1_details">Details</string>
-    <string name="player_sheet_h2_current_session">Current session</string>
+    <string name="player_sheet_h2_current_session">Uneko saioa</string>
     <string name="player_sheet_h2_station_name">Estazioa</string>
     <string name="player_sheet_h2_station_metadata">Orain entzuten</string>
     <string name="player_sheet_h2_stream_url">Jario URLa</string>
@@ -126,8 +126,8 @@
     <string name="notification_channel_playback_description">Erreprodukzio kontrolak, irratiaren logoa eta unean jotzen ari denaren informazioa.</string>
 
     <!-- onboarding -->
-    <string name="onboarding_app_description">Radio App</string>
-    <string name="onboarding_app_get_started">Get started</string>
+    <string name="onboarding_app_description">Irrati aplikazioa</string>
+    <string name="onboarding_app_get_started">Hasi</string>
 
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7
