@@ -31,7 +31,7 @@
     <string name="descr_station_name_example">Adibideko FM</string>
     <string name="descr_station_metadata_example">Artista - Titulua</string>
     <string name="descr_station_stream_loading">Jarioa kargatzen …</string>
-    <string name="descr_playback_button">Erreproduzitu botoi handia</string>
+    <string name="descr_playback_button">Urrezko erreproduzitu botoia</string>
     <string name="descr_playback_indicator">Erreprodukzioa martxan adierazlea</string>
     <string name="descr_playback_indicator_started">Erreprodukzioa martxan adierazlea</string>
     <string name="descr_timer_icon">Sleep timer icon</string>
@@ -41,7 +41,7 @@
     <string name="descr_player_sheet_content_copy_icon">Edukia kopiatzeko ikonoa</string>
     <string name="descr_player_sheet_p_station_name">Aukeratutako irrati estazioaren izena</string>
     <string name="descr_player_sheet_p_station_metadata">Aukeratutako irrati estazioaren metadatuak</string>
-    <string name="descr_player_sheet_p_stream_url">Aukeratutako irrati estazioaren jarioaren URLa</string>
+    <string name="descr_player_sheet_p_stream_url">Aukeratutako irrati estazioaren jarioaren esteka</string>
     <string name="descr_list_add_new">Add a new station</string>
 
     <!-- player -->
@@ -60,7 +60,7 @@
     <string name="dialog_generic_button_okay">Ados</string>
     <string name="dialog_generic_button_cancel">Utzi</string>
     <string name="dialog_add_station_button">Gehitu</string>
-    <string name="dialog_add_station_input_hint">Itsatsi jario URLa</string>
+    <string name="dialog_add_station_input_hint">Itsatsi jarioaren esteka</string>
     <string name="dialog_add_station_message">Gehitu irrati berria</string>
     <string name="dialog_add_station_howto">MP3, AAC edo Ogg/Opus gisa kodetutako audio jario gordinak eta m3u edo pls fitxategietan kapsulatutako jarioak gehitu ditzakezu. Bestela irrati berriak gehitu ditzakezu zure nabigatzailean jarioaren loturan sakatuz (pls edo m3u).</string>
     <string name="dialog_delete_station_message">Ezabatu irratia</string>
@@ -79,12 +79,12 @@
     <string name="dialog_error_title_fetch_read">Irakurtze arazoa</string>
     <string name="dialog_error_title_fetch_write">Idazte arazoa</string>
     <string name="dialog_error_message_fetch_general_external_storage">Kanpo biltegiratzea:</string>
-    <string name="dialog_error_message_fetch_general_hint_m3u">Oharra: Transistor MP3, AAC eta Ogg/Opus formatuetan kodetutako jarioak edo .m3u or .pls luzapenetan bukatutako URLak besterik ezin ditzake prozesatu.</string>
+    <string name="dialog_error_message_fetch_general_hint_m3u">Oharra: Transistor MP3, AAC eta Ogg/Opus formatuetan kodetutako jarioak edo .m3u or .pls luzapenetan bukatutako estekak besterik ezin ditzake prozesatu.</string>
     <string name="dialog_error_message_fetch_general_playlist_type">MIME fitxategi mota:</string>
     <string name="dialog_error_message_fetch_general_stream_type">MIME jario mota:</string>
     <string name="dialog_error_message_fetch_general_file_content">Fitxategiaren edukia:</string>
     <string name="dialog_error_message_fetch_download">Transistor saiatu da, baina ez du lotura ulertzen.</string>
-    <string name="dialog_error_message_fetch_download_station_url">Estazioaren URLa:</string>
+    <string name="dialog_error_message_fetch_download_station_url">Estazioaren jarioaren esteka:</string>
     <string name="dialog_error_message_fetch_read">Transistor saiatu da, baina ez du fitxategia ulertzen.</string>
     <string name="dialog_error_message_fetch_read_file_location">Fitxategiaren kokalekua:</string>
     <string name="dialog_error_message_fetch_write">Ezin izan da irratia biltegiratzera gorde.</string>
@@ -98,7 +98,7 @@
     <string name="toastmessage_shortcut_created">Lasterbidea sortu da.</string>
     <string name="toastmessage_shortcut_not_created">Ez da lasterbidea sortu. Gailu honek ez du lasterbideak sortzea ahalbidetzen.</string>
     <string name="toastmessage_list_refreshed">Irratien zerrenda birkargatzen.</string>
-    <string name="toastmessage_copied_to_clipboard_url">Jarioaren URLa arbelera kopiatu da.</string>
+    <string name="toastmessage_copied_to_clipboard_url">Jarioaren esteka arbelera kopiatu da.</string>
     <string name="toastmessage_copied_to_clipboard_metadata">Metadatuak arbelera kopiatu dira.</string>
     <string name="toastmessage_station_copied">Estazioa arbelera kopiatu da.</string>
     <string name="toastmessage_stream_may_not_work">Onartu gabeko audio formatua atzeman da. Jarioaren erreprodukzioa agian ez da behar bezalakoa izango.</string>
