@@ -105,7 +105,7 @@ public final class ImageHelper {
 
         // extract color palette from station image
         Palette palette = Palette.from(mInputImage).generate();
-        // get musted and vibrant swatches
+        // get muted and vibrant swatches
         Palette.Swatch vibrantSwatch = palette.getVibrantSwatch();
         Palette.Swatch mutedSwatch = palette.getMutedSwatch();
 
@@ -125,7 +125,7 @@ public final class ImageHelper {
 
 
 
-    /* Creates station image on a circular background with defaukt color */
+    /* Creates station image on a circular background with default color */
     public Bitmap createCircularFramedImage(int size) {
         // get default color
         int color = ContextCompat.getColor(mContext, R.color.transistor_grey_lighter);

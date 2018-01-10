@@ -89,7 +89,6 @@
         android:layout_width="wrap_content"
         android:layout_height="18dp"
         android:layout_marginBottom="16dp"
-        android:elegantTextHeight="false"
         android:text="@string/onboarding_app_rodriguez_quote_2"
         android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="parent"

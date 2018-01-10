@@ -279,7 +279,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
     }
 
 
-    /* Refreshes list of stations - used by pull to refesh */
+    /* Refreshes list of stations - used by pull to refresh */
     private void refreshList() {
 //        // stop player service using intent
 //        Intent intent = new Intent(mActivity, PlayerService.class);
@@ -758,7 +758,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
             }
         });
         // stretch Snackbar
-        (mSleepTimerNotification.getView()).getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;;
+        (mSleepTimerNotification.getView()).getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
         mSleepTimerNotification.show();
     }
 
@@ -928,7 +928,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
                     if (mSleepTimerRunning && newStation.getPlaybackState() == PLAYBACK_STATE_STOPPED) {
                         stopSleepTimer();
                     }
-                    // update station currently used by player servic
+                    // update station currently used by player service
                     mPlayerServiceStation = newStation;
                 }
             }

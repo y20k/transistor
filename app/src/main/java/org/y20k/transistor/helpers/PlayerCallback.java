@@ -81,7 +81,7 @@ public interface PlayerCallback {
      * This method is called when the player creates a new AudioTrack object
      * - before any PCM data are fed into it.
      *
-     * @param value the metadata value
+     * @param audioTrack the AudioTrack object
      */
     public void playerAudioTrackCreated( AudioTrack audioTrack );
 

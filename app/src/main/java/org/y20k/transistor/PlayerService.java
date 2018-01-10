@@ -117,13 +117,11 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     private static Station mStation;
     private PackageValidator mPackageValidator;
     private StationListProvider mStationListProvider;
-    private AudioManager mAudioManager;
     private AudioFocusHelper mAudioFocusHelper;
-    private AudioAttributesCompat mAudioAttributes;
+    private AudioFocusRequestCompat mAudioFocusRequest;
     private static MediaSessionCompat mSession;
     private static MediaControllerCompat mController;
     private boolean mStationMetadataReceived;
-    private boolean mAudioFocusLossTransient;
     private boolean mPlayerInitLock;
     private HeadphoneUnplugReceiver mHeadphoneUnplugReceiver;
     private WifiManager.WifiLock mWifiLock;
@@ -141,8 +139,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         super.onCreate();
 
         // set up variables
-        mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        mAudioFocusLossTransient = false;
         mStationMetadataReceived = false;
         mPlayerInitLock = false;
         mSession = createMediaSession(this);
@@ -159,14 +155,11 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         mStationListProvider = new StationListProvider();
         mPackageValidator = new PackageValidator(this);
 
-        // build audio attributes
-        mAudioAttributes = new AudioAttributesCompat.Builder()
-                .setUsage(C.USAGE_MEDIA)
-                .setContentType(C.CONTENT_TYPE_MUSIC)
-                .build();
-
-        // create audiofocus helper
+        // create audio focus helper
         mAudioFocusHelper = new AudioFocusHelper(this);
+
+        // create audio focus request
+        mAudioFocusRequest = createFocusRequest();
 
         // create media controller
         try {
@@ -177,7 +170,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         }
 
         // get instance of mPlayer
-        createPlayer(mAudioAttributes);
+        createPlayer();
     }
 
 
@@ -458,37 +451,34 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
     }
 
+
     @Override
-    /* Checks if player is playing - method required by AudioFocusAwarePlayer */
     public boolean isPlaying() {
-        LogHelper.e(LOG_TAG, "!!! is playing?" +  mPlayer.getPlayWhenReady()); // todo remove
+        // checks if player is playing (method required by AudioFocusAwarePlayer)
         return mPlayer.getPlayWhenReady();
     }
 
 
     @Override
-    /* Starts playback - method required by AudioFocusAwarePlayer */
     public void play() {
-        // start the stream
+        // start the stream (method required by AudioFocusAwarePlayer)
         mPlayer.setPlayWhenReady(true);
 //        mController.getTransportControls().play();
     }
 
 
     @Override
-    /* Pauses / stops playback - method required by AudioFocusAwarePlayer */
     public void pause() {
-        // just stop the stream
+        // just stop the stream (method required by AudioFocusAwarePlayer)
         mPlayer.setPlayWhenReady(false);
 //        mController.getTransportControls().stop();
     }
 
 
     @Override
-    /* Stops playback - method required by AudioFocusAwarePlayer */
     public void stop() {
-        // stop the stream
-        mController.getTransportControls().stop();
+        // stop the stream (method required by AudioFocusAwarePlayer)
+        mController.getTransportControls().pause();
     }
 
 
@@ -498,54 +488,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         // set volume in ExoPlayer
         mPlayer.setVolume(volume);
     }
-
-
-
-//    @Override
-//    public void onAudioFocusChange(int focusChange) {
-//        switch (focusChange) {
-//            // gain of audio focus of unknown duration
-//            case AudioManager.AUDIOFOCUS_GAIN:
-//                if (mAudioFocusLossTransient) {
-//                    // AUDIOFOCUS_GAIN after AUDIOFOCUS_LOSS_TRANSIENT -> restart playback
-//                    mController.getTransportControls().play();
-//                    mAudioFocusLossTransient = false;
-//                } else if (mStation.getPlaybackState() != PLAYBACK_STATE_STOPPED) {
-//                    // AUDIOFOCUS_GAIN after AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> raise volume again
-//                    if (mPlayer == null) {
-//                        initializePlayer();
-//                        mPlayer.setPlayWhenReady(true);
-//                    } else if (mPlayer.getPlayWhenReady()) {
-//                        mPlayer.setPlayWhenReady(true);
-//                    }
-//                    mPlayer.setVolume(1.0f);
-//                }
-//                break;
-//            // loss of audio focus of unknown duration
-//            case AudioManager.AUDIOFOCUS_LOSS:
-//                if (mStation.getPlaybackState() != PLAYBACK_STATE_STOPPED && mPlayer.getPlayWhenReady()) {
-//                    mController.getTransportControls().pause();
-//                }
-//                break;
-//            // transient loss of audio focus - e.g. phone call
-//            case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
-//                if (mStation.getPlaybackState() != PLAYBACK_STATE_STOPPED && mPlayer != null && mPlayer.getPlayWhenReady()) {
-//                    mAudioFocusLossTransient = true;
-//                    mController.getTransportControls().pause();
-//                }
-//                else if (mStation.getPlaybackState() == PLAYBACK_STATE_STOPPED && mPlayer != null && mPlayer.getPlayWhenReady()) {
-//                    mAudioFocusLossTransient = true;
-//                    mPlayer.setPlayWhenReady(false);
-//                }
-//                break;
-//            // temporary external request of audio focus
-//            case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
-//                if (mPlayer != null && mPlayer.getPlayWhenReady()){
-//                    mPlayer.setVolume(0.1f);
-//                }
-//                break;
-//        }
-//    }
 
 
     @Override
@@ -626,8 +568,8 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             mWakeLock.acquire(); // needs android.permission.WAKE_LOCK
         }
 
-        // request focus and initialize media mPlayer
-        if (mStation.getStreamUri() != null && requestFocus(mAudioAttributes)) {
+        // request audio focus and initialize media mPlayer
+        if (mStation.getStreamUri() != null && mAudioFocusHelper.requestAudioFocus(mAudioFocusRequest)) {
             // initialize player and start playback
             initializePlayer();
             mPlayer.setPlayWhenReady(true);
@@ -694,7 +636,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         LogHelper.v(LOG_TAG, "Stopping playback. Station name:" + mStation.getStationName());
 
         // give up audio focus
-        giveUpAudioFocus();
+        mAudioFocusHelper.abandonAudioFocus(mAudioFocusRequest);
 
         // update playback state
         mSession.setPlaybackState(createSessionPlaybackState());
@@ -728,7 +670,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
 
     /* Creates an instance of SimpleExoPlayer */
-    private void createPlayer(AudioAttributesCompat audioAttributes) {
+    private void createPlayer() {
 
         if (mPlayer != null) {
             releasePlayer();
@@ -742,9 +684,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
         // create the player
         mPlayer = ExoPlayerFactory.newSimpleInstance(new DefaultRenderersFactory(getApplicationContext()), trackSelector, loadControl);
-
-        // set audio attributes
-//        mPlayer.setAudioAttributes((AudioAttributes)audioAttributes); // todo remove or reenable
     }
 
 
@@ -761,12 +700,10 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             // TODO HLS does not work reliable
             Toast.makeText(this, this.getString(R.string.toastmessage_stream_may_not_work), Toast.LENGTH_LONG).show();
             dataSourceFactory = new DefaultDataSourceFactory(this, Util.getUserAgent(this, mUserAgent), bandwidthMeter);
-//            mediaSource = new HlsMediaSource(mStation.getStreamUri(), dataSourceFactory, null, null);
             mediaSource = new HlsMediaSource.Factory(dataSourceFactory).createMediaSource(mStation.getStreamUri());
         } else {
             dataSourceFactory = new CustomDefaultHttpDataSourceFactory(mUserAgent, bandwidthMeter, true, playerCallback);
             ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
-//            mediaSource = new ExtractorMediaSource(mStation.getStreamUri(), dataSourceFactory, extractorsFactory, 32, null, null, null, (1024 * 1024)); // todo attach listener here
             mediaSource = new ExtractorMediaSource.Factory(dataSourceFactory).setContinueLoadingCheckIntervalBytes(32).createMediaSource(mStation.getStreamUri());
         }
         // prepare player with source.
@@ -790,43 +727,22 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     }
 
 
-    /* Request audio manager focus */
-    private boolean requestFocus(AudioAttributesCompat audioAttributes) {
-             AudioFocusRequestCompat focusRequest =
-                     new AudioFocusRequestCompat.Builder(AudioManager.AUDIOFOCUS_GAIN)
-                             .setOnAudioFocusChangeListener(mAudioFocusHelper.getListenerForPlayer(this))
-                             .setAudioAttributes(audioAttributes)
-                             .setFocusGain(AudioManager.AUDIOFOCUS_GAIN)
-                             .setWillPauseWhenDucked(false)
-                             .setAcceptsDelayedFocusGain(true)
-                             .build();
-             return mAudioFocusHelper.requestAudioFocus(focusRequest);
-//        LogHelper.e(LOG_TAG, "!!! Request Focus."); // todo remove
-//        int result = mAudioManager.requestAudioFocus(this,
-//                AudioManager.STREAM_MUSIC,
-//                AudioManager.AUDIOFOCUS_GAIN);
-//        return result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED;
-    }
+    /* Creates request for AudioFocus */
+    private AudioFocusRequestCompat createFocusRequest() {
+        // build audio attributes
+        AudioAttributesCompat audioAttributes = new AudioAttributesCompat.Builder()
+                .setUsage(C.USAGE_MEDIA)
+                .setContentType(C.CONTENT_TYPE_MUSIC)
+                .build();
 
-
-    /* Give up audio focus - if not transient */ // todo check if this works !!!
-    private void giveUpAudioFocus() {
-        AudioFocusRequestCompat focusRequest =
-                new AudioFocusRequestCompat.Builder(AudioManager.AUDIOFOCUS_GAIN)
+        // built and return focus request
+        return new AudioFocusRequestCompat.Builder(AudioManager.AUDIOFOCUS_GAIN)
                         .setOnAudioFocusChangeListener(mAudioFocusHelper.getListenerForPlayer(this))
-//                        .setAudioAttributes(audioAttributes)
+                        .setAudioAttributes(audioAttributes)
                         .setFocusGain(AudioManager.AUDIOFOCUS_GAIN)
+                        .setWillPauseWhenDucked(false)
+                        .setAcceptsDelayedFocusGain(false) // todo check if this flag can be turned on (true)
                         .build();
-        mAudioFocusHelper.abandonAudioFocus(focusRequest);
-
-//        if (mAudioFocusLossTransient) {
-//            // do not give up focus when focus loss is just transient
-//            return false;
-//        } else {
-//            // give up audio focus
-//            int result = mAudioManager.abandonAudioFocus(this);
-//            return result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED;
-//        }
     }
 
 

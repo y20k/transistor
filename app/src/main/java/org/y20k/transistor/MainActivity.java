@@ -382,7 +382,7 @@ public final class MainActivity extends AppCompatActivity implements TransistorK
             // update live data
             mCollectionViewModel.getStationList().setValue(newStationList);
 
-            // reset mTemopStation
+            // reset mTempStation
             mTempStation = null;
 
             return true;

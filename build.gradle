@@ -33,7 +33,7 @@ allprojects {
         minSdkVersion = 19
         compileSdkVersion = 27
         targetSdkVersion = 27
-        buildToolsVersion = '27.0.2'
+        buildToolsVersion = '27.0.3'
         supportLibraryVersion = '27.0.2'
         archLifecycleVersion = '1.0.0'
         junit_version = "4.12"

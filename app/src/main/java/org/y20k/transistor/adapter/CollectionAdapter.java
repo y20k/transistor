@@ -124,7 +124,7 @@ public final class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.V
 
         // CASE ADD NEW
         if (holder instanceof AddNewViewHolder) {
-            // get referece to AddNewViewHolder and listen for taps
+            // get reference to AddNewViewHolder and listen for taps
             AddNewViewHolder addNewViewHolder = (AddNewViewHolder) holder;
             addNewViewHolder.getLListItemAddNewLayout().setOnClickListener (new View.OnClickListener () {
                 @Override

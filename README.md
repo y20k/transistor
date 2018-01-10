@@ -4,7 +4,7 @@ README
 Transistor - Radio App for Android
 ----------------------------------
 
-**Version 3.0.x BETA ("Oh! You Pretty Things")**
+**Version 3.0.x ("Oh! You Pretty Things")**
 
 Transistor is a bare bones app for listening to radio programs over the internet. The app stores stations as files on your device's external storage. It currently understands streams encoded in MP3, AAC and Ogg/Opus(*).
 

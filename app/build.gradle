@@ -13,7 +13,7 @@ android {
 
         vectorDrawables.useSupportLibrary = true
 
-        resConfigs "en", "ca", "de", "el", "es", "eu", "fr", "ja", "kab", "nb-rNO", "pl", "ru", "sl", "sr", "tr", "uk", "v21", "v24", "w820dp", "zh-rCN"
+        resConfigs "en", "ca", "de", "el", "es", "eu", "fr", "ja", "kab", "nb-rNO", "pl", "ru", "sl", "sr", "tr", "uk", "zh-rCN"
 
     }
     buildTypes {
@@ -42,7 +42,7 @@ dependencies {
     implementation project(':exoplayer-library-core')
     implementation project(':exoplayer-library-hls')
 
-    implementation 'android.arch.lifecycle:extensions:' + archLifecycleVersion;
-    annotationProcessor 'android.arch.lifecycle:compiler:' + archLifecycleVersion;
+    implementation 'android.arch.lifecycle:extensions:' + archLifecycleVersion
+    annotationProcessor 'android.arch.lifecycle:compiler:' + archLifecycleVersion
 
 }
