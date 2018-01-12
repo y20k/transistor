@@ -34,19 +34,19 @@
     <string name="descr_playback_button">Goldener Play-Knopf</string>
     <string name="descr_playback_indicator">Symbol für Playback Status</string>
     <string name="descr_playback_indicator_started">Symbol für Playback Aktivität</string>
-    <string name="descr_timer_icon">Sleep timer icon</string>
+    <string name="descr_timer_icon">Sleep-Timer Symbol</string>
     <string name="descr_timer_indicator_started">Symbol für Sleeptimer Aktivität</string>
-    <string name="descr_player_sheet_button_expand">Button to expand and minimize the radio player</string>
+    <string name="descr_player_sheet_button_expand">Button zum Erweitern und Minimieren des Radio-Players</string>
     <string name="descr_player_sheet_information_icon">Info Icon</string>
     <string name="descr_player_sheet_content_copy_icon">Icon für Inhalt kopieren</string>
     <string name="descr_player_sheet_p_station_name">Name des gewählten Radiosenders</string>
     <string name="descr_player_sheet_p_station_metadata">Metadaten des gewählten Radiosenders</string>
     <string name="descr_player_sheet_p_stream_url">Streaming-Adresse des gewählten Radiosenders</string>
-    <string name="descr_list_add_new">Add a new station</string>
+    <string name="descr_list_add_new">Einen neuen Sender hinzufügen</string>
 
     <!-- player -->
     <string name="player_sheet_h1_details">Details</string>
-    <string name="player_sheet_h2_current_session">Current session</string>
+    <string name="player_sheet_h2_current_session">Laufende Sendung</string>
     <string name="player_sheet_h2_station_name">Sender</string>
     <string name="player_sheet_h2_station_metadata">Momentan läuft</string>
     <string name="player_sheet_h2_stream_url">Streaming-Adresse</string>
