@@ -4,14 +4,14 @@
     <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
 
     <!-- app shortcuts -->
-    <string name="shortcut_last_station_short_label">Last station</string>
-    <string name="shortcut_last_station_long_label">Play last station</string>
-    <string name="shortcut_last_station_disabled_message">Shortcut for playback of last station disabled.</string>
+    <string name="shortcut_last_station_short_label">Dernière station</string>
+    <string name="shortcut_last_station_long_label">Lire la dernière station</string>
+    <string name="shortcut_last_station_disabled_message">Raccourci pour la lecture de la dernière station désactivé.</string>
 
     <!-- menu entries -->
     <string name="menu_about">À propos</string>
     <string name="menu_howto">Guide</string>
-    <string name="menu_refresh">Refresh list</string>
+    <string name="menu_refresh">Actualiser la liste</string>
     <string name="menu_timer">Minuteur de veille</string>
     <string name="menu_icon">Changer le logo</string>
     <string name="menu_add">Ajouter</string>
@@ -31,37 +31,37 @@
     <string name="descr_station_name_example">Exemple FM</string>
     <string name="descr_station_metadata_example">Artiste - Titre</string>
     <string name="descr_station_stream_loading">Chargement…</string>
-    <string name="descr_playback_button">Grand bouton de lecture</string>
+    <string name="descr_playback_button">Bouton de lecture doré</string>
     <string name="descr_playback_indicator">Indicateur de lecture en cours</string>
     <string name="descr_playback_indicator_started">Indicateur de lecture en cours</string>
-    <string name="descr_timer_icon">Sleep timer icon</string>
+    <string name="descr_timer_icon">Icône minuteur de veille</string>
     <string name="descr_timer_indicator_started">Indicateur d\'exécution du minuteur de veille</string>
-    <string name="descr_player_sheet_button_expand">Button to expand and minimize the radio player</string>
+    <string name="descr_player_sheet_button_expand">Bouton pour agrandir et réduire le lecteur radio</string>
     <string name="descr_player_sheet_information_icon">Information Icon</string>
-    <string name="descr_player_sheet_content_copy_icon">Content copy icon</string>
-    <string name="descr_player_sheet_p_station_name">Name of selected radio station</string>
-    <string name="descr_player_sheet_p_station_metadata">Metadata from selected radio station</string>
-    <string name="descr_player_sheet_p_stream_url">Stream URL of selected radio station</string>
-    <string name="descr_list_add_new">Add a new station</string>
+    <string name="descr_player_sheet_content_copy_icon">Icône copier contenu</string>
+    <string name="descr_player_sheet_p_station_name">Nom de la station radio sélectionnée</string>
+    <string name="descr_player_sheet_p_station_metadata">Métadonnées de la station de radio sélectionnée</string>
+    <string name="descr_player_sheet_p_stream_url">Lien de diffusion de la station radio sélectionnée</string>
+    <string name="descr_list_add_new">Ajouter une nouvelle station</string>
 
     <!-- player -->
     <string name="player_sheet_h1_details">Details</string>
-    <string name="player_sheet_h2_current_session">Current session</string>
+    <string name="player_sheet_h2_current_session">Session actuelle</string>
     <string name="player_sheet_h2_station_name">Station</string>
-    <string name="player_sheet_h2_station_metadata">Currently Playing</string>
+    <string name="player_sheet_h2_station_metadata">En cours de lecture</string>
     <string name="player_sheet_h2_stream_url">Stream URL</string>
-    <string name="player_sheet_p_station_metadata">no metadata available</string>
-    <string name="player_sheet_h2_station_mime_type">MIME type</string>
-    <string name="player_sheet_h2_station_channel_count">Channel count</string>
-    <string name="player_sheet_h2_station_sample_rate">Sample rate</string>
+    <string name="player_sheet_p_station_metadata">aucune métadonnée disponible</string>
+    <string name="player_sheet_h2_station_mime_type">Type MIME</string>
+    <string name="player_sheet_h2_station_channel_count">Chaîne</string>
+    <string name="player_sheet_h2_station_sample_rate">Échantillonnage</string>
     <string name="player_sheet_h2_station_bitrate">Bitrate</string>
 
     <!-- dialogs -->
     <string name="dialog_generic_button_cancel">Annuler</string>
     <string name="dialog_add_station_button">Ajouter</string>
-    <string name="dialog_add_station_input_hint">Coller un lien de diffusion valide</string>
+    <string name="dialog_add_station_input_hint">Coller un lien de diffusion</string>
     <string name="dialog_add_station_message">Ajouter une station</string>
-    <string name="dialog_add_station_howto">Vous pouvez ajouter des flux audio encodés en MP3 et OGG ainsi que les flux encapsulés en pls ou m3u. Sinon, vous pouvez ajouter de nouvelles stations en appuyant sur des liens de diffusion (pls ou m3u) dans votre navigateur internet.</string>
+    <string name="dialog_add_station_howto">Vous pouvez ajouter des flux audio encodés en MP3, AAC et Ogg/Opus ainsi que les flux encapsulés en pls ou m3u. Sinon, vous pouvez ajouter de nouvelles stations en appuyant sur des liens de diffusion (pls ou m3u) dans votre navigateur internet.</string>
     <string name="dialog_delete_station_message">Supprimer la station</string>
     <string name="dialog_button_delete">Supprimer</string>
     <string name="dialog_generic_button_okay">OK</string>
@@ -74,20 +74,20 @@
     <string name="dialog_error_message_default">Une erreur est survenue</string>
     <string name="dialog_error_details_button_default">Afficher les détails</string>
     <string name="dialog_error_details_default">Aucun détail disponible</string>
-    <string name="dialog_error_details_write">La station est probablement un doublon ou bien vous pourriez vouloir vérifier votre stockage externe.</string>
+    <string name="dialog_error_details_write">Cette station est probablement un doublon ou bien vous pouvez vérifier votre stockage externe.</string>
     <string name="dialog_error_title_fetch_download">Erreur de téléchargement</string>
     <string name="dialog_error_title_fetch_read">Erreur de lecture</string>
     <string name="dialog_error_title_fetch_write">Erreur d\'écriture</string>
     <string name="dialog_error_message_fetch_general_external_storage">Stockage externe :</string>
-    <string name="dialog_error_message_fetch_general_hint_m3u">Astuce : Transistor peut traiter uniquement les flux MP3 et OGG ou les adresses se terminant par .m3u ou .pls.</string>
+    <string name="dialog_error_message_fetch_general_hint_m3u">Astuce : Transistor peut traiter uniquement les flux MP3, AAC et Ogg/Opus ou les liens se terminant par .m3u ou .pls.</string>
     <string name="dialog_error_message_fetch_general_playlist_type">Type de fichier :</string>
     <string name="dialog_error_message_fetch_general_stream_type">Type de flux :</string>
     <string name="dialog_error_message_fetch_general_file_content">Contenu du fichier :</string>
-    <string name="dialog_error_message_fetch_download">Transistor a tout essayé, mais ne pouvait pas donner sens au lien donné.</string>
-    <string name="dialog_error_message_fetch_download_station_url">Adresse de la station :</string>
-    <string name="dialog_error_message_fetch_read">Transistor a tout essayé mais ne pouvait pas donner sens au fichier donné.</string>
+    <string name="dialog_error_message_fetch_download">Transistor a tout essayé, mais ne pouvait pas donner sens au lien.</string>
+    <string name="dialog_error_message_fetch_download_station_url">Lien de diffusion de la station :</string>
+    <string name="dialog_error_message_fetch_read">Transistor a tout essayé mais ne pouvait pas donner sens au fichier.</string>
     <string name="dialog_error_message_fetch_read_file_location">Emplacement du fichier :</string>
-    <string name="dialog_error_message_fetch_write">Transistor a tout essayé mais ne pouvait pas enregistrer la station donné sur le stockage.</string>
+    <string name="dialog_error_message_fetch_write">Transistor a tout essayé mais impossible d\'enregistrer la station.</string>
 
     <!-- messages -->
     <string name="actioncall_message_start_here">Ajouter une station</string>
@@ -96,19 +96,19 @@
     <string name="toastmessage_long_press_playback_stopped">Lecture arrêtée (appui long détecté)</string>
     <string name="toastmessage_long_press_playback_started">Lecture démarrée (appui long détecté)</string>
     <string name="toastmessage_shortcut_created">Raccourci créé.</string>
-    <string name="toastmessage_shortcut_not_created">Shortcut not created. This device does not allow the creation of shortcuts.</string>
-    <string name="toastmessage_list_refreshed">Reloading list of stations.</string>
-    <string name="toastmessage_copied_to_clipboard_url">Stream URL copied to clipboard.</string>
-    <string name="toastmessage_copied_to_clipboard_metadata">Metadata copied to clipboard.</string>
+    <string name="toastmessage_shortcut_not_created">Raccourci non créé. Cet appareil ne permet pas la création de raccourcis.</string>
+    <string name="toastmessage_list_refreshed">Recharger la liste des stations.</string>
+    <string name="toastmessage_copied_to_clipboard_url">Lien de diffusion copié dans le presse-papiers.</string>
+    <string name="toastmessage_copied_to_clipboard_metadata">Métadonnées copiées dans le presse-papiers.</string>
     <string name="toastmessage_station_copied">Station copiée dans le presse-papier.</string>
     <string name="toastmessage_stream_may_not_work">Format audio non pris en charge détecté. La lecture du flux peut ne pas fonctionner correctement.</string>
     <string name="toastmessage_timer_activated">Minuteur de veille activé.</string>
     <string name="toastmessage_timer_cancelled">Minuteur de veille annulé.</string>
     <string name="toastmessage_timer_duration_increased">Durée augmentée.</string>
-    <string name="toastalert_unable_to_connect">Unable to connect. Device does not have an internet connection or stream may be outdated.</string>
+    <string name="toastalert_unable_to_connect">Impossible de se connecter. L\'appareil ne dispose pas d’une connexion internet ou le flux est peut être obsolète.</string>
     <string name="toastmessage_timer_start_unable">Veuillez d\'abord démarrer la lecture.</string>
     <string name="toastalert_rename_unsuccessful">Impossible de renommer la station. Veuillez choisir un nom différent.</string>
-    <string name="toastalert_delete_successful">Station supprimée.</string>
+    <string name="toastalert_delete_successful">La station a été supprimée.</string>
     <string name="toastalert_no_external_storage">Impossible d\'accéder au stockage externe.</string>
     <string name="toastalert_headphones_unplugged">Casque débranché. Lecture arrêtée.</string>
     <string name="toastalert_permission_denied">Autorisation refusée :</string>
@@ -122,12 +122,12 @@
     <string name="notification_stop">Arrêter</string>
     <string name="notification_swipe_to_stop">Glissez pour arrêter</string>
     <string name="notification_playing">Lecture en cours</string>
-    <string name="notification_channel_playback_name">Playback Controls</string>
-    <string name="notification_channel_playback_description">Playback controls, station logo and now playing info.</string>
+    <string name="notification_channel_playback_name">Commandes de lecture</string>
+    <string name="notification_channel_playback_description">Commandes de lecture, logo de la station et informations de lecture.</string>
 
     <!-- onboarding -->
-    <string name="onboarding_app_description">Radio App</string>
-    <string name="onboarding_app_get_started">Get started</string>
+    <string name="onboarding_app_description">Appli Radio</string>
+    <string name="onboarding_app_get_started">Démarrer</string>
 
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7
