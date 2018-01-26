@@ -642,12 +642,12 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         mSession.setPlaybackState(createSessionPlaybackState());
 
         if (dismissNotification) {
-            // dismiss notification
-            NotificationHelper.stop(this);
+            // remove the foreground lock and dismiss notification
+            stopForeground(false);
             // don't keep media session active
             mSession.setActive(false);
         } else {
-            // update notification
+            // remove the foreground lock and update notification (make it swipe-able)
             NotificationHelper.update(this, mStation, mSession);
             // keep media session active
             mSession.setActive(true);
@@ -664,7 +664,8 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         try {
             this.unregisterReceiver(mHeadphoneUnplugReceiver);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogHelper.v(LOG_TAG, "Unable to unregister HeadphoneUnplugReceiver");
+            // e.printStackTrace();
         }
     }
 
@@ -846,8 +847,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     }
 
 
-
-
 //    /* Loads app state from preferences */
 //    private void loadAppState(Context context) {
 //        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
@@ -880,13 +879,13 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
         @Override
         public void onPause() {
-            // stop playback
+            // stop playback and keep notification
             stopPlayback(false);
         }
 
         @Override
         public void onStop() {
-            // stop playback
+            // stop playback and remove notification
             stopPlayback(true);
         }
 

@@ -140,7 +140,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
         loadAppState(mActivity);
 
         // create collection adapter
-        mCollectionAdapter = new CollectionAdapter(mActivity, null);
+        mCollectionAdapter = new CollectionAdapter(mActivity, mCurrentStationUrl);
 
         // initialize broadcast receivers
         initializeBroadcastReceivers();
@@ -190,7 +190,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
         minimizePlayer();
 
         // attach listeners to buttons
-        setTapListeners();
+        setAdapterListeners();
 
         // observe changes in LiveData
         mCollectionViewModel = ViewModelProviders.of((AppCompatActivity) mActivity).get(CollectionViewModel.class);
@@ -384,7 +384,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
 
 
     /* Attaches tap listeners to buttons */
-    private void setTapListeners() {
+    private void setAdapterListeners() {
         // tap on station list
         mCollectionAdapter.setCollectionAdapterListener(new CollectionAdapter.CollectionAdapterListener() {
             @Override
@@ -396,6 +396,11 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
                 setupPlayer(station);
                 Animation animation = AnimationUtils.loadAnimation(mActivity, R.anim.wiggle);
                 mPlayerStationImage.startAnimation(animation);
+            }
+
+            @Override
+            public void jumpToPosition(int position) {
+                mLayoutManager.scrollToPosition(position);
             }
         });
 

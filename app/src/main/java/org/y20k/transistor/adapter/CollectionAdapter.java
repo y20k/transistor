@@ -57,6 +57,7 @@ public final class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.V
     /* Listener Interface */
     public interface CollectionAdapterListener {
         void itemSelected(Station station, boolean isLongPress);
+        void jumpToPosition(int position);
     }
 
     /* Define log tag */
@@ -70,12 +71,16 @@ public final class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.V
     private BroadcastReceiver mMetadataChangedReceiver;
     private CollectionAdapterListener mCollectionAdapterListener;
     private ArrayList<Station> mStationList;
+    private int mStationIdSelected;
+    private String mCurrentStationUrl;
 
 
     /* Constructor */
-    public CollectionAdapter(Activity activity, Uri stationUriSelected) {
+    public CollectionAdapter(Activity activity, String currentStationUrl) {
         // set initial values
         mActivity = activity;
+        mStationIdSelected = -1;
+        mCurrentStationUrl = currentStationUrl;
 
         // create empty station list
         mStationList = new ArrayList<Station>();
@@ -120,7 +125,7 @@ public final class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.V
 
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
 
         // CASE ADD NEW
         if (holder instanceof AddNewViewHolder) {
@@ -139,7 +144,7 @@ public final class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.V
         // CASE STATION
         else if (holder instanceof StationViewHolder) {
             // get station from position
-            final Station station = mStationList.get(holder.getAdapterPosition());
+            final Station station = mStationList.get(position);
 
             // get reference to StationViewHolder
             StationViewHolder stationViewHolder = (StationViewHolder) holder;
@@ -153,23 +158,38 @@ public final class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.V
             // set playback indicator - in phone view only
             togglePlaybackIndicator(stationViewHolder, station);
 
+            // visually mark holder selected
+            stationViewHolder.getListItemLayout().setSelected(position == mStationIdSelected);
+
             // listen for taps
             stationViewHolder.getListItemLayout().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     // notify and update player sheet
-                    mCollectionAdapterListener.itemSelected(mStationList.get(position), false);
+                    handleTap(holder.getAdapterPosition(), station, false);
                 }
             });
             stationViewHolder.getListItemLayout().setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
                     // notify and update player sheet - and start playback
-                    mCollectionAdapterListener.itemSelected(mStationList.get(position), true);
+                    handleTap(holder.getAdapterPosition(), station, true);
                     return true;
                 }
             });
         }
+    }
+
+
+    /* Handles tap on station */
+    private void handleTap(int adapterPosition, Station station, boolean isLongpress) {
+        // notify and update player sheet - and start playback if longpress
+        mCollectionAdapterListener.itemSelected(station, isLongpress);
+        // visually deselect previous station
+        notifyItemChanged(mStationIdSelected,HOLDER_UPDATE_SELECTION_STATE);
+        // visually select this station
+        mStationIdSelected = adapterPosition;
+        notifyItemChanged(adapterPosition, HOLDER_UPDATE_SELECTION_STATE);
     }
 
 
@@ -199,6 +219,9 @@ public final class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.V
                         LogHelper.v(LOG_TAG, "List of station: Partial view update -> playback state changed");
                         togglePlaybackIndicator(stationViewHolder, station);
                         break;
+                    case HOLDER_UPDATE_SELECTION_STATE:
+                        // visually mark holder selected
+                        stationViewHolder.getListItemLayout().setSelected(position == mStationIdSelected);
                     case HOLDER_UPDATE_IMAGE:
                         // set station image
                         LogHelper.v(LOG_TAG, "List of station: Partial view update -> station image changed");
@@ -396,6 +419,13 @@ public final class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                 // update current station list
                 mStationList = StationListHelper.copyStationList(newStationList);
+
+                // get station id selected (once)
+                if (mStationIdSelected == -1) {
+                    mStationIdSelected = StationListHelper.findStationId(mStationList, Uri.parse(mCurrentStationUrl));
+                    mCollectionAdapterListener.jumpToPosition(mStationIdSelected);
+                }
+
                 // inform this adapter about the changes
                 diffResult.dispatchUpdatesTo(CollectionAdapter.this);
            }

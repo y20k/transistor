@@ -20,16 +20,12 @@ allprojects {
     repositories {
         google()
         jcenter()
-
-//        maven {
-//            url "https://jitpack.io"
-//        }
     }
 
     project.ext {
         applicationId = 'org.y20k.transistor'
-        versionCode = 50
-        versionName = '3.0.0'
+        versionCode = 51
+        versionName = '3.0.1'
         minSdkVersion = 19
         compileSdkVersion = 27
         targetSdkVersion = 27

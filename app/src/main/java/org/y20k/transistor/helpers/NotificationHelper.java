@@ -87,14 +87,6 @@ public final class NotificationHelper implements TransistorKeys {
     }
 
 
-    /* Stop displaying notification */
-    public static void stop(Service service) {
-        if (service != null) {
-            service.stopForeground(true);
-        }
-    }
-
-
     /* Creates a notification builder */
     private static NotificationCompat.Builder getNotificationBuilder(Context context, Station station) {
 

@@ -91,7 +91,9 @@ public interface TransistorKeys {
     /* VIEW HOLDER */
     int HOLDER_UPDATE_NAME = 1;
     int HOLDER_UPDATE_PLAYBACK_STATE = 2;
-    int HOLDER_UPDATE_IMAGE = 3;
+    int HOLDER_UPDATE_SELECTION_STATE = 3;
+    int HOLDER_UPDATE_IMAGE = 4;
+
     int VIEW_TYPE_STATION = 0;
     int VIEW_TYPE_ADD_NEW = 1;
 
