@@ -42,7 +42,7 @@
     <string name="descr_player_sheet_p_station_name">Navn på valgt radiostasjon</string>
     <string name="descr_player_sheet_p_station_metadata">Metadata fra valgt radiostasjon</string>
     <string name="descr_player_sheet_p_stream_url">Strømningslenke for valgt radiostasjon</string>
-    <string name="descr_list_add_new">Add a new station</string>
+    <string name="descr_list_add_new">Legg til en ny stasjon</string>
 
     <!-- player -->
     <string name="player_sheet_h1_details">Detaljer</string>
@@ -126,8 +126,8 @@
     <string name="notification_channel_playback_description">Avspillingskontroller, stasjonslogo og info om hva som spilles.</string>
 
     <!-- onboarding -->
-    <string name="onboarding_app_description">Radio App</string>
-    <string name="onboarding_app_get_started">Get started</string>
+    <string name="onboarding_app_description">Radio-program</string>
+    <string name="onboarding_app_get_started">Kom igang</string>
 
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7
