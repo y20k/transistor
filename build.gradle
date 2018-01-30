@@ -32,6 +32,8 @@ allprojects {
         buildToolsVersion = '27.0.3'
         supportLibraryVersion = '27.0.2'
         archLifecycleVersion = '1.0.0'
+        constraintLayoutVersion = '1.1.0-beta4'
+        exoPlayerVersion = '2.6.1'
         junit_version = "4.12"
     }
 

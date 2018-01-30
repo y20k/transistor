@@ -56,8 +56,6 @@ import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.audio.AudioAttributes;
-import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
-import com.google.android.exoplayer2.extractor.ExtractorsFactory;
 import com.google.android.exoplayer2.metadata.Metadata;
 import com.google.android.exoplayer2.metadata.MetadataRenderer;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
@@ -704,7 +702,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             mediaSource = new HlsMediaSource.Factory(dataSourceFactory).createMediaSource(mStation.getStreamUri());
         } else {
             dataSourceFactory = new CustomDefaultHttpDataSourceFactory(mUserAgent, bandwidthMeter, true, playerCallback);
-            ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
             mediaSource = new ExtractorMediaSource.Factory(dataSourceFactory).setContinueLoadingCheckIntervalBytes(32).createMediaSource(mStation.getStreamUri());
         }
         // prepare player with source.
@@ -738,12 +735,12 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
         // built and return focus request
         return new AudioFocusRequestCompat.Builder(AudioManager.AUDIOFOCUS_GAIN)
-                        .setOnAudioFocusChangeListener(mAudioFocusHelper.getListenerForPlayer(this))
-                        .setAudioAttributes(audioAttributes)
-                        .setFocusGain(AudioManager.AUDIOFOCUS_GAIN)
-                        .setWillPauseWhenDucked(false)
-                        .setAcceptsDelayedFocusGain(false) // todo check if this flag can be turned on (true)
-                        .build();
+                .setOnAudioFocusChangeListener(mAudioFocusHelper.getListenerForPlayer(this))
+                .setAudioAttributes(audioAttributes)
+                .setFocusGain(AudioManager.AUDIOFOCUS_GAIN)
+                .setWillPauseWhenDucked(false)
+                .setAcceptsDelayedFocusGain(false) // todo check if this flag can be turned on (true)
+                .build();
     }
 
 
@@ -1008,10 +1005,10 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
                 // set content type
                 mPlayer.setAudioAttributes(new AudioAttributes.Builder()
-                                .setUsage(C.USAGE_MEDIA)
-                                .setContentType(C.CONTENT_TYPE_MUSIC)
-                                .build()
-                        );
+                        .setUsage(C.USAGE_MEDIA)
+                        .setContentType(C.CONTENT_TYPE_MUSIC)
+                        .build()
+                );
             }
 
             // release init lock

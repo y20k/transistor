@@ -71,10 +71,10 @@ public class CustomDefaultHttpDataSourceFactory implements DataSource.Factory {
 
 
     @Override
-    public DefaultHttpDataSource createDataSource() {
+    public DataSource createDataSource() {
         // toggle Shoutcast extraction
         if (enableShoutcast) {
-            return new IcyDataSource(userAgent, null, playerCallback);
+            return new IcyDataSource(playerCallback);
         } else {
             return new DefaultHttpDataSource(userAgent, null, listener, connectTimeoutMillis,
                     readTimeoutMillis, allowCrossProtocolRedirects, null);
