@@ -75,7 +75,7 @@ import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.AudioFocusAwarePlayer;
 import org.y20k.transistor.helpers.AudioFocusHelper;
 import org.y20k.transistor.helpers.AudioFocusRequestCompat;
-import org.y20k.transistor.helpers.CustomDefaultHttpDataSourceFactory;
+import org.y20k.transistor.helpers.IcyDataSourceFactory;
 import org.y20k.transistor.helpers.LogHelper;
 import org.y20k.transistor.helpers.NotificationHelper;
 import org.y20k.transistor.helpers.PackageValidator;
@@ -701,7 +701,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             dataSourceFactory = new DefaultDataSourceFactory(this, Util.getUserAgent(this, mUserAgent), bandwidthMeter);
             mediaSource = new HlsMediaSource.Factory(dataSourceFactory).createMediaSource(mStation.getStreamUri());
         } else {
-            dataSourceFactory = new CustomDefaultHttpDataSourceFactory(mUserAgent, bandwidthMeter, true, playerCallback);
+            dataSourceFactory = new IcyDataSourceFactory(this, Util.getUserAgent(this, mUserAgent), bandwidthMeter, true, playerCallback);
             mediaSource = new ExtractorMediaSource.Factory(dataSourceFactory).setContinueLoadingCheckIntervalBytes(32).createMediaSource(mStation.getStreamUri());
         }
         // prepare player with source.

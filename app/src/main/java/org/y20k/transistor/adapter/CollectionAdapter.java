@@ -421,7 +421,7 @@ public final class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.V
                 mStationList = StationListHelper.copyStationList(newStationList);
 
                 // get station id selected (once)
-                if (mStationIdSelected == -1) {
+                if (mStationIdSelected == -1 && mCurrentStationUrl != null) {
                     mStationIdSelected = StationListHelper.findStationId(mStationList, Uri.parse(mCurrentStationUrl));
                     mCollectionAdapterListener.jumpToPosition(mStationIdSelected);
                 }
