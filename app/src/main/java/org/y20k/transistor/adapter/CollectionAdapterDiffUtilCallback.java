@@ -87,8 +87,10 @@ public class CollectionAdapterDiffUtilCallback extends DiffUtil.Callback impleme
             return HOLDER_UPDATE_NAME;
         } else if (oldStation.getPlaybackState() != newStation.getPlaybackState()) {
             return HOLDER_UPDATE_PLAYBACK_STATE;
-        } else if (oldStation.getStationImageSize() != newStation.getStationImageSize()){
+        } else if (oldStation.getStationImageSize() != newStation.getStationImageSize()) {
             return HOLDER_UPDATE_IMAGE;
+        } else if (oldStation.getSelectionState() != newStation.getSelectionState()) {
+            return HOLDER_UPDATE_SELECTION_STATE;
         } else {
             return super.getChangePayload(oldItemPosition, newItemPosition);
         }

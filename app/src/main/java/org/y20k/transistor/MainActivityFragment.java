@@ -389,6 +389,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
         mCollectionAdapter.setCollectionAdapterListener(new CollectionAdapter.CollectionAdapterListener() {
             @Override
             public void itemSelected(Station station, boolean isLongPress) {
+                mCurrentStation = station; // todo check & remove
                 if (isLongPress) {
                     mCurrentStation = station;
                     togglePlayback(mCurrentStation, true);
@@ -509,10 +510,12 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
 
 
     /* Setup player visually */
-    private void setupPlayer(Station station) {
+    private void setupPlayer(@Nullable Station station) {
         if (isAdded()) {
             // update current station
             mCurrentStation = station;
+
+            LogHelper.e(LOG_TAG, "!!! (setupPlayer) state mCurrentStation: " + mCurrentStation.getPlaybackState()); // todo remove
 
             if (station != null) {
                 // show player & hide onboarding
@@ -923,6 +926,8 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
                     }
                     // update this station
                     mCurrentStation = newStation;
+
+                    LogHelper.e(LOG_TAG, "!!! (Observer) state mCurrentStation: " + mCurrentStation.getPlaybackState()); // todo remove
 
                 }
 

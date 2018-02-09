@@ -68,6 +68,7 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
     private Uri mStreamUri;
     private String mPlaylistFileContent;
     private int mPlayback;
+    private boolean mSelected;
     private String mMetadata;
     private String mMimeType;
     private int mChannelCount;
@@ -77,7 +78,7 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
 
 
     /* Generic Constructor */
-    public Station(File stationImageFile, long stationImageSize, String stationName, File stationPlaylistFile, Uri streamUri, String playlistFileContent, int playback, String metadata, String mimeType, int channelCount, int sampleRate, int bitrate, Bundle stationFetchResults) {
+    public Station(File stationImageFile, long stationImageSize, String stationName, File stationPlaylistFile, Uri streamUri, String playlistFileContent, int playback, boolean selected, String metadata, String mimeType, int channelCount, int sampleRate, int bitrate, Bundle stationFetchResults) {
         mStationImageFile = stationImageFile;
         mStationImageSize = stationImageSize;
         mStationName = stationName;
@@ -85,6 +86,7 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
         mStreamUri = streamUri;
         mPlaylistFileContent = playlistFileContent;
         mPlayback = playback;
+        mSelected = selected;
         mMetadata = metadata;
         mMimeType = mimeType;
         mChannelCount = channelCount;
@@ -240,7 +242,7 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
 
     /* Copy Constructor */
     public Station(Station station) {
-        this(station.getStationImageFile(), station.getStationImageSize(), station.getStationName(), station.getStationPlaylistFile(), station.getStreamUri(), station.getPlaylistFileContent(), station.getPlaybackState(), station.getMetadata(), station.getMimeType(), station.getChannelCount(), station.getSampleRate(), station.getBitrate(), station.getStationFetchResults());
+        this(station.getStationImageFile(), station.getStationImageSize(), station.getStationName(), station.getStationPlaylistFile(), station.getStreamUri(), station.getPlaylistFileContent(), station.getPlaybackState(), station.getSelectionState(), station.getMetadata(), station.getMimeType(), station.getChannelCount(), station.getSampleRate(), station.getBitrate(), station.getStationFetchResults());
     }
 
 
@@ -254,12 +256,12 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
         mPlaylistFileContent = in.readString();
         mStationFetchResults = in.readBundle(Bundle.class.getClassLoader());
         mPlayback = in.readInt();
+        mSelected = in.readByte() != 0;
         mMetadata = in.readString();
         mMimeType = in.readString();
         mChannelCount = in.readInt();
         mSampleRate = in.readInt();
         mBitrate = in.readInt();
-        LogHelper.v(LOG_TAG, "Station re-created from parcel. State of playback is: " + mPlayback);
     }
 
 
@@ -672,6 +674,12 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
     }
 
 
+    /* Getter for selection state (if station is selected in UI) */
+    public boolean getSelectionState() {
+        return mSelected;
+    }
+
+
     /* Getter for URL of stream */
     public Uri getStreamUri() {
         return mStreamUri;
@@ -756,6 +764,12 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
     }
 
 
+    /* Getter for selection state (if station is selected in UI) */
+    public void setSelectionState(boolean selected) {
+        mSelected = selected;
+    }
+
+
     /* Setter for URL of station */
     public void setStreamUri(Uri streamUri) {
         mStreamUri = streamUri;
@@ -821,6 +835,7 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
         dest.writeString(mPlaylistFileContent);
         dest.writeBundle(mStationFetchResults);
         dest.writeInt(mPlayback);
+        dest.writeByte((byte) (mSelected ? 1 : 0));     //if mSelected == true, byte == 1
         dest.writeString(mMetadata);
         dest.writeString(mMimeType);
         dest.writeInt(mChannelCount);

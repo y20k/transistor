@@ -166,14 +166,14 @@ public final class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.V
                 @Override
                 public void onClick(View view) {
                     // notify and update player sheet
-                    handleTap(holder.getAdapterPosition(), station, false);
+                    handleTap(holder.getAdapterPosition(), false);
                 }
             });
             stationViewHolder.getListItemLayout().setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
                     // notify and update player sheet - and start playback
-                    handleTap(holder.getAdapterPosition(), station, true);
+                    handleTap(holder.getAdapterPosition(),  true);
                     return true;
                 }
             });
@@ -182,9 +182,10 @@ public final class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.V
 
 
     /* Handles tap on station */
-    private void handleTap(int adapterPosition, Station station, boolean isLongpress) {
-        // notify and update player sheet - and start playback if longpress
-        mCollectionAdapterListener.itemSelected(station, isLongpress);
+    private void handleTap(int adapterPosition, boolean isLongPress) {
+
+        // notify and update player sheet - and start playback if long press
+        mCollectionAdapterListener.itemSelected(mStationList.get(adapterPosition), isLongPress);
         // visually deselect previous station
         notifyItemChanged(mStationIdSelected,HOLDER_UPDATE_SELECTION_STATE);
         // visually select this station
@@ -221,7 +222,9 @@ public final class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.V
                         break;
                     case HOLDER_UPDATE_SELECTION_STATE:
                         // visually mark holder selected
+                        LogHelper.v(LOG_TAG, "!!! List of station: Partial view update -> selection state changed");
                         stationViewHolder.getListItemLayout().setSelected(position == mStationIdSelected);
+                        break;
                     case HOLDER_UPDATE_IMAGE:
                         // set station image
                         LogHelper.v(LOG_TAG, "List of station: Partial view update -> station image changed");
@@ -305,7 +308,6 @@ public final class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.V
                 } else if (intent.hasExtra(EXTRA_ERROR_OCCURRED) && intent.getBooleanExtra(EXTRA_ERROR_OCCURRED, false)) {
                     handlePlaybackStateError(intent);
                 }
-
             }
         };
         IntentFilter playbackStateChangedIntentFilter = new IntentFilter(ACTION_PLAYBACK_STATE_CHANGED);
@@ -428,7 +430,7 @@ public final class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                 // inform this adapter about the changes
                 diffResult.dispatchUpdatesTo(CollectionAdapter.this);
-           }
+            }
         };
     }
 

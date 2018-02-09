@@ -57,7 +57,7 @@ import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.audio.AudioAttributes;
 import com.google.android.exoplayer2.metadata.Metadata;
-import com.google.android.exoplayer2.metadata.MetadataRenderer;
+import com.google.android.exoplayer2.metadata.MetadataOutput;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.TrackGroupArray;
@@ -105,7 +105,7 @@ import static org.y20k.transistor.helpers.StationListProvider.MEDIA_ID_ROOT;
 /**
  * PlayerService class
  */
-public final class PlayerService extends MediaBrowserServiceCompat implements TransistorKeys, AudioFocusAwarePlayer, Player.EventListener, MetadataRenderer.Output {
+public final class PlayerService extends MediaBrowserServiceCompat implements TransistorKeys, AudioFocusAwarePlayer, Player.EventListener, MetadataOutput {
 
     /* Define log tag */
     private static final String LOG_TAG = PlayerService.class.getSimpleName();
