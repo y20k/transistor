@@ -222,7 +222,7 @@ public final class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.V
                         break;
                     case HOLDER_UPDATE_SELECTION_STATE:
                         // visually mark holder selected
-                        LogHelper.v(LOG_TAG, "!!! List of station: Partial view update -> selection state changed");
+                        LogHelper.v(LOG_TAG, "List of station: Partial view update -> selection state changed");
                         stationViewHolder.getListItemLayout().setSelected(position == mStationIdSelected);
                         break;
                     case HOLDER_UPDATE_IMAGE:

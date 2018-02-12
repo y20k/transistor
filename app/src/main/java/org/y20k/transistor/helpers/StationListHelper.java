@@ -18,6 +18,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 
+import org.y20k.transistor.PlayerService;
 import org.y20k.transistor.core.Station;
 
 import java.io.File;
@@ -147,7 +148,8 @@ public final class StationListHelper implements TransistorKeys {
         // get Uri of currently playing station - CASE: PlayerService is active, but Activity has been killed
         String urlString = PreferenceManager.getDefaultSharedPreferences(context).getString(PREF_STATION_URL, null);
         Uri uri = null;
-        if (urlString != null) {
+        LogHelper.e(LOG_TAG, "!!!! MediaSession active: " +  PlayerService.isMediaSessionActive()); // todo remove
+        if (urlString != null && PlayerService.isMediaSessionActive()) {
             uri = Uri.parse(urlString);
         }
 

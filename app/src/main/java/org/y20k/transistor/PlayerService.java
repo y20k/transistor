@@ -520,9 +520,25 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     }
 
 
+    @Override
+    public void onTaskRemoved(Intent rootIntent) {
+        super.onTaskRemoved(rootIntent);
+        LogHelper.v(LOG_TAG, "onTaskRemoved called.");
+    }
+
+
     /* Getter for current station */
     public static Station getStation() {
         return mStation;
+    }
+
+
+    public static boolean isMediaSessionActive() {
+        if (mSession == null) {
+            return false;
+        } else {
+            return mSession.isActive();
+        }
     }
 
 
