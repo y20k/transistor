@@ -221,6 +221,10 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             // update controller - stop playback
             if (mStation != null && mStation.getPlaybackState() != PLAYBACK_STATE_STOPPED) {
                 mController.getTransportControls().stop();
+            } else if (mStation != null) {
+                // remove the foreground lock (dismisses notification) and don't keep media session active
+                stopForeground(true);
+                mSession.setActive(false);
             }
         }
 
@@ -396,10 +400,8 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     @Override
     public IBinder onBind(Intent intent) {
         if (SERVICE_INTERFACE.equals(intent.getAction())) {
-            LogHelper.v(LOG_TAG, "onBind called. SERVICE_INTERFACE"); // todo remove
             return super.onBind(intent);
         } else {
-            LogHelper.v(LOG_TAG, "onBind called. ELSE"); // todo remove
             return null;
         }
     }
@@ -640,15 +642,14 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         mSession.setPlaybackState(createSessionPlaybackState());
 
         if (dismissNotification) {
-            // remove the foreground lock and dismiss notification
-            stopForeground(false);
-            // don't keep media session active
+            // remove the foreground lock (dismisses notification) and don't keep media session active
+            stopForeground(true);
             mSession.setActive(false);
         } else {
             // remove the foreground lock and update notification (make it swipe-able)
             NotificationHelper.update(this, mStation, mSession);
-            // keep media session active
-            mSession.setActive(true);
+//            // keep media session active
+//            mSession.setActive(true);
         }
 
         // send local broadcast: playback stopped
@@ -687,7 +688,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
 
     /* Add a media source to player */
-    private void preparePLayer(int connectionType) {
+    private void preparePlayer(int connectionType) {
         // create MediaSource
         MediaSource mediaSource;
         // create BandwidthMeter for DataSource.Factory
@@ -998,7 +999,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
                 stopPlayback(false);
             } else if (mStation.getPlaybackState() != PLAYBACK_STATE_STOPPED) {
                 // prepare player
-                preparePLayer(connectionType);
+                preparePlayer(connectionType);
 
                 // add listener
                 mPlayer.addListener(PlayerService.this);
