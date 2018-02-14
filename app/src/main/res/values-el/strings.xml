@@ -24,6 +24,8 @@
     <string name="header_howto">Οδηγίες χρήσης</string>
 
     <!-- descriptions -->
+    <string name="descr_app_icon">App icon depicting an old radio</string>
+    <string name="descr_arrow_upward">Arrow facing upward</string>
     <string name="descr_station_options_button">Προβολή των επιλογών για το ραδιοσταθμό</string>
     <string name="descr_station_icon">Εικονίδιο του ραδιοσταθμού</string>
     <string name="descr_station_name">Το όνομα του ραδιοσταθμού</string>

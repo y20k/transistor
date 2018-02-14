@@ -24,6 +24,8 @@
     <string name="header_howto">使用方法</string>
 
     <!-- descriptions -->
+    <string name="descr_app_icon">App icon depicting an old radio</string>
+    <string name="descr_arrow_upward">Arrow facing upward</string>
     <string name="descr_station_options_button">ラジオ局の表示オプション</string>
     <string name="descr_station_icon">ラジオ局のアイコン</string>
     <string name="descr_station_name">ラジオ局の名前</string>

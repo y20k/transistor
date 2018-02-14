@@ -24,6 +24,8 @@
     <string name="header_howto">How to use</string>
 
     <!-- descriptions -->
+    <string name="descr_app_icon">App icon depicting an old radio</string>
+    <string name="descr_arrow_upward">Arrow facing upward</string>
     <string name="descr_station_options_button">Display options for radio station</string>
     <string name="descr_station_icon">Icon of radio station</string>
     <string name="descr_station_name">Name of radio station</string>

@@ -211,6 +211,8 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
         // refresh app state
         loadAppState(mActivity);
 
+        LogHelper.e(LOG_TAG, "!!! Intent! -> " + mActivity.getIntent().getAction() + mActivity.getIntent().getData() ); // todo remove
+
         // handles the activity's intent
         Intent intent = mActivity.getIntent();
         if (Intent.ACTION_VIEW.equals(intent.getAction())) {
