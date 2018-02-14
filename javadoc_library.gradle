@@ -14,7 +14,7 @@
 android.libraryVariants.all { variant ->
     def name = variant.buildType.name
     if (!name.equals("release")) {
-        return; // Skip non-release builds.
+        return // Skip non-release builds.
     }
     task("generateJavadoc", type: Javadoc) {
         description = "Generates Javadoc for the ${javadocTitle}."

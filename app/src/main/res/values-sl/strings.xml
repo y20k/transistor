@@ -24,6 +24,8 @@
     <string name="header_howto">Kako uporabljati</string>
 
     <!-- descriptions -->
+    <string name="descr_app_icon">App icon depicting an old radio</string>
+    <string name="descr_arrow_upward">Arrow facing upward</string>
     <string name="descr_station_options_button">Prikaz možnosti za radisjko postajo</string>
     <string name="descr_station_icon">Ikona radijske postaje</string>
     <string name="descr_station_name">Ime radijske postaje</string>

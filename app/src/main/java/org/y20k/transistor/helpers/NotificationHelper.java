@@ -130,7 +130,7 @@ public final class NotificationHelper implements TransistorKeys {
         style.setMediaSession(mSession.getSessionToken());
         style.setShowActionsInCompactView(0);
         style.setShowCancelButton(true); // pre-Lollipop workaround
-        style.setCancelButtonIntent(swipeActionPendingIntent); // todo check if swipeActionPendingIntent is called
+        style.setCancelButtonIntent(swipeActionPendingIntent);
 
         // construct notification in builder
         NotificationCompat.Builder builder;

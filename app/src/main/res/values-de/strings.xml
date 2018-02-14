@@ -24,6 +24,8 @@
     <string name="header_howto">Wie Transistor funktioniert</string>
 
     <!-- descriptions -->
+    <string name="descr_app_icon">App-Icon in der Form eines alten Radios</string>
+    <string name="descr_arrow_upward">Nach oben weisender Pfeil</string>
     <string name="descr_station_options_button">Optionen für Radiosender anzeigen</string>
     <string name="descr_station_icon">Logo der Radiosender</string>
     <string name="descr_station_name">Name des Radiosenders</string>

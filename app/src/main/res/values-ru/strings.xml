@@ -24,6 +24,8 @@
     <string name="header_howto">Как использовать</string>
 
     <!-- descriptions -->
+    <string name="descr_app_icon">App icon depicting an old radio</string>
+    <string name="descr_arrow_upward">Arrow facing upward</string>
     <string name="descr_station_options_button">Показать опции радиостанции</string>
     <string name="descr_station_icon">Иконка радиостанции</string>
     <string name="descr_station_name">Название радиостанции</string>
