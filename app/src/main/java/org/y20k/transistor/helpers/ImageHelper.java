@@ -128,7 +128,7 @@ public final class ImageHelper {
     /* Creates station image on a circular background with default color */
     public Bitmap createCircularFramedImage(int size) {
         // get default color
-        int color = ContextCompat.getColor(mContext, R.color.transistor_grey_lighter);
+        int color = ContextCompat.getColor(mContext, R.color.station_image_background);
         return createCircularFramedImage(size, color);
     }
 

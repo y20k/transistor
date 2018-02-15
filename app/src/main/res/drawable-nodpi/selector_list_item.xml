@@ -7,8 +7,8 @@
 
     <!-- View is "selected" -->
     <item android:state_selected="true"
-        android:drawable="@color/transistor_grey_very_light" />
+        android:drawable="@color/list_item_background_selected" />
 
     <!-- Default state. -->
-    <item android:drawable="@color/transistor_white" />
+    <item android:drawable="@color/list_item_background" />
 </selector>

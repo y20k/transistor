@@ -26,6 +26,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.media.AudioManager;
 import android.net.Uri;
@@ -41,6 +42,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -469,6 +471,16 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
             }
         });
 
+
+        // secret night mode switch
+        mPlayerStationImage.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                toggleNightMode();
+                return true;
+            }
+        });
+
         // swipe to refresh
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -857,6 +869,32 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
             Toast.makeText(mActivity, notificationText, Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+
+
+    /* Toggles night mode / dark theme */
+    private void toggleNightMode() {
+        int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        switch (currentNightMode) {
+            case Configuration.UI_MODE_NIGHT_NO:
+                // night mode is not active - turn on night mode
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                break;
+            case Configuration.UI_MODE_NIGHT_YES:
+                // night mode is active - turn off night mode
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                break;
+            case Configuration.UI_MODE_NIGHT_UNDEFINED:
+                // don't know what mode is active - turn on night mode
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                break;
+        }
+        // recreate activity
+        mActivity.recreate();
+
+        // inform user
+        Toast.makeText(mActivity, "Night mode change.", Toast.LENGTH_LONG).show(); // todo extract string
     }
 
 

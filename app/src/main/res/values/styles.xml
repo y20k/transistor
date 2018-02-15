@@ -2,11 +2,11 @@
 <resources>
 
     <!-- Base application theme -->
-    <style name="TransistorAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="TransistorAppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
 
         <!-- Set AppCompat’s colors -->
         <item name="colorPrimary">@color/transistor_red</item>
-        <item name="colorPrimaryDark">@color/transistor_grey_darker_95percent</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/transistor_gold_dark</item>
 
     </style>
