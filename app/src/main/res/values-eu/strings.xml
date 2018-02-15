@@ -24,8 +24,8 @@
     <string name="header_howto">Nola erabili</string>
 
     <!-- descriptions -->
-    <string name="descr_app_icon">App icon depicting an old radio</string>
-    <string name="descr_arrow_upward">Arrow facing upward</string>
+    <string name="descr_app_icon">Irrati zahar baten ikonoa</string>
+    <string name="descr_arrow_upward">Goranzko gezia</string>
     <string name="descr_station_options_button">Bistaratu irrati estazioaren aukerak</string>
     <string name="descr_station_icon">Irrati estazioaren ikonoa</string>
     <string name="descr_station_name">Irrati estazioaren izena</string>
