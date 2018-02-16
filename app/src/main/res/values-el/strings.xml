@@ -97,6 +97,9 @@
     <string name="toastmessage_add_open_file_started">Ανοίγει το αρχείο.</string>
     <string name="toastmessage_long_press_playback_stopped">Διακόπηκε η αναπαραγωγή (εντοπίστηκε διαρκές άγγιγμα)</string>
     <string name="toastmessage_long_press_playback_started">Άρχισε η αναπαραγωγή (εντοπίστηκε διαρκές άγγιγμα)</string>
+    <string name="toastmessage_long_press_change_icon">Change station icon (long press detected)</string>
+    <string name="toastmessage_long_press_change_name">Rename station (long press detected)</string>
+    <string name="toastmessage_long_press_night_mode_switch">Night mode switch (long press detected)</string>
     <string name="toastmessage_shortcut_created">Δημιουργήθηκε συντόμευση.</string>
     <string name="toastmessage_shortcut_not_created">Δεν δημιουργήθηκε συντόμευση. Αυτή η συσκευή δεν επιτρέπει τη δημιουργία συντομεύσεων.</string>
     <string name="toastmessage_list_refreshed">Φορτώνεται ξανά το κατάστιχο των σταθμών.</string>

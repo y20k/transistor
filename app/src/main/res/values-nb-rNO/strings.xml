@@ -97,6 +97,9 @@
     <string name="toastmessage_add_open_file_started">Åpner fil.</string>
     <string name="toastmessage_long_press_playback_stopped">Avspilling stoppet (enset langt trykk)</string>
     <string name="toastmessage_long_press_playback_started">Avspilling startet (langt trykk enset)</string>
+    <string name="toastmessage_long_press_change_icon">Change station icon (long press detected)</string>
+    <string name="toastmessage_long_press_change_name">Rename station (long press detected)</string>
+    <string name="toastmessage_long_press_night_mode_switch">Night mode switch (long press detected)</string>
     <string name="toastmessage_shortcut_created">Snarvei opprettet.</string>
     <string name="toastmessage_shortcut_not_created">Snarveien ble ikke opprettet. Denne enheten tillater ikke opprettelse av snarveier.</string>
     <string name="toastmessage_list_refreshed">Laster inn stasjonsliste igjen.</string>

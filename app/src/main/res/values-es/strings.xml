@@ -97,6 +97,9 @@
     <string name="toastmessage_add_open_file_started">Abriendo archivo.</string>
     <string name="toastmessage_long_press_playback_stopped">Reproducción detenida (detectada pulsación larga)</string>
     <string name="toastmessage_long_press_playback_started">Reproducción empezada (detectada pulsación larga)</string>
+    <string name="toastmessage_long_press_change_icon">Change station icon (long press detected)</string>
+    <string name="toastmessage_long_press_change_name">Rename station (long press detected)</string>
+    <string name="toastmessage_long_press_night_mode_switch">Night mode switch (long press detected)</string>
     <string name="toastmessage_shortcut_created">Acceso directo creado.</string>
     <string name="toastmessage_shortcut_not_created">Atajo no creado. Este dispositivo no permite la creación de accesos directos.</string>
     <string name="toastmessage_list_refreshed">Recargando lista de emisoras.</string>

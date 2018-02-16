@@ -97,6 +97,9 @@
     <string name="toastmessage_add_open_file_started">Dosya açılıyor.</string>
     <string name="toastmessage_long_press_playback_stopped">Oynatma durdurdu (uzun dokunuş algılandı)</string>
     <string name="toastmessage_long_press_playback_started">Oynatma başladı (uzun dokunuş algılandı)</string>
+    <string name="toastmessage_long_press_change_icon">Change station icon (long press detected)</string>
+    <string name="toastmessage_long_press_change_name">Rename station (long press detected)</string>
+    <string name="toastmessage_long_press_night_mode_switch">Night mode switch (long press detected)</string>
     <string name="toastmessage_shortcut_created">Kısayol oluşturuldu.</string>
     <string name="toastmessage_shortcut_not_created">Kısayol oluşturulmadı. Bu aygıt kısayolların oluşturulmasına izin vermiyor.</string>
     <string name="toastmessage_list_refreshed">İstasyonların listesi ön yükleniyor.</string>

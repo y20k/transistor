@@ -97,6 +97,9 @@
     <string name="toastmessage_add_open_file_started">開いているファイル.</string>
     <string name="toastmessage_long_press_playback_stopped">再生が停止しました (長押しを検出しました)</string>
     <string name="toastmessage_long_press_playback_started">再生を開始しました (長押しを検出しました)</string>
+    <string name="toastmessage_long_press_change_icon">Change station icon (long press detected)</string>
+    <string name="toastmessage_long_press_change_name">Rename station (long press detected)</string>
+    <string name="toastmessage_long_press_night_mode_switch">Night mode switch (long press detected)</string>
     <string name="toastmessage_shortcut_created">ショートカットを作成しました。</string>
     <string name="toastmessage_shortcut_not_created">ショートカットは作成されません。このデバイスは、ショートカットの作成を許可していません。</string>
     <string name="toastmessage_list_refreshed">局のリストを再読み込みしています。</string>

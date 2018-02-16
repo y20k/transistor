@@ -97,6 +97,9 @@
     <string name="toastmessage_add_open_file_started">Fitxategia irekitzen.</string>
     <string name="toastmessage_long_press_playback_stopped">Erreprodukzioa gelditu da (sakatze luzea atzeman da)</string>
     <string name="toastmessage_long_press_playback_started">Erreprodukzioa hasi da (sakatze luzea atzeman da)</string>
+    <string name="toastmessage_long_press_change_icon">Change station icon (long press detected)</string>
+    <string name="toastmessage_long_press_change_name">Rename station (long press detected)</string>
+    <string name="toastmessage_long_press_night_mode_switch">Night mode switch (long press detected)</string>
     <string name="toastmessage_shortcut_created">Lasterbidea sortu da.</string>
     <string name="toastmessage_shortcut_not_created">Ez da lasterbidea sortu. Gailu honek ez du lasterbideak sortzea ahalbidetzen.</string>
     <string name="toastmessage_list_refreshed">Irratien zerrenda birkargatzen.</string>
