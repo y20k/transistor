@@ -61,6 +61,7 @@ import android.widget.Toast;
 import org.y20k.transistor.adapter.CollectionAdapter;
 import org.y20k.transistor.adapter.CollectionViewModel;
 import org.y20k.transistor.core.Station;
+import org.y20k.transistor.helpers.DialogRename;
 import org.y20k.transistor.helpers.ImageHelper;
 import org.y20k.transistor.helpers.LogHelper;
 import org.y20k.transistor.helpers.PermissionHelper;
@@ -472,10 +473,34 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
         });
 
 
-        // secret night mode switch
         mPlayerStationImage.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
+                longPressFeedback(R.string.toastmessage_long_press_change_icon);
+                // get system picker for images
+                ((MainActivity)mActivity).pickImage(mCurrentStation);
+                return true;
+            }
+        });
+
+
+        mPlayerStationName.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                longPressFeedback(R.string.toastmessage_long_press_change_name);
+                // construct and run rename dialog
+                DialogRename dialogRename = new DialogRename(mActivity, mCurrentStation);
+                dialogRename.show();
+                return true;
+            }
+        });
+
+
+        // secret night mode switch
+        mPlayerSheetStationOptionsButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                longPressFeedback(R.string.toastmessage_long_press_night_mode_switch);
                 toggleNightMode();
                 return true;
             }
@@ -500,7 +525,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
             stopPlayback();
             // if long press -> inform user
             if (isLongPress) {
-                Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_long_press_playback_stopped), Toast.LENGTH_LONG).show();
+                longPressFeedback(R.string.toastmessage_long_press_playback_stopped);
             }
         } else {
             // start player service using intent
@@ -508,15 +533,8 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
             mPlayerBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
             // if long press -> inform user
             if (isLongPress) {
-                Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_long_press_playback_started), Toast.LENGTH_LONG).show();
+                longPressFeedback(R.string.toastmessage_long_press_playback_started);
             }
-        }
-
-        // if long press -> vibrate 50 milliseconds
-        if (isLongPress) {
-            Vibrator v = (Vibrator) mActivity.getSystemService(Context.VIBRATOR_SERVICE);
-            v.vibrate(50);
-            // v.vibrate(VibrationEffect.createOneShot(50, DEFAULT_AMPLITUDE)); // todo check if there is a support library vibrator
         }
     }
 
@@ -892,9 +910,17 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
         }
         // recreate activity
         mActivity.recreate();
+    }
 
+
+    /* Inform user and give haptic feedback (vibration) */
+    private void longPressFeedback(int stringResource) {
         // inform user
-        Toast.makeText(mActivity, "Night mode change.", Toast.LENGTH_LONG).show(); // todo extract string
+        Toast.makeText(mActivity, stringResource, Toast.LENGTH_LONG).show();
+        // vibrate 50 milliseconds
+        Vibrator v = (Vibrator) mActivity.getSystemService(Context.VIBRATOR_SERVICE);
+        v.vibrate(50);
+//            v.vibrate(VibrationEffect.createOneShot(50, DEFAULT_AMPLITUDE)); // todo check if there is a support library vibrator
     }
 
 

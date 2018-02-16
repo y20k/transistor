@@ -97,6 +97,9 @@
     <string name="toastmessage_add_open_file_started">Otwieranie pliku.</string>
     <string name="toastmessage_long_press_playback_stopped">Odtwarzanie zatrzymanie (wykryto długie naciśnięcie)</string>
     <string name="toastmessage_long_press_playback_started">Odtwarzanie rozpoczęte (wykryto długie naciśnięcie)</string>
+    <string name="toastmessage_long_press_change_icon">Change station icon (long press detected)</string>
+    <string name="toastmessage_long_press_change_name">Rename station (long press detected)</string>
+    <string name="toastmessage_long_press_night_mode_switch">Night mode switch (long press detected)</string>
     <string name="toastmessage_shortcut_created">Skrót utworzony.</string>
     <string name="toastmessage_shortcut_not_created">Shortcut not created. This device does not allow the creation of shortcuts.</string>
     <string name="toastmessage_list_refreshed">Reloading list of stations.</string>
