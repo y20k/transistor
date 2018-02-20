@@ -6,11 +6,12 @@
 
         <!-- Set AppCompat’s colors -->
         <item name="colorPrimary">@color/transistor_red</item>
-        <item name="colorPrimaryDark">@color/transistor_grey_darker</item>
+        <item name="colorPrimaryDark">@color/transistor_red_dark</item>
         <item name="colorAccent">@color/transistor_gold_dark</item>
 
         <!-- Don't show white status bar -->
         <item name="android:windowLightStatusBar">false</item>
+        <item name="android:statusBarColor">@color/transistor_grey_darker</item>
 
     </style>
 

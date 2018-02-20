@@ -15,7 +15,7 @@
 
     <!-- COLOR NAMES -->
     <color name="transistor_red">#FFD93025</color>
-    <color name="transistor_red_dark">#B31412</color>
+    <color name="transistor_red_dark">#FFB31412</color>
 
     <color name="transistor_grey">#FF5F6368</color>
     <color name="transistor_grey_light">#FFBDC1C6</color>
@@ -29,6 +29,7 @@
     <color name="transistor_gold_lighter">#FFFFE3B6</color>
     <color name="transistor_gold_dark">#FFCC9933</color>
 
+    <color name="transistor_black">#FF000000</color>
     <color name="transistor_white">#FFFFFFFF</color>
     <color name="transistor_transparent">#00ffffff</color>
 

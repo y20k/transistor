@@ -6,11 +6,12 @@
 
         <!-- Set AppCompat’s colors -->
         <item name="colorPrimary">@color/transistor_red</item>
-        <item name="colorPrimaryDark">@color/transistor_white</item> <!-- tints status bar white -->
+        <item name="colorPrimaryDark">@color/transistor_red_dark</item>
         <item name="colorAccent">@color/transistor_gold_dark</item>
 
         <!-- Show white status bar -->
         <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@color/transistor_white</item> <!-- tints status bar white -->
 
         <!-- Default window background used for resizing on v24) -->
         <item name="android:windowBackgroundFallback">@color/transistor_red_dark</item>

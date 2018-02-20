@@ -50,6 +50,7 @@ public interface TransistorKeys {
     String ARG_PLAYBACK = "ArgPlayback";
 
     /* PREFS */
+    String PREF_NIGHT_MODE_STATE = "prefNightModeState";
     String PREF_STATION_URL = "prefStationUrl";
     String PREF_STATION_URL_LAST = "prefStationUrlLast";
     String PREF_STATION_URI_SELECTED = "prefStationUriSelected";
