@@ -57,23 +57,22 @@ public final class NightModeHelper implements TransistorKeys {
     public static void restoreSavedState(Activity activity) {
         int savedNightModeState = loadNightModeState(activity);
         int currentNightModeState = getCurrentNightModeState(activity);
-        LogHelper.i(LOG_TAG, "Saved state of Night Mode = " + savedNightModeState + " || current state of Night Mode = " + currentNightModeState + " || NO=16 & YES=32"); // todo remove
         if (savedNightModeState != -1 && savedNightModeState != currentNightModeState) {
-//            switch (savedNightModeState) {
-//                case Configuration.UI_MODE_NIGHT_NO:
-//                     // turn off night mode
-//                    deactivateNightMode(activity);
-//                    break;
-//                case Configuration.UI_MODE_NIGHT_YES:
-//                    // turn on night mode
-//                    activateNightMode(activity);
-//                    break;
-//                case Configuration.UI_MODE_NIGHT_UNDEFINED:
-//                    // turn off night mode
-//                    deactivateNightMode(activity);
-//                    break;
-//            }
-//            activity.recreate(); // todo check if necessary
+            switch (savedNightModeState) {
+                case Configuration.UI_MODE_NIGHT_NO:
+                     // turn off night mode
+                    deactivateNightMode(activity);
+                    break;
+                case Configuration.UI_MODE_NIGHT_YES:
+                    // turn on night mode
+                    activateNightMode(activity);
+                    break;
+                case Configuration.UI_MODE_NIGHT_UNDEFINED:
+                    // turn off night mode
+                    deactivateNightMode(activity);
+                    break;
+            }
+            activity.recreate(); // todo check if necessary
         }
     }
 
@@ -86,23 +85,32 @@ public final class NightModeHelper implements TransistorKeys {
 
     /* Activates Night Mode */
     private static void activateNightMode(Activity activity) {
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        saveNightModeState(activity, Configuration.UI_MODE_NIGHT_YES);
+
+        // revert to normal status bar
         View decorView = activity.getWindow().getDecorView();
         decorView.setSystemUiVisibility(0);
-        saveNightModeState(activity, Configuration.UI_MODE_NIGHT_NO);
+
+        // switch to Nighh Mode
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
     }
 
 
     /* Deactivates Night Mode */
     private static void deactivateNightMode(Activity activity) {
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        // save the new state
+        saveNightModeState(activity, Configuration.UI_MODE_NIGHT_NO);
+
+        // switch to white status bar - if possible
         View decorView = activity.getWindow().getDecorView();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         } else {
             decorView.setSystemUiVisibility(0);
         }
-        saveNightModeState(activity, Configuration.UI_MODE_NIGHT_YES);
+
+        // switch to Day Mode
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
     }
 
 
