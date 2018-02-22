@@ -37,6 +37,7 @@ public final class StationListHelper implements TransistorKeys {
     /* Define log tag */
     private static final String LOG_TAG = StationListHelper.class.getSimpleName();
 
+
     /* Creates a real copy of given station list*/
     public static ArrayList<Station> copyStationList(ArrayList<Station> stationList) {
         ArrayList<Station> newStationList = new ArrayList<Station>();
@@ -119,8 +120,8 @@ public final class StationListHelper implements TransistorKeys {
     /* Load list of stations from storage */
     public static ArrayList<Station> loadStationListFromStorage(Context context) {
 
-        StorageHelper storageHelper = new StorageHelper(context);
-        File folder = storageHelper.getCollectionDirectory();
+        // get collection folder
+        File folder = StorageHelper.getCollectionDirectory(context);
 
         // create folder if necessary
         if (!folder.exists()) {

@@ -30,30 +30,14 @@ import org.y20k.transistor.core.Station;
  */
 public final class StationContextMenu extends DialogFragment implements TransistorKeys {
 
-
-    /* Main class variables */
-    private View mView;
-    private Activity mActivity;
-    private Station mStation;
-
-
-    /* Constructor (default) */
-    public StationContextMenu() {
-    }
-
-
-    /* Initializer for main class variables */
-    public void initialize(Activity activity, View view, Station station) {
-        mActivity = activity;
-        mView = view;
-        mStation = station;
-    }
+    /* Define log tag */
+    private static final String LOG_TAG = StationContextMenu.class.getSimpleName();
 
 
     /* Displays context menu */
-    public void show() {
+    public static void show(final Activity activity, final View view, final Station station) {
 
-        PopupMenu popup = new PopupMenu(mActivity, mView);
+        PopupMenu popup = new PopupMenu(activity, view);
         popup.inflate(R.menu.menu_list_list_item);
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
@@ -64,28 +48,25 @@ public final class StationContextMenu extends DialogFragment implements Transist
                     // CASE ICON
                     case R.id.menu_icon:
                         // get system picker for images
-                        ((MainActivity)mActivity).pickImage(mStation);
+                        ((MainActivity)activity).pickImage(station);
                         return true;
 
                     // CASE RENAME
                     case R.id.menu_rename:
                         // construct and run rename dialog
-                        DialogRename dialogRename = new DialogRename(mActivity, mStation);
-                        dialogRename.show();
+                        DialogRename.show(activity, station);
                         return true;
 
                     // CASE DELETE
                     case R.id.menu_delete:
                         // construct and run delete dialog
-                        DialogDelete dialogDelete = new DialogDelete(mActivity, mStation);
-                        dialogDelete.show();
+                        DialogDelete.show(activity, station);
                         return true;
 
                     // CASE SHORTCUT
                     case R.id.menu_shortcut: {
                         // create shortcut
-                        ShortcutHelper shortcutHelper = new ShortcutHelper(mActivity.getApplication().getApplicationContext());
-                        shortcutHelper.placeShortcut(mStation);
+                        ShortcutHelper.placeShortcut(activity.getApplication().getApplicationContext(), station);
                         return true;
                     }
 

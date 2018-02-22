@@ -35,28 +35,16 @@ public final class DialogRename implements TransistorKeys {
     private static final String LOG_TAG = DialogRename.class.getSimpleName();
 
 
-    /* Main class variables */
-    private final Activity mActivity;
-    private final Station mStation;
-
-
-    /* Constructor */
-    public DialogRename(Activity activity, Station station) {
-        mActivity = activity;
-        mStation = station;
-    }
-
-
     /* Construct and show dialog */
-    public void show() {
+    public static void show(final Activity activity, final Station station) {
         // prepare dialog builder
-        LayoutInflater inflater = LayoutInflater.from(mActivity);
-        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+        LayoutInflater inflater = LayoutInflater.from(activity);
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
         // get input field
         View view = inflater.inflate(R.layout.dialog_rename_station, null);
         final EditText inputField = (EditText) view.findViewById(R.id.dialog_rename_station_input);
-        inputField.setText(mStation.getStationName());
+        inputField.setText(station.getStationName());
 
         // set dialog view
         builder.setView(view);
@@ -73,7 +61,7 @@ public final class DialogRename implements TransistorKeys {
                 String newStationName = inputField.getText().toString();
 
                 // hand updated station over to main activity
-                ((MainActivity)mActivity).handleStationRename(mStation, newStationName);
+                ((MainActivity)activity).handleStationRename(station, newStationName);
 
             }
         });

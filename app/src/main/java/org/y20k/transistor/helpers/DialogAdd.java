@@ -32,23 +32,15 @@ import java.io.File;
  */
 public final class DialogAdd {
 
-    /* Main class variables */
-    private final Activity mActivity;
-    private final File mFolder;
-
-
-    /* Constructor */
-    public DialogAdd(Activity activity, File folder) {
-        mActivity = activity;
-        mFolder = folder;
-    }
+    /* Define log tag */
+    private static final String LOG_TAG = DialogAdd.class.getSimpleName();
 
 
     /* Construct and show dialog */
-    public void show() {
+    public static void show(final Activity activity, final File folder) {
         // prepare dialog builder
-        LayoutInflater inflater = LayoutInflater.from(mActivity);
-        final AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+        LayoutInflater inflater = LayoutInflater.from(activity);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
         // get input field
         View view = inflater.inflate(R.layout.dialog_add_station, null);
@@ -65,7 +57,7 @@ public final class DialogAdd {
                 if (inputField.getText() != null) {
                     final String input = inputField.getText().toString();
                     // download new station
-                    StationFetcher stationFetcher = new StationFetcher(mActivity, mFolder, Uri.parse(input.trim()));
+                    StationFetcher stationFetcher = new StationFetcher(activity, folder, Uri.parse(input.trim()));
                     stationFetcher.execute();
                 }
             }

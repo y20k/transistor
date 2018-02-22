@@ -132,16 +132,8 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
         // get activity and application contexts
         mActivity = getActivity();
 
-//        // initialize night mode state
-//        if (savedInstanceState == null) {
-//            NightModeHelper.restoreSavedState(mActivity);
-//        }
-
         // get notification message
         mSleepTimerNotificationMessage = mActivity.getString(R.string.snackbar_message_timer_set) + " ";
-
-        // initialize StorageHelper
-        mStorageHelper = new StorageHelper(mActivity);
 
         // load  state
         loadAppState(mActivity);
@@ -315,8 +307,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
             fetchNewStation(mNewStationUri);
         } else if (mNewStationUri != null && mNewStationUri.getScheme().startsWith("file")) {
             // check for read permission
-            PermissionHelper permissionHelper = new PermissionHelper(mActivity, mRootView);
-            if (permissionHelper.requestReadExternalStorage(PERMISSION_REQUEST_STATION_FETCHER_READ_EXTERNAL_STORAGE)) {
+            if (PermissionHelper.requestReadExternalStorage(mActivity, mRootView, PERMISSION_REQUEST_STATION_FETCHER_READ_EXTERNAL_STORAGE)) {
                 // read and add new station
                 fetchNewStation(mNewStationUri);
             }
@@ -442,9 +433,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
         mPlayerSheetStationOptionsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                StationContextMenu menu = new StationContextMenu();
-                menu.initialize(mActivity, view, mCurrentStation);
-                menu.show();
+                StationContextMenu.show(mActivity, view, mCurrentStation);
             }
         });
 
@@ -491,8 +480,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
             public boolean onLongClick(View view) {
                 longPressFeedback(R.string.toastmessage_long_press_change_name);
                 // construct and run rename dialog
-                DialogRename dialogRename = new DialogRename(mActivity, mCurrentStation);
-                dialogRename.show();
+                DialogRename.show(mActivity, mCurrentStation);
                 return true;
             }
         });
@@ -834,7 +822,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
     /* Fetch new station with given Uri */
     private void fetchNewStation(Uri stationUri) {
         // download and add new station
-        StationFetcher stationFetcher = new StationFetcher(mActivity, mStorageHelper.getCollectionDirectory(), stationUri);
+        StationFetcher stationFetcher = new StationFetcher(mActivity, StorageHelper.getCollectionDirectory(mActivity), stationUri);
         stationFetcher.execute();
     }
 

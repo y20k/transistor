@@ -25,7 +25,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDelegate;
 import android.view.View;
 import android.widget.Toast;
 
@@ -34,6 +33,7 @@ import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.DialogError;
 import org.y20k.transistor.helpers.ImageHelper;
 import org.y20k.transistor.helpers.LogHelper;
+import org.y20k.transistor.helpers.NightModeHelper;
 import org.y20k.transistor.helpers.PermissionHelper;
 import org.y20k.transistor.helpers.ShortcutHelper;
 import org.y20k.transistor.helpers.StationListHelper;
@@ -64,21 +64,23 @@ public final class MainActivity extends AppCompatActivity implements TransistorK
     private Station mTempStation;
 
 
-    /* Sets day / night mode */
-    static {
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-    }
+//    /* Sets day / night mode */
+//    static {
+//        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+//    }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // initialize night mode state
+        if (savedInstanceState == null) {
+            NightModeHelper.restoreSavedState(this);
+        }
+
         // initialize list of stations
         mStationList = new ArrayList<Station>();
-
-        // initialize storage helper
-        mStorageHelper = new StorageHelper(this);
 
         // initialize temp station (used by image change requests)
         mTempStation = null;
@@ -180,6 +182,9 @@ public final class MainActivity extends AppCompatActivity implements TransistorK
     /* Puts new station in list and updates live data  */
     public int handleStationAdd(Bundle stationDownloadBundle) {
 
+        // get collection folder
+        File folder = StorageHelper.getCollectionDirectory(this);
+
         // get station, station image and station URL from download bundle
         Station station = null;
         Bitmap stationBitmap = null;
@@ -193,7 +198,7 @@ public final class MainActivity extends AppCompatActivity implements TransistorK
         // check is station is valid and unique
         if (station != null && StationListHelper.findStationId(mStationList, station.getStreamUri()) == -1) {
             // write playlist file and station image - if available
-            station.writePlaylistFile(mStorageHelper.getCollectionDirectory());
+            station.writePlaylistFile(folder);
             if (stationBitmap != null) {
                 station.writeImageFile(stationBitmap);
             }
@@ -210,8 +215,7 @@ public final class MainActivity extends AppCompatActivity implements TransistorK
             String errorTitle = getResources().getString(R.string.dialog_error_title_fetch_write);
             String errorMessage = getResources().getString(R.string.dialog_error_message_fetch_write);
             String errorDetails = getResources().getString(R.string.dialog_error_details_write);
-            DialogError dialogError = new DialogError(this, errorTitle, errorMessage, errorDetails);
-            dialogError.show();
+            DialogError.show(this, errorTitle, errorMessage, errorDetails);
             LogHelper.e(LOG_TAG, "Unable to add station to collection: Duplicate name and/or stream URL.");
 
             return -1;
@@ -225,9 +229,8 @@ public final class MainActivity extends AppCompatActivity implements TransistorK
 
         // name of station is new
         if (station != null && newStationName.length() > 0 && !station.getStationName().equals(newStationName)) {
-
-            // initialize StorageHelper
-            StorageHelper storageHelper = new StorageHelper(this);
+            // get collection folder
+            File folder = StorageHelper.getCollectionDirectory(this);
 
             // create copies of station and main list of stations
             ArrayList<Station> newStationList = StationListHelper.copyStationList(mStationList);
@@ -243,12 +246,12 @@ public final class MainActivity extends AppCompatActivity implements TransistorK
             File stationPlaylistFile = station.getStationPlaylistFile();
             stationPlaylistFile.delete();
             // set new playlist file - and write file
-            newStation.setStationPlaylistFile(storageHelper.getCollectionDirectory());
-            newStation.writePlaylistFile(storageHelper.getCollectionDirectory());
+            newStation.setStationPlaylistFile(folder);
+            newStation.writePlaylistFile(folder);
 
             // rename existing image file
             File stationImageFile = station.getStationImageFile();
-            newStation.setStationImageFile(storageHelper.getCollectionDirectory());
+            newStation.setStationImageFile(folder);
             stationImageFile.renameTo(newStation.getStationImageFile());
 
             // update list
@@ -323,8 +326,7 @@ public final class MainActivity extends AppCompatActivity implements TransistorK
         }
 
         // delete station shortcut
-        ShortcutHelper shortcutHelper = new ShortcutHelper(this);
-        shortcutHelper.removeShortcut(station);
+        ShortcutHelper.removeShortcut(this, station);
 
         // return ID of station next to the deleted station station
         return stationId;
@@ -335,8 +337,7 @@ public final class MainActivity extends AppCompatActivity implements TransistorK
     public void pickImage(Station station) {
         mTempStation = station;
         View rootView = findViewById(android.R.id.content);
-        PermissionHelper permissionHelper = new PermissionHelper(this, rootView);
-        if (permissionHelper.requestReadExternalStorage(PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE)) {
+        if (PermissionHelper.requestReadExternalStorage(this, rootView, PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE)) {
             selectFromImagePicker();
         }
     }
@@ -353,6 +354,9 @@ public final class MainActivity extends AppCompatActivity implements TransistorK
 
     /* Saves and sets new station image and updates station list and live data */
     private boolean handleStationImageChange(Intent data) {
+
+        // get collection folder
+        File folder = StorageHelper.getCollectionDirectory(this);
 
         // retrieve selected image Uri from image picker
         Bitmap newImage = null;
@@ -377,7 +381,7 @@ public final class MainActivity extends AppCompatActivity implements TransistorK
             Station newStation = new Station(mTempStation);
 
             // set new station image file object
-            newStation.setStationImageFile(mStorageHelper.getCollectionDirectory());
+            newStation.setStationImageFile(folder);
 
             // update list
             int stationID = StationListHelper.findStationId(mStationList, mTempStation.getStreamUri());
@@ -417,7 +421,7 @@ public final class MainActivity extends AppCompatActivity implements TransistorK
     private void checkExternalStorageState() {
 
         String state = Environment.getExternalStorageState();
-        if (!state.equals(Environment.MEDIA_MOUNTED) || mStorageHelper.getCollectionDirectory() == null) {
+        if (!state.equals(Environment.MEDIA_MOUNTED) || StorageHelper.getCollectionDirectory(this) == null) {
             Toast.makeText(this, getString(R.string.toastalert_no_external_storage), Toast.LENGTH_LONG).show();
             LogHelper.e(LOG_TAG, "Error: Unable to mount External Storage. Current state: " + state);
 

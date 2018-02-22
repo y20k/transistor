@@ -156,8 +156,7 @@ public final class StationFetcher extends AsyncTask<Void, Void, Bundle> implemen
             }
 
             // show error dialog
-            DialogError dialogError = new DialogError(mActivity, errorTitle, errorMessage, errorDetails);
-            dialogError.show();
+            DialogError.show(mActivity, errorTitle, errorMessage, errorDetails);
         }
 
     }

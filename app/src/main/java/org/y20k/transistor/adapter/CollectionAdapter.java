@@ -134,9 +134,7 @@ public final class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.V
             addNewViewHolder.getLListItemAddNewLayout().setOnClickListener (new View.OnClickListener () {
                 @Override
                 public void onClick (View view) {
-                    StorageHelper storageHelper = new StorageHelper(mActivity);
-                    DialogAdd dialog = new DialogAdd(mActivity, storageHelper.getCollectionDirectory());
-                    dialog.show();
+                    DialogAdd.show(mActivity, StorageHelper.getCollectionDirectory(mActivity));
                 }
             });
         }

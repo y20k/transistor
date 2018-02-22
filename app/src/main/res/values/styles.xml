@@ -9,6 +9,9 @@
         <item name="colorPrimaryDark">@color/transistor_grey_darker</item>
         <item name="colorAccent">@color/transistor_gold_dark</item>
 
+        <!-- List divider -->
+        <item name="android:listDivider">@drawable/list_divider</item>
+
     </style>
 
 </resources>

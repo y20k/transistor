@@ -34,27 +34,15 @@ public final class DialogDelete implements TransistorKeys {
     private static final String LOG_TAG = DialogDelete.class.getSimpleName();
 
 
-    /* Main class variables */
-    private final Activity mActivity;
-    private final Station mStation;
-
-
-    /* Constructor */
-    public DialogDelete(Activity activity, Station station) {
-        mActivity = activity;
-        mStation = station;
-    }
-
-
     /* Construct and show dialog */
-    public void show() {
+    public static void show(final Activity activity, final Station station) {
         // stop player service using intent
-        Intent intent = new Intent(mActivity, PlayerService.class);
+        Intent intent = new Intent(activity, PlayerService.class);
         intent.setAction(ACTION_DISMISS);
-        mActivity.startService(intent);
+        activity.startService(intent);
         LogHelper.v(LOG_TAG, "Opening delete dialog. Stopping player service.");
 
-        AlertDialog.Builder deleteDialog = new AlertDialog.Builder(mActivity);
+        AlertDialog.Builder deleteDialog = new AlertDialog.Builder(activity);
 
         // add message to dialog
         deleteDialog.setMessage(R.string.dialog_delete_station_message);
@@ -64,7 +52,7 @@ public final class DialogDelete implements TransistorKeys {
             // listen for click on delete button
             public void onClick(DialogInterface arg0, int arg1) {
                 // hand station over to main activity
-                ((MainActivity)mActivity).handleStationDelete(mStation);
+                ((MainActivity)activity).handleStationDelete(station);
             }
         });
 

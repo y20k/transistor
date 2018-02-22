@@ -24,37 +24,26 @@ import java.io.File;
 /**
  * StorageHelper class
  */
-public class StorageHelper {
+public final class StorageHelper {
 
     /* Define log tag */
     private static final String LOG_TAG = StorageHelper.class.getSimpleName();
 
 
-    /* Main class variables */
-    private final Context mActivity;
-    private File mCollectionDirectory;
-
-
-    /* Constructor */
-    public StorageHelper(Context activity) {
-        mActivity = activity;
-        mCollectionDirectory = findCollectionDirectory();
-    }
-
-
     /* Getter for collection directory */
-    public File getCollectionDirectory() {
-        return mCollectionDirectory;
+    public static File getCollectionDirectory(Context context) {
+        return findCollectionDirectory(context);
     }
 
 
     /* Checks if given folder holds any m3u files */
-    public boolean storageHasStationPlaylistFiles() {
-        if (!mCollectionDirectory.isDirectory()) {
+    public static boolean storageHasStationPlaylistFiles(Context context) {
+        File collectionDirectory = findCollectionDirectory(context);
+        if (!collectionDirectory.isDirectory()) {
             LogHelper.i(LOG_TAG, "Given file object is not a directory.");
             return false;
         }
-        File[] listOfFiles = mCollectionDirectory.listFiles();
+        File[] listOfFiles = collectionDirectory.listFiles();
         for (File file : listOfFiles) {
             if (file.getPath().endsWith(".m3u")) {
                 return true;
@@ -66,9 +55,9 @@ public class StorageHelper {
 
 
     /* Return a write-able sub-directory from external storage  */
-    private File findCollectionDirectory() {
+    private static File findCollectionDirectory(Context context) {
         String subDirectory = "Collection";
-        File[] storage = mActivity.getExternalFilesDirs(subDirectory);
+        File[] storage = context.getExternalFilesDirs(subDirectory);
         for (File file : storage) {
             if (file != null) {
                 String state = EnvironmentCompat.getStorageState(file);
@@ -80,8 +69,5 @@ public class StorageHelper {
         }
         return null;
     }
-
-
-
 
 }

@@ -30,27 +30,11 @@ import org.y20k.transistor.R;
  */
 public final class DialogError {
 
-    /* Main class variables */
-    private final Activity mActivity;
-    private final String mErrorTitle;
-    private final String mErrorMessage;
-    private final String mErrorDetails;
-
-
-    /* Constructor */
-    public DialogError(Activity activity, String errorTitle, String errorMessage, String errorDetails) {
-        mActivity = activity;
-        mErrorTitle = errorTitle;
-        mErrorMessage = errorMessage;
-        mErrorDetails = errorDetails;
-    }
-
-
     /* Construct and show dialog */
-    public void show() {
+    public static void show(final Activity activity, final String errorTitle, final String errorMessage, final String errorDetails) {
         // prepare dialog builder
-        LayoutInflater inflater = LayoutInflater.from(mActivity);
-        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+        LayoutInflater inflater = LayoutInflater.from(activity);
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
         // get views
         View view = inflater.inflate(R.layout.dialog_error, null);
@@ -75,9 +59,9 @@ public final class DialogError {
         });
 
         // set text views
-        errorTitleView.setText(mErrorTitle);
-        errorMessageView.setText(mErrorMessage);
-        errorDetailsView.setText(mErrorDetails);
+        errorTitleView.setText(errorTitle);
+        errorMessageView.setText(errorMessage);
+        errorDetailsView.setText(errorDetails);
 
         // set dialog view
         builder.setView(view);
