@@ -492,6 +492,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
             public boolean onLongClick(View view) {
                 longPressFeedback(R.string.toastmessage_long_press_night_mode_switch);
                 NightModeHelper.switchToOpposite(mActivity);
+                mActivity.recreate();
                 return true;
             }
         });

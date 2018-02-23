@@ -33,7 +33,6 @@ import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.DialogError;
 import org.y20k.transistor.helpers.ImageHelper;
 import org.y20k.transistor.helpers.LogHelper;
-import org.y20k.transistor.helpers.NightModeHelper;
 import org.y20k.transistor.helpers.PermissionHelper;
 import org.y20k.transistor.helpers.ShortcutHelper;
 import org.y20k.transistor.helpers.StationListHelper;
@@ -64,20 +63,9 @@ public final class MainActivity extends AppCompatActivity implements TransistorK
     private Station mTempStation;
 
 
-//    /* Sets day / night mode */
-//    static {
-//        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-//    }
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // initialize night mode state
-        if (savedInstanceState == null) {
-            NightModeHelper.restoreSavedState(this);
-        }
 
         // initialize list of stations
         mStationList = new ArrayList<Station>();
