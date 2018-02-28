@@ -29,6 +29,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.media.AudioManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
@@ -280,11 +281,6 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
 
     /* Refreshes list of stations - used by pull to refresh */
     private void refreshList() {
-//        // stop player service using intent
-//        Intent intent = new Intent(mActivity, PlayerService.class);
-//        intent.setAction(ACTION_DISMISS);
-//        mActivity.startService(intent);
-
         // manually refresh list of stations (force reload) - useful when editing playlist files manually outside of Transistor
         ArrayList<Station> newStationList = StationListHelper.loadStationListFromStorage(mActivity);
         mCollectionViewModel.getStationList().setValue(newStationList);
@@ -341,7 +337,6 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
 
     /* Handles intent to show player from notification or from shortcut */
     private void handleShowPlayer(Intent intent) {
-
         Station station = null;
         boolean startPlayback = false;
 
@@ -349,6 +344,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
         if (intent.hasExtra(EXTRA_STATION)) {
             // get station from notification
             station = intent.getParcelableExtra(EXTRA_STATION);
+            mPlayerServiceStation = station;
             startPlayback = false;
         }
         // CASE: playback requested via homescreen shortcut
@@ -378,6 +374,8 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
         } else {
             Toast.makeText(mActivity, getString(R.string.toastalert_station_not_found), Toast.LENGTH_LONG).show();
         }
+
+
     }
 
 
@@ -486,7 +484,19 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
         });
 
 
-        // secret night mode switch
+        // secret night mode switch - pre-Android P (28)
+        if (Build.VERSION.SDK_INT < 28) {
+            mPlayerSheetStationOptionsButton.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    longPressFeedback(R.string.toastmessage_long_press_night_mode_switch);
+                    NightModeHelper.switchToOpposite(mActivity);
+                    mActivity.recreate();
+                    return true;
+                }
+            });
+        }
+
         mPlayerSheetStationOptionsButton.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
@@ -692,17 +702,17 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
         long duration = FIFTEEN_MINUTES;
 
         // CASE: No station is playing, no timer is running
-        if (mPlayerServiceStation == null || (mPlayerServiceStation.getPlaybackState() == PLAYBACK_STATE_STOPPED && !mSleepTimerRunning)) {
+        if (!PlayerService.isPlaybackRunning() && !mSleepTimerRunning) {
             // unable to start timer
             Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_timer_start_unable), Toast.LENGTH_SHORT).show();
         }
         // CASE: A station is playing, no sleep timer is running
-        else if (mPlayerServiceStation != null && mPlayerServiceStation.getPlaybackState() != PLAYBACK_STATE_STOPPED && !mSleepTimerRunning) {
+        else if (PlayerService.isPlaybackRunning() && !mSleepTimerRunning) {
             startSleepTimer(duration);
             Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_timer_activated), Toast.LENGTH_SHORT).show();
         }
         // CASE: A station is playing, Sleep timer is running
-        else if (mPlayerServiceStation != null && mPlayerServiceStation.getPlaybackState() == PLAYBACK_STATE_STARTED) {
+        else if (PlayerService.isPlaybackRunning() && mSleepTimerRunning) {
             startSleepTimer(duration);
             Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_timer_duration_increased) + " [+" + getReadableTime(duration) + "]", Toast.LENGTH_SHORT).show();
         }
@@ -906,6 +916,13 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
                         mCurrentStation = findStationByUri(Uri.parse(mCurrentStationUrl), newStationList);
                     } else {
                         mCurrentStation = newStationList.get(0);
+                    }
+                    // update current station from player service - if necessary
+                    if (mPlayerServiceStation == null) {
+                        mPlayerServiceStation = PlayerService.getCurrentStation();
+                        if (mPlayerServiceStation != null && mPlayerServiceStation.getStreamUri().equals(mCurrentStation.getStreamUri())) {
+                            mCurrentStation = mPlayerServiceStation;
+                        }
                     }
                     // setup and show player
                     setupPlayer(mCurrentStation);

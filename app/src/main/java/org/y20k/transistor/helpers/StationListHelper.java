@@ -86,8 +86,30 @@ public final class StationListHelper implements TransistorKeys {
             }
         }
 
-        // return null if nothing was found
+        // return -1 if nothing was found
         return -1;
+    }
+
+
+    /* Finds the station that is currently playing */
+    public static Station findCurrentlyPlayingStation(ArrayList<Station> stationList) {
+        Station station = null;
+
+        // make sure list is not null
+        if (stationList == null) {
+            return station;
+        }
+
+        // traverse list of stations
+        for (int i = 0; i < stationList.size(); i++) {
+            station = stationList.get(i);
+            if (station.getPlaybackState() != PLAYBACK_STATE_STOPPED) {
+                return station;
+            }
+        }
+
+        // return null if nothing was found
+        return station;
     }
 
 

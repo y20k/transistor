@@ -124,7 +124,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     private HeadphoneUnplugReceiver mHeadphoneUnplugReceiver;
     private WifiManager.WifiLock mWifiLock;
     private PowerManager.WakeLock mWakeLock;
-    private SimpleExoPlayer mPlayer;
+    private static SimpleExoPlayer mPlayer;
     private String mUserAgent;
 
 
@@ -367,12 +367,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
 
     @Override
-    public void onTimelineChanged(Timeline timeline, Object manifest) {
-
-    }
-
-
-    @Override
     public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {
 
     }
@@ -382,6 +376,11 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
     }
 
+
+    @Override
+    public void onTimelineChanged(Timeline timeline, Object manifest, int reason) {
+
+    }
 
     @Override
     public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
@@ -527,18 +526,25 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     }
 
 
-    /* Getter for current station */
-    public static Station getStation() {
-        return mStation;
-    }
-
-
+    /* Checks if media session is active */
     public static boolean isMediaSessionActive() {
         if (mSession == null) {
             return false;
         } else {
             return mSession.isActive();
         }
+    }
+
+
+    /* Checks if playback is running */
+    public static boolean isPlaybackRunning() {
+        return mPlayer.getPlayWhenReady();
+    }
+
+
+    /* Getter for current station */
+    public static Station getCurrentStation() {
+        return mStation;
     }
 
 
