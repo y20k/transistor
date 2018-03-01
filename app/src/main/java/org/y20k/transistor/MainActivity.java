@@ -13,12 +13,15 @@
 
 package org.y20k.transistor;
 
+import android.app.AlertDialog;
 import android.arch.lifecycle.LifecycleRegistry;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -26,6 +29,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import org.y20k.transistor.adapter.CollectionViewModel;
@@ -43,6 +48,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Semaphore;
 
 
 /**
@@ -61,6 +70,8 @@ public final class MainActivity extends AppCompatActivity implements TransistorK
     private final LifecycleRegistry mRegistry = new LifecycleRegistry(this);
     private ArrayList<Station> mStationList;
     private Station mTempStation;
+    // Hack for static chooseStreamDialog() to display the dialog box
+    private static MainActivity mStaticInstance = null;
 
 
     @Override
@@ -90,6 +101,8 @@ public final class MainActivity extends AppCompatActivity implements TransistorK
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.main_container, listFragment, MAIN_ACTIVITY_FRAGMENT_TAG)
                 .commit();
+
+        mStaticInstance = this;
     }
 
 
@@ -104,6 +117,7 @@ public final class MainActivity extends AppCompatActivity implements TransistorK
 
     @Override
     protected void onDestroy() {
+        mStaticInstance = null;
         super.onDestroy();
     }
 
@@ -420,6 +434,80 @@ public final class MainActivity extends AppCompatActivity implements TransistorK
             android.os.Process.killProcess(android.os.Process.myPid());
             System.exit(1);
         }
+    }
+
+    public static class ChooseStreamDialogResult {
+        public Uri uri = null;
+        public String name = null;
+        public boolean dialogCancelled = false; // TODO: not used, shows error dialog when user presses Back
+    };
+
+    /* Shows an ugly popup AlertDialog to select an audio stream */
+    public static ChooseStreamDialogResult chooseStreamDialog(final List<Uri> uris, final List<String> names) {
+        final ChooseStreamDialogResult result = new ChooseStreamDialogResult();
+
+        MainActivity myself = mStaticInstance;
+        if (myself == null) {
+            LogHelper.e(LOG_TAG, "Error: cannot show dialog in chooseStreamDialog() because mStaticInstance is null");
+            result.uri = uris.get(0);
+            if (names.size() >= 1) {
+                result.name = names.get(0);
+            }
+            return result;
+        }
+
+        final Semaphore dialogFinished = new Semaphore(0);
+        final AlertDialog.Builder listDialog = new AlertDialog.Builder(myself);
+        listDialog.setIcon(R.mipmap.ic_launcher);
+        listDialog.setTitle(R.string.descr_list_add_new);
+
+        ArrayList<HashMap<String,String>> elements = new ArrayList<HashMap<String,String>>();
+        for (int i = 0; i < uris.size(); i++) {
+            HashMap<String,String> item = new HashMap<String,String>();
+            item.put("uri", uris.get(i).toString());
+            if (names.size() > i) {
+                item.put("name", names.get(i));
+            } else {
+                item.put("name", "");
+            }
+            elements.add(item);
+        }
+
+        final SimpleAdapter arrayAdapter =
+                new SimpleAdapter(myself, elements, R.layout.listview_select_station,
+                        new String[] {"name", "uri"},
+                        new int[] {R.id.select_station_name, R.id.select_station_uri});
+
+        listDialog.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                HashMap<String,String> selection = (HashMap<String,String>) arrayAdapter.getItem(which);
+                result.uri = uris.get(which);
+                if (names.size() > which) {
+                    result.name = names.get(which);
+                }
+                dialogFinished.release();
+            }
+        });
+
+        listDialog.setCancelable(true);
+        listDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                result.dialogCancelled = true;
+                dialogFinished.release();
+            }
+        });
+
+        myself.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                listDialog.show();
+            }
+        });
+
+        dialogFinished.acquireUninterruptibly();
+        return result;
     }
 
 }

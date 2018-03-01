@@ -14,6 +14,7 @@
 
 package org.y20k.transistor.core;
 
+import android.app.AlertDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -23,6 +24,8 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v4.media.MediaMetadataCompat;
 
+import org.y20k.transistor.MainActivity;
+import org.y20k.transistor.R;
 import org.y20k.transistor.helpers.LogHelper;
 import org.y20k.transistor.helpers.TransistorKeys;
 
@@ -38,7 +41,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -324,8 +329,8 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
             int counter = 0;
             StringBuilder sb = new StringBuilder("");
 
-            // read until last last reached or until line five
-            while ((line = br.readLine()) != null && counter < 5) {
+            // read until last last reached or until sanity limit of 100 lines
+            while ((line = br.readLine()) != null && counter < 100) {
                 sb.append(line);
                 sb.append("\n");
                 counter++;
@@ -486,6 +491,8 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
         // prepare scanner
         Scanner in = new Scanner(fileContent);
         String line;
+        List<Uri> uris = new ArrayList<Uri>();
+        List<String> names = new ArrayList<String>();
 
         while (in.hasNextLine()) {
 
@@ -494,25 +501,40 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
 
             // M3U: found station name
             if (line.contains("#EXTINF:-1,")) {
-                mStationName = line.substring(11).trim();
-            // M3U: found stream URL - abort loop
+                names.add(line.substring(11).trim());
+            // M3U: found stream URL
             } else if (line.startsWith("http")) {
-                mStreamUri = Uri.parse(line.trim());
-                break;
+                uris.add(Uri.parse(line.trim()));
             }
 
             // PLS: found station name
-            else if (line.startsWith("Title1=")) {
-                mStationName = line.substring(7).trim();
-            // PLS: found stream URL - abort loop
-            } else if (line.startsWith("File1=http")) {
-                mStreamUri = Uri.parse(line.substring(6).trim());
-                break;
+            else if (line.matches("^Title[0-9]+=.*")) {
+                names.add(line.substring(line.indexOf("=") + 1).trim());
+            // PLS: found stream URL
+            } else if (line.matches("^File[0-9]+=http.*")) {
+                uris.add(Uri.parse(line.substring(line.indexOf("=") + 1).trim()));
             }
 
         }
 
         in.close();
+
+        if (uris.size() == 1) {
+            mStreamUri = uris.get(0);
+            if (names.size() >= 1) {
+                mStationName = names.get(0);
+            }
+        }
+
+        if (uris.size() > 1) {
+            MainActivity.ChooseStreamDialogResult result = MainActivity.chooseStreamDialog(uris, names);
+            mStreamUri = result.uri;
+            mStationName = result.name;
+            if (result.dialogCancelled && mStationFetchResults != null) {
+                // TODO: move this out of here, parse() should not touch mStationFetchResults
+                mStationFetchResults.putBoolean(RESULT_USER_CANCELLED, true);
+            }
+        }
 
         if (mStreamUri == null) {
             LogHelper.e(LOG_TAG, "Unable to parse: " + fileContent);

@@ -59,6 +59,7 @@ public interface TransistorKeys {
 
     /* RESULTS */
     String RESULT_FETCH_ERROR = "FETCH_ERROR";
+    String RESULT_USER_CANCELLED = "USER_CANCELLED";
     String RESULT_PLAYLIST_TYPE = "PLAYLIST_TYPE";
     String RESULT_STREAM_TYPE = "STREAM_TYPE";
     String RESULT_FILE_CONTENT = "FILE_CONTENT";

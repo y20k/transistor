@@ -156,7 +156,9 @@ public final class StationFetcher extends AsyncTask<Void, Void, Bundle> implemen
             }
 
             // show error dialog
-            DialogError.show(mActivity, errorTitle, errorMessage, errorDetails);
+            if (!fetchResults.getBoolean(RESULT_USER_CANCELLED, false)) {
+                DialogError.show(mActivity, errorTitle, errorMessage, errorDetails);
+            }
         }
 
     }
