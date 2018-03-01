@@ -77,6 +77,7 @@
                 <data android:mimeType="audio/x-scpls" />
                 <data android:mimeType="audio/mpegurl" />
                 <data android:mimeType="audio/x-mpegurl" />
+                <data android:mimeType="application/pls+xml" />
                 <data android:mimeType="application/x-mpegurl" />
                 <data android:mimeType="application/vnd.apple.mpegurl" />
                 <data android:mimeType="application/vnd.apple.mpegurl.audio" />
