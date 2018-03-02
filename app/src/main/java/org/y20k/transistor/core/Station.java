@@ -135,7 +135,7 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
             mStationName = getStationName(fileLocation);
             // save results
             mStationFetchResults.putParcelable(RESULT_STREAM_TYPE, contentType);
-            mStationFetchResults.putBoolean(RESULT_FETCH_STATUS, false);
+            mStationFetchResults.putInt(RESULT_FETCH_STATUS, CONTAINS_ONE_STREAM);
         }
 
         // content type is playlist
@@ -169,13 +169,13 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
         } else if (contentType != null && contentType.type != null) {
             // save results and return
             mStationFetchResults.putParcelable(RESULT_STREAM_TYPE, contentType);
-            mStationFetchResults.putBoolean(RESULT_FETCH_STATUS, true);
+            mStationFetchResults.putInt(RESULT_FETCH_STATUS, CONTAINS_NO_STREAM);
             return;
 
             // no content type
         } else {
             // save error flag in results and return
-            mStationFetchResults.putBoolean(RESULT_FETCH_STATUS, true);
+            mStationFetchResults.putInt(RESULT_FETCH_STATUS, CONTAINS_NO_STREAM);
             return;
         }
 
@@ -212,12 +212,12 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
             // save results
             mStationFetchResults.putParcelable(RESULT_STREAM_TYPE, getContentType(mStreamUri));
             mStationFetchResults.putString(RESULT_FILE_CONTENT, mPlaylistFileContent);
-            mStationFetchResults.putBoolean(RESULT_FETCH_STATUS, false);
+            mStationFetchResults.putInt(RESULT_FETCH_STATUS, CONTAINS_ONE_STREAM);
 
         } else {
             // save error flag and file content in results
             mStationFetchResults.putString(RESULT_FILE_CONTENT, "\n[File probably does not contain a valid streaming URL.]");
-            mStationFetchResults.putBoolean(RESULT_FETCH_STATUS, true);
+            mStationFetchResults.putInt(RESULT_FETCH_STATUS, CONTAINS_NO_STREAM);
         }
 
         // set Transistor's playlist file object

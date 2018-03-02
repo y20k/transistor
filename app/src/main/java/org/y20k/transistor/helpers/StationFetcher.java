@@ -271,7 +271,7 @@ public final class StationFetcher extends AsyncTask<Void, Void, Bundle> implemen
             sb.append(mActivity.getResources().getString(R.string.dialog_error_message_fetch_general_hint_m3u));
         }
 
-        if (fetchResults != null && fetchResults.getBoolean(RESULT_FETCH_STATUS)) {
+        if (fetchResults != null && fetchResults.getInt(RESULT_FETCH_STATUS) == CONTAINS_NO_STREAM) {
             String fileContent = fetchResults.getString(RESULT_FILE_CONTENT);
             if (fileContent != null) {
                 sb.append("\n\n");
