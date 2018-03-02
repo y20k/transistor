@@ -80,17 +80,20 @@ public final class StationFetcher extends AsyncTask<Void, Void, Bundle> implemen
             // download new station,
             station = new Station(mFolder, mStationURL);
 
-            // check if name parameter was given
-            if (mStationName != null) {
-                station.setStationName(mStationName);
+            // check if multiple streams
+            if (station.getStationFetchResults().getInt(RESULT_FETCH_STATUS) == CONTAINS_ONE_STREAM) {
+                // check if name parameter was given
+                if (mStationName != null) {
+                    station.setStationName(mStationName);
+                }
+
+                // download new station image
+                stationImage = station.fetchImageFile(mStationURL);
+
+                // pack bundle
+                stationDownloadBundle.putParcelable(KEY_DOWNLOAD_STATION, station);
+                stationDownloadBundle.putParcelable(KEY_DOWNLOAD_STATION_IMAGE, stationImage);
             }
-
-            // download new station image
-            stationImage = station.fetchImageFile(mStationURL);
-
-            // pack bundle
-            stationDownloadBundle.putParcelable(KEY_DOWNLOAD_STATION, station);
-            stationDownloadBundle.putParcelable(KEY_DOWNLOAD_STATION_IMAGE, stationImage);
 
             return stationDownloadBundle;
 
@@ -98,8 +101,11 @@ public final class StationFetcher extends AsyncTask<Void, Void, Bundle> implemen
             // read file and return new station
             station =  new Station(mFolder, mStationUri);
 
-            // pack bundle
-            stationDownloadBundle.putParcelable(KEY_DOWNLOAD_STATION, station);
+            // check if multiple streams
+            if (station.getStationFetchResults().getInt(RESULT_FETCH_STATUS) == CONTAINS_ONE_STREAM) {
+                // pack bundle
+                stationDownloadBundle.putParcelable(KEY_DOWNLOAD_STATION, station);
+            }
 
             return stationDownloadBundle;
 
