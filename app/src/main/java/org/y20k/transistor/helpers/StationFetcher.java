@@ -77,23 +77,20 @@ public final class StationFetcher extends AsyncTask<Void, Void, Bundle> implemen
         Bitmap stationImage = null;
 
         if (mFolderExists && mStationUriScheme != null && mStationUriScheme.startsWith("http")  && urlCleanup()) {
-            // download new station,
+            // download new station
             station = new Station(mFolder, mStationURL);
-
             // check if multiple streams
             if (station.getStationFetchResults().getInt(RESULT_FETCH_STATUS) == CONTAINS_ONE_STREAM) {
                 // check if name parameter was given
                 if (mStationName != null) {
                     station.setStationName(mStationName);
                 }
-
-                // download new station image
+                // download new station image and pack to bundle
                 stationImage = station.fetchImageFile(mStationURL);
-
-                // pack bundle
-                stationDownloadBundle.putParcelable(KEY_DOWNLOAD_STATION, station);
                 stationDownloadBundle.putParcelable(KEY_DOWNLOAD_STATION_IMAGE, stationImage);
             }
+            // pack bundle
+            stationDownloadBundle.putParcelable(KEY_DOWNLOAD_STATION, station);
 
             return stationDownloadBundle;
 
@@ -146,6 +143,7 @@ public final class StationFetcher extends AsyncTask<Void, Void, Bundle> implemen
 
         // CASE 3: an error occurred
         if (station == null || (fetchResults != null && fetchResults.getInt(RESULT_FETCH_STATUS) == CONTAINS_NO_STREAM) || !mFolderExists) {
+            LogHelper.e(LOG_TAG, "!!! ding. station = " +  station); // todo remove
 
             String errorTitle;
             String errorMessage;

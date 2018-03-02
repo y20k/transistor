@@ -57,7 +57,7 @@ public final class DialogAdd {
                 if (inputField.getText() != null) {
                     final String input = inputField.getText().toString();
                     // download new station
-                    StationFetcher stationFetcher = new StationFetcher(activity, folder, Uri.parse(input.trim()));
+                    StationFetcher stationFetcher = new StationFetcher(activity, folder, Uri.parse(input.trim()), null);
                     stationFetcher.execute();
                 }
             }
