@@ -138,4 +138,8 @@
     The last version containing those strings is v2.3.7
     https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
 
-</resources>
+<string name="dialog_add_station_choose_stream_message">Fant flere strømmer</string>
+    <string name="dialog_add_station_choose_stream_button">Bruk denne</string>
+
+
+    </resources>
