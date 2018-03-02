@@ -73,7 +73,7 @@ public interface TransistorKeys {
     String[] CONTENT_TYPES_AAC = {"audio/aac", "audio/aacp"};
 
     /* SUPPORTED PLAYLIST CONTENT TYPES */
-    String[] CONTENT_TYPES_PLS = {"audio/x-scpls"};
+    String[] CONTENT_TYPES_PLS = {"audio/x-scpls", "application/pls+xml"};
     String[] CONTENT_TYPES_M3U = {"audio/mpegurl", "application/x-mpegurl", "application/x-mpegURL", "audio/x-mpegurl", "application/x-mpegurl"};
     String[] CONTENT_TYPES_HLS = {"application/vnd.apple.mpegurl", "application/vnd.apple.mpegurl.audio"};
 
