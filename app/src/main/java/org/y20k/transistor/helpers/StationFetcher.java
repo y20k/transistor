@@ -43,16 +43,18 @@ public final class StationFetcher extends AsyncTask<Void, Void, Bundle> implemen
     private final Activity mActivity;
     private final File mFolder;
     private final Uri mStationUri;
+    private final String mStationName;
     private final String mStationUriScheme;
     private URL mStationURL;
     private final boolean mFolderExists;
 
 
     /* Constructor */
-    public StationFetcher(Activity activity, File folder, Uri stationUri) {
+    public StationFetcher(Activity activity, File folder, Uri stationUri, String stationName) {
         mActivity = activity;
         mFolder = folder;
         mStationUri = stationUri;
+        mStationName =stationName; // optional station name // todo set station name, if given in postexecute
 
         mFolderExists = mFolder.exists();
         mStationUriScheme = stationUri.getScheme();
@@ -77,6 +79,12 @@ public final class StationFetcher extends AsyncTask<Void, Void, Bundle> implemen
         if (mFolderExists && mStationUriScheme != null && mStationUriScheme.startsWith("http")  && urlCleanup()) {
             // download new station,
             station = new Station(mFolder, mStationURL);
+
+            // check if name parameter was given
+            if (mStationName != null) {
+                station.setStationName(mStationName);
+            }
+
             // download new station image
             stationImage = station.fetchImageFile(mStationURL);
 
@@ -117,17 +125,21 @@ public final class StationFetcher extends AsyncTask<Void, Void, Bundle> implemen
             fetchResults = station.getStationFetchResults();
         }
 
-        // station was successfully fetched
-        if (station != null && fetchResults != null && !fetchResults.getBoolean(RESULT_FETCH_ERROR) && mFolderExists) {
-
-            // send local broadcast - adapter will save station
+        // CASE 1: station was successfully fetched
+        if (station != null && fetchResults != null && fetchResults.getInt(RESULT_FETCH_STATUS) == CONTAINS_ONE_STREAM && mFolderExists) {
+            // hand over result to MainActivity
             ((MainActivity)mActivity).handleStationAdd(stationDownloadBundle);
-
             LogHelper.v(LOG_TAG, "Station was successfully fetched: " + station.getStreamUri().toString());
         }
 
-        // an error occurred
-        if (station == null || (fetchResults != null && fetchResults.getBoolean(RESULT_FETCH_ERROR)) || !mFolderExists) {
+        // CASE 2: multiple streams found
+        if (station != null && fetchResults != null && fetchResults.getInt(RESULT_FETCH_STATUS) == CONTAINS_MULTIPLE_STREAMS && mFolderExists) {
+            // let user choose
+            DialogAddChooseStream.show(mActivity, fetchResults.getStringArrayList(RESULT_LIST_OF_URIS), fetchResults.getStringArrayList(RESULT_LIST_OF_NAMES));
+        }
+
+        // CASE 3: an error occurred
+        if (station == null || (fetchResults != null && fetchResults.getInt(RESULT_FETCH_STATUS) == CONTAINS_NO_STREAM) || !mFolderExists) {
 
             String errorTitle;
             String errorMessage;
@@ -255,7 +267,7 @@ public final class StationFetcher extends AsyncTask<Void, Void, Bundle> implemen
             sb.append(mActivity.getResources().getString(R.string.dialog_error_message_fetch_general_hint_m3u));
         }
 
-        if (fetchResults != null && fetchResults.getBoolean(RESULT_FETCH_ERROR)) {
+        if (fetchResults != null && fetchResults.getBoolean(RESULT_FETCH_STATUS)) {
             String fileContent = fetchResults.getString(RESULT_FILE_CONTENT);
             if (fileContent != null) {
                 sb.append("\n\n");

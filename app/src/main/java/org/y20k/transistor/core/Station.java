@@ -38,6 +38,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Scanner;
@@ -98,6 +99,9 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
 
     /* Constructor when given file from the Collection folder */
     public Station(File file) {
+        // create results bundle
+        mStationFetchResults = new Bundle();
+
         // read and parse playlist file
         mStationPlaylistFile = file;
         if (mStationPlaylistFile.exists()) {
@@ -131,41 +135,47 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
             mStationName = getStationName(fileLocation);
             // save results
             mStationFetchResults.putParcelable(RESULT_STREAM_TYPE, contentType);
-            mStationFetchResults.putBoolean(RESULT_FETCH_ERROR, false);
+            mStationFetchResults.putBoolean(RESULT_FETCH_STATUS, false);
         }
 
         // content type is playlist
         else if (isPlaylist(contentType)) {
-            // download and parse station data from playlist file
+            // download from playlist file
             mPlaylistFileContent = downloadPlaylistFile(fileLocation);
 
-            // parse result of downloadPlaylistFile
-            if (parse(mPlaylistFileContent) && mStreamUri != null) {
+            // parse station data
+            int parseResult = parse(mPlaylistFileContent);
+
+            //
+            if (parseResult == CONTAINS_ONE_STREAM && mStreamUri != null) {
                 mStationName = getStationName(fileLocation);
                 // save results
                 mStationFetchResults.putParcelable(RESULT_PLAYLIST_TYPE, contentType);
                 mStationFetchResults.putParcelable(RESULT_STREAM_TYPE, getContentType(mStreamUri));
                 mStationFetchResults.putString(RESULT_FILE_CONTENT, mPlaylistFileContent);
-                mStationFetchResults.putBoolean(RESULT_FETCH_ERROR, false);
+                mStationFetchResults.putInt(RESULT_FETCH_STATUS, CONTAINS_ONE_STREAM);
 
+            } else if (parseResult == CONTAINS_MULTIPLE_STREAMS)  {
+                // save result - let StationFetcher handle that
+                mStationFetchResults.putInt(RESULT_FETCH_STATUS, CONTAINS_MULTIPLE_STREAMS);
             } else {
                 // save error flag and file content in results
                 mStationFetchResults.putParcelable(RESULT_PLAYLIST_TYPE, contentType);
                 mStationFetchResults.putString(RESULT_FILE_CONTENT, "\n[File probably does not contain a valid streaming URL.]");
-                mStationFetchResults.putBoolean(RESULT_FETCH_ERROR, true);
+                mStationFetchResults.putInt(RESULT_FETCH_STATUS, CONTAINS_NO_STREAM);
             }
 
-        // content type is none of the above
+            // content type is none of the above
         } else if (contentType != null && contentType.type != null) {
             // save results and return
             mStationFetchResults.putParcelable(RESULT_STREAM_TYPE, contentType);
-            mStationFetchResults.putBoolean(RESULT_FETCH_ERROR, true);
+            mStationFetchResults.putBoolean(RESULT_FETCH_STATUS, true);
             return;
 
-        // no content type
+            // no content type
         } else {
             // save error flag in results and return
-            mStationFetchResults.putBoolean(RESULT_FETCH_ERROR, true);
+            mStationFetchResults.putBoolean(RESULT_FETCH_STATUS, true);
             return;
         }
 
@@ -194,17 +204,20 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
             LogHelper.v(LOG_TAG, "File does not exist " + localFile);
         }
 
+        // parse station data
+        int parseResult = parse(mPlaylistFileContent);
+
         // parse the raw content of playlist file (mPlaylistFileContent)
-        if (parse(mPlaylistFileContent) &&  mStreamUri != null) {
+        if (parseResult == CONTAINS_ONE_STREAM  &&  mStreamUri != null) {
             // save results
             mStationFetchResults.putParcelable(RESULT_STREAM_TYPE, getContentType(mStreamUri));
             mStationFetchResults.putString(RESULT_FILE_CONTENT, mPlaylistFileContent);
-            mStationFetchResults.putBoolean(RESULT_FETCH_ERROR, false);
+            mStationFetchResults.putBoolean(RESULT_FETCH_STATUS, false);
 
         } else {
             // save error flag and file content in results
             mStationFetchResults.putString(RESULT_FILE_CONTENT, "\n[File probably does not contain a valid streaming URL.]");
-            mStationFetchResults.putBoolean(RESULT_FETCH_ERROR, true);
+            mStationFetchResults.putBoolean(RESULT_FETCH_STATUS, true);
         }
 
         // set Transistor's playlist file object
@@ -324,8 +337,8 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
             int counter = 0;
             StringBuilder sb = new StringBuilder("");
 
-            // read until last last reached or until line five
-            while ((line = br.readLine()) != null && counter < 5) {
+            // read until last last reached or until sanity limit of 32 lines
+            while ((line = br.readLine()) != null && counter < 32) {
                 sb.append(line);
                 sb.append("\n");
                 counter++;
@@ -474,18 +487,20 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
 
 
     /* Parses string representation of mStationPlaylistFile */
-    private boolean parse(String fileContent) {
+    private int parse(String fileContent) {
 
         mPlaylistFileContent = fileContent;
 
         // check for null
         if (fileContent == null) {
-            return false;
+            return CONTAINS_NO_STREAM;
         }
 
         // prepare scanner
         Scanner in = new Scanner(fileContent);
         String line;
+        ArrayList<String> uris = new ArrayList<String>();
+        ArrayList<String> names = new ArrayList<String>();
 
         while (in.hasNextLine()) {
 
@@ -494,41 +509,57 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
 
             // M3U: found station name
             if (line.contains("#EXTINF:-1,")) {
-                mStationName = line.substring(11).trim();
-            // M3U: found stream URL - abort loop
+                names.add(line.substring(11).trim());
+                // M3U: found stream URL
             } else if (line.startsWith("http")) {
-                mStreamUri = Uri.parse(line.trim());
-                break;
+                uris.add(line.trim());
             }
 
             // PLS: found station name
-            else if (line.startsWith("Title1=")) {
-                mStationName = line.substring(7).trim();
-            // PLS: found stream URL - abort loop
-            } else if (line.startsWith("File1=http")) {
-                mStreamUri = Uri.parse(line.substring(6).trim());
-                break;
+            else if (line.matches("^Title[0-9]+=.*")) {
+                names.add(line.substring(line.indexOf("=") + 1).trim());
+                // PLS: found stream URL
+            } else if (line.matches("^File[0-9]+=http.*")) {
+                uris.add(line.substring(line.indexOf("=") + 1).trim());
             }
 
         }
 
         in.close();
 
-        if (mStreamUri == null) {
+        // CASE 1: playlist was empty - let StationFetcher handle that
+        if (uris.size() == 0) {
             LogHelper.e(LOG_TAG, "Unable to parse: " + fileContent);
-            return false;
+            return CONTAINS_NO_STREAM;
         }
 
-        // try to construct name of station from remote mStationPlaylistFile name
-        if (mStationPlaylistFile != null && mStationName == null) {
-            mStationName = mStationPlaylistFile.getName().substring(0, mStationPlaylistFile.getName().lastIndexOf("."));
-        } else if (mStationPlaylistFile == null && mStationName == null) {
-            mStationName = "New Station";
+        // CASE 1: playlist contains multiple streams
+        else if (uris.size() > 1) {
+            LogHelper.v(LOG_TAG, "Playlist contains multiple stations: " + fileContent);
+            mStationFetchResults.putStringArrayList(RESULT_LIST_OF_URIS, uris);
+            mStationFetchResults.putStringArrayList(RESULT_LIST_OF_NAMES, names);
+            return CONTAINS_MULTIPLE_STREAMS;
         }
 
-        // file content string parsed successfully
-        return true;
+        // CASE 3: playlist has one stream
+        else {
+            // get Uri and Name
+            mStreamUri = Uri.parse(uris.get(0));
 
+            // get station name
+            if (names.size() >= 1) {
+                // use name extracted from playlist
+                mStationName = names.get(0);
+            } else if (mStationPlaylistFile != null && mStationName == null) {
+                // try to construct name of station from remote mStationPlaylistFile name
+                mStationName = mStationPlaylistFile.getName().substring(0, mStationPlaylistFile.getName().lastIndexOf("."));
+            } else if (mStationPlaylistFile == null && mStationName == null) {
+                // use default name
+                mStationName = "New Station";
+            }
+            // file content string parsed successfully
+            return CONTAINS_ONE_STREAM;
+        }
     }
 
 

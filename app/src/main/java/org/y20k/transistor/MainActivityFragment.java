@@ -833,7 +833,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
     /* Fetch new station with given Uri */
     private void fetchNewStation(Uri stationUri) {
         // download and add new station
-        StationFetcher stationFetcher = new StationFetcher(mActivity, StorageHelper.getCollectionDirectory(mActivity), stationUri);
+        StationFetcher stationFetcher = new StationFetcher(mActivity, StorageHelper.getCollectionDirectory(mActivity), stationUri, null);
         stationFetcher.execute();
     }
 

@@ -58,7 +58,9 @@ public interface TransistorKeys {
     String PREF_TWO_PANE = "prefTwoPane";
 
     /* RESULTS */
-    String RESULT_FETCH_ERROR = "FETCH_ERROR";
+    String RESULT_FETCH_STATUS = "FETCH_STATUS";
+    String RESULT_LIST_OF_URIS = "LIST_OF_URIS";
+    String RESULT_LIST_OF_NAMES = "LIST_OF_NAMES";
     String RESULT_PLAYLIST_TYPE = "PLAYLIST_TYPE";
     String RESULT_STREAM_TYPE = "STREAM_TYPE";
     String RESULT_FILE_CONTENT = "FILE_CONTENT";
@@ -110,6 +112,11 @@ public interface TransistorKeys {
     int CONNECTION_TYPE_HLS = 1;
     int CONNECTION_TYPE_OTHER = 2;
     int CONNECTION_TYPE_ERROR = 3;
+
+    /* FETCH RESULTS */
+    int CONTAINS_NO_STREAM = 0;
+    int CONTAINS_ONE_STREAM = 1;
+    int CONTAINS_MULTIPLE_STREAMS = 2;
 
     /* KEYS */
     String METADATA_CUSTOM_KEY_IMAGE_FILE = "METADATA_CUSTOM_KEY_IMAGE_FILE";
