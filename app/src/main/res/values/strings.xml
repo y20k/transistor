@@ -70,7 +70,8 @@
     <string name="dialog_rename_station_input_hint">Enter a new name</string>
     <string name="dialog_rename_station_message">Rename station</string>
     <string name="dialog_button_rename">Rename</string>
-    <string name="dialog_add_station_choose_stream_message">Multiple streams found</string>
+    <string name="dialog_add_station_choose_stream_heading">Multiple streams found</string>
+    <string name="dialog_add_station_choose_stream_message">Please select a stream.</string>
     <string name="dialog_add_station_choose_stream_button">Use this one</string>
 
 

@@ -6,7 +6,7 @@
     android:padding="24dp">
 
     <TextView
-        android:id="@+id/dialog_rename_station_message"
+        android:id="@+id/dialog_rename_station_heading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/dialog_rename_station_message"
