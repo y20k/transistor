@@ -24,8 +24,8 @@
     <string name="header_howto">Како се користи</string>
 
     <!-- descriptions -->
-    <string name="descr_app_icon">App icon depicting an old radio</string>
-    <string name="descr_arrow_upward">Arrow facing upward</string>
+    <string name="descr_app_icon">Икона апликације која означава стари радио</string>
+    <string name="descr_arrow_upward">Стрелица на горе</string>
     <string name="descr_station_options_button">Прикажи опције за радио станицу</string>
     <string name="descr_station_icon">Икона радио станице</string>
     <string name="descr_station_name">Назив радио станице</string>
@@ -36,7 +36,7 @@
     <string name="descr_playback_button">Дугме за пуштање</string>
     <string name="descr_playback_indicator">Показивач тренутног пуштања</string>
     <string name="descr_playback_indicator_started">Показивач тренутног пуштања</string>
-    <string name="descr_timer_icon">Sleep timer icon</string>
+    <string name="descr_timer_icon">Икона тајмера</string>
     <string name="descr_timer_indicator_started">Индикатор покренутог тајмера</string>
     <string name="descr_player_sheet_button_expand">Button to expand and minimize the radio player</string>
     <string name="descr_player_sheet_information_icon">Information Icon</string>
