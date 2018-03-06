@@ -138,4 +138,9 @@
     The last version containing those strings is v2.3.7
     https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
 
-</resources>
+<string name="dialog_add_station_choose_stream_heading">複数のストリームが見つかりました</string>
+    <string name="dialog_add_station_choose_stream_message">ストリームを選択してください。</string>
+    <string name="dialog_add_station_choose_stream_button">これを使用します</string>
+
+
+    </resources>
