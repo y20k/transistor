@@ -7,37 +7,37 @@ Transistor is designed, developed and maintained by: [y20k](https://github.com/y
 Contributing developer(s): [azixMcAze](https://github.com/azixMcAze) & [meonwax](https://github.com/meonwax) & [pelya](https://github.com/mpelya)
 
 ### Translations
-Basque version: [osoitz](https://github.com/osoitz)
+Basque version: [osoitz](https://github.com/osoitz) | [weblate version history](https://hosted.weblate.org/changes/?lang=ca&project=transistor)
 
-Catalan version: [Zagur](https://github.com/Zagur)
+Catalan version: [Zagur](https://github.com/Zagur) | [weblate version history](https://hosted.weblate.org/changes/?lang=eu&project=transistor)
 
-Chinese version: [YFdyh000](https://github.com/yfdyh000)
+Chinese version: [YFdyh000](https://github.com/yfdyh000) | [weblate version history](https://hosted.weblate.org/changes/?lang=zh_Hans&project=transistor)
 
-French version: [M2ck](https://github.com/M2ck)
+French version: [M2ck](https://github.com/M2ck) | [weblate version history](https://hosted.weblate.org/changes/?lang=fr&project=transistor)
 
-German version: [y20k](https://github.com/y20k)
+German version: [y20k](https://github.com/y20k) | [weblate version history](https://hosted.weblate.org/changes/?lang=de&project=transistor)
 
-Greek version: [nikoss](https://github.com/nikoss)
+Greek version: [nikoss](https://github.com/nikoss) | [weblate version history](https://hosted.weblate.org/changes/?lang=el&project=transistor)
 
-Japanese version: [naofum](https://github.com/naofum)
+Japanese version: [naofum](https://github.com/naofum) | [weblate version history](https://hosted.weblate.org/changes/?lang=jp&project=transistor)
 
-Kabyle version: [SlimaneAmiri](https://github.com/SlimaneAmiri)
+Kabyle version: [SlimaneAmiri](https://github.com/SlimaneAmiri) | [weblate version history](https://hosted.weblate.org/changes/?lang=kab&project=transistor)
 
-Norwegian version: [comradekingu](https://github.com/comradekingu)
+Norwegian version: [comradekingu](https://github.com/comradekingu) | [weblate version history](https://hosted.weblate.org/changes/?lang=nb_NO&project=transistor)
 
-Polish version: [woodypl](https://github.com/woodypl)
+Polish version: [woodypl](https://github.com/woodypl) | [weblate version history](https://hosted.weblate.org/changes/?lang=pl&project=transistor)
 
-Russian version: [Boris Timofeev](https://github.com/btimofeev)
+Russian version: [Boris Timofeev](https://github.com/btimofeev) | [weblate version history](https://hosted.weblate.org/changes/?lang=ru&project=transistor)
 
-Serbian version: [pejakm](https://github.com/pejakm)
+Serbian version: [pejakm](https://github.com/pejakm) | [weblate version history](https://hosted.weblate.org/changes/?lang=sr&project=transistor)
 
-Slovenian version: [bungabunga](https://github.com/bungabunga)
+Slovenian version: [bungabunga](https://github.com/bungabunga) | [weblate version history](https://hosted.weblate.org/changes/?lang=sl&project=transistor)
 
-Spanish version: [franciscot](https://github.com/franciscot)
+Spanish version: [franciscot](https://github.com/franciscot) | [weblate version history](https://hosted.weblate.org/changes/?lang=es&project=transistor)
 
-Turkish version [turkceapps](https://hosted.weblate.org/user/turkceapps/)
+Turkish version [turkceapps](https://hosted.weblate.org/user/turkceapps/) | [weblate version history](https://hosted.weblate.org/changes/?lang=tr&project=transistor)
 
-Ukrainian version: [burunduk](https://github.com/burunduk) 
+Ukrainian version: [burunduk](https://github.com/burunduk) | [weblate version history](https://hosted.weblate.org/changes/?lang=uk&project=transistor)
 
 ### Want to help?
 Please check out the notes in [CONTRIBUTE.md](https://github.com/y20k/transistor/blob/master/CONTRIBUTE.md) first.

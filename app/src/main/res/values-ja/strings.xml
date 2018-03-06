@@ -45,6 +45,7 @@
     <string name="descr_player_sheet_p_station_metadata">選択したラジオ局からのメタデータ</string>
     <string name="descr_player_sheet_p_stream_url">選択したラジオ局のストリームのリンク</string>
     <string name="descr_list_add_new">Add a new station</string>
+    <string name="descr_list_add_select_stream_dropdown">Dropdown menu that hold a selection of streams</string>
 
     <!-- player -->
     <string name="player_sheet_h1_details">詳細</string>
@@ -70,6 +71,9 @@
     <string name="dialog_rename_station_input_hint">新しい名前を入力してください</string>
     <string name="dialog_rename_station_message">放送局の名前を変更</string>
     <string name="dialog_button_rename">名前の変更</string>
+    <string name="dialog_add_station_choose_stream_heading">複数のストリームが見つかりました</string>
+    <string name="dialog_add_station_choose_stream_message">ストリームを選択してください。</string>
+    <string name="dialog_add_station_choose_stream_button">これを使用します</string>
 
     <!-- error dialogs -->
     <string name="dialog_error_title_default">エラー</string>
@@ -138,9 +142,4 @@
     The last version containing those strings is v2.3.7
     https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
 
-<string name="dialog_add_station_choose_stream_heading">複数のストリームが見つかりました</string>
-    <string name="dialog_add_station_choose_stream_message">ストリームを選択してください。</string>
-    <string name="dialog_add_station_choose_stream_button">これを使用します</string>
-
-
-    </resources>
+</resources>

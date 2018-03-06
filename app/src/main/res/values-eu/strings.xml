@@ -45,6 +45,7 @@
     <string name="descr_player_sheet_p_station_metadata">Aukeratutako irrati estazioaren metadatuak</string>
     <string name="descr_player_sheet_p_stream_url">Aukeratutako irrati estazioaren jarioaren esteka</string>
     <string name="descr_list_add_new">Gehitu irrati berria</string>
+    <string name="descr_list_add_select_stream_dropdown">Dropdown menu that hold a selection of streams</string>
 
     <!-- player -->
     <string name="player_sheet_h1_details">Details</string>
@@ -70,6 +71,9 @@
     <string name="dialog_rename_station_input_hint">Sartu izen berri bat</string>
     <string name="dialog_rename_station_message">Aldatu izena estazioari</string>
     <string name="dialog_button_rename">Aldatu izena</string>
+    <string name="dialog_add_station_choose_stream_heading">Multiple streams found</string>
+    <string name="dialog_add_station_choose_stream_message">Please select a stream</string>
+    <string name="dialog_add_station_choose_stream_button">Use this one</string>
 
     <!-- error dialogs -->
     <string name="dialog_error_title_default">Errorea</string>

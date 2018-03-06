@@ -36,6 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
         android:layout_marginTop="8dp"
+        android:contentDescription="@string/descr_list_add_select_stream_dropdown"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/dialog_rename_station_message"
         app:layout_constraintStart_toStartOf="@+id/dialog_rename_station_message"
