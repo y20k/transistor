@@ -54,14 +54,14 @@ public final class StationFetcher extends AsyncTask<Void, Void, Bundle> implemen
         mActivity = activity;
         mFolder = folder;
         mStationUri = stationUri;
-        mStationName =stationName; // optional station name // todo set station name, if given in postexecute
+        mStationName = stationName; // optional station name // todo set station name, if given in postexecute
 
         mFolderExists = mFolder.exists();
         mStationUriScheme = stationUri.getScheme();
 
         if (stationUri != null && mStationUriScheme != null && mStationUriScheme.startsWith("http")) {
             Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_add_download_started), Toast.LENGTH_LONG).show();
-        } else if (stationUri != null && mStationUriScheme != null && mStationUriScheme.startsWith("file")) {
+        } else if (stationUri != null && mStationUriScheme != null && mStationUriScheme.startsWith("content")) {
             Toast.makeText(mActivity, mActivity.getString(R.string.toastmessage_add_open_file_started), Toast.LENGTH_LONG).show();
         }
 
@@ -79,6 +79,7 @@ public final class StationFetcher extends AsyncTask<Void, Void, Bundle> implemen
         if (mFolderExists && mStationUriScheme != null && mStationUriScheme.startsWith("http")  && urlCleanup()) {
             // download new station
             station = new Station(mFolder, mStationURL);
+
             // check if multiple streams
             if (station.getStationFetchResults().getInt(RESULT_FETCH_STATUS) == CONTAINS_ONE_STREAM) {
                 // check if name parameter was given
@@ -94,15 +95,19 @@ public final class StationFetcher extends AsyncTask<Void, Void, Bundle> implemen
 
             return stationDownloadBundle;
 
-        } else if (mFolderExists && mStationUriScheme != null && mStationUriScheme.startsWith("file")) {
+        } else if (mFolderExists && mStationUriScheme != null && mStationUriScheme.startsWith("content")) {
             // read file and return new station
-            station =  new Station(mFolder, mStationUri);
+            station = new Station(mFolder,  mActivity.getContentResolver(), mStationUri);
 
             // check if multiple streams
             if (station.getStationFetchResults().getInt(RESULT_FETCH_STATUS) == CONTAINS_ONE_STREAM) {
-                // pack bundle
-                stationDownloadBundle.putParcelable(KEY_DOWNLOAD_STATION, station);
+                // check if name parameter was given
+                if (mStationName != null) {
+                    station.setStationName(mStationName);
+                }
             }
+            // pack bundle
+            stationDownloadBundle.putParcelable(KEY_DOWNLOAD_STATION, station);
 
             return stationDownloadBundle;
 
@@ -143,8 +148,6 @@ public final class StationFetcher extends AsyncTask<Void, Void, Bundle> implemen
 
         // CASE 3: an error occurred
         if (station == null || (fetchResults != null && fetchResults.getInt(RESULT_FETCH_STATUS) == CONTAINS_NO_STREAM) || !mFolderExists) {
-            LogHelper.e(LOG_TAG, "!!! ding. station = " +  station); // todo remove
-
             String errorTitle;
             String errorMessage;
             String errorDetails;
@@ -154,8 +157,8 @@ public final class StationFetcher extends AsyncTask<Void, Void, Bundle> implemen
                 errorTitle = mActivity.getResources().getString(R.string.dialog_error_title_fetch_download);
                 errorMessage = mActivity.getResources().getString(R.string.dialog_error_message_fetch_download);
                 errorDetails = buildDownloadErrorDetails(fetchResults);
-            } else if (mStationUriScheme != null && mStationUriScheme.startsWith("file")) {
-                // construct error message for "file"
+            } else if (mStationUriScheme != null && mStationUriScheme.startsWith("content")) {
+                // construct error message for "content"
                 errorTitle = mActivity.getResources().getString(R.string.dialog_error_title_fetch_read);
                 errorMessage = mActivity.getResources().getString(R.string.dialog_error_message_fetch_read);
                 errorDetails = buildReadErrorDetails(fetchResults);
@@ -214,7 +217,7 @@ public final class StationFetcher extends AsyncTask<Void, Void, Bundle> implemen
         sb.append("\n");
         sb.append(mFolder);
         sb.append("\n\n");
-        if (mStationUri.getScheme().startsWith("file")) {
+        if (mStationUri.getScheme().startsWith("content")) {
             sb.append(mActivity.getResources().getString(R.string.dialog_error_message_fetch_read_file_location));
         } else {
             sb.append(mActivity.getResources().getString(R.string.dialog_error_message_fetch_download_station_url));

@@ -14,6 +14,7 @@
 
 package org.y20k.transistor.core;
 
+import android.content.ContentResolver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -29,8 +30,9 @@ import org.y20k.transistor.helpers.TransistorKeys;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -102,11 +104,14 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
         // create results bundle
         mStationFetchResults = new Bundle();
 
-        // read and parse playlist file
+        // store file
         mStationPlaylistFile = file;
-        if (mStationPlaylistFile.exists()) {
-            parse(readPlaylistFile(mStationPlaylistFile));
-        }
+
+        // read local playlist file from  Collection folder
+        mPlaylistFileContent = readPlaylist(getInputStream(file));
+
+        // parse station data
+        parse(mPlaylistFileContent);
 
         // set image file object
         File folder = mStationPlaylistFile.getParentFile();
@@ -121,7 +126,6 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
 
     /* Constructor when given folder and remote location (-> the internet) */
     public Station(File folder, URL fileLocation) {
-
         // create results bundle
         mStationFetchResults = new Bundle();
 
@@ -140,13 +144,13 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
 
         // content type is playlist
         else if (isPlaylist(contentType)) {
-            // download from playlist file
-            mPlaylistFileContent = downloadPlaylistFile(fileLocation);
+            // read remote playlist file and put result into mPlaylistFileContent
+            mPlaylistFileContent = readPlaylist(getInputStream(fileLocation));
 
             // parse station data
             int parseResult = parse(mPlaylistFileContent);
 
-            //
+            // todo desribe
             if (parseResult == CONTAINS_ONE_STREAM && mStreamUri != null) {
                 mStationName = getStationName(fileLocation);
                 // save results
@@ -158,6 +162,7 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
             } else if (parseResult == CONTAINS_MULTIPLE_STREAMS)  {
                 // save result - let StationFetcher handle that
                 mStationFetchResults.putInt(RESULT_FETCH_STATUS, CONTAINS_MULTIPLE_STREAMS);
+
             } else {
                 // save error flag and file content in results
                 mStationFetchResults.putParcelable(RESULT_PLAYLIST_TYPE, contentType);
@@ -191,28 +196,29 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
 
 
     /* Constructor when given folder and file on sd card */
-    public Station(File folder, Uri fileLocation) {
-
+    public Station(File folder, ContentResolver contentResolver, Uri uri) {
         // create results bundle
         mStationFetchResults = new Bundle();
 
+        // get file from Uri
+        mStationPlaylistFile = new File(uri.getPath());
+
         // read local file and put result into mPlaylistFileContent
-        File localFile = new File(fileLocation.getPath());
-        if (localFile.exists()) {
-            mPlaylistFileContent = readPlaylistFile(localFile);
-        } else {
-            LogHelper.v(LOG_TAG, "File does not exist " + localFile);
-        }
+        mPlaylistFileContent = readPlaylist(getInputStream(contentResolver, uri));
 
         // parse station data
         int parseResult = parse(mPlaylistFileContent);
 
-        // parse the raw content of playlist file (mPlaylistFileContent)
+        // todo desribe
         if (parseResult == CONTAINS_ONE_STREAM  &&  mStreamUri != null) {
             // save results
             mStationFetchResults.putParcelable(RESULT_STREAM_TYPE, getContentType(mStreamUri));
             mStationFetchResults.putString(RESULT_FILE_CONTENT, mPlaylistFileContent);
             mStationFetchResults.putInt(RESULT_FETCH_STATUS, CONTAINS_ONE_STREAM);
+
+        } else if (parseResult == CONTAINS_MULTIPLE_STREAMS) {
+            // save result - let StationFetcher handle that
+            mStationFetchResults.putInt(RESULT_FETCH_STATUS, CONTAINS_MULTIPLE_STREAMS);
 
         } else {
             // save error flag and file content in results
@@ -325,17 +331,52 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
     }
 
 
-    /* Downloads remote playlist file */
-    private String downloadPlaylistFile(URL fileLocation) {
+//    /* Downloads remote playlist file */
+//    private String downloadPlaylistFile(URL fileLocation) {
+//
+//        LogHelper.v(LOG_TAG, "Downloading... " + fileLocation.toString());
+//
+//        try (BufferedReader br = new BufferedReader(new InputStreamReader(
+//                fileLocation.openStream()))) {
+//
+//            String line;
+//            int counter = 0;
+//            StringBuilder sb = new StringBuilder("");
+//
+//            // read until last last reached or until sanity limit of 32 lines
+//            while ((line = br.readLine()) != null && counter < 32) {
+//                sb.append(line);
+//                sb.append("\n");
+//                counter++;
+//            }
+//
+//            if (sb.length() == 0) {
+//                LogHelper.e(LOG_TAG, "Input stream was empty: " + fileLocation.toString());
+//            }
+//
+//            // set mPlaylistFileContent and return String
+//            mPlaylistFileContent = sb.toString();
+//            return sb.toString();
+//
+//        } catch (IOException e) {
+//            LogHelper.e(LOG_TAG, "Unable to get playlist file from server: " + fileLocation.toString());
+//            // set mPlaylistFileContent and return null
+//            mPlaylistFileContent = "[HTTP error. Unable to get playlist file from server: " + fileLocation.toString() + "]";
+//            return null;
+//        }
+//    }
 
-        LogHelper.v(LOG_TAG, "Downloading... " + fileLocation.toString());
 
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(
-                fileLocation.openStream()))) {
+    /* Reads InputStream from a playlist file or location and return it as String*/
+    private String readPlaylist(InputStream inputStream) {
 
+        LogHelper.v(LOG_TAG, "Reading input stream... ");
+        try {
+            // write input stream line by line to string
+            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+            StringBuilder sb = new StringBuilder();
             String line;
             int counter = 0;
-            StringBuilder sb = new StringBuilder("");
 
             // read until last last reached or until sanity limit of 32 lines
             while ((line = br.readLine()) != null && counter < 32) {
@@ -343,51 +384,57 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
                 sb.append("\n");
                 counter++;
             }
+            inputStream.close();
 
             if (sb.length() == 0) {
-                LogHelper.e(LOG_TAG, "Input stream was empty: " + fileLocation.toString());
+                LogHelper.e(LOG_TAG, "Input stream was empty.");
             }
 
-            // set mPlaylistFileContent and return String
-            mPlaylistFileContent = sb.toString();
+            // return content as String
             return sb.toString();
 
         } catch (IOException e) {
-            LogHelper.e(LOG_TAG, "Unable to get playlist file from server: " + fileLocation.toString());
+            LogHelper.e(LOG_TAG, "Unable to read playlist file.");
             // set mPlaylistFileContent and return null
-            mPlaylistFileContent = "[HTTP error. Unable to get playlist file from server: " + fileLocation.toString() + "]";
+            mPlaylistFileContent = "[IO error. Unable to read playlist file.]";
+            return null;
+        }
+
+    }
+
+
+    /* Get InputStream from remote location (URL) */
+    private InputStream getInputStream(URL url) {
+        try {
+            return url.openStream();
+        } catch (IOException e) {
+            LogHelper.e(LOG_TAG, "Unable open remote location: " + e.toString());
             return null;
         }
     }
 
 
-    /* Reads local playlist file */
-    private String readPlaylistFile(File playlistFile) {
-
-        try (BufferedReader br = new BufferedReader(new FileReader(playlistFile))) {
-            String line;
-            int counter = 0;
-            StringBuilder sb = new StringBuilder("");
-
-            // read until last line reached or until line five
-            while ((line = br.readLine()) != null && counter < 5) {
-                sb.append(line);
-                sb.append("\n");
-                counter++;
-            }
-
-            // set mPlaylistFileContent and return String
-            mPlaylistFileContent = sb.toString();
-            return sb.toString();
-
-        } catch (IOException e) {
-            LogHelper.e(LOG_TAG, "Unable to read playlist file: " + playlistFile.toString());
-            // set mPlaylistFileContent and return null
-            mPlaylistFileContent = "[IO error. Unable to read playlist file: " + playlistFile.toString()  + "]";
+    /* Get InputStream from File */
+    private InputStream getInputStream(File file) {
+        try {
+            return new FileInputStream(file);
+        } catch (FileNotFoundException e) {
+            LogHelper.e(LOG_TAG, "Unable open file: " + e.toString());
             return null;
         }
-
     }
+
+
+    /* Get InputStream from Uri using ContentReselver */
+    private InputStream getInputStream(ContentResolver contentResolver, Uri uri) {
+        try {
+            return contentResolver.openInputStream(uri);
+        } catch (FileNotFoundException e) {
+            LogHelper.e(LOG_TAG, "Unable open file: " + e.toString());
+            return null;
+        }
+    }
+
 
 
     /* Returns content type for given Uri */
@@ -503,7 +550,6 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
         ArrayList<String> names = new ArrayList<String>();
 
         while (in.hasNextLine()) {
-
             // get a line from file content
             line = in.nextLine();
 
@@ -529,7 +575,7 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
 
         // CASE 1: playlist was empty - let StationFetcher handle that
         if (uris.size() == 0) {
-            LogHelper.e(LOG_TAG, "Unable to parse: " + fileContent);
+            LogHelper.e(LOG_TAG, "Unable to parse: " + fileContent + uris.toString());
             return CONTAINS_NO_STREAM;
         }
 

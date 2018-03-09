@@ -213,10 +213,10 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
 
         // handles the activity's intent
         Intent intent = mActivity.getIntent();
-        if (Intent.ACTION_VIEW.equals(intent.getAction())) {
-            handleStreamingLink(intent);
-        } else if (ACTION_SHOW_PLAYER.equals(intent.getAction())) {
+        if (ACTION_SHOW_PLAYER.equals(intent.getAction())) {
             handleShowPlayer(intent);
+        } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
+            handleStreamingLink(intent);
         }
 
         // show notification bar if timer is running
@@ -301,7 +301,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
         if (mNewStationUri != null && mNewStationUri.getScheme().startsWith("http")) {
             // download and add new station
             fetchNewStation(mNewStationUri);
-        } else if (mNewStationUri != null && mNewStationUri.getScheme().startsWith("file")) {
+        } else if (mNewStationUri != null && mNewStationUri.getScheme().startsWith("content")) {
             // check for read permission
             if (PermissionHelper.requestReadExternalStorage(mActivity, mRootView, PERMISSION_REQUEST_STATION_FETCHER_READ_EXTERNAL_STORAGE)) {
                 // read and add new station

@@ -88,16 +88,23 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:scheme="file" />
+                <data android:scheme="content" />
                 <data android:host="*" />
-                <data android:pathPattern=".*\\.m3u" />
-                <data android:pathPattern=".*\\.m3u8" />
-                <data android:pathPattern=".*\\.pls" />
+                <data android:mimeType="audio/x-scpls" />
+                <data android:mimeType="audio/mpegurl" />
+                <data android:mimeType="audio/x-mpegurl" />
+                <data android:mimeType="application/pls+xml" />
+                <data android:mimeType="application/x-mpegurl" />
+                <data android:mimeType="application/vnd.apple.mpegurl" />
+                <data android:mimeType="application/vnd.apple.mpegurl.audio" />
+                <!--<data android:pathPattern=".*\\.m3u" />-->
+                <!--<data android:pathPattern=".*\\.m3u8" />-->
+                <!--<data android:pathPattern=".*\\.pls" />-->
             </intent-filter>
 
             <!-- App Shortcuts -->
             <meta-data android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
-
 
         </activity>
 

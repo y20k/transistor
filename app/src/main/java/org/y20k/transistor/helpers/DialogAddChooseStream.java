@@ -129,8 +129,8 @@ public final class DialogAddChooseStream implements TransistorKeys {
                 TextView stationNameView = view.findViewById(R.id.select_station_name);
                 TextView stationUrlView = view.findViewById(R.id.select_station_url);
                 // set text views
-                stationNameView.setText(getItem(position).get("name"));
-                stationUrlView.setText(getItem(position).get("url"));
+                stationNameView.setText(getItem(position).get(SELECT_STREAM_KEY_NAME));
+                stationUrlView.setText(getItem(position).get(SELECT_STREAM_KEY_URL));
             }
             return view;
         }
@@ -146,9 +146,9 @@ public final class DialogAddChooseStream implements TransistorKeys {
                 TextView stationNameView = dropdownView.findViewById(R.id.select_station_name);
                 TextView stationUrlView = dropdownView.findViewById(R.id.select_station_url);
                 // set text views and set them selected (to start the marquee effect)
-                stationNameView.setText(getItem(i).get("name"));
+                stationNameView.setText(getItem(i).get(SELECT_STREAM_KEY_NAME));
                 stationNameView.setSelected(true);
-                stationUrlView.setText(getItem(i).get("url"));
+                stationUrlView.setText(getItem(i).get(SELECT_STREAM_KEY_URL));
                 stationUrlView.setSelected(true);
             }
             return dropdownView;
@@ -216,11 +216,11 @@ public final class DialogAddChooseStream implements TransistorKeys {
             mStations = new ArrayList<HashMap<String,String>>();
             for (int i = 0; i < stationUrls.size(); i++) {
                 HashMap<String,String> item = new HashMap<String,String>();
-                item.put("url", stationUrls.get(i));
+                item.put(SELECT_STREAM_KEY_URL, stationUrls.get(i));
                 if (stationNames.size() > i) {
-                    item.put("name", stationNames.get(i));
+                    item.put(SELECT_STREAM_KEY_NAME, stationNames.get(i));
                 } else {
-                    item.put("name", "");
+                    item.put(SELECT_STREAM_KEY_NAME, "");
                 }
                 mStations.add(item);
             }
