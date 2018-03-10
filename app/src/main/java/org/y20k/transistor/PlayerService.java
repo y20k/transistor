@@ -406,7 +406,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     }
 
 
-    @Nullable
     @Override
     public BrowserRoot onGetRoot(@NonNull String clientPackageName, int clientUid, @Nullable Bundle rootHints) {
         // Credit: https://github.com/googlesamples/android-UniversalMusicPlayer (->  MusicService)
@@ -1048,7 +1047,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     /**
      * Callback: Callback from IcyInputStream reacting to new metadata
      */
-    PlayerCallback playerCallback = new PlayerCallback() {
+    final PlayerCallback playerCallback = new PlayerCallback() {
 
         @Override
         public void playerStarted() {

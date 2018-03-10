@@ -38,9 +38,9 @@ public class CollectionViewModel extends AndroidViewModel implements TransistorK
 
 
     /* Main class variables */
-    private MutableLiveData<ArrayList<Station>> mStationListLiveData;
-    private MutableLiveData<Station> mPlayerServiceStationLiveData;
-    private MutableLiveData<Boolean> mTwoPaneLiveData;
+    private final MutableLiveData<ArrayList<Station>> mStationListLiveData;
+    private final MutableLiveData<Station> mPlayerServiceStationLiveData;
+    private final MutableLiveData<Boolean> mTwoPaneLiveData;
 
     /* Constructor */
     public CollectionViewModel(Application application) {

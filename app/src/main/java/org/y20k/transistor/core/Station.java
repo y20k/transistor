@@ -150,7 +150,7 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
             // parse station data
             int parseResult = parse(mPlaylistFileContent);
 
-            // todo desribe
+            // put results in bundle (for StationFetcher)
             if (parseResult == CONTAINS_ONE_STREAM && mStreamUri != null) {
                 mStationName = getStationName(fileLocation);
                 // save results
@@ -209,7 +209,7 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
         // parse station data
         int parseResult = parse(mPlaylistFileContent);
 
-        // todo desribe
+        // put results in bundle (for StationFetcher)
         if (parseResult == CONTAINS_ONE_STREAM  &&  mStreamUri != null) {
             // save results
             mStationFetchResults.putParcelable(RESULT_STREAM_TYPE, getContentType(mStreamUri));
@@ -425,7 +425,7 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
     }
 
 
-    /* Get InputStream from Uri using ContentReselver */
+    /* Get InputStream from Uri using ContentResolver */
     private InputStream getInputStream(ContentResolver contentResolver, Uri uri) {
         try {
             return contentResolver.openInputStream(uri);

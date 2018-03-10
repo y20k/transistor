@@ -32,8 +32,8 @@ public class CollectionAdapterDiffUtilCallback extends DiffUtil.Callback impleme
 
 
     /* Main class variables */
-    private ArrayList<Station> mOldStations;
-    private ArrayList<Station> mNewStations;
+    private final ArrayList<Station> mOldStations;
+    private final ArrayList<Station> mNewStations;
 
     /* Constructor */
     public CollectionAdapterDiffUtilCallback(ArrayList<Station> oldStations, ArrayList<Station> newStations) {

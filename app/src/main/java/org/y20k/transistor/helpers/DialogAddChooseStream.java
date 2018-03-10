@@ -102,7 +102,7 @@ public final class DialogAddChooseStream implements TransistorKeys {
 
 
     /**
-     * Inner class: Custom adpater for dropdown spinner
+     * Inner class: Custom adapter for dropdown spinner
      */
     private static final class DropdownAdapter  extends BaseAdapter implements ThemedSpinnerAdapter {
 
@@ -212,7 +212,7 @@ public final class DialogAddChooseStream implements TransistorKeys {
 
 
         /* Fills adapter list with station names and urls */
-        private final void initializeStationList(final ArrayList<String> stationUrls, final ArrayList<String> stationNames) {
+        private void initializeStationList(final ArrayList<String> stationUrls, final ArrayList<String> stationNames) {
             mStations = new ArrayList<HashMap<String,String>>();
             for (int i = 0; i < stationUrls.size(); i++) {
                 HashMap<String,String> item = new HashMap<String,String>();

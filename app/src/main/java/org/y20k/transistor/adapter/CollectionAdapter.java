@@ -65,14 +65,14 @@ public final class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.V
 
 
     /* Main class variables */
-    private Activity mActivity;
-    private CollectionViewModel mCollectionViewModel;
+    private final Activity mActivity;
+    private final CollectionViewModel mCollectionViewModel;
     private BroadcastReceiver mPlaybackStateChangedReceiver;
     private BroadcastReceiver mMetadataChangedReceiver;
     private CollectionAdapterListener mCollectionAdapterListener;
     private ArrayList<Station> mStationList;
     private int mStationIdSelected;
-    private String mCurrentStationUrl;
+    private final String mCurrentStationUrl;
 
 
     /* Constructor */

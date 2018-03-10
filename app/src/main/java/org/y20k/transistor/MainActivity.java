@@ -44,6 +44,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+//import android.arch.lifecycle.ViewModelProviders;
+
 
 /**
  * MainActivity class
@@ -55,8 +57,8 @@ public final class MainActivity extends AppCompatActivity implements TransistorK
 
 
     /* Main class variables */
-    private StorageHelper mStorageHelper;
-    private View mContainer;
+//    private StorageHelper mStorageHelper;
+//    private View mContainer;
     private CollectionViewModel mCollectionViewModel;
     private final LifecycleRegistry mRegistry = new LifecycleRegistry(this);
     private ArrayList<Station> mStationList;
