@@ -4,14 +4,14 @@
     <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
 
     <!-- app shortcuts -->
-    <string name="shortcut_last_station_short_label">Last station</string>
-    <string name="shortcut_last_station_long_label">Play last station</string>
-    <string name="shortcut_last_station_disabled_message">Shortcut for playback of last station disabled.</string>
+    <string name="shortcut_last_station_short_label">Остання станція</string>
+    <string name="shortcut_last_station_long_label">Відтворити останню станцію</string>
+    <string name="shortcut_last_station_disabled_message">Ярлик для відтворення останньої станції відключений.</string>
 
     <!-- menu entries -->
     <string name="menu_about">Про додаток</string>
     <string name="menu_howto">Як користуватися</string>
-    <string name="menu_refresh">Refresh list</string>
+    <string name="menu_refresh">Оновити список</string>
     <string name="menu_timer">Таймер сну</string>
     <string name="menu_icon">Змінити піктограму</string>
     <string name="menu_add">Додати</string>
@@ -24,7 +24,7 @@
     <string name="header_howto">Як користуватися</string>
 
     <!-- descriptions -->
-    <string name="descr_app_icon">App icon depicting an old radio</string>
+    <string name="descr_app_icon">Значок програми із зображенням старого радіо</string>
     <string name="descr_arrow_upward">Arrow facing upward</string>
     <string name="descr_station_options_button">Показ параметрів радіостанції</string>
     <string name="descr_station_icon">Піктограма для радіостанції</string>
@@ -33,36 +33,36 @@
     <string name="descr_station_name_example">Приклад FM</string>
     <string name="descr_station_metadata_example">Артист - Заголовок</string>
     <string name="descr_station_stream_loading">Завантаження потоку …</string>
-    <string name="descr_playback_button">Велика кнопка «грати»</string>
+    <string name="descr_playback_button">Золота кнопка відтворення</string>
     <string name="descr_playback_indicator">Індикатор активності відтворення</string>
     <string name="descr_playback_indicator_started">Індикатор відтворення активний</string>
-    <string name="descr_timer_icon">Sleep timer icon</string>
+    <string name="descr_timer_icon">Піктограма таймера сну</string>
     <string name="descr_timer_indicator_started">Індикатор активного таймеру сну</string>
     <string name="descr_player_sheet_button_expand">Button to expand and minimize the radio player</string>
-    <string name="descr_player_sheet_information_icon">Information Icon</string>
+    <string name="descr_player_sheet_information_icon">Інформаційна піктограма</string>
     <string name="descr_player_sheet_content_copy_icon">Значок копіювання контенту</string>
     <string name="descr_player_sheet_p_station_name">Назва обраної станції</string>
     <string name="descr_player_sheet_p_station_metadata">Метадані обраної станції</string>
-    <string name="descr_player_sheet_p_stream_url">URL потоку обраної станції</string>
-    <string name="descr_list_add_new">Add a new station</string>
+    <string name="descr_player_sheet_p_stream_url">Потокове посилання обраної радіостанції</string>
+    <string name="descr_list_add_new">Додати нову станцію</string>
     <string name="descr_list_add_select_stream_dropdown">Dropdown menu that hold a selection of streams</string>
 
     <!-- player -->
-    <string name="player_sheet_h1_details">Details</string>
-    <string name="player_sheet_h2_current_session">Current session</string>
+    <string name="player_sheet_h1_details">Подробиці</string>
+    <string name="player_sheet_h2_current_session">Поточний сеанс</string>
     <string name="player_sheet_h2_station_name">Станція</string>
-    <string name="player_sheet_h2_station_metadata">Зараз грає</string>
+    <string name="player_sheet_h2_station_metadata">В даний час грає</string>
     <string name="player_sheet_h2_stream_url">URL потоку</string>
     <string name="player_sheet_p_station_metadata">метадані відсутні</string>
-    <string name="player_sheet_h2_station_mime_type">MIME type</string>
-    <string name="player_sheet_h2_station_channel_count">Channel count</string>
+    <string name="player_sheet_h2_station_mime_type">Тип MIME</string>
+    <string name="player_sheet_h2_station_channel_count">Кількість каналів</string>
     <string name="player_sheet_h2_station_sample_rate">Sample rate</string>
-    <string name="player_sheet_h2_station_bitrate">Bitrate</string>
+    <string name="player_sheet_h2_station_bitrate">Бітрейт</string>
 
     <!-- dialogs -->
     <string name="dialog_generic_button_cancel">Скасувати</string>
     <string name="dialog_add_station_button">Додати</string>
-    <string name="dialog_add_station_input_hint">Вставити перевірене посилання на мовлення</string>
+    <string name="dialog_add_station_input_hint">Вставити потокове посилання</string>
     <string name="dialog_add_station_message">Додати нову станцію</string>
     <string name="dialog_add_station_howto">Ви можете додати потоковий звук у кодуванні MP3 чи OGG через .m3u чи .pls файли. Також можете додати станцію натиснувши на піктограму посилання мовлення (pls чи m3u) у вашому веб-оглядачі.</string>
     <string name="dialog_delete_station_message">Видалити станцію</string>
@@ -106,7 +106,7 @@
     <string name="toastmessage_long_press_night_mode_switch">Night mode switch (long press detected)</string>
     <string name="toastmessage_shortcut_created">Посилання створено.</string>
     <string name="toastmessage_shortcut_not_created">Shortcut not created. This device does not allow the creation of shortcuts.</string>
-    <string name="toastmessage_list_refreshed">Reloading list of stations.</string>
+    <string name="toastmessage_list_refreshed">Перезавантаження списку станцій.</string>
     <string name="toastmessage_copied_to_clipboard_url">URL потоку скопійовано до буферу обміну.</string>
     <string name="toastmessage_copied_to_clipboard_metadata">Метадані скопійовано до буферу обміну.</string>
     <string name="toastmessage_station_copied">Станцію скопійовано до буферу обміну.</string>
@@ -136,11 +136,10 @@
 
     <!-- onboarding -->
     <string name="onboarding_app_description">Radio App</string>
-    <string name="onboarding_app_get_started">Get started</string>
+    <string name="onboarding_app_get_started">Розпочати</string>
 
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7
     https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
 
 </resources>
-
