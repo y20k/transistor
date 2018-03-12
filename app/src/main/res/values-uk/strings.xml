@@ -25,7 +25,7 @@
 
     <!-- descriptions -->
     <string name="descr_app_icon">Значок програми із зображенням старого радіо</string>
-    <string name="descr_arrow_upward">Arrow facing upward</string>
+    <string name="descr_arrow_upward">Стрілка вгору</string>
     <string name="descr_station_options_button">Показ параметрів радіостанції</string>
     <string name="descr_station_icon">Піктограма для радіостанції</string>
     <string name="descr_station_name">Назва радіостанції</string>
@@ -38,14 +38,14 @@
     <string name="descr_playback_indicator_started">Індикатор відтворення активний</string>
     <string name="descr_timer_icon">Піктограма таймера сну</string>
     <string name="descr_timer_indicator_started">Індикатор активного таймеру сну</string>
-    <string name="descr_player_sheet_button_expand">Button to expand and minimize the radio player</string>
+    <string name="descr_player_sheet_button_expand">Кнопка, щоб розгорнути або згорнути радіопрогравач</string>
     <string name="descr_player_sheet_information_icon">Інформаційна піктограма</string>
     <string name="descr_player_sheet_content_copy_icon">Значок копіювання контенту</string>
     <string name="descr_player_sheet_p_station_name">Назва обраної станції</string>
     <string name="descr_player_sheet_p_station_metadata">Метадані обраної станції</string>
     <string name="descr_player_sheet_p_stream_url">Потокове посилання обраної радіостанції</string>
     <string name="descr_list_add_new">Додати нову станцію</string>
-    <string name="descr_list_add_select_stream_dropdown">Dropdown menu that hold a selection of streams</string>
+    <string name="descr_list_add_select_stream_dropdown">Спливаюче меню, що містить вибір потоків</string>
 
     <!-- player -->
     <string name="player_sheet_h1_details">Подробиці</string>
@@ -56,7 +56,7 @@
     <string name="player_sheet_p_station_metadata">метадані відсутні</string>
     <string name="player_sheet_h2_station_mime_type">Тип MIME</string>
     <string name="player_sheet_h2_station_channel_count">Кількість каналів</string>
-    <string name="player_sheet_h2_station_sample_rate">Sample rate</string>
+    <string name="player_sheet_h2_station_sample_rate">Частота дискретизації</string>
     <string name="player_sheet_h2_station_bitrate">Бітрейт</string>
 
     <!-- dialogs -->
@@ -64,36 +64,36 @@
     <string name="dialog_add_station_button">Додати</string>
     <string name="dialog_add_station_input_hint">Вставити потокове посилання</string>
     <string name="dialog_add_station_message">Додати нову станцію</string>
-    <string name="dialog_add_station_howto">Ви можете додати потоковий звук у кодуванні MP3 чи OGG через .m3u чи .pls файли. Також можете додати станцію натиснувши на піктограму посилання мовлення (pls чи m3u) у вашому веб-оглядачі.</string>
+    <string name="dialog_add_station_howto">Ви можете додавати аудіо потоки, закодовані в MP3, AAC і Ogg / Opus, а також потоки, що містяться у файлах PLS або M3U. Крім того, ви можете додавати нові станції, натискаючи потокове посилання (.pls або .m3u) у своєму веб-браузері.</string>
     <string name="dialog_delete_station_message">Видалити станцію</string>
     <string name="dialog_button_delete">Видалити</string>
     <string name="dialog_generic_button_okay">Гаразд</string>
     <string name="dialog_rename_station_input_hint">Ввести нову назву</string>
     <string name="dialog_rename_station_message">Перейменувати станцію</string>
     <string name="dialog_button_rename">Перейменувати</string>
-    <string name="dialog_add_station_choose_stream_heading">Multiple streams found</string>
-    <string name="dialog_add_station_choose_stream_message">Please select a stream</string>
-    <string name="dialog_add_station_choose_stream_button">Select</string>
+    <string name="dialog_add_station_choose_stream_heading">Знайдено декілька потоків</string>
+    <string name="dialog_add_station_choose_stream_message">Будь ласка, виберіть потік</string>
+    <string name="dialog_add_station_choose_stream_button">Вибрати</string>
 
     <!-- error dialogs -->
     <string name="dialog_error_title_default">Помилка</string>
     <string name="dialog_error_message_default">Трапилась помилка</string>
     <string name="dialog_error_details_button_default">Показати подробиці</string>
     <string name="dialog_error_details_default">Подробиці відсутні</string>
-    <string name="dialog_error_details_write">Можливо станція вже існує, або виникла проблема із зовнішнім сховищем.</string>
+    <string name="dialog_error_details_write">Ця станція, ймовірно, є дубльованою, або ви можете перевірити зовнішню пам\'ять.</string>
     <string name="dialog_error_title_fetch_download">Проблеми із завантаженням</string>
     <string name="dialog_error_title_fetch_read">Проблема під час читання</string>
     <string name="dialog_error_title_fetch_write">Проблема під час запису</string>
     <string name="dialog_error_message_fetch_general_external_storage">Зовнішнє сховище:</string>
-    <string name="dialog_error_message_fetch_general_hint_m3u">Підказка: Transistor може обробляти MP3 та OGG аудіо потоки, або посилання на файли .m3u чи .pls.</string>
+    <string name="dialog_error_message_fetch_general_hint_m3u">Підказка: транзистор може обробляти тільки потоки, які закодовані в MP3, AAC і Ogg/Opus, або посилання, що закінчуються .m3u або .pls.</string>
     <string name="dialog_error_message_fetch_general_playlist_type">MIME тип файлу:</string>
     <string name="dialog_error_message_fetch_general_stream_type">MIME тип потоку:</string>
     <string name="dialog_error_message_fetch_general_file_content">Вміст віддаленого файлу:</string>
-    <string name="dialog_error_message_fetch_download">Transistor намагався, але все ж таки не зміг зрозуміти отримане посилання.</string>
-    <string name="dialog_error_message_fetch_download_station_url">URL станції:</string>
+    <string name="dialog_error_message_fetch_download">Transistor намагався, але все ж таки не зміг зрозуміти посилання.</string>
+    <string name="dialog_error_message_fetch_download_station_url">Потокове посилання станції:</string>
     <string name="dialog_error_message_fetch_read">Transistor не може обробити вказаний файл.</string>
     <string name="dialog_error_message_fetch_read_file_location">Розміщення файлу:</string>
-    <string name="dialog_error_message_fetch_write">Transistor не зміг зберегти вказану станцію до сховища.</string>
+    <string name="dialog_error_message_fetch_write">Transistor не зміг зберегти вказану станцію.</string>
 
     <!-- messages -->
     <string name="actioncall_message_start_here">Додати нову станцію</string>
@@ -101,13 +101,13 @@
     <string name="toastmessage_add_open_file_started">Відкриття файлу.</string>
     <string name="toastmessage_long_press_playback_stopped">Відтворення зупинено</string>
     <string name="toastmessage_long_press_playback_started">Відтворення розпочато</string>
-    <string name="toastmessage_long_press_change_icon">Change station icon (long press detected)</string>
-    <string name="toastmessage_long_press_change_name">Rename station (long press detected)</string>
-    <string name="toastmessage_long_press_night_mode_switch">Night mode switch (long press detected)</string>
+    <string name="toastmessage_long_press_change_icon">Зміна піктограми станції (виявлено довге натискання)</string>
+    <string name="toastmessage_long_press_change_name">Перейменувати станцію (виявлено тривале натискання)</string>
+    <string name="toastmessage_long_press_night_mode_switch">Перемикач нічного режиму (виявлено тривале натискання)</string>
     <string name="toastmessage_shortcut_created">Посилання створено.</string>
-    <string name="toastmessage_shortcut_not_created">Shortcut not created. This device does not allow the creation of shortcuts.</string>
+    <string name="toastmessage_shortcut_not_created">Ярлик не створено. Цей пристрій не дозволяє створювати ярлики.</string>
     <string name="toastmessage_list_refreshed">Перезавантаження списку станцій.</string>
-    <string name="toastmessage_copied_to_clipboard_url">URL потоку скопійовано до буферу обміну.</string>
+    <string name="toastmessage_copied_to_clipboard_url">Потокове посилання скопійовано до буферу обміну.</string>
     <string name="toastmessage_copied_to_clipboard_metadata">Метадані скопійовано до буферу обміну.</string>
     <string name="toastmessage_station_copied">Станцію скопійовано до буферу обміну.</string>
     <string name="toastmessage_stream_may_not_work">"Виявлено аудіо формат, який не підтримується.  Відтворення потоку може працювати не коректно."</string>
@@ -115,9 +115,9 @@
     <string name="toastmessage_timer_cancelled">Таймер сну вимкнено.</string>
     <string name="toastmessage_timer_duration_increased">Тривалість збільшено.</string>
     <string name="toastmessage_timer_start_unable">Будь ласка, спершу розпочніть список відтворення.</string>
-    <string name="toastalert_unable_to_connect">Unable to connect. Device does not have an internet connection or stream may be outdated.</string>
+    <string name="toastalert_unable_to_connect">Неможливо підключитися. Пристрій не має з\'єднання з Інтернетом, або потік може бути застарілим.</string>
     <string name="toastalert_rename_unsuccessful">Не вдалося перейменувати станцію. Будь ласка, оберіть іншу назву.</string>
-    <string name="toastalert_delete_successful">Станцію вилучено.</string>
+    <string name="toastalert_delete_successful">Станція була вилучена.</string>
     <string name="toastalert_no_external_storage">Не вдалося отримати доступ до зовнішнього сховища.</string>
     <string name="toastalert_headphones_unplugged">Навушники відключені. Відтворення призупинено.</string>
     <string name="toastalert_permission_denied">Доступ не надано:</string>
@@ -131,11 +131,11 @@
     <string name="notification_stop">Stop</string>
     <string name="notification_swipe_to_stop">Посуньте для зупинки</string>
     <string name="notification_playing">Відтворення</string>
-    <string name="notification_channel_playback_name">Playback Controls</string>
-    <string name="notification_channel_playback_description">Playback controls, station logo and now playing info.</string>
+    <string name="notification_channel_playback_name">Елементи управління відтворенням</string>
+    <string name="notification_channel_playback_description">Елементи управління відтворенням, логотип станції та інформація про програвання.</string>
 
     <!-- onboarding -->
-    <string name="onboarding_app_description">Radio App</string>
+    <string name="onboarding_app_description">Радіо-додаток</string>
     <string name="onboarding_app_get_started">Розпочати</string>
 
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
