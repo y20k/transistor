@@ -71,9 +71,9 @@
     <string name="dialog_rename_station_input_hint">Bitte neuen Namen eingeben</string>
     <string name="dialog_rename_station_message">Sender umbenennen</string>
     <string name="dialog_button_rename">Umbenennen</string>
-    <string name="dialog_add_station_choose_stream_heading">Multiple streams found</string>
-    <string name="dialog_add_station_choose_stream_message">Please select a stream</string>
-    <string name="dialog_add_station_choose_stream_button">Use this one</string>
+    <string name="dialog_add_station_choose_stream_heading">Mehrere Streaming-Adressen gefunden</string>
+    <string name="dialog_add_station_choose_stream_message">Bitte eine Streaming-Adresse auswählen</string>
+    <string name="dialog_add_station_choose_stream_button">Auswählen</string>
 
     <!-- error dialogs -->
     <string name="dialog_error_title_default">Fehler</string>

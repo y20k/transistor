@@ -73,7 +73,7 @@
     <string name="dialog_button_rename">Renombrar</string>
     <string name="dialog_add_station_choose_stream_heading">Multiple streams found</string>
     <string name="dialog_add_station_choose_stream_message">Please select a stream</string>
-    <string name="dialog_add_station_choose_stream_button">Use this one</string>
+    <string name="dialog_add_station_choose_stream_button">Select</string>
 
     <!-- error dialogs -->
     <string name="dialog_error_title_default">Error</string>
