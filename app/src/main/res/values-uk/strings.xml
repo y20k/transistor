@@ -128,7 +128,7 @@
 
     <!-- notification -->
     <string name="notification_play">Грати</string>
-    <string name="notification_stop">Stop</string>
+    <string name="notification_stop">Призупинити</string>
     <string name="notification_swipe_to_stop">Посуньте для зупинки</string>
     <string name="notification_playing">Відтворення</string>
     <string name="notification_channel_playback_name">Елементи управління відтворенням</string>
