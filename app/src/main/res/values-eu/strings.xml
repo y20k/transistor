@@ -73,7 +73,7 @@
     <string name="dialog_button_rename">Aldatu izena</string>
     <string name="dialog_add_station_choose_stream_heading">Hainbat jario aurkitu dira</string>
     <string name="dialog_add_station_choose_stream_message">Hautatu jario bat</string>
-    <string name="dialog_add_station_choose_stream_button">Erabili hau</string>
+    <string name="dialog_add_station_choose_stream_button">Hautatu</string>
 
     <!-- error dialogs -->
     <string name="dialog_error_title_default">Errorea</string>
