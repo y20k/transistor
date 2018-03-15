@@ -728,7 +728,9 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
         mActivity.startService(intent);
 
         // show timer notification
-        showSleepTimerNotification(duration);
+        if (mSleepTimerNotification == null || !mSleepTimerNotification.isShown()) {
+            showSleepTimerNotification(duration);
+        }
         mSleepTimerRunning = true;
         LogHelper.v(LOG_TAG, "Starting timer service and notification.");
     }
