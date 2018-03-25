@@ -45,7 +45,7 @@
     <string name="descr_player_sheet_p_station_metadata">Metadata fra valgt radiostasjon</string>
     <string name="descr_player_sheet_p_stream_url">Strømningslenke for valgt radiostasjon</string>
     <string name="descr_list_add_new">Legg til en ny stasjon</string>
-    <string name="descr_list_add_select_stream_dropdown">Dropdown menu that hold a selection of streams</string>
+    <string name="descr_list_add_select_stream_dropdown">Rullegardinsmeny med et utvalg strømmer</string>
 
     <!-- player -->
     <string name="player_sheet_h1_details">Detaljer</string>
@@ -71,7 +71,7 @@
     <string name="dialog_rename_station_input_hint">Skriv inn nytt navn</string>
     <string name="dialog_rename_station_message">Endre navn på stasjon</string>
     <string name="dialog_button_rename">Gi nytt navn</string>
-    <string name="dialog_add_station_choose_stream_heading">Multiple streams found</string>
+    <string name="dialog_add_station_choose_stream_heading">Fant flere strømmer</string>
     <string name="dialog_add_station_choose_stream_message">Fant flere strømmer</string>
     <string name="dialog_add_station_choose_stream_button">Bruk denne</string>
 
