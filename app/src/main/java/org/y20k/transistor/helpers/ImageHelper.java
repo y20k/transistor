@@ -22,8 +22,6 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.net.Uri;
-import android.os.ParcelFileDescriptor;
-import android.provider.MediaStore;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.graphics.Palette;
@@ -31,9 +29,8 @@ import android.support.v7.graphics.Palette;
 import org.y20k.transistor.R;
 import org.y20k.transistor.core.Station;
 
-import java.io.FileDescriptor;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 
 
 /**
@@ -55,7 +52,7 @@ public final class ImageHelper {
         mContext = context;
         if (station != null && station.getStationImageFile() != null && station.getStationImageFile().exists()) {
             // get station image
-            mInputImage = BitmapFactory.decodeFile(station.getStationImageFile().toString());
+            mInputImage = decodeSampledBitmapFromFile(station.getStationImageFile().toString(), 72, 72);
         } else {
             // set default station image
             mInputImage = getBitmap(R.drawable.ic_music_note_black_36dp);
@@ -66,13 +63,19 @@ public final class ImageHelper {
     /* Constructor when given an Uri */
     public ImageHelper(Uri inputImageUri, Context context) {
         mContext = context;
-        mInputImage = null;
-        try {
-            mInputImage = MediaStore.Images.Media.getBitmap(mContext.getContentResolver(), inputImageUri);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-//        mInputImage = decodeSampledBitmapFromUri(inputImageUri, 72, 72);
+
+//        mInputImage = null;
+//        try {
+//            mContext.getContentResolver().openInputStream(inputImageUri)
+//            MediaStore.Images.Media.
+//
+//
+//            mInputImage = MediaStore.Images.Media.getBitmap(mContext.getContentResolver(), inputImageUri);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+        mInputImage = decodeSampledBitmapFromUri(inputImageUri, 72, 72);
     }
 
 
@@ -209,39 +212,52 @@ public final class ImageHelper {
     }
 
 
+
+    /* Return sampled down image for given image file path */
+    private Bitmap decodeSampledBitmapFromFile(String imageFilePath, int reqWidth, int reqHeight) {
+
+        // first decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(imageFilePath, options);
+
+        // calculate inSampleSize
+        options.inSampleSize = calculateSampleParameter(options, reqWidth, reqHeight);
+
+        // decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeFile(imageFilePath, options);
+    }
+
+
     /* Return sampled down image for given Uri */
     private Bitmap decodeSampledBitmapFromUri(Uri imageUri, int reqWidth, int reqHeight) {
 
-        Bitmap bitmap;
-        ParcelFileDescriptor parcelFileDescriptor =  null;
+        InputStream stream = null;
+        Bitmap bitmap = null;
 
         try {
-            parcelFileDescriptor = mContext.getContentResolver().openFileDescriptor(imageUri, "r");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        if (parcelFileDescriptor != null) {
-            FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
-
-            // decode with inJustDecodeBounds=true to check dimensions
+            // first decode with inJustDecodeBounds=true to check dimensions
+            stream = mContext.getContentResolver().openInputStream(imageUri);
             final BitmapFactory.Options options = new BitmapFactory.Options();
             options.inJustDecodeBounds = true;
-            BitmapFactory.decodeFileDescriptor(fileDescriptor, null, options);
+            BitmapFactory.decodeStream(stream, null, options);
+            stream.close();
 
             // calculate inSampleSize
             options.inSampleSize = calculateSampleParameter(options, reqWidth, reqHeight);
 
             // decode bitmap with inSampleSize set
+            stream = mContext.getContentResolver().openInputStream(imageUri);
             options.inJustDecodeBounds = false;
-            bitmap = BitmapFactory.decodeFileDescriptor(fileDescriptor, null, options);
+            BitmapFactory.decodeStream(stream, null, options);
+            stream.close();
 
-            return bitmap;
-
-        } else {
-            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
+        return bitmap;
     }
 
 

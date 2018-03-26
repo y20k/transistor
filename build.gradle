@@ -32,7 +32,7 @@ allprojects {
         supportLibraryVersion = '27.1.0'
         archLifecycleVersion = '1.1.0'
         constraintLayoutVersion = '1.1.0-beta5'
-        exoPlayerVersion = '2.7.0'
+        exoPlayerVersion = '2.7.1'
         junit_version = "4.12"
     }
 
