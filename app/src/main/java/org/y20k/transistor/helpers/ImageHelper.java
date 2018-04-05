@@ -63,18 +63,6 @@ public final class ImageHelper {
     /* Constructor when given an Uri */
     public ImageHelper(Uri inputImageUri, Context context) {
         mContext = context;
-
-//        mInputImage = null;
-//        try {
-//            mContext.getContentResolver().openInputStream(inputImageUri)
-//            MediaStore.Images.Media.
-//
-//
-//            mInputImage = MediaStore.Images.Media.getBitmap(mContext.getContentResolver(), inputImageUri);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
         mInputImage = decodeSampledBitmapFromUri(inputImageUri, 72, 72);
     }
 
@@ -250,7 +238,7 @@ public final class ImageHelper {
             // decode bitmap with inSampleSize set
             stream = mContext.getContentResolver().openInputStream(imageUri);
             options.inJustDecodeBounds = false;
-            BitmapFactory.decodeStream(stream, null, options);
+            bitmap = BitmapFactory.decodeStream(stream, null, options);
             stream.close();
 
         } catch (IOException e) {
