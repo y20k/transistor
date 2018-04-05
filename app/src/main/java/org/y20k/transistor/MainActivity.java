@@ -57,8 +57,6 @@ public final class MainActivity extends AppCompatActivity implements TransistorK
 
 
     /* Main class variables */
-//    private StorageHelper mStorageHelper;
-//    private View mContainer;
     private CollectionViewModel mCollectionViewModel;
     private final LifecycleRegistry mRegistry = new LifecycleRegistry(this);
     private ArrayList<Station> mStationList;
