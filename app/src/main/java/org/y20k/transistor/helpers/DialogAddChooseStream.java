@@ -81,8 +81,12 @@ public final class DialogAddChooseStream implements TransistorKeys {
             // listen for click on delete button
             public void onClick(DialogInterface arg0, int arg1) {
                 // get selection from spinner
-                String selectionName = stationNames.get(mStationSelectionId);
-                Uri selectionUri = Uri.parse(stationUrls.get(mStationSelectionId));
+                String selectionName = null;
+                Uri selectionUri = null;
+                if (stationNames.size() > mStationSelectionId) {
+                    selectionName = stationNames.get(mStationSelectionId);
+                }
+                selectionUri = Uri.parse(stationUrls.get(mStationSelectionId));
                 // add new station
                 StationFetcher stationFetcher = new StationFetcher(activity, StorageHelper.getCollectionDirectory(activity), selectionUri, selectionName);
                 stationFetcher.execute();
