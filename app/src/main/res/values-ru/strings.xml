@@ -24,8 +24,8 @@
     <string name="header_howto">Как использовать</string>
 
     <!-- descriptions -->
-    <string name="descr_app_icon">App icon depicting an old radio</string>
-    <string name="descr_arrow_upward">Arrow facing upward</string>
+    <string name="descr_app_icon">Значок приложения с изображением старого радио</string>
+    <string name="descr_arrow_upward">Стрелка вверх</string>
     <string name="descr_station_options_button">Показать опции радиостанции</string>
     <string name="descr_station_icon">Иконка радиостанции</string>
     <string name="descr_station_name">Название радиостанции</string>
@@ -45,7 +45,7 @@
     <string name="descr_player_sheet_p_station_metadata">Метаданные выбранной радиостанции</string>
     <string name="descr_player_sheet_p_stream_url">Адрес потока выбранной радиостанции</string>
     <string name="descr_list_add_new">Добавить новую станцию</string>
-    <string name="descr_list_add_select_stream_dropdown">Dropdown menu that hold a selection of streams</string>
+    <string name="descr_list_add_select_stream_dropdown">Выпадающего меню со списком потоков</string>
 
     <!-- player -->
     <string name="player_sheet_h1_details">Details</string>
@@ -71,9 +71,9 @@
     <string name="dialog_rename_station_input_hint">Введите новое имя</string>
     <string name="dialog_rename_station_message">Переименовать станцию</string>
     <string name="dialog_button_rename">Переименовать</string>
-    <string name="dialog_add_station_choose_stream_heading">Multiple streams found</string>
-    <string name="dialog_add_station_choose_stream_message">Please select a stream</string>
-    <string name="dialog_add_station_choose_stream_button">Select</string>
+    <string name="dialog_add_station_choose_stream_heading">Найдено несколько потоков</string>
+    <string name="dialog_add_station_choose_stream_message">Выберите поток</string>
+    <string name="dialog_add_station_choose_stream_button">Выбрать</string>
 
     <!-- error dialogs -->
     <string name="dialog_error_title_default">Ошибка</string>
