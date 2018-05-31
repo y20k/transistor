@@ -24,8 +24,8 @@
     <string name="header_howto">Nasıl kullanılır</string>
 
     <!-- descriptions -->
-    <string name="descr_app_icon">App icon depicting an old radio</string>
-    <string name="descr_arrow_upward">Arrow facing upward</string>
+    <string name="descr_app_icon">Eski bir radyoyu gösteren uygulama simgesi</string>
+    <string name="descr_arrow_upward">Yukarı bakan ok</string>
     <string name="descr_station_options_button">Radyo istasyonu için seçenekleri göster</string>
     <string name="descr_station_icon">Radyo istasyonunun simgesi</string>
     <string name="descr_station_name">Radyo istasyonunun ismi</string>
@@ -45,7 +45,7 @@
     <string name="descr_player_sheet_p_station_metadata">Seçili radyo istasyonundan meta veri</string>
     <string name="descr_player_sheet_p_stream_url">Seçili radyo istasyonunun yayın bağlantısı</string>
     <string name="descr_list_add_new">Yeni istasyon ekle</string>
-    <string name="descr_list_add_select_stream_dropdown">Dropdown menu that hold a selection of streams</string>
+    <string name="descr_list_add_select_stream_dropdown">Seçili akışları barındıran aşağı kayan menü</string>
 
     <!-- player -->
     <string name="player_sheet_h1_details">Details</string>
@@ -71,9 +71,9 @@
     <string name="dialog_rename_station_input_hint">Yeni isim girin</string>
     <string name="dialog_rename_station_message">İstasyonunu yeniden adlandır</string>
     <string name="dialog_button_rename">Yeniden adlandır</string>
-    <string name="dialog_add_station_choose_stream_heading">Multiple streams found</string>
-    <string name="dialog_add_station_choose_stream_message">Please select a stream</string>
-    <string name="dialog_add_station_choose_stream_button">Select</string>
+    <string name="dialog_add_station_choose_stream_heading">Birden çok akış bulundu</string>
+    <string name="dialog_add_station_choose_stream_message">"Lütfen bir akış seçin "</string>
+    <string name="dialog_add_station_choose_stream_button">Seç</string>
 
     <!-- error dialogs -->
     <string name="dialog_error_title_default">Hata</string>
@@ -101,9 +101,9 @@
     <string name="toastmessage_add_open_file_started">Dosya açılıyor.</string>
     <string name="toastmessage_long_press_playback_stopped">Oynatma durdurdu (uzun dokunuş algılandı)</string>
     <string name="toastmessage_long_press_playback_started">Oynatma başladı (uzun dokunuş algılandı)</string>
-    <string name="toastmessage_long_press_change_icon">Change station icon (long press detected)</string>
-    <string name="toastmessage_long_press_change_name">Rename station (long press detected)</string>
-    <string name="toastmessage_long_press_night_mode_switch">Night mode switch (long press detected)</string>
+    <string name="toastmessage_long_press_change_icon">"İstasyon simgesini değiştir  (uzun basma algılandı)"</string>
+    <string name="toastmessage_long_press_change_name">İstasyonu yeniden adlandır (uzun basma algılandı)</string>
+    <string name="toastmessage_long_press_night_mode_switch">Gece kipi düğmesi (uzun basma algılandı)</string>
     <string name="toastmessage_shortcut_created">Kısayol oluşturuldu.</string>
     <string name="toastmessage_shortcut_not_created">Kısayol oluşturulmadı. Bu aygıt kısayolların oluşturulmasına izin vermiyor.</string>
     <string name="toastmessage_list_refreshed">İstasyonların listesi ön yükleniyor.</string>
