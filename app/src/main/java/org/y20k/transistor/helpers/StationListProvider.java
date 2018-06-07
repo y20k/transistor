@@ -23,7 +23,8 @@ import org.y20k.transistor.core.Station;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 
 /**
@@ -44,14 +45,14 @@ public class StationListProvider implements TransistorKeys {
     /* Main class variables */
     public static final String MEDIA_ID_ROOT = "__ROOT__";
     public static final String MEDIA_ID_EMPTY_ROOT = "__EMPTY__";
-    private final LinkedHashMap<String, MediaMetadataCompat> mStationListById;
+    private final TreeMap<String, MediaMetadataCompat> mStationListById;
     private enum State { NON_INITIALIZED, INITIALIZING, INITIALIZED }
     private volatile State mCurrentState = State.NON_INITIALIZED;
 
 
     /* Constructor */
     public StationListProvider() {
-        mStationListById = new LinkedHashMap<>();
+        mStationListById = new TreeMap<>();
     }
 
 
@@ -64,33 +65,61 @@ public class StationListProvider implements TransistorKeys {
     }
 
 
-    /* Return the first station in list */
-    public MediaMetadataCompat getFirstStation() {
-        MediaMetadataCompat firstStationMetaData = null;
-        firstStationMetaData = mStationListById.entrySet().iterator().next().getValue();
-
-        if (firstStationMetaData != null) {
-            return firstStationMetaData;
-        } else {
-            // stupid hack: only if mStationListById is empty
-            String stationName = "KCSB";
-            String stationUri = "http://live.kcsb.org:80/KCSB_128\n";
-            return new MediaMetadataCompat.Builder()
-                    .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, String.valueOf(stationUri.hashCode()))
-                    .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI, stationUri)
-                    .putString(MediaMetadataCompat.METADATA_KEY_GENRE, "Radio")
-                    .putString(MediaMetadataCompat.METADATA_KEY_TITLE, stationName)
-//                    .putString(MediaMetadataCompat.METADATA_KEY_ALBUM, stationName)
-//                    .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, stationName)
-//                    .putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI, iconUrl)
-//                    .putLong(MediaMetadataCompat.METADATA_KEY_TRACK_NUMBER, trackNumber)
-//                    .putLong(MediaMetadataCompat.METADATA_KEY_NUM_TRACKS, totalTrackCount)
-//                    .putString(METADATA_CUSTOM_KEY_IMAGE_FILE, station.getStationImageFile().getPath())
-//                    .putString(METADATA_CUSTOM_KEY_PLAYLIST_FILE, station.getStationPlaylistFile().getPath())
-                    .build();
-        }
+    /* Return a hard-coded station if no actual stations are available */
+    private MediaMetadataCompat getFallbackStation() {
+        // stupid hack: only if mStationListById is empty
+        String stationName = "KCSB";
+        String stationUri = "http://live.kcsb.org:80/KCSB_128\n";
+        return new MediaMetadataCompat.Builder()
+                .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, String.valueOf(stationUri.hashCode()))
+                .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI, stationUri)
+                .putString(MediaMetadataCompat.METADATA_KEY_GENRE, "Radio")
+                .putString(MediaMetadataCompat.METADATA_KEY_TITLE, stationName)
+//                .putString(MediaMetadataCompat.METADATA_KEY_ALBUM, stationName)
+//                .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, stationName)
+//                .putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI, iconUrl)
+//                .putLong(MediaMetadataCompat.METADATA_KEY_TRACK_NUMBER, trackNumber)
+//                .putLong(MediaMetadataCompat.METADATA_KEY_NUM_TRACKS, totalTrackCount)
+//                .putString(METADATA_CUSTOM_KEY_IMAGE_FILE, station.getStationImageFile().getPath())
+//                .putString(METADATA_CUSTOM_KEY_PLAYLIST_FILE, station.getStationPlaylistFile().getPath())
+                .build();
     }
 
+    /* Return the first station in list */
+    public MediaMetadataCompat getFirstStation() {
+        Map.Entry<String, MediaMetadataCompat> entry = mStationListById.firstEntry();
+        if (entry != null) {
+            return entry.getValue();
+        }
+        return getFallbackStation();
+    }
+
+    /* Return the last station in list */
+    public MediaMetadataCompat getLastStation() {
+        Map.Entry<String, MediaMetadataCompat> entry = mStationListById.lastEntry();
+        if (entry != null) {
+            return entry.getValue();
+        }
+        return getFallbackStation();
+    }
+
+    /* Return the first station after the given station, or null if none is available */
+    public MediaMetadataCompat getStationAfter(String stationId) {
+        Map.Entry<String, MediaMetadataCompat> entry = mStationListById.higherEntry(stationId);
+        if (entry != null) {
+            return entry.getValue();
+        }
+        return null;
+    }
+
+    /* Return the first station before the given station, or null if none is available */
+    public MediaMetadataCompat getStationBefore(String stationId) {
+        Map.Entry<String, MediaMetadataCompat> entry = mStationListById.lowerEntry(stationId);
+        if (entry != null) {
+            return entry.getValue();
+        }
+        return null;
+    }
 
     /* Return the MediaMetadata for given ID */
     public MediaMetadataCompat getStationMediaMetadata(String stationId) {
@@ -161,11 +190,8 @@ public class StationListProvider implements TransistorKeys {
     /* Creates MediaMetadata from station */
     private MediaMetadataCompat buildMediaMetadata(Station station) {
 
-        // since we don't have a unique ID, we fake one using the hashcode of the stream address
-        String id = String.valueOf(station.getStreamUri().hashCode());
-
         return new MediaMetadataCompat.Builder()
-                .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, id)
+                .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, station.getStationId())
                 .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI, station.getStreamUri().toString())
 //                .putString(MediaMetadataCompat.METADATA_KEY_ALBUM, station.getStationName())
 //                .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, station.getStationName())

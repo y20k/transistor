@@ -812,6 +812,12 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
     }
 
 
+    /* Getter for station id */
+    public String getStationId() {
+        // since we don't have a unique ID, we fake one using the hashcode of the stream address
+        return String.valueOf(this.getStreamUri().hashCode());
+    }
+
     /* Getter for URL of stream */
     public Uri getStreamUri() {
         return mStreamUri;
