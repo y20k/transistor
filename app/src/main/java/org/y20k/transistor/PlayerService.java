@@ -934,14 +934,36 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
         @Override
         public void onSkipToNext() {
+            LogHelper.d(LOG_TAG, "onSkipToNext");
             super.onSkipToNext();
-            // handle requests to skip to the next media item // todo implement
+            if (mStation == null) {
+                return;
+            }
+            MediaMetadataCompat station = mStationListProvider.getStationAfter(mStation.getStationId());
+            if (station == null) {
+                station = mStationListProvider.getFirstStation();
+            }
+            if (station != null) {
+                mStation = new Station(station);
+                startPlayback();
+            }
         }
 
         @Override
         public void onSkipToPrevious() {
+            LogHelper.d(LOG_TAG, "onSkipToPrevious");
             super.onSkipToPrevious();
-            // handle requests to skip to the previous media item // todo implement
+            if (mStation == null) {
+                return;
+            }
+            MediaMetadataCompat station = mStationListProvider.getStationBefore(mStation.getStationId());
+            if (station == null) {
+                station = mStationListProvider.getLastStation();
+            }
+            if (station != null) {
+                mStation = new Station(station);
+                startPlayback();
+            }
         }
 
     }
