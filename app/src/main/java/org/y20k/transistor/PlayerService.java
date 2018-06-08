@@ -782,17 +782,19 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     /* Creates playback state */
     private PlaybackStateCompat createSessionPlaybackState() {
 
+        long skipActions = PlaybackStateCompat.ACTION_SKIP_TO_NEXT | PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS;
+
         if (mStation == null || mStation.getPlaybackState() == PLAYBACK_STATE_STOPPED) {
             // define action for playback state to be used in media session callback
             return new PlaybackStateCompat.Builder()
                     .setState(PlaybackStateCompat.STATE_STOPPED, 0, 0)
-                    .setActions(PlaybackStateCompat.ACTION_PLAY)
+                    .setActions(PlaybackStateCompat.ACTION_PLAY | skipActions)
                     .build();
         } else {
             // define action for playback state to be used in media session callback
             return new PlaybackStateCompat.Builder()
                     .setState(PlaybackStateCompat.STATE_PLAYING, 0, 0)
-                    .setActions(PlaybackStateCompat.ACTION_STOP | PlaybackStateCompat.ACTION_PAUSE | ACTION_PREPARE_FROM_MEDIA_ID)
+                    .setActions(PlaybackStateCompat.ACTION_STOP | PlaybackStateCompat.ACTION_PAUSE | ACTION_PREPARE_FROM_MEDIA_ID | skipActions)
                     .build();
         }
     }
@@ -936,10 +938,10 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         public void onSkipToNext() {
             LogHelper.d(LOG_TAG, "onSkipToNext");
             super.onSkipToNext();
-            if (mStation == null) {
-                return;
+            MediaMetadataCompat station = null;
+            if (mStation != null) {
+                station = mStationListProvider.getStationAfter(mStation.getStationId());
             }
-            MediaMetadataCompat station = mStationListProvider.getStationAfter(mStation.getStationId());
             if (station == null) {
                 station = mStationListProvider.getFirstStation();
             }
@@ -953,10 +955,10 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         public void onSkipToPrevious() {
             LogHelper.d(LOG_TAG, "onSkipToPrevious");
             super.onSkipToPrevious();
-            if (mStation == null) {
-                return;
+            MediaMetadataCompat station = null;
+            if (mStation != null) {
+                station = mStationListProvider.getStationBefore(mStation.getStationId());
             }
-            MediaMetadataCompat station = mStationListProvider.getStationBefore(mStation.getStationId());
             if (station == null) {
                 station = mStationListProvider.getLastStation();
             }
