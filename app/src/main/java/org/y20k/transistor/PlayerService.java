@@ -340,10 +340,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             state = "Media source is currently being loaded.";
         } else {
             state = "Media source is currently NOT being loaded.";
-//            // update controller - stop playback
-//            if (mPlayback) {
-//                mController.getTransportControls().pause();
-//            }
         }
         LogHelper.v(LOG_TAG, "State of loading has changed: " + state);
     }
@@ -409,7 +405,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     @Override
     public BrowserRoot onGetRoot(@NonNull String clientPackageName, int clientUid, @Nullable Bundle rootHints) {
         // Credit: https://github.com/googlesamples/android-UniversalMusicPlayer (->  MusicService)
-        LogHelper.v(LOG_TAG, "OnGetRoot: clientPackageName=" + clientPackageName + "; clientUid=" + clientUid + " ; rootHints=" + rootHints);
+        LogHelper.e(LOG_TAG, "OnGetRoot: clientPackageName=" + clientPackageName + "; clientUid=" + clientUid + " ; rootHints=" + rootHints); // todo change
         // to ensure you are not allowing any arbitrary app to browse your app's contents, you need to check the origin:
         if (!mPackageValidator.isCallerAllowed(this, clientPackageName, clientUid)) {
             // request comes from an untrusted package
@@ -461,7 +457,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     public void play() {
         // start the stream (method required by AudioFocusAwarePlayer)
         mPlayer.setPlayWhenReady(true);
-//        mController.getTransportControls().play();
     }
 
 
@@ -469,7 +464,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     public void pause() {
         // just stop the stream (method required by AudioFocusAwarePlayer)
         mPlayer.setPlayWhenReady(false);
-//        mController.getTransportControls().stop();
     }
 
 
@@ -597,9 +591,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             LogHelper.v(LOG_TAG, "Starting playback. Station name:" + mStation.getStationName());
 
             // update MediaSession
-            mSession.setPlaybackState(createSessionPlaybackState());
-            mSession.setMetadata(getSessionMetadata(getApplicationContext(), mStation));
-            mSession.setActive(true);
+            updateMediaSession(mStation,true);
 
             // put up notification
             NotificationHelper.show(this, mSession, mStation);
@@ -659,18 +651,16 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         // give up audio focus
         mAudioFocusHelper.abandonAudioFocus(mAudioFocusRequest);
 
-        // update playback state
-        mSession.setPlaybackState(createSessionPlaybackState());
-
         if (dismissNotification) {
             // remove the foreground lock (dismisses notification) and don't keep media session active
             stopForeground(true);
-            mSession.setActive(false);
+            // update media session
+            updateMediaSession(mStation, false);
         } else {
             // remove the foreground lock and update notification (make it swipe-able)
             NotificationHelper.update(this, mStation, mSession);
-//            // keep media session active
-//            mSession.setActive(true);
+            // update media session
+            updateMediaSession(mStation, true);
         }
 
         // send local broadcast: playback stopped
@@ -687,6 +677,14 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             LogHelper.v(LOG_TAG, "Unable to unregister HeadphoneUnplugReceiver");
             // e.printStackTrace();
         }
+    }
+
+
+    /* Updates station in MediaSession and state of MediaSession */
+    private void updateMediaSession(Station station, boolean activeState) {
+        mSession.setPlaybackState(createSessionPlaybackState());
+        mSession.setMetadata(getSessionMetadata(getApplicationContext(), station));
+        mSession.setActive(activeState);
     }
 
 
@@ -832,12 +830,13 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
         switch (parentMediaId) {
             case MEDIA_ID_ROOT:
-                for (MediaMetadataCompat track : mStationListProvider.getAllMusics()) {
+                for (MediaMetadataCompat track : mStationListProvider.getAllStations()) {
                     MediaBrowserCompat.MediaItem item =
                             new MediaBrowserCompat.MediaItem(track.getDescription(),
                                     MediaBrowserCompat.MediaItem.FLAG_PLAYABLE);
                     mediaItems.add(item);
                 }
+
                 break;
             case MEDIA_ID_EMPTY_ROOT:
                 // since the client provided the empty root we'll just send back an empty list
@@ -920,7 +919,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
                 mStation = new Station(mStationListProvider.getFirstStation());
             } else {
                 // try to match station name and voice query
-                for (MediaMetadataCompat stationMetadata : mStationListProvider.getAllMusics()) {
+                for (MediaMetadataCompat stationMetadata : mStationListProvider.getAllStations()) {
                     String[] words = query.split(" ");
                     for (String word : words) {
                         if (stationMetadata.getString(MediaMetadataCompat.METADATA_KEY_TITLE).toLowerCase().contains(word.toLowerCase())) {
@@ -947,7 +946,11 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             }
             if (station != null) {
                 mStation = new Station(station);
+            }
+            if (mPlayer.getPlayWhenReady()) {
                 startPlayback();
+            } else {
+                updateMediaSession(mStation,true);
             }
         }
 
@@ -964,7 +967,11 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             }
             if (station != null) {
                 mStation = new Station(station);
+            }
+            if (mPlayer.getPlayWhenReady()) {
                 startPlayback();
+            } else {
+                updateMediaSession(mStation,true);
             }
         }
 

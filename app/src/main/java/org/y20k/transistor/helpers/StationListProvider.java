@@ -17,6 +17,7 @@ package org.y20k.transistor.helpers;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.v4.media.MediaMetadataCompat;
 
 import org.y20k.transistor.core.Station;
@@ -57,7 +58,7 @@ public class StationListProvider implements TransistorKeys {
 
 
     /* Return list of all stations */
-    public Iterable<MediaMetadataCompat> getAllMusics() {
+    public Iterable<MediaMetadataCompat> getAllStations() {
         if (mCurrentState != State.INITIALIZED || mStationListById.isEmpty()) {
             return Collections.emptyList();
         }
@@ -94,6 +95,7 @@ public class StationListProvider implements TransistorKeys {
         return getFallbackStation();
     }
 
+
     /* Return the last station in list */
     public MediaMetadataCompat getLastStation() {
         Map.Entry<String, MediaMetadataCompat> entry = mStationListById.lastEntry();
@@ -102,6 +104,7 @@ public class StationListProvider implements TransistorKeys {
         }
         return getFallbackStation();
     }
+
 
     /* Return the first station after the given station, or null if none is available */
     public MediaMetadataCompat getStationAfter(String stationId) {
@@ -112,6 +115,7 @@ public class StationListProvider implements TransistorKeys {
         return null;
     }
 
+
     /* Return the first station before the given station, or null if none is available */
     public MediaMetadataCompat getStationBefore(String stationId) {
         Map.Entry<String, MediaMetadataCompat> entry = mStationListById.lowerEntry(stationId);
@@ -120,6 +124,20 @@ public class StationListProvider implements TransistorKeys {
         }
         return null;
     }
+
+
+    /* Return the last played station */
+    public MediaMetadataCompat getLastPlayedStation(Context context) {
+        // get url of last played station
+        String stationUrlLastString = PreferenceManager.getDefaultSharedPreferences(context).getString(PREF_STATION_URL_LAST, null);
+
+        // todo implement
+
+        // fallback: first station
+        return getFirstStation();
+    }
+
+
 
     /* Return the MediaMetadata for given ID */
     public MediaMetadataCompat getStationMediaMetadata(String stationId) {
@@ -139,6 +157,12 @@ public class StationListProvider implements TransistorKeys {
     /* Return current state */
     public boolean isInitialized() {
         return mCurrentState == State.INITIALIZED;
+    }
+
+
+    /* Check if empty */
+    public boolean isEmpty() {
+        return mStationListById.isEmpty();
     }
 
 
@@ -169,7 +193,7 @@ public class StationListProvider implements TransistorKeys {
     }
 
 
-    /* */
+    /* Retrieves stations as MediaMetadataCompat */
     private synchronized void retrieveStations(Context context) {
         if (mCurrentState == State.NON_INITIALIZED) {
             mCurrentState = State.INITIALIZING;
