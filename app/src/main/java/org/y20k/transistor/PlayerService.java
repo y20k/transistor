@@ -946,11 +946,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             }
             if (station != null) {
                 mStation = new Station(station);
-            }
-            if (mPlayer.getPlayWhenReady()) {
                 startPlayback();
-            } else {
-                updateMediaSession(mStation,true);
             }
         }
 
@@ -967,11 +963,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             }
             if (station != null) {
                 mStation = new Station(station);
-            }
-            if (mPlayer.getPlayWhenReady()) {
                 startPlayback();
-            } else {
-                updateMediaSession(mStation,true);
             }
         }
 
