@@ -14,11 +14,13 @@
 
 package org.y20k.transistor;
 
+import android.app.UiModeManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.AudioManager;
@@ -90,7 +92,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static android.support.v4.media.session.PlaybackStateCompat.ACTION_PREPARE_FROM_MEDIA_ID;
 import static com.google.android.exoplayer2.ExoPlaybackException.TYPE_RENDERER;
 import static com.google.android.exoplayer2.ExoPlaybackException.TYPE_SOURCE;
 import static com.google.android.exoplayer2.ExoPlaybackException.TYPE_UNEXPECTED;
@@ -780,7 +781,12 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     /* Creates playback state */
     private PlaybackStateCompat createSessionPlaybackState() {
 
-        long skipActions = PlaybackStateCompat.ACTION_SKIP_TO_NEXT | PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS;
+        long skipActions;
+        if (isCarUiMode()) {
+            skipActions = PlaybackStateCompat.ACTION_SKIP_TO_NEXT | PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS;
+        } else {
+            skipActions = 0;
+        }
 
         if (mStation == null || mStation.getPlaybackState() == PLAYBACK_STATE_STOPPED) {
             // define action for playback state to be used in media session callback
@@ -789,10 +795,10 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
                     .setActions(PlaybackStateCompat.ACTION_PLAY | skipActions)
                     .build();
         } else {
-            // define action for playback state to be used in media session callback
+            // define action for playback state to be used in media session callback - car mode version
             return new PlaybackStateCompat.Builder()
                     .setState(PlaybackStateCompat.STATE_PLAYING, 0, 0)
-                    .setActions(PlaybackStateCompat.ACTION_STOP | PlaybackStateCompat.ACTION_PAUSE | ACTION_PREPARE_FROM_MEDIA_ID | skipActions)
+                    .setActions(PlaybackStateCompat.ACTION_STOP | PlaybackStateCompat.ACTION_PAUSE | PlaybackStateCompat.ACTION_PREPARE_FROM_MEDIA_ID | skipActions)
                     .build();
         }
     }
@@ -846,6 +852,19 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
                 break;
         }
         result.sendResult(mediaItems);
+    }
+
+
+    /* Detects car mode */
+    private boolean isCarUiMode() {
+        UiModeManager uiModeManager = (UiModeManager) this.getSystemService(Context.UI_MODE_SERVICE);
+        if (uiModeManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_CAR) {
+            LogHelper.v(LOG_TAG, "Running in Car mode");
+            return true;
+        } else {
+            LogHelper.v(LOG_TAG, "Running on a non-Car mode");
+            return false;
+        }
     }
 
 
