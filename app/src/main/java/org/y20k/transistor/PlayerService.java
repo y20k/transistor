@@ -944,7 +944,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             if (station == null) {
                 station = mStationListProvider.getFirstStation();
             }
-            if (station != null) {
+            if (station != null && !mStationListProvider.isEmpty()) {
                 mStation = new Station(station);
                 startPlayback();
             }
@@ -961,7 +961,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             if (station == null) {
                 station = mStationListProvider.getLastStation();
             }
-            if (station != null) {
+            if (station != null && !mStationListProvider.isEmpty()) {
                 mStation = new Station(station);
                 startPlayback();
             }
