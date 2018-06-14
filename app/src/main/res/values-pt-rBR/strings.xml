@@ -11,7 +11,7 @@
     <string name="menu_add">Adicionar</string>
     <string name="menu_delete">Remover</string>
     <string name="menu_rename">Renomear</string>
-    <string name="menu_shortcut">Colocar na tela inicial</string>
+    <string name="menu_shortcut">Atalho na tela inicial</string>
 
     <string name="header_about">Sobre</string>
     <string name="header_howto">Como usar</string>
