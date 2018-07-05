@@ -13,7 +13,7 @@ android {
 
         vectorDrawables.useSupportLibrary = true
 
-        resConfigs "en", "ca", "de", "el", "es", "eu", "fr", "ja", "kab", "nb-rNO", "pl", "ru", "sl", "sr", "tr", "uk", "zh-rCN"
+        resConfigs "en", "ca", "de", "el", "es", "eu", "fr", "ja", "kab", "nb-rNO", "pl", "pt-rBR", "ru", "sl", "sr", "tr", "uk", "zh-rCN"
 
     }
     buildTypes {
