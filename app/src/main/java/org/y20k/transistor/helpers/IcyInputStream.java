@@ -24,6 +24,7 @@ import android.util.Log;
 import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
 
 /**
@@ -105,7 +106,7 @@ public class IcyInputStream extends FilterInputStream {
         super( in );
         this.period = period;
         this.playerCallback = playerCallback;
-        this.characterEncoding = characterEncoding != null ? characterEncoding : "UTF-8";
+        this.characterEncoding = characterEncoding != null ? characterEncoding : getEncodingFromStream(in);
 
         remaining = period;
         mbuffer = new byte[128];
@@ -248,6 +249,16 @@ public class IcyInputStream extends FilterInputStream {
         }
 
         return offset - oo;
+    }
+
+
+    /* Try to get encoding from stream using InputStreamReader - defaults to UTF-8 */
+    private String getEncodingFromStream(InputStream in) {
+        String characterEncoding = null;
+        InputStreamReader reader = new InputStreamReader(in);
+        characterEncoding = reader.getEncoding();
+        LogHelper.v(LOG, "Encoding -> " +  characterEncoding); // todo remove
+        return characterEncoding != null ? characterEncoding : "UTF-8";
     }
 
 }
