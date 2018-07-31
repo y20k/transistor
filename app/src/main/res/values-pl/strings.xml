@@ -5,7 +5,7 @@
 
     <!-- app shortcuts -->
     <string name="shortcut_last_station_short_label">Last station</string>
-    <string name="shortcut_last_station_long_label">Play last station</string>
+    <string name="shortcut_last_station_long_label">Odtwórz ostatnią stację</string>
     <string name="shortcut_last_station_disabled_message">Shortcut for playback of last station disabled.</string>
 
     <!-- menu entries -->
@@ -17,7 +17,7 @@
     <string name="menu_add">Dodaj</string>
     <string name="menu_delete">Usuń</string>
     <string name="menu_rename">Zmień nazwę</string>
-    <string name="menu_shortcut">Dodaj do ekranu głównego</string>
+    <string name="menu_shortcut">Umieść na ekranie głównym</string>
 
     <!-- headers -->
     <string name="header_about">O aplikacji</string>
@@ -33,7 +33,7 @@
     <string name="descr_station_name_example">Przykład FM</string>
     <string name="descr_station_metadata_example">Wykonawca - Tytuł</string>
     <string name="descr_station_stream_loading">Ładowanie strumienia …</string>
-    <string name="descr_playback_button">Duży przycisk odtwarzania</string>
+    <string name="descr_playback_button">Złoty przycisk odtwarzania</string>
     <string name="descr_playback_indicator">Wskaźnik odtwarzania</string>
     <string name="descr_playback_indicator_started">Wskaźnik odtwarzania</string>
     <string name="descr_timer_icon">Sleep timer icon</string>
@@ -43,7 +43,7 @@
     <string name="descr_player_sheet_content_copy_icon">Content copy icon</string>
     <string name="descr_player_sheet_p_station_name">Nazwa wybranej stacji</string>
     <string name="descr_player_sheet_p_station_metadata">Metadane wybranej stacji</string>
-    <string name="descr_player_sheet_p_stream_url">URL strumienia wybranej stacji</string>
+    <string name="descr_player_sheet_p_stream_url">Łącze transmisji strumieniowej wybranej stacji radiowej</string>
     <string name="descr_list_add_new">Add a new station</string>
     <string name="descr_list_add_select_stream_dropdown">Dropdown menu that hold a selection of streams</string>
 
@@ -51,7 +51,7 @@
     <string name="player_sheet_h1_details">Details</string>
     <string name="player_sheet_h2_current_session">Current session</string>
     <string name="player_sheet_h2_station_name">Stacja</string>
-    <string name="player_sheet_h2_station_metadata">Currently Playing</string>
+    <string name="player_sheet_h2_station_metadata">Teraz grane</string>
     <string name="player_sheet_h2_stream_url">URL strumienia</string>
     <string name="player_sheet_p_station_metadata">metadane niedostępne</string>
     <string name="player_sheet_h2_station_mime_type">MIME type</string>
@@ -60,12 +60,12 @@
     <string name="player_sheet_h2_station_bitrate">Bitrate</string>
 
     <!-- dialogs -->
-    <string name="dialog_generic_button_okay">Okej</string>
+    <string name="dialog_generic_button_okay">OK</string>
     <string name="dialog_generic_button_cancel">Anuluj</string>
     <string name="dialog_add_station_button">Dodaj</string>
-    <string name="dialog_add_station_input_hint">Wklej poprawny URL</string>
+    <string name="dialog_add_station_input_hint">Wklej link do przesyłania strumieniowego</string>
     <string name="dialog_add_station_message">Dodaj nową stację</string>
-    <string name="dialog_add_station_howto">Możesz dodać zarówno surowe strumienie audio zakodowane w MP3 i OGG jak i strumienie zapisane w plikach pls lub m3u. Alternatywnie możesz dodać nowe stacje poprzez dotknięcie linków (pls lub m3u) w Twojej przeglądarce internetowej.</string>
+    <string name="dialog_add_station_howto">Możesz dodać nieprzetworzone strumienie audio zakodowane w plikach MP3, AAC i Ogg/Opus oraz strumieniach zawartych w plikach PLS lub M3U. Możesz też dodawać nowe stacje, dotykając linków przesyłania strumieniowego (.pls lub .m3u) w przeglądarce internetowej.</string>
     <string name="dialog_delete_station_message">Usuń stację</string>
     <string name="dialog_button_delete">Usuń</string>
     <string name="dialog_rename_station_input_hint">Wpisz nową nazwę</string>
@@ -85,12 +85,12 @@
     <string name="dialog_error_title_fetch_read">Problem z odczytem</string>
     <string name="dialog_error_title_fetch_write">Problem z zapisem</string>
     <string name="dialog_error_message_fetch_general_external_storage">Pamięć zewnętrzna:</string>
-    <string name="dialog_error_message_fetch_general_hint_m3u">Porada: Transistor może przetworzyć tylko strumienie MP3 i OGG lub URLe kończące się na .m3u lub .pls.</string>
+    <string name="dialog_error_message_fetch_general_hint_m3u">Porada: Transistor może przetworzyć tylko strumienie MP3 i OGG lub łącza kończące się na .m3u lub .pls.</string>
     <string name="dialog_error_message_fetch_general_playlist_type">Typ MIME pliku:</string>
     <string name="dialog_error_message_fetch_general_stream_type">Typ MIME strumienia:</string>
     <string name="dialog_error_message_fetch_general_file_content">Zawartość pliku:</string>
     <string name="dialog_error_message_fetch_download">Transistor próbował z całych sił, ale nie był w stanie zrozumieć podanego linku.</string>
-    <string name="dialog_error_message_fetch_download_station_url">URL stacji:</string>
+    <string name="dialog_error_message_fetch_download_station_url">Łącze transmisji strumieniowej stacji:</string>
     <string name="dialog_error_message_fetch_read">Transistor próbował z całych sił, ale nie był w stanie zrozumieć podanego pliku.</string>
     <string name="dialog_error_message_fetch_read_file_location">Lokalizacja pliku:</string>
     <string name="dialog_error_message_fetch_write">Transistor próbował z całych sił, ale nie był w stanie zapisać podanej stacji do pamięci.</string>
@@ -99,7 +99,7 @@
     <string name="actioncall_message_start_here">Dodaj nową stację</string>
     <string name="toastmessage_add_download_started">Pobieranie rozpoczęte.</string>
     <string name="toastmessage_add_open_file_started">Otwieranie pliku.</string>
-    <string name="toastmessage_long_press_playback_stopped">Odtwarzanie zatrzymanie (wykryto długie naciśnięcie)</string>
+    <string name="toastmessage_long_press_playback_stopped">Odtwarzanie zatrzymane (wykryto długie naciśnięcie)</string>
     <string name="toastmessage_long_press_playback_started">Odtwarzanie rozpoczęte (wykryto długie naciśnięcie)</string>
     <string name="toastmessage_long_press_change_icon">Change station icon (long press detected)</string>
     <string name="toastmessage_long_press_change_name">Rename station (long press detected)</string>
@@ -107,18 +107,18 @@
     <string name="toastmessage_shortcut_created">Skrót utworzony.</string>
     <string name="toastmessage_shortcut_not_created">Shortcut not created. This device does not allow the creation of shortcuts.</string>
     <string name="toastmessage_list_refreshed">Reloading list of stations.</string>
-    <string name="toastmessage_copied_to_clipboard_url">URL strumienia skopiowany do schowka.</string>
+    <string name="toastmessage_copied_to_clipboard_url">Link do transmisji strumieniowej skopiowany do schowka.</string>
     <string name="toastmessage_copied_to_clipboard_metadata">Metadane skopiowane do schowka.</string>
     <string name="toastmessage_station_copied">Stacja skopiowana do schowka.</string>
     <string name="toastmessage_stream_may_not_work">Wykryto niewspierany format audio. Odtwarzanie strumienia może nie działać poprawnie.</string>
     <string name="toastmessage_timer_activated">Wyłącznik czasowy uruchomiony.</string>
     <string name="toastmessage_timer_cancelled">Wyłącznik czasowy anulowany.</string>
-    <string name="toastmessage_timer_duration_increased">Zwiększono czas wyłącznika.</string>
+    <string name="toastmessage_timer_duration_increased">Wydłużono czas działania.</string>
     <string name="toastmessage_timer_start_unable">Proszę najpierw rozpocząć odtwarzanie.</string>
     <string name="toastalert_unable_to_connect">Unable to connect. Device does not have an internet connection or stream may be outdated.</string>
     <string name="toastalert_rename_unsuccessful">Nie udało się zmienić nazwy stacji. Proszę wybrać inną nazwę.</string>
-    <string name="toastalert_delete_successful">Stacja usunięta.</string>
-    <string name="toastalert_no_external_storage">Dostęp do pamięci zewnętrznej nie powiódł się.</string>
+    <string name="toastalert_delete_successful">Stacja została usunięta.</string>
+    <string name="toastalert_no_external_storage">Nie można uzyskać dostępu do pamięci zewnętrznej.</string>
     <string name="toastalert_headphones_unplugged">Słuchawki odłączone. Odtwarzanie zatrzymane.</string>
     <string name="toastalert_permission_denied">Odmowa dostępu:</string>
     <string name="toastalert_station_not_found">Nie udało się odnaleźć stacji.</string>
