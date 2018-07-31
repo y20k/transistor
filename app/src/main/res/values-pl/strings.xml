@@ -1,17 +1,17 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
     <!-- activities -->
-    <string name="app_name">Transistor</string><!-- please do not translate app_name - transcription into different alphabet types is fine though -->
+    <string name="app_name">Aplikacja Transistor</string><!-- please do not translate app_name - transcription into different alphabet types is fine though -->
 
     <!-- app shortcuts -->
-    <string name="shortcut_last_station_short_label">Last station</string>
+    <string name="shortcut_last_station_short_label">Ostatnia stacja</string>
     <string name="shortcut_last_station_long_label">Odtwórz ostatnią stację</string>
-    <string name="shortcut_last_station_disabled_message">Shortcut for playback of last station disabled.</string>
+    <string name="shortcut_last_station_disabled_message">Skrót do odtwarzania ostatniej stacji jest wyłączony.</string>
 
     <!-- menu entries -->
     <string name="menu_about">O aplikacji</string>
     <string name="menu_howto">Instrukcja obsługi</string>
-    <string name="menu_refresh">Refresh list</string>
+    <string name="menu_refresh">Odśwież listę</string>
     <string name="menu_timer">Wyłącznik czasowy</string>
     <string name="menu_icon">Zmień ikonę</string>
     <string name="menu_add">Dodaj</string>
@@ -24,8 +24,8 @@
     <string name="header_howto">Instrukcja obsługi</string>
 
     <!-- descriptions -->
-    <string name="descr_app_icon">App icon depicting an old radio</string>
-    <string name="descr_arrow_upward">Arrow facing upward</string>
+    <string name="descr_app_icon">Ikona aplikacji przedstawiająca stare radio</string>
+    <string name="descr_arrow_upward">Strzałka skierowana w górę</string>
     <string name="descr_station_options_button">Wyświetl opcje dla stacji</string>
     <string name="descr_station_icon">Ikona stacji</string>
     <string name="descr_station_name">Nazwa stacji</string>
@@ -36,27 +36,27 @@
     <string name="descr_playback_button">Złoty przycisk odtwarzania</string>
     <string name="descr_playback_indicator">Wskaźnik odtwarzania</string>
     <string name="descr_playback_indicator_started">Wskaźnik odtwarzania</string>
-    <string name="descr_timer_icon">Sleep timer icon</string>
+    <string name="descr_timer_icon">Ikona wyłącznika czasowego</string>
     <string name="descr_timer_indicator_started">Wskaźnik wyłącznika czasowego</string>
-    <string name="descr_player_sheet_button_expand">Button to expand and minimize the radio player</string>
+    <string name="descr_player_sheet_button_expand">Przycisk do rozwijania i minimalizowania radia</string>
     <string name="descr_player_sheet_information_icon">Information Icon</string>
-    <string name="descr_player_sheet_content_copy_icon">Content copy icon</string>
+    <string name="descr_player_sheet_content_copy_icon">Ikona zawartości</string>
     <string name="descr_player_sheet_p_station_name">Nazwa wybranej stacji</string>
     <string name="descr_player_sheet_p_station_metadata">Metadane wybranej stacji</string>
     <string name="descr_player_sheet_p_stream_url">Łącze transmisji strumieniowej wybranej stacji radiowej</string>
-    <string name="descr_list_add_new">Add a new station</string>
-    <string name="descr_list_add_select_stream_dropdown">Dropdown menu that hold a selection of streams</string>
+    <string name="descr_list_add_new">Dodaj nową stację</string>
+    <string name="descr_list_add_select_stream_dropdown">Menu rozwijane zawierające wybrane strumienie</string>
 
     <!-- player -->
     <string name="player_sheet_h1_details">Details</string>
-    <string name="player_sheet_h2_current_session">Current session</string>
+    <string name="player_sheet_h2_current_session">Obecna sesja</string>
     <string name="player_sheet_h2_station_name">Stacja</string>
     <string name="player_sheet_h2_station_metadata">Teraz grane</string>
     <string name="player_sheet_h2_stream_url">URL strumienia</string>
     <string name="player_sheet_p_station_metadata">metadane niedostępne</string>
-    <string name="player_sheet_h2_station_mime_type">MIME type</string>
-    <string name="player_sheet_h2_station_channel_count">Channel count</string>
-    <string name="player_sheet_h2_station_sample_rate">Sample rate</string>
+    <string name="player_sheet_h2_station_mime_type">Typ MIME</string>
+    <string name="player_sheet_h2_station_channel_count">Liczba kanałów</string>
+    <string name="player_sheet_h2_station_sample_rate">Próbna ocena</string>
     <string name="player_sheet_h2_station_bitrate">Bitrate</string>
 
     <!-- dialogs -->
@@ -71,9 +71,9 @@
     <string name="dialog_rename_station_input_hint">Wpisz nową nazwę</string>
     <string name="dialog_rename_station_message">Zmień nazwę stacji</string>
     <string name="dialog_button_rename">Zmień nazwę</string>
-    <string name="dialog_add_station_choose_stream_heading">Multiple streams found</string>
-    <string name="dialog_add_station_choose_stream_message">Please select a stream</string>
-    <string name="dialog_add_station_choose_stream_button">Select</string>
+    <string name="dialog_add_station_choose_stream_heading">Znaleziono wiele strumieni</string>
+    <string name="dialog_add_station_choose_stream_message">Wybierz strumień</string>
+    <string name="dialog_add_station_choose_stream_button">Wybierz</string>
 
     <!-- error dialogs -->
     <string name="dialog_error_title_default">Błąd</string>
@@ -101,12 +101,12 @@
     <string name="toastmessage_add_open_file_started">Otwieranie pliku.</string>
     <string name="toastmessage_long_press_playback_stopped">Odtwarzanie zatrzymane (wykryto długie naciśnięcie)</string>
     <string name="toastmessage_long_press_playback_started">Odtwarzanie rozpoczęte (wykryto długie naciśnięcie)</string>
-    <string name="toastmessage_long_press_change_icon">Change station icon (long press detected)</string>
-    <string name="toastmessage_long_press_change_name">Rename station (long press detected)</string>
-    <string name="toastmessage_long_press_night_mode_switch">Night mode switch (long press detected)</string>
+    <string name="toastmessage_long_press_change_icon">Zmień ikonę stacji (wykryto długie naciśnięcie)</string>
+    <string name="toastmessage_long_press_change_name">Zmień nazwę stacji (wykryto długie naciśnięcie)</string>
+    <string name="toastmessage_long_press_night_mode_switch">Przełącznik trybu nocnego (wykryto długie naciśnięcie)</string>
     <string name="toastmessage_shortcut_created">Skrót utworzony.</string>
-    <string name="toastmessage_shortcut_not_created">Shortcut not created. This device does not allow the creation of shortcuts.</string>
-    <string name="toastmessage_list_refreshed">Reloading list of stations.</string>
+    <string name="toastmessage_shortcut_not_created">Skrót nie został utworzony. To urządzenie nie pozwala na tworzenie skrótów.</string>
+    <string name="toastmessage_list_refreshed">Przeładuj listę stacji.</string>
     <string name="toastmessage_copied_to_clipboard_url">Link do transmisji strumieniowej skopiowany do schowka.</string>
     <string name="toastmessage_copied_to_clipboard_metadata">Metadane skopiowane do schowka.</string>
     <string name="toastmessage_station_copied">Stacja skopiowana do schowka.</string>
@@ -115,7 +115,7 @@
     <string name="toastmessage_timer_cancelled">Wyłącznik czasowy anulowany.</string>
     <string name="toastmessage_timer_duration_increased">Wydłużono czas działania.</string>
     <string name="toastmessage_timer_start_unable">Proszę najpierw rozpocząć odtwarzanie.</string>
-    <string name="toastalert_unable_to_connect">Unable to connect. Device does not have an internet connection or stream may be outdated.</string>
+    <string name="toastalert_unable_to_connect">Nie można połączyć. Urządzenie nie ma połączenia z internetem lub strumień może być nieaktualny.</string>
     <string name="toastalert_rename_unsuccessful">Nie udało się zmienić nazwy stacji. Proszę wybrać inną nazwę.</string>
     <string name="toastalert_delete_successful">Stacja została usunięta.</string>
     <string name="toastalert_no_external_storage">Nie można uzyskać dostępu do pamięci zewnętrznej.</string>
@@ -127,16 +127,16 @@
     <string name="snackbar_message_timer_set">Wyłącznik czasowy ustawiony na</string>
 
     <!-- notification -->
-    <string name="notification_play">Play</string>
+    <string name="notification_play">Odtwarzaj</string>
     <string name="notification_stop">Stop</string>
     <string name="notification_swipe_to_stop">Przesuń palcem, aby zatrzymać</string>
     <string name="notification_playing">Odtwarzane</string>
-    <string name="notification_channel_playback_name">Playback Controls</string>
-    <string name="notification_channel_playback_description">Playback controls, station logo and now playing info.</string>
+    <string name="notification_channel_playback_name">Sterowanie odtwarzaniem</string>
+    <string name="notification_channel_playback_description">Sterowanie odtwarzaniem, logo stacji i odtwarzanie informacji.</string>
 
     <!-- onboarding -->
-    <string name="onboarding_app_description">Radio App</string>
-    <string name="onboarding_app_get_started">Get started</string>
+    <string name="onboarding_app_description">Aplikacja radiowa</string>
+    <string name="onboarding_app_get_started">Pierwsze kroki</string>
 
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7
