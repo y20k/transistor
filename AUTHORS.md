@@ -25,7 +25,7 @@ Kabyle version: [SlimaneAmiri](https://github.com/SlimaneAmiri) | [weblate versi
 
 Norwegian version: [comradekingu](https://github.com/comradekingu) | [weblate version history](https://hosted.weblate.org/changes/?lang=nb_NO&project=transistor)
 
-Polish version: [woodypl](https://github.com/woodypl) | [weblate version history](https://hosted.weblate.org/changes/?lang=pl&project=transistor)
+Polish version: [woodypl](https://github.com/woodypl), [WaldiS](https://hosted.weblate.org/user/WaldiS/) | [weblate version history](https://hosted.weblate.org/changes/?lang=pl&project=transistor)
 
 Portuguese (Brazil) version: [hdmjunior](https://github.com/hdmjunior) |  [weblate version history](https://hosted.weblate.org/changes/?lang=pt_BR&project=transistor)
 
