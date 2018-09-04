@@ -71,9 +71,9 @@
     <string name="dialog_rename_station_input_hint">Entrer un nouveau nom</string>
     <string name="dialog_rename_station_message">Renommer la station</string>
     <string name="dialog_button_rename">Renommer</string>
-    <string name="dialog_add_station_choose_stream_heading">Multiple streams found</string>
-    <string name="dialog_add_station_choose_stream_message">Please select a stream</string>
-    <string name="dialog_add_station_choose_stream_button">Select</string>
+    <string name="dialog_add_station_choose_stream_heading">Plusieurs flux ont étés trouvés</string>
+    <string name="dialog_add_station_choose_stream_message">Veuillez sélectionner un flux</string>
+    <string name="dialog_add_station_choose_stream_button">Sélectionner</string>
 
     <!-- error dialogs -->
     <string name="dialog_error_title_default">Erreur</string>    
@@ -102,7 +102,7 @@
     <string name="toastmessage_long_press_playback_stopped">Lecture arrêtée (appui long détecté)</string>
     <string name="toastmessage_long_press_playback_started">Lecture démarrée (appui long détecté)</string>
     <string name="toastmessage_long_press_change_icon">Change station icon (long press detected)</string>
-    <string name="toastmessage_long_press_change_name">Rename station (long press detected)</string>
+    <string name="toastmessage_long_press_change_name">Renommer la station (appui long détecté)</string>
     <string name="toastmessage_long_press_night_mode_switch">Night mode switch (long press detected)</string>
     <string name="toastmessage_shortcut_created">Raccourci créé.</string>
     <string name="toastmessage_shortcut_not_created">Raccourci non créé. Cet appareil ne permet pas la création de raccourcis.</string>
