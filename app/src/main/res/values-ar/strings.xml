@@ -277,4 +277,5 @@
     <string name="descr_card_station_image_change"></string>
     <string name="snackbar_request_storage_access"></string>
     <string name="onboarding_app_rodriguez_quote_2" translatable="false"></string>
+    <string name="player_sheet_h2_station_channel_count"></string>
 </resources>
