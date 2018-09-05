@@ -7,13 +7,15 @@ Transistor is designed, developed and maintained by: [y20k](https://github.com/y
 Contributing developer(s): [azixMcAze](https://github.com/azixMcAze) & [meonwax](https://github.com/meonwax) & [mook](https://github.com/mook) & [pelya](https://github.com/mpelya)
 
 ### Translations
-Basque version: [osoitz](https://github.com/osoitz) | [weblate version history](https://hosted.weblate.org/changes/?lang=ca&project=transistor)
+Arabic version: [ButterflyOfFire](https://github.com/BoFFire) | [weblate version history](https://hosted.weblate.org/changes/?lang=ar&project=transistor)
 
-Catalan version: [Zagur](https://github.com/Zagur) | [weblate version history](https://hosted.weblate.org/changes/?lang=eu&project=transistor)
+Basque version: [osoitz](https://github.com/osoitz) | [weblate version history](https://hosted.weblate.org/changes/?lang=eu&project=transistor)
+
+Catalan version: [Zagur](https://github.com/Zagur) | [weblate version history](https://hosted.weblate.org/changes/?lang=ca&project=transistor)
 
 Chinese version: [YFdyh000](https://github.com/yfdyh000) | [weblate version history](https://hosted.weblate.org/changes/?lang=zh_Hans&project=transistor)
 
-French version: [M2ck](https://github.com/M2ck) | [weblate version history](https://hosted.weblate.org/changes/?lang=fr&project=transistor)
+French version: [M2ck](https://github.com/M2ck), [ButterflyOfFire](https://github.com/BoFFire) | [weblate version history](https://hosted.weblate.org/changes/?lang=fr&project=transistor)
 
 German version: [y20k](https://github.com/y20k) | [weblate version history](https://hosted.weblate.org/changes/?lang=de&project=transistor)
 
