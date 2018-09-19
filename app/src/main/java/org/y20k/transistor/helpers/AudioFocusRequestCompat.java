@@ -14,9 +14,10 @@ import android.os.Looper;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
-import android.support.v4.media.AudioAttributesCompat;
 
 import java.lang.annotation.Retention;
+
+import androidx.media.AudioAttributesCompat;
 
 import static java.lang.annotation.RetentionPolicy.SOURCE;
 

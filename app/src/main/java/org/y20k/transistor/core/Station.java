@@ -21,7 +21,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
 import android.support.v4.media.MediaMetadataCompat;
 
 import org.y20k.transistor.helpers.LogHelper;
@@ -46,6 +45,8 @@ import java.util.Locale;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import androidx.annotation.NonNull;
 
 import static android.support.v4.media.MediaMetadataCompat.METADATA_KEY_MEDIA_URI;
 import static android.support.v4.media.MediaMetadataCompat.METADATA_KEY_TITLE;

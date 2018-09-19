@@ -13,13 +13,13 @@
 
 package org.y20k.transistor.adapter;
 
-import android.support.annotation.Nullable;
-import android.support.v7.util.DiffUtil;
-
 import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.TransistorKeys;
 
 import java.util.ArrayList;
+
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.DiffUtil;
 
 
 /**

@@ -15,9 +15,6 @@
 package org.y20k.transistor;
 
 import android.app.Activity;
-import android.arch.lifecycle.LifecycleOwner;
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -33,19 +30,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,6 +40,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.y20k.transistor.adapter.CollectionAdapter;
 import org.y20k.transistor.adapter.CollectionViewModel;
@@ -75,6 +62,21 @@ import org.y20k.transistor.helpers.TransistorKeys;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 
 /**
@@ -574,6 +576,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
         ImageHelper imageHelper = new ImageHelper(station, mActivity);
         Bitmap stationImage = imageHelper.createCircularFramedImage(192);
         mPlayerStationName.setText(station.getStationName());
+        mPlayerStationName.setContentDescription(station.getStationName());
         mPlayerStationImage.setImageBitmap(stationImage);
         mPlayerSheetStreamUrl.setText(station.getStreamUri().toString());
     }
@@ -655,8 +658,10 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
                 mPlayerStationMetadata.setVisibility(View.VISIBLE);
             }
             mPlayerStationMetadata.setText(stationMetadata);
+            mPlayerStationMetadata.setContentDescription(stationMetadata);
             mPlayerStationMetadata.setSelected(true); // triggers the marquee
             mPlayerSheetMetadata.setText(stationMetadata);
+            mPlayerSheetMetadata.setContentDescription(stationMetadata);
             mPlayerSheetMetadata.setSelected(true); // triggers the marquee
         }
     }

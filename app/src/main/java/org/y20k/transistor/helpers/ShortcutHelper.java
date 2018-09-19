@@ -18,14 +18,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
-import android.support.v4.content.pm.ShortcutInfoCompat;
-import android.support.v4.content.pm.ShortcutManagerCompat;
-import android.support.v4.graphics.drawable.IconCompat;
 import android.widget.Toast;
 
 import org.y20k.transistor.MainActivity;
 import org.y20k.transistor.R;
 import org.y20k.transistor.core.Station;
+
+import androidx.core.content.pm.ShortcutInfoCompat;
+import androidx.core.content.pm.ShortcutManagerCompat;
+import androidx.core.graphics.drawable.IconCompat;
 
 
 /**

@@ -15,6 +15,7 @@
 
 package org.y20k.transistor.helpers;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
@@ -212,6 +213,7 @@ public class StationListProvider implements TransistorKeys {
 
 
     /* Creates MediaMetadata from station */
+    @SuppressLint("WrongConstant")
     private MediaMetadataCompat buildMediaMetadata(Station station) {
 
         return new MediaMetadataCompat.Builder()

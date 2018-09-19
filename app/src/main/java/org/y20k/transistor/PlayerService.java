@@ -14,6 +14,7 @@
 
 package org.y20k.transistor;
 
+import android.annotation.SuppressLint;
 import android.app.UiModeManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -32,14 +33,8 @@ import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.media.AudioAttributesCompat;
 import android.support.v4.media.MediaBrowserCompat;
-import android.support.v4.media.MediaBrowserServiceCompat;
 import android.support.v4.media.MediaMetadataCompat;
-import android.support.v4.media.session.MediaButtonReceiver;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
@@ -91,6 +86,13 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.media.AudioAttributesCompat;
+import androidx.media.MediaBrowserServiceCompat;
+import androidx.media.session.MediaButtonReceiver;
 
 import static com.google.android.exoplayer2.ExoPlaybackException.TYPE_RENDERER;
 import static com.google.android.exoplayer2.ExoPlaybackException.TYPE_SOURCE;
@@ -146,9 +148,9 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         mUserAgent = Util.getUserAgent(this, APPLICATION_NAME);
 
         // create Wifi and wake locks
-        mWifiLock = ((WifiManager) this.getSystemService(Context.WIFI_SERVICE)).createWifiLock(WifiManager.WIFI_MODE_FULL, "Transistor_wifi_lock");
+        mWifiLock = ((WifiManager) this.getSystemService(Context.WIFI_SERVICE)).createWifiLock(WifiManager.WIFI_MODE_FULL, "Transistor:wifi_lock");
         PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
-        mWakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "Transistor_wake_lock");
+        mWakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "Transistor:wake_lock");
 
         // objects used by the unfinished Android Auto implementation
         mStationListProvider = new StationListProvider();
@@ -749,7 +751,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     /* Creates request for AudioFocus */
     private AudioFocusRequestCompat createFocusRequest() {
         // build audio attributes
-        AudioAttributesCompat audioAttributes = new AudioAttributesCompat.Builder()
+        @SuppressLint("WrongConstant") AudioAttributesCompat audioAttributes = new AudioAttributesCompat.Builder()
                 .setUsage(C.USAGE_MEDIA)
                 .setContentType(C.CONTENT_TYPE_MUSIC)
                 .build();

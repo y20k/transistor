@@ -17,11 +17,13 @@ package org.y20k.transistor.helpers;
 import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.view.View;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import org.y20k.transistor.R;
+
+import androidx.core.app.ActivityCompat;
 
 
 /**

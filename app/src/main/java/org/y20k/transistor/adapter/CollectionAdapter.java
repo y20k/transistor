@@ -15,20 +15,12 @@
 package org.y20k.transistor.adapter;
 
 import android.app.Activity;
-import android.arch.lifecycle.LifecycleOwner;
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.support.annotation.Nullable;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.util.DiffUtil;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +39,15 @@ import org.y20k.transistor.helpers.TransistorKeys;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 /**
@@ -152,6 +153,9 @@ public final class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.V
 
             // set station name
             stationViewHolder.getStationNameView().setText(station.getStationName());
+
+            // set station name
+            stationViewHolder.getStationNameView().setContentDescription(station.getStationName());
 
             // set playback indicator - in phone view only
             togglePlaybackIndicator(stationViewHolder, station);

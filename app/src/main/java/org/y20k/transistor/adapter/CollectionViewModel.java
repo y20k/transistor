@@ -14,8 +14,6 @@
 package org.y20k.transistor.adapter;
 
 import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
-import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -27,6 +25,9 @@ import org.y20k.transistor.helpers.StationListHelper;
 import org.y20k.transistor.helpers.TransistorKeys;
 
 import java.util.ArrayList;
+
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.MutableLiveData;
 
 /**
  * CollectionViewModel.class

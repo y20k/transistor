@@ -13,7 +13,7 @@ android {
 
         vectorDrawables.useSupportLibrary = true
 
-        resConfigs "en", "ca", "de", "el", "es", "eu", "fr", "ja", "kab", "nb-rNO", "pl", "pt-rBR", "ru", "sl", "sr", "tr", "uk", "zh-rCN"
+        resConfigs "en", "ar", "ca", "de", "el", "es", "eu", "fr", "ja", "kab", "nb-rNO", "pl", "pt-rBR", "ru", "sl", "sr", "tr", "uk", "zh-rCN"
 
     }
     buildTypes {
@@ -33,15 +33,16 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:' + supportLibraryVersion
-    implementation 'com.android.support:design:' + supportLibraryVersion
-    implementation 'com.android.support:support-media-compat:' + supportLibraryVersion
-    implementation 'com.android.support:palette-v7:' + supportLibraryVersion
-    implementation 'com.android.support.constraint:constraint-layout:' + constraintLayoutVersion
 
-    implementation 'com.google.android.exoplayer:exoplayer-core:' + exoPlayerVersion
-    implementation 'com.google.android.exoplayer:exoplayer-hls:' + exoPlayerVersion
+    implementation "androidx.appcompat:appcompat:$appcompatVersion"
+    implementation "androidx.palette:palette:$paletteVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$constraintlayoutVersion"
+    implementation "androidx.media:media:$mediaVersion"
+    implementation "androidx.lifecycle:lifecycle-runtime:$livecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-extensions:$livecycleVersion"
 
-    implementation 'android.arch.lifecycle:extensions:' + archLifecycleVersion
-    annotationProcessor 'android.arch.lifecycle:compiler:' + archLifecycleVersion
+    implementation "com.google.android.material:material:$materialVersion"
+
+    implementation "com.google.android.exoplayer:exoplayer-core:$exoPlayerVersion"
+    implementation "com.google.android.exoplayer:exoplayer-hls:$exoPlayerVersion"
 }

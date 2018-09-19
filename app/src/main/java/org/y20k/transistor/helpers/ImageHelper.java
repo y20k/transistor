@@ -22,15 +22,16 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.net.Uri;
-import android.support.graphics.drawable.VectorDrawableCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.graphics.Palette;
 
 import org.y20k.transistor.R;
 import org.y20k.transistor.core.Station;
 
 import java.io.IOException;
 import java.io.InputStream;
+
+import androidx.core.content.ContextCompat;
+import androidx.palette.graphics.Palette;
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
 
 /**

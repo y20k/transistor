@@ -25,10 +25,11 @@ import android.media.AudioFocusRequest;
 import android.media.AudioManager;
 import android.media.AudioManager.OnAudioFocusChangeListener;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
-import android.support.v4.media.AudioAttributesCompat;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.media.AudioAttributesCompat;
 
 /**
  * A class to help request and abandon audio focus, with proper handling of API 26+

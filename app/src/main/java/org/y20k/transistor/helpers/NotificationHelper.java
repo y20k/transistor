@@ -23,14 +23,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.media.session.MediaSessionCompat;
 
 import org.y20k.transistor.MainActivity;
 import org.y20k.transistor.PlayerService;
 import org.y20k.transistor.R;
 import org.y20k.transistor.core.Station;
+
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.TaskStackBuilder;
 
 
 /**
@@ -126,7 +127,7 @@ public final class NotificationHelper implements TransistorKeys {
         PendingIntent swipeActionPendingIntent = PendingIntent.getService(context, 12, swipeActionIntent, 0);
 
         // create media style
-        android.support.v4.media.app.NotificationCompat.MediaStyle style = new android.support.v4.media.app.NotificationCompat.MediaStyle();
+        androidx.media.app.NotificationCompat.MediaStyle style = new androidx.media.app.NotificationCompat.MediaStyle();
         style.setMediaSession(mSession.getSessionToken());
         style.setShowActionsInCompactView(0);
         style.setShowCancelButton(true); // pre-Lollipop workaround
