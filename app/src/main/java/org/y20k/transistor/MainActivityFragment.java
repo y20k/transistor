@@ -576,7 +576,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
         ImageHelper imageHelper = new ImageHelper(station, mActivity);
         Bitmap stationImage = imageHelper.createCircularFramedImage(192);
         mPlayerStationName.setText(station.getStationName());
-        mPlayerStationName.setContentDescription(station.getStationName());
+        mPlayerStationName.setContentDescription(station.getStationName()); // for accessibility apps like TalkBack
         mPlayerStationImage.setImageBitmap(stationImage);
         mPlayerSheetStreamUrl.setText(station.getStreamUri().toString());
     }
@@ -658,10 +658,10 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
                 mPlayerStationMetadata.setVisibility(View.VISIBLE);
             }
             mPlayerStationMetadata.setText(stationMetadata);
-            mPlayerStationMetadata.setContentDescription(stationMetadata);
+            mPlayerStationMetadata.setContentDescription(stationMetadata); // for accessibility apps like TalkBack
             mPlayerStationMetadata.setSelected(true); // triggers the marquee
             mPlayerSheetMetadata.setText(stationMetadata);
-            mPlayerSheetMetadata.setContentDescription(stationMetadata);
+            mPlayerSheetMetadata.setContentDescription(stationMetadata); // for accessibility apps like TalkBack
             mPlayerSheetMetadata.setSelected(true); // triggers the marquee
         }
     }
