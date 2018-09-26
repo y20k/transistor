@@ -579,6 +579,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
         mPlayerStationName.setContentDescription(station.getStationName()); // for accessibility apps like TalkBack
         mPlayerStationImage.setImageBitmap(stationImage);
         mPlayerSheetStreamUrl.setText(station.getStreamUri().toString());
+        mPlayerSheetStreamUrl.setContentDescription(station.getStreamUri().toString()); // for accessibility apps like TalkBack
     }
 
 
@@ -604,6 +605,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
     }
 
 
+    /* Initiates the rotation animation of the playback button  */
     private void animatePlaybackButtonStateTransition(Station station) {
         if (isAdded()) {
             // toggle views needed for active playback
@@ -671,24 +673,35 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
     private void setupExtendedMetaDataViews(Station station) {
 
         // fill and show mime type
-        if (!station.getMimeType().equals("")) {
-            mStationDataSheetMimeType.setText(station.getMimeType());
+        String mimeType = station.getMimeType();
+        if (!mimeType.equals("")) {
+            mStationDataSheetMimeType.setText(mimeType);
+            mStationDataSheetMimeType.setContentDescription(mimeType); // for accessibility apps like TalkBack
         } else {
             mStationDataSheetMimeType.setText(R.string.player_sheet_p_no_data);
+            mStationDataSheetMimeType.setContentDescription(getString(R.string.player_sheet_p_no_data)); // for accessibility apps like TalkBack
         }
 
         // fill and show channel count
-        if (station.getChannelCount() > 0) {
-            mStationDataSheetChannelCount.setText(String.valueOf(station.getChannelCount()));
+        int channelCount = station.getChannelCount();
+        if (channelCount > 0) {
+            String channelCountString = String.valueOf(channelCount);
+            mStationDataSheetChannelCount.setText(channelCountString);
+            mStationDataSheetChannelCount.setContentDescription(channelCountString); // for accessibility apps like TalkBack
         } else {
             mStationDataSheetChannelCount.setText(R.string.player_sheet_p_no_data);
+            mStationDataSheetChannelCount.setContentDescription(getString(R.string.player_sheet_p_no_data)); // for accessibility apps like TalkBack
         }
 
         // fill and show sample rate
-        if (station.getSampleRate() > 0) {
-            mStationDataSheetSampleRate.setText(String.valueOf(station.getSampleRate()));
+        int sampleRate = station.getSampleRate();
+        if (sampleRate > 0) {
+            String sampleRateString = String.valueOf(sampleRate);
+            mStationDataSheetSampleRate.setText(sampleRateString);
+            mStationDataSheetSampleRate.setContentDescription(sampleRateString); // for accessibility apps like TalkBack
         } else {
             mStationDataSheetSampleRate.setText(R.string.player_sheet_p_no_data);
+            mStationDataSheetSampleRate.setContentDescription(getString(R.string.player_sheet_p_no_data)); // for accessibility apps like TalkBack
         }
 
 //        // fill and show bit rate

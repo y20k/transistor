@@ -44,8 +44,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-//import android.arch.lifecycle.ViewModelProviders;
-
 
 /**
  * MainActivity class
