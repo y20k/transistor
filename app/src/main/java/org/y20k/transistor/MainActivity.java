@@ -41,7 +41,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LifecycleRegistry;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -59,7 +58,6 @@ public final class MainActivity extends AppCompatActivity implements TransistorK
 
     /* Main class variables */
     private CollectionViewModel mCollectionViewModel;
-    private final LifecycleRegistry mRegistry = new LifecycleRegistry(this);
     private ArrayList<Station> mStationList;
     private Station mTempStation;
 
@@ -159,12 +157,6 @@ public final class MainActivity extends AppCompatActivity implements TransistorK
             handleStationImageChange(data);
         }
 
-    }
-
-
-    @Override
-    public LifecycleRegistry getLifecycle() {
-        return mRegistry;
     }
 
 
