@@ -23,8 +23,8 @@ allprojects {
 
     project.ext {
         applicationId = 'org.y20k.transistor'
-        versionCode = 60
-        versionName = '3.0.10'
+        versionCode = 61
+        versionName = '3.0.11'
         minSdkVersion = 19
         compileSdkVersion = 28
         targetSdkVersion = 28
@@ -37,7 +37,7 @@ allprojects {
         mediaVersion = '1.0.0'
         livecycleVersion = '2.0.0'
 
-        exoPlayerVersion = '2.8.4'
+        exoPlayerVersion = '2.9.0'
         junit_version = "4.12"
     }
 

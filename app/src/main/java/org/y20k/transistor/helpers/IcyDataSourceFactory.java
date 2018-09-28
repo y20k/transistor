@@ -33,7 +33,7 @@ public final class IcyDataSourceFactory implements Factory {
 
     /* Main class variables */
     private final Context context;
-    private final TransferListener<? super DataSource> listener;
+    private final TransferListener listener;
     private final DataSource.Factory baseDataSourceFactory;
     private boolean enableShoutcast = false;
     private PlayerCallback playerCallback;
@@ -56,7 +56,7 @@ public final class IcyDataSourceFactory implements Factory {
     /* Constructor */
     public IcyDataSourceFactory(Context context,
                                 String userAgent,
-                                TransferListener<? super DataSource> listener,
+                                TransferListener listener,
                                 boolean enableShoutcast,
                                 PlayerCallback playerCallback) {
         // use next Constructor
@@ -70,7 +70,7 @@ public final class IcyDataSourceFactory implements Factory {
 
     /* Constructor */
     public IcyDataSourceFactory(Context context,
-                                TransferListener<? super DataSource> listener,
+                                TransferListener listener,
                                 DataSource.Factory baseDataSourceFactory,
                                 boolean enableShoutcast,
                                 PlayerCallback playerCallback) {

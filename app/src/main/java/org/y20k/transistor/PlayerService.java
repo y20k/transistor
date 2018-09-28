@@ -43,6 +43,7 @@ import android.widget.Toast;
 
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.DefaultLoadControl;
+import com.google.android.exoplayer2.DefaultLoadControl.Builder;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayerFactory;
@@ -702,10 +703,18 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         TrackSelector trackSelector = new DefaultTrackSelector();
 
         // create default LoadControl - double the buffer
-        LoadControl loadControl = new DefaultLoadControl(new DefaultAllocator(true, C.DEFAULT_BUFFER_SEGMENT_SIZE * 2));
+        LoadControl loadControl = createDefaultLoadControl();
 
         // create the player
-        mPlayer = ExoPlayerFactory.newSimpleInstance(new DefaultRenderersFactory(getApplicationContext()), trackSelector, loadControl);
+        mPlayer = ExoPlayerFactory.newSimpleInstance(this, new DefaultRenderersFactory(getApplicationContext()), trackSelector, loadControl);
+    }
+
+
+    /* Creates a LoadControl */
+    private DefaultLoadControl createDefaultLoadControl() {
+        Builder builder = new Builder();
+        builder.setAllocator(new DefaultAllocator(true, C.DEFAULT_BUFFER_SEGMENT_SIZE * 2));
+        return builder.createDefaultLoadControl();
     }
 
 

@@ -1,8 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+
     compileSdkVersion project.ext.compileSdkVersion
     buildToolsVersion project.ext.buildToolsVersion
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 
     defaultConfig {
         applicationId project.ext.applicationId
@@ -14,8 +20,8 @@ android {
         vectorDrawables.useSupportLibrary = true
 
         resConfigs "en", "ar", "ca", "de", "el", "es", "eu", "fr", "ja", "kab", "nb-rNO", "pl", "pt-rBR", "ru", "sl", "sr", "tr", "uk", "zh-rCN"
-
     }
+
     buildTypes {
         release {
             minifyEnabled true

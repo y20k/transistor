@@ -23,6 +23,7 @@ import android.net.Uri;
 
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DataSpec;
+import com.google.android.exoplayer2.upstream.TransferListener;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -49,6 +50,12 @@ public class IcyDataSource implements DataSource, TransistorKeys {
     /* Constructor */
     public IcyDataSource(final PlayerCallback playerCallback) {
         mPlayerCallback = playerCallback;
+    }
+
+
+    @Override
+    public void addTransferListener(TransferListener transferListener) {
+
     }
 
 
