@@ -16,6 +16,7 @@
 
     <application
         android:name=".Transistor"
+        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:supportsRtl="true"
         android:fullBackupContent="@xml/backupscheme"
@@ -31,7 +32,7 @@
             android:resource="@mipmap/ic_launcher" />
 
         <!-- MEDIA BUTTON RECEIVER -->
-        <receiver android:name="android.support.v4.media.session.MediaButtonReceiver">
+        <receiver android:name="androidx.media.session.MediaButtonReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.MEDIA_BUTTON" />
             </intent-filter>

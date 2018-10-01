@@ -11,12 +11,12 @@ import android.media.AudioManager.OnAudioFocusChangeListener;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.IntDef;
-import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 
 import java.lang.annotation.Retention;
 
+import androidx.annotation.IntDef;
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.media.AudioAttributesCompat;
 
 import static java.lang.annotation.RetentionPolicy.SOURCE;
