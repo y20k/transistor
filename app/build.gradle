@@ -3,7 +3,6 @@ apply plugin: 'com.android.application'
 android {
 
     compileSdkVersion project.ext.compileSdkVersion
-    buildToolsVersion project.ext.buildToolsVersion
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -18,26 +17,27 @@ android {
         versionName project.ext.versionName
 
         vectorDrawables.useSupportLibrary = true
-
         resConfigs "en", "ar", "ca", "de", "el", "es", "eu", "fr", "ja", "kab", "nb-rNO", "pl", "pt-rBR", "ru", "sl", "sr", "tr", "uk", "zh-rCN"
     }
 
     buildTypes {
+
         release {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
     }
 
     lintOptions {
         disable 'MissingTranslation'
     }
-
 }
 
 
 dependencies {
+
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     implementation "androidx.appcompat:appcompat:$appcompatVersion"
@@ -51,4 +51,5 @@ dependencies {
 
     implementation "com.google.android.exoplayer:exoplayer-core:$exoPlayerVersion"
     implementation "com.google.android.exoplayer:exoplayer-hls:$exoPlayerVersion"
+
 }

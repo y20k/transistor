@@ -1,21 +1,21 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.maven_gradle_plugin_version = "1.5"
+
     repositories {
         google()
         jcenter()
     }
-    dependencies {
-        classpath "com.github.dcendents:android-maven-gradle-plugin:$maven_gradle_plugin_version"
-        classpath 'com.android.tools.build:gradle:3.3.0-alpha12'
 
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.2.0'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
 }
 
 allprojects {
+
     repositories {
         google()
         jcenter()
@@ -23,12 +23,12 @@ allprojects {
 
     project.ext {
         applicationId = 'org.y20k.transistor'
-        versionCode = 61
-        versionName = '3.0.11'
-        minSdkVersion = 19
+        versionCode = 62
+        versionName = '3.0.12'
+
         compileSdkVersion = 28
         targetSdkVersion = 28
-        buildToolsVersion = '28.0.3'
+        minSdkVersion = 19
 
         constraintlayoutVersion = '1.1.3'
         materialVersion = "1.0.0"
@@ -40,12 +40,8 @@ allprojects {
         exoPlayerVersion = '2.9.0'
         junit_version = "4.12"
     }
+}
 
-    if (it.hasProperty('externalBuildDir')) {
-        if (!new File(externalBuildDir).isAbsolute()) {
-            externalBuildDir = new File(rootDir, externalBuildDir)
-        }
-        buildDir = "${externalBuildDir}/${project.name}"
-    }
-
+task clean(type: Delete) {
+    delete rootProject.buildDir
 }
