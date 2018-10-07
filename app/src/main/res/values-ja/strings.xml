@@ -24,8 +24,8 @@
     <string name="header_howto">使用方法</string>
 
     <!-- descriptions -->
-    <string name="descr_app_icon">App icon depicting an old radio</string>
-    <string name="descr_arrow_upward">Arrow facing upward</string>
+    <string name="descr_app_icon">古いラジオを描いたアプリのアイコン</string>
+    <string name="descr_arrow_upward">上向き矢印</string>
     <string name="descr_station_options_button">ラジオ局の表示オプション</string>
     <string name="descr_station_icon">ラジオ局のアイコン</string>
     <string name="descr_station_name">ラジオ局の名前</string>
@@ -38,14 +38,14 @@
     <string name="descr_playback_indicator_started">再生中のインジケーター</string>
     <string name="descr_timer_icon">スリープタイマー アイコン</string>
     <string name="descr_timer_indicator_started">スリープタイマー実行中のインジケーター</string>
-    <string name="descr_player_sheet_button_expand">Button to expand and minimize the radio player</string>
+    <string name="descr_player_sheet_button_expand">ラジオプレーヤーを拡大、最小化するボタン</string>
     <string name="descr_player_sheet_information_icon">Information Icon</string>
     <string name="descr_player_sheet_content_copy_icon">コンテンツ コピー アイコン</string>
     <string name="descr_player_sheet_p_station_name">選択したラジオ局の名前</string>
     <string name="descr_player_sheet_p_station_metadata">選択したラジオ局からのメタデータ</string>
     <string name="descr_player_sheet_p_stream_url">選択したラジオ局のストリームのリンク</string>
-    <string name="descr_list_add_new">Add a new station</string>
-    <string name="descr_list_add_select_stream_dropdown">Dropdown menu that hold a selection of streams</string>
+    <string name="descr_list_add_new">新しい放送局を追加します</string>
+    <string name="descr_list_add_select_stream_dropdown">ストリームの選択を保持するドロップダウンメニュー</string>
 
     <!-- player -->
     <string name="player_sheet_h1_details">詳細</string>
@@ -101,9 +101,9 @@
     <string name="toastmessage_add_open_file_started">開いているファイル.</string>
     <string name="toastmessage_long_press_playback_stopped">再生が停止しました (長押しを検出しました)</string>
     <string name="toastmessage_long_press_playback_started">再生を開始しました (長押しを検出しました)</string>
-    <string name="toastmessage_long_press_change_icon">Change station icon (long press detected)</string>
-    <string name="toastmessage_long_press_change_name">Rename station (long press detected)</string>
-    <string name="toastmessage_long_press_night_mode_switch">Night mode switch (long press detected)</string>
+    <string name="toastmessage_long_press_change_icon">放送局アイコンの変更 (長押しが検出されました)</string>
+    <string name="toastmessage_long_press_change_name">放送局名の変更 (長押しが検出されました)</string>
+    <string name="toastmessage_long_press_night_mode_switch">夜間モードの切り替え (長押しが検出されました)</string>
     <string name="toastmessage_shortcut_created">ショートカットを作成しました。</string>
     <string name="toastmessage_shortcut_not_created">ショートカットは作成されません。このデバイスは、ショートカットの作成を許可していません。</string>
     <string name="toastmessage_list_refreshed">局のリストを再読み込みしています。</string>
@@ -135,8 +135,8 @@
     <string name="notification_channel_playback_description">再生コントロール、局のロゴ、今再生中の情報。</string>
 
     <!-- onboarding -->
-    <string name="onboarding_app_description">Radio App</string>
-    <string name="onboarding_app_get_started">Get started</string>
+    <string name="onboarding_app_description">ラジオアプリ</string>
+    <string name="onboarding_app_get_started">はじめましょう</string>
 
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7
