@@ -36,7 +36,7 @@
     <string name="descr_playback_button">Goldener Play-Knopf</string>
     <string name="descr_playback_indicator">Symbol für Playback Status</string>
     <string name="descr_playback_indicator_started">Symbol für Playback Aktivität</string>
-    <string name="descr_timer_icon">Sleep-Timer Symbol</string>
+    <string name="descr_timer_icon">Sleeptimer Symbol</string>
     <string name="descr_timer_indicator_started">Symbol für Sleeptimer Aktivität</string>
     <string name="descr_player_sheet_button_expand">Button zum Erweitern und Minimieren des Radio-Players</string>
     <string name="descr_player_sheet_information_icon">Info Icon</string>
@@ -132,7 +132,7 @@
     <string name="notification_playing">Wiedergabe</string>
     <string name="notification_swipe_to_stop">Ausblenden, um Wiedergabe zu stoppen</string>
     <string name="notification_channel_playback_name">Playback-Steuerung</string>
-    <string name="notification_channel_playback_description">Playback-Steuerung, Sender Logo und Infos über Programminformationen.</string>
+    <string name="notification_channel_playback_description">Playback-Steuerung, Senderlogo und Infos über Programminformationen.</string>
 
     <!-- onboarding -->
     <string name="onboarding_app_description">Radio App</string>
