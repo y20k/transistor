@@ -4,6 +4,6 @@
         android:viewportWidth="56.0"
         android:viewportHeight="56.0">
     <path
-        android:fillColor="@color/transistor_gold"
+        android:fillColor="@color/player_button_background"
         android:pathData="M28,28m-28,0a28,28 0,1 1,56 0a28,28 0,1 1,-56 0"/>
 </vector>

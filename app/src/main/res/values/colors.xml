@@ -6,10 +6,11 @@
     <color name="status_bar_background">@color/transistor_white</color>
     <color name="app_onboarding_icons">@color/transistor_grey_dark</color>
 
-    <color name="player_sheet_background_main">@color/transistor_red_dark</color>
+    <color name="player_sheet_background_main">@color/transistor_grey_darker</color>
     <color name="player_sheet_text_main">@color/transistor_white</color>
     <color name="player_sheet_background_details">@color/transistor_grey_dark</color>
     <color name="player_sheet_text_details">@color/transistor_white</color>
+    <color name="player_button_background">@color/transistor_blue</color>
 
     <color name="list_item_background">@color/transistor_white</color>
     <color name="list_item_background_selected">@color/transistor_grey_very_light</color>
@@ -19,10 +20,6 @@
 
 
     <!-- COLOR NAMES -->
-    <color name="transistor_red">#FFD93025</color>              <!-- Material Design 2: Red 600 -->
-    <color name="transistor_red_dark">#FFB31412</color>         <!-- Material Design 2: Red 800 -->
-    <color name="transistor_red_darker">#FF880605</color>
-
     <color name="transistor_grey">#FF5F6368</color>             <!-- Material Design 2: Grey 700 -->
     <color name="transistor_grey_light">#FFBDC1C6</color>       <!-- Material Design 2: Grey 400 -->
     <color name="transistor_grey_lighter">#FFD2D6DA</color>
@@ -30,10 +27,9 @@
     <color name="transistor_grey_dark">#FF3C4043</color>        <!-- Material Design 2: Grey 800 -->
     <color name="transistor_grey_darker">#FF17181A</color>
 
-    <color name="transistor_gold">#FFE6BA64</color>
-    <color name="transistor_gold_light">#FFE6C687</color>
-    <color name="transistor_gold_lighter">#FFFFE3B6</color>
-    <color name="transistor_gold_dark">#FFCC9933</color>
+    <color name="transistor_blue">#FF3C98DB</color>
+    <color name="transistor_blue_light">#FF4DAEF4</color>
+    <color name="transistor_blue_dark">#FF19405B</color>
 
     <color name="transistor_black">#FF000000</color>
     <color name="transistor_white">#FFFFFFFF</color>

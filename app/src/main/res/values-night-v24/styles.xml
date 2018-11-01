@@ -5,9 +5,9 @@
     <style name="TransistorAppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
 
         <!-- Set AppCompat’s colors -->
-        <item name="colorPrimary">@color/transistor_red</item>
-        <item name="colorPrimaryDark">@color/transistor_red_dark</item>
-        <item name="colorAccent">@color/transistor_gold_dark</item>
+        <item name="colorPrimary">@color/transistor_grey_dark</item>
+        <item name="colorPrimaryDark">@color/transistor_grey_darker</item>
+        <item name="colorAccent">@color/transistor_blue</item>
 
         <!-- List divider -->
         <item name="android:listDivider">@drawable/list_divider</item>
@@ -17,7 +17,7 @@
         <item name="android:statusBarColor">@color/status_bar_background</item>
 
         <!-- Default window background used for resizing on v24 -->
-        <item name="android:windowBackgroundFallback">@color/transistor_red_dark</item>
+        <item name="android:windowBackgroundFallback">@color/transistor_grey_dark</item>
 
     </style>
 
