@@ -1,4 +1,4 @@
-FOr adding assets, see [All About Descriptions, Graphics, and Screenshots](https://f-droid.org/en/docs/All_About_Descriptions_Graphics_and_Screenshots/).
+For adding assets, see [All About Descriptions, Graphics, and Screenshots](https://f-droid.org/en/docs/All_About_Descriptions_Graphics_and_Screenshots/).
 
 Feature graphic background [photograph](https://www.flickr.com/photos/90871503@N05/8322808792/) is licensed CC-BY-2.0.
 

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="24" height="24" viewBox="0 0 6.3499999 6.3500002"
+    version="1.1" id="svg4775" inkscape:version="0.92.2 2405546, 2018-03-11" sodipodi:docname="transistor-status-bar-icon-current.svg"
+    inkscape:export-filename="/home/solaris/Desktop/transistor/app/src/main/res/drawable-xxxhdpi/ic_notification_app_icon_white_24dp.png"
+    inkscape:export-xdpi="384" inkscape:export-ydpi="384">
+  <defs
+     id="defs4769">
+    <style
+       id="style4894">.cls-1{fill:#fff;}</style>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="36.910785"
+     inkscape:cx="5.8295913"
+     inkscape:cy="11.077549"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     units="px"
+     inkscape:window-width="1254"
+     inkscape:window-height="1358"
+     inkscape:window-x="1285"
+     inkscape:window-y="44"
+     inkscape:window-maximized="0"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:lockguides="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid40" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata4772">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Radio"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-290.64998)">
+    <path
+       inkscape:label="Dial white"
+       style="fill:#ffffff;stroke-width:0.01915808"
+       inkscape:connector-curvature="0"
+       class="cls-1"
+       d="M 6.1098295,292.90038 H 5.9360947 v -0.0221 A 0.52443936,0.53157842 0 0 0 5.4122263,292.34643 H 1.6425805 l 3.6956228,-1.15614 a 0.13055338,0.13233057 0 1 0 -0.077068,-0.25287 l -4.5570652,1.42463 -0.035965,0.0113 -0.008572,0.003 a 0.10846533,0.10994184 0 0 0 -0.0201717,0.008 0.52501023,0.53215705 0 0 0 -0.32882118,0.49434 v 2.92059 a 0.52462965,0.5317713 0 0 0 0.52462935,0.53197 H 5.4120246 a 0.52443936,0.53157842 0 0 0 0.5238686,-0.53176 v -2.06614 h 0.1737343 a 0.08753343,0.08872498 0 0 0 0.087533,-0.0887 v -0.65582 a 0.08753343,0.08872498 0 0 0 -0.087343,-0.0879 z m -5.30128959,0.0674 a 0.16174654,0.16394835 0 0 1 0.16136534,-0.16355 H 3.8318675 v 0.83383 a 0.09799937,0.09933341 0 1 0 0.1959986,0 v -0.83364 H 5.27693 a 0.16136595,0.16356259 0 0 1 0.161366,0.16357 v 0.84867 A 0.16136595,0.16356259 0 0 1 5.27693,293.98022 H 0.97047618 a 0.16174654,0.16394835 0 0 1 -0.16136544,-0.16348 z m 2.71182259,2.8103 H 0.93375046 a 0.13072926,0.13250885 0 1 1 0,-0.26481 H 3.5203625 a 0.13072926,0.13250885 0 0 1 0,0.26481 z m 0,-0.52964 H 0.93375046 a 0.13072926,0.13250885 0 0 1 0,-0.26483 H 3.5203625 a 0.13072926,0.13250885 0 0 1 0,0.26483 z m 0,-0.52964 H 0.93375046 a 0.13072926,0.13250885 0 1 1 0,-0.26485 H 3.5203625 a 0.13072926,0.13250885 0 0 1 0,0.26485 z m 1.3006326,1.02496 a 0.61939409,0.62782573 0 1 1 0.6192038,-0.62821 0.61977468,0.6282115 0 0 1 -0.6193942,0.62821 z"
+       id="path4900" />
+    <path
+       inkscape:label="Radio white"
+       style="fill:#ffffff;stroke-width:0.01915808"
+       inkscape:connector-curvature="0"
+       class="cls-1"
+       d="m 5.1789308,295.1156 a 0.35793557,0.36280806 0 1 1 -0.3579357,-0.36281 0.35850646,0.3633867 0 0 1 0.3579357,0.36281 z"
+       id="path4902" />
+  </g>
+</svg>
