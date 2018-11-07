@@ -24,8 +24,8 @@
     <string name="header_howto">Guide</string>
 
     <!-- descriptions -->
-    <string name="descr_app_icon">App icon depicting an old radio</string>
-    <string name="descr_arrow_upward">Arrow facing upward</string>
+    <string name="descr_app_icon">Icône d\'application représentant une ancienne radio</string>
+    <string name="descr_arrow_upward">Flèche vers le haut</string>
     <string name="descr_station_options_button">Options d\'affichage pour la station radio</string>
     <string name="descr_station_icon">Logo de la station radio</string>
     <string name="descr_station_name">Nom de la station radio</string>
@@ -33,7 +33,7 @@
     <string name="descr_station_name_example">Exemple FM</string>
     <string name="descr_station_metadata_example">Artiste - Titre</string>
     <string name="descr_station_stream_loading">Chargement…</string>
-    <string name="descr_playback_button">Bouton de lecture doré</string>
+    <string name="descr_playback_button">Bouton de lecture</string>
     <string name="descr_playback_indicator">Indicateur de lecture en cours</string>
     <string name="descr_playback_indicator_started">Indicateur de lecture en cours</string>
     <string name="descr_timer_icon">Icône minuteur de veille</string>
@@ -45,7 +45,7 @@
     <string name="descr_player_sheet_p_station_metadata">Métadonnées de la station de radio sélectionnée</string>
     <string name="descr_player_sheet_p_stream_url">Lien de diffusion de la station radio sélectionnée</string>
     <string name="descr_list_add_new">Ajouter une nouvelle station</string>
-    <string name="descr_list_add_select_stream_dropdown">Dropdown menu that hold a selection of streams</string>
+    <string name="descr_list_add_select_stream_dropdown">Menu déroulant qui contient une sélection de flux</string>
 
     <!-- player -->
     <string name="player_sheet_h1_details">Details</string>
@@ -101,9 +101,9 @@
     <string name="toastmessage_add_open_file_started">Ouverture du fichier.</string>
     <string name="toastmessage_long_press_playback_stopped">Lecture arrêtée (appui long détecté)</string>
     <string name="toastmessage_long_press_playback_started">Lecture démarrée (appui long détecté)</string>
-    <string name="toastmessage_long_press_change_icon">Change station icon (long press detected)</string>
+    <string name="toastmessage_long_press_change_icon">Icône de changement de station (longue pression détectée)</string>
     <string name="toastmessage_long_press_change_name">Renommer la station (appui long détecté)</string>
-    <string name="toastmessage_long_press_night_mode_switch">Night mode switch (long press detected)</string>
+    <string name="toastmessage_long_press_night_mode_switch">Commutateur de mode nuit (pression longue détectée)</string>
     <string name="toastmessage_shortcut_created">Raccourci créé.</string>
     <string name="toastmessage_shortcut_not_created">Raccourci non créé. Cet appareil ne permet pas la création de raccourcis.</string>
     <string name="toastmessage_list_refreshed">Recharger la liste des stations.</string>
