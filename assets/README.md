@@ -8,7 +8,7 @@ How to create Transitor's [Adaptive Icon](https://developer.android.com/guide/pr
 
 1. Go to `File > New > Image Asset`
 2. Choose `Icon Type > Launcher Icons (Adaptive and Legacy)`
-3. Foreground Layer: Select the file [transistor-app-icon-current-without-background.png](https://github.com/y20k/transistor/blob/master/assets/transistor-app-icon-current-without-background.png/transistor-app-icon-current-without-background.png)
+3. Foreground Layer: Select the file [transistor-app-icon-current-without-background.png](https://raw.githubusercontent.com/y20k/transistor/master/assets/transistor-app-icon-current-without-background.png)
 4. Backgound Layer: Select the color `3C98DB`
 5. Foreground Layer: Set Trim to `No`
 6. Foreground Layer: Set Resize to `75%`

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/player_sheet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/player_sheet_background_details"
+    android:background="@drawable/shape_player_sheet_background"
     android:clickable="true"
     android:focusable="true"
     android:paddingBottom="16dp"
@@ -17,17 +16,17 @@
     tools:layout_editor_absoluteY="25dp"
     tools:showIn="@layout/fragment_main">
 
-    <!--<android.support.constraint.Group-->
+    <!--<androidx.constraintlayout.widget.Group-->
     <!--android:id="@+id/playback_active_views"-->
     <!--android:layout_width="0dp"-->
     <!--android:layout_height="0dp"-->
     <!--app:constraint_referenced_ids="player_station_metadata,player_sheet_h2_session,player_sheet_p_session,player_sheet_h2_mime,player_sheet_p_mime,player_sheet_h2_samplerate,player_sheet_p_samplerate,player_sheet_h2_channels,player_sheet_p_channels,player_sheet_h2_bitrate,player_sheet_p_bitrate,player_sheet_metadata_views" />-->
 
     <View
-        android:id="@+id/player_background_red"
+        android:id="@+id/player_background"
         android:layout_width="0dp"
         android:layout_height="72dp"
-        android:background="@color/player_sheet_background_main"
+        android:background="@drawable/shape_player_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +39,7 @@
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginTop="8dp"
         android:contentDescription="@string/descr_station_icon"
-        app:layout_constraintStart_toStartOf="@+id/player_background_red"
+        app:layout_constraintStart_toStartOf="@+id/player_background"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_circle_large_grey_36dp" />
 
@@ -48,11 +47,11 @@
         android:id="@+id/player_playback_button"
         android:layout_width="@dimen/design_fab_size_normal"
         android:layout_height="@dimen/design_fab_size_normal"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginTop="8dp"
-        android:background="@drawable/ic_circle_large_gold_56dp"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:background="@drawable/ic_circle_large_56dp"
         android:contentDescription="@string/descr_playback_button"
-        app:layout_constraintEnd_toEndOf="@+id/player_background_red"
+        app:layout_constraintEnd_toEndOf="@+id/player_background"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_play_arrow_white_36dp" />
 
@@ -60,10 +59,10 @@
         android:id="@+id/player_station_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
         android:contentDescription="@string/descr_station_name_example"
         android:ellipsize="end"
         android:singleLine="true"
@@ -74,15 +73,15 @@
         app:layout_constraintBottom_toTopOf="@+id/player_station_metadata"
         app:layout_constraintEnd_toStartOf="@+id/player_playback_button"
         app:layout_constraintStart_toEndOf="@+id/player_station_image"
-        app:layout_constraintTop_toTopOf="@+id/player_background_red" />
+        app:layout_constraintTop_toTopOf="@+id/player_background" />
 
     <TextView
         android:id="@+id/player_station_metadata"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
         android:contentDescription="@string/descr_station_metadata_example"
         android:ellipsize="marquee"
         android:marqueeRepeatLimit="marquee_forever"
@@ -91,8 +90,8 @@
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColor="@color/player_sheet_text_details"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/player_background_red"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/player_background"
         app:layout_constraintEnd_toStartOf="@+id/player_playback_button"
         app:layout_constraintStart_toEndOf="@+id/player_station_image"
         app:layout_constraintTop_toBottomOf="@+id/player_station_name" />
@@ -118,10 +117,10 @@
         android:layout_marginTop="24dp"
         android:background="?attr/selectableItemBackground"
         android:contentDescription="@string/descr_timer_icon"
-        android:paddingBottom="8dp"
-        android:paddingEnd="16dp"
         android:paddingStart="16dp"
         android:paddingTop="8dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/player_station_image"
         app:srcCompat="@drawable/ic_timer_inverted_24dp" />
@@ -133,10 +132,10 @@
         android:layout_marginTop="24dp"
         android:background="?attr/selectableItemBackground"
         android:contentDescription="@string/descr_station_options_button"
-        android:paddingBottom="8dp"
-        android:paddingEnd="@dimen/activity_horizontal_margin"
         android:paddingStart="16dp"
         android:paddingTop="8dp"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingBottom="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/player_station_image"
         app:srcCompat="@drawable/ic_more_vert_white_24dp" />
@@ -199,8 +198,8 @@
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
         android:contentDescription="@string/descr_player_sheet_content_copy_icon"
-        android:paddingEnd="@dimen/activity_horizontal_margin"
         android:paddingStart="16dp"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/player_sheet_p_metadata"
         app:srcCompat="@drawable/ic_content_copy_grey_24dp" />
@@ -238,8 +237,8 @@
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
         android:contentDescription="@string/descr_player_sheet_content_copy_icon"
-        android:paddingEnd="@dimen/activity_horizontal_margin"
         android:paddingStart="16dp"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/player_sheet_p_stream_url"
         app:srcCompat="@drawable/ic_content_copy_grey_24dp" />
@@ -270,8 +269,7 @@
         android:id="@+id/player_sheet_h2_samplerate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
         android:text="@string/player_sheet_h2_station_sample_rate"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColor="@color/player_sheet_text_details"
@@ -294,8 +292,8 @@
         android:id="@+id/player_sheet_h2_channels"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:text="@string/player_sheet_h2_station_channel_count"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColor="@color/player_sheet_text_details"

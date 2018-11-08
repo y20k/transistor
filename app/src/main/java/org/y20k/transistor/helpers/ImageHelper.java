@@ -70,13 +70,14 @@ public final class ImageHelper {
 
     /* Creates shortcut icon for Home screen */
     public Bitmap createShortcut(int size) {
+        int yOffset = 16;
 
         // get scaled background bitmap
         Bitmap background = getBitmap(R.drawable.ic_shortcut_bg_48dp);
         background = Bitmap.createScaledBitmap(background, size, size, false);
 
         // compose images
-        return composeImages(background, size);
+        return composeImages(background, size, yOffset);
     }
 
 
@@ -88,7 +89,7 @@ public final class ImageHelper {
         background = Bitmap.createScaledBitmap(background, size, size, false);
 
         // compose images
-        return composeImages(background, size);
+        return composeImages(background, size, 0);
     }
 
 
@@ -147,27 +148,27 @@ public final class ImageHelper {
         // draw input image onto canvas using transformation matrix
         Paint paint = new Paint();
         paint.setFilterBitmap(true);
-        imageCanvas.drawBitmap(mInputImage, createTransformationMatrix(size), paint);
+        imageCanvas.drawBitmap(mInputImage, createTransformationMatrix(size, 0), paint);
 
         return outputImage;
     }
 
 
     /* Composes foreground bitmap onto background bitmap */
-    private Bitmap composeImages(Bitmap background, int size) {
+    private Bitmap composeImages(Bitmap background, int size, int yOffset) {
 
         // compose output image
         Bitmap outputImage = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(outputImage);
         canvas.drawBitmap(background, 0, 0, null);
-        canvas.drawBitmap(mInputImage, createTransformationMatrix(size), null);
+        canvas.drawBitmap(mInputImage, createTransformationMatrix(size, yOffset), null);
 
         return outputImage;
     }
 
 
     /* Creates a transformation matrix for given */
-    private Matrix createTransformationMatrix (int size) {
+    private Matrix createTransformationMatrix (int size, int yOffset) {
         Matrix matrix = new Matrix();
 
         // get size of original image and calculate padding
@@ -184,12 +185,12 @@ public final class ImageHelper {
         if (inputImageWidth >= inputImageHeight) {
             aspectRatio = (size - padding*2) / inputImageWidth;
             xTranslation = 0.0f + padding;
-            yTranslation = (size - inputImageHeight * aspectRatio)/2.0f;
+            yTranslation = ((size - inputImageHeight * aspectRatio)/2.0f ) + yOffset;
         }
         // portrait format
         else if (inputImageHeight > inputImageWidth) {
             aspectRatio = (size - padding*2) / inputImageHeight;
-            yTranslation = 0.0f + padding;
+            yTranslation = 0.0f + padding + yOffset;
             xTranslation = (size - inputImageWidth * aspectRatio)/2.0f;
         }
 

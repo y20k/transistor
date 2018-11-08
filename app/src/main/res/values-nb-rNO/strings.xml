@@ -33,7 +33,7 @@
     <string name="descr_station_name_example">Eksempel FM</string>
     <string name="descr_station_metadata_example">Artist - Tittel</string>
     <string name="descr_station_stream_loading">Laster strøm …</string>
-    <string name="descr_playback_button">Gylden avspillingsknapp</string>
+    <string name="descr_playback_button">Avspillingsknapp</string>
     <string name="descr_playback_indicator">Indikator for avspillingsfremdrift</string>
     <string name="descr_playback_indicator_started">Indikator for avspillingsaktivitet</string>
     <string name="descr_timer_icon">Ikon for tidsavbruddsindikator</string>

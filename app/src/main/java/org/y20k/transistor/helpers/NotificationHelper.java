@@ -135,7 +135,7 @@ public final class NotificationHelper implements TransistorKeys {
 
         // construct notification in builder
         NotificationCompat.Builder builder;
-        builder = new NotificationCompat.Builder(context, NOTIFICATION_CHANEL_ID_PLAYBACK_CHANNEL);
+        builder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID_PLAYBACK_CHANNEL);
         builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
         builder.setSmallIcon(R.drawable.ic_notification_app_icon_white_24dp);
         builder.setLargeIcon(getStationIcon(context, station));
@@ -175,7 +175,7 @@ public final class NotificationHelper implements TransistorKeys {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // API level 26 ("Android O") supports notification channels.
-            String id = NOTIFICATION_CHANEL_ID_PLAYBACK_CHANNEL;
+            String id = NOTIFICATION_CHANNEL_ID_PLAYBACK_CHANNEL;
             CharSequence name = context.getString(R.string.notification_channel_playback_name);
             String description = context.getString(R.string.notification_channel_playback_description);
             int importance = NotificationManager.IMPORTANCE_LOW;
