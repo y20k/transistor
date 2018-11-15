@@ -139,7 +139,7 @@ public final class NotificationHelper implements TransistorKeys {
         builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
         builder.setSmallIcon(R.drawable.ic_notification_app_icon_white_24dp);
         builder.setLargeIcon(getStationIcon(context, station));
-        builder.setContentTitle(station.getStationName());
+        builder.setContentTitle(station.getStationNameStripId());
         builder.setContentText(station.getMetadata());
         builder.setShowWhen(false);
         builder.setStyle(style);

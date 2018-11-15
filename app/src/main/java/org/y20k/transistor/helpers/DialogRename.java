@@ -44,7 +44,7 @@ public final class DialogRename implements TransistorKeys {
         // get input field
         View view = inflater.inflate(R.layout.dialog_rename_station, null);
         final EditText inputField = (EditText) view.findViewById(R.id.dialog_rename_station_input);
-        inputField.setText(station.getStationName());
+        inputField.setText(station.getStationNameStripId());
 
         // set dialog view
         builder.setView(view);

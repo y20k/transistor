@@ -152,8 +152,8 @@ public final class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.V
             stationViewHolder.getStationImageView().setImageBitmap(createStationImageBitmap(station));
 
             // set station name and content description (for accessibility apps like TalkBack)
-            stationViewHolder.getStationNameView().setText(station.getStationName());
-            stationViewHolder.getStationNameView().setContentDescription(station.getStationName());
+            stationViewHolder.getStationNameView().setText(station.getStationNameStripId());
+            stationViewHolder.getStationNameView().setContentDescription(station.getStationNameStripId());
 
             // set playback indicator - in phone view only
             togglePlaybackIndicator(stationViewHolder, station);
@@ -213,7 +213,7 @@ public final class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.V
                     case HOLDER_UPDATE_NAME:
                         // set station name
                         LogHelper.v(LOG_TAG, "List of station: Partial view update -> station name changed");
-                        stationViewHolder.getStationNameView().setText(station.getStationName());
+                        stationViewHolder.getStationNameView().setText(station.getStationNameStripId());
                         break;
                     case HOLDER_UPDATE_PLAYBACK_STATE:
                         // set playback indicator

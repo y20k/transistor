@@ -35,6 +35,9 @@ android {
     }
 }
 
+repositories {
+    mavenCentral()
+}
 
 dependencies {
 
@@ -52,4 +55,5 @@ dependencies {
     implementation "com.google.android.exoplayer:exoplayer-core:$exoPlayerVersion"
     implementation "com.google.android.exoplayer:exoplayer-hls:$exoPlayerVersion"
 
+    implementation 'com.github.woxthebox:draglistview:1.6.3'
 }

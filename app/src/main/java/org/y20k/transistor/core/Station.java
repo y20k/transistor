@@ -800,6 +800,14 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
         return mStationName;
     }
 
+    /* Getter for name of station */
+    public String getStationNameStripId() {
+        if (mStationName.matches("^[0-9]{3}#.*")) {
+            return mStationName.substring(4);
+        }
+        return mStationName;
+    }
+
 
     /* Getter for playback state */
     public int getPlaybackState() {
@@ -815,6 +823,9 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
 
     /* Getter for station id */
     public String getStationId() {
+        if (mStationName.matches("^[0-9]{3}#..*")) {
+            return mStationName.substring(0, 3);
+        }
         // since we don't have a unique ID, we fake one using the hashcode of the stream address and append it to the station name
         return mStationName.toLowerCase() + String.valueOf(getStreamUri().hashCode());
     }
@@ -894,6 +905,11 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
     /* Setter for name of station */
     public void setStationName(String stationName) {
         mStationName = stationName;
+    }
+
+    /* Setter for name of station */
+    public void setStationNameAndId(String stationName, int id) {
+        setStationName(String.format("%03d#", id) + stationName);
     }
 
 

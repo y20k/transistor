@@ -299,7 +299,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
                 // check for race between onPlayerStateChanged and MetadataHelper
                 if (!mStationMetadataReceived && mStation.getPlaybackState() != PLAYBACK_STATE_STOPPED) {
-                    mStation.setMetadata(mStation.getStationName());
+                    mStation.setMetadata(mStation.getStationNameStripId());
                 }
 
                 // update notification
@@ -830,7 +830,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
         if (station != null) {
             return new MediaMetadataCompat.Builder()
-                    .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, station.getStationName())
+                    .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, station.getStationNameStripId())
                     .putString(MediaMetadataCompat.METADATA_KEY_TITLE, station.getMetadata())
                     .putString(MediaMetadataCompat.METADATA_KEY_ALBUM, albumTitle)
                     .putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, stationImage)
@@ -1130,7 +1130,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
                 if (value.length() > 0) {
                     mStation.setMetadata(value);
                 } else {
-                    mStation.setMetadata(mStation.getStationName());
+                    mStation.setMetadata(mStation.getStationNameStripId());
                 }
                 mStationMetadataReceived = true;
 

@@ -575,8 +575,8 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
     private void setupStationMainViews(Station station) {
         ImageHelper imageHelper = new ImageHelper(station, mActivity);
         Bitmap stationImage = imageHelper.createCircularFramedImage(192);
-        mPlayerStationName.setText(station.getStationName());
-        mPlayerStationName.setContentDescription(station.getStationName()); // for accessibility apps like TalkBack
+        mPlayerStationName.setText(station.getStationNameStripId());
+        mPlayerStationName.setContentDescription(station.getStationNameStripId()); // for accessibility apps like TalkBack
         mPlayerStationImage.setImageBitmap(stationImage);
         mPlayerSheetStreamUrl.setText(station.getStreamUri().toString());
         mPlayerSheetStreamUrl.setContentDescription(station.getStreamUri().toString()); // for accessibility apps like TalkBack
@@ -882,9 +882,9 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
         switch (contentType) {
             case COPY_STATION_ALL:
                 if (mCurrentStation.getMetadata() != null) {
-                    clipboardText = mCurrentStation.getStationName() +  " - " +  mCurrentStation.getMetadata() + " (" +  mCurrentStation.getStreamUri().toString() + ")";
+                    clipboardText = mCurrentStation.getStationNameStripId() +  " - " +  mCurrentStation.getMetadata() + " (" +  mCurrentStation.getStreamUri().toString() + ")";
                 } else {
-                    clipboardText = mCurrentStation.getStationName() + " (" + mCurrentStation.getStreamUri().toString() + ")";
+                    clipboardText = mCurrentStation.getStationNameStripId() + " (" + mCurrentStation.getStreamUri().toString() + ")";
                 }
                 notificationText = mActivity.getString(R.string.toastmessage_station_copied);
                 break;
@@ -971,7 +971,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
 
                     // CASE: NAME
                     if (!(newName.equals(oldName))) {
-                        mPlayerStationName.setText(newStation.getStationName());
+                        mPlayerStationName.setText(newStation.getStationNameStripId());
                         minimizePlayer();
                     }
                     // CASE: IMAGE

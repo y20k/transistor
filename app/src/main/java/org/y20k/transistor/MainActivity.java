@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -219,7 +220,7 @@ public final class MainActivity extends AppCompatActivity implements TransistorK
             int stationID = StationListHelper.findStationId(newStationList, station.getStreamUri());
 
             // set new name
-            newStation.setStationName(newStationName);
+            newStation.setStationNameAndId(newStationName, stationID);
 
             // delete old playlist file
             File stationPlaylistFile = station.getStationPlaylistFile();
@@ -253,6 +254,46 @@ public final class MainActivity extends AppCompatActivity implements TransistorK
 
     }
 
+    /* Returns a list of station IDs and names */
+    public ArrayList<Pair<Integer, String>> getStationListItems() {
+        ArrayList<Pair<Integer, String>> stations = new ArrayList<Pair<Integer, String>>();
+        int idx = 0;
+        for (Station s: mStationList) {
+            stations.add(new Pair<Integer, String>(idx, s.getStationNameStripId()));
+            idx += 1;
+        }
+        return stations;
+    };
+
+    /* Reorders station list and updates live data */
+    public void handleStationReorder(ArrayList<Pair<Integer, String>> newList) {
+        ArrayList<Station> newStationList = new ArrayList<Station>();
+        File folder = StorageHelper.getCollectionDirectory(this);
+        for (int i = 0; i < newList.size(); i++) {
+            int newId = newList.get(i).first;
+            Station oldStation = mStationList.get(newId);
+            Station newStation = new Station(oldStation);
+            newStation.setStationNameAndId(oldStation.getStationNameStripId(), i);
+            if (!newStation.getStationName().equals(oldStation.getStationName())) {
+                // delete old playlist file
+                File stationPlaylistFile = oldStation.getStationPlaylistFile();
+                stationPlaylistFile.delete();
+                // set new playlist file - and write file
+                newStation.setStationPlaylistFile(folder);
+                newStation.writePlaylistFile(folder);
+
+                // rename existing image file
+                File stationImageFile = oldStation.getStationImageFile();
+                newStation.setStationImageFile(folder);
+                stationImageFile.renameTo(newStation.getStationImageFile());
+            }
+            newStationList.add(newStation);
+            // update liva data station from PlayerService - used in MainActivityFragment
+            mCollectionViewModel.getPlayerServiceStation().setValue(newStation);
+        }
+        // update live data list of stations - used in CollectionAdapter
+        mCollectionViewModel.getStationList().setValue(newStationList);
+    }
 
     /* Removes given station from list and updates live data */
     public int handleStationDelete(Station station) {

@@ -57,6 +57,12 @@ public final class StationContextMenu extends DialogFragment implements Transist
                         DialogRename.show(activity, station);
                         return true;
 
+                    // CASE RENAME
+                    case R.id.menu_reorder:
+                        // construct and run rename dialog
+                        DialogReorder.show(activity);
+                        return true;
+
                     // CASE DELETE
                     case R.id.menu_delete:
                         // construct and run delete dialog

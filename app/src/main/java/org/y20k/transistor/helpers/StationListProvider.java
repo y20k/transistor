@@ -223,7 +223,7 @@ public class StationListProvider implements TransistorKeys {
 //                .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, station.getStationName())
                 .putString(MediaMetadataCompat.METADATA_KEY_GENRE, "Radio")
 //                .putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI, iconUrl)
-                .putString(MediaMetadataCompat.METADATA_KEY_TITLE,  station.getStationName())
+                .putString(MediaMetadataCompat.METADATA_KEY_TITLE,  station.getStationNameStripId())
 //                .putLong(MediaMetadataCompat.METADATA_KEY_TRACK_NUMBER, trackNumber)
 //                .putLong(MediaMetadataCompat.METADATA_KEY_NUM_TRACKS, totalTrackCount)
                 .putString(METADATA_CUSTOM_KEY_IMAGE_FILE, station.getStationImageFile().getPath())

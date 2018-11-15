@@ -43,9 +43,9 @@ public final class ShortcutHelper implements TransistorKeys {
 
         // credit: https://medium.com/@BladeCoder/using-support-library-26-0-0-you-can-do-bb75911e01e8
         if (ShortcutManagerCompat.isRequestPinShortcutSupported(context)) {
-            ShortcutInfoCompat shortcut = new ShortcutInfoCompat.Builder(context, station.getStationName())
-                    .setShortLabel(station.getStationName())
-                    .setLongLabel(station.getStationName())
+            ShortcutInfoCompat shortcut = new ShortcutInfoCompat.Builder(context, station.getStationNameStripId())
+                    .setShortLabel(station.getStationNameStripId())
+                    .setLongLabel(station.getStationNameStripId())
                     .setIcon(IconCompat.createWithBitmap(createShortcutIcon(context, station)))
                     .setIntent(createShortcutIntent(context, station))
                     .build();
@@ -66,7 +66,7 @@ public final class ShortcutHelper implements TransistorKeys {
         } else {
             // the pre 26 way: create and launch intent put shortcut on Home screen
             Intent removeIntent = new Intent();
-            removeIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, station.getStationName());
+            removeIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, station.getStationNameStripId());
             removeIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON, createShortcutIcon(context, station));
             removeIntent.putExtra("duplicate", false);
             removeIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, createShortcutIntent(context, station));
