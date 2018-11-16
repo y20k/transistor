@@ -70,10 +70,10 @@ During Playback Transistor acquires a so called partial wake lock. That prevents
 
 Screenshots (v3.1)
 ---------------------
-[<img src="https://raw.githubusercontent.com/y20k/transistor/master/assets/v3.1-oneplus5/01-lockscreen-active-v3.1-oneplus5.png" width="240">](https://raw.githubusercontent.com/y20k/transistor/master/assets/v3.1-oneplus5/01-lockscreen-active-v3.1-oneplus5.png)
-[<img src="https://raw.githubusercontent.com/y20k/transistor/master/assets/v3.1-oneplus5/02-playback-v31-oneplus5.png" width="240">](https://raw.githubusercontent.com/y20k/transistor/master/assets/v3.1-oneplus5/02-playback-v31-oneplus5.png)
-[<img src="https://raw.githubusercontent.com/y20k/transistor/master/assets/v3.1-oneplus5/03-details-v3.1-oneplus5.png" width="240">](https://raw.githubusercontent.com/y20k/transistor/master/assets/v3.1-oneplus5/03-details-v3.1-oneplus5.png)
+[<img src="https://raw.githubusercontent.com/y20k/transistor/master/assets/screenshots-v3.1/01-lockscreen-active-v3.1-oneplus5.png" width="240">](https://raw.githubusercontent.com/y20k/transistor/master/assets/screenshots-v3.1/01-lockscreen-active-v3.1-oneplus5.png)
+[<img src="https://raw.githubusercontent.com/y20k/transistor/master/assets/screenshots-v3.1/02-playback-v31-oneplus5.png" width="240">](https://raw.githubusercontent.com/y20k/transistor/master/assets/screenshots-v3.1/02-playback-v31-oneplus5.png)
+[<img src="https://raw.githubusercontent.com/y20k/transistor/master/assets/screenshots-v3.1/03-details-v3.1-oneplus5.png" width="240">](https://raw.githubusercontent.com/y20k/transistor/master/assets/screenshots-v3.1/03-details-v3.1-oneplus5.png)
 
-[<img src="https://raw.githubusercontent.com/y20k/transistor/master/assets/v3.1-oneplus5/04-sleeptimer-v3.1-oneplus5.png" width="240">](https://raw.githubusercontent.com/y20k/transistor/master/assets/v3.1-oneplus5/04-sleeptimer-v3.1-oneplus5.png)
-[<img src="https://raw.githubusercontent.com/y20k/transistor/master/assets/v3.1-oneplus5/05-homescreen-v3.1-oneplus5.png" width="240">](https://raw.githubusercontent.com/y20k/transistor/master/assets/v3.1-oneplus5/05-homescreen-v3.1-oneplus5.png)
-[<img src="https://raw.githubusercontent.com/y20k/transistor/master/assets/v3.1-oneplus5/06-onboarding-v3.1-oneplus5.png" width="240">](https://raw.githubusercontent.com/y20k/transistor/master/assets/v3.1-oneplus5/06-onboarding-v3.1-oneplus5.png)
+[<img src="https://raw.githubusercontent.com/y20k/transistor/master/assets/screenshots-v3.1/04-sleeptimer-v3.1-oneplus5.png" width="240">](https://raw.githubusercontent.com/y20k/transistor/master/assets/screenshots-v3.1/04-sleeptimer-v3.1-oneplus5.png)
+[<img src="https://raw.githubusercontent.com/y20k/transistor/master/assets/screenshots-v3.1/05-homescreen-v3.1-oneplus5.png" width="240">](https://raw.githubusercontent.com/y20k/transistor/master/assets/screenshots-v3.1/05-homescreen-v3.1-oneplus5.png)
+[<img src="https://raw.githubusercontent.com/y20k/transistor/master/assets/screenshots-v3.1/06-onboarding-v3.1-oneplus5.png" width="240">](https://raw.githubusercontent.com/y20k/transistor/master/assets/screenshots-v3.1/06-onboarding-v3.1-oneplus5.png)
