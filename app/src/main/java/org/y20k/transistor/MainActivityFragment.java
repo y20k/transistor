@@ -679,7 +679,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
             mStationDataSheetMimeType.setContentDescription(mimeType); // for accessibility apps like TalkBack
         } else {
             mStationDataSheetMimeType.setText(R.string.player_sheet_p_no_data);
-            mStationDataSheetMimeType.setContentDescription(getString(R.string.player_sheet_p_no_data)); // for accessibility apps like TalkBack
+            mStationDataSheetMimeType.setContentDescription(mActivity.getString(R.string.player_sheet_p_no_data)); // for accessibility apps like TalkBack
         }
 
         // fill and show channel count
@@ -690,7 +690,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
             mStationDataSheetChannelCount.setContentDescription(channelCountString); // for accessibility apps like TalkBack
         } else {
             mStationDataSheetChannelCount.setText(R.string.player_sheet_p_no_data);
-            mStationDataSheetChannelCount.setContentDescription(getString(R.string.player_sheet_p_no_data)); // for accessibility apps like TalkBack
+            mStationDataSheetChannelCount.setContentDescription(mActivity.getString(R.string.player_sheet_p_no_data)); // for accessibility apps like TalkBack
         }
 
         // fill and show sample rate
@@ -701,7 +701,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
             mStationDataSheetSampleRate.setContentDescription(sampleRateString); // for accessibility apps like TalkBack
         } else {
             mStationDataSheetSampleRate.setText(R.string.player_sheet_p_no_data);
-            mStationDataSheetSampleRate.setContentDescription(getString(R.string.player_sheet_p_no_data)); // for accessibility apps like TalkBack
+            mStationDataSheetSampleRate.setContentDescription(mActivity.getString(R.string.player_sheet_p_no_data)); // for accessibility apps like TalkBack
         }
 
 //        // fill and show bit rate
