@@ -476,6 +476,24 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
                     if (charsetString != null) {
                         contentType.charset = charsetString.trim();
                     }
+                    if (contentType.type.contains("application/octet-stream")) {
+                        LogHelper.w(LOG_TAG, "Special case \"application/octet-stream\": use file name to set correct content type.");
+                        String headerFieldContentDisposition = connection.getHeaderField("Content-Disposition");
+                        if (headerFieldContentDisposition != null) {
+                            String fileName = headerFieldContentDisposition.split("=")[1]; //getting value after '='
+                            if (fileName.endsWith(".pls")) {
+                                contentType.type = CONTENT_TYPES_PLS[0];
+                                LogHelper.i(LOG_TAG, "Found .pls playlist file: " +  fileName);
+                            } else if (fileName.endsWith(".m3u")) {
+                                contentType.type = CONTENT_TYPES_M3U[0];
+                                LogHelper.i(LOG_TAG, "Found .m3u playlist file: " +  fileName);
+                            } else {
+                                LogHelper.i(LOG_TAG, "File name does not seem to be a playlist: " +  fileName);
+                            }
+                        } else {
+                            LogHelper.i(LOG_TAG, "Unable to get file name from \"Content-Disposition\" header field.");
+                        }
+                    }
                     connection.disconnect();
                 }
             } else {
