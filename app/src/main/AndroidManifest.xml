@@ -86,6 +86,7 @@
                 <data android:mimeType="application/x-mpegurl" />
                 <data android:mimeType="application/vnd.apple.mpegurl" />
                 <data android:mimeType="application/vnd.apple.mpegurl.audio" />
+                <data android:mimeType="application/octet-stream" />
             </intent-filter>
 
             <!-- handle file extension intent from file browser -->

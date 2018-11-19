@@ -14,6 +14,7 @@
 
 package org.y20k.transistor.core;
 
+import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -239,6 +240,7 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
 
 
     /* Constructor when given MediaMetadata (e.g. from Android Auto)  */
+    @SuppressLint("WrongConstant")
     public Station (MediaMetadataCompat stationMediaMetadata) {
         mStationName = stationMediaMetadata.getString(METADATA_KEY_TITLE);
         mStreamUri = Uri.parse(stationMediaMetadata.getString(METADATA_KEY_MEDIA_URI));
@@ -481,10 +483,10 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
                         String headerFieldContentDisposition = connection.getHeaderField("Content-Disposition");
                         if (headerFieldContentDisposition != null) {
                             String fileName = headerFieldContentDisposition.split("=")[1]; //getting value after '='
-                            if (fileName.endsWith(".pls")) {
+                            if (fileName.endsWith(FILE_EXTENSION_PLS)) {
                                 contentType.type = CONTENT_TYPES_PLS[0];
                                 LogHelper.i(LOG_TAG, "Found .pls playlist file: " +  fileName);
-                            } else if (fileName.endsWith(".m3u")) {
+                            } else if (fileName.endsWith(FILE_EXTENSION_M3U)) {
                                 contentType.type = CONTENT_TYPES_M3U[0];
                                 LogHelper.i(LOG_TAG, "Found .m3u playlist file: " +  fileName);
                             } else {

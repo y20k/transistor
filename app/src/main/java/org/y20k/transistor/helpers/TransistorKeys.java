@@ -79,6 +79,10 @@ public interface TransistorKeys {
     String[] CONTENT_TYPES_M3U = {"audio/mpegurl", "application/x-mpegurl", "application/x-mpegURL", "audio/x-mpegurl", "application/x-mpegurl"};
     String[] CONTENT_TYPES_HLS = {"application/vnd.apple.mpegurl", "application/vnd.apple.mpegurl.audio"};
 
+    /* FILE EXTENSIONS */
+    String FILE_EXTENSION_M3U = ".m3u";
+    String FILE_EXTENSION_PLS = ".pls";
+
     /* PERMISSION REQUESTS */
     int PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE = 1;
     int PERMISSION_REQUEST_STATION_FETCHER_READ_EXTERNAL_STORAGE = 2;
