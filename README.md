@@ -23,7 +23,7 @@ Install Transistor
 How to use Transistor
 ---------------------
 ### How to add a new radio station?
-The easiest way to add a new station is to search for streaming links and then choose Transistor as a your default handler for those file types. You can also tap the (+) symbol in the top bar and paste in streaming links directly. Please note: Transistor does not feature any kind of built-in search option.
+The easiest way to add a new station is to [search for streaming links](https://github.com/y20k/transistor/wiki#places-to-look-for-radio-stations) and then choose Transistor as a your default handler for those file types. You can also tap the (+) symbol in the top bar and paste in streaming links directly. Please note: Transistor does not feature any kind of built-in search option.
 
 ### How to play back a radio station?
 Tap the Play button ;).

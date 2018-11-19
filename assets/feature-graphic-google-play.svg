@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="1024" height="500" viewBox="0 0 270.93333 132.29167"
+    version="1.1" id="svg872" inkscape:version="0.92.2 5c3e80d, 2017-08-06" sodipodi:docname="feature-grafix-google-play.svg"
+    inkscape:export-filename="/Users/solaris/feature-graphic-google-play-de.png"
+    inkscape:export-xdpi="96" inkscape:export-ydpi="96">
+  <defs
+     id="defs866">
+    <filter
+       id="filter5622"
+       inkscape:label="Drop Shadow"
+       style="color-interpolation-filters:sRGB;">
+      <feFlood
+         id="feFlood5612"
+         result="flood"
+         flood-color="rgb(0,0,0)"
+         flood-opacity="0.498039" />
+      <feComposite
+         id="feComposite5614"
+         result="composite1"
+         operator="in"
+         in2="SourceGraphic"
+         in="flood" />
+      <feGaussianBlur
+         id="feGaussianBlur5616"
+         result="blur"
+         stdDeviation="0.2"
+         in="composite1" />
+      <feOffset
+         id="feOffset5618"
+         result="offset"
+         dy="0.7"
+         dx="2" />
+      <feComposite
+         id="feComposite5620"
+         result="composite2"
+         operator="over"
+         in2="offset"
+         in="SourceGraphic" />
+    </filter>
+    <filter
+       id="filter4906"
+       inkscape:label="Drop Shadow"
+       style="color-interpolation-filters:sRGB;">
+      <feFlood
+         id="feFlood4896"
+         result="flood"
+         flood-color="rgb(0,0,0)"
+         flood-opacity="0.498039" />
+      <feComposite
+         id="feComposite4898"
+         result="composite1"
+         operator="in"
+         in2="SourceGraphic"
+         in="flood" />
+      <feGaussianBlur
+         id="feGaussianBlur4900"
+         result="blur"
+         stdDeviation="0.3"
+         in="composite1" />
+      <feOffset
+         id="feOffset4902"
+         result="offset"
+         dy="1"
+         dx="1" />
+      <feComposite
+         id="feComposite4904"
+         result="composite2"
+         operator="over"
+         in2="offset"
+         in="SourceGraphic" />
+    </filter>
+    <style
+       id="style3854">.cls-1{fill:#fff;}</style>
+    <filter
+       style="color-interpolation-filters:sRGB;"
+       inkscape:label="Drop Shadow"
+       id="filter2015">
+      <feFlood
+         flood-opacity="1"
+         flood-color="rgb(23,24,26)"
+         result="flood"
+         id="feFlood2005" />
+      <feComposite
+         in="flood"
+         in2="SourceGraphic"
+         operator="in"
+         result="composite1"
+         id="feComposite2007" />
+      <feGaussianBlur
+         in="composite1"
+         stdDeviation="1"
+         result="blur"
+         id="feGaussianBlur2009" />
+      <feOffset
+         dx="0.7"
+         dy="0.7"
+         result="offset"
+         id="feOffset2011" />
+      <feComposite
+         in="SourceGraphic"
+         in2="offset"
+         operator="over"
+         result="composite2"
+         id="feComposite2013" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="313.46619"
+     inkscape:cy="431.34173"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer2"
+     showgrid="false"
+     units="px"
+     inkscape:window-width="1916"
+     inkscape:window-height="1155"
+     inkscape:window-x="4"
+     inkscape:window-y="1"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata869">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Layer 2">
+    <rect
+       style="opacity:1;fill:#3c4043;fill-opacity:1;stroke-width:0.26458332"
+       id="rect1531"
+       width="270.93329"
+       height="132.29167"
+       x="0.57353306"
+       y="0.130262"
+       inkscape:label="Background" />
+    <rect
+       style="opacity:1;fill:#19405b;fill-opacity:1;stroke-width:0.26458332"
+       id="rect1533"
+       width="270.93332"
+       height="48.683334"
+       x="0.53453904"
+       y="71.086945"
+       inkscape:label="Text Background" />
+    <g
+       id="g1562"
+       inkscape:label="Text"
+       transform="translate(0,-0.52916663)">
+      <text
+         inkscape:label="Transistor"
+         id="text1537"
+         y="99.139496"
+         x="7.7830539"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:25.39999962px;line-height:1.25;font-family:roboto;-inkscape-font-specification:'roboto Bold';letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           id="tspan1539"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:25.39999962px;font-family:roboto;-inkscape-font-specification:'roboto Bold';fill:#ffffff;fill-opacity:1;stroke-width:0.26458332"
+           y="99.139496"
+           x="7.7830539"
+           sodipodi:role="line">Transistor</tspan></text>
+      <text
+         inkscape:label="Einfach Radio hören"
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         x="11.49259"
+         y="111.43927"
+         id="text1550"><tspan
+           sodipodi:role="line"
+           id="tspan1548"
+           x="11.49259"
+           y="111.43927"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12.69999981px;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';fill:#ffffff;fill-opacity:1;stroke-width:0.26458332">Einfach Radio hören</tspan></text>
+      <text
+         inkscape:label="simple radio app"
+         id="text1554"
+         y="111.43927"
+         x="11.49259"
+         style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:none;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12.69999981px;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';fill:#ffffff;fill-opacity:1;stroke-width:0.26458332"
+           y="111.43927"
+           x="11.49259"
+           id="tspan1552"
+           sodipodi:role="line">Simple radio app</tspan></text>
+    </g>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer4"
+     inkscape:label="Layer 3">
+    <g
+       id="g1739"
+       transform="matrix(1.691157,0,0,1.691157,148.52369,5.5277359)"
+       style="filter:url(#filter2015)">
+      <g
+         style="display:inline"
+         inkscape:label="Circular Background"
+         id="layer2-6">
+        <circle
+           style="display:inline;fill:#3c98db;fill-opacity:1;stroke-width:0.25706676"
+           id="circle839"
+           cx="33.866669"
+           cy="33.866669"
+           inkscape:label="Circle"
+           r="30.1625" />
+      </g>
+      <g
+         style="display:inline"
+         inkscape:label="Radio Icon by Munadi Kiehl"
+         id="layer3">
+        <path
+           sodipodi:nodetypes="ccccccccccccc"
+           inkscape:label="Radio outline shadow long"
+           style="display:none;opacity:0.12999998;fill:#3c4043;fill-opacity:1;stroke-width:0.13388914"
+           inkscape:connector-curvature="0"
+           class="cls-1"
+           d="m 48.995601,15.85484 c 1.207165,-0.350428 0.647781,-2.051952 -0.559384,-1.701524 l -33.076887,9.586159 -0.261046,0.07528 -0.06215,0.01817 c -0.05057,0.01311 -0.09961,0.03093 -0.146406,0.05321 -1.44396,0.546639 -2.388893,1.86364 -2.386707,3.326473 v 19.652535 c -7.63e-4,1.976726 1.704341,3.57956 3.807958,3.57956 l 17.676288,18.514091 34.558008,-0.09081 0.693494,-32.654199 z"
+           id="path833" />
+        <path
+           inkscape:label="Radio outline shadow short"
+           inkscape:connector-curvature="0"
+           id="path3726"
+           transform="scale(0.26458334)"
+           d="m 183.89258,53.332031 c -0.265,0.02533 -0.54102,0.07738 -0.82617,0.160157 l -125.015629,36.232421 -0.986328,0.283203 -0.234375,0.07031 c -0.191131,0.04955 -0.377821,0.115011 -0.554687,0.199219 -5.457487,2.066037 -9.027794,7.045401 -9.019532,12.574219 v 74.27735 c -0.0029,7.47109 6.4419,13.52734 14.392579,13.52734 L 109.0293,240.2832 A 114,114 0 0 0 128,242 114,114 0 0 0 242,128 114,114 0 0 0 241.2793,116.34375 L 185.17969,59.923828 c 4.27735,-1.241674 2.68785,-6.971735 -1.28711,-6.591797 z"
+           style="display:inline;opacity:0.12999998;fill:#3c4043;fill-opacity:1;stroke-width:0.97159088" />
+        <path
+           sodipodi:nodetypes="cccccccccccccscccssccc"
+           inkscape:label="Radio outline blue"
+           style="display:inline;fill:#3c98db;fill-opacity:1;stroke-width:0.13388914"
+           inkscape:connector-curvature="0"
+           class="cls-1"
+           d="M 54.596352,27.361865 H 53.33532 v -0.149256 c 7.64e-4,-1.97449 -1.701198,-3.576113 -3.802433,-3.578262 H 22.17139 L 48.995601,15.85484 c 1.207165,-0.350428 0.647781,-2.051952 -0.559384,-1.701524 l -33.076887,9.586159 -0.261046,0.07528 -0.06215,0.01817 c -0.05057,0.01311 -0.09961,0.03093 -0.146406,0.05321 -1.44396,0.546639 -2.388893,1.86364 -2.386707,3.326473 v 19.652535 c -7.63e-4,1.976726 1.704341,3.57956 3.807958,3.57956 H 49.53151 c 2.101235,-0.0021 3.803197,-1.603772 3.802433,-3.578262 V 32.963526 h 1.261032 c 0.350894,0 0.63535,-0.267298 0.63535,-0.597026 v -4.4128 c -0.003,-0.327194 -0.285759,-0.591136 -0.633969,-0.591835 z"
+           id="path3885" />
+        <path
+           id="path3862-3"
+           d="m 47.83954,42.268045 a 2.5980301,2.4413168 0 1 1 -2.59803,-2.441317 2.6021736,2.4452104 0 0 1 2.59803,2.441317 z"
+           class="cls-1"
+           inkscape:connector-curvature="0"
+           style="display:inline;fill:#ffffff;stroke-width:0.13388914"
+           inkscape:label="Dial white" />
+        <path
+           id="path3860"
+           d="M 54.596352,27.361865 H 53.33532 V 27.212609 A 3.8065767,3.5769639 0 0 0 49.532887,23.634347 H 22.17139 L 48.995601,15.85484 a 0.94759172,0.89043295 0 1 0 -0.559384,-1.701524 l -33.076887,9.586159 -0.261046,0.07528 -0.06215,0.01817 a 0.78728183,0.73979297 0 0 0 -0.146406,0.05321 3.8107203,3.5808575 0 0 0 -2.386707,3.326473 v 19.652535 a 3.8079579,3.5782618 0 0 0 3.807958,3.57956 H 49.53151 a 3.8065767,3.5769639 0 0 0 3.802433,-3.578262 V 32.963526 h 1.261032 a 0.63535025,0.5970259 0 0 0 0.63535,-0.597026 v -4.4128 a 0.63535025,0.5970259 0 0 0 -0.633969,-0.591835 z m -38.478745,0.454259 a 1.1740168,1.1032 0 0 1 1.171254,-1.100604 h 20.773191 v 5.610745 a 0.71131604,0.66840944 0 1 0 1.422632,0 v -5.609447 h 9.066172 a 1.1712544,1.1006043 0 0 1 1.171255,1.100604 v 5.710682 a 1.1712544,1.1006043 0 0 1 -1.171255,1.100605 H 17.293005 a 1.1740168,1.1032 0 0 1 -1.171254,-1.100605 z m 19.683427,18.910147 h -18.7746 a 0.94888179,0.89164521 0 1 1 0,-1.781993 h 18.7746 a 0.94888179,0.89164521 0 0 1 0,1.781993 z m 0,-3.563985 h -18.7746 a 0.94888179,0.89164521 0 0 1 0,-1.781993 h 18.7746 a 0.94888179,0.89164521 0 0 1 0,1.781993 z m 0,-3.563986 h -18.7746 a 0.94888179,0.89164521 0 1 1 0,-1.781992 h 18.7746 a 0.94888179,0.89164521 0 0 1 0,1.781992 z m 9.440476,6.896948 a 4.4957936,4.2246072 0 1 1 4.494413,-4.227203 4.498556,4.227203 0 0 1 -4.495794,4.227203 z"
+           class="cls-1"
+           inkscape:connector-curvature="0"
+           style="display:inline;fill:#ffffff;stroke-width:0.13388914"
+           inkscape:label="Radio white" />
+      </g>
+    </g>
+  </g>
+</svg>
