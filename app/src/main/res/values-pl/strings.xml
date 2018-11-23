@@ -33,7 +33,7 @@
     <string name="descr_station_name_example">Przykład FM</string>
     <string name="descr_station_metadata_example">Wykonawca - Tytuł</string>
     <string name="descr_station_stream_loading">Ładowanie strumienia …</string>
-    <string name="descr_playback_button">Złoty przycisk odtwarzania</string>
+    <string name="descr_playback_button">Przycisk odtwarzania</string>
     <string name="descr_playback_indicator">Wskaźnik odtwarzania</string>
     <string name="descr_playback_indicator_started">Wskaźnik odtwarzania</string>
     <string name="descr_timer_icon">Ikona wyłącznika czasowego</string>
@@ -48,7 +48,7 @@
     <string name="descr_list_add_select_stream_dropdown">Menu rozwijane zawierające wybrane strumienie</string>
 
     <!-- player -->
-    <string name="player_sheet_h1_details">Details</string>
+    <string name="player_sheet_h1_details">Szczegóły</string>
     <string name="player_sheet_h2_current_session">Obecna sesja</string>
     <string name="player_sheet_h2_station_name">Stacja</string>
     <string name="player_sheet_h2_station_metadata">Teraz grane</string>
@@ -56,7 +56,7 @@
     <string name="player_sheet_p_station_metadata">metadane niedostępne</string>
     <string name="player_sheet_h2_station_mime_type">Typ MIME</string>
     <string name="player_sheet_h2_station_channel_count">Liczba kanałów</string>
-    <string name="player_sheet_h2_station_sample_rate">Próbna ocena</string>
+    <string name="player_sheet_h2_station_sample_rate">Częstotliwość próbkowania</string>
     <string name="player_sheet_h2_station_bitrate">Bitrate</string>
 
     <!-- dialogs -->
