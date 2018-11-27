@@ -119,6 +119,7 @@
     <string name="toastalert_rename_unsuccessful">Incapaç de canviar el nom de l\'emissora. Si us plau, escolliu un nom diferent.</string>
     <string name="toastalert_delete_successful">Emissora ha estat esborrada.</string>
     <string name="toastalert_no_external_storage">No es pot accedir a l\'emmagatzematge intern.</string>
+    <string name="toastalert_no_image_picker">No image picker available. Consider installing a Gallery application.</string>
     <string name="toastalert_headphones_unplugged">Auriculars desendollats. La reproducció s\'ha aturat.</string>
     <string name="toastalert_permission_denied">Permís denegat:</string>
     <string name="toastalert_station_not_found">No es pot trobar l\'emissora.</string>

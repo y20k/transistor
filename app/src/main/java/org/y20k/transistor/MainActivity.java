@@ -15,6 +15,7 @@ package org.y20k.transistor;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
@@ -36,6 +37,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -145,7 +147,6 @@ public final class MainActivity extends AppCompatActivity implements TransistorK
         // make sure that MainActivityFragment's onActivityResult() gets called
         super.onActivityResult(requestCode, resultCode, data);
 
-        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_CANCELED) {
             return;
         }
@@ -327,7 +328,13 @@ public final class MainActivity extends AppCompatActivity implements TransistorK
         // get system picker for images
         Intent pickImageIntent = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(pickImageIntent, REQUEST_LOAD_IMAGE);
+        List<ResolveInfo> imagePickerApps = getPackageManager().queryIntentActivities(pickImageIntent, 0);
+        if (!imagePickerApps.isEmpty()) {
+            startActivityForResult(pickImageIntent, REQUEST_LOAD_IMAGE);
+        } else {
+            Toast.makeText(this, getString(R.string.toastalert_no_image_picker), Toast.LENGTH_LONG).show();
+        }
+
     }
 
 

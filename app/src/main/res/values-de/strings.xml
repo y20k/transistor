@@ -119,6 +119,7 @@
     <string name="toastalert_rename_unsuccessful">Sender kann nicht umbenannt werden. Bitte wählen Sie einen anderen Namen.</string>
     <string name="toastalert_delete_successful">Die Sender wurde entfernt.</string>
     <string name="toastalert_no_external_storage">Zugriff auf den externen Speicher nicht möglich.</string>
+    <string name="toastalert_no_image_picker">Bildauswahl nicht verfügbar. Installation einer Galerie-Anwendung empfohlen.</string>
     <string name="toastalert_headphones_unplugged">Kopfhörer entfernt. Wiedergabe gestoppt.</string>
     <string name="toastalert_permission_denied">Fehlende Berechtigung:</string>
     <string name="toastalert_station_not_found">Sender kann nicht gefunden werden.</string>

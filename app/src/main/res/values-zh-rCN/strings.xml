@@ -120,6 +120,7 @@
     <string name="toastalert_rename_unsuccessful">无法重命名电台。请另选其他名称。</string>
     <string name="toastalert_delete_successful">电台已移除。</string>
     <string name="toastalert_no_external_storage">无法访问外部存储。</string>
+    <string name="toastalert_no_image_picker">No image picker available. Consider installing a Gallery application.</string>
     <string name="toastalert_headphones_unplugged">耳机已拔出。播放停止。</string>
     <string name="toastalert_permission_denied">权限被拒绝：</string>
     <string name="toastalert_station_not_found">Unable to find station.</string>

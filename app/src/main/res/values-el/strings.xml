@@ -119,6 +119,7 @@
     <string name="toastalert_rename_unsuccessful">Αδυναμία μετονομασίας του σταθμού. Παρακαλώ, επέλεξε ένα διαφορετικό όνομα.</string>
     <string name="toastalert_delete_successful">Ο σταθμός απομακρύνθηκε.</string>
     <string name="toastalert_no_external_storage">Αδυναμία πρόσβασης στην εξωτερική αποθήκη.</string>
+    <string name="toastalert_no_image_picker">No image picker available. Consider installing a Gallery application.</string>
     <string name="toastalert_headphones_unplugged">Τα ακουστικά αποσυνδέθηκαν. Η αναπαραγωγή σταμάτησε.</string>
     <string name="toastalert_permission_denied">Άρνηση δικαιώματος:</string>
     <string name="toastalert_station_not_found">Αδυναμία εύρεσης του σταθμού.</string>

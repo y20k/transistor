@@ -119,6 +119,7 @@
     <string name="toastalert_rename_unsuccessful">放送局の名前を変更できません。別の名前を選択してください。</string>
     <string name="toastalert_delete_successful">放送局が削除されました。</string>
     <string name="toastalert_no_external_storage">外部ストレージにアクセスできません。</string>
+    <string name="toastalert_no_image_picker">No image picker available. Consider installing a Gallery application.</string>
     <string name="toastalert_headphones_unplugged">ヘッドフォンのプラグを外しました。再生を停止します。</string>
     <string name="toastalert_permission_denied">アクセスが拒否されました:</string>
     <string name="toastalert_station_not_found">局を見つけることができません。</string>

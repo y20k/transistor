@@ -118,7 +118,8 @@
     <string name="toastalert_unable_to_connect">No se puede conectar. El dispositivo no tiene conexión a Internet o el stream puede estar desactualizado.</string>
     <string name="toastalert_rename_unsuccessful">No se ha podido renombrar la emisora. Por favor elija un nombre diferente.</string>
     <string name="toastalert_delete_successful">La emisora fue borrada.</string>
-    <string name="toastalert_no_external_storage">No se ha podido acceder al almacenamiento externo.</string>
+     <string name="toastalert_no_external_storage">No se ha podido acceder al almacenamiento externo.</string>
+    <string name="toastalert_no_image_picker">No image picker available. Consider installing a Gallery application.</string>
     <string name="toastalert_headphones_unplugged">Auriculares desconectados. Reproducción detenida.</string>
     <string name="toastalert_permission_denied">Permiso denegado:</string>
     <string name="toastalert_station_not_found">No se puede encontrar la emisora.</string>

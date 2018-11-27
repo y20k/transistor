@@ -119,6 +119,7 @@
     <string name="toastalert_rename_unsuccessful">Ne morem preimenovati postaje. Prosim izberite drugo ime.</string>
     <string name="toastalert_delete_successful">Postaja je bila odstranjena.</string>
     <string name="toastalert_no_external_storage">Nimam dostopa do zunanjega pomnilnika.</string>
+    <string name="toastalert_no_image_picker">No image picker available. Consider installing a Gallery application.</string>
     <string name="toastalert_headphones_unplugged">Prenos je bil ustavljen zaradi odstranitve slušalk.</string>
     <string name="toastalert_permission_denied">Permission denied:</string>
     <string name="toastalert_station_not_found">Unable to find station.</string>

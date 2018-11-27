@@ -119,6 +119,7 @@
     <string name="toastalert_rename_unsuccessful">İstasyon yeniden adlandırılamadı. Lütfen farklı bir ad seçin.</string>
     <string name="toastalert_delete_successful">İstasyon kaldırıldı.</string>
     <string name="toastalert_no_external_storage">Harici depolamaya erişilemiyor.</string>
+    <string name="toastalert_no_image_picker">No image picker available. Consider installing a Gallery application.</string>
     <string name="toastalert_headphones_unplugged">Kulaklık çıkarıldı. Oynatma durdu.</string>
     <string name="toastalert_permission_denied">İzin reddedildi:</string>
     <string name="toastalert_station_not_found">İstasyon bulunamıyor.</string>

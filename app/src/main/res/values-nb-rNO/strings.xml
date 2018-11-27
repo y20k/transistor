@@ -119,6 +119,7 @@
     <string name="toastalert_rename_unsuccessful">Kunne ikke endre navn på stasjon. Velg et annet navn.</string>
     <string name="toastalert_delete_successful">Stasjonen ble fjernet.</string>
     <string name="toastalert_no_external_storage">Fikk ikke tilgang til eksternt lagringsmedium.</string>
+    <string name="toastalert_no_image_picker">No image picker available. Consider installing a Gallery application.</string>
     <string name="toastalert_headphones_unplugged">Hodetelefoner frakoblet. Avspilling stoppet.</string>
     <string name="toastalert_permission_denied">Tilgang nektet:</string>
     <string name="toastalert_station_not_found">Klarer ikke å finne stasjonen.</string>

@@ -75,7 +75,6 @@
     <string name="dialog_add_station_choose_stream_message">Please select a stream</string>
     <string name="dialog_add_station_choose_stream_button">Select</string>
 
-
     <!-- error dialogs -->
     <string name="dialog_error_title_default">Error</string>
     <string name="dialog_error_message_default">An error occurred</string>
@@ -120,6 +119,7 @@
     <string name="toastalert_rename_unsuccessful">Unable to rename station. Please choose a different name.</string>
     <string name="toastalert_delete_successful">The station was removed.</string>
     <string name="toastalert_no_external_storage">Unable to access external storage.</string>
+    <string name="toastalert_no_image_picker">No image picker available. Consider installing a Gallery application.</string>
     <string name="toastalert_headphones_unplugged">Headphones unplugged. Playback stopped.</string>
     <string name="toastalert_permission_denied">Permission denied:</string>
     <string name="toastalert_station_not_found">Unable to find station.</string>

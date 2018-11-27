@@ -119,6 +119,7 @@
     <string name="toastalert_rename_unsuccessful">"Ezin  izan zaio izena aldatu estazioari. Aukeratu beste izen bat."</string>
     <string name="toastalert_delete_successful">Estazioa kendu da.</string>
     <string name="toastalert_no_external_storage">Ezin izan da kanpo biltegia atzitu.</string>
+    <string name="toastalert_no_image_picker">No image picker available. Consider installing a Gallery application.</string>
     <string name="toastalert_headphones_unplugged">Aurikularrak deskonektatuta. Erreprodukzioa gelditu da.</string>
     <string name="toastalert_permission_denied">Baimena ukatu da:</string>
     <string name="toastalert_station_not_found">Ezin izan da irratia aurkitu.</string>

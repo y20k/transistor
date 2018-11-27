@@ -119,6 +119,7 @@
     <string name="toastalert_rename_unsuccessful">Не могох да преименујем станицу. Унесите други назив.</string>
     <string name="toastalert_delete_successful">Станица је уклоњена.</string>
     <string name="toastalert_no_external_storage">Не могох да приступим спољашњем складишту.</string>
+    <string name="toastalert_no_image_picker">No image picker available. Consider installing a Gallery application.</string>
     <string name="toastalert_headphones_unplugged">Слушалице искључене. Пуштање заустављено.</string>
     <string name="toastalert_permission_denied">Дозвола одбијена:</string>
     <string name="toastalert_station_not_found">Не могох да нађем станицу.</string>
