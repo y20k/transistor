@@ -120,7 +120,7 @@
     <string name="toastalert_delete_successful">Stacja została usunięta.</string>
     <string name="toastalert_no_external_storage">Nie można uzyskać dostępu do pamięci zewnętrznej.</string>
     <string name="toastalert_headphones_unplugged">Słuchawki odłączone. Odtwarzanie zatrzymane.</string>
-    <string name="toastalert_no_image_picker">No image picker available. Consider installing a Gallery application.</string>
+    <string name="toastalert_no_image_picker">Brak dostępnego selektora zdjęć. Rozważ zainstalowanie aplikacji Galeria.</string>
     <string name="toastalert_permission_denied">Odmowa dostępu:</string>
     <string name="toastalert_station_not_found">Nie udało się odnaleźć stacji.</string>
     <string name="toastalert_stream_not_found">Transistor nie może rozpoznać tej stacji. Proszę ją usunąć i dodać jeszcze raz do ekranu głównego.</string>
