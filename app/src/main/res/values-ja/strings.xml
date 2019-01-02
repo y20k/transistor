@@ -103,7 +103,9 @@
     <string name="toastmessage_long_press_playback_started">再生を開始しました (長押しを検出しました)</string>
     <string name="toastmessage_long_press_change_icon">放送局アイコンの変更 (長押しが検出されました)</string>
     <string name="toastmessage_long_press_change_name">放送局名の変更 (長押しが検出されました)</string>
-    <string name="toastmessage_long_press_night_mode_switch">夜間モードの切り替え (長押しが検出されました)</string>
+    <string name="toastmessage_theme_night">Switching to Night mode (long press detected)</string>
+    <string name="toastmessage_theme_day">Switching to Day mode (long press detected)</string>
+    <string name="toastmessage_theme_follow_system">Switching to Follow System Setting mode (long press detected)</string>
     <string name="toastmessage_shortcut_created">ショートカットを作成しました。</string>
     <string name="toastmessage_shortcut_not_created">ショートカットは作成されません。このデバイスは、ショートカットの作成を許可していません。</string>
     <string name="toastmessage_list_refreshed">局のリストを再読み込みしています。</string>

@@ -104,6 +104,9 @@
     <string name="toastmessage_long_press_change_icon">Icône de changement de station (longue pression détectée)</string>
     <string name="toastmessage_long_press_change_name">Renommer la station (appui long détecté)</string>
     <string name="toastmessage_long_press_night_mode_switch">Commutateur de mode nuit (pression longue détectée)</string>
+    <string name="toastmessage_theme_night">Switching to Night mode (long press detected)</string>
+    <string name="toastmessage_theme_day">Switching to Day mode (long press detected)</string>
+    <string name="toastmessage_theme_follow_system">Switching to Follow System Setting mode (long press detected)</string>
     <string name="toastmessage_shortcut_created">Raccourci créé.</string>
     <string name="toastmessage_shortcut_not_created">Raccourci non créé. Cet appareil ne permet pas la création de raccourcis.</string>
     <string name="toastmessage_list_refreshed">Recharger la liste des stations.</string>

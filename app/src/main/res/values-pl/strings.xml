@@ -103,7 +103,9 @@
     <string name="toastmessage_long_press_playback_started">Odtwarzanie rozpoczęte (wykryto długie naciśnięcie)</string>
     <string name="toastmessage_long_press_change_icon">Zmień ikonę stacji (wykryto długie naciśnięcie)</string>
     <string name="toastmessage_long_press_change_name">Zmień nazwę stacji (wykryto długie naciśnięcie)</string>
-    <string name="toastmessage_long_press_night_mode_switch">Przełącznik trybu nocnego (wykryto długie naciśnięcie)</string>
+    <string name="toastmessage_theme_night">Switching to Night mode (long press detected)</string>
+    <string name="toastmessage_theme_day">Switching to Day mode (long press detected)</string>
+    <string name="toastmessage_theme_follow_system">Switching to Follow System Setting mode (long press detected)</string>
     <string name="toastmessage_shortcut_created">Skrót utworzony.</string>
     <string name="toastmessage_shortcut_not_created">Skrót nie został utworzony. To urządzenie nie pozwala na tworzenie skrótów.</string>
     <string name="toastmessage_list_refreshed">Przeładuj listę stacji.</string>

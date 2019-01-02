@@ -103,7 +103,9 @@
     <string name="toastmessage_long_press_playback_started">Playback started (long press detected)</string>
     <string name="toastmessage_long_press_change_icon">Change station icon (long press detected)</string>
     <string name="toastmessage_long_press_change_name">Rename station (long press detected)</string>
-    <string name="toastmessage_long_press_night_mode_switch">Night mode switch (long press detected)</string>
+    <string name="toastmessage_theme_night">Switching to Night mode (long press detected)</string>
+    <string name="toastmessage_theme_day">Switching to Day mode (long press detected)</string>
+    <string name="toastmessage_theme_follow_system">Switching to Follow System Setting mode (long press detected)</string>
     <string name="toastmessage_shortcut_created">Shortcut created.</string>
     <string name="toastmessage_shortcut_not_created">Shortcut not created. This device does not allow the creation of shortcuts.</string>
     <string name="toastmessage_list_refreshed">Reloading list of stations.</string>

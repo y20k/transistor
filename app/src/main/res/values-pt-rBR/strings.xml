@@ -103,7 +103,9 @@
     <string name="toastmessage_long_press_playback_started">Iniciando reprodução (toque longo detectado)</string>
     <string name="toastmessage_long_press_change_icon">"Mudar ícone da estação  (toque longo detectado)"</string>
     <string name="toastmessage_long_press_change_name">Renomear estação (toque longo detectado)</string>
-    <string name="toastmessage_long_press_night_mode_switch">Interruptor do modo noturno (toque longo detectado)</string>
+    <string name="toastmessage_theme_night">Switching to Night mode (long press detected)</string>
+    <string name="toastmessage_theme_day">Switching to Day mode (long press detected)</string>
+    <string name="toastmessage_theme_follow_system">Switching to Follow System Setting mode (long press detected)</string>
     <string name="toastmessage_shortcut_created">Atalho criado.</string>
     <string name="toastmessage_shortcut_not_created">Atalho não criado. Este dispositivo não permite a criação de atalhos.</string>
     <string name="toastmessage_list_refreshed">Recarregando lista de estações.</string>

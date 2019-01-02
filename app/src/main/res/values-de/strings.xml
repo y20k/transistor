@@ -103,7 +103,9 @@
     <string name="toastmessage_long_press_playback_started">Wiedergabe gestartet (Längeres Drücken erkannt)</string>
     <string name="toastmessage_long_press_change_icon">Symbol ändern (Längeres Drücken erkannt)</string>
     <string name="toastmessage_long_press_change_name">Sender umbenennen (Längeres Drücken erkannt)</string>
-    <string name="toastmessage_long_press_night_mode_switch">Schalter für Nachtmodus (Längeres Drücken erkannt)</string>
+    <string name="toastmessage_theme_night">Nachtmodus aktiviert (Längeres Drücken erkannt)</string>
+    <string name="toastmessage_theme_day">Tagmodus aktiviert (Längeres Drücken erkannt)</string>
+    <string name="toastmessage_theme_follow_system">Modus Systemeinstellung Beachten aktiviert (Längeres Drücken erkannt)</string>
     <string name="toastmessage_shortcut_created">Sender auf Startbildschirm platziert.</string>
     <string name="toastmessage_shortcut_not_created">Sender nicht auf Startbildschirm platziert. Das Gerät unterbindet das Platzieren von Verknüpfungen.</string>
     <string name="toastmessage_list_refreshed">Aktualisiere Senderliste.</string>

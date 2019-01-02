@@ -103,7 +103,9 @@
     <string name="toastmessage_long_press_playback_started">Avspilling startet (langt trykk enset)</string>
     <string name="toastmessage_long_press_change_icon">Endre stasjonsikon (langt trykk oppdaget)</string>
     <string name="toastmessage_long_press_change_name">Gi stasjon nytt navn (langt trykk oppdaget)</string>
-    <string name="toastmessage_long_press_night_mode_switch">Bytte til nattmodus (langt trykk oppdaget)</string>
+    <string name="toastmessage_theme_night">Switching to Night mode (long press detected)</string>
+    <string name="toastmessage_theme_day">Switching to Day mode (long press detected)</string>
+    <string name="toastmessage_theme_follow_system">Switching to Follow System Setting mode (long press detected)</string>
     <string name="toastmessage_shortcut_created">Snarvei opprettet.</string>
     <string name="toastmessage_shortcut_not_created">Snarveien ble ikke opprettet. Denne enheten tillater ikke opprettelse av snarveier.</string>
     <string name="toastmessage_list_refreshed">Laster inn stasjonsliste igjen.</string>

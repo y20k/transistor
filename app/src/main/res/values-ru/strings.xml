@@ -103,7 +103,9 @@
     <string name="toastmessage_long_press_playback_started">Начинаю воспроизведение радиостанции</string>
     <string name="toastmessage_long_press_change_icon">Изменение иконки станции (long press detected)</string>
     <string name="toastmessage_long_press_change_name">Переименование станции (long press detected)</string>
-    <string name="toastmessage_long_press_night_mode_switch">Переключение ночного режима (long press detected)</string>
+    <string name="toastmessage_theme_night">Switching to Night mode (long press detected)</string>
+    <string name="toastmessage_theme_day">Switching to Day mode (long press detected)</string>
+    <string name="toastmessage_theme_follow_system">Switching to Follow System Setting mode (long press detected)</string>
     <string name="toastmessage_shortcut_created">Ярлык создан.</string>
     <string name="toastmessage_shortcut_not_created">Ярлык не создан. Устройство не позволяет создавать ярлыки.</string>
     <string name="toastmessage_list_refreshed">Перезагрузка списка станций.</string>

@@ -14,12 +14,9 @@
 package org.y20k.transistor;
 
 import android.app.Application;
-import android.os.Build;
 
 import org.y20k.transistor.helpers.LogHelper;
 import org.y20k.transistor.helpers.NightModeHelper;
-
-import androidx.appcompat.app.AppCompatDelegate;
 
 
 /**
@@ -36,13 +33,16 @@ public class Transistor extends Application {
         super.onCreate();
 
         // set Day / Night theme state
-        if (Build.VERSION.SDK_INT >= 28) {
-            // Android P might introduce a system wide theme option - in that case: follow system (28 = Build.VERSION_CODES.P)
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-        } else {
-            // try t0 get last state the user chose
-            NightModeHelper.restoreSavedState(this);
-        }
+        NightModeHelper.restoreSavedState(this);
+
+// todo remove
+//        if (Build.VERSION.SDK_INT >= 28) {
+//            // Android P might introduce a system wide theme option - in that case: follow system (28 = Build.VERSION_CODES.P)
+//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+//        } else {
+//            // try to get last state the user chose
+//            NightModeHelper.restoreSavedState(this);
+//        }
 
     }
 

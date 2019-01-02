@@ -103,7 +103,9 @@
     <string name="toastmessage_long_press_playback_started">Відтворення розпочато</string>
     <string name="toastmessage_long_press_change_icon">Зміна піктограми станції (виявлено довге натискання)</string>
     <string name="toastmessage_long_press_change_name">Перейменувати станцію (виявлено тривале натискання)</string>
-    <string name="toastmessage_long_press_night_mode_switch">Перемикач нічного режиму (виявлено тривале натискання)</string>
+    <string name="toastmessage_theme_night">Switching to Night mode (long press detected)</string>
+    <string name="toastmessage_theme_day">Switching to Day mode (long press detected)</string>
+    <string name="toastmessage_theme_follow_system">Switching to Follow System Setting mode (long press detected)</string>
     <string name="toastmessage_shortcut_created">Посилання створено.</string>
     <string name="toastmessage_shortcut_not_created">Ярлик не створено. Цей пристрій не дозволяє створювати ярлики.</string>
     <string name="toastmessage_list_refreshed">Перезавантаження списку станцій.</string>

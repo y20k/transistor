@@ -26,7 +26,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.media.AudioManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
@@ -463,7 +462,6 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
             }
         });
 
-
         mPlayerStationImage.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
@@ -473,7 +471,6 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
                 return true;
             }
         });
-
 
         mPlayerStationName.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -485,25 +482,11 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
             }
         });
 
-
-        // secret night mode switch - pre-Android P (28)
-        if (Build.VERSION.SDK_INT < 28) {
-            mPlayerSheetStationOptionsButton.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    longPressFeedback(R.string.toastmessage_long_press_night_mode_switch);
-                    NightModeHelper.switchToOpposite(mActivity);
-                    mActivity.recreate();
-                    return true;
-                }
-            });
-        }
-
         mPlayerSheetStationOptionsButton.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                longPressFeedback(R.string.toastmessage_long_press_night_mode_switch);
-                NightModeHelper.switchToOpposite(mActivity);
+                longPressFeedback(EMPTY_STRING_RESOURCE);
+                NightModeHelper.switchMode(mActivity);
                 mActivity.recreate();
                 return true;
             }
@@ -914,7 +897,9 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
     /* Inform user and give haptic feedback (vibration) */
     private void longPressFeedback(int stringResource) {
         // inform user
-        Toast.makeText(mActivity, stringResource, Toast.LENGTH_LONG).show();
+        if (stringResource != EMPTY_STRING_RESOURCE) {
+            Toast.makeText(mActivity, stringResource, Toast.LENGTH_LONG).show();
+        }
         // vibrate 50 milliseconds
         Vibrator v = (Vibrator) mActivity.getSystemService(Context.VIBRATOR_SERVICE);
         v.vibrate(50);

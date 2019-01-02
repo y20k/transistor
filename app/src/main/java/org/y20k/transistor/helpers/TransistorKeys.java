@@ -133,6 +133,7 @@ public interface TransistorKeys {
     long FIFTEEN_MINUTES = 900000; // equals 15 minutes
     int PLAYER_SERVICE_NOTIFICATION_ID = 1;
     int REQUEST_LOAD_IMAGE = 1;
+    int EMPTY_STRING_RESOURCE = -1;
     String NOTIFICATION_CHANNEL_ID_PLAYBACK_CHANNEL ="notificationChannelIdPlaybackChannel";
     String SHOUTCAST_STREAM_TITLE_HEADER = "StreamTitle";
 
