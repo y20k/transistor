@@ -26,6 +26,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.media.AudioTrack;
+import android.media.audiofx.AudioEffect;
+import android.media.audiofx.Equalizer;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -53,7 +55,9 @@ import com.google.android.exoplayer2.PlaybackParameters;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.Timeline;
+import com.google.android.exoplayer2.analytics.AnalyticsListener;
 import com.google.android.exoplayer2.audio.AudioAttributes;
+import com.google.android.exoplayer2.audio.AudioRendererEventListener;
 import com.google.android.exoplayer2.metadata.Metadata;
 import com.google.android.exoplayer2.metadata.MetadataOutput;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
@@ -109,7 +113,7 @@ import static org.y20k.transistor.helpers.StationListProvider.MEDIA_ID_ROOT;
 /**
  * PlayerService class
  */
-public final class PlayerService extends MediaBrowserServiceCompat implements TransistorKeys, AudioFocusAwarePlayer, Player.EventListener, MetadataOutput {
+public final class PlayerService extends MediaBrowserServiceCompat implements TransistorKeys, AudioFocusAwarePlayer, Player.EventListener, MetadataOutput, AnalyticsListener {
 
     /* Define log tag */
     private static final String LOG_TAG = PlayerService.class.getSimpleName();
@@ -487,6 +491,16 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
 
     @Override
+    public void onAudioSessionId(EventTime eventTime, int audioSessionId) {
+        // integrate with system equalizer (AudioFX)
+        final Intent intent = new Intent(AudioEffect.ACTION_OPEN_AUDIO_EFFECT_CONTROL_SESSION);
+        intent.putExtra(AudioEffect.EXTRA_AUDIO_SESSION, audioSessionId);
+        intent.putExtra(AudioEffect.EXTRA_PACKAGE_NAME, getPackageName());
+        sendBroadcast(intent);
+    }
+
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
 
@@ -506,9 +520,10 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             mSession.release();
         }
 
-        // release player
+        // release player and analytic listener
         if (mPlayer != null) {
             releasePlayer();
+            mPlayer.removeAnalyticsListener(this);
         }
 
         // cancel notification
@@ -697,6 +712,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
         if (mPlayer != null) {
             releasePlayer();
+            mPlayer.removeAnalyticsListener(this);
         }
 
         // create default TrackSelector
@@ -707,6 +723,9 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
         // create the player
         mPlayer = ExoPlayerFactory.newSimpleInstance(this, new DefaultRenderersFactory(getApplicationContext()), trackSelector, loadControl);
+
+        // start listening for audio session id
+        mPlayer.addAnalyticsListener(this);
     }
 
 
