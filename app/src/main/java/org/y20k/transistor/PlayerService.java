@@ -27,7 +27,6 @@ import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.media.audiofx.AudioEffect;
-import android.media.audiofx.Equalizer;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -57,7 +56,6 @@ import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.analytics.AnalyticsListener;
 import com.google.android.exoplayer2.audio.AudioAttributes;
-import com.google.android.exoplayer2.audio.AudioRendererEventListener;
 import com.google.android.exoplayer2.metadata.Metadata;
 import com.google.android.exoplayer2.metadata.MetadataOutput;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
@@ -520,10 +518,12 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             mSession.release();
         }
 
-        // release player and analytic listener
+        // remove analytics listener
+        mPlayer.removeAnalyticsListener(this);
+
+        // release player
         if (mPlayer != null) {
             releasePlayer();
-            mPlayer.removeAnalyticsListener(this);
         }
 
         // cancel notification
@@ -712,7 +712,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
         if (mPlayer != null) {
             releasePlayer();
-            mPlayer.removeAnalyticsListener(this);
         }
 
         // create default TrackSelector
