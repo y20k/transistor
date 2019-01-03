@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- activities -->
     <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
@@ -103,9 +103,9 @@
     <string name="toastmessage_long_press_playback_started">Erreprodukzioa hasi da (sakatze luzea atzeman da)</string>
     <string name="toastmessage_long_press_change_icon">Aldatu irratiaren ikonoa (Sakatze luzea antzeman da)</string>
     <string name="toastmessage_long_press_change_name">Aldatu irratiaren izena (Sakatze luzea antzeman da)</string>
-    <string name="toastmessage_theme_night">Switching to Night mode (long press detected)</string>
-    <string name="toastmessage_theme_day">Switching to Day mode (long press detected)</string>
-    <string name="toastmessage_theme_follow_system">Switching to Follow System Setting mode (long press detected)</string>
+    <string name="toastmessage_theme_night">Gau modura aldatzen (luze sakatzea antzeman da)</string>
+    <string name="toastmessage_theme_day">Egun modura aldatzen (luze sakatzea antzeman da)</string>
+    <string name="toastmessage_theme_follow_system">Sistemaren ezarpenetan aukeratutako modura aldatzen (luze sakatzea antzeman da)</string>
     <string name="toastmessage_shortcut_created">Lasterbidea sortu da.</string>
     <string name="toastmessage_shortcut_not_created">Ez da lasterbidea sortu. Gailu honek ez du lasterbideak sortzea ahalbidetzen.</string>
     <string name="toastmessage_list_refreshed">Irratien zerrenda birkargatzen.</string>
