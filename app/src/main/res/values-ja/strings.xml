@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- activities -->
     <string name="app_name">トランジスター</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
@@ -33,7 +33,7 @@
     <string name="descr_station_name_example">FM の例</string>
     <string name="descr_station_metadata_example">アーティスト - タイトル</string>
     <string name="descr_station_stream_loading">ストリームのロード中 …</string>
-    <string name="descr_playback_button">ゴールドの再生ボタン</string>
+    <string name="descr_playback_button">再生ボタン</string>
     <string name="descr_playback_indicator">再生中のインジケーター</string>
     <string name="descr_playback_indicator_started">再生中のインジケーター</string>
     <string name="descr_timer_icon">スリープタイマー アイコン</string>
