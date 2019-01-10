@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- activities -->
     <string name="app_name">Transistor</string>
@@ -26,14 +26,14 @@
     <!-- descriptions -->
     <string name="descr_app_icon">Ícone do aplicativo representando um rádio antigo</string>
     <string name="descr_arrow_upward">Seta para cima</string>
-    <string name="descr_station_options_button">Mostrar opções para estação</string>
-    <string name="descr_station_icon">Ícone da estação</string>
-    <string name="descr_station_name">Nome da estação</string>
+    <string name="descr_station_options_button">Mostrar opções para estação de rádio</string>
+    <string name="descr_station_icon">Ícone da estação de rádio</string>
+    <string name="descr_station_name">Nome da estação de rádio</string>
     <string name="descr_station_metadata">Metadados (Artista / Título ) da estação sintonizada</string>
     <string name="descr_station_name_example">Exemplo FM</string>
     <string name="descr_station_metadata_example">Artista - Título</string>
     <string name="descr_station_stream_loading">Carregando transmissão …</string>
-    <string name="descr_playback_button">Botão dourado de reprodução</string>
+    <string name="descr_playback_button">Botão de reprodução</string>
     <string name="descr_playback_indicator">Indicador de reprodução</string>
     <string name="descr_playback_indicator_started">Indicador de reprodução</string>
     <string name="descr_timer_icon">Ícone do temporizador</string>
@@ -65,7 +65,7 @@
     <string name="dialog_add_station_button">Adicionar</string>
     <string name="dialog_add_station_input_hint">Colar link para transmissão</string>
     <string name="dialog_add_station_message">Adicionar nova estação</string>
-    <string name="dialog_add_station_howto">Adicione arquivos de transmissão codificados em MP3, AAC e Ogg / Opus, ou arquivos encapsulados em a PLS ou M3U. Você também pode adicionar novas estações tocando nos links de transmissão (.pls ou .m3u) em seu navegador.</string>
+    <string name="dialog_add_station_howto">Adicione arquivos de transmissão codificados em MP3, AAC e Ogg / Opus, ou arquivos encapsulados em PLS ou M3U. Você também pode adicionar novas estações tocando nos links de transmissão (.pls ou .m3u) em seu navegador.</string>
     <string name="dialog_delete_station_message">Remover transmissão</string>
     <string name="dialog_button_delete">Remover</string>
     <string name="dialog_rename_station_input_hint">Insira um novo nome</string>
@@ -80,7 +80,7 @@
     <string name="dialog_error_message_default">Um erro ocorreu</string>
     <string name="dialog_error_details_button_default">Mostrar detalhes</string>
     <string name="dialog_error_details_default">Detalhes indisponíveis</string>
-    <string name="dialog_error_details_write">Esta estação é provavelmente uma duplicata ou então você pode querer verificar seu armazenamento externo.</string>
+    <string name="dialog_error_details_write">Esta estação é provavelmente uma duplicata ou você pode querer verificar seu armazenamento externo.</string>
     <string name="dialog_error_title_fetch_download">Problema com o download</string>
     <string name="dialog_error_title_fetch_read">Ler problema</string>
     <string name="dialog_error_title_fetch_write">Escrever um problema</string>
@@ -103,9 +103,9 @@
     <string name="toastmessage_long_press_playback_started">Iniciando reprodução (toque longo detectado)</string>
     <string name="toastmessage_long_press_change_icon">"Mudar ícone da estação  (toque longo detectado)"</string>
     <string name="toastmessage_long_press_change_name">Renomear estação (toque longo detectado)</string>
-    <string name="toastmessage_theme_night">Switching to Night mode (long press detected)</string>
-    <string name="toastmessage_theme_day">Switching to Day mode (long press detected)</string>
-    <string name="toastmessage_theme_follow_system">Switching to Follow System Setting mode (long press detected)</string>
+    <string name="toastmessage_theme_night">Mudando para Modo Noturno (toque longo detectado)</string>
+    <string name="toastmessage_theme_day">Mudando para Modo Diurno (toque longo detectado)</string>
+    <string name="toastmessage_theme_follow_system">Mudando para Seguir Configuração do Sistema (toque longo detectado)</string>
     <string name="toastmessage_shortcut_created">Atalho criado.</string>
     <string name="toastmessage_shortcut_not_created">Atalho não criado. Este dispositivo não permite a criação de atalhos.</string>
     <string name="toastmessage_list_refreshed">Recarregando lista de estações.</string>
@@ -121,7 +121,7 @@
     <string name="toastalert_rename_unsuccessful">Não foi possível renomear a estação. Por favor, escolha um nome diferente.</string>
     <string name="toastalert_delete_successful">A estação foi removida.</string>
     <string name="toastalert_no_external_storage">Não foi possível acessar o armazenamento externo.</string>
-    <string name="toastalert_no_image_picker">No image picker available. Consider installing a Gallery application.</string>
+    <string name="toastalert_no_image_picker">Seletor de imagem indisponível. Considere instalar um aplicativo de Galeria.</string>
     <string name="toastalert_headphones_unplugged">Fones de ouvido desconectados. A reprodução parou.</string>
     <string name="toastalert_permission_denied">Permissão negada:</string>
     <string name="toastalert_station_not_found">Não foi possível encontrar a estação.</string>
