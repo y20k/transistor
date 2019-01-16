@@ -43,8 +43,8 @@ import android.widget.Toast;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.snackbar.Snackbar;
 
-import org.y20k.transistor.adapter.CollectionAdapter;
-import org.y20k.transistor.adapter.CollectionViewModel;
+import org.y20k.transistor.collection.CollectionAdapter;
+import org.y20k.transistor.collection.CollectionViewModel;
 import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.DialogRename;
 import org.y20k.transistor.helpers.ImageHelper;

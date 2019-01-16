@@ -22,7 +22,7 @@ import android.os.Environment;
 import android.view.View;
 import android.widget.Toast;
 
-import org.y20k.transistor.adapter.CollectionViewModel;
+import org.y20k.transistor.collection.CollectionViewModel;
 import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.DialogError;
 import org.y20k.transistor.helpers.ImageHelper;

@@ -11,7 +11,7 @@
  * http://opensource.org/licenses/MIT
  */
 
-package org.y20k.transistor.adapter;
+package org.y20k.transistor.collection;
 
 import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.TransistorKeys;

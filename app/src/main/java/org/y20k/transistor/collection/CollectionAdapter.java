@@ -12,7 +12,7 @@
  */
 
 
-package org.y20k.transistor.adapter;
+package org.y20k.transistor.collection;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;

@@ -11,7 +11,7 @@
  * http://opensource.org/licenses/MIT
  */
 
-package org.y20k.transistor.adapter;
+package org.y20k.transistor.collection;
 
 import android.app.Application;
 import android.content.Context;
