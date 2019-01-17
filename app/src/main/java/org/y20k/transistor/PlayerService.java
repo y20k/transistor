@@ -550,7 +550,11 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
     /* Checks if playback is running */
     public static boolean isPlaybackRunning() {
-        return mPlayer.getPlayWhenReady();
+        if (mPlayer == null) {
+            return false;
+        } else {
+            return mPlayer.getPlayWhenReady();
+        }
     }
 
 
