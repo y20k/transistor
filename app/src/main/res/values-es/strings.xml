@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- activities -->
     <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
@@ -24,8 +24,8 @@
     <string name="header_howto">Cómo utilizar</string>
 
     <!-- descriptions -->
-    <string name="descr_app_icon">App icon depicting an old radio</string>
-    <string name="descr_arrow_upward">Arrow facing upward</string>
+    <string name="descr_app_icon">Icono de aplicación que muestra una radio antigua</string>
+    <string name="descr_arrow_upward">Flecha hacia arriba</string>
     <string name="descr_station_options_button">Mostrar las opciones para la emisora de radio</string>
     <string name="descr_station_icon">Icono de emisora de radio</string>
     <string name="descr_station_name">Nombre de emisora de radio</string>
@@ -33,7 +33,7 @@
     <string name="descr_station_name_example">Ejemplo FM</string>
     <string name="descr_station_metadata_example">Artista - Título</string>
     <string name="descr_station_stream_loading">Cargando retransmisión …</string>
-    <string name="descr_playback_button">Botón dorado de reproducción</string>
+    <string name="descr_playback_button">Botón de reproducción</string>
     <string name="descr_playback_indicator">Indicador para el funcionamiento de la reproducción</string>
     <string name="descr_playback_indicator_started">Indicador para el funcionamiento de la reproducción</string>
     <string name="descr_timer_icon">Icono de temporizador de reposo</string>
@@ -45,7 +45,7 @@
     <string name="descr_player_sheet_p_station_metadata">Metadatos de la emisora de radio seleccionada</string>
     <string name="descr_player_sheet_p_stream_url">Enlace Stream de la emisora de radio seleccionada</string>
     <string name="descr_list_add_new">Añadir una nueva emisora</string>
-    <string name="descr_list_add_select_stream_dropdown">Dropdown menu that hold a selection of streams</string>
+    <string name="descr_list_add_select_stream_dropdown">Menú desplegable que contiene una selección de retransmisiones</string>
 
     <!-- player -->
     <string name="player_sheet_h1_details">Detalles</string>
@@ -71,9 +71,9 @@
     <string name="dialog_rename_station_input_hint">Introducir un nuevo nombre</string>
     <string name="dialog_rename_station_message">Renombrar emisora</string>
     <string name="dialog_button_rename">Renombrar</string>
-    <string name="dialog_add_station_choose_stream_heading">Multiple streams found</string>
-    <string name="dialog_add_station_choose_stream_message">Please select a stream</string>
-    <string name="dialog_add_station_choose_stream_button">Select</string>
+    <string name="dialog_add_station_choose_stream_heading">Múltiples retransmisiones encontrados</string>
+    <string name="dialog_add_station_choose_stream_message">Por favor selecione una retrasmisión</string>
+    <string name="dialog_add_station_choose_stream_button">Seleccionar</string>
 
     <!-- error dialogs -->
     <string name="dialog_error_title_default">Error</string>
@@ -101,11 +101,11 @@
     <string name="toastmessage_add_open_file_started">Abriendo archivo.</string>
     <string name="toastmessage_long_press_playback_stopped">Reproducción detenida (detectada pulsación larga)</string>
     <string name="toastmessage_long_press_playback_started">Reproducción empezada (detectada pulsación larga)</string>
-    <string name="toastmessage_long_press_change_icon">Change station icon (long press detected)</string>
-    <string name="toastmessage_long_press_change_name">Rename station (long press detected)</string>
-    <string name="toastmessage_theme_night">Switching to Night mode (long press detected)</string>
-    <string name="toastmessage_theme_day">Switching to Day mode (long press detected)</string>
-    <string name="toastmessage_theme_follow_system">Switching to Follow System Setting mode (long press detected)</string>
+    <string name="toastmessage_long_press_change_icon">Cambiar el icono de la emisora (pulsación larga detectada)</string>
+    <string name="toastmessage_long_press_change_name">Renombrar emisora (se detecta una pulsación larga)</string>
+    <string name="toastmessage_theme_night">Cambio al modo Noche (se detecta una pulsación prolongada)</string>
+    <string name="toastmessage_theme_day">Cambio al modo Día (se detecta una pulsación prolongada)</string>
+    <string name="toastmessage_theme_follow_system">Cambiar al modo de ajuste del sistema (se detecta una pulsación prolongada)</string>
     <string name="toastmessage_shortcut_created">Acceso directo creado.</string>
     <string name="toastmessage_shortcut_not_created">Atajo no creado. Este dispositivo no permite la creación de accesos directos.</string>
     <string name="toastmessage_list_refreshed">Recargando lista de emisoras.</string>
@@ -121,7 +121,7 @@
     <string name="toastalert_rename_unsuccessful">No se ha podido renombrar la emisora. Por favor elija un nombre diferente.</string>
     <string name="toastalert_delete_successful">La emisora fue borrada.</string>
      <string name="toastalert_no_external_storage">No se ha podido acceder al almacenamiento externo.</string>
-    <string name="toastalert_no_image_picker">No image picker available. Consider installing a Gallery application.</string>
+    <string name="toastalert_no_image_picker">No hay ningún selector de imágenes disponible. Considere la posibilidad de instalar una aplicación de Galería.</string>
     <string name="toastalert_headphones_unplugged">Auriculares desconectados. Reproducción detenida.</string>
     <string name="toastalert_permission_denied">Permiso denegado:</string>
     <string name="toastalert_station_not_found">No se puede encontrar la emisora.</string>
