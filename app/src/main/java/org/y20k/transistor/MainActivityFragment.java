@@ -466,7 +466,9 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
             @Override
             public boolean onLongClick(View v) {
                 // show metadata in toast
-                Toast.makeText(mActivity, mPlayerSheetMetadata.getText(), Toast.LENGTH_LONG).show();
+                if (mPlayerSheetMetadata.getText().length() > 1) {
+                    Toast.makeText(mActivity, mPlayerSheetMetadata.getText(), Toast.LENGTH_LONG).show();
+                }
                 return true;
             }
         });

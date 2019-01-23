@@ -7,6 +7,7 @@
     <color name="app_onboarding_icons">@color/transistor_grey_dark</color>
 
     <color name="player_sheet_background_main">@color/transistor_grey_darker</color>
+    <color name="player_sheet_background_main_border">@color/transistor_grey_darker</color>
     <color name="player_sheet_text_main">@color/transistor_white</color>
     <color name="player_sheet_background_details">@color/transistor_grey_dark</color>
     <color name="player_sheet_text_details">@color/transistor_white</color>

@@ -1,8 +1,8 @@
 README
 ======
 
-Transistor - Radio App for Android
-----------------------------------
+Transistor - Simple Radio App
+-----------------------------
 
 **Version 3.1.x ("John, I’m Only Dancing")**
 
