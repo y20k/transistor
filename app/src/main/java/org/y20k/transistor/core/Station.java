@@ -171,15 +171,14 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
                 mStationFetchResults.putString(RESULT_FILE_CONTENT, "\n[File probably does not contain a valid streaming URL.]");
                 mStationFetchResults.putInt(RESULT_FETCH_STATUS, CONTAINS_NO_STREAM);
             }
-
-            // content type is none of the above
+        // content type is none of the above
         } else if (contentType != null && contentType.type != null) {
             // save results and return
             mStationFetchResults.putParcelable(RESULT_STREAM_TYPE, contentType);
             mStationFetchResults.putInt(RESULT_FETCH_STATUS, CONTAINS_NO_STREAM);
             return;
 
-            // no content type
+        // no content type
         } else {
             // save error flag in results and return
             mStationFetchResults.putInt(RESULT_FETCH_STATUS, CONTAINS_NO_STREAM);
@@ -468,7 +467,7 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
             if (contentTypeHeader != null) {
                 LogHelper.i(LOG_TAG, "Determining content type. Result: " + contentTypeHeader);
                 Matcher matcher = CONTENT_TYPE_PATTERN.matcher(contentTypeHeader.trim().toLowerCase(Locale.ENGLISH));
-                if (matcher.matches()) {
+                if (matcher.find()) {
                     contentType = new ContentType();
                     String contentTypeString = matcher.group(1);
                     String charsetString = matcher.group(3);
@@ -496,11 +495,11 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
                             LogHelper.i(LOG_TAG, "Unable to get file name from \"Content-Disposition\" header field.");
                         }
                     }
-                    connection.disconnect();
                 }
             } else {
                 LogHelper.w(LOG_TAG, "Unable to determine content type. Type is null.");
             }
+            connection.disconnect();
         } catch (Exception e) {
             LogHelper.e(LOG_TAG, "Unable to determine content type. HTTP connection failed");
             e.printStackTrace();

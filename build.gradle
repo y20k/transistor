@@ -37,7 +37,7 @@ allprojects {
         mediaVersion = '1.0.0'
         livecycleVersion = '2.0.0'
 
-        exoPlayerVersion = '2.9.3'
+        exoPlayerVersion = '2.9.4'
         junit_version = "4.12"
     }
 }

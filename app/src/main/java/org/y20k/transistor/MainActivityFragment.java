@@ -462,6 +462,24 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
             }
         });
 
+        mPlayerSheetMetadata.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                // show metadata in toast
+                Toast.makeText(mActivity, mPlayerSheetMetadata.getText(), Toast.LENGTH_LONG).show();
+                return true;
+            }
+        });
+
+        mPlayerSheetStreamUrl.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                // show stream url in toast
+                Toast.makeText(mActivity, mPlayerSheetStreamUrl.getText(), Toast.LENGTH_LONG).show();
+                return true;
+            }
+        });
+
         mPlayerStationImage.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
