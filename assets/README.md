@@ -17,4 +17,4 @@ How to create Transitor's [Adaptive Icon](https://developer.android.com/guide/pr
 ... have been taken on a OnePlus 5
 
 ## F-Droid Assets
-F-Droid assets are found in the folder **metadata/<locale>/**. More about adding assets -> [All About Descriptions, Graphics, and Screenshots](https://f-droid.org/en/docs/All_About_Descriptions_Graphics_and_Screenshots/).
+F-Droid assets are found in the folder **metadata/<locale>/**.
