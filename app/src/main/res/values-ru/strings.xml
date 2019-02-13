@@ -101,11 +101,11 @@
     <string name="toastmessage_add_open_file_started">Открытие файла.</string>
     <string name="toastmessage_long_press_playback_stopped">Воспроизведение остановлено</string>
     <string name="toastmessage_long_press_playback_started">Начинаю воспроизведение радиостанции</string>
-    <string name="toastmessage_long_press_change_icon">Изменение иконки станции (long press detected)</string>
-    <string name="toastmessage_long_press_change_name">Переименование станции (long press detected)</string>
+    <string name="toastmessage_long_press_change_icon">Изменение иконки станции (обнаружено долгое нажатие)</string>
+    <string name="toastmessage_long_press_change_name">Переименование станции (обнаружено долгое нажатие)</string>
     <string name="toastmessage_theme_night">Переключение в ночной режим (обнаружено долгое нажатие)</string>
     <string name="toastmessage_theme_day">Переключение в дневной режим (обнаружено долгое нажатие)</string>
-    <string name="toastmessage_theme_follow_system">Switching to Follow System Setting mode (long press detected)</string>
+    <string name="toastmessage_theme_follow_system">Тема зависит от системных настроек (обнаружено долгое нажатие)</string>
     <string name="toastmessage_shortcut_created">Ярлык создан.</string>
     <string name="toastmessage_shortcut_not_created">Ярлык не создан. Устройство не позволяет создавать ярлыки.</string>
     <string name="toastmessage_list_refreshed">Перезагрузка списка станций.</string>
@@ -121,7 +121,7 @@
     <string name="toastalert_rename_unsuccessful">Невозможно переименовать станцию. Пожалуйста, выберите другое имя.</string>
     <string name="toastalert_delete_successful">Станция была удалена.</string>
     <string name="toastalert_no_external_storage">Нет доступа к внешнему накопителю.</string>
-    <string name="toastalert_no_image_picker">No image picker available. Consider installing a Gallery application.</string>
+    <string name="toastalert_no_image_picker">Нет приложения для выбора изображений. Установите приложение Галерея.</string>
     <string name="toastalert_headphones_unplugged">Наушники отключили. Воспроизведение остановлено.</string>
     <string name="toastalert_permission_denied">Доступ запрещён:</string>
     <string name="toastalert_station_not_found">Невозможно найти станцию.</string>
