@@ -1,2 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">ਟਰਾਂਜ਼ਿਸਟਰ</string>
+    <string name="shortcut_last_station_short_label">ਪਿਛਲਾ ਸਟੇਸ਼ਨ</string>
+    <string name="shortcut_last_station_long_label">ਪਿਛਲਾ ਸਟੇਸ਼ਨ ਸ਼ੁਰੂ ਕਰੋ</string>
+    <string name="shortcut_last_station_disabled_message">ਪਿਛਲਾ ਸਟੇਸ਼ਨ ਸ਼ੁਰੂ ਕਰਨ ਵਾਲਾ ਸ਼ਾਰਟਕਟ ਬੰਦ ਹੈ ।</string>
+    <string name="menu_about">ਐੱਪ ਬਾਰੇ</string>
+    <string name="menu_howto">ਇਹਨੂੰ ਕਿਵੇਂ ਵਰਤਣਾ ਹੈ</string>
+    <string name="menu_refresh">ਸੂਚੀ ਤਾਜ਼ਾ ਕਰੋ</string>
+    <string name="menu_timer">ਨੀਂਦ ਟਾਈਮਰ</string>
+    <string name="menu_icon">ਆਈਕਾਨ ਬਦਲੋ</string>
+</resources>
