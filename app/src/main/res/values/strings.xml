@@ -33,7 +33,8 @@
     <string name="descr_station_name_example">Example FM</string>
     <string name="descr_station_metadata_example">Artist - Title</string>
     <string name="descr_station_stream_loading">Loading stream …</string>
-    <string name="descr_playback_button">Playback button</string>
+    <string name="descr_playback_button_play">Play</string>
+    <string name="descr_playback_button_stop">Stop</string>
     <string name="descr_playback_indicator">Playing station</string>
     <string name="descr_playback_indicator_started">Indicator for running playback</string>
     <string name="descr_timer_icon">Sleep timer</string>

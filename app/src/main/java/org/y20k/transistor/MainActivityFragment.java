@@ -593,14 +593,17 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
             switch (station.getPlaybackState()) {
                 case PLAYBACK_STATE_STOPPED: {
                     mPlayerPlaybackButton.setImageResource(R.drawable.ic_play_arrow_white_36dp);
+                    mPlayerPlaybackButton.setContentDescription(mActivity.getString(R.string.descr_playback_button_play));
                     break;
                 }
                 case PLAYBACK_STATE_LOADING_STATION: {
                     mPlayerPlaybackButton.setImageResource(R.drawable.ic_stop_white_36dp);
+                    mPlayerPlaybackButton.setContentDescription(mActivity.getString(R.string.descr_playback_button_stop));
                     break;
                 }
                 case PLAYBACK_STATE_STARTED: {
                     mPlayerPlaybackButton.setImageResource(R.drawable.ic_stop_white_36dp);
+                    mPlayerPlaybackButton.setContentDescription(mActivity.getString(R.string.descr_playback_button_stop));
                     break;
                 }
             }

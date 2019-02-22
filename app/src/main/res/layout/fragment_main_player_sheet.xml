@@ -50,7 +50,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:background="@drawable/ic_circle_large_56dp"
-        android:contentDescription="@string/descr_playback_button"
+        android:contentDescription="@string/descr_playback_button_play"
         app:layout_constraintEnd_toEndOf="@+id/player_background"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_play_arrow_white_36dp" />
