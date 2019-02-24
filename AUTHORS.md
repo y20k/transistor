@@ -29,6 +29,8 @@ Kabyle version: [SlimaneAmiri](https://github.com/SlimaneAmiri) | [weblate versi
 
 Norwegian version: [comradekingu](https://github.com/comradekingu) | [weblate version history](https://hosted.weblate.org/changes/?lang=nb_NO&project=transistor)
 
+Punjabi version: [Jasdeep Singh Malhotra](https://github.com/cingh-jasdeep) | [weblate version history](https://hosted.weblate.org/changes/?lang=pa&project=transistor)
+
 Polish version: [woodypl](https://github.com/woodypl), [WaldiS](https://hosted.weblate.org/user/WaldiS/) | [weblate version history](https://hosted.weblate.org/changes/?lang=pl&project=transistor)
 
 Portuguese (Brazil) version: [hdmjunior](https://github.com/hdmjunior) |  [weblate version history](https://hosted.weblate.org/changes/?lang=pt_BR&project=transistor)
@@ -36,6 +38,8 @@ Portuguese (Brazil) version: [hdmjunior](https://github.com/hdmjunior) |  [webla
 Russian version: [Boris Timofeev](https://github.com/btimofeev) | [weblate version history](https://hosted.weblate.org/changes/?lang=ru&project=transistor)
 
 Serbian version: [pejakm](https://github.com/pejakm) | [weblate version history](https://hosted.weblate.org/changes/?lang=sr&project=transistor)
+
+Slovak version: [pvagner](https://github.com/pvagner) | [weblate version history](https://hosted.weblate.org/changes/?lang=sk&project=transistor)
 
 Slovenian version: [bungabunga](https://github.com/bungabunga) | [weblate version history](https://hosted.weblate.org/changes/?lang=sl&project=transistor)
 
