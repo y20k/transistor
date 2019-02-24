@@ -8,7 +8,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.0'
+        classpath 'com.android.tools.build:gradle:3.3.1'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -34,10 +34,10 @@ allprojects {
         materialVersion = "1.0.0"
         appcompatVersion = '1.0.2'
         paletteVersion = '1.0.0'
-        mediaVersion = '1.0.0'
+        mediaVersion = '1.0.1'
         livecycleVersion = '2.0.0'
 
-        exoPlayerVersion = '2.9.4'
+        exoPlayerVersion = '2.9.6'
         junit_version = "4.12"
     }
 }
