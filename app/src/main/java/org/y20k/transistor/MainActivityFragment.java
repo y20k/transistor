@@ -414,8 +414,10 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
             public void onClick(View view) {
                 if (mPlayerBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
                     mPlayerBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                    mPlayerSheet.setContentDescription(mActivity.getString(R.string.descr_player_sheet_button_minimize)); // When the sheet is expanded we wish to present it as a button to accessibility services and set our own contentDescription
                 } else {
                     mPlayerBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+ mPlayerSheet.setContentDescription(null); // When the sheed is minimized we wish to use automatically generated contentDescription since there are no focusable controls inside
                 }
             }
         });
@@ -579,10 +581,8 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
         ImageHelper imageHelper = new ImageHelper(station, mActivity);
         Bitmap stationImage = imageHelper.createCircularFramedImage(192);
         mPlayerStationName.setText(station.getStationName());
-        mPlayerStationName.setContentDescription(station.getStationName()); // for accessibility apps like TalkBack
         mPlayerStationImage.setImageBitmap(stationImage);
         mPlayerSheetStreamUrl.setText(station.getStreamUri().toString());
-        mPlayerSheetStreamUrl.setContentDescription(station.getStreamUri().toString()); // for accessibility apps like TalkBack
     }
 
 
@@ -666,10 +666,8 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
                 mPlayerStationMetadata.setVisibility(View.VISIBLE);
             }
             mPlayerStationMetadata.setText(stationMetadata);
-            mPlayerStationMetadata.setContentDescription(stationMetadata); // for accessibility apps like TalkBack
             mPlayerStationMetadata.setSelected(true); // triggers the marquee
             mPlayerSheetMetadata.setText(stationMetadata);
-            mPlayerSheetMetadata.setContentDescription(stationMetadata); // for accessibility apps like TalkBack
             mPlayerSheetMetadata.setSelected(true); // triggers the marquee
         }
     }
@@ -682,10 +680,8 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
         String mimeType = station.getMimeType();
         if (!mimeType.equals("")) {
             mStationDataSheetMimeType.setText(mimeType);
-            mStationDataSheetMimeType.setContentDescription(mimeType); // for accessibility apps like TalkBack
         } else {
             mStationDataSheetMimeType.setText(R.string.player_sheet_p_no_data);
-            mStationDataSheetMimeType.setContentDescription(mActivity.getString(R.string.player_sheet_p_no_data)); // for accessibility apps like TalkBack
         }
 
         // fill and show channel count
@@ -693,10 +689,8 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
         if (channelCount > 0) {
             String channelCountString = String.valueOf(channelCount);
             mStationDataSheetChannelCount.setText(channelCountString);
-            mStationDataSheetChannelCount.setContentDescription(channelCountString); // for accessibility apps like TalkBack
         } else {
             mStationDataSheetChannelCount.setText(R.string.player_sheet_p_no_data);
-            mStationDataSheetChannelCount.setContentDescription(mActivity.getString(R.string.player_sheet_p_no_data)); // for accessibility apps like TalkBack
         }
 
         // fill and show sample rate
@@ -704,10 +698,8 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
         if (sampleRate > 0) {
             String sampleRateString = String.valueOf(sampleRate);
             mStationDataSheetSampleRate.setText(sampleRateString);
-            mStationDataSheetSampleRate.setContentDescription(sampleRateString); // for accessibility apps like TalkBack
         } else {
             mStationDataSheetSampleRate.setText(R.string.player_sheet_p_no_data);
-            mStationDataSheetSampleRate.setContentDescription(mActivity.getString(R.string.player_sheet_p_no_data)); // for accessibility apps like TalkBack
         }
 
 //        // fill and show bit rate
