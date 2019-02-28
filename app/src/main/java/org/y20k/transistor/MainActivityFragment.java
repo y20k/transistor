@@ -275,6 +275,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
             return false;
         } else {
             mPlayerBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        mPlayerSheet.setContentDescription(null); // When the sheet is minimized we wish to use automatically generated contentDescription since there are no focusable controls inside
             return true;
         }
     }
@@ -417,7 +418,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
                     mPlayerSheet.setContentDescription(mActivity.getString(R.string.descr_player_sheet_button_minimize)); // When the sheet is expanded we wish to present it as a button to accessibility services and set our own contentDescription
                 } else {
                     mPlayerBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
- mPlayerSheet.setContentDescription(null); // When the sheed is minimized we wish to use automatically generated contentDescription since there are no focusable controls inside
+ mPlayerSheet.setContentDescription(null); // When the sheet is minimized we wish to use automatically generated contentDescription since there are no focusable controls inside
                 }
             }
         });
@@ -539,6 +540,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
             // start player service using intent
             startPlayback(station);
             mPlayerBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            mPlayerSheet.setContentDescription(null); // When the sheet is minimized we wish to use automatically generated contentDescription since there are no focusable controls inside
             // if long press -> inform user
             if (isLongPress) {
                 longPressFeedback(R.string.toastmessage_long_press_playback_started);
