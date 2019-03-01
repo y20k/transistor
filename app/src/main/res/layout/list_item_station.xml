@@ -27,7 +27,6 @@
         android:id="@+id/list_item_textview"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/descr_station_name"
         android:ellipsize="end"
         android:paddingEnd="4dp"
         android:paddingStart="24dp"

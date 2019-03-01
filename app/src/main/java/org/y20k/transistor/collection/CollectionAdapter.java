@@ -151,9 +151,8 @@ public final class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.V
             // set station image
             stationViewHolder.getStationImageView().setImageBitmap(createStationImageBitmap(station));
 
-            // set station name and content description (for accessibility apps like TalkBack)
+            // set station name
             stationViewHolder.getStationNameView().setText(station.getStationName());
-            stationViewHolder.getStationNameView().setContentDescription(station.getStationName());
 
             // set playback indicator - in phone view only
             togglePlaybackIndicator(stationViewHolder, station);
