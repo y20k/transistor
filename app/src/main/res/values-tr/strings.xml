@@ -33,8 +33,8 @@
     <string name="descr_station_name_example">Örnek FM</string>
     <string name="descr_station_metadata_example">Sanatçı - Başlık</string>
     <string name="descr_station_stream_loading">Yayın yükleniyor…</string>
-    <string name="descr_playback_button_play">Play</string>
-    <string name="descr_playback_button_stop">Stop</string>
+    <string name="descr_playback_button_play"></string>
+    <string name="descr_playback_button_stop"></string>
     <string name="descr_playback_indicator">Yürütülen oynatma için gösterge</string>
     <string name="descr_playback_indicator_started">Yürütülen oynatma için gösterge</string>
     <string name="descr_timer_icon">Uyku zamanlayıcı simgesi</string>

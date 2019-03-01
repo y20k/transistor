@@ -33,8 +33,8 @@
     <string name="descr_station_name_example">Например FM</string>
     <string name="descr_station_metadata_example">Исполнитель - Название</string>
     <string name="descr_station_stream_loading">Загрузка потока …</string>
-    <string name="descr_playback_button_play">Play</string>
-    <string name="descr_playback_button_stop">Stop</string>
+    <string name="descr_playback_button_play"></string>
+    <string name="descr_playback_button_stop"></string>
     <string name="descr_playback_indicator">Индикатор воспроизведения</string>
     <string name="descr_playback_indicator_started">Индикатор воспроизведения</string>
     <string name="descr_timer_icon">Иконка таймера сна</string>

@@ -34,8 +34,8 @@
     <string name="descr_station_name_example">示例 FM</string>
     <string name="descr_station_metadata_example">Artist - Title</string>
     <string name="descr_station_stream_loading">Loading stream …</string>
-    <string name="descr_playback_button_play">Play</string>
-    <string name="descr_playback_button_stop">Stop</string>
+    <string name="descr_playback_button_play"></string>
+    <string name="descr_playback_button_stop"></string>
     <string name="descr_playback_indicator">播放中指示器</string>
     <string name="descr_playback_indicator_started">播放中指示器</string>
     <string name="descr_timer_icon">Sleep timer icon</string>

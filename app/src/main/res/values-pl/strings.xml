@@ -33,8 +33,8 @@
     <string name="descr_station_name_example">Przykład FM</string>
     <string name="descr_station_metadata_example">Wykonawca - Tytuł</string>
     <string name="descr_station_stream_loading">Ładowanie strumienia …</string>
-    <string name="descr_playback_button_play">Play</string>
-    <string name="descr_playback_button_stop">Stop</string>
+    <string name="descr_playback_button_play"></string>
+    <string name="descr_playback_button_stop"></string>
     <string name="descr_playback_indicator">Wskaźnik odtwarzania</string>
     <string name="descr_playback_indicator_started">Wskaźnik odtwarzania</string>
     <string name="descr_timer_icon">Ikona wyłącznika czasowego</string>
