@@ -9,52 +9,32 @@
     <string name="shortcut_last_station_disabled_message">Η συντόμευση για την αναπαραγωγή του τελευταίου σταθμού έχει απενεργοποιηθεί.</string>
 
     <!-- menu entries -->
-    <string name="menu_about">Σχετικά με</string>
-    <string name="menu_howto">Οδηγίες χρήσης</string>
-    <string name="menu_refresh">Ανανέωση της λίστας</string>
-    <string name="menu_timer">Χρονοδιακόπτης νανουρίσματος</string>
     <string name="menu_icon">Αλλαγή εικονιδίου</string>
-    <string name="menu_add">Προσθήκη</string>
     <string name="menu_delete">Διαγραφή</string>
     <string name="menu_rename">Μετονομασία</string>
     <string name="menu_shortcut">Τοποθέτηση στην Σπιτική οθόνη</string>
 
-    <!-- headers -->
-    <string name="header_about">Σχετικά με</string>
-    <string name="header_howto">Οδηγίες χρήσης</string>
-
     <!-- descriptions -->
     <string name="descr_app_icon">App icon depicting an old radio</string>
-    <string name="descr_arrow_upward">Arrow facing upward</string>
     <string name="descr_station_options_button">Προβολή των επιλογών για το ραδιοσταθμό</string>
-    <string name="descr_station_icon">Εικονίδιο του ραδιοσταθμού</string>
-    <string name="descr_station_name">Το όνομα του ραδιοσταθμού</string>
-    <string name="descr_station_metadata">Μεταδεδομένα (Καλλιτέχνης/ Τίτλος) του ραδιοσταθμού που παίζει τώρα</string>
     <string name="descr_station_name_example">Παράδειγμα FM</string>
     <string name="descr_station_metadata_example">Καλλιτέχνης - Τίτλος</string>
     <string name="descr_station_stream_loading">Φορτώνεται η ροή …</string>
     <string name="descr_playback_button_play"></string>
     <string name="descr_playback_button_stop"></string>
     <string name="descr_playback_indicator">Ένδειξη για την κατάσταση της αναπαραγωγής</string>
-    <string name="descr_playback_indicator_started">Ένδειξη για την κατάσταση της αναπαραγωγής</string>
     <string name="descr_timer_icon">Sleep timer icon</string>
-    <string name="descr_timer_indicator_started">Ένδειξη για το τρέξιμο του χρονοδιακόπτη νανουρίσματος</string>
-    <string name="descr_player_sheet_button_expand">Button to expand and minimize the radio player</string>
-    <string name="descr_player_sheet_information_icon">Εικονίδιο Πληροφοριών</string>
+    <string name="descr_player_sheet_button_minimize"></string>
     <string name="descr_player_sheet_content_copy_icon">Εικονίδιο αντιγραφής του περιεχομένου</string>
-    <string name="descr_player_sheet_p_station_name">Το όνομα του επιλεγμένου ραδιοσταθμού</string>
-    <string name="descr_player_sheet_p_station_metadata">Μεταδεδομένα από τον επιλεγμένο ραδιοσταθμό</string>
     <string name="descr_player_sheet_p_stream_url">Ο δεσμός της ροής του επιλεγμένου ραδιοσταθμού</string>
-    <string name="descr_list_add_new">Add a new station</string>
-    <string name="descr_list_add_select_stream_dropdown">Dropdown menu that hold a selection of streams</string>
+    <string name="descr_list_add_new"></string>
+    <string name="descr_list_add_select_stream_dropdown"></string>
 
     <!-- player -->
-    <string name="player_sheet_h1_details">Details</string>
-    <string name="player_sheet_h2_current_session">Current session</string>
-    <string name="player_sheet_h2_station_name">Σταθμός</string>
+    <string name="player_sheet_h1_details"></string>
+    <string name="player_sheet_h2_current_session"></string>
     <string name="player_sheet_h2_station_metadata">Παίζει Τώρα</string>
     <string name="player_sheet_h2_stream_url">Ο δεσμός της ροής</string>
-    <string name="player_sheet_p_station_metadata">δεν υπάρχουν διαθέσιμα μεταδεδομένα</string>
     <string name="player_sheet_h2_station_mime_type">Μορφή MIME</string>
     <string name="player_sheet_h2_station_channel_count">Καταμέτρηση καναλιών</string>
     <string name="player_sheet_h2_station_sample_rate">Ρυθμός δειγματοληψίας</string>
@@ -72,9 +52,9 @@
     <string name="dialog_rename_station_input_hint">Προσθήκη ενός νέου ονόματος</string>
     <string name="dialog_rename_station_message">Μετονομασία του σταθμού</string>
     <string name="dialog_button_rename">Μετονομασία</string>
-    <string name="dialog_add_station_choose_stream_heading">Multiple streams found</string>
-    <string name="dialog_add_station_choose_stream_message">Please select a stream</string>
-    <string name="dialog_add_station_choose_stream_button">Select</string>
+    <string name="dialog_add_station_choose_stream_heading"></string>
+    <string name="dialog_add_station_choose_stream_message"></string>
+    <string name="dialog_add_station_choose_stream_button"></string>
 
     <!-- error dialogs -->
     <string name="dialog_error_title_default">Σφάλμα</string>
@@ -97,16 +77,15 @@
     <string name="dialog_error_message_fetch_write">Το Τρανσιστοράκι έβαλε τα δυνατά του, αλλά δεν μπόρεσε να αποθηκεύσει τον σταθμό.</string>
 
     <!-- messages -->
-    <string name="actioncall_message_start_here">Προσθήκη ενός νέου σταθμού</string>
     <string name="toastmessage_add_download_started">Άρχισε η λήψη.</string>
     <string name="toastmessage_add_open_file_started">Ανοίγει το αρχείο.</string>
     <string name="toastmessage_long_press_playback_stopped">Διακόπηκε η αναπαραγωγή (εντοπίστηκε διαρκές άγγιγμα)</string>
     <string name="toastmessage_long_press_playback_started">Άρχισε η αναπαραγωγή (εντοπίστηκε διαρκές άγγιγμα)</string>
-    <string name="toastmessage_long_press_change_icon">Change station icon (long press detected)</string>
-    <string name="toastmessage_long_press_change_name">Rename station (long press detected)</string>
-    <string name="toastmessage_theme_night">Switching to Night mode (long press detected)</string>
-    <string name="toastmessage_theme_day">Switching to Day mode (long press detected)</string>
-    <string name="toastmessage_theme_follow_system">Switching to Follow System Setting mode (long press detected)</string>
+    <string name="toastmessage_long_press_change_icon"></string>
+    <string name="toastmessage_long_press_change_name"></string>
+    <string name="toastmessage_theme_night"></string>
+    <string name="toastmessage_theme_day"></string>
+    <string name="toastmessage_theme_follow_system"></string>
     <string name="toastmessage_shortcut_created">Δημιουργήθηκε συντόμευση.</string>
     <string name="toastmessage_shortcut_not_created">Δεν δημιουργήθηκε συντόμευση. Αυτή η συσκευή δεν επιτρέπει τη δημιουργία συντομεύσεων.</string>
     <string name="toastmessage_list_refreshed">Φορτώνεται ξανά το κατάστιχο των σταθμών.</string>
@@ -126,21 +105,18 @@
     <string name="toastalert_headphones_unplugged">Τα ακουστικά αποσυνδέθηκαν. Η αναπαραγωγή σταμάτησε.</string>
     <string name="toastalert_permission_denied">Άρνηση δικαιώματος:</string>
     <string name="toastalert_station_not_found">Αδυναμία εύρεσης του σταθμού.</string>
-    <string name="toastalert_stream_not_found">Το Τρανζιστοράκι δεν αναγνωρίζει αυτό το σταθμό. Παρακαλώ, διέγραψέ τον, και πρόσθεσέ τον ξανά στην Σπιτική οθόνη.</string>
     <string name="snackbar_request_storage_access">Θα πρέπει να παραχωρηθούν δικαιώματα ανάγνωσης στο Τρανζιστοράκι, ώστε να μπορεί να έχει πρόσβαση σε δεδομένα στην εξωτερική αποθήκη.</string>
     <string name="snackbar_message_timer_set">Ο χρονοδιακόπτης νανουρίσματος έχει οριστεί στις</string>
 
     <!-- notification -->
     <string name="notification_play">Παίξε</string>
     <string name="notification_stop">Σταμάτημα</string>
-    <string name="notification_swipe_to_stop">Χάραξε για να σταματήσει</string>
-    <string name="notification_playing">Παίζει</string>
     <string name="notification_channel_playback_name">Ρυθμιστικά Αναπαραγωγής</string>
     <string name="notification_channel_playback_description">Οι ρυθμιστές αναπαραγωγής, το λογότυπο του σταθμού, και οι πληροφορίες της τωρινής αναπαραγωγής.</string>
 
     <!-- onboarding -->
-    <string name="onboarding_app_description">Radio App</string>
-    <string name="onboarding_app_get_started">Get started</string>
+    <string name="onboarding_app_description"></string>
+    <string name="onboarding_app_get_started"></string>
 
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7

@@ -1,60 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- activities -->
-    <string name="app_name">Transistor</string>
-    <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
+    <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
+
     <!-- app shortcuts -->
     <string name="shortcut_last_station_short_label">Posledne prehrávaná stanica</string>
     <string name="shortcut_last_station_long_label">Znovu spustí naposledy prehrávanú stanicu</string>
     <string name="shortcut_last_station_disabled_message">Skratka na posledne prehrávanú stanicu je zakázaná.</string>
+
     <!-- menu entries -->
-    <string name="menu_about">O aplikácii</string>
-    <string name="menu_howto">Ako používať</string>
-    <string name="menu_refresh">Obnoviť zoznam</string>
-    <string name="menu_timer">Časovač zaspávania</string>
     <string name="menu_icon">Zmeniť ikonu</string>
-    <string name="menu_add">Pridať</string>
     <string name="menu_delete">Vymazať</string>
     <string name="menu_rename">Premenovať</string>
     <string name="menu_shortcut">Umiestniť odkaz na domovskú obrazovku</string>
-    <!-- headers -->
-    <string name="header_about">O aplikácii</string>
-    <string name="header_howto">Ako používať</string>
+
     <!-- descriptions -->
     <string name="descr_app_icon">Ikona aplikácii znázorňuje staré rádio</string>
-    <string name="descr_arrow_upward">Šípka smerom hore</string>
     <string name="descr_station_options_button">Možnosti</string>
-    <string name="descr_station_icon">Ikona rádio stanice</string>
-    <string name="descr_station_name">Názov radio stanice</string>
-    <string name="descr_station_metadata">Meta údaje (Interprét / Názov skladby) práve prehrávajúcej stanice</string>
     <string name="descr_station_name_example">Príklad FM</string>
     <string name="descr_station_metadata_example">Interprét - Názov skladby</string>
     <string name="descr_station_stream_loading">Načítanie streamu…</string>
     <string name="descr_playback_button_play">Prehrať</string>
     <string name="descr_playback_button_stop">Zastaviť</string>
     <string name="descr_playback_indicator">Prehráva sa</string>
-    <string name="descr_playback_indicator_started">Indicator for running playback</string>
     <string name="descr_timer_icon">Časovač zaspávania</string>
-    <string name="descr_timer_indicator_started">Časovač spustený</string>
-    <string name="descr_player_sheet_button_expand">Button to expand and minimize the radio player</string>
-    <string name="descr_player_sheet_information_icon">Informácie</string>
+    <string name="descr_player_sheet_button_minimize">Skriť podrobnosti o stanici</string>
     <string name="descr_player_sheet_content_copy_icon">Kopírovať</string>
-    <string name="descr_player_sheet_p_station_name">Názov vybratej stanici</string>
-    <string name="descr_player_sheet_p_station_metadata">Údaje o prehrávanej skladbe vybratej stanice</string>
     <string name="descr_player_sheet_p_stream_url">Priamy odkaz na stream vybratej stanice</string>
     <string name="descr_list_add_new">Pridať stanicu</string>
     <string name="descr_list_add_select_stream_dropdown">Vyberte stream</string>
+
     <!-- player -->
     <string name="player_sheet_h1_details">Podrobnosti</string>
     <string name="player_sheet_h2_current_session">Aktuálne spustenie</string>
-    <string name="player_sheet_h2_station_name">Stanica</string>
     <string name="player_sheet_h2_station_metadata">Práve hrá</string>
     <string name="player_sheet_h2_stream_url">Odkaz na stream</string>
-    <string name="player_sheet_p_station_metadata">Nie sú k dispozícii meta údaje</string>
     <string name="player_sheet_h2_station_mime_type">Typ mime</string>
     <string name="player_sheet_h2_station_channel_count">Počet kanálov</string>
     <string name="player_sheet_h2_station_sample_rate">Vzorkovacia frekvencia</string>
     <string name="player_sheet_h2_station_bitrate">Bitová rýchlosť</string>
+
     <!-- dialogs -->
     <string name="dialog_generic_button_okay">OK</string>
     <string name="dialog_generic_button_cancel">Zrušiť</string>
@@ -70,6 +55,7 @@
     <string name="dialog_add_station_choose_stream_heading">Nájdených viac streamov</string>
     <string name="dialog_add_station_choose_stream_message">Prosím vyberte stream</string>
     <string name="dialog_add_station_choose_stream_button">Vybrať</string>
+
     <!-- error dialogs -->
     <string name="dialog_error_title_default">Chyba</string>
     <string name="dialog_error_message_default">Vyskytla sa chyba</string>
@@ -89,8 +75,8 @@
     <string name="dialog_error_message_fetch_read">Transistor vyskúšal všetky možnosti, no tento súbor nedokáže spracovať.</string>
     <string name="dialog_error_message_fetch_read_file_location">Umiestnenie súboru:</string>
     <string name="dialog_error_message_fetch_write">Transistor vyskúšal všetky možnosti, no nie je možné uložiť stanicu.</string>
+
     <!-- messages -->
-    <string name="actioncall_message_start_here">Pridať novú stanicu</string>
     <string name="toastmessage_add_download_started">Sťahovanie spustené.</string>
     <string name="toastmessage_add_open_file_started">Otváranie súboru.</string>
     <string name="toastmessage_long_press_playback_stopped">Prehrávanie zastavené (rozpoznané dlhé stlačenie)</string>
@@ -119,21 +105,21 @@
     <string name="toastalert_headphones_unplugged">Slúchadlá odpojené. Prehrávanie zastavené.</string>
     <string name="toastalert_permission_denied">Prístup odoprený:</string>
     <string name="toastalert_station_not_found">Nie je možné nájsť stanicu.</string>
-    <string name="toastalert_stream_not_found">Transistor nemôže rozpoznať túto stanicu. Prosím vymažte odkaz a opätovne ju pridajte na domovskú obrazovku.</string>
     <string name="snackbar_request_storage_access">Transistoru musíte udeliť právo čítať, aby bolo možné pristupovať k údajom na externom úložisku.</string>
     <string name="snackbar_message_timer_set">Časovač zaspávania nastavený na</string>
+
     <!-- notification -->
     <string name="notification_play">Prehrať</string>
     <string name="notification_stop">Zastaviť</string>
-    <string name="notification_swipe_to_stop">Zastavíte presunutím</string>
-    <string name="notification_playing">Prehrávanie</string>
     <string name="notification_channel_playback_name">Ovládacie prvky prehrávania</string>
     <string name="notification_channel_playback_description">Ovládacie prvky prehrávania, logo stanice a informácie o práve prehrávanej skladbe.</string>
+
     <!-- onboarding -->
     <string name="onboarding_app_description">Aplikácia Rádio</string>
     <string name="onboarding_app_get_started">Začíname</string>
+
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7
     https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
-    <string name="descr_player_sheet_button_minimize">Skriť podrobnosti o stanici</string>
+
 </resources>

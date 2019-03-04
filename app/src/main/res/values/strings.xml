@@ -9,41 +9,23 @@
     <string name="shortcut_last_station_disabled_message">Shortcut for playback of last station disabled.</string>
 
     <!-- menu entries -->
-    <string name="menu_about">About</string>
-    <string name="menu_howto">How to use</string>
-    <string name="menu_refresh">Refresh list</string>
-    <string name="menu_timer">Sleep timer</string>
     <string name="menu_icon">Change icon</string>
-    <string name="menu_add">Add</string>
     <string name="menu_delete">Delete</string>
     <string name="menu_rename">Rename</string>
     <string name="menu_shortcut">Place on Home screen</string>
 
-    <!-- headers -->
-    <string name="header_about">About</string>
-    <string name="header_howto">How to use</string>
-
     <!-- descriptions -->
     <string name="descr_app_icon">App icon depicting an old radio</string>
-    <string name="descr_arrow_upward">Arrow facing upward</string>
     <string name="descr_station_options_button">Options</string>
-    <string name="descr_station_icon">Icon of radio station</string>
-    <string name="descr_station_name">Name of radio station</string>
-    <string name="descr_station_metadata">Metadata (Artist / Title) of currently playing radio station</string>
     <string name="descr_station_name_example">Example FM</string>
     <string name="descr_station_metadata_example">Artist - Title</string>
     <string name="descr_station_stream_loading">Loading stream …</string>
     <string name="descr_playback_button_play">Play</string>
     <string name="descr_playback_button_stop">Stop</string>
     <string name="descr_playback_indicator">Playing station</string>
-    <string name="descr_playback_indicator_started">Indicator for running playback</string>
     <string name="descr_timer_icon">Sleep timer</string>
-    <string name="descr_timer_indicator_started">Indicator for running sleep timer</string>
     <string name="descr_player_sheet_button_minimize">Hide station details</string>
-    <string name="descr_player_sheet_information_icon">Information</string>
     <string name="descr_player_sheet_content_copy_icon">Copy</string>
-    <string name="descr_player_sheet_p_station_name">Name of selected radio station</string>
-    <string name="descr_player_sheet_p_station_metadata">Metadata from selected radio station</string>
     <string name="descr_player_sheet_p_stream_url">Streaming link of selected radio station</string>
     <string name="descr_list_add_new">Add a new station</string>
     <string name="descr_list_add_select_stream_dropdown">Select a stream</string>
@@ -51,10 +33,8 @@
     <!-- player -->
     <string name="player_sheet_h1_details">Details</string>
     <string name="player_sheet_h2_current_session">Current session</string>
-    <string name="player_sheet_h2_station_name">Station</string>
     <string name="player_sheet_h2_station_metadata">Currently playing</string>
     <string name="player_sheet_h2_stream_url">Streaming link</string>
-    <string name="player_sheet_p_station_metadata">no metadata available</string>
     <string name="player_sheet_h2_station_mime_type">MIME type</string>
     <string name="player_sheet_h2_station_channel_count">Channel count</string>
     <string name="player_sheet_h2_station_sample_rate">Sample rate</string>
@@ -97,7 +77,6 @@
     <string name="dialog_error_message_fetch_write">Transistor tried hard but could not save the station.</string>
 
     <!-- messages -->
-    <string name="actioncall_message_start_here">Add a new station</string>
     <string name="toastmessage_add_download_started">Download started.</string>
     <string name="toastmessage_add_open_file_started">Opening file.</string>
     <string name="toastmessage_long_press_playback_stopped">Playback stopped (long press detected)</string>
@@ -126,15 +105,12 @@
     <string name="toastalert_headphones_unplugged">Headphones unplugged. Playback stopped.</string>
     <string name="toastalert_permission_denied">Permission denied:</string>
     <string name="toastalert_station_not_found">Unable to find station.</string>
-    <string name="toastalert_stream_not_found">Transistor does not recognize this station. Please delete and add it again to the Home screen.</string>
     <string name="snackbar_request_storage_access">Transistor needs to be granted read permissions to be able access data from external storage.</string>
     <string name="snackbar_message_timer_set">Sleep timer set to</string>
 
     <!-- notification -->
     <string name="notification_play">Play</string>
     <string name="notification_stop">Stop</string>
-    <string name="notification_swipe_to_stop">Swipe to stop</string>
-    <string name="notification_playing">Playing</string>
     <string name="notification_channel_playback_name">Playback Controls</string>
     <string name="notification_channel_playback_description">Playback controls, station logo and now playing info.</string>
 

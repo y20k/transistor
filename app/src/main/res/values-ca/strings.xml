@@ -9,56 +9,36 @@
     <string name="shortcut_last_station_disabled_message">La drecera per la reproducció automàtica de l\'ultima emissora ha estat desactivada.</string>
 
     <!-- menu entries -->
-    <string name="menu_about">Quant a</string>
-    <string name="menu_howto">Com utilitzar</string>
-    <string name="menu_refresh">Actualitzar llista</string>
-    <string name="menu_timer">Temporitzador per dormir</string>
     <string name="menu_icon">Canvia la icona</string>
-    <string name="menu_add">Afegeix</string>
     <string name="menu_delete">Esborrar</string>
     <string name="menu_rename">Renombra</string>
     <string name="menu_shortcut">Lloc a la pantalla d\'inici</string>
 
-    <!-- headers -->
-    <string name="header_about">Quant a</string>
-    <string name="header_howto">Com utilitzar</string>
-
     <!-- descriptions -->
     <string name="descr_app_icon">La icona de la aplicació representa una ràdio antiga</string>
-    <string name="descr_arrow_upward">Fletxa cap amunt</string>
     <string name="descr_station_options_button">Mostra les opcions per l\'estació de ràdio</string>
-    <string name="descr_station_icon">Icona de l\'emissora de ràdio</string>
-    <string name="descr_station_name">Nom de l\'emissora de ràdio</string>
-    <string name="descr_station_metadata">Metadades (Artistes / Títol) que s\'està reproduint a l\'emissora de ràdio</string>
     <string name="descr_station_name_example">Exemple FM</string>
     <string name="descr_station_metadata_example">Artista - Títol</string>
     <string name="descr_station_stream_loading">Carregant flux de dades…</string>
     <string name="descr_playback_button_play"></string>
     <string name="descr_playback_button_stop"></string>
     <string name="descr_playback_indicator">Indicador pel funcionament de la reproducció</string>
-    <string name="descr_playback_indicator_started">Indicador pel funcionament de la reproducció</string>
     <string name="descr_timer_icon">Icona del temporitzador</string>
-    <string name="descr_timer_indicator_started">Indicador per al funcionament de temporitzador d\'apagat</string>
-    <string name="descr_player_sheet_button_expand">El botó per expandir o minimitzar el reproductor de la ràdio</string>
-    <string name="descr_player_sheet_information_icon">Information Icon</string>
+    <string name="descr_player_sheet_button_minimize"></string>
     <string name="descr_player_sheet_content_copy_icon">Icona de copiar contingut</string>
-    <string name="descr_player_sheet_p_station_name">Nom de la emissora seleccionada</string>
-    <string name="descr_player_sheet_p_station_metadata">Metadada de la emissora seleccionada</string>
     <string name="descr_player_sheet_p_stream_url">Enllaç de transmissió de l\'emissora de ràdio seleccionada</string>
     <string name="descr_list_add_new">Afegeix nova emissora</string>
-    <string name="descr_list_add_select_stream_dropdown">Dropdown menu that hold a selection of streams</string>
+    <string name="descr_list_add_select_stream_dropdown"></string>
 
     <!-- player -->
-    <string name="player_sheet_h1_details">Details</string>
+    <string name="player_sheet_h1_details"></string>
     <string name="player_sheet_h2_current_session">Actual sessió</string>
-    <string name="player_sheet_h2_station_name">Emissora</string>
     <string name="player_sheet_h2_station_metadata">Reproduint ara</string>
-    <string name="player_sheet_h2_stream_url">Stream URL</string>
-    <string name="player_sheet_p_station_metadata">Metadada no disponible</string>
+    <string name="player_sheet_h2_stream_url"></string>
     <string name="player_sheet_h2_station_mime_type">Tipus MIME</string>
     <string name="player_sheet_h2_station_channel_count">Recompte de canals</string>
     <string name="player_sheet_h2_station_sample_rate">Freqüència de mostratge</string>
-    <string name="player_sheet_h2_station_bitrate">Bitrate</string>
+    <string name="player_sheet_h2_station_bitrate"></string>
 
     <!-- dialogs -->
     <string name="dialog_generic_button_okay">D\'acord</string>
@@ -72,12 +52,12 @@
     <string name="dialog_rename_station_input_hint">Introdueix un nou nom</string>
     <string name="dialog_rename_station_message">Canvia el nom de l\'emissora</string>
     <string name="dialog_button_rename">Canvia el nom</string>
-    <string name="dialog_add_station_choose_stream_heading">Multiple streams found</string>
-    <string name="dialog_add_station_choose_stream_message">Please select a stream</string>
-    <string name="dialog_add_station_choose_stream_button">Select</string>
+    <string name="dialog_add_station_choose_stream_heading"></string>
+    <string name="dialog_add_station_choose_stream_message"></string>
+    <string name="dialog_add_station_choose_stream_button"></string>
 
     <!-- error dialogs -->
-    <string name="dialog_error_title_default">Error</string>
+    <string name="dialog_error_title_default"></string>
     <string name="dialog_error_message_default">S\'ha produït un error</string>
     <string name="dialog_error_details_button_default">Mostra els detalls</string>
     <string name="dialog_error_details_default">Detalls no disponibles</string>
@@ -97,16 +77,15 @@
     <string name="dialog_error_message_fetch_write">Transistor ho ha intentat el millor que ha pogut però no pot desar l\'emissora.</string>
 
     <!-- messages -->
-    <string name="actioncall_message_start_here">Afegeix nova emissora</string>
     <string name="toastmessage_add_download_started">La baixada ha començat.</string>
     <string name="toastmessage_add_open_file_started">Obrint fitxer.</string>
     <string name="toastmessage_long_press_playback_stopped">Reproducció aturada (pulsació llarga detectada)</string>
     <string name="toastmessage_long_press_playback_started">Reproducció iniciada (pulsació llarga detectada)</string>
-    <string name="toastmessage_long_press_change_icon">Change station icon (long press detected)</string>
-    <string name="toastmessage_long_press_change_name">Rename station (long press detected)</string>
-    <string name="toastmessage_theme_night">Switching to Night mode (long press detected)</string>
-    <string name="toastmessage_theme_day">Switching to Day mode (long press detected)</string>
-    <string name="toastmessage_theme_follow_system">Switching to Follow System Setting mode (long press detected)</string>
+    <string name="toastmessage_long_press_change_icon"></string>
+    <string name="toastmessage_long_press_change_name"></string>
+    <string name="toastmessage_theme_night"></string>
+    <string name="toastmessage_theme_day"></string>
+    <string name="toastmessage_theme_follow_system"></string>
     <string name="toastmessage_shortcut_created">Accés directe creat.</string>
     <string name="toastmessage_shortcut_not_created">La drecera no s\'ha creat. Aquest dispositiu no permet crear dreceres.</string>
     <string name="toastmessage_list_refreshed">Tornar a carregar les emissores.</string>
@@ -126,15 +105,12 @@
     <string name="toastalert_headphones_unplugged">Auriculars desendollats. La reproducció s\'ha aturat.</string>
     <string name="toastalert_permission_denied">Permís denegat:</string>
     <string name="toastalert_station_not_found">No es pot trobar l\'emissora.</string>
-    <string name="toastalert_stream_not_found">Transistor no rconeix aquesta emissora. Si us plau, esborra i torna a afegir-la a la pantalla d\'inici.</string>
     <string name="snackbar_request_storage_access">Transistor necessita obtenir permisos de lectura per accedir a les dades del emmagatzematge extern.</string>
     <string name="snackbar_message_timer_set">Comptador de temps d\'espera fixat en</string>
 
     <!-- notification -->
     <string name="notification_play">Reproduint</string>
-    <string name="notification_stop">Stop</string>
-    <string name="notification_swipe_to_stop">Llisca per aturar</string>
-    <string name="notification_playing">Reproduint</string>
+    <string name="notification_stop"></string>
     <string name="notification_channel_playback_name">Controls de reproducció</string>
     <string name="notification_channel_playback_description">Controls de reproducció, logo de la emissora i informació de reproducció actual.</string>
 

@@ -9,41 +9,23 @@
     <string name="shortcut_last_station_disabled_message">Atalho para reproduzir última estação desabilitado.</string>
 
     <!-- menu entries -->
-    <string name="menu_about">Sobre</string>
-    <string name="menu_howto">Como usar</string>
-    <string name="menu_refresh">Atualizar lista</string>
-    <string name="menu_timer">Temporizador</string>
     <string name="menu_icon">Mudar ícone</string>
-    <string name="menu_add">Adicionar</string>
     <string name="menu_delete">Remover</string>
     <string name="menu_rename">Renomear</string>
     <string name="menu_shortcut">Atalho na tela inicial</string>
 
-    <!-- headers -->
-    <string name="header_about">Sobre</string>
-    <string name="header_howto">Como usar</string>
-
     <!-- descriptions -->
     <string name="descr_app_icon">Ícone do aplicativo representando um rádio antigo</string>
-    <string name="descr_arrow_upward">Seta para cima</string>
     <string name="descr_station_options_button">Mostrar opções para estação de rádio</string>
-    <string name="descr_station_icon">Ícone da estação de rádio</string>
-    <string name="descr_station_name">Nome da estação de rádio</string>
-    <string name="descr_station_metadata">Metadados (Artista / Título ) da estação sintonizada</string>
     <string name="descr_station_name_example">Exemplo FM</string>
     <string name="descr_station_metadata_example">Artista - Título</string>
     <string name="descr_station_stream_loading">Carregando transmissão …</string>
     <string name="descr_playback_button_play"></string>
     <string name="descr_playback_button_stop"></string>
     <string name="descr_playback_indicator">Indicador de reprodução</string>
-    <string name="descr_playback_indicator_started">Indicador de reprodução</string>
     <string name="descr_timer_icon">Ícone do temporizador</string>
-    <string name="descr_timer_indicator_started">Indicador do temporizador</string>
-    <string name="descr_player_sheet_button_expand">Botão para expandir e minimizar o rádio</string>
-    <string name="descr_player_sheet_information_icon">Ícone de informações</string>
+    <string name="descr_player_sheet_button_minimize"></string>
     <string name="descr_player_sheet_content_copy_icon">Ícone de copiar conteúdo</string>
-    <string name="descr_player_sheet_p_station_name">Nome da estação selecionada</string>
-    <string name="descr_player_sheet_p_station_metadata">Metadados da estação selecionada</string>
     <string name="descr_player_sheet_p_stream_url">Link para transmissão da estação selecionada</string>
     <string name="descr_list_add_new">Adicionar nova estação</string>
     <string name="descr_list_add_select_stream_dropdown">Menu suspenso com uma seleção de transmissões</string>
@@ -51,10 +33,8 @@
     <!-- player -->
     <string name="player_sheet_h1_details">Detalhes</string>
     <string name="player_sheet_h2_current_session">Sessão atual</string>
-    <string name="player_sheet_h2_station_name">Estação</string>
     <string name="player_sheet_h2_station_metadata">Tocando agora</string>
     <string name="player_sheet_h2_stream_url">Link para transmissão</string>
-    <string name="player_sheet_p_station_metadata">Metadados indisponíveis</string>
     <string name="player_sheet_h2_station_mime_type">Tipo MIME</string>
     <string name="player_sheet_h2_station_channel_count">Canais</string>
     <string name="player_sheet_h2_station_sample_rate">Amostragem</string>
@@ -97,7 +77,6 @@
     <string name="dialog_error_message_fetch_write">Transistor tentou, mas não pôde salvar a estação.</string>
 
     <!-- messages -->
-    <string name="actioncall_message_start_here">Adicionar nova estação</string>
     <string name="toastmessage_add_download_started">Transferência iniciada.</string>
     <string name="toastmessage_add_open_file_started">Abrindo arquivo.</string>
     <string name="toastmessage_long_press_playback_stopped">Pausa na reprodução (toque longo detectado)</string>
@@ -126,15 +105,12 @@
     <string name="toastalert_headphones_unplugged">Fones de ouvido desconectados. A reprodução parou.</string>
     <string name="toastalert_permission_denied">Permissão negada:</string>
     <string name="toastalert_station_not_found">Não foi possível encontrar a estação.</string>
-    <string name="toastalert_stream_not_found">Transistor não reconheceu a estação. Remova e adicione-a novamente à tela inicial.</string>
     <string name="snackbar_request_storage_access">Transistor precisa de permissão para acessar os arquivos do armazenamento externo.</string>
     <string name="snackbar_message_timer_set">Temporizador definido para</string>
 
     <!-- notification -->
     <string name="notification_play">Tocar</string>
     <string name="notification_stop">Parar</string>
-    <string name="notification_swipe_to_stop">Deslize para parar</string>
-    <string name="notification_playing">Tocando</string>
     <string name="notification_channel_playback_name">Controles de reprodução</string>
     <string name="notification_channel_playback_description">Controles de reprodução, logo da estação e informações de reprodução.</string>
 

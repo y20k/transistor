@@ -9,41 +9,23 @@
     <string name="shortcut_last_station_disabled_message">Ярлик для відтворення останньої станції відключений.</string>
 
     <!-- menu entries -->
-    <string name="menu_about">Про додаток</string>
-    <string name="menu_howto">Як користуватися</string>
-    <string name="menu_refresh">Оновити список</string>
-    <string name="menu_timer">Таймер сну</string>
     <string name="menu_icon">Змінити піктограму</string>
-    <string name="menu_add">Додати</string>
     <string name="menu_delete">Видалити</string>
     <string name="menu_rename">Перейменувати</string>
     <string name="menu_shortcut">Розмістити на домашньому екрані</string>
 
-    <!-- headers -->
-    <string name="header_about">Про додаток</string>
-    <string name="header_howto">Як користуватися</string>
-
     <!-- descriptions -->
     <string name="descr_app_icon">Значок програми із зображенням старого радіо</string>
-    <string name="descr_arrow_upward">Стрілка вгору</string>
     <string name="descr_station_options_button">Показ параметрів радіостанції</string>
-    <string name="descr_station_icon">Піктограма для радіостанції</string>
-    <string name="descr_station_name">Назва радіостанції</string>
-    <string name="descr_station_metadata">Метадані (Артист / Заголовок) поточної станції</string>
     <string name="descr_station_name_example">Приклад FM</string>
     <string name="descr_station_metadata_example">Артист - Заголовок</string>
     <string name="descr_station_stream_loading">Завантаження потоку …</string>
     <string name="descr_playback_button_play"></string>
     <string name="descr_playback_button_stop"></string>
     <string name="descr_playback_indicator">Індикатор активності відтворення</string>
-    <string name="descr_playback_indicator_started">Індикатор відтворення активний</string>
     <string name="descr_timer_icon">Піктограма таймера сну</string>
-    <string name="descr_timer_indicator_started">Індикатор активного таймеру сну</string>
-    <string name="descr_player_sheet_button_expand">Кнопка, щоб розгорнути або згорнути радіопрогравач</string>
-    <string name="descr_player_sheet_information_icon">Інформаційна піктограма</string>
+    <string name="descr_player_sheet_button_minimize"></string>
     <string name="descr_player_sheet_content_copy_icon">Значок копіювання контенту</string>
-    <string name="descr_player_sheet_p_station_name">Назва обраної станції</string>
-    <string name="descr_player_sheet_p_station_metadata">Метадані обраної станції</string>
     <string name="descr_player_sheet_p_stream_url">Потокове посилання обраної радіостанції</string>
     <string name="descr_list_add_new">Додати нову станцію</string>
     <string name="descr_list_add_select_stream_dropdown">Спливаюче меню, що містить вибір потоків</string>
@@ -51,10 +33,8 @@
     <!-- player -->
     <string name="player_sheet_h1_details">Подробиці</string>
     <string name="player_sheet_h2_current_session">Поточний сеанс</string>
-    <string name="player_sheet_h2_station_name">Станція</string>
     <string name="player_sheet_h2_station_metadata">В даний час грає</string>
     <string name="player_sheet_h2_stream_url">URL потоку</string>
-    <string name="player_sheet_p_station_metadata">метадані відсутні</string>
     <string name="player_sheet_h2_station_mime_type">Тип MIME</string>
     <string name="player_sheet_h2_station_channel_count">Кількість каналів</string>
     <string name="player_sheet_h2_station_sample_rate">Частота дискретизації</string>
@@ -97,16 +77,15 @@
     <string name="dialog_error_message_fetch_write">Transistor не зміг зберегти вказану станцію.</string>
 
     <!-- messages -->
-    <string name="actioncall_message_start_here">Додати нову станцію</string>
     <string name="toastmessage_add_download_started">Завантаження розпочато.</string>
     <string name="toastmessage_add_open_file_started">Відкриття файлу.</string>
     <string name="toastmessage_long_press_playback_stopped">Відтворення зупинено</string>
     <string name="toastmessage_long_press_playback_started">Відтворення розпочато</string>
     <string name="toastmessage_long_press_change_icon">Зміна піктограми станції (виявлено довге натискання)</string>
     <string name="toastmessage_long_press_change_name">Перейменувати станцію (виявлено тривале натискання)</string>
-    <string name="toastmessage_theme_night">Switching to Night mode (long press detected)</string>
-    <string name="toastmessage_theme_day">Switching to Day mode (long press detected)</string>
-    <string name="toastmessage_theme_follow_system">Switching to Follow System Setting mode (long press detected)</string>
+    <string name="toastmessage_theme_night"></string>
+    <string name="toastmessage_theme_day"></string>
+    <string name="toastmessage_theme_follow_system"></string>
     <string name="toastmessage_shortcut_created">Посилання створено.</string>
     <string name="toastmessage_shortcut_not_created">Ярлик не створено. Цей пристрій не дозволяє створювати ярлики.</string>
     <string name="toastmessage_list_refreshed">Перезавантаження списку станцій.</string>
@@ -126,15 +105,12 @@
     <string name="toastalert_headphones_unplugged">Навушники відключені. Відтворення призупинено.</string>
     <string name="toastalert_permission_denied">Доступ не надано:</string>
     <string name="toastalert_station_not_found">Не вдалося знайти станцію.</string>
-    <string name="toastalert_stream_not_found">Transistor не розпізнав цю станцію. Будь ласка, вилучіть та додайте її ще раз на домашній екран.</string>
     <string name="snackbar_request_storage_access">Transistor потребує доступу для читання даних зі зовнішнього сховища.</string>
     <string name="snackbar_message_timer_set">Таймер сну встановлено на</string>
 
     <!-- notification -->
     <string name="notification_play">Грати</string>
     <string name="notification_stop">Призупинити</string>
-    <string name="notification_swipe_to_stop">Посуньте для зупинки</string>
-    <string name="notification_playing">Відтворення</string>
     <string name="notification_channel_playback_name">Елементи управління відтворенням</string>
     <string name="notification_channel_playback_description">Елементи управління відтворенням, логотип станції та інформація про програвання.</string>
 

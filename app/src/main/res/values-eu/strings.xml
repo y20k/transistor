@@ -9,41 +9,23 @@
     <string name="shortcut_last_station_disabled_message">Azken irratia erreproduzitzeko laster-marka desgaituta.</string>
 
     <!-- menu entries -->
-    <string name="menu_about">Honi buruz</string>
-    <string name="menu_howto">Nola erabili</string>
-    <string name="menu_refresh">Freskatu zerrenda</string>
-    <string name="menu_timer">Itzaltzeko atzera kontaketa</string>
     <string name="menu_icon">Aldatu ikonoa</string>
-    <string name="menu_add">Gehitu</string>
     <string name="menu_delete">Ezabatu</string>
     <string name="menu_rename">Aldatu izena</string>
     <string name="menu_shortcut">Kokatu hasiera orrian</string>
 
-    <!-- headers -->
-    <string name="header_about">Honi buruz</string>
-    <string name="header_howto">Nola erabili</string>
-
     <!-- descriptions -->
     <string name="descr_app_icon">Irrati zahar baten ikonoa</string>
-    <string name="descr_arrow_upward">Goranzko gezia</string>
     <string name="descr_station_options_button">Bistaratu irrati estazioaren aukerak</string>
-    <string name="descr_station_icon">Irrati estazioaren ikonoa</string>
-    <string name="descr_station_name">Irrati estazioaren izena</string>
-    <string name="descr_station_metadata">Orain jotzen ari den irratiaren metadatuak (Artista / Titulua)</string>
     <string name="descr_station_name_example">Adibideko FM</string>
     <string name="descr_station_metadata_example">Artista - Titulua</string>
     <string name="descr_station_stream_loading">Jarioa kargatzen …</string>
     <string name="descr_playback_button_play"></string>
     <string name="descr_playback_button_stop"></string>
     <string name="descr_playback_indicator">Erreprodukzioa martxan adierazlea</string>
-    <string name="descr_playback_indicator_started">Erreprodukzioa martxan adierazlea</string>
     <string name="descr_timer_icon">Atzera kontaketaren ikonoa</string>
-    <string name="descr_timer_indicator_started">Atzera kontaketa martxan adierazlea</string>
-    <string name="descr_player_sheet_button_expand">Irrati erreproduzigailua hedatu eta minimizatzeko botoia</string>
-    <string name="descr_player_sheet_information_icon">Information Icon</string>
+    <string name="descr_player_sheet_button_minimize"></string>
     <string name="descr_player_sheet_content_copy_icon">Edukia kopiatzeko ikonoa</string>
-    <string name="descr_player_sheet_p_station_name">Aukeratutako irrati estazioaren izena</string>
-    <string name="descr_player_sheet_p_station_metadata">Aukeratutako irrati estazioaren metadatuak</string>
     <string name="descr_player_sheet_p_stream_url">Aukeratutako irrati estazioaren jarioaren esteka</string>
     <string name="descr_list_add_new">Gehitu irrati berria</string>
     <string name="descr_list_add_select_stream_dropdown">Jarioen aukera bat duen laster-menua</string>
@@ -51,10 +33,8 @@
     <!-- player -->
     <string name="player_sheet_h1_details">Details</string>
     <string name="player_sheet_h2_current_session">Uneko saioa</string>
-    <string name="player_sheet_h2_station_name">Estazioa</string>
     <string name="player_sheet_h2_station_metadata">Orain entzuten</string>
     <string name="player_sheet_h2_stream_url">Jario URLa</string>
-    <string name="player_sheet_p_station_metadata">ez dago metadaturik eskuragarri</string>
     <string name="player_sheet_h2_station_mime_type">MIME mota</string>
     <string name="player_sheet_h2_station_channel_count">Kanal kopurua</string>
     <string name="player_sheet_h2_station_sample_rate">Lagin-tasa</string>
@@ -97,7 +77,6 @@
     <string name="dialog_error_message_fetch_write">Ezin izan da irratia biltegiratzera gorde.</string>
 
     <!-- messages -->
-    <string name="actioncall_message_start_here">Gehitu estazio berria</string>
     <string name="toastmessage_add_download_started">Deskarga hasi da.</string>
     <string name="toastmessage_add_open_file_started">Fitxategia irekitzen.</string>
     <string name="toastmessage_long_press_playback_stopped">Erreprodukzioa gelditu da (sakatze luzea atzeman da)</string>
@@ -126,15 +105,12 @@
     <string name="toastalert_headphones_unplugged">Aurikularrak deskonektatuta. Erreprodukzioa gelditu da.</string>
     <string name="toastalert_permission_denied">Baimena ukatu da:</string>
     <string name="toastalert_station_not_found">Ezin izan da irratia aurkitu.</string>
-    <string name="toastalert_stream_not_found">Transistorrek ez du irrati hau ulertzen. Ezabatu eta berriro gehitu hasiera pantailara.</string>
     <string name="snackbar_request_storage_access">Transistorrek irakurketa baimenak behar ditu kanpo biltegiko datuak atzitzeko.</string>
     <string name="snackbar_message_timer_set">"Itzaltzeko atzera-kontaketa  ezarri da"</string>
 
     <!-- notification -->
     <string name="notification_play">Erreproduzitu</string>
     <string name="notification_stop">Stop</string>
-    <string name="notification_swipe_to_stop">Pasatu hatza gelditzeko</string>
-    <string name="notification_playing">Erreprodukzioan</string>
     <string name="notification_channel_playback_name">Erreprodukzio kontrolak</string>
     <string name="notification_channel_playback_description">Erreprodukzio kontrolak, irratiaren logoa eta unean jotzen ari denaren informazioa.</string>
 

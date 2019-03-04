@@ -9,41 +9,23 @@
     <string name="shortcut_last_station_disabled_message">En son istasyonun oynatılması için kısayol devre dışı.</string>
 
     <!-- menu entries -->
-    <string name="menu_about">Hakkında</string>
-    <string name="menu_howto">Nasıl kullanılır</string>
-    <string name="menu_refresh">Listeyi yenile</string>
-    <string name="menu_timer">Uyku zamanlayıcı</string>
     <string name="menu_icon">Simgeyi değiştir</string>
-    <string name="menu_add">Ekle</string>
     <string name="menu_delete">Sil</string>
     <string name="menu_rename">Yeniden adlandır</string>
     <string name="menu_shortcut">Ana ekrana ekle</string>
 
-    <!-- headers -->
-    <string name="header_about">Hakkında</string>
-    <string name="header_howto">Nasıl kullanılır</string>
-
     <!-- descriptions -->
     <string name="descr_app_icon">Eski bir radyoyu gösteren uygulama simgesi</string>
-    <string name="descr_arrow_upward">Yukarı bakan ok</string>
     <string name="descr_station_options_button">Radyo istasyonu için seçenekleri göster</string>
-    <string name="descr_station_icon">Radyo istasyonunun simgesi</string>
-    <string name="descr_station_name">Radyo istasyonunun ismi</string>
-    <string name="descr_station_metadata">Şu anda oynatılan radyo istasyonunun meta verisi (Sanatçı / Başlık)</string>
     <string name="descr_station_name_example">Örnek FM</string>
     <string name="descr_station_metadata_example">Sanatçı - Başlık</string>
     <string name="descr_station_stream_loading">Yayın yükleniyor…</string>
     <string name="descr_playback_button_play"></string>
     <string name="descr_playback_button_stop"></string>
     <string name="descr_playback_indicator">Yürütülen oynatma için gösterge</string>
-    <string name="descr_playback_indicator_started">Yürütülen oynatma için gösterge</string>
     <string name="descr_timer_icon">Uyku zamanlayıcı simgesi</string>
-    <string name="descr_timer_indicator_started">Yürütülen uyku zamanlayıcı için gösterge</string>
-    <string name="descr_player_sheet_button_expand">Radyo oynatıcıyı genişletip küçülten buton</string>
-    <string name="descr_player_sheet_information_icon">Bilgi Simgesi</string>
+    <string name="descr_player_sheet_button_minimize"></string>
     <string name="descr_player_sheet_content_copy_icon">İçerik kopyalama simgesi</string>
-    <string name="descr_player_sheet_p_station_name">Seçili radyo istasyonunun adı</string>
-    <string name="descr_player_sheet_p_station_metadata">Seçili radyo istasyonundan meta veri</string>
     <string name="descr_player_sheet_p_stream_url">Seçili radyo istasyonunun yayın bağlantısı</string>
     <string name="descr_list_add_new">Yeni istasyon ekle</string>
     <string name="descr_list_add_select_stream_dropdown">Seçili akışları barındıran aşağı kayan menü</string>
@@ -51,10 +33,8 @@
     <!-- player -->
     <string name="player_sheet_h1_details">Details</string>
     <string name="player_sheet_h2_current_session">Geçerli oturum</string>
-    <string name="player_sheet_h2_station_name">İstasyon</string>
     <string name="player_sheet_h2_station_metadata">Şimdi oynatılıyor</string>
     <string name="player_sheet_h2_stream_url">Yayın bağlantısı</string>
-    <string name="player_sheet_p_station_metadata">kullanılabilir meta veri yok</string>
     <string name="player_sheet_h2_station_mime_type">MIME türü</string>
     <string name="player_sheet_h2_station_channel_count">Kanal sayısı</string>
     <string name="player_sheet_h2_station_sample_rate">Örnekleme hızı</string>
@@ -97,7 +77,6 @@
     <string name="dialog_error_message_fetch_write">Transistor çok uğraştı fakat istasyonu kaydedemedi.</string>
 
     <!-- messages -->
-    <string name="actioncall_message_start_here">Yeni istasyon ekle</string>
     <string name="toastmessage_add_download_started">İndirme başladı.</string>
     <string name="toastmessage_add_open_file_started">Dosya açılıyor.</string>
     <string name="toastmessage_long_press_playback_stopped">Oynatma durdurdu (uzun dokunuş algılandı)</string>
@@ -126,15 +105,12 @@
     <string name="toastalert_headphones_unplugged">Kulaklık çıkarıldı. Oynatma durdu.</string>
     <string name="toastalert_permission_denied">İzin reddedildi:</string>
     <string name="toastalert_station_not_found">İstasyon bulunamıyor.</string>
-    <string name="toastalert_stream_not_found">Transistor bu istasyonu tanımıyor. Lütfen silin ve Ana ekrana tekrar ekleyin.</string>
     <string name="snackbar_request_storage_access">Transistor, harici depolamadaki verilere erişebilmek için okuma izni verilmesine gerek duyar.</string>
     <string name="snackbar_message_timer_set">Uyku zamanlayıcısı ayarı</string>
 
     <!-- notification -->
     <string name="notification_play">Oynat</string>
     <string name="notification_stop">Stop</string>
-    <string name="notification_swipe_to_stop">Durdurmak için kaydır</string>
-    <string name="notification_playing">Oynatılıyor</string>
     <string name="notification_channel_playback_name">Oynatma Kontrolleri</string>
     <string name="notification_channel_playback_description">Oynatma kontrolleri, istasyon logosu ve şimdi yürütülüyor bilgisi.</string>
 

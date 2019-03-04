@@ -1,65 +1,44 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
     <!-- activities -->
-    <string name="app_name">Transistor</string>
-    <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
+    <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
 
     <!-- app shortcuts -->
-    <string name="shortcut_last_station_short_label">Last station</string>
-    <string name="shortcut_last_station_long_label">Play last station</string>
-    <string name="shortcut_last_station_disabled_message">Shortcut for playback of last station disabled.</string>
+    <string name="shortcut_last_station_short_label"></string>
+    <string name="shortcut_last_station_long_label"></string>
+    <string name="shortcut_last_station_disabled_message"></string>
 
     <!-- menu entries -->
-    <string name="menu_about">关于</string>
-    <string name="menu_howto">如何使用</string>
-    <string name="menu_refresh">Refresh list</string>
-    <string name="menu_timer">睡眠定时器</string>
     <string name="menu_icon">更改图标</string>
-    <string name="menu_add">添加</string>
     <string name="menu_delete">删除</string>
     <string name="menu_rename">重命名</string>
     <string name="menu_shortcut">放在首页</string>
 
-    <!-- headers -->
-    <string name="header_about">关于</string>
-    <string name="header_howto">如何使用</string>
-
     <!-- descriptions -->
-    <string name="descr_app_icon">App icon depicting an old radio</string>
-    <string name="descr_arrow_upward">Arrow facing upward</string>
+    <string name="descr_app_icon"></string>
     <string name="descr_station_options_button">显示电台选项</string>
-    <string name="descr_station_icon">电台图标</string>
-    <string name="descr_station_name">电台名称</string>
-    <string name="descr_station_metadata">Metadata (Artist / Title) of currently playing radio station</string>
     <string name="descr_station_name_example">示例 FM</string>
-    <string name="descr_station_metadata_example">Artist - Title</string>
-    <string name="descr_station_stream_loading">Loading stream …</string>
+    <string name="descr_station_metadata_example"></string>
+    <string name="descr_station_stream_loading"></string>
     <string name="descr_playback_button_play"></string>
     <string name="descr_playback_button_stop"></string>
     <string name="descr_playback_indicator">播放中指示器</string>
-    <string name="descr_playback_indicator_started">播放中指示器</string>
-    <string name="descr_timer_icon">Sleep timer icon</string>
-    <string name="descr_timer_indicator_started">睡眠定时器指示器</string>
-    <string name="descr_player_sheet_button_expand">Button to expand and minimize the radio player</string>
-    <string name="descr_player_sheet_information_icon">Information Icon</string>
-    <string name="descr_player_sheet_content_copy_icon">Content copy icon</string>
-    <string name="descr_player_sheet_p_station_name">Name of selected radio station</string>
-    <string name="descr_player_sheet_p_station_metadata">Metadata from selected radio station</string>
-    <string name="descr_player_sheet_p_stream_url">Stream URL of selected radio station</string>
-    <string name="descr_list_add_new">Add a new station</string>
-    <string name="descr_list_add_select_stream_dropdown">Dropdown menu that hold a selection of streams</string>
+    <string name="descr_timer_icon"></string>
+    <string name="descr_player_sheet_button_minimize"></string>
+    <string name="descr_player_sheet_content_copy_icon"></string>
+    <string name="descr_player_sheet_p_stream_url"></string>
+    <string name="descr_list_add_new"></string>
+    <string name="descr_list_add_select_stream_dropdown"></string>
 
     <!-- player -->
-    <string name="player_sheet_h1_details">Details</string>
-    <string name="player_sheet_h2_current_session">Current session</string>
-    <string name="player_sheet_h2_station_name">Station</string>
-    <string name="player_sheet_h2_station_metadata">Currently Playing</string>
-    <string name="player_sheet_h2_stream_url">Stream URL</string>
-    <string name="player_sheet_p_station_metadata">no metadata available</string>
-    <string name="player_sheet_h2_station_mime_type">MIME type</string>
-    <string name="player_sheet_h2_station_channel_count">Channel count</string>
-    <string name="player_sheet_h2_station_sample_rate">Sample rate</string>
-    <string name="player_sheet_h2_station_bitrate">Bitrate</string>
+    <string name="player_sheet_h1_details"></string>
+    <string name="player_sheet_h2_current_session"></string>
+    <string name="player_sheet_h2_station_metadata"></string>
+    <string name="player_sheet_h2_stream_url"></string>
+    <string name="player_sheet_h2_station_mime_type"></string>
+    <string name="player_sheet_h2_station_channel_count"></string>
+    <string name="player_sheet_h2_station_sample_rate"></string>
+    <string name="player_sheet_h2_station_bitrate"></string>
 
     <!-- dialogs -->
     <string name="dialog_generic_button_okay">确定</string>
@@ -68,16 +47,16 @@
     <string name="dialog_add_station_input_hint">请输入一个有效的流媒体网址</string>
     <string name="dialog_add_station_message">添加新电台</string>
     <string name="dialog_add_station_howto">您可以添加 MP3 和 OGG 编码的原始音频流，以及封装在 pls 或 m3u 文件中的这些流。您也可以在您的网页浏览器中点击流链接（pls 或 m3u）添加新电台。</string>
-    <string name="dialog_error_message_fetch_general_playlist_type">MIME type of file:</string>
-    <string name="dialog_error_message_fetch_general_stream_type">MIME type of stream:</string>
+    <string name="dialog_error_message_fetch_general_playlist_type"></string>
+    <string name="dialog_error_message_fetch_general_stream_type"></string>
     <string name="dialog_delete_station_message">删除电台</string>
     <string name="dialog_button_delete">删除</string>
     <string name="dialog_rename_station_input_hint">请输入新名称</string>
     <string name="dialog_rename_station_message">重命名电台</string>
     <string name="dialog_button_rename">重命名</string>
-    <string name="dialog_add_station_choose_stream_heading">Multiple streams found</string>
-    <string name="dialog_add_station_choose_stream_message">Please select a stream</string>
-    <string name="dialog_add_station_choose_stream_button">Select</string>
+    <string name="dialog_add_station_choose_stream_heading"></string>
+    <string name="dialog_add_station_choose_stream_message"></string>
+    <string name="dialog_add_station_choose_stream_button"></string>
 
     <!-- error dialogs -->
     <string name="dialog_error_title_default">错误</string>
@@ -98,50 +77,46 @@
     <string name="dialog_error_message_fetch_write">Transistor 努力尝试，但没能保存指定电台到存储。</string>
 
     <!-- messages -->
-    <string name="actioncall_message_start_here">添加新电台</string>
     <string name="toastmessage_add_download_started">下载开始.</string>
     <string name="toastmessage_add_open_file_started">打开文件.</string>
     <string name="toastmessage_long_press_playback_stopped">播放已停止（长按删除）</string>
     <string name="toastmessage_long_press_playback_started">播放已开始（长按删除）</string>
-    <string name="toastmessage_long_press_change_icon">Change station icon (long press detected)</string>
-    <string name="toastmessage_long_press_change_name">Rename station (long press detected)</string>
-    <string name="toastmessage_theme_night">Switching to Night mode (long press detected)</string>
-    <string name="toastmessage_theme_day">Switching to Day mode (long press detected)</string>
-    <string name="toastmessage_theme_follow_system">Switching to Follow System Setting mode (long press detected)</string>
+    <string name="toastmessage_long_press_change_icon"></string>
+    <string name="toastmessage_long_press_change_name"></string>
+    <string name="toastmessage_theme_night"></string>
+    <string name="toastmessage_theme_day"></string>
+    <string name="toastmessage_theme_follow_system"></string>
     <string name="toastmessage_shortcut_created">捷径已创建。</string>
-    <string name="toastmessage_shortcut_not_created">Shortcut not created. This device does not allow the creation of shortcuts.</string>
-    <string name="toastmessage_list_refreshed">Reloading list of stations.</string>
-    <string name="toastmessage_copied_to_clipboard_url">Stream URL copied to clipboard.</string>
-    <string name="toastmessage_copied_to_clipboard_metadata">Metadata copied to clipboard.</string>
+    <string name="toastmessage_shortcut_not_created"></string>
+    <string name="toastmessage_list_refreshed"></string>
+    <string name="toastmessage_copied_to_clipboard_url"></string>
+    <string name="toastmessage_copied_to_clipboard_metadata"></string>
     <string name="toastmessage_station_copied">电台已复制。</string>
-    <string name="toastmessage_stream_may_not_work">Unsupported audio format detected. Playback of stream may not work properly.</string>
+    <string name="toastmessage_stream_may_not_work"></string>
     <string name="toastmessage_timer_activated">睡眠定时器已激活。</string>
     <string name="toastmessage_timer_cancelled">睡眠定时器已取消。</string>
     <string name="toastmessage_timer_duration_increased">已增加持续时间 (+ 15 分钟)。</string>
     <string name="toastmessage_timer_start_unable">请先开始播放。</string>
-    <string name="toastalert_unable_to_connect">Unable to connect. Device does not have an internet connection or stream may be outdated.</string>
+    <string name="toastalert_unable_to_connect"></string>
     <string name="toastalert_rename_unsuccessful">无法重命名电台。请另选其他名称。</string>
     <string name="toastalert_delete_successful">电台已移除。</string>
     <string name="toastalert_no_external_storage">无法访问外部存储。</string>
-    <string name="toastalert_no_image_picker">No image picker available. Consider installing a Gallery application.</string>
+    <string name="toastalert_no_image_picker"></string>
     <string name="toastalert_headphones_unplugged">耳机已拔出。播放停止。</string>
     <string name="toastalert_permission_denied">权限被拒绝：</string>
-    <string name="toastalert_station_not_found">Unable to find station.</string>
-    <string name="toastalert_stream_not_found">Transistor 无法识别此电台。请删除它并重新添加到首页。</string>
+    <string name="toastalert_station_not_found"></string>
     <string name="snackbar_request_storage_access">Transistor 需要被授权读取以从外部存储访问数据。</string>
     <string name="snackbar_message_timer_set">睡眠定时器设为</string>
 
     <!-- notification -->
-    <string name="notification_play">Play</string>
-    <string name="notification_stop">Stop</string>
-    <string name="notification_swipe_to_stop">滑动以停止</string>
-    <string name="notification_playing">正在播放</string>
-    <string name="notification_channel_playback_name">Playback Controls</string>
-    <string name="notification_channel_playback_description">Playback controls, station logo and now playing info.</string>
+    <string name="notification_play"></string>
+    <string name="notification_stop"></string>
+    <string name="notification_channel_playback_name"></string>
+    <string name="notification_channel_playback_description"></string>
 
     <!-- onboarding -->
-    <string name="onboarding_app_description">Radio App</string>
-    <string name="onboarding_app_get_started">Get started</string>
+    <string name="onboarding_app_description"></string>
+    <string name="onboarding_app_get_started"></string>
 
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7

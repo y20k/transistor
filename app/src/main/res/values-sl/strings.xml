@@ -9,56 +9,36 @@
     <string name="shortcut_last_station_disabled_message">Shortcut for playback of last station disabled.</string>
 
     <!-- menu entries -->
-    <string name="menu_about">O programu</string>
-    <string name="menu_howto">Uporaba</string>
-    <string name="menu_refresh">Refresh list</string>
-    <string name="menu_timer">Sleep timer</string>
     <string name="menu_icon">Zamenjaj ikono</string>
-    <string name="menu_add">Dodaj</string>
     <string name="menu_delete">Izbriši</string>
     <string name="menu_rename">Preimenuj</string>
     <string name="menu_shortcut">Place on Home screen</string>
 
-    <!-- headers -->
-    <string name="header_about">O programu</string>
-    <string name="header_howto">Kako uporabljati</string>
-
     <!-- descriptions -->
-    <string name="descr_app_icon">App icon depicting an old radio</string>
-    <string name="descr_arrow_upward">Arrow facing upward</string>
+    <string name="descr_app_icon"></string>
     <string name="descr_station_options_button">Prikaz možnosti za radisjko postajo</string>
-    <string name="descr_station_icon">Ikona radijske postaje</string>
-    <string name="descr_station_name">Ime radijske postaje</string>
-    <string name="descr_station_metadata">Metadata (Artist / Title) of currently playing radio station</string>
     <string name="descr_station_name_example">Primer FM</string>
-    <string name="descr_station_metadata_example">Artist - Title</string>
-    <string name="descr_station_stream_loading">Loading stream …</string>
+    <string name="descr_station_metadata_example"></string>
+    <string name="descr_station_stream_loading"></string>
     <string name="descr_playback_indicator">Kazalnik za predvajanje v teku</string>
     <string name="descr_playback_button_play"></string>
     <string name="descr_playback_button_stop"></string>
-    <string name="descr_playback_indicator_started">Kazalnik za predvajanje v teku</string>
-    <string name="descr_timer_icon">Sleep timer icon</string>
-    <string name="descr_timer_indicator_started">Indicator for running sleep timer</string>
-    <string name="descr_player_sheet_button_expand">Button to expand and minimize the radio player</string>
-    <string name="descr_player_sheet_information_icon">Information Icon</string>
-    <string name="descr_player_sheet_content_copy_icon">Content copy icon</string>
-    <string name="descr_player_sheet_p_station_name">Name of selected radio station</string>
-    <string name="descr_player_sheet_p_station_metadata">Metadata from selected radio station</string>
-    <string name="descr_player_sheet_p_stream_url">Stream URL of selected radio station</string>
-    <string name="descr_list_add_new">Add a new station</string>
-    <string name="descr_list_add_select_stream_dropdown">Dropdown menu that hold a selection of streams</string>
+    <string name="descr_timer_icon"></string>
+    <string name="descr_player_sheet_button_minimize"></string>
+    <string name="descr_player_sheet_content_copy_icon"></string>
+    <string name="descr_player_sheet_p_stream_url"></string>
+    <string name="descr_list_add_new"></string>
+    <string name="descr_list_add_select_stream_dropdown"></string>
 
     <!-- player -->
-    <string name="player_sheet_h1_details">Details</string>
-    <string name="player_sheet_h2_current_session">Current session</string>
-    <string name="player_sheet_h2_station_name">Station</string>
-    <string name="player_sheet_h2_station_metadata">Currently Playing</string>
-    <string name="player_sheet_h2_stream_url">Stream URL</string>
-    <string name="player_sheet_p_station_metadata">no metadata available</string>
-    <string name="player_sheet_h2_station_mime_type">MIME type</string>
-    <string name="player_sheet_h2_station_channel_count">Channel count</string>
-    <string name="player_sheet_h2_station_sample_rate">Sample rate</string>
-    <string name="player_sheet_h2_station_bitrate">Bitrate</string>
+    <string name="player_sheet_h1_details"></string>
+    <string name="player_sheet_h2_current_session"></string>
+    <string name="player_sheet_h2_station_metadata"></string>
+    <string name="player_sheet_h2_stream_url"></string>
+    <string name="player_sheet_h2_station_mime_type"></string>
+    <string name="player_sheet_h2_station_channel_count"></string>
+    <string name="player_sheet_h2_station_sample_rate"></string>
+    <string name="player_sheet_h2_station_bitrate"></string>
 
     <!-- dialogs -->
     <string name="dialog_add_station_button">Dodaj</string>
@@ -72,75 +52,71 @@
     <string name="dialog_rename_station_input_hint">Vnesi novo ime</string>
     <string name="dialog_rename_station_message">Preimenuj postajo</string>
     <string name="dialog_button_rename">Preimenuj</string>
-    <string name="dialog_add_station_choose_stream_heading">Multiple streams found</string>
-    <string name="dialog_add_station_choose_stream_message">Please select a stream</string>
-    <string name="dialog_add_station_choose_stream_button">Select</string>
+    <string name="dialog_add_station_choose_stream_heading"></string>
+    <string name="dialog_add_station_choose_stream_message"></string>
+    <string name="dialog_add_station_choose_stream_button"></string>
 
     <!-- error dialogs -->
     <string name="dialog_error_title_default">Napaka</string>
     <string name="dialog_error_message_default">Prišlo je do napake</string>
     <string name="dialog_error_details_button_default">Prikaz podrobnosti</string>
     <string name="dialog_error_details_default">Podrobnosti niso na voljo</string>
-    <string name="dialog_error_details_write">Station is probably a duplicate or else you might want to check your external storage.</string>
+    <string name="dialog_error_details_write"></string>
     <string name="dialog_error_title_fetch_download">Težava pri prenosu</string>
-    <string name="dialog_error_title_fetch_read">Read Issue</string>
-    <string name="dialog_error_title_fetch_write">Write Issue</string>
+    <string name="dialog_error_title_fetch_read"></string>
+    <string name="dialog_error_title_fetch_write"></string>
     <string name="dialog_error_message_fetch_general_external_storage">Zunanja shramba:</string>
     <string name="dialog_error_message_fetch_general_hint_m3u">Namig: aplikacija Transistor lahko obdela le medijske tokove kodirane v formatu MP3 ali OGG, oziroma medijske povezave s končnicami .m3u ali .pls.</string>
-    <string name="dialog_error_message_fetch_general_playlist_type">MIME type of file:</string>
-    <string name="dialog_error_message_fetch_general_stream_type">MIME type of stream:</string>
+    <string name="dialog_error_message_fetch_general_playlist_type"></string>
+    <string name="dialog_error_message_fetch_general_stream_type"></string>
     <string name="dialog_error_message_fetch_general_file_content">Vsebina oddaljene datoteke:</string>
     <string name="dialog_error_message_fetch_download">Aplikacji Transistor ni uspelo pridobiti ustreznih podatkov iz vnešene povezave.</string>
     <string name="dialog_error_message_fetch_download_station_url">URL postaje:</string>
-    <string name="dialog_error_message_fetch_read">Transistor tried hard but could not make sense of given file.</string>
-    <string name="dialog_error_message_fetch_read_file_location">Location of file:</string>
-    <string name="dialog_error_message_fetch_write">Transistor tried hard but could not save given station to storage.</string>
+    <string name="dialog_error_message_fetch_read"></string>
+    <string name="dialog_error_message_fetch_read_file_location"></string>
+    <string name="dialog_error_message_fetch_write"></string>
 
     <!-- messages -->
-    <string name="actioncall_message_start_here">Dodaj novo postajo</string>
     <string name="toastmessage_add_download_started">Prenos se je začel.</string>
-    <string name="toastmessage_add_open_file_started">Opening file.</string>
+    <string name="toastmessage_add_open_file_started"></string>
     <string name="toastmessage_long_press_playback_stopped">Radijski prenos je bil ustavljen</string>
     <string name="toastmessage_long_press_playback_started">Radijski prenos se je začel</string>
-    <string name="toastmessage_long_press_change_icon">Change station icon (long press detected)</string>
-    <string name="toastmessage_long_press_change_name">Rename station (long press detected)</string>
-    <string name="toastmessage_theme_night">Switching to Night mode (long press detected)</string>
-    <string name="toastmessage_theme_day">Switching to Day mode (long press detected)</string>
-    <string name="toastmessage_theme_follow_system">Switching to Follow System Setting mode (long press detected)</string>
-    <string name="toastmessage_shortcut_created">Shortcut created.</string>
-    <string name="toastmessage_shortcut_not_created">Shortcut not created. This device does not allow the creation of shortcuts.</string>
-    <string name="toastmessage_list_refreshed">Reloading list of stations.</string>
-    <string name="toastmessage_copied_to_clipboard_url">Stream URL copied to clipboard.</string>
-    <string name="toastmessage_copied_to_clipboard_metadata">Metadata copied to clipboard.</string>
-    <string name="toastmessage_station_copied">Station copied.</string>
-    <string name="toastmessage_stream_may_not_work">Unsupported audio format detected. Playback of stream may not work properly.</string>
-    <string name="toastmessage_timer_activated">Sleep timer activated.</string>
-    <string name="toastmessage_timer_cancelled">Sleep timer cancelled.</string>
-    <string name="toastmessage_timer_duration_increased">Duration increased.</string>
-    <string name="toastmessage_timer_start_unable">Please start playback first.</string>
-    <string name="toastalert_unable_to_connect">Unable to connect. Device does not have an internet connection or stream may be outdated.</string>
+    <string name="toastmessage_long_press_change_icon"></string>
+    <string name="toastmessage_long_press_change_name"></string>
+    <string name="toastmessage_theme_night"></string>
+    <string name="toastmessage_theme_day"></string>
+    <string name="toastmessage_theme_follow_system"></string>
+    <string name="toastmessage_shortcut_created"></string>
+    <string name="toastmessage_shortcut_not_created"></string>
+    <string name="toastmessage_list_refreshed"></string>
+    <string name="toastmessage_copied_to_clipboard_url"></string>
+    <string name="toastmessage_copied_to_clipboard_metadata"></string>
+    <string name="toastmessage_station_copied"></string>
+    <string name="toastmessage_stream_may_not_work"></string>
+    <string name="toastmessage_timer_activated"></string>
+    <string name="toastmessage_timer_cancelled"></string>
+    <string name="toastmessage_timer_duration_increased"></string>
+    <string name="toastmessage_timer_start_unable"></string>
+    <string name="toastalert_unable_to_connect"></string>
     <string name="toastalert_rename_unsuccessful">Ne morem preimenovati postaje. Prosim izberite drugo ime.</string>
     <string name="toastalert_delete_successful">Postaja je bila odstranjena.</string>
     <string name="toastalert_no_external_storage">Nimam dostopa do zunanjega pomnilnika.</string>
     <string name="toastalert_no_image_picker">No image picker available. Consider installing a Gallery application.</string>
     <string name="toastalert_headphones_unplugged">Prenos je bil ustavljen zaradi odstranitve slušalk.</string>
-    <string name="toastalert_permission_denied">Permission denied:</string>
-    <string name="toastalert_station_not_found">Unable to find station.</string>
-    <string name="toastalert_stream_not_found">Transistor does not recognize this station. Please delete and add it again to the Home screen.</string>
+    <string name="toastalert_permission_denied"></string>
+    <string name="toastalert_station_not_found"></string>
     <string name="snackbar_request_storage_access">Za dodajanje nove ikone radijski postaji potrebuje Transistor dostop do vaših slik in fotografij.</string>
-    <string name="snackbar_message_timer_set">Sleep timer set to</string>
+    <string name="snackbar_message_timer_set"></string>
 
     <!-- notification -->
-    <string name="notification_play">Play</string>
-    <string name="notification_stop">Stop</string>
-    <string name="notification_swipe_to_stop">Za izklop podrsajte</string>
-    <string name="notification_playing">Predvaja se:</string>
-    <string name="notification_channel_playback_name">Playback Controls</string>
-    <string name="notification_channel_playback_description">Playback controls, station logo and now playing info.</string>
+    <string name="notification_play"></string>
+    <string name="notification_stop"></string>
+    <string name="notification_channel_playback_name"></string>
+    <string name="notification_channel_playback_description"></string>
 
     <!-- onboarding -->
-    <string name="onboarding_app_description">Radio App</string>
-    <string name="onboarding_app_get_started">Get started</string>
+    <string name="onboarding_app_description"></string>
+    <string name="onboarding_app_get_started"></string>
 
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7

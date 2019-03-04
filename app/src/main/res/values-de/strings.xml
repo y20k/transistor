@@ -1,60 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- activities -->
-    <string name="app_name">Transistor</string>
-    <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
+    <string name="app_name">Transistor</string>     <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
+
     <!-- app shortcuts -->
     <string name="shortcut_last_station_short_label">Letzter Sender</string>
     <string name="shortcut_last_station_long_label">Wiedergabe letzter Sender</string>
     <string name="shortcut_last_station_disabled_message">Shortcut für Wiedergabe des letzten Senders deaktiviert.</string>
+
     <!-- menu entries -->
-    <string name="menu_about">Über Transistor</string>
-    <string name="menu_howto">Wie Transistor funktioniert</string>
-    <string name="menu_refresh">Liste aktualisieren</string>
-    <string name="menu_timer">Sleeptimer</string>
     <string name="menu_icon">Symbol ändern</string>
-    <string name="menu_add">Hinzufügen</string>
     <string name="menu_delete">Löschen</string>
     <string name="menu_rename">Umbenennen</string>
     <string name="menu_shortcut">Auf Startbildschirm speichern</string>
-    <!-- headers -->
-    <string name="header_about">Über Transistor</string>
-    <string name="header_howto">Wie Transistor funktioniert</string>
+
     <!-- descriptions -->
     <string name="descr_app_icon">App-Symbol in der Form eines alten Radios</string>
-    <string name="descr_arrow_upward">Nach oben weisender Pfeil</string>
     <string name="descr_station_options_button">Optionen</string>
-    <string name="descr_station_icon">Logo des Radiosenders</string>
-    <string name="descr_station_name">Name des Radiosenders</string>
-    <string name="descr_station_metadata">Metadaten (Interpret / Titel) des derzeit aktiven Radiosenders</string>
     <string name="descr_station_name_example">FM-Beispiel</string>
     <string name="descr_station_metadata_example">Interpret - Titel</string>
     <string name="descr_station_stream_loading">Lade Stream …</string>
     <string name="descr_playback_button_play">Abspielen</string>
     <string name="descr_playback_button_stop">Stopp</string>
     <string name="descr_playback_indicator">Playback Status</string>
-    <string name="descr_playback_indicator_started">Symbol für Playback Aktivität</string>
     <string name="descr_timer_icon">Sleeptimer Symbol</string>
-    <string name="descr_timer_indicator_started">Symbol für Sleeptimer Aktivität</string>
-    <string name="descr_player_sheet_button_expand">Button zum Erweitern und Minimieren des Radio-Players</string>
-    <string name="descr_player_sheet_information_icon">Info Icon</string>
+    <string name="descr_player_sheet_button_minimize"></string>
     <string name="descr_player_sheet_content_copy_icon">Icon für Inhalt kopieren</string>
-    <string name="descr_player_sheet_p_station_name">Name des gewählten Radiosenders</string>
-    <string name="descr_player_sheet_p_station_metadata">Metadaten des gewählten Radiosenders</string>
     <string name="descr_player_sheet_p_stream_url">Streaming-Adresse des gewählten Radiosenders</string>
     <string name="descr_list_add_new">Einen neuen Sender hinzufügen</string>
     <string name="descr_list_add_select_stream_dropdown">Dropdown-Menü mit einer Auswahl von Streams</string>
+
     <!-- player -->
     <string name="player_sheet_h1_details">Details</string>
     <string name="player_sheet_h2_current_session">Laufende Sendung</string>
-    <string name="player_sheet_h2_station_name">Sender</string>
     <string name="player_sheet_h2_station_metadata">Momentan läuft</string>
     <string name="player_sheet_h2_stream_url">Streaming-Adresse</string>
-    <string name="player_sheet_p_station_metadata">Metadaten nicht verfügbar</string>
     <string name="player_sheet_h2_station_mime_type">MIME-Typ</string>
     <string name="player_sheet_h2_station_channel_count">Kanäle</string>
     <string name="player_sheet_h2_station_sample_rate">Samplerate</string>
     <string name="player_sheet_h2_station_bitrate">Bitrate</string>
+
     <!-- dialogs -->
     <string name="dialog_generic_button_okay">Bestätigen</string>
     <string name="dialog_generic_button_cancel">Abbrechen</string>
@@ -70,6 +55,7 @@
     <string name="dialog_add_station_choose_stream_heading">Mehrere Streaming-Adressen gefunden</string>
     <string name="dialog_add_station_choose_stream_message">Bitte eine Streaming-Adresse auswählen</string>
     <string name="dialog_add_station_choose_stream_button">Auswählen</string>
+
     <!-- error dialogs -->
     <string name="dialog_error_title_default">Fehler</string>
     <string name="dialog_error_message_default">Ein Fehler ist aufgetreten</string>
@@ -89,8 +75,8 @@
     <string name="dialog_error_message_fetch_read">Transistor konnte diese Datei nicht verarbeiten</string>
     <string name="dialog_error_message_fetch_read_file_location">Speicherort:</string>
     <string name="dialog_error_message_fetch_write">Transistor hat es versucht, kann diese Datei aber nicht speichern.</string>
+
     <!-- messages -->
-    <string name="actioncall_message_start_here">Einen neuen Sender hinzufügen</string>
     <string name="toastmessage_add_download_started">Download gestartet.</string>
     <string name="toastmessage_add_open_file_started">Öffne Datei.</string>
     <string name="toastmessage_long_press_playback_stopped">Wiedergabe gestoppt (Längeres Drücken erkannt)</string>
@@ -119,20 +105,21 @@
     <string name="toastalert_headphones_unplugged">Kopfhörer entfernt. Wiedergabe gestoppt.</string>
     <string name="toastalert_permission_denied">Fehlende Berechtigung:</string>
     <string name="toastalert_station_not_found">Sender kann nicht gefunden werden.</string>
-    <string name="toastalert_stream_not_found">Transistor kann mit diesem Sender nichts anfangen. Bitte löschen und erneut auf der Startseite hinzufügen.</string>
     <string name="snackbar_request_storage_access">Transistor benötigt Lese-Rechte, um auf Dateien auf dem externen Speicher zugreifen zu können.</string>
     <string name="snackbar_message_timer_set">Sleeptimer eingestellt auf</string>
+
     <!-- notification -->
     <string name="notification_play">Wiedergabe</string>
     <string name="notification_stop">Stopp</string>
-    <string name="notification_playing">Wiedergabe</string>
-    <string name="notification_swipe_to_stop">Ausblenden, um Wiedergabe zu stoppen</string>
     <string name="notification_channel_playback_name">Playback-Steuerung</string>
     <string name="notification_channel_playback_description">Playback-Steuerung, Senderlogo und Infos über Programminformationen.</string>
+
     <!-- onboarding -->
     <string name="onboarding_app_description">Radio App</string>
     <string name="onboarding_app_get_started">Jetzt starten</string>
+
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7
     https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
+
 </resources>
