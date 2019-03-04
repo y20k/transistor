@@ -2,18 +2,15 @@
 <resources>
     <!-- activities -->
     <string name="app_name">Transistor</string>
-
     <!-- app shortcuts -->
     <string name="shortcut_last_station_short_label">Siste stasjon</string>
     <string name="shortcut_last_station_long_label">Spill siste stasjon</string>
     <string name="shortcut_last_station_disabled_message">Snarvei for avspilling av siste stasjon avskrudd.</string>
-
     <!-- menu entries -->
     <string name="menu_icon">Endre miniatyrbilde</string>
     <string name="menu_delete">Slett</string>
     <string name="menu_rename">Gi nytt navn</string>
     <string name="menu_shortcut">Plasser på hjemmeskjermen</string>
-
     <!-- descriptions -->
     <string name="descr_app_icon">Programikon som viser en gammel radio</string>
     <string name="descr_station_options_button">Vis valg for radiostasjon</string>
@@ -29,7 +26,6 @@
     <string name="descr_player_sheet_p_stream_url">Strømningslenke for valgt radiostasjon</string>
     <string name="descr_list_add_new">Legg til en ny stasjon</string>
     <string name="descr_list_add_select_stream_dropdown">Rullegardinsmeny med et utvalg strømmer</string>
-
     <!-- player -->
     <string name="player_sheet_h1_details">Detaljer</string>
     <string name="player_sheet_h2_current_session">Gjeldende økt</string>
@@ -38,8 +34,7 @@
     <string name="player_sheet_h2_station_mime_type">MIME-type</string>
     <string name="player_sheet_h2_station_channel_count">Kanalantall</string>
     <string name="player_sheet_h2_station_sample_rate">Samplingsrate</string>
-    <string name="player_sheet_h2_station_bitrate"></string>
-
+    <string name="player_sheet_h2_station_bitrate">Bitrate</string>
     <!-- dialogs -->
     <string name="dialog_generic_button_okay">Godta</string>
     <string name="dialog_generic_button_cancel">Avbryt</string>
@@ -55,7 +50,6 @@
     <string name="dialog_add_station_choose_stream_heading">Fant flere strømmer</string>
     <string name="dialog_add_station_choose_stream_message">Fant flere strømmer</string>
     <string name="dialog_add_station_choose_stream_button">Bruk denne</string>
-
     <!-- error dialogs -->
     <string name="dialog_error_title_default">Feil</string>
     <string name="dialog_error_message_default">En feil inntraff</string>
@@ -75,7 +69,6 @@
     <string name="dialog_error_message_fetch_read">Transistor prøvde hardt, men kunne ikke skjønne seg på fila.</string>
     <string name="dialog_error_message_fetch_read_file_location">Filens plassering:</string>
     <string name="dialog_error_message_fetch_write">Transistor prøvde hardt, men kunne ikke lagre stasjonen.</string>
-
     <!-- messages -->
     <string name="toastmessage_add_download_started">Nedlasting startet.</string>
     <string name="toastmessage_add_open_file_started">Åpner fil.</string>
@@ -83,9 +76,9 @@
     <string name="toastmessage_long_press_playback_started">Avspilling startet (langt trykk enset)</string>
     <string name="toastmessage_long_press_change_icon">Endre stasjonsikon (langt trykk oppdaget)</string>
     <string name="toastmessage_long_press_change_name">Gi stasjon nytt navn (langt trykk oppdaget)</string>
-    <string name="toastmessage_theme_night"></string>
-    <string name="toastmessage_theme_day"></string>
-    <string name="toastmessage_theme_follow_system"></string>
+    <string name="toastmessage_theme_night">Veksler til \"Nattmodus\" (langt trykk oppdaget)</string>
+    <string name="toastmessage_theme_day">Veksler til \"Dagmodus\" (langt trykk oppdaget)</string>
+    <string name="toastmessage_theme_follow_system">Veksler til \"Følg systeminnstillingsmodus\" (oppdaget langt trykk)</string>
     <string name="toastmessage_shortcut_created">Snarvei opprettet.</string>
     <string name="toastmessage_shortcut_not_created">Snarveien ble ikke opprettet. Denne enheten tillater ikke opprettelse av snarveier.</string>
     <string name="toastmessage_list_refreshed">Laster inn stasjonsliste igjen.</string>
@@ -107,19 +100,15 @@
     <string name="toastalert_station_not_found">Klarer ikke å finne stasjonen.</string>
     <string name="snackbar_request_storage_access">Transistor må gis lesetilgang for å kunne nå data på eksternt lagringsmedium.</string>
     <string name="snackbar_message_timer_set">Tidsavbrudd satt til</string>
-
     <!-- notification -->
     <string name="notification_play">Spill</string>
     <string name="notification_stop">Stopp</string>
     <string name="notification_channel_playback_name">Avspillingskontroller</string>
     <string name="notification_channel_playback_description">Avspillingskontroller, stasjonslogo og info om hva som spilles.</string>
-
     <!-- onboarding -->
     <string name="onboarding_app_description">Radio-program</string>
     <string name="onboarding_app_get_started">Kom igang</string>
-
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7
     https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
-
 </resources>
