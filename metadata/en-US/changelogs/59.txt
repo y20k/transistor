@@ -1,0 +1,7 @@
+# v3.0.9 - Oh! You Pretty Things
+
+**2018-08-08**
+
+- metadata display can handle UTF-8 and Latin1 characters
+- updated translations
+
