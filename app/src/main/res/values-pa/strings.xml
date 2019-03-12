@@ -1,125 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- activities -->
-    <string name="app_name">ਟਰਾਂਜ਼ਿਸਟਰ</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
-
+    <string name="app_name">ਟਰਾਂਜ਼ਿਸਟਰ</string>
+    <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
     <!-- app shortcuts -->
     <string name="shortcut_last_station_short_label">ਪਿਛਲਾ ਸਟੇਸ਼ਨ</string>
     <string name="shortcut_last_station_long_label">ਪਿਛਲਾ ਸਟੇਸ਼ਨ ਸ਼ੁਰੂ ਕਰੋ</string>
     <string name="shortcut_last_station_disabled_message">ਪਿਛਲਾ ਸਟੇਸ਼ਨ ਸ਼ੁਰੂ ਕਰਨ ਵਾਲਾ ਸ਼ਾਰਟਕਟ ਬੰਦ ਹੈ ।</string>
-
     <!-- menu entries -->
     <string name="menu_icon">ਆਈਕਾਨ ਬਦਲੋ</string>
-    <string name="menu_delete"></string>
-    <string name="menu_rename"></string>
-    <string name="menu_shortcut"></string>
-
+    <string name="menu_delete">ਹਟਾਓ</string>
+    <string name="menu_rename">ਨਾਂ ਬਦਲੋ</string>
+    <string name="menu_shortcut">ਹੋਮ ਸਕਰੀਨ ਤੇ ਲਗਾਓ</string>
     <!-- descriptions -->
-    <string name="descr_app_icon"></string>
-    <string name="descr_station_options_button"></string>
-    <string name="descr_station_name_example"></string>
-    <string name="descr_station_metadata_example"></string>
-    <string name="descr_station_stream_loading"></string>
-    <string name="descr_playback_button_play"></string>
-    <string name="descr_playback_button_stop"></string>
-    <string name="descr_playback_indicator"></string>
-    <string name="descr_timer_icon"></string>
-    <string name="descr_player_sheet_button_minimize"></string>
-    <string name="descr_player_sheet_content_copy_icon"></string>
-    <string name="descr_player_sheet_p_stream_url"></string>
-    <string name="descr_list_add_new"></string>
-    <string name="descr_list_add_select_stream_dropdown"></string>
-
+    <string name="descr_app_icon">ਪੁਰਾਣਾ ਰੇਡੀਓ ਦਰਸਾਉਂਦਾ ਹੋਇਆ ਐਪ ਆਇਕੌਨ</string>
+    <string name="descr_station_options_button">ਚੋਣਾਂ</string>
+    <string name="descr_station_name_example">ਉਦਾਹਰਣ ਏਫਏਮ</string>
+    <string name="descr_station_metadata_example">ਕਲਾਕਾਰ - ਟਾਈਟਲ</string>
+    <string name="descr_station_stream_loading">ਸਟਰੀਮ ਲੋਡ ਹੋ ਰਹੀ ਹੈ …</string>
+    <string name="descr_playback_button_play">ਚਲਾਓ</string>
+    <string name="descr_playback_button_stop">ਰੋਕੋ</string>
+    <string name="descr_playback_indicator">ਚਲਦਾ ਹੋਇਆ ਸਟੇਸ਼ਨ</string>
+    <string name="descr_timer_icon">ਨੀਂਦ ਟਾਈਮਰ</string>
+    <string name="descr_player_sheet_button_minimize">ਸਟੇਸ਼ਨ ਦਾ ਵੇਰਵਾ ਛੁਪਾਓ</string>
+    <string name="descr_player_sheet_content_copy_icon">ਕਾਪੀ ਕਰੋ</string>
+    <string name="descr_player_sheet_p_stream_url">ਚੋਣ ਕੀਤੇ ਹੋਏ ਰੇਡੀਉ ਸਟੇਸ਼ਨ ਦਾ ਸਟਰੀਮਿੰਗ ਲਿੰਕ</string>
+    <string name="descr_list_add_new">ਨਵਾਂ ਸਟੇਸ਼ਨ ਐਡ ਕਰੋ</string>
+    <string name="descr_list_add_select_stream_dropdown">ਸਟਰੀਮ ਚੋਣ ਕਰੋ</string>
     <!-- player -->
-    <string name="player_sheet_h1_details"></string>
-    <string name="player_sheet_h2_current_session"></string>
-    <string name="player_sheet_h2_station_metadata"></string>
-    <string name="player_sheet_h2_stream_url"></string>
-    <string name="player_sheet_h2_station_mime_type"></string>
-    <string name="player_sheet_h2_station_channel_count"></string>
-    <string name="player_sheet_h2_station_sample_rate"></string>
-    <string name="player_sheet_h2_station_bitrate"></string>
-
+    <string name="player_sheet_h1_details">ਵੇਰਵਾ</string>
+    <string name="player_sheet_h2_current_session">ਮੌਜੂਦਾ ਸੈਸ਼ਨ</string>
+    <string name="player_sheet_h2_station_metadata">ਵਰਤਮਾਨ ਵਿੱਚ ਚਲ ਰਿਹਾ ਹੈ</string>
+    <string name="player_sheet_h2_stream_url">ਸਟ੍ਰੀਮਿੰਗ ਲਿੰਕ</string>
+    <string name="player_sheet_h2_station_mime_type">MIME ਕਿਸਮ</string>
+    <string name="player_sheet_h2_station_channel_count">ਚੈਨਲ ਗਿਣਤੀ</string>
+    <string name="player_sheet_h2_station_sample_rate">ਨਮੂਨਾ ਦਰ</string>
+    <string name="player_sheet_h2_station_bitrate">ਬਿੱਟਰੇਟ</string>
     <!-- dialogs -->
-    <string name="dialog_generic_button_okay"></string>
-    <string name="dialog_generic_button_cancel"></string>
-    <string name="dialog_add_station_button"></string>
-    <string name="dialog_add_station_input_hint"></string>
-    <string name="dialog_add_station_message"></string>
-    <string name="dialog_add_station_howto"></string>
-    <string name="dialog_delete_station_message"></string>
-    <string name="dialog_button_delete"></string>
-    <string name="dialog_rename_station_input_hint"></string>
-    <string name="dialog_rename_station_message"></string>
-    <string name="dialog_button_rename"></string>
-    <string name="dialog_add_station_choose_stream_heading"></string>
-    <string name="dialog_add_station_choose_stream_message"></string>
-    <string name="dialog_add_station_choose_stream_button"></string>
-
+    <string name="dialog_generic_button_okay">ਠੀਕ ਹੈ</string>
+    <string name="dialog_generic_button_cancel">ਰੱਦ ਕਰੋ</string>
+    <string name="dialog_add_station_button">ਸ਼ਾਮਿਲ ਕਰੋ</string>
+    <string name="dialog_add_station_input_hint">ਸਟ੍ਰੀਮਿੰਗ ਲਿੰਕ ਪੇਸਟ ਕਰੋ</string>
+    <string name="dialog_add_station_message">ਨਵਾਂ ਸਟੇਸ਼ਨ ਸ਼ਾਮਿਲ ਕਰੋ</string>
+    <string name="dialog_add_station_howto">ਤੁਸੀਂ MP3, AAC ਅਤੇ Ogg / ਓਪਸ ਦੇ ਨਾਲ ਨਾਲ PLS ਜਾਂ M3U ਫਾਈਲਾਂ ਵਿੱਚ ਇਨਪੁਟ ਕੀਤੇ ਗਏ ਰਾਅ ਆਡੀਓ ਸਟ੍ਰੀਮਸ ਨੂੰ ਸ਼ਾਮਲ ਕਰ ਸਕਦੇ ਹੋ. ਵਿਕਲਪਕ ਤੌਰ ਤੇ ਤੁਸੀਂ ਆਪਣੇ ਵੈਬ ਬ੍ਰਾਊਜ਼ਰ ਵਿੱਚ ਸਟ੍ਰੀਮਿੰਗ ਲਿੰਕਾਂ (.pls ਜਾਂ .m3u) ਤੇ ਟੈਪ ਕਰਕੇ ਨਵੇਂ ਸਟੇਸ਼ਨਸ ਸ਼ਾਮਿਲ ਸਕਦੇ ਹੋ ।</string>
+    <string name="dialog_delete_station_message">ਸਟੇਸ਼ਨ ਹਟਾਓ</string>
+    <string name="dialog_button_delete">ਹਟਾਓ</string>
+    <string name="dialog_rename_station_input_hint">ਇੱਕ ਨਵਾਂ ਨਾਮ ਦਰਜ ਕਰੋ</string>
+    <string name="dialog_rename_station_message">ਸਟੇਸ਼ਨ ਦਾ ਨਾਂ ਬਦਲੋ</string>
+    <string name="dialog_button_rename">ਨਾਂ ਬਦਲੋ</string>
+    <string name="dialog_add_station_choose_stream_heading">ਕਈ ਸਟ੍ਰੀਮ ਮਿਲੇ ਹਨ</string>
+    <string name="dialog_add_station_choose_stream_message">ਕਿਰਪਾ ਕਰਕੇ ਇਕ ਸਟ੍ਰੀਮ ਚੁਣੋ</string>
+    <string name="dialog_add_station_choose_stream_button">ਚੁਣੋ</string>
     <!-- error dialogs -->
-    <string name="dialog_error_title_default"></string>
-    <string name="dialog_error_message_default"></string>
-    <string name="dialog_error_details_button_default"></string>
-    <string name="dialog_error_details_default"></string>
-    <string name="dialog_error_details_write"></string>
-    <string name="dialog_error_title_fetch_download"></string>
-    <string name="dialog_error_title_fetch_read"></string>
-    <string name="dialog_error_title_fetch_write"></string>
-    <string name="dialog_error_message_fetch_general_external_storage"></string>
-    <string name="dialog_error_message_fetch_general_hint_m3u"></string>
-    <string name="dialog_error_message_fetch_general_playlist_type"></string>
-    <string name="dialog_error_message_fetch_general_stream_type"></string>
-    <string name="dialog_error_message_fetch_general_file_content"></string>
-    <string name="dialog_error_message_fetch_download"></string>
-    <string name="dialog_error_message_fetch_download_station_url"></string>
-    <string name="dialog_error_message_fetch_read"></string>
-    <string name="dialog_error_message_fetch_read_file_location"></string>
-    <string name="dialog_error_message_fetch_write"></string>
-
+    <string name="dialog_error_title_default">ਨੁਕਸ</string>
+    <string name="dialog_error_message_default">ਇੱਕ ਗਲਤੀ ਆਈ ਹੈ</string>
+    <string name="dialog_error_details_button_default">ਵੇਰਵਾ ਦਿਖਾਓ</string>
+    <string name="dialog_error_details_default">ਕੋਈ ਵੇਰਵੇ ਉਪਲਬਧ ਨਹੀਂ</string>
+    <string name="dialog_error_details_write">ਇਹ ਸਟੇਸ਼ਨ ਸ਼ਾਇਦ ਇੱਕ ਡੁਪਲੀਕੇਟ ਹੈ ਜਾਂ ਨਹੀਂ ਤਾਂ ਤੁਸੀਂ ਆਪਣੇ ਐਕਸਟਰਨਲ ਸਟੋਰੇਜ ਦੀ ਜਾੰਚ ਕਰ ਸਕਦੇ ਹੋ ।</string>
+    <string name="dialog_error_title_fetch_download">ਡਾਊਨਲੋਡ ਵਿੱਚ ਦਿੱਕਤ ਆਈ ਹੈ</string>
+    <string name="dialog_error_title_fetch_read">ਡਾਟਾ ਪੜ੍ਹਨ ਵਿੱਚ ਗਲਤੀ ਹੈ</string>
+    <string name="dialog_error_title_fetch_write">ਡਾਟਾ ਲਿਖਣ ਵਿੱਚ ਗਲਤੀ ਹੈ</string>
+    <string name="dialog_error_message_fetch_general_external_storage">ਐਕਸਟਰਨਲ ਸਟੋਰੇਜ:</string>
+    <string name="dialog_error_message_fetch_general_hint_m3u">ਸੰਕੇਤ: ਟ੍ਰਾਂਸਿਸਟਰ ਸਿਰਫ MP3, AAC ਅਤੇ Ogg/Opus ਏਨਕੋਡਿਡ ਸਟ੍ਰੀਮ ਜਾਂ .m3u ਜਾਂ .pls ਵਿੱਚ ਖਤਮ ਹੋਣ ਵਾਲੇ ਲਿੰਕ ਤੇ ਕੰਮ ਕਰ ਸਕਦਾ ਹੈ.</string>
+    <string name="dialog_error_message_fetch_general_playlist_type"/>
+    <string name="dialog_error_message_fetch_general_stream_type"/>
+    <string name="dialog_error_message_fetch_general_file_content"/>
+    <string name="dialog_error_message_fetch_download"/>
+    <string name="dialog_error_message_fetch_download_station_url"/>
+    <string name="dialog_error_message_fetch_read"/>
+    <string name="dialog_error_message_fetch_read_file_location"/>
+    <string name="dialog_error_message_fetch_write"/>
     <!-- messages -->
-    <string name="toastmessage_add_download_started"></string>
-    <string name="toastmessage_add_open_file_started"></string>
-    <string name="toastmessage_long_press_playback_stopped"></string>
-    <string name="toastmessage_long_press_playback_started"></string>
-    <string name="toastmessage_long_press_change_icon"></string>
-    <string name="toastmessage_long_press_change_name"></string>
-    <string name="toastmessage_theme_night"></string>
-    <string name="toastmessage_theme_day"></string>
-    <string name="toastmessage_theme_follow_system"></string>
-    <string name="toastmessage_shortcut_created"></string>
-    <string name="toastmessage_shortcut_not_created"></string>
-    <string name="toastmessage_list_refreshed"></string>
-    <string name="toastmessage_copied_to_clipboard_url"></string>
-    <string name="toastmessage_copied_to_clipboard_metadata"></string>
-    <string name="toastmessage_station_copied"></string>
-    <string name="toastmessage_stream_may_not_work"></string>
-    <string name="toastmessage_timer_activated"></string>
-    <string name="toastmessage_timer_cancelled"></string>
-    <string name="toastmessage_timer_duration_increased"></string>
-    <string name="toastmessage_timer_start_unable"></string>
-    <string name="toastalert_unable_to_connect"></string>
-    <string name="toastalert_rename_unsuccessful"></string>
-    <string name="toastalert_delete_successful"></string>
-    <string name="toastalert_no_external_storage"></string>
-    <string name="toastalert_no_image_picker"></string>
-    <string name="toastalert_headphones_unplugged"></string>
-    <string name="toastalert_permission_denied"></string>
-    <string name="toastalert_station_not_found"></string>
-    <string name="snackbar_request_storage_access"></string>
-    <string name="snackbar_message_timer_set"></string>
-
+    <string name="toastmessage_add_download_started"/>
+    <string name="toastmessage_add_open_file_started"/>
+    <string name="toastmessage_long_press_playback_stopped"/>
+    <string name="toastmessage_long_press_playback_started"/>
+    <string name="toastmessage_long_press_change_icon"/>
+    <string name="toastmessage_long_press_change_name"/>
+    <string name="toastmessage_theme_night"/>
+    <string name="toastmessage_theme_day"/>
+    <string name="toastmessage_theme_follow_system"/>
+    <string name="toastmessage_shortcut_created"/>
+    <string name="toastmessage_shortcut_not_created"/>
+    <string name="toastmessage_list_refreshed"/>
+    <string name="toastmessage_copied_to_clipboard_url"/>
+    <string name="toastmessage_copied_to_clipboard_metadata"/>
+    <string name="toastmessage_station_copied"/>
+    <string name="toastmessage_stream_may_not_work"/>
+    <string name="toastmessage_timer_activated"/>
+    <string name="toastmessage_timer_cancelled"/>
+    <string name="toastmessage_timer_duration_increased"/>
+    <string name="toastmessage_timer_start_unable"/>
+    <string name="toastalert_unable_to_connect"/>
+    <string name="toastalert_rename_unsuccessful"/>
+    <string name="toastalert_delete_successful"/>
+    <string name="toastalert_no_external_storage"/>
+    <string name="toastalert_no_image_picker"/>
+    <string name="toastalert_headphones_unplugged"/>
+    <string name="toastalert_permission_denied"/>
+    <string name="toastalert_station_not_found"/>
+    <string name="snackbar_request_storage_access"/>
+    <string name="snackbar_message_timer_set"/>
     <!-- notification -->
-    <string name="notification_play"></string>
-    <string name="notification_stop"></string>
-    <string name="notification_channel_playback_name"></string>
-    <string name="notification_channel_playback_description"></string>
-
+    <string name="notification_play"/>
+    <string name="notification_stop"/>
+    <string name="notification_channel_playback_name"/>
+    <string name="notification_channel_playback_description"/>
     <!-- onboarding -->
-    <string name="onboarding_app_description"></string>
-    <string name="onboarding_app_get_started"></string>
-
+    <string name="onboarding_app_description"/>
+    <string name="onboarding_app_get_started"/>
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7
     https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
-
 </resources>
