@@ -1,35 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- activities -->
-    <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
-
+    <string name="app_name">Transistor</string>
+    <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
     <!-- app shortcuts -->
     <string name="shortcut_last_station_short_label">Azken irratia</string>
     <string name="shortcut_last_station_long_label">Jo azken irratia</string>
     <string name="shortcut_last_station_disabled_message">Azken irratia erreproduzitzeko laster-marka desgaituta.</string>
-
     <!-- menu entries -->
     <string name="menu_icon">Aldatu ikonoa</string>
     <string name="menu_delete">Ezabatu</string>
     <string name="menu_rename">Aldatu izena</string>
     <string name="menu_shortcut">Kokatu hasiera orrian</string>
-
     <!-- descriptions -->
     <string name="descr_app_icon">Irrati zahar baten ikonoa</string>
-    <string name="descr_station_options_button">Bistaratu irrati estazioaren aukerak</string>
+    <string name="descr_station_options_button">Aukerak</string>
     <string name="descr_station_name_example">Adibideko FM</string>
     <string name="descr_station_metadata_example">Artista - Titulua</string>
     <string name="descr_station_stream_loading">Jarioa kargatzen …</string>
-    <string name="descr_playback_button_play"></string>
-    <string name="descr_playback_button_stop"></string>
-    <string name="descr_playback_indicator">Erreprodukzioa martxan adierazlea</string>
-    <string name="descr_timer_icon">Atzera kontaketaren ikonoa</string>
-    <string name="descr_player_sheet_button_minimize"></string>
-    <string name="descr_player_sheet_content_copy_icon">Edukia kopiatzeko ikonoa</string>
+    <string name="descr_playback_button_play">Jo</string>
+    <string name="descr_playback_button_stop">Gelditu</string>
+    <string name="descr_playback_indicator">Irratia erreproduzitzen</string>
+    <string name="descr_timer_icon">Atzera kontaketa</string>
+    <string name="descr_player_sheet_button_minimize">Ezkutatu irratiaren xehetasunak</string>
+    <string name="descr_player_sheet_content_copy_icon">Kopiatu</string>
     <string name="descr_player_sheet_p_stream_url">Aukeratutako irrati estazioaren jarioaren esteka</string>
     <string name="descr_list_add_new">Gehitu irrati berria</string>
-    <string name="descr_list_add_select_stream_dropdown">Jarioen aukera bat duen laster-menua</string>
-
+    <string name="descr_list_add_select_stream_dropdown">Hautatu jarioa</string>
     <!-- player -->
     <string name="player_sheet_h1_details">Details</string>
     <string name="player_sheet_h2_current_session">Uneko saioa</string>
@@ -39,7 +36,6 @@
     <string name="player_sheet_h2_station_channel_count">Kanal kopurua</string>
     <string name="player_sheet_h2_station_sample_rate">Lagin-tasa</string>
     <string name="player_sheet_h2_station_bitrate">Bitrate</string>
-
     <!-- dialogs -->
     <string name="dialog_generic_button_okay">Ados</string>
     <string name="dialog_generic_button_cancel">Utzi</string>
@@ -55,7 +51,6 @@
     <string name="dialog_add_station_choose_stream_heading">Hainbat jario aurkitu dira</string>
     <string name="dialog_add_station_choose_stream_message">Hautatu jario bat</string>
     <string name="dialog_add_station_choose_stream_button">Hautatu</string>
-
     <!-- error dialogs -->
     <string name="dialog_error_title_default">Errorea</string>
     <string name="dialog_error_message_default">Errore bat gertatu da</string>
@@ -75,7 +70,6 @@
     <string name="dialog_error_message_fetch_read">Transistor saiatu da, baina ez du fitxategia ulertzen.</string>
     <string name="dialog_error_message_fetch_read_file_location">Fitxategiaren kokalekua:</string>
     <string name="dialog_error_message_fetch_write">Ezin izan da irratia biltegiratzera gorde.</string>
-
     <!-- messages -->
     <string name="toastmessage_add_download_started">Deskarga hasi da.</string>
     <string name="toastmessage_add_open_file_started">Fitxategia irekitzen.</string>
@@ -107,19 +101,15 @@
     <string name="toastalert_station_not_found">Ezin izan da irratia aurkitu.</string>
     <string name="snackbar_request_storage_access">Transistorrek irakurketa baimenak behar ditu kanpo biltegiko datuak atzitzeko.</string>
     <string name="snackbar_message_timer_set">"Itzaltzeko atzera-kontaketa  ezarri da"</string>
-
     <!-- notification -->
     <string name="notification_play">Erreproduzitu</string>
     <string name="notification_stop">Stop</string>
     <string name="notification_channel_playback_name">Erreprodukzio kontrolak</string>
     <string name="notification_channel_playback_description">Erreprodukzio kontrolak, irratiaren logoa eta unean jotzen ari denaren informazioa.</string>
-
     <!-- onboarding -->
     <string name="onboarding_app_description">Irrati aplikazioa</string>
     <string name="onboarding_app_get_started">Hasi</string>
-
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7
     https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
-
 </resources>
