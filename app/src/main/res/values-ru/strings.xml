@@ -20,11 +20,11 @@
     <string name="descr_station_name_example">Например FM</string>
     <string name="descr_station_metadata_example">Исполнитель - Название</string>
     <string name="descr_station_stream_loading">Загрузка потока …</string>
-    <string name="descr_playback_button_play"></string>
-    <string name="descr_playback_button_stop"></string>
+    <!--<string name="descr_playback_button_play"></string>-->
+    <!--<string name="descr_playback_button_stop"></string>-->
     <string name="descr_playback_indicator">Индикатор воспроизведения</string>
     <string name="descr_timer_icon">Иконка таймера сна</string>
-    <string name="descr_player_sheet_button_minimize"></string>
+    <!--<string name="descr_player_sheet_button_minimize"></string>-->
     <string name="descr_player_sheet_content_copy_icon">Иконка копирования контента</string>
     <string name="descr_player_sheet_p_stream_url">Адрес потока выбранной радиостанции</string>
     <string name="descr_list_add_new">Добавить новую станцию</string>

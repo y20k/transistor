@@ -20,11 +20,11 @@
     <string name="descr_station_name_example">Приклад FM</string>
     <string name="descr_station_metadata_example">Артист - Заголовок</string>
     <string name="descr_station_stream_loading">Завантаження потоку …</string>
-    <string name="descr_playback_button_play"></string>
-    <string name="descr_playback_button_stop"></string>
+    <!--<string name="descr_playback_button_play"></string>-->
+    <!--<string name="descr_playback_button_stop"></string>-->
     <string name="descr_playback_indicator">Індикатор активності відтворення</string>
     <string name="descr_timer_icon">Піктограма таймера сну</string>
-    <string name="descr_player_sheet_button_minimize"></string>
+    <!--<string name="descr_player_sheet_button_minimize"></string>-->
     <string name="descr_player_sheet_content_copy_icon">Значок копіювання контенту</string>
     <string name="descr_player_sheet_p_stream_url">Потокове посилання обраної радіостанції</string>
     <string name="descr_list_add_new">Додати нову станцію</string>
@@ -83,9 +83,9 @@
     <string name="toastmessage_long_press_playback_started">Відтворення розпочато</string>
     <string name="toastmessage_long_press_change_icon">Зміна піктограми станції (виявлено довге натискання)</string>
     <string name="toastmessage_long_press_change_name">Перейменувати станцію (виявлено тривале натискання)</string>
-    <string name="toastmessage_theme_night"></string>
-    <string name="toastmessage_theme_day"></string>
-    <string name="toastmessage_theme_follow_system"></string>
+    <!--<string name="toastmessage_theme_night"></string>-->
+    <!--<string name="toastmessage_theme_day"></string>-->
+    <!--<string name="toastmessage_theme_follow_system"></string>-->
     <string name="toastmessage_shortcut_created">Посилання створено.</string>
     <string name="toastmessage_shortcut_not_created">Ярлик не створено. Цей пристрій не дозволяє створювати ярлики.</string>
     <string name="toastmessage_list_refreshed">Перезавантаження списку станцій.</string>

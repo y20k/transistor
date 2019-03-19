@@ -20,25 +20,25 @@
     <string name="descr_station_name_example">Пример ФМ</string>
     <string name="descr_station_metadata_example">Извођач — наслов</string>
     <string name="descr_station_stream_loading">Учитавам ток…</string>
-    <string name="descr_playback_button_play"></string>
-    <string name="descr_playback_button_stop"></string>
+    <string name="descr_playback_button_play">Пусти</string>
+    <string name="descr_playback_button_stop">Заустави</string>
     <string name="descr_playback_indicator">Показивач тренутног пуштања</string>
     <string name="descr_timer_icon">Икона тајмера</string>
-    <string name="descr_player_sheet_button_minimize"></string>
+    <!--<string name="descr_player_sheet_button_minimize"></string>-->
     <string name="descr_player_sheet_content_copy_icon">Икона копирања садржаја</string>
     <string name="descr_player_sheet_p_stream_url">Веза тока изабране радио станице</string>
-    <string name="descr_list_add_new"></string>
-    <string name="descr_list_add_select_stream_dropdown"></string>
+    <!--<string name="descr_list_add_new"></string>-->
+    <!--<string name="descr_list_add_select_stream_dropdown"></string>-->
 
     <!-- player -->
-    <string name="player_sheet_h1_details"></string>
-    <string name="player_sheet_h2_current_session"></string>
+    <!--<string name="player_sheet_h1_details"></string>-->
+    <!--<string name="player_sheet_h2_current_session"></string>-->
     <string name="player_sheet_h2_station_metadata">Тренутно пуштање</string>
     <string name="player_sheet_h2_stream_url">Веза тока</string>
     <string name="player_sheet_h2_station_mime_type">МИМЕ тип</string>
     <string name="player_sheet_h2_station_channel_count">Број канала</string>
     <string name="player_sheet_h2_station_sample_rate">Узорковање</string>
-    <string name="player_sheet_h2_station_bitrate"></string>
+    <!--<string name="player_sheet_h2_station_bitrate"></string>-->
 
     <!-- dialogs -->
     <string name="dialog_generic_button_okay">У реду</string>
@@ -52,9 +52,9 @@
     <string name="dialog_rename_station_input_hint">Унесите нови назив</string>
     <string name="dialog_rename_station_message">Преименовање станице</string>
     <string name="dialog_button_rename">Преименуј</string>
-    <string name="dialog_add_station_choose_stream_heading"></string>
-    <string name="dialog_add_station_choose_stream_message"></string>
-    <string name="dialog_add_station_choose_stream_button"></string>
+    <!-- <string name="dialog_add_station_choose_stream_heading"></string>-->
+    <!--<string name="dialog_add_station_choose_stream_message"></string>-->
+    <!--<string name="dialog_add_station_choose_stream_button"></string>-->
 
     <!-- error dialogs -->
     <string name="dialog_error_title_default">Грешка</string>
@@ -81,11 +81,11 @@
     <string name="toastmessage_add_open_file_started">Отварам фајл.</string>
     <string name="toastmessage_long_press_playback_stopped">Пуштање заустављено (примећен дуги тап)</string>
     <string name="toastmessage_long_press_playback_started">Пуштање почето (примећен дуги тап)</string>
-    <string name="toastmessage_long_press_change_icon"></string>
-    <string name="toastmessage_long_press_change_name"></string>
-    <string name="toastmessage_theme_night"></string>
-    <string name="toastmessage_theme_day"></string>
-    <string name="toastmessage_theme_follow_system"></string>
+    <!--<string name="toastmessage_long_press_change_icon"></string>-->
+    <!--<string name="toastmessage_long_press_change_name"></string>-->
+    <!--<string name="toastmessage_theme_night"></string>-->
+    <!--<string name="toastmessage_theme_day"></string>-->
+    <!--<string name="toastmessage_theme_follow_system"></string>-->
     <string name="toastmessage_shortcut_created">Пречица направљена.</string>
     <string name="toastmessage_shortcut_not_created">Пречица није направљена. Овај уређај не допушта прављење пречица.</string>
     <string name="toastmessage_list_refreshed">Поново учитавам списак станица.</string>
@@ -115,8 +115,8 @@
     <string name="notification_channel_playback_description">Контроле пуштања, лого станице и подаци о тренутно пуштеном.</string>
 
     <!-- onboarding -->
-    <string name="onboarding_app_description"></string>
-    <string name="onboarding_app_get_started"></string>
+    <!--<string name="onboarding_app_description"></string>-->
+    <!--<string name="onboarding_app_get_started"></string>-->
 
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7

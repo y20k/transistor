@@ -4,7 +4,7 @@
 <svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
     xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
     xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="192pt" height="192pt"
-    viewBox="0 0 67.733335 67.733333" version="1.1" id="svg8" inkscape:version="0.92.2 5c3e80d, 2017-08-06"
+    viewBox="0 0 67.733335 67.733333" version="1.1" id="svg8" inkscape:version="0.92.4 5da689c313, 2019-01-14"
     sodipodi:docname="transistor-app-icon-current.svg" inkscape:export-filename="/Users/solaris/Desktop/app-icon-1600.png"
     inkscape:export-xdpi="600.00006" inkscape:export-ydpi="600.00006">
   <defs
@@ -83,18 +83,18 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.3087036"
-     inkscape:cx="113.40044"
-     inkscape:cy="192.68812"
+     inkscape:zoom="2"
+     inkscape:cx="202.75268"
+     inkscape:cy="211.58757"
      inkscape:document-units="pt"
-     inkscape:current-layer="layer3"
+     inkscape:current-layer="g4553"
      showgrid="false"
      units="pt"
      inkscape:snap-object-midpoints="true"
-     inkscape:window-width="1869"
-     inkscape:window-height="1155"
-     inkscape:window-x="118"
-     inkscape:window-y="0"
+     inkscape:window-width="1942"
+     inkscape:window-height="1273"
+     inkscape:window-x="543"
+     inkscape:window-y="44"
      inkscape:window-maximized="0"
      inkscape:snap-global="false"
      showguides="true"
@@ -107,7 +107,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -127,8 +127,8 @@
   <g
      inkscape:groupmode="layer"
      id="layer3"
-     inkscape:label="Radio Icon by Munadi Kiehl"
-     style="display:inline">
+     inkscape:label="Radio Icon by Munadi Kiehl (original)"
+     style="display:none">
     <path
        id="path833"
        d="m 48.995601,15.85484 c 1.207165,-0.350428 0.647781,-2.051952 -0.559384,-1.701524 l -33.076887,9.586159 -0.261046,0.07528 -0.06215,0.01817 c -0.05057,0.01311 -0.09961,0.03093 -0.146406,0.05321 -1.44396,0.546639 -2.388893,1.86364 -2.386707,3.326473 v 19.652535 c -7.63e-4,1.976726 1.704341,3.57956 3.807958,3.57956 l 17.676288,18.514091 34.558008,-0.09081 0.693494,-32.654199 z"
@@ -166,5 +166,85 @@
        class="cls-1"
        d="M 54.596352,27.361865 H 53.33532 V 27.212609 A 3.8065767,3.5769639 0 0 0 49.532887,23.634347 H 22.17139 L 48.995601,15.85484 a 0.94759172,0.89043295 0 1 0 -0.559384,-1.701524 l -33.076887,9.586159 -0.261046,0.07528 -0.06215,0.01817 a 0.78728183,0.73979297 0 0 0 -0.146406,0.05321 3.8107203,3.5808575 0 0 0 -2.386707,3.326473 v 19.652535 a 3.8079579,3.5782618 0 0 0 3.807958,3.57956 H 49.53151 a 3.8065767,3.5769639 0 0 0 3.802433,-3.578262 V 32.963526 h 1.261032 a 0.63535025,0.5970259 0 0 0 0.63535,-0.597026 v -4.4128 a 0.63535025,0.5970259 0 0 0 -0.633969,-0.591835 z m -38.478745,0.454259 a 1.1740168,1.1032 0 0 1 1.171254,-1.100604 h 20.773191 v 5.610745 a 0.71131604,0.66840944 0 1 0 1.422632,0 v -5.609447 h 9.066172 a 1.1712544,1.1006043 0 0 1 1.171255,1.100604 v 5.710682 a 1.1712544,1.1006043 0 0 1 -1.171255,1.100605 H 17.293005 a 1.1740168,1.1032 0 0 1 -1.171254,-1.100605 z m 19.683427,18.910147 h -18.7746 a 0.94888179,0.89164521 0 1 1 0,-1.781993 h 18.7746 a 0.94888179,0.89164521 0 0 1 0,1.781993 z m 0,-3.563985 h -18.7746 a 0.94888179,0.89164521 0 0 1 0,-1.781993 h 18.7746 a 0.94888179,0.89164521 0 0 1 0,1.781993 z m 0,-3.563986 h -18.7746 a 0.94888179,0.89164521 0 1 1 0,-1.781992 h 18.7746 a 0.94888179,0.89164521 0 0 1 0,1.781992 z m 9.440476,6.896948 a 4.4957936,4.2246072 0 1 1 4.494413,-4.227203 4.498556,4.227203 0 0 1 -4.495794,4.227203 z"
        id="path3860" />
+  </g>
+  <g
+     style="display:inline"
+     inkscape:label="Radio Icon  (Variant)"
+     id="g4553"
+     inkscape:groupmode="layer">
+    <path
+       sodipodi:nodetypes="ccccccccccccc"
+       inkscape:label="Radio outline shadow long"
+       style="display:none;opacity:0.12999998;fill:#3c4043;fill-opacity:1;stroke-width:0.13388914"
+       inkscape:connector-curvature="0"
+       class="cls-1"
+       d="m 48.995601,15.85484 c 1.207165,-0.350428 0.647781,-2.051952 -0.559384,-1.701524 l -33.076887,9.586159 -0.261046,0.07528 -0.06215,0.01817 c -0.05057,0.01311 -0.09961,0.03093 -0.146406,0.05321 -1.44396,0.546639 -2.388893,1.86364 -2.386707,3.326473 v 19.652535 c -7.63e-4,1.976726 1.704341,3.57956 3.807958,3.57956 l 17.676288,18.514091 34.558008,-0.09081 0.693494,-32.654199 z"
+       id="path4615" />
+    <path
+       inkscape:label="Radio outline shadow short"
+       inkscape:connector-curvature="0"
+       id="path4611"
+       transform="scale(0.26458334)"
+       d="m 183.89258,53.332031 c -0.265,0.02533 -0.54102,0.07738 -0.82617,0.160157 l -125.015629,36.232421 -0.986328,0.283203 -0.234375,0.07031 c -0.191131,0.04955 -0.377821,0.115011 -0.554687,0.199219 -5.457487,2.066037 -9.027794,7.045401 -9.019532,12.574219 v 74.27735 c -0.0029,7.47109 6.4419,13.52734 14.392579,13.52734 L 109.0293,240.2832 A 114,114 0 0 0 128,242 114,114 0 0 0 242,128 114,114 0 0 0 241.2793,116.34375 L 185.17969,59.923828 c 4.27735,-1.241674 2.68785,-6.971735 -1.28711,-6.591797 z"
+       style="display:inline;opacity:0.12999998;fill:#3c4043;fill-opacity:1;stroke-width:0.97159088" />
+    <path
+       id="path4605"
+       d="m 53.33532,27.212609 c 7.64e-4,-1.97449 -1.701198,-3.576113 -3.802433,-3.578262 H 22.17139 l -6.454167,6.86e-4 -0.357893,0.104442 -0.261046,0.07528 -0.06215,0.01817 c -0.05057,0.01311 -0.09961,0.03093 -0.146406,0.05321 -1.44396,0.546639 -2.388893,1.86364 -2.386707,3.326473 v 19.652535 c -7.63e-4,1.976726 1.704341,3.57956 3.807958,3.57956 H 49.53151 c 2.101235,-0.0021 3.803197,-1.603772 3.802433,-3.578262 -4.67e-4,-6.551278 -1.95e-4,-13.102555 0.0014,-19.653832 z"
+       class="cls-1"
+       inkscape:connector-curvature="0"
+       style="display:inline;fill:#ffffff;stroke-width:0.13388914"
+       inkscape:label="Radio white (basic shape)"
+       sodipodi:nodetypes="ccccccccccscccc" />
+    <path
+       sodipodi:nodetypes="cccssccc"
+       inkscape:label="Volume dial"
+       style="display:inline;fill:#ffffff;stroke-width:0.13388914"
+       inkscape:connector-curvature="0"
+       class="cls-1"
+       d="M 54.596352,27.361865 H 53.33532 l -0.0014,5.601661 h 1.261032 c 0.350894,0 0.63535,-0.267298 0.63535,-0.597026 v -4.4128 c -0.003,-0.327194 -0.285759,-0.591136 -0.633969,-0.591835 z"
+       id="path4607" />
+    <path
+       id="path4603"
+       d="M 22.17139,23.634347 48.995601,15.85484 c 1.207165,-0.350428 0.647781,-2.051952 -0.559384,-1.701524 L 15.71862,23.634251 Z"
+       class="cls-1"
+       inkscape:connector-curvature="0"
+       style="display:inline;fill:#ffffff;fill-opacity:1;stroke-width:0.13388914"
+       inkscape:label="Antenna"
+       sodipodi:nodetypes="ccccc" />
+    <path
+       inkscape:label="Speaker (inner)"
+       id="path4590"
+       style="display:inline;fill:#d2d6da;fill-opacity:1;stroke-width:0.13388915"
+       d="m 17.009496,37.815581 c -1.305628,-0.0279 -1.287829,1.832271 0.01705,1.782321 h 18.774567 c 1.213546,-0.04657 1.213546,-1.73523 0,-1.781805 H 17.02655 c -0.0057,-2.22e-4 -0.01138,-2.65e-4 -0.01705,-5.29e-4 z m 0.01705,3.564641 c -1.213494,0.04662 -1.213494,1.735186 0,1.781803 h 18.774567 c 1.213493,-0.04662 1.213493,-1.735183 0,-1.781803 z m -0.01705,3.563607 c -1.305628,-0.0279 -1.287829,1.832272 0.01705,1.782321 h 18.774567 c 1.223462,-0.03792 1.223462,-1.744398 0,-1.782321 H 17.02655 c -0.0057,-4.7e-5 -0.01138,-4.7e-5 -0.01705,0 z"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccccccccccccccccc" />
+    <path
+       sodipodi:nodetypes="cccc"
+       inkscape:connector-curvature="0"
+       d="m 45.05223,38.049676 c -5.864873,0.231908 -5.680414,8.44626 0.189653,8.44548 2.482792,-0.0021 4.494258,-1.894102 4.494297,-4.227132 -0.0016,-2.401552 -2.130477,-4.31886 -4.68395,-4.218348 z"
+       style="display:inline;fill:#d2d6da;fill-opacity:1;stroke-width:0.13388915"
+       id="path4588"
+       inkscape:label="Frequency Dial outer" />
+    <path
+       id="path4598"
+       d="m 47.83954,42.268045 a 2.5980301,2.4413168 0 1 1 -2.59803,-2.441317 2.6021736,2.4452104 0 0 1 2.59803,2.441317 z"
+       class="cls-1"
+       inkscape:connector-curvature="0"
+       style="display:inline;fill:#ffffff;stroke-width:0.13388914"
+       inkscape:label="Frequency Dial" />
+    <path
+       style="display:inline;fill:#d2d6da;fill-opacity:1;stroke-width:0.13388915"
+       d="m 17.289066,26.715484 c -0.646163,0.0013 -1.169744,0.493007 -1.171505,1.100191 l 0.0041,5.712312 c 0.0015,0.607388 0.525127,1.09941 1.171504,1.100709 h 31.25804 c 0.646806,-1.38e-4 1.171049,-0.492919 1.170988,-1.100709 v -5.710762 c 6.1e-5,-0.60779 -0.524182,-1.10057 -1.170988,-1.100708 z"
+       id="path4586"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccccccc"
+       inkscape:label="Frequency Scale" />
+    <path
+       inkscape:label="Frequency Needle"
+       sodipodi:nodetypes="ccccc"
+       inkscape:connector-curvature="0"
+       id="path4609"
+       d="m 39.485091,26.716517 v 5.609476 c 2.24e-4,0.891439 -1.422427,0.891439 -1.422652,0 v -5.610509 z"
+       style="display:inline;fill:#bdc1c6;fill-opacity:1;stroke-width:0.13388915" />
   </g>
 </svg>

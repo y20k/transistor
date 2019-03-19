@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- activities -->
-    <string name="app_name">Transistor</string>
-    <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
+    <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
+
     <!-- app shortcuts -->
     <string name="shortcut_last_station_short_label">Última emisora</string>
     <string name="shortcut_last_station_long_label">Reproducir última emisora</string>
     <string name="shortcut_last_station_disabled_message">Atajo para la reproducción de la última emisora desactivada.</string>
+
     <!-- menu entries -->
     <string name="menu_icon">Cambiar icono</string>
     <string name="menu_delete">Borrar</string>
     <string name="menu_rename">Renombrar</string>
     <string name="menu_shortcut">Colocar en la pantalla de inicio</string>
+
     <!-- descriptions -->
     <string name="descr_app_icon">Icono de aplicación que muestra una radio antigua</string>
     <string name="descr_station_options_button">Opciones</string>
@@ -27,6 +29,7 @@
     <string name="descr_player_sheet_p_stream_url">Enlace Stream de la emisora de radio seleccionada</string>
     <string name="descr_list_add_new">Añadir una nueva emisora</string>
     <string name="descr_list_add_select_stream_dropdown">Seleccionar una retransmisión</string>
+
     <!-- player -->
     <string name="player_sheet_h1_details">Detalles</string>
     <string name="player_sheet_h2_current_session">Sesión actual</string>
@@ -36,6 +39,7 @@
     <string name="player_sheet_h2_station_channel_count">Número de canales</string>
     <string name="player_sheet_h2_station_sample_rate">Frecuencia de muestreo</string>
     <string name="player_sheet_h2_station_bitrate">Tasa de bits</string>
+
     <!-- dialogs -->
     <string name="dialog_generic_button_okay">Aceptar</string>
     <string name="dialog_generic_button_cancel">Cancelar</string>
@@ -51,6 +55,7 @@
     <string name="dialog_add_station_choose_stream_heading">Múltiples retransmisiones encontrados</string>
     <string name="dialog_add_station_choose_stream_message">Por favor selecione una retrasmisión</string>
     <string name="dialog_add_station_choose_stream_button">Seleccionar</string>
+
     <!-- error dialogs -->
     <string name="dialog_error_title_default">Error</string>
     <string name="dialog_error_message_default">Un error ha ocurrido</string>
@@ -70,6 +75,7 @@
     <string name="dialog_error_message_fetch_read">Transistor lo intentó todo pero no pudo entender el archivo.</string>
     <string name="dialog_error_message_fetch_read_file_location">Ubicación del archivo:</string>
     <string name="dialog_error_message_fetch_write">Transistor lo intentó todo pero no pudo guardar la emisora.</string>
+
     <!-- messages -->
     <string name="toastmessage_add_download_started">Descarga comenzada.</string>
     <string name="toastmessage_add_open_file_started">Abriendo archivo.</string>
@@ -101,15 +107,19 @@
     <string name="toastalert_station_not_found">No se puede encontrar la emisora.</string>
     <string name="snackbar_request_storage_access">Transistor necesita obtener permisos de lectura para acceder a los datos del almacenamiento externo.</string>
     <string name="snackbar_message_timer_set">Temporizador de apagado establecer en</string>
+
     <!-- notification -->
     <string name="notification_play">Reproducir</string>
     <string name="notification_stop">Stop</string>
     <string name="notification_channel_playback_name">Controles de reproducción</string>
     <string name="notification_channel_playback_description">Controles de reproducción, logo de la emisora e información de reproducción actual.</string>
+
     <!-- onboarding -->
     <string name="onboarding_app_description">Radio App</string>
     <string name="onboarding_app_get_started">Empieza</string>
+
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7
     https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
+
 </resources>

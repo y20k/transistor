@@ -20,25 +20,25 @@
     <string name="descr_station_name_example">Exemple FM</string>
     <string name="descr_station_metadata_example">Artista - Títol</string>
     <string name="descr_station_stream_loading">Carregant flux de dades…</string>
-    <string name="descr_playback_button_play"></string>
-    <string name="descr_playback_button_stop"></string>
+    <!--<string name="descr_playback_button_play"></string>-->
+    <!--<string name="descr_playback_button_stop"></string>-->
     <string name="descr_playback_indicator">Indicador pel funcionament de la reproducció</string>
     <string name="descr_timer_icon">Icona del temporitzador</string>
-    <string name="descr_player_sheet_button_minimize"></string>
+    <!--<string name="descr_player_sheet_button_minimize"></string>-->
     <string name="descr_player_sheet_content_copy_icon">Icona de copiar contingut</string>
     <string name="descr_player_sheet_p_stream_url">Enllaç de transmissió de l\'emissora de ràdio seleccionada</string>
     <string name="descr_list_add_new">Afegeix nova emissora</string>
-    <string name="descr_list_add_select_stream_dropdown"></string>
+    <!--<string name="descr_list_add_select_stream_dropdown"></string>-->
 
     <!-- player -->
-    <string name="player_sheet_h1_details"></string>
+    <!--<string name="player_sheet_h1_details"></string>-->
     <string name="player_sheet_h2_current_session">Actual sessió</string>
     <string name="player_sheet_h2_station_metadata">Reproduint ara</string>
-    <string name="player_sheet_h2_stream_url"></string>
+    <!--<string name="player_sheet_h2_stream_url"></string>-->
     <string name="player_sheet_h2_station_mime_type">Tipus MIME</string>
     <string name="player_sheet_h2_station_channel_count">Recompte de canals</string>
     <string name="player_sheet_h2_station_sample_rate">Freqüència de mostratge</string>
-    <string name="player_sheet_h2_station_bitrate"></string>
+    <!--<string name="player_sheet_h2_station_bitrate"></string>-->
 
     <!-- dialogs -->
     <string name="dialog_generic_button_okay">D\'acord</string>
@@ -52,12 +52,12 @@
     <string name="dialog_rename_station_input_hint">Introdueix un nou nom</string>
     <string name="dialog_rename_station_message">Canvia el nom de l\'emissora</string>
     <string name="dialog_button_rename">Canvia el nom</string>
-    <string name="dialog_add_station_choose_stream_heading"></string>
-    <string name="dialog_add_station_choose_stream_message"></string>
-    <string name="dialog_add_station_choose_stream_button"></string>
+    <!--<string name="dialog_add_station_choose_stream_heading"></string>-->
+    <!--<string name="dialog_add_station_choose_stream_message"></string>-->
+    <!--<string name="dialog_add_station_choose_stream_button"></string>-->
 
     <!-- error dialogs -->
-    <string name="dialog_error_title_default"></string>
+    <!--<string name="dialog_error_title_default"></string>-->
     <string name="dialog_error_message_default">S\'ha produït un error</string>
     <string name="dialog_error_details_button_default">Mostra els detalls</string>
     <string name="dialog_error_details_default">Detalls no disponibles</string>
@@ -81,11 +81,11 @@
     <string name="toastmessage_add_open_file_started">Obrint fitxer.</string>
     <string name="toastmessage_long_press_playback_stopped">Reproducció aturada (pulsació llarga detectada)</string>
     <string name="toastmessage_long_press_playback_started">Reproducció iniciada (pulsació llarga detectada)</string>
-    <string name="toastmessage_long_press_change_icon"></string>
-    <string name="toastmessage_long_press_change_name"></string>
-    <string name="toastmessage_theme_night"></string>
-    <string name="toastmessage_theme_day"></string>
-    <string name="toastmessage_theme_follow_system"></string>
+    <!--<string name="toastmessage_long_press_change_icon"></string>-->
+    <!--<string name="toastmessage_long_press_change_name"></string>-->
+    <!--<string name="toastmessage_theme_night"></string>-->
+    <!--<string name="toastmessage_theme_day"></string>-->
+    <!--<string name="toastmessage_theme_follow_system"></string>-->
     <string name="toastmessage_shortcut_created">Accés directe creat.</string>
     <string name="toastmessage_shortcut_not_created">La drecera no s\'ha creat. Aquest dispositiu no permet crear dreceres.</string>
     <string name="toastmessage_list_refreshed">Tornar a carregar les emissores.</string>
@@ -110,7 +110,7 @@
 
     <!-- notification -->
     <string name="notification_play">Reproduint</string>
-    <string name="notification_stop"></string>
+    <!--<string name="notification_stop"></string>-->
     <string name="notification_channel_playback_name">Controls de reproducció</string>
     <string name="notification_channel_playback_description">Controls de reproducció, logo de la emissora i informació de reproducció actual.</string>
 

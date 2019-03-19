@@ -20,19 +20,19 @@
     <string name="descr_station_name_example">Παράδειγμα FM</string>
     <string name="descr_station_metadata_example">Καλλιτέχνης - Τίτλος</string>
     <string name="descr_station_stream_loading">Φορτώνεται η ροή …</string>
-    <string name="descr_playback_button_play"></string>
-    <string name="descr_playback_button_stop"></string>
+    <!--<string name="descr_playback_button_play"></string>-->
+    <!--<string name="descr_playback_button_stop"></string>-->
     <string name="descr_playback_indicator">Ένδειξη για την κατάσταση της αναπαραγωγής</string>
     <string name="descr_timer_icon">Sleep timer icon</string>
-    <string name="descr_player_sheet_button_minimize"></string>
+    <!--<string name="descr_player_sheet_button_minimize"></string>-->
     <string name="descr_player_sheet_content_copy_icon">Εικονίδιο αντιγραφής του περιεχομένου</string>
     <string name="descr_player_sheet_p_stream_url">Ο δεσμός της ροής του επιλεγμένου ραδιοσταθμού</string>
-    <string name="descr_list_add_new"></string>
-    <string name="descr_list_add_select_stream_dropdown"></string>
+    <!--<string name="descr_list_add_new"></string>-->
+    <!--<string name="descr_list_add_select_stream_dropdown"></string>-->
 
     <!-- player -->
-    <string name="player_sheet_h1_details"></string>
-    <string name="player_sheet_h2_current_session"></string>
+    <!--<string name="player_sheet_h1_details"></string>-->
+    <!--<string name="player_sheet_h2_current_session"></string>-->
     <string name="player_sheet_h2_station_metadata">Παίζει Τώρα</string>
     <string name="player_sheet_h2_stream_url">Ο δεσμός της ροής</string>
     <string name="player_sheet_h2_station_mime_type">Μορφή MIME</string>
@@ -52,9 +52,9 @@
     <string name="dialog_rename_station_input_hint">Προσθήκη ενός νέου ονόματος</string>
     <string name="dialog_rename_station_message">Μετονομασία του σταθμού</string>
     <string name="dialog_button_rename">Μετονομασία</string>
-    <string name="dialog_add_station_choose_stream_heading"></string>
-    <string name="dialog_add_station_choose_stream_message"></string>
-    <string name="dialog_add_station_choose_stream_button"></string>
+    <!--<string name="dialog_add_station_choose_stream_heading"></string>-->
+    <!--<string name="dialog_add_station_choose_stream_message"></string>-->
+    <!--<string name="dialog_add_station_choose_stream_button"></string>-->
 
     <!-- error dialogs -->
     <string name="dialog_error_title_default">Σφάλμα</string>
@@ -81,11 +81,11 @@
     <string name="toastmessage_add_open_file_started">Ανοίγει το αρχείο.</string>
     <string name="toastmessage_long_press_playback_stopped">Διακόπηκε η αναπαραγωγή (εντοπίστηκε διαρκές άγγιγμα)</string>
     <string name="toastmessage_long_press_playback_started">Άρχισε η αναπαραγωγή (εντοπίστηκε διαρκές άγγιγμα)</string>
-    <string name="toastmessage_long_press_change_icon"></string>
-    <string name="toastmessage_long_press_change_name"></string>
-    <string name="toastmessage_theme_night"></string>
-    <string name="toastmessage_theme_day"></string>
-    <string name="toastmessage_theme_follow_system"></string>
+    <!--<string name="toastmessage_long_press_change_icon"></string>-->
+    <!--<string name="toastmessage_long_press_change_name"></string>-->
+    <!--<string name="toastmessage_theme_night"></string>-->
+    <!--<string name="toastmessage_theme_day"></string>-->
+    <!--<string name="toastmessage_theme_follow_system"></string>-->
     <string name="toastmessage_shortcut_created">Δημιουργήθηκε συντόμευση.</string>
     <string name="toastmessage_shortcut_not_created">Δεν δημιουργήθηκε συντόμευση. Αυτή η συσκευή δεν επιτρέπει τη δημιουργία συντομεύσεων.</string>
     <string name="toastmessage_list_refreshed">Φορτώνεται ξανά το κατάστιχο των σταθμών.</string>
@@ -115,8 +115,8 @@
     <string name="notification_channel_playback_description">Οι ρυθμιστές αναπαραγωγής, το λογότυπο του σταθμού, και οι πληροφορίες της τωρινής αναπαραγωγής.</string>
 
     <!-- onboarding -->
-    <string name="onboarding_app_description"></string>
-    <string name="onboarding_app_get_started"></string>
+    <!--<string name="onboarding_app_description"></string>-->
+    <!--<string name="onboarding_app_get_started"></string>-->
 
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7

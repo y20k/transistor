@@ -4,9 +4,9 @@
     <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
 
     <!-- app shortcuts -->
-    <string name="shortcut_last_station_short_label"></string>
-    <string name="shortcut_last_station_long_label"></string>
-    <string name="shortcut_last_station_disabled_message"></string>
+    <!--<string name="shortcut_last_station_short_label"></string>-->
+    <!--<string name="shortcut_last_station_long_label"></string>-->
+    <!--<string name="shortcut_last_station_disabled_message"></string>-->
 
     <!-- menu entries -->
     <string name="menu_icon">更改图标</string>
@@ -15,30 +15,30 @@
     <string name="menu_shortcut">放在首页</string>
 
     <!-- descriptions -->
-    <string name="descr_app_icon"></string>
+    <!--<string name="descr_app_icon"></string>-->
     <string name="descr_station_options_button">显示电台选项</string>
     <string name="descr_station_name_example">示例 FM</string>
-    <string name="descr_station_metadata_example"></string>
-    <string name="descr_station_stream_loading"></string>
-    <string name="descr_playback_button_play"></string>
-    <string name="descr_playback_button_stop"></string>
+    <!--<string name="descr_station_metadata_example"></string>-->
+    <!--<string name="descr_station_stream_loading"></string>-->
+    <!--<string name="descr_playback_button_play"></string>-->
+    <!--<string name="descr_playback_button_stop"></string>-->
     <string name="descr_playback_indicator">播放中指示器</string>
-    <string name="descr_timer_icon"></string>
-    <string name="descr_player_sheet_button_minimize"></string>
-    <string name="descr_player_sheet_content_copy_icon"></string>
-    <string name="descr_player_sheet_p_stream_url"></string>
-    <string name="descr_list_add_new"></string>
-    <string name="descr_list_add_select_stream_dropdown"></string>
+    <!--<string name="descr_timer_icon"></string>-->
+    <!--<string name="descr_player_sheet_button_minimize"></string>-->
+    <!--<string name="descr_player_sheet_content_copy_icon"></string>-->
+    <!--<string name="descr_player_sheet_p_stream_url"></string>-->
+    <!--<string name="descr_list_add_new"></string>-->
+    <!--<string name="descr_list_add_select_stream_dropdown"></string>-->
 
     <!-- player -->
-    <string name="player_sheet_h1_details"></string>
-    <string name="player_sheet_h2_current_session"></string>
-    <string name="player_sheet_h2_station_metadata"></string>
-    <string name="player_sheet_h2_stream_url"></string>
-    <string name="player_sheet_h2_station_mime_type"></string>
-    <string name="player_sheet_h2_station_channel_count"></string>
-    <string name="player_sheet_h2_station_sample_rate"></string>
-    <string name="player_sheet_h2_station_bitrate"></string>
+    <!--<string name="player_sheet_h1_details"></string>-->
+    <!--<string name="player_sheet_h2_current_session"></string>-->
+    <!--<string name="player_sheet_h2_station_metadata"></string>-->
+    <!--<string name="player_sheet_h2_stream_url"></string>-->
+    <!--<string name="player_sheet_h2_station_mime_type"></string>-->
+    <!--<string name="player_sheet_h2_station_channel_count"></string>-->
+    <!--<string name="player_sheet_h2_station_sample_rate"></string>-->
+    <!--<string name="player_sheet_h2_station_bitrate"></string>-->
 
     <!-- dialogs -->
     <string name="dialog_generic_button_okay">确定</string>
@@ -47,16 +47,16 @@
     <string name="dialog_add_station_input_hint">请输入一个有效的流媒体网址</string>
     <string name="dialog_add_station_message">添加新电台</string>
     <string name="dialog_add_station_howto">您可以添加 MP3 和 OGG 编码的原始音频流，以及封装在 pls 或 m3u 文件中的这些流。您也可以在您的网页浏览器中点击流链接（pls 或 m3u）添加新电台。</string>
-    <string name="dialog_error_message_fetch_general_playlist_type"></string>
-    <string name="dialog_error_message_fetch_general_stream_type"></string>
+    <!--<string name="dialog_error_message_fetch_general_playlist_type"></string>-->
+    <!--<string name="dialog_error_message_fetch_general_stream_type"></string>-->
     <string name="dialog_delete_station_message">删除电台</string>
     <string name="dialog_button_delete">删除</string>
     <string name="dialog_rename_station_input_hint">请输入新名称</string>
     <string name="dialog_rename_station_message">重命名电台</string>
     <string name="dialog_button_rename">重命名</string>
-    <string name="dialog_add_station_choose_stream_heading"></string>
-    <string name="dialog_add_station_choose_stream_message"></string>
-    <string name="dialog_add_station_choose_stream_button"></string>
+    <!--<string name="dialog_add_station_choose_stream_heading"></string>-->
+    <!--<string name="dialog_add_station_choose_stream_message"></string>-->
+    <!--<string name="dialog_add_station_choose_stream_button"></string>-->
 
     <!-- error dialogs -->
     <string name="dialog_error_title_default">错误</string>
@@ -81,42 +81,42 @@
     <string name="toastmessage_add_open_file_started">打开文件.</string>
     <string name="toastmessage_long_press_playback_stopped">播放已停止（长按删除）</string>
     <string name="toastmessage_long_press_playback_started">播放已开始（长按删除）</string>
-    <string name="toastmessage_long_press_change_icon"></string>
-    <string name="toastmessage_long_press_change_name"></string>
-    <string name="toastmessage_theme_night"></string>
-    <string name="toastmessage_theme_day"></string>
-    <string name="toastmessage_theme_follow_system"></string>
+    <!--<string name="toastmessage_long_press_change_icon"></string>-->
+    <!--<string name="toastmessage_long_press_change_name"></string>-->
+    <!--<string name="toastmessage_theme_night"></string>-->
+    <!--<string name="toastmessage_theme_day"></string>-->
+    <!--<string name="toastmessage_theme_follow_system"></string>-->
     <string name="toastmessage_shortcut_created">捷径已创建。</string>
-    <string name="toastmessage_shortcut_not_created"></string>
-    <string name="toastmessage_list_refreshed"></string>
-    <string name="toastmessage_copied_to_clipboard_url"></string>
-    <string name="toastmessage_copied_to_clipboard_metadata"></string>
+    <!--<string name="toastmessage_shortcut_not_created"></string>-->
+    <!--<string name="toastmessage_list_refreshed"></string>-->
+    <!--<string name="toastmessage_copied_to_clipboard_url"></string>-->
+    <!--<string name="toastmessage_copied_to_clipboard_metadata"></string>-->
     <string name="toastmessage_station_copied">电台已复制。</string>
-    <string name="toastmessage_stream_may_not_work"></string>
+    <!--<string name="toastmessage_stream_may_not_work"></string>-->
     <string name="toastmessage_timer_activated">睡眠定时器已激活。</string>
     <string name="toastmessage_timer_cancelled">睡眠定时器已取消。</string>
     <string name="toastmessage_timer_duration_increased">已增加持续时间 (+ 15 分钟)。</string>
     <string name="toastmessage_timer_start_unable">请先开始播放。</string>
-    <string name="toastalert_unable_to_connect"></string>
+    <!--<string name="toastalert_unable_to_connect"></string>-->
     <string name="toastalert_rename_unsuccessful">无法重命名电台。请另选其他名称。</string>
     <string name="toastalert_delete_successful">电台已移除。</string>
     <string name="toastalert_no_external_storage">无法访问外部存储。</string>
-    <string name="toastalert_no_image_picker"></string>
+    <!--<string name="toastalert_no_image_picker"></string>-->
     <string name="toastalert_headphones_unplugged">耳机已拔出。播放停止。</string>
     <string name="toastalert_permission_denied">权限被拒绝：</string>
-    <string name="toastalert_station_not_found"></string>
+    <!--<string name="toastalert_station_not_found"></string>-->
     <string name="snackbar_request_storage_access">Transistor 需要被授权读取以从外部存储访问数据。</string>
     <string name="snackbar_message_timer_set">睡眠定时器设为</string>
 
     <!-- notification -->
-    <string name="notification_play"></string>
-    <string name="notification_stop"></string>
-    <string name="notification_channel_playback_name"></string>
-    <string name="notification_channel_playback_description"></string>
+    <!--<string name="notification_play"></string>-->
+    <!--<string name="notification_stop"></string>-->
+    <!--<string name="notification_channel_playback_name"></string>-->
+    <!--<string name="notification_channel_playback_description"></string>-->
 
     <!-- onboarding -->
-    <string name="onboarding_app_description"></string>
-    <string name="onboarding_app_get_started"></string>
+    <!--<string name="onboarding_app_description"></string>-->
+    <!--<string name="onboarding_app_get_started"></string>-->
 
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7
