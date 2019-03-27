@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- activities -->
-    <string name="app_name">Transistor</string>
+    <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
+
     <!-- app shortcuts -->
     <string name="shortcut_last_station_short_label">Última estação</string>
     <string name="shortcut_last_station_long_label">Sintonizar última estação</string>
     <string name="shortcut_last_station_disabled_message">Atalho para reproduzir última estação desabilitado.</string>
+
     <!-- menu entries -->
     <string name="menu_icon">Mudar ícone</string>
     <string name="menu_delete">Remover</string>
     <string name="menu_rename">Renomear</string>
     <string name="menu_shortcut">Atalho na tela inicial</string>
+
     <!-- descriptions -->
     <string name="descr_app_icon">Ícone do aplicativo representando um rádio antigo</string>
     <string name="descr_station_options_button">Mostrar opções para estação de rádio</string>
@@ -21,11 +24,12 @@
     <string name="descr_playback_button_stop">Parar</string>
     <string name="descr_playback_indicator">Indicador de reprodução</string>
     <string name="descr_timer_icon">Ícone do temporizador</string>
-    <!--<string name="descr_player_sheet_button_minimize"></string>-->
+    <string name="descr_player_sheet_button_minimize">Ocultar detalhes da estação</string>
     <string name="descr_player_sheet_content_copy_icon">Ícone de copiar conteúdo</string>
     <string name="descr_player_sheet_p_stream_url">Link para transmissão da estação selecionada</string>
     <string name="descr_list_add_new">Adicionar nova estação</string>
     <string name="descr_list_add_select_stream_dropdown">Menu suspenso com uma seleção de transmissões</string>
+
     <!-- player -->
     <string name="player_sheet_h1_details">Detalhes</string>
     <string name="player_sheet_h2_current_session">Sessão atual</string>
@@ -35,6 +39,7 @@
     <string name="player_sheet_h2_station_channel_count">Canais</string>
     <string name="player_sheet_h2_station_sample_rate">Amostragem</string>
     <string name="player_sheet_h2_station_bitrate">Taxa de bits</string>
+
     <!-- dialogs -->
     <string name="dialog_generic_button_okay">Ok</string>
     <string name="dialog_generic_button_cancel">Cancelar</string>
@@ -50,6 +55,7 @@
     <string name="dialog_add_station_choose_stream_heading">Múltiplas transmissões encontradas</string>
     <string name="dialog_add_station_choose_stream_message">Por favor, selecione uma transmissão</string>
     <string name="dialog_add_station_choose_stream_button">Selecionar</string>
+
     <!-- error dialogs -->
     <string name="dialog_error_title_default">Erro</string>
     <string name="dialog_error_message_default">Um erro ocorreu</string>
@@ -69,6 +75,7 @@
     <string name="dialog_error_message_fetch_read">Transistor tentou, mas não pôde compreender o arquivo.</string>
     <string name="dialog_error_message_fetch_read_file_location">Local do arquivo:</string>
     <string name="dialog_error_message_fetch_write">Transistor tentou, mas não pôde salvar a estação.</string>
+
     <!-- messages -->
     <string name="toastmessage_add_download_started">Transferência iniciada.</string>
     <string name="toastmessage_add_open_file_started">Abrindo arquivo.</string>
@@ -100,16 +107,19 @@
     <string name="toastalert_station_not_found">Não foi possível encontrar a estação.</string>
     <string name="snackbar_request_storage_access">Transistor precisa de permissão para acessar os arquivos do armazenamento externo.</string>
     <string name="snackbar_message_timer_set">Temporizador definido para</string>
+
     <!-- notification -->
     <string name="notification_play">Tocar</string>
     <string name="notification_stop">Parar</string>
     <string name="notification_channel_playback_name">Controles de reprodução</string>
     <string name="notification_channel_playback_description">Controles de reprodução, logo da estação e informações de reprodução.</string>
+
     <!-- onboarding -->
     <string name="onboarding_app_description">Aplicativo de rádio</string>
     <string name="onboarding_app_get_started">Começar</string>
+
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7
     https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
-    <string name="descr_player_sheet_button_minimize">Ocultar detalhes da estação</string>
+
 </resources>

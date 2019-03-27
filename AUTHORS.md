@@ -35,6 +35,8 @@ Punjabi version: [Jasdeep Singh Malhotra](https://github.com/cingh-jasdeep) | [w
 
 Polish version: [woodypl](https://github.com/woodypl), [WaldiS](https://hosted.weblate.org/user/WaldiS/) | [weblate version history](https://hosted.weblate.org/changes/?lang=pl&project=transistor)
 
+Portuguese version: [Rui Mendes](https://hosted.weblate.org/user/tonela/) |  [weblate version history](https://hosted.weblate.org/changes/?lang=pt&project=transistor)
+
 Portuguese (Brazil) version: [hdmjunior](https://github.com/hdmjunior) |  [weblate version history](https://hosted.weblate.org/changes/?lang=pt_BR&project=transistor)
 
 Russian version: [Boris Timofeev](https://github.com/btimofeev) | [weblate version history](https://hosted.weblate.org/changes/?lang=ru&project=transistor)
