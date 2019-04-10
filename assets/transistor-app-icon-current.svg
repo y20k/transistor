@@ -16,9 +16,9 @@
    id="svg8"
    inkscape:version="0.92.2 5c3e80d, 2017-08-06"
    sodipodi:docname="transistor-app-icon-current.svg"
-   inkscape:export-filename="/Users/solaris/Desktop/app-icon-1600.png"
-   inkscape:export-xdpi="600.00006"
-   inkscape:export-ydpi="600.00006">
+   inkscape:export-filename="/Users/solaris/Desktop/transistor/assets/transistor-app-icon-current.png"
+   inkscape:export-xdpi="1117.09"
+   inkscape:export-ydpi="1117.09">
   <defs
      id="defs2">
     <filter
@@ -95,9 +95,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.93687375"
-     inkscape:cx="292.75"
-     inkscape:cy="92.490642"
+     inkscape:zoom="4"
+     inkscape:cx="30.353199"
+     inkscape:cy="50.223995"
      inkscape:document-units="pt"
      inkscape:current-layer="layer3"
      showgrid="false"
@@ -119,7 +119,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -141,8 +141,15 @@
      inkscape:groupmode="layer"
      id="layer3"
      inkscape:label="Radio Icon by Munadi Kiehl (original)"
-     style="display:inline"
+     style="display:none"
      transform="translate(0,-29.633334)">
+    <path
+       inkscape:label="Radio outline shadow long"
+       inkscape:connector-curvature="0"
+       id="path926"
+       d="m 24.757742,41.058243 c -0.02706,0.0026 -0.05525,0.0079 -0.08437,0.01635 l -12.766582,3.70005 -0.100723,0.02892 -0.02393,0.0072 c -0.01952,0.0051 -0.03858,0.01174 -0.05664,0.02034 -0.557318,0.210984 -0.921917,0.719476 -0.921073,1.284078 v 7.585197 c -2.97e-4,0.762946 0.657846,1.38141 1.469768,1.38141 l 4.838528,5.067898 7.530215,7.583648 L 38.1,67.73333 V 54.441383 l -7.481935,-6.948379 -5.728884,-5.761607 c 0.436803,-0.1268 0.274483,-0.711953 -0.131439,-0.673154 z"
+       style="display:none;opacity:0.12999998;fill:#3c4043;fill-opacity:1;stroke-width:0.09921875"
+       sodipodi:nodetypes="cccccccccccccccc" />
     <path
        style="display:inline;opacity:0.12999998;fill:#3c4043;fill-opacity:1;stroke-width:0.09921875"
        d="m 24.757742,41.058243 c -0.02706,0.0026 -0.05525,0.0079 -0.08437,0.01635 l -12.766582,3.70005 -0.100723,0.02892 -0.02393,0.0072 c -0.01952,0.0051 -0.03858,0.01174 -0.05664,0.02034 -0.557318,0.210984 -0.921917,0.719476 -0.921073,1.284078 v 7.585197 c -2.97e-4,0.762946 0.657846,1.38141 1.469768,1.38141 l 4.838528,5.067898 a 11.641667,11.641667 0 0 0 1.937278,0.17532 11.641667,11.641667 0 0 0 11.641667,-11.641667 11.641667,11.641667 0 0 0 -0.0736,-1.190335 l -5.728884,-5.761607 c 0.436803,-0.1268 0.274483,-0.711953 -0.131439,-0.673154 z"
@@ -173,7 +180,7 @@
        id="path3860" />
   </g>
   <g
-     style="display:none"
+     style="display:inline"
      inkscape:label="Radio Icon  (Variant)"
      id="g4553"
      inkscape:groupmode="layer"
