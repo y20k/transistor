@@ -27,6 +27,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.RecyclerView;
+
 import org.y20k.transistor.R;
 import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.DialogAdd;
@@ -39,15 +48,6 @@ import org.y20k.transistor.helpers.TransistorKeys;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.RecyclerView;
 
 
 /**
@@ -265,7 +265,7 @@ public final class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.V
     /* Create bitmap version of station image */
     private Bitmap createStationImageBitmap(Station station) {
         ImageHelper imageHelper = new ImageHelper(station, mActivity);
-        return imageHelper.createCircularFramedImage(192);
+        return imageHelper.createFramedImage(192);
     }
 
 

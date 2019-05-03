@@ -23,15 +23,14 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.net.Uri;
 
+import androidx.palette.graphics.Palette;
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
+
 import org.y20k.transistor.R;
 import org.y20k.transistor.core.Station;
 
 import java.io.IOException;
 import java.io.InputStream;
-
-import androidx.core.content.ContextCompat;
-import androidx.palette.graphics.Palette;
-import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
 
 /**
@@ -118,11 +117,38 @@ public final class ImageHelper {
 
 
 
-    /* Creates station image on a circular background with default color */
-    public Bitmap createCircularFramedImage(int size) {
+    /* Creates station image on a background with the main image color */
+    public Bitmap createFramedImage(int size) {
         // get default color
-        int color = ContextCompat.getColor(mContext, R.color.station_image_background);
-        return createCircularFramedImage(size, color);
+        // int color = ContextCompat.getColor(mContext, R.color.station_image_background); // todo remove
+        int color = getStationImageColor();
+        return createFramedImage(size, color);
+    }
+
+
+    /* Creates station image on a square background with given color */
+    public Bitmap createFramedImage(int size, int color) {
+
+        // create background
+        Paint background = new Paint();
+        background.setColor(color);
+        background.setStyle(Paint.Style.FILL);
+
+        // create empty bitmap and canvas
+        Bitmap outputImage = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+        Canvas imageCanvas = new Canvas(outputImage);
+
+        // draw square background
+        float right = (float) size;
+        float bottom =  (float) size;
+        imageCanvas.drawRect(0f,0f, right, bottom, background);
+
+        // draw input image onto canvas using transformation matrix
+        Paint paint = new Paint();
+        paint.setFilterBitmap(true);
+        imageCanvas.drawBitmap(mInputImage, createTransformationMatrix(size, 0), paint);
+
+        return outputImage;
     }
 
 
@@ -174,7 +200,8 @@ public final class ImageHelper {
         // get size of original image and calculate padding
         float inputImageHeight = (float)mInputImage.getHeight();
         float inputImageWidth = (float)mInputImage.getWidth();
-        float padding = (float)size/4;
+        // float padding = (float)size/4; // todo remove
+        float padding = 0f;
 
         // define variables needed for transformation matrix
         float aspectRatio = 0.0f;

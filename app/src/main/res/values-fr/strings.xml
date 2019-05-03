@@ -18,24 +18,24 @@
     <string name="descr_station_name_example">Exemple FM</string>
     <string name="descr_station_metadata_example">Artiste - Titre</string>
     <string name="descr_station_stream_loading">Chargement…</string>
-    <!--<string name="descr_playback_button_play"></string>-->
-    <!--<string name="descr_playback_button_stop"></string>-->
+    <string name="descr_playback_button_play">Lecture</string>
+    <string name="descr_playback_button_stop">Arrêter</string>
     <string name="descr_playback_indicator">Station en lecture</string>
     <string name="descr_timer_icon">Minuterie</string>
-    <!-- <string name="descr_player_sheet_button_minimize"></string>-->
+    <string name="descr_player_sheet_button_minimize">Masquer les détails de la station</string>
     <string name="descr_player_sheet_content_copy_icon">Copier</string>
     <string name="descr_player_sheet_p_stream_url">Lien de diffusion de la station radio sélectionnée</string>
     <string name="descr_list_add_new">Ajouter une nouvelle station</string>
     <string name="descr_list_add_select_stream_dropdown">Sélectionner un flux</string>
     <!-- player -->
-    <!--<string name="player_sheet_h1_details"></string>-->
+    <string name="player_sheet_h1_details">Détails</string>
     <string name="player_sheet_h2_current_session">Session actuelle</string>
     <string name="player_sheet_h2_station_metadata">En cours de lecture</string>
     <string name="player_sheet_h2_stream_url">Stream URL</string>
     <string name="player_sheet_h2_station_mime_type">Type MIME</string>
     <string name="player_sheet_h2_station_channel_count">Chaîne</string>
     <string name="player_sheet_h2_station_sample_rate">Échantillonnage</string>
-    <!--<string name="player_sheet_h2_station_bitrate"></string>-->
+    <string name="player_sheet_h2_station_bitrate">Débit</string>
     <!-- dialogs -->
     <string name="dialog_generic_button_cancel">Annuler</string>
     <string name="dialog_add_station_button">Ajouter</string>
@@ -112,9 +112,4 @@
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7
     https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
-    <string name="descr_playback_button_play">Lecture</string>
-    <string name="descr_playback_button_stop">Arrêter</string>
-    <string name="descr_player_sheet_button_minimize">Masquer les détails de la station</string>
-    <string name="player_sheet_h1_details">Détails</string>
-    <string name="player_sheet_h2_station_bitrate">Débit</string>
 </resources>

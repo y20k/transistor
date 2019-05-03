@@ -40,6 +40,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -61,21 +76,6 @@ import org.y20k.transistor.helpers.TransistorKeys;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 
 /**
@@ -581,7 +581,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
     /*  Setup station name, image and stream url */
     private void setupStationMainViews(Station station) {
         ImageHelper imageHelper = new ImageHelper(station, mActivity);
-        Bitmap stationImage = imageHelper.createCircularFramedImage(192);
+        Bitmap stationImage = imageHelper.createFramedImage(192);
         mPlayerStationName.setText(station.getStationName());
         mPlayerStationImage.setImageBitmap(stationImage);
         mPlayerSheetStreamUrl.setText(station.getStreamUri().toString());
@@ -979,7 +979,7 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
                     // CASE: IMAGE
                     else if (newImageSize != oldImageSize) {
                         ImageHelper imageHelper = new ImageHelper(newStation, mActivity);
-                        Bitmap stationImage = imageHelper.createCircularFramedImage(192);
+                        Bitmap stationImage = imageHelper.createFramedImage(192);
                         mPlayerStationImage.setImageBitmap(stationImage);
                         minimizePlayer();
                     }

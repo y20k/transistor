@@ -25,13 +25,13 @@ import android.graphics.Bitmap;
 import android.os.Build;
 import android.support.v4.media.session.MediaSessionCompat;
 
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.TaskStackBuilder;
+
 import org.y20k.transistor.MainActivity;
 import org.y20k.transistor.PlayerService;
 import org.y20k.transistor.R;
 import org.y20k.transistor.core.Station;
-
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.TaskStackBuilder;
 
 
 /**
@@ -165,7 +165,7 @@ public final class NotificationHelper implements TransistorKeys {
         ImageHelper imageHelper = new ImageHelper(station, context);
 //        return imageHelper.createStationIcon(512);
         int color = imageHelper.getStationImageColor();
-        return imageHelper.createCircularFramedImage(512, color);
+        return imageHelper.createFramedImage(512, color);
 
     }
 
