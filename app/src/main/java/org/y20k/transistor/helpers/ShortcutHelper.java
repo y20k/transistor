@@ -20,13 +20,13 @@ import android.graphics.Bitmap;
 import android.os.Build;
 import android.widget.Toast;
 
-import org.y20k.transistor.MainActivity;
-import org.y20k.transistor.R;
-import org.y20k.transistor.core.Station;
-
 import androidx.core.content.pm.ShortcutInfoCompat;
 import androidx.core.content.pm.ShortcutManagerCompat;
 import androidx.core.graphics.drawable.IconCompat;
+
+import org.y20k.transistor.MainActivity;
+import org.y20k.transistor.R;
+import org.y20k.transistor.core.Station;
 
 
 /**
@@ -97,16 +97,13 @@ public final class ShortcutHelper implements TransistorKeys {
     /* Create shortcut icon */
     private static Bitmap createShortcutIcon(Context context, Station station) {
         ImageHelper imageHelper = new ImageHelper(station, context);
-        return imageHelper.createShortcut(192);
-
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            // only return the station image
-//            return imageHelper.getInputImage();
-//        } else {
-//            // return station image in circular frame
-//            return imageHelper.createShortcut(192);
-//        }
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // only return the station image - Oreo adds an app icon badge to the shortcut - no need for additional branding
+            return imageHelper.getInputImage();
+        } else {
+            // return station image in circular frame
+            return imageHelper.createShortcut(192);
+        }
     }
 
 }

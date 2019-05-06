@@ -3,7 +3,6 @@
     android:shape="rectangle">
 
     <solid android:color="@color/station_image_background" />
-
-    <!-- <padding android:left="3dp" android:top="3dp" android:right="3dp" android:bottom="3dp" /> -->
+    <corners android:radius="4dp" />
 
 </shape>

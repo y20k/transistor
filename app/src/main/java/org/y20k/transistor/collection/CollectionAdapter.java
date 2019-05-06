@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -150,6 +151,10 @@ public final class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.V
 
             // set station image
             stationViewHolder.getStationImageView().setImageBitmap(createStationImageBitmap(station));
+            // round station image corners, if possible
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                stationViewHolder.getStationImageView().setClipToOutline(true);
+            }
 
             // set station name
             stationViewHolder.getStationNameView().setText(station.getStationName());
@@ -228,6 +233,10 @@ public final class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.V
                         // set station image
                         LogHelper.v(LOG_TAG, "List of station: Partial view update -> station image changed");
                         stationViewHolder.getStationImageView().setImageBitmap(createStationImageBitmap(station));
+                        // round station image corners, if possible
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            stationViewHolder.getStationImageView().setClipToOutline(true);
+                        }
                         break;
                 }
             }

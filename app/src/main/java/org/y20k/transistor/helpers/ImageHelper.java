@@ -76,7 +76,7 @@ public final class ImageHelper {
         background = Bitmap.createScaledBitmap(background, size, size, false);
 
         // compose images
-        return composeImages(background, size, yOffset);
+        return composeImages(background, size, yOffset, true);
     }
 
 
@@ -88,7 +88,7 @@ public final class ImageHelper {
         background = Bitmap.createScaledBitmap(background, size, size, false);
 
         // compose images
-        return composeImages(background, size, 0);
+        return composeImages(background, size, 0, true);
     }
 
 
@@ -146,7 +146,7 @@ public final class ImageHelper {
         // draw input image onto canvas using transformation matrix
         Paint paint = new Paint();
         paint.setFilterBitmap(true);
-        imageCanvas.drawBitmap(mInputImage, createTransformationMatrix(size, 0), paint);
+        imageCanvas.drawBitmap(mInputImage, createTransformationMatrix(size, 0, false), paint);
 
         return outputImage;
     }
@@ -174,34 +174,36 @@ public final class ImageHelper {
         // draw input image onto canvas using transformation matrix
         Paint paint = new Paint();
         paint.setFilterBitmap(true);
-        imageCanvas.drawBitmap(mInputImage, createTransformationMatrix(size, 0), paint);
+        imageCanvas.drawBitmap(mInputImage, createTransformationMatrix(size, 0, false), paint);
 
         return outputImage;
     }
 
 
     /* Composes foreground bitmap onto background bitmap */
-    private Bitmap composeImages(Bitmap background, int size, int yOffset) {
+    private Bitmap composeImages(Bitmap background, int size, int yOffset, Boolean scaled) {
 
         // compose output image
         Bitmap outputImage = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(outputImage);
         canvas.drawBitmap(background, 0, 0, null);
-        canvas.drawBitmap(mInputImage, createTransformationMatrix(size, yOffset), null);
+        canvas.drawBitmap(mInputImage, createTransformationMatrix(size, yOffset, scaled), null);
 
         return outputImage;
     }
 
 
     /* Creates a transformation matrix for given */
-    private Matrix createTransformationMatrix (int size, int yOffset) {
+    private Matrix createTransformationMatrix(int size, int yOffset, Boolean scaled) {
         Matrix matrix = new Matrix();
 
         // get size of original image and calculate padding
         float inputImageHeight = (float)mInputImage.getHeight();
         float inputImageWidth = (float)mInputImage.getWidth();
-        // float padding = (float)size/4; // todo remove
         float padding = 0f;
+        if (scaled) {
+            padding = (float)size/4;
+        }
 
         // define variables needed for transformation matrix
         float aspectRatio = 0.0f;

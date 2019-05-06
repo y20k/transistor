@@ -26,6 +26,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.media.AudioManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
@@ -584,6 +585,10 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
         Bitmap stationImage = imageHelper.createFramedImage(192);
         mPlayerStationName.setText(station.getStationName());
         mPlayerStationImage.setImageBitmap(stationImage);
+        // round station image corners, if possible
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mPlayerStationImage.setClipToOutline(true);
+        }
         mPlayerSheetStreamUrl.setText(station.getStreamUri().toString());
     }
 
@@ -981,6 +986,10 @@ public final class MainActivityFragment extends Fragment implements TransistorKe
                         ImageHelper imageHelper = new ImageHelper(newStation, mActivity);
                         Bitmap stationImage = imageHelper.createFramedImage(192);
                         mPlayerStationImage.setImageBitmap(stationImage);
+                        // round station image corners, if possible
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            mPlayerStationImage.setClipToOutline(true);
+                        }
                         minimizePlayer();
                     }
                     // CASE: METADATA

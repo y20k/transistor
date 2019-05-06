@@ -23,6 +23,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_music_note_black_36dp" />
+    <!-- android:clipToOutline="true" does not work at the moment - use setClipToOutline(true) in code instead-->
 
     <TextView
         android:id="@+id/list_item_textview"

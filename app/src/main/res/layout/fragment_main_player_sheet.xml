@@ -38,9 +38,11 @@
         android:layout_height="@dimen/design_fab_size_normal"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginTop="8dp"
+        android:background="@drawable/shape_station_list_icon"
         app:layout_constraintStart_toStartOf="@+id/player_background"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_circle_large_grey_36dp" />
+    <!-- android:clipToOutline="true" does not work at the moment - use setClipToOutline(true) in code instead-->
 
     <ImageButton
         android:id="@+id/player_playback_button"
