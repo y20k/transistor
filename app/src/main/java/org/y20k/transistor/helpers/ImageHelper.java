@@ -67,8 +67,8 @@ public final class ImageHelper {
     }
 
 
-    /* Creates shortcut icon for Home screen */
-    public Bitmap createShortcut(int size) {
+    /* Creates shortcut icon on radio station shape for Home screen */
+    public Bitmap createShortcutOnRadioShape(int size) {
         int yOffset = 16;
 
         // get scaled background bitmap
@@ -80,16 +80,17 @@ public final class ImageHelper {
     }
 
 
-    /* Creates station icon for notification */
-    public Bitmap createStationIcon(int size) {
 
-        // get scaled background bitmap
-        Bitmap background = getBitmap(R.drawable.ic_notification_large_bg_grey_128dp);
-        background = Bitmap.createScaledBitmap(background, size, size, false);
-
-        // compose images
-        return composeImages(background, size, 0, true);
-    }
+//    /* Creates station icon for notification */
+//    public Bitmap createStationIcon(int size) {
+//
+//        // get scaled background bitmap
+//        Bitmap background = getBitmap(R.drawable.ic_notification_large_bg_grey_128dp);
+//        background = Bitmap.createScaledBitmap(background, size, size, false);
+//
+//        // compose images
+//        return composeImages(background, size, 0, true);
+//    }
 
 
     /* Extracts color from station icon */
@@ -150,36 +151,36 @@ public final class ImageHelper {
     }
 
 
-    /* Creates station image on a circular background with given color */
-    public Bitmap createCircularFramedImage(int size, int color) {
+//    /* Creates station image on a circular background with given color */
+//    public Bitmap createCircularFramedImage(int size, int color) {
+//
+//        // create background
+//        Paint background = new Paint();
+//        background.setColor(color);
+//        background.setStyle(Paint.Style.FILL);
+//
+//
+//        // create empty bitmap and canvas
+//        Bitmap outputImage = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+//        Canvas imageCanvas = new Canvas(outputImage);
+//
+//        // draw circular background
+//        float cx = size / 2f;
+//        float cy = size / 2f;
+//        float radius = size / 2f;
+//        imageCanvas.drawCircle(cx, cy, radius, background);
+//
+//        // draw input image onto canvas using transformation matrix
+//        Paint paint = new Paint();
+//        paint.setFilterBitmap(true);
+//        imageCanvas.drawBitmap(mInputImage, createTransformationMatrix(size, 0, 4), paint);
+//
+//        return outputImage;
+//    }
 
-        // create background
-        Paint background = new Paint();
-        background.setColor(color);
-        background.setStyle(Paint.Style.FILL);
 
-
-        // create empty bitmap and canvas
-        Bitmap outputImage = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
-        Canvas imageCanvas = new Canvas(outputImage);
-
-        // draw circular background
-        float cx = size / 2f;
-        float cy = size / 2f;
-        float radius = size / 2f;
-        imageCanvas.drawCircle(cx, cy, radius, background);
-
-        // draw input image onto canvas using transformation matrix
-        Paint paint = new Paint();
-        paint.setFilterBitmap(true);
-        imageCanvas.drawBitmap(mInputImage, createTransformationMatrix(size, 0, false), paint);
-
-        return outputImage;
-    }
-
-
-    /* Composes foreground bitmap onto background bitmap */
-    private Bitmap composeImages(Bitmap background, int size, int yOffset, Boolean scaled) {
+    /* Composes foreground bitmap onto background bitmap  - paddingScaleFactor 0 -> no padding */
+    private Bitmap composeImages(Bitmap background, int size, int yOffset, boolean scaled) {
 
         // compose output image
         Bitmap outputImage = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
@@ -191,8 +192,8 @@ public final class ImageHelper {
     }
 
 
-    /* Creates a transformation matrix for given */
-    private Matrix createTransformationMatrix(int size, int yOffset, Boolean scaled) {
+    /* Creates a transformation matrix for given - paddingScaleFactor 0 -> no padding */
+    private Matrix createTransformationMatrix(int size, int yOffset, boolean scaled) {
         Matrix matrix = new Matrix();
 
         // get size of original image and calculate padding
@@ -200,7 +201,7 @@ public final class ImageHelper {
         float inputImageWidth = (float)mInputImage.getWidth();
         float padding = 0f;
         if (scaled) {
-            padding = (float)size/4;
+            padding = (float)size/4f;
         }
 
         // define variables needed for transformation matrix

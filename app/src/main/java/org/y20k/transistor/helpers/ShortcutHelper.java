@@ -16,7 +16,6 @@ package org.y20k.transistor.helpers;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Build;
 import android.widget.Toast;
 
@@ -46,7 +45,7 @@ public final class ShortcutHelper implements TransistorKeys {
             ShortcutInfoCompat shortcut = new ShortcutInfoCompat.Builder(context, station.getStationName())
                     .setShortLabel(station.getStationName())
                     .setLongLabel(station.getStationName())
-                    .setIcon(IconCompat.createWithBitmap(createShortcutIcon(context, station)))
+                    .setIcon(createShortcutIcon(context, station))
                     .setIntent(createShortcutIntent(context, station))
                     .build();
             ShortcutManagerCompat.requestPinShortcut(context, shortcut, null);
@@ -65,9 +64,10 @@ public final class ShortcutHelper implements TransistorKeys {
             // from API level 26 ("Android O") on shortcuts are handled by ShortcutManager, which cannot remove shortcuts. The user must remove them manually.
         } else {
             // the pre 26 way: create and launch intent put shortcut on Home screen
+            ImageHelper imageHelper = new ImageHelper(station, context);
             Intent removeIntent = new Intent();
             removeIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, station.getStationName());
-            removeIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON, createShortcutIcon(context, station));
+            removeIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON, imageHelper.createShortcutOnRadioShape(192));
             removeIntent.putExtra("duplicate", false);
             removeIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, createShortcutIntent(context, station));
             removeIntent.setAction("com.android.launcher.action.UNINSTALL_SHORTCUT");
@@ -95,14 +95,14 @@ public final class ShortcutHelper implements TransistorKeys {
 
 
     /* Create shortcut icon */
-    private static Bitmap createShortcutIcon(Context context, Station station) {
+    private static IconCompat createShortcutIcon(Context context, Station station) {
         ImageHelper imageHelper = new ImageHelper(station, context);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // only return the station image - Oreo adds an app icon badge to the shortcut - no need for additional branding
-            return imageHelper.createFramedImage(192);
+            return IconCompat.createWithAdaptiveBitmap(imageHelper.createFramedImage(192));
         } else {
             // return station image in circular frame
-            return imageHelper.createShortcut(192);
+            return IconCompat.createWithBitmap(imageHelper.createShortcutOnRadioShape(192));
         }
     }
 
