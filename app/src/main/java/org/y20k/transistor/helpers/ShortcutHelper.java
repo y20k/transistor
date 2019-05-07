@@ -99,7 +99,7 @@ public final class ShortcutHelper implements TransistorKeys {
         ImageHelper imageHelper = new ImageHelper(station, context);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // only return the station image - Oreo adds an app icon badge to the shortcut - no need for additional branding
-            return imageHelper.getInputImage();
+            return imageHelper.createFramedImage(192);
         } else {
             // return station image in circular frame
             return imageHelper.createShortcut(192);

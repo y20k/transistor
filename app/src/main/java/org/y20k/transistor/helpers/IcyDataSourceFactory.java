@@ -88,7 +88,9 @@ public final class IcyDataSourceFactory implements Factory {
         if (enableShoutcast) {
             return new IcyDataSource(playerCallback);
         } else {
-            return new DefaultDataSource(context, listener, baseDataSourceFactory.createDataSource());
+            DefaultDataSource dataSource = new DefaultDataSource(context, baseDataSourceFactory.createDataSource());
+            dataSource.addTransferListener(listener);
+            return dataSource;
         }
     }
 

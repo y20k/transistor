@@ -19,7 +19,7 @@
     <string name="descr_station_options_button">Opties</string>
     <string name="descr_station_name_example">Voorbeeld FM</string>
     <string name="descr_station_metadata_example">Artiest - Titel</string>
-    <string name="descr_station_stream_loading">Stream aan het laden...</string>
+    <string name="descr_station_stream_loading">Stream aan het laden…</string>
     <string name="descr_playback_button_play">Afspelen</string>
     <string name="descr_playback_button_stop">Stoppen</string>
     <string name="descr_playback_indicator">Zender aan het afspelen:</string>

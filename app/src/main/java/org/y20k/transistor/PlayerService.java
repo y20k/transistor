@@ -42,6 +42,13 @@ import android.support.v4.media.session.PlaybackStateCompat;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.media.AudioAttributesCompat;
+import androidx.media.MediaBrowserServiceCompat;
+import androidx.media.session.MediaButtonReceiver;
+
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultLoadControl.Builder;
@@ -58,8 +65,8 @@ import com.google.android.exoplayer2.analytics.AnalyticsListener;
 import com.google.android.exoplayer2.audio.AudioAttributes;
 import com.google.android.exoplayer2.metadata.Metadata;
 import com.google.android.exoplayer2.metadata.MetadataOutput;
-import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.source.ProgressiveMediaSource;
 import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.source.hls.HlsMediaSource;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
@@ -67,7 +74,6 @@ import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultAllocator;
-import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
@@ -89,13 +95,6 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.media.AudioAttributesCompat;
-import androidx.media.MediaBrowserServiceCompat;
-import androidx.media.session.MediaButtonReceiver;
 
 import static com.google.android.exoplayer2.ExoPlaybackException.TYPE_RENDERER;
 import static com.google.android.exoplayer2.ExoPlaybackException.TYPE_SOURCE;
@@ -721,8 +720,8 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         // create default TrackSelector
         TrackSelector trackSelector = new DefaultTrackSelector();
 
-        // create default LoadControl - double the buffer
-        LoadControl loadControl = createDefaultLoadControl();
+        // create default LoadControl - increase buffer size
+        LoadControl loadControl = createDefaultLoadControl(10);
 
         // create the player
         mPlayer = ExoPlayerFactory.newSimpleInstance(this, new DefaultRenderersFactory(getApplicationContext()), trackSelector, loadControl);
@@ -732,10 +731,10 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     }
 
 
-    /* Creates a LoadControl */
-    private DefaultLoadControl createDefaultLoadControl() {
+    /* Creates a LoadControl - increase buffer size by given factor */
+    private DefaultLoadControl createDefaultLoadControl(int factor) {
         Builder builder = new Builder();
-        builder.setAllocator(new DefaultAllocator(true, C.DEFAULT_BUFFER_SEGMENT_SIZE * 2));
+        builder.setAllocator(new DefaultAllocator(true, C.DEFAULT_BUFFER_SEGMENT_SIZE * factor));
         return builder.createDefaultLoadControl();
     }
 
@@ -744,19 +743,17 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     private void preparePlayer(int connectionType) {
         // create MediaSource
         MediaSource mediaSource;
-        // create BandwidthMeter for DataSource.Factory
-        DefaultBandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
         // create DataSource.Factory - produces DataSource instances through which media data is loaded
         DataSource.Factory dataSourceFactory;
 
         if (connectionType == CONNECTION_TYPE_HLS) {
             // TODO HLS does not work reliable
             Toast.makeText(this, this.getString(R.string.toastmessage_stream_may_not_work), Toast.LENGTH_LONG).show();
-            dataSourceFactory = new DefaultDataSourceFactory(this, Util.getUserAgent(this, mUserAgent), bandwidthMeter);
+            dataSourceFactory = new DefaultDataSourceFactory(this, Util.getUserAgent(this, mUserAgent));
             mediaSource = new HlsMediaSource.Factory(dataSourceFactory).createMediaSource(mStation.getStreamUri());
         } else {
-            dataSourceFactory = new IcyDataSourceFactory(this, Util.getUserAgent(this, mUserAgent), bandwidthMeter, true, playerCallback);
-            mediaSource = new ExtractorMediaSource.Factory(dataSourceFactory).setContinueLoadingCheckIntervalBytes(32).createMediaSource(mStation.getStreamUri());
+            dataSourceFactory = new IcyDataSourceFactory(this, Util.getUserAgent(this, mUserAgent), true, playerCallback);
+            mediaSource = new ProgressiveMediaSource.Factory(dataSourceFactory).setContinueLoadingCheckIntervalBytes(32).createMediaSource(mStation.getStreamUri());
         }
         // prepare player with source.
         mPlayer.prepare(mediaSource);

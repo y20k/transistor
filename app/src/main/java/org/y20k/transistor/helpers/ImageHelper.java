@@ -117,10 +117,8 @@ public final class ImageHelper {
 
 
 
-    /* Creates station image on a background with the main image color */
+    /* Creates station image on a background with the main station image color */
     public Bitmap createFramedImage(int size) {
-        // get default color
-        // int color = ContextCompat.getColor(mContext, R.color.station_image_background); // todo remove
         int color = getStationImageColor();
         return createFramedImage(size, color);
     }
@@ -166,9 +164,9 @@ public final class ImageHelper {
         Canvas imageCanvas = new Canvas(outputImage);
 
         // draw circular background
-        float cx = size / 2;
-        float cy = size / 2;
-        float radius = size / 2;
+        float cx = size / 2f;
+        float cy = size / 2f;
+        float radius = size / 2f;
         imageCanvas.drawCircle(cx, cy, radius, background);
 
         // draw input image onto canvas using transformation matrix
