@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- activities -->
-    <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
-
+    <string name="app_name">Transistor</string>
+    <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
     <!-- app shortcuts -->
     <string name="shortcut_last_station_short_label">Son istasyon</string>
-    <string name="shortcut_last_station_long_label">En son istasyonu oynat</string>
+    <string name="shortcut_last_station_long_label">Son istasyonu oynat</string>
     <string name="shortcut_last_station_disabled_message">En son istasyonun oynatılması için kısayol devre dışı.</string>
-
     <!-- menu entries -->
     <string name="menu_icon">Simgeyi değiştir</string>
     <string name="menu_delete">Sil</string>
     <string name="menu_rename">Yeniden adlandır</string>
     <string name="menu_shortcut">Ana ekrana ekle</string>
-
     <!-- descriptions -->
     <string name="descr_app_icon">Eski bir radyoyu gösteren uygulama simgesi</string>
     <string name="descr_station_options_button">Radyo istasyonu için seçenekleri göster</string>
@@ -29,7 +27,6 @@
     <string name="descr_player_sheet_p_stream_url">Seçili radyo istasyonunun yayın bağlantısı</string>
     <string name="descr_list_add_new">Yeni istasyon ekle</string>
     <string name="descr_list_add_select_stream_dropdown">Seçili akışları barındıran aşağı kayan menü</string>
-
     <!-- player -->
     <string name="player_sheet_h1_details">Details</string>
     <string name="player_sheet_h2_current_session">Geçerli oturum</string>
@@ -39,7 +36,6 @@
     <string name="player_sheet_h2_station_channel_count">Kanal sayısı</string>
     <string name="player_sheet_h2_station_sample_rate">Örnekleme hızı</string>
     <string name="player_sheet_h2_station_bitrate">Bit hızı</string>
-
     <!-- dialogs -->
     <string name="dialog_generic_button_okay">Tamam</string>
     <string name="dialog_generic_button_cancel">İptal</string>
@@ -55,7 +51,6 @@
     <string name="dialog_add_station_choose_stream_heading">Birden çok akış bulundu</string>
     <string name="dialog_add_station_choose_stream_message">"Lütfen bir akış seçin "</string>
     <string name="dialog_add_station_choose_stream_button">Seç</string>
-
     <!-- error dialogs -->
     <string name="dialog_error_title_default">Hata</string>
     <string name="dialog_error_message_default">Bir hata oluştu</string>
@@ -75,7 +70,6 @@
     <string name="dialog_error_message_fetch_read">Transistor çok uğraştı fakat dosyayı tanıyamadı.</string>
     <string name="dialog_error_message_fetch_read_file_location">Dosyanın yeri:</string>
     <string name="dialog_error_message_fetch_write">Transistor çok uğraştı fakat istasyonu kaydedemedi.</string>
-
     <!-- messages -->
     <string name="toastmessage_add_download_started">İndirme başladı.</string>
     <string name="toastmessage_add_open_file_started">Dosya açılıyor.</string>
@@ -107,19 +101,15 @@
     <string name="toastalert_station_not_found">İstasyon bulunamıyor.</string>
     <string name="snackbar_request_storage_access">Transistor, harici depolamadaki verilere erişebilmek için okuma izni verilmesine gerek duyar.</string>
     <string name="snackbar_message_timer_set">Uyku zamanlayıcısı ayarı</string>
-
     <!-- notification -->
     <string name="notification_play">Oynat</string>
     <string name="notification_stop">Stop</string>
     <string name="notification_channel_playback_name">Oynatma Kontrolleri</string>
     <string name="notification_channel_playback_description">Oynatma kontrolleri, istasyon logosu ve şimdi yürütülüyor bilgisi.</string>
-
     <!-- onboarding -->
     <string name="onboarding_app_description">Radyo uygulaması</string>
     <string name="onboarding_app_get_started">Başlayın</string>
-
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7
     https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
-
 </resources>
