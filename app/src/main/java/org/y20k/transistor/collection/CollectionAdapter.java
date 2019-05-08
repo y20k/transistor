@@ -274,7 +274,7 @@ public final class CollectionAdapter extends RecyclerView.Adapter<RecyclerView.V
     /* Create bitmap version of station image */
     private Bitmap createStationImageBitmap(Station station) {
         ImageHelper imageHelper = new ImageHelper(station, mActivity);
-        return imageHelper.createFramedImage(192);
+        return imageHelper.createSquareImage(192, false);
     }
 
 

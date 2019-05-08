@@ -163,7 +163,7 @@ public final class NotificationHelper implements TransistorKeys {
         }
         // create and return station image icon
         ImageHelper imageHelper = new ImageHelper(station, context);
-        return imageHelper.createFramedImage(512);
+        return imageHelper.createSquareImage(512, false);
 
     }
 
