@@ -7,7 +7,7 @@
         <!-- Set AppCompat’s colors -->
         <item name="colorPrimary">@color/transistor_grey_dark</item>
         <item name="colorPrimaryDark">@color/transistor_black</item>
-        <item name="colorAccent">@color/transistor_blue</item>
+        <item name="colorAccent">@color/transistor_red</item>
 
         <!-- List divider -->
         <item name="android:listDivider">@drawable/list_divider</item>

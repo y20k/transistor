@@ -11,7 +11,7 @@
     <color name="player_sheet_text_main">@color/transistor_white</color>
     <color name="player_sheet_background_details">@color/transistor_grey_dark</color>
     <color name="player_sheet_text_details">@color/transistor_white</color>
-    <color name="player_button_background">@color/transistor_blue</color>
+    <color name="player_button_background">@color/transistor_red</color>
 
     <color name="list_item_background">@color/transistor_white</color>
     <color name="list_item_background_selected">@color/transistor_grey_very_light</color>
@@ -28,9 +28,12 @@
     <color name="transistor_grey_dark">#FF3C4043</color>        <!-- Material Design 2: Grey 800 -->
     <color name="transistor_grey_darker">#FF17181A</color>
 
-    <color name="transistor_blue">#FF3C98DB</color>
+    <color name="transistor_red">#FFDC3D33</color>
+    <color name="transistor_red_dark">#FFC83D35</color>
+
+    <!-- <color name="transistor_blue">#FF3C98DB</color>
     <color name="transistor_blue_light">#FF4DAEF4</color>
-    <color name="transistor_blue_dark">#FF19405B</color>
+    <color name="transistor_blue_dark">#FF19405B</color> -->
 
     <color name="transistor_black">#FF000000</color>
     <color name="transistor_white">#FFFFFFFF</color>
