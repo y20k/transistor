@@ -4,7 +4,7 @@
 <svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
     xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
     xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="108pt" height="108pt"
-    viewBox="0 0 38.100001 38.1" version="1.1" id="svg8" inkscape:version="0.92.4 5da689c313, 2019-01-14"
+    viewBox="0 0 38.100001 38.1" version="1.1" id="svg8" inkscape:version="0.92.2 5c3e80d, 2017-08-06"
     sodipodi:docname="transistor-app-icon-current.svg" inkscape:export-filename="/home/solaris/Desktop/transistor/assets/transistor-app-icon-current-foreground.png"
     inkscape:export-xdpi="600" inkscape:export-ydpi="600">
   <defs
@@ -107,6 +107,28 @@
          result="composite2"
          id="feComposite1514" />
     </filter>
+    <mask
+       maskUnits="userSpaceOnUse"
+       id="mask921">
+      <path
+         style="display:inline;opacity:1;fill:#ffffff;fill-opacity:1;stroke-width:0.39691988"
+         d="M 30.691667,19.050001 A 11.641666,11.641666 0 0 1 19.050001,30.691667 11.641666,11.641666 0 0 1 7.4083348,19.050001 11.641666,11.641666 0 0 1 19.050001,7.4083348 11.641666,11.641666 0 0 1 30.691667,19.050001 Z"
+         id="path923"
+         inkscape:connector-curvature="0"
+         mask="none"
+         clip-path="none" />
+    </mask>
+    <mask
+       maskUnits="userSpaceOnUse"
+       id="mask925">
+      <path
+         style="display:inline;opacity:1;fill:#ffffff;fill-opacity:1;stroke-width:0.39691988"
+         d="M 30.691667,19.050001 A 11.641666,11.641666 0 0 1 19.050001,30.691667 11.641666,11.641666 0 0 1 7.4083348,19.050001 11.641666,11.641666 0 0 1 19.050001,7.4083348 11.641666,11.641666 0 0 1 30.691667,19.050001 Z"
+         id="path927"
+         inkscape:connector-curvature="0"
+         mask="none"
+         clip-path="none" />
+    </mask>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -115,11 +137,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="8"
-     inkscape:cx="73.996652"
-     inkscape:cy="78.29746"
+     inkscape:zoom="11.313708"
+     inkscape:cx="73.339624"
+     inkscape:cy="89.036608"
      inkscape:document-units="pt"
-     inkscape:current-layer="g959"
+     inkscape:current-layer="g64"
      showgrid="false"
      units="pt"
      inkscape:snap-object-midpoints="true"
@@ -172,6 +194,31 @@
        width="38.100002"
        id="rect996"
        style="display:inline;opacity:0.12999998;fill:#3c4043;fill-opacity:1;stroke:none;stroke-width:0.28937912;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.07843137" />
+  </g>
+  <g
+     style="display:inline"
+     inkscape:label="Background Masked Circle 66pt"
+     id="g64"
+     inkscape:groupmode="layer">
+    <rect
+       inkscape:label="Red Square"
+       y="-8.944092e-07"
+       x="-1.7888184e-06"
+       height="38.100002"
+       width="38.100002"
+       id="rect60"
+       style="display:inline;opacity:1;fill:#dc3d33;fill-opacity:1;stroke:none;stroke-width:0.40924388;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.07843137"
+       mask="url(#mask925)" />
+    <rect
+       style="display:inline;opacity:0.12999998;fill:#3c4043;fill-opacity:1;stroke:none;stroke-width:0.28937912;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.07843137"
+       id="rect62"
+       width="38.100002"
+       height="19.050001"
+       x="-1.7888184e-06"
+       y="19.050001"
+       inkscape:label="Shaddow Lower Half"
+       clip-path="none"
+       mask="url(#mask921)" />
   </g>
   <g
      inkscape:label="Drop Shaddow"
@@ -232,7 +279,7 @@
      inkscape:groupmode="layer"
      id="g959"
      inkscape:label="Radio Icon  (Variant)"
-     style="display:inline">
+     style="display:none">
     <path
        id="path1000"
        d="m 26.564215,46.115095 c 2.95e-4,-0.762084 -0.656603,-1.380254 -1.467606,-1.381084 H 14.536031 l -2.491082,2.65e-4 -0.138134,0.04031 -0.100755,0.02905 -0.02399,0.007 c -0.01952,0.0051 -0.03845,0.01194 -0.05651,0.02054 -0.557318,0.210984 -0.922029,0.7193 -0.921185,1.283902 v 7.585189 c -2.95e-4,0.762947 0.657816,1.381585 1.469738,1.381585 h 12.821959 c 0.811003,-8.11e-4 1.467901,-0.619 1.467606,-1.381084 -1.8e-4,-2.528563 -7.5e-5,-5.057126 5.41e-4,-7.585689 z"
@@ -307,7 +354,7 @@
      inkscape:label="Save Zones"
      style="display:none">
     <circle
-       style="display:none;opacity:0.12999998;fill:#ff71ff;fill-opacity:1;stroke-width:0.39691988"
+       style="display:inline;opacity:0.12999998;fill:#ff71ff;fill-opacity:1;stroke-width:0.39691988"
        id="path846"
        cx="19.050001"
        cy="19.050001"
