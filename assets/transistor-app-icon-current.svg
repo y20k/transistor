@@ -5,7 +5,7 @@
     xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
     xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="108pt" height="108pt"
     viewBox="0 0 38.100001 38.1" version="1.1" id="svg8" inkscape:version="0.92.2 5c3e80d, 2017-08-06"
-    sodipodi:docname="transistor-app-icon-current.svg" inkscape:export-filename="/home/solaris/Desktop/transistor/assets/transistor-app-icon-current-foreground.png"
+    sodipodi:docname="transistor-app-icon-current.svg" inkscape:export-filename="/Users/solaris/Desktop/transistor/assets/transistor-app-icon-current-background.png"
     inkscape:export-xdpi="600" inkscape:export-ydpi="600">
   <defs
      id="defs2">
@@ -138,17 +138,17 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="11.313708"
-     inkscape:cx="73.339624"
-     inkscape:cy="89.036608"
+     inkscape:cx="36.481682"
+     inkscape:cy="67.823404"
      inkscape:document-units="pt"
-     inkscape:current-layer="g64"
+     inkscape:current-layer="layer4"
      showgrid="false"
      units="pt"
      inkscape:snap-object-midpoints="true"
      inkscape:window-width="2408"
      inkscape:window-height="1260"
-     inkscape:window-x="86"
-     inkscape:window-y="27"
+     inkscape:window-x="143"
+     inkscape:window-y="95"
      inkscape:window-maximized="0"
      inkscape:snap-global="false"
      showguides="true"
@@ -169,15 +169,7 @@
      inkscape:groupmode="layer"
      id="layer4"
      inkscape:label="Background"
-     style="display:none">
-    <rect
-       inkscape:label="Blue Square"
-       y="-8.944092e-07"
-       x="-1.7888184e-06"
-       height="38.100002"
-       width="38.100002"
-       id="rect2187"
-       style="display:none;opacity:1;fill:#3c98db;fill-opacity:1;stroke:none;stroke-width:0.40924388;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.07843137" />
+     style="display:inline">
     <rect
        style="display:inline;opacity:1;fill:#dc3d33;fill-opacity:1;stroke:none;stroke-width:0.40924388;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.07843137"
        id="rect879"
@@ -187,38 +179,13 @@
        y="-8.944092e-07"
        inkscape:label="Red Square" />
     <rect
-       inkscape:label="Shaddow Lower Half"
+       inkscape:label="Lower Half +2"
        y="19.050001"
        x="-1.7888184e-06"
        height="19.050001"
        width="38.100002"
        id="rect996"
-       style="display:inline;opacity:0.12999998;fill:#3c4043;fill-opacity:1;stroke:none;stroke-width:0.28937912;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.07843137" />
-  </g>
-  <g
-     style="display:inline"
-     inkscape:label="Background Masked Circle 66pt"
-     id="g64"
-     inkscape:groupmode="layer">
-    <rect
-       inkscape:label="Red Square"
-       y="-8.944092e-07"
-       x="-1.7888184e-06"
-       height="38.100002"
-       width="38.100002"
-       id="rect60"
-       style="display:inline;opacity:1;fill:#dc3d33;fill-opacity:1;stroke:none;stroke-width:0.40924388;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.07843137"
-       mask="url(#mask925)" />
-    <rect
-       style="display:inline;opacity:0.12999998;fill:#3c4043;fill-opacity:1;stroke:none;stroke-width:0.28937912;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.07843137"
-       id="rect62"
-       width="38.100002"
-       height="19.050001"
-       x="-1.7888184e-06"
-       y="19.050001"
-       inkscape:label="Shaddow Lower Half"
-       clip-path="none"
-       mask="url(#mask921)" />
+       style="display:inline;opacity:1;fill:#ca2d23;fill-opacity:1;stroke:none;stroke-width:0.28937912;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.07843137" />
   </g>
   <g
      inkscape:label="Drop Shaddow"
