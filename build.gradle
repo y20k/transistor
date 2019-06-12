@@ -8,7 +8,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.0'
+        classpath 'com.android.tools.build:gradle:3.4.1'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -24,7 +24,7 @@ allprojects {
     project.ext {
         applicationId = 'org.y20k.transistor'
         versionCode = 67
-        versionName = '3.1.3'
+        versionName = '3.2.0'
 
         compileSdkVersion = 28
         targetSdkVersion = 28
@@ -37,7 +37,7 @@ allprojects {
         mediaVersion = '1.0.1'
         livecycleVersion = '2.0.0'
 
-        exoPlayerVersion = '2.10.0'
+        exoPlayerVersion = '2.10.1'
         junit_version = "4.12"
     }
 }

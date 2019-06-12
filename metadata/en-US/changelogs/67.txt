@@ -1,0 +1,8 @@
+# v3.2.0 - Life on Mars?
+
+**2019-06-26**
+
+- list of radio stations has larger icons
+- main app icon color changed to red
+- updated translations
+

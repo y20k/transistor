@@ -4,7 +4,7 @@ README
 Transistor - Simple Radio App
 -----------------------------
 
-**Version 3.1.x ("John, I’m Only Dancing")**
+**Version 3.2.x ("Life on Mars?")**
 
 Transistor is a bare bones app for listening to radio programs over the internet. The app stores stations as files on your device's external storage. It currently understands streams encoded in MP3, AAC and Ogg/Opus(*).
 
@@ -59,7 +59,7 @@ Transistor streams radio stations over the internet.
 
 ### Permission "READ_EXTERNAL_STORAGE"
 Transistor needs access to images, photos and documents to be able to customize radio station icons and to able to open locally saved playlist files.
-            
+
 ### Permission "VIBRATE"
 Tapping and holding a radio station will toggle a tiny vibration.
 
@@ -68,12 +68,12 @@ During Playback Transistor acquires a so called partial wake lock. That prevents
 
 (*) Opus playback is only supported on devices running Android 5.0+
 
-Screenshots (v3.1)
+Screenshots (v3.2)
 ---------------------
-[<img src="https://raw.githubusercontent.com/y20k/transistor/master/assets/screenshots-v3.1/01-lockscreen-active-v3.1-oneplus5.png" width="240">](https://raw.githubusercontent.com/y20k/transistor/master/assets/screenshots-v3.1/01-lockscreen-active-v3.1-oneplus5.png)
-[<img src="https://raw.githubusercontent.com/y20k/transistor/master/assets/screenshots-v3.1/02-playback-v31-oneplus5.png" width="240">](https://raw.githubusercontent.com/y20k/transistor/master/assets/screenshots-v3.1/02-playback-v31-oneplus5.png)
-[<img src="https://raw.githubusercontent.com/y20k/transistor/master/assets/screenshots-v3.1/03-details-v3.1-oneplus5.png" width="240">](https://raw.githubusercontent.com/y20k/transistor/master/assets/screenshots-v3.1/03-details-v3.1-oneplus5.png)
+[<img src="https://raw.githubusercontent.com/y20k/transistor/master/metadata/en-US/phoneScreenshots/01-lockscreen-active-v3.2-oneplus5.png" width="240">](https://raw.githubusercontent.com/y20k/transistor/master/metadata/en-US/phoneScreenshots/01-lockscreen-active-v3.2-oneplus5.png)
+[<img src="https://raw.githubusercontent.com/y20k/transistor/master/metadata/en-US/phoneScreenshots/02-playback-v3.2-oneplus5.png" width="240">](https://raw.githubusercontent.com/y20k/transistor/master/metadata/en-US/phoneScreenshots/02-playback-v3.2-oneplus5.png)
+[<img src="https://raw.githubusercontent.com/y20k/transistor/master/metadata/en-US/phoneScreenshots/03-details-v3.2-oneplus5.png" width="240">](https://raw.githubusercontent.com/y20k/transistor/master/metadata/en-US/phoneScreenshots/03-details-v3.2-oneplus5.png)
 
-[<img src="https://raw.githubusercontent.com/y20k/transistor/master/assets/screenshots-v3.1/04-sleeptimer-v3.1-oneplus5.png" width="240">](https://raw.githubusercontent.com/y20k/transistor/master/assets/screenshots-v3.1/04-sleeptimer-v3.1-oneplus5.png)
-[<img src="https://raw.githubusercontent.com/y20k/transistor/master/assets/screenshots-v3.1/05-homescreen-v3.1-oneplus5.png" width="240">](https://raw.githubusercontent.com/y20k/transistor/master/assets/screenshots-v3.1/05-homescreen-v3.1-oneplus5.png)
-[<img src="https://raw.githubusercontent.com/y20k/transistor/master/assets/screenshots-v3.1/06-onboarding-v3.1-oneplus5.png" width="240">](https://raw.githubusercontent.com/y20k/transistor/master/assets/screenshots-v3.1/06-onboarding-v3.1-oneplus5.png)
+[<img src="https://raw.githubusercontent.com/y20k/transistor/master/metadata/en-US/phoneScreenshots/04-sleeptimer-v3.2-oneplus5.png" width="240">](https://raw.githubusercontent.com/y20k/transistor/master/metadata/en-US/phoneScreenshots/04-sleeptimer-v3.2-oneplus5.png)
+[<img src="https://raw.githubusercontent.com/y20k/transistor/master/metadata/en-US/phoneScreenshots/05-homescreen-v3.2-oneplus5.png" width="240">](https://raw.githubusercontent.com/y20k/transistor/master/metadata/en-US/phoneScreenshots/05-homescreen-v3.2-oneplus5.png)
+[<img src="https://raw.githubusercontent.com/y20k/transistor/master/metadata/en-US/phoneScreenshots/06-onboarding-v3.2-oneplus5.png" width="240">](https://raw.githubusercontent.com/y20k/transistor/master/metadata/en-US/phoneScreenshots/06-onboarding-v3.2-oneplus5.png)
