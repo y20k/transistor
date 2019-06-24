@@ -32,7 +32,7 @@
     <string name="player_sheet_h2_current_session">現在のセッション</string>
     <string name="player_sheet_h2_station_metadata">現在再生中</string>
     <string name="player_sheet_h2_stream_url">ストリームのリンク</string>
-    <string name="player_sheet_h2_station_mime_type">MIME タイプ</string>
+    <string name="player_sheet_h2_station_mime_type">メディアタイプ</string>
     <string name="player_sheet_h2_station_channel_count">チャンネル数</string>
     <string name="player_sheet_h2_station_sample_rate">サンプルレート</string>
     <string name="player_sheet_h2_station_bitrate">ビットレート</string>
@@ -62,7 +62,7 @@
     <string name="dialog_error_title_fetch_write">問題を書き込む</string>
     <string name="dialog_error_message_fetch_general_external_storage">外部ストレージ:</string>
     <string name="dialog_error_message_fetch_general_hint_m3u">ヒント: トランジスターは MP3、AAC、Ogg/Opus でエンコードされたストリームや .m3u または .pls で終わるリンクのみ処理することができます。</string>
-    <string name="dialog_error_message_fetch_general_playlist_type">ファイルの MIME タイプ:</string>
+    <string name="dialog_error_message_fetch_general_playlist_type">ファイルのメディアタイプ:</string>
     <string name="dialog_error_message_fetch_general_stream_type">ストリームの MIME タイプ:</string>
     <string name="dialog_error_message_fetch_general_file_content">リモート ファイルのコンテンツ:</string>
     <string name="dialog_error_message_fetch_download">トランジスターの努力にもかかわらず、リンクが意味をなさない可能性があります。</string>
