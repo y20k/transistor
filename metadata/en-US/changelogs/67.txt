@@ -2,7 +2,7 @@
 
 **2019-06-26**
 
+- Italian translation
 - list of radio stations has larger icons
 - main app icon color changed to red
-- updated translations
 

@@ -25,6 +25,8 @@ German version: [y20k](https://github.com/y20k) | [weblate version history](http
 
 Greek version: [nikoss](https://github.com/nikoss) | [weblate version history](https://hosted.weblate.org/changes/?lang=el&project=transistor)
 
+Italian version: [pjammo](https://github.com/pjammo) | [weblate version history](https://hosted.weblate.org/changes/?lang=it&project=transistor)
+
 Japanese version: [naofum](https://github.com/naofum) | [weblate version history](https://hosted.weblate.org/changes/?lang=ja&project=transistor)
 
 Kabyle version: [SlimaneAmiri](https://github.com/SlimaneAmiri) | [weblate version history](https://hosted.weblate.org/changes/?lang=kab&project=transistor)
