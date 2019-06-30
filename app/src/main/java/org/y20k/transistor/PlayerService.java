@@ -400,13 +400,22 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
     @Override
     public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
-        if (trackGroups.length > 0) {
-            // update format metadata of station
-            Format format = trackGroups.get(0).getFormat(0);
-            mStation.setMimeType(format.sampleMimeType);
-            mStation.setChannelCount(format.channelCount);
-            mStation.setSampleRate(format.sampleRate);
-            mStation.setBitrate(format.bitrate);
+        for (int i = 0; i < trackGroups.length; i++) {
+            if (mPlayer.getRendererType(i) == C.TRACK_TYPE_AUDIO) {
+                // update format metadata of station
+                Format format = trackGroups.get(i).getFormat(0);
+                mStation.setMimeType(format.sampleMimeType);
+                mStation.setChannelCount(format.channelCount);
+                mStation.setSampleRate(format.sampleRate);
+                mStation.setBitrate(format.bitrate);
+
+                // send local broadcast
+                Intent intent = new Intent();
+                intent.setAction(ACTION_PLAYBACK_STATE_CHANGED);
+                intent.putExtra(EXTRA_STATION, mStation);
+                LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
+                LogHelper.v(LOG_TAG, "LocalBroadcast: ACTION_PLAYBACK_STATE_CHANGED -> EXTRA_STATION");
+            }
         }
     }
 
