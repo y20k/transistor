@@ -25,7 +25,6 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.AudioManager;
-import android.media.AudioTrack;
 import android.media.audiofx.AudioEffect;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
@@ -65,10 +64,13 @@ import com.google.android.exoplayer2.analytics.AnalyticsListener;
 import com.google.android.exoplayer2.audio.AudioAttributes;
 import com.google.android.exoplayer2.metadata.Metadata;
 import com.google.android.exoplayer2.metadata.MetadataOutput;
+import com.google.android.exoplayer2.metadata.icy.IcyHeaders;
+import com.google.android.exoplayer2.metadata.icy.IcyInfo;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.ProgressiveMediaSource;
 import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.source.hls.HlsMediaSource;
+import com.google.android.exoplayer2.source.hls.HlsTrackMetadataEntry;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
@@ -81,11 +83,9 @@ import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.AudioFocusAwarePlayer;
 import org.y20k.transistor.helpers.AudioFocusHelper;
 import org.y20k.transistor.helpers.AudioFocusRequestCompat;
-import org.y20k.transistor.helpers.IcyDataSourceFactory;
 import org.y20k.transistor.helpers.LogHelper;
 import org.y20k.transistor.helpers.NotificationHelper;
 import org.y20k.transistor.helpers.PackageValidator;
-import org.y20k.transistor.helpers.PlayerCallback;
 import org.y20k.transistor.helpers.StationListProvider;
 import org.y20k.transistor.helpers.TransistorKeys;
 
@@ -244,7 +244,22 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
     @Override
     public void onMetadata(Metadata metadata) {
-        LogHelper.v(LOG_TAG, "Got new metadata: " + metadata.toString());
+        for (int i = 0; i < metadata.length(); i++) {
+            final Metadata.Entry entry = metadata.get(i);
+            // extract IceCast metadata
+            if (entry instanceof IcyInfo) {
+                final IcyInfo icyInfo = ((IcyInfo) entry);
+                updateMetadata(icyInfo.title);
+            } else if (entry instanceof IcyHeaders) {
+                final IcyHeaders icyHeaders = ((IcyHeaders) entry);
+                LogHelper.i(LOG_TAG, "icyHeaders:" + icyHeaders.name + " - " + icyHeaders.genre);
+            } else if (entry instanceof HlsTrackMetadataEntry) {
+                final HlsTrackMetadataEntry hlsTrackMetadataEntry = ((HlsTrackMetadataEntry) entry);
+            }
+            // TODO implement HLS metadata extraction
+            // https://exoplayer.dev/doc/reference/com/google/android/exoplayer2/metadata/Metadata.Entry.html
+            // https://exoplayer.dev/doc/reference/com/google/android/exoplayer2/source/hls/HlsTrackMetadataEntry.html
+        }
     }
 
 
@@ -728,6 +743,9 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
         // start listening for audio session id
         mPlayer.addAnalyticsListener(this);
+
+        // start listening for stream metadata
+        mPlayer.addMetadataOutput(this);
     }
 
 
@@ -741,20 +759,20 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
     /* Add a media source to player */
     private void preparePlayer(int connectionType) {
-        // create MediaSource
-        MediaSource mediaSource;
         // create DataSource.Factory - produces DataSource instances through which media data is loaded
         DataSource.Factory dataSourceFactory;
+        dataSourceFactory = new DefaultDataSourceFactory(this, Util.getUserAgent(this, mUserAgent));
 
+        // create MediaSource
+        MediaSource mediaSource;
         if (connectionType == CONNECTION_TYPE_HLS) {
             // TODO HLS does not work reliable
             Toast.makeText(this, this.getString(R.string.toastmessage_stream_may_not_work), Toast.LENGTH_LONG).show();
-            dataSourceFactory = new DefaultDataSourceFactory(this, Util.getUserAgent(this, mUserAgent));
             mediaSource = new HlsMediaSource.Factory(dataSourceFactory).createMediaSource(mStation.getStreamUri());
         } else {
-            dataSourceFactory = new IcyDataSourceFactory(this, Util.getUserAgent(this, mUserAgent), true, playerCallback);
             mediaSource = new ProgressiveMediaSource.Factory(dataSourceFactory).setContinueLoadingCheckIntervalBytes(32).createMediaSource(mStation.getStreamUri());
         }
+
         // prepare player with source.
         mPlayer.prepare(mediaSource);
     }
@@ -895,6 +913,30 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             LogHelper.v(LOG_TAG, "Running on a non-Car mode");
             return false;
         }
+    }
+
+
+    /* Updates metadata info and broadcasts the change to the user interface */
+    private void updateMetadata(String metadata) {
+        if (metadata == null || metadata.length() > 0 ) {
+            mStation.setMetadata(metadata);
+        } else {
+            mStation.setMetadata(mStation.getStationName());
+        }
+        mStationMetadataReceived = true;
+
+        // send local broadcast
+        Intent i = new Intent();
+        i.setAction(ACTION_METADATA_CHANGED);
+        i.putExtra(EXTRA_STATION, mStation);
+        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(i);
+        LogHelper.v(LOG_TAG, "LocalBroadcast: ACTION_METADATA_CHANGED -> EXTRA_STATION");
+
+        // update media session metadata
+        mSession.setMetadata(getSessionMetadata(getApplicationContext(), mStation));
+
+        // update notification
+        NotificationHelper.update(PlayerService.this, mStation, mSession);
     }
 
 
@@ -1113,69 +1155,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     }
     /**
      * End of inner class
-     */
-
-
-    /**
-     * Callback: Callback from IcyInputStream reacting to new metadata
-     */
-    final PlayerCallback playerCallback = new PlayerCallback() {
-
-        @Override
-        public void playerStarted() {
-            LogHelper.v(LOG_TAG, "PlayerCallback: playerStarted" );
-        }
-
-        @Override
-        public void playerPCMFeedBuffer(boolean isPlaying, int audioBufferSizeMs, int audioBufferCapacityMs) {
-            LogHelper.v(LOG_TAG, "PlayerCallback: playerPCMFeedBuffer" );
-        }
-
-        @Override
-        public void playerStopped(int perf) {
-            LogHelper.v(LOG_TAG, "PlayerCallback: playerStopped" );
-        }
-
-        @Override
-        public void playerException(Throwable t) {
-            LogHelper.v(LOG_TAG, "PlayerCallback: playerException" );
-        }
-
-        @Override
-        public void playerMetadata(String key, String value) {
-            if (key.equals(SHOUTCAST_STREAM_TITLE_HEADER)) {
-                LogHelper.v(LOG_TAG, "PlayerCallback: playerMetadata " + key + " : " + value);
-
-                if (value.length() > 0) {
-                    mStation.setMetadata(value);
-                } else {
-                    mStation.setMetadata(mStation.getStationName());
-                }
-                mStationMetadataReceived = true;
-
-                // send local broadcast
-                Intent i = new Intent();
-                i.setAction(ACTION_METADATA_CHANGED);
-                i.putExtra(EXTRA_STATION, mStation);
-                LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(i);
-                LogHelper.v(LOG_TAG, "LocalBroadcast: ACTION_METADATA_CHANGED -> EXTRA_STATION");
-
-                // update media session metadata
-                mSession.setMetadata(getSessionMetadata(getApplicationContext(), mStation));
-
-                // update notification
-                NotificationHelper.update(PlayerService.this, mStation, mSession);
-
-            }
-        }
-
-        @Override
-        public void playerAudioTrackCreated(AudioTrack audioTrack) {
-            LogHelper.v(LOG_TAG, "PlayerCallback: playerMetadata" );
-        }
-    };
-    /**
-     * End of inner callback
      */
 
 }
