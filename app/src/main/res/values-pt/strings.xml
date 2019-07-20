@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- activities -->
-    <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
-
+    <string name="app_name">Transistor</string>
+    <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
     <!-- app shortcuts -->
     <string name="shortcut_last_station_short_label">Última estação</string>
     <string name="shortcut_last_station_long_label">Reproduzir última estação</string>
     <string name="shortcut_last_station_disabled_message">Atalho para reproduzir a última estação desativado.</string>
-
     <!-- menu entries -->
     <string name="menu_icon">Alterar ícone</string>
     <string name="menu_delete">Eliminar</string>
     <string name="menu_rename">Alternar nome</string>
     <string name="menu_shortcut">Colocar no ecrã inicial</string>
-
     <!-- descriptions -->
     <string name="descr_app_icon">Ícone da aplicação que representa um rádio antigo</string>
     <string name="descr_station_options_button">Opções</string>
@@ -29,17 +27,15 @@
     <string name="descr_player_sheet_p_stream_url">Link da transmissão da estação selecionada</string>
     <string name="descr_list_add_new">Adicionar nova estação</string>
     <string name="descr_list_add_select_stream_dropdown">Selecionar uma transmissão</string>
-
     <!-- player -->
     <string name="player_sheet_h1_details">Detalhes</string>
     <string name="player_sheet_h2_current_session">Sessão atual</string>
     <string name="player_sheet_h2_station_metadata">A tocar agora</string>
     <string name="player_sheet_h2_stream_url">Link de transmissão</string>
-    <string name="player_sheet_h2_station_mime_type">Tipo MIME</string>
+    <string name="player_sheet_h2_station_mime_type">Tipo de mídia</string>
     <string name="player_sheet_h2_station_channel_count">Nº de canais</string>
     <string name="player_sheet_h2_station_sample_rate">Taxa de amostragem</string>
     <string name="player_sheet_h2_station_bitrate">Taxa de bits</string>
-
     <!-- dialogs -->
     <string name="dialog_generic_button_okay">Aceitar</string>
     <string name="dialog_generic_button_cancel">Cancelar</string>
@@ -55,7 +51,6 @@
     <string name="dialog_add_station_choose_stream_heading">Encontradas várias transmissões</string>
     <string name="dialog_add_station_choose_stream_message">Selecione uma transmissão</string>
     <string name="dialog_add_station_choose_stream_button">Selecionar</string>
-
     <!-- error dialogs -->
     <string name="dialog_error_title_default">Erro</string>
     <string name="dialog_error_message_default">Surgiu um erro</string>
@@ -67,7 +62,7 @@
     <string name="dialog_error_title_fetch_write">Escrever problema</string>
     <string name="dialog_error_message_fetch_general_external_storage">Armazenamento externo:</string>
     <string name="dialog_error_message_fetch_general_hint_m3u">Dica: o Transistor só lê ficheiros de transmissão em MP3, AAC e Ogg/Opus ou links terminados em .m3u ou .pls.</string>
-    <string name="dialog_error_message_fetch_general_playlist_type">Tipo MIME do ficheiro:</string>
+    <string name="dialog_error_message_fetch_general_playlist_type">Tipo de mídia do ficheiro:</string>
     <string name="dialog_error_message_fetch_general_stream_type">Tipo MIME da transmissão:</string>
     <string name="dialog_error_message_fetch_general_file_content">Conteúdo do ficheiro:</string>
     <string name="dialog_error_message_fetch_download">O Transistor não consegui processar o link.</string>
@@ -75,7 +70,6 @@
     <string name="dialog_error_message_fetch_read">O Transistor não consegui processar o ficheiro.</string>
     <string name="dialog_error_message_fetch_read_file_location">Localização do ficheiro:</string>
     <string name="dialog_error_message_fetch_write">O Transistor não consegui guardar a estação.</string>
-
     <!-- messages -->
     <string name="toastmessage_add_download_started">Descarregamento iniciado.</string>
     <string name="toastmessage_add_open_file_started">A abrir o ficheiro.</string>
@@ -107,19 +101,15 @@
     <string name="toastalert_station_not_found">Não foi possível encontrar a estação.</string>
     <string name="snackbar_request_storage_access">O Transistor necessita de permissão para aceder aos ficheiros no armazenamento externo.</string>
     <string name="snackbar_message_timer_set">Temporizador de desligar definido para</string>
-
     <!-- notification -->
     <string name="notification_play">Tocar</string>
     <string name="notification_stop">Parar</string>
     <string name="notification_channel_playback_name">Controlos de reprodução</string>
     <string name="notification_channel_playback_description">Controlos de reprodução, logótipo da estação e informações de reprodução.</string>
-
     <!-- onboarding -->
     <string name="onboarding_app_description">Aplicação de rádio</string>
     <string name="onboarding_app_get_started">Começar</string>
-
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7
     https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
-
 </resources>
