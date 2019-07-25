@@ -17,6 +17,8 @@ Catalan version: [Zagur](https://github.com/Zagur) | [weblate version history](
 
 Chinese version: [YFdyh000](https://github.com/yfdyh000) | [weblate version history](https://hosted.weblate.org/changes/?lang=zh_Hans&project=transistor)
 
+Czech version: [Paper Mountain Studio ](https://github.com/PaperMountainStudio) | [weblate version history](https://hosted.weblate.org/changes/?lang=cs&project=transistor)
+
 Dutch version: [hypothermic](https://github.com/hypothermic) | [weblate version history](https://hosted.weblate.org/changes/?lang=nl&project=transistor)
 
 French version: [M2ck](https://github.com/M2ck), [ButterflyOfFire](https://github.com/BoFFire) | [weblate version history](https://hosted.weblate.org/changes/?lang=fr&project=transistor)
