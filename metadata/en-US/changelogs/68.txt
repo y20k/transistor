@@ -1,0 +1,7 @@
+# v3.2.1 - Life on Mars?
+
+**2019-07-25**
+
+- Czech translation
+- the "now playing" metadata feature displays non-latin characters better (less unreadble gibberish)
+
