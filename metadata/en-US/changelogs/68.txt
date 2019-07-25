@@ -3,5 +3,5 @@
 **2019-07-25**
 
 - Czech translation
-- the "now playing" metadata feature displays non-latin characters better (less unreadble gibberish)
+- the "now playing" metadata feature displays non-latin characters better (less unreadable gibberish)
 
