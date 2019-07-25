@@ -17,7 +17,7 @@ android {
         versionName project.ext.versionName
 
         vectorDrawables.useSupportLibrary = true
-        resConfigs "en", "ar", "ca", "de", "el", "es", "eu", "fr", "it", "ja", "kab", "nb-rNO", "nl", "pa", "pl", "pt", "pt-rBR", "ru", "sk", "sl", "sr", "tr", "uk", "zh-rCN"
+        resConfigs "en", "ar", "ca", "cs","de", "el", "es", "eu", "fr", "it", "ja", "kab", "nb-rNO", "nl", "pa", "pl", "pt", "pt-rBR", "ru", "sk", "sl", "sr", "tr", "uk", "zh-rCN"
     }
 
     buildTypes {
