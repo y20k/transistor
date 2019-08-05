@@ -1,19 +1,17 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- activities -->
-    <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
-
+    <string name="app_name">Transistor</string>
+    <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
     <!-- app shortcuts -->
     <!--<string name="shortcut_last_station_short_label"></string>-->
     <!--<string name="shortcut_last_station_long_label"></string>-->
     <!--<string name="shortcut_last_station_disabled_message"></string>-->
-
     <!-- menu entries -->
     <string name="menu_icon">更改图标</string>
     <string name="menu_delete">删除</string>
     <string name="menu_rename">重命名</string>
     <string name="menu_shortcut">放在首页</string>
-
     <!-- descriptions -->
     <!--<string name="descr_app_icon"></string>-->
     <string name="descr_station_options_button">显示电台选项</string>
@@ -29,7 +27,6 @@
     <!--<string name="descr_player_sheet_p_stream_url"></string>-->
     <!--<string name="descr_list_add_new"></string>-->
     <!--<string name="descr_list_add_select_stream_dropdown"></string>-->
-
     <!-- player -->
     <!--<string name="player_sheet_h1_details"></string>-->
     <!--<string name="player_sheet_h2_current_session"></string>-->
@@ -39,7 +36,6 @@
     <!--<string name="player_sheet_h2_station_channel_count"></string>-->
     <!--<string name="player_sheet_h2_station_sample_rate"></string>-->
     <!--<string name="player_sheet_h2_station_bitrate"></string>-->
-
     <!-- dialogs -->
     <string name="dialog_generic_button_okay">确定</string>
     <string name="dialog_generic_button_cancel">取消</string>
@@ -57,7 +53,6 @@
     <!--<string name="dialog_add_station_choose_stream_heading"></string>-->
     <!--<string name="dialog_add_station_choose_stream_message"></string>-->
     <!--<string name="dialog_add_station_choose_stream_button"></string>-->
-
     <!-- error dialogs -->
     <string name="dialog_error_title_default">错误</string>
     <string name="dialog_error_message_default">发生错误</string>
@@ -75,7 +70,6 @@
     <string name="dialog_error_message_fetch_read">Transistor 努力尝试，但没能感应到指定文件。</string>
     <string name="dialog_error_message_fetch_read_file_location">文件位置：</string>
     <string name="dialog_error_message_fetch_write">Transistor 努力尝试，但没能保存指定电台到存储。</string>
-
     <!-- messages -->
     <string name="toastmessage_add_download_started">下载开始.</string>
     <string name="toastmessage_add_open_file_started">打开文件.</string>
@@ -107,19 +101,22 @@
     <!--<string name="toastalert_station_not_found"></string>-->
     <string name="snackbar_request_storage_access">Transistor 需要被授权读取以从外部存储访问数据。</string>
     <string name="snackbar_message_timer_set">睡眠定时器设为</string>
-
     <!-- notification -->
     <!--<string name="notification_play"></string>-->
     <!--<string name="notification_stop"></string>-->
     <!--<string name="notification_channel_playback_name"></string>-->
     <!--<string name="notification_channel_playback_description"></string>-->
-
     <!-- onboarding -->
     <!--<string name="onboarding_app_description"></string>-->
     <!--<string name="onboarding_app_get_started"></string>-->
-
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7
     https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
-
+    <string name="descr_player_sheet_content_copy_icon"></string>
+    <string name="descr_player_sheet_p_stream_url"></string>
+    <string name="toastmessage_copied_to_clipboard_url"></string>
+    <string name="shortcut_last_station_short_label"></string>
+    <string name="shortcut_last_station_long_label"></string>
+    <string name="player_sheet_h2_station_metadata"></string>
+    <string name="descr_list_add_select_stream_dropdown"></string>
 </resources>
