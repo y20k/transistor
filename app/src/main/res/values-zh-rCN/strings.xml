@@ -58,7 +58,7 @@
     <string name="dialog_error_message_default">发生错误</string>
     <string name="dialog_error_details_button_default">显示详情</string>
     <string name="dialog_error_details_default">无详情可用</string>
-    <string name="dialog_error_details_write">电台可能出现了重复，或者您可能需要检查您的外部存储。</string>
+    <string name="dialog_error_details_write">这个电台可能出现了重复，或者您可能需要检查您的外部存储。</string>
     <string name="dialog_error_title_fetch_download">下载问题</string>
     <string name="dialog_error_title_fetch_read">读取问题</string>
     <string name="dialog_error_title_fetch_write">写入问题</string>
@@ -112,11 +112,13 @@
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7
     https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
-    <string name="descr_player_sheet_content_copy_icon"></string>
-    <string name="descr_player_sheet_p_stream_url"></string>
-    <string name="toastmessage_copied_to_clipboard_url"></string>
-    <string name="shortcut_last_station_short_label"></string>
-    <string name="shortcut_last_station_long_label"></string>
-    <string name="player_sheet_h2_station_metadata"></string>
-    <string name="descr_list_add_select_stream_dropdown"></string>
+    <string name="descr_player_sheet_content_copy_icon"/>
+    <string name="descr_player_sheet_p_stream_url"/>
+    <string name="toastmessage_copied_to_clipboard_url"/>
+    <string name="shortcut_last_station_short_label"/>
+    <string name="shortcut_last_station_long_label"/>
+    <string name="player_sheet_h2_station_metadata"/>
+    <string name="descr_list_add_select_stream_dropdown"/>
+    <string name="descr_timer_icon"></string>
+    <string name="player_sheet_h2_station_bitrate">位元率</string>
 </resources>
