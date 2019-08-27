@@ -31,8 +31,8 @@
     <string name="player_sheet_h1_details">Détails</string>
     <string name="player_sheet_h2_current_session">Session actuelle</string>
     <string name="player_sheet_h2_station_metadata">En cours de lecture</string>
-    <string name="player_sheet_h2_stream_url">Stream URL</string>
-    <string name="player_sheet_h2_station_mime_type">Type MIME</string>
+    <string name="player_sheet_h2_stream_url">Lien de streaming</string>
+    <string name="player_sheet_h2_station_mime_type">Type de média</string>
     <string name="player_sheet_h2_station_channel_count">Chaîne</string>
     <string name="player_sheet_h2_station_sample_rate">Échantillonnage</string>
     <string name="player_sheet_h2_station_bitrate">Débit</string>
@@ -62,7 +62,7 @@
     <string name="dialog_error_title_fetch_write">Erreur d\'écriture</string>
     <string name="dialog_error_message_fetch_general_external_storage">Stockage externe :</string>
     <string name="dialog_error_message_fetch_general_hint_m3u">Astuce: Transistor peut traiter uniquement les flux MP3, AAC et Ogg/Opus ou les liens se terminant par .m3u ou .pls.</string>
-    <string name="dialog_error_message_fetch_general_playlist_type">Type de fichier :</string>
+    <string name="dialog_error_message_fetch_general_playlist_type">Type de média du fichier :</string>
     <string name="dialog_error_message_fetch_general_stream_type">Type de flux :</string>
     <string name="dialog_error_message_fetch_general_file_content">Contenu du fichier :</string>
     <string name="dialog_error_message_fetch_download">Transistor a tout essayé, mais ne pouvait pas donner sens au lien.</string>
@@ -107,8 +107,8 @@
     <string name="notification_channel_playback_name">Commandes de lecture</string>
     <string name="notification_channel_playback_description">Commandes de lecture, logo de la station et informations de lecture.</string>
     <!-- onboarding -->
-    <string name="onboarding_app_description">Appli Radio</string>
-    <string name="onboarding_app_get_started">Démarrer</string>
+    <string name="onboarding_app_description">Appli radio</string>
+    <string name="onboarding_app_get_started">Commencer</string>
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7
     https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
