@@ -87,8 +87,8 @@
     <string name="toastmessage_copied_to_clipboard_metadata">Metadaten in die Zwischenablage kopiert.</string>
     <string name="toastmessage_station_copied">Sender in die Zwischenablage kopiert.</string>
     <string name="toastmessage_stream_may_not_work">Nicht unterstütztes Audioformat gefunden. Stream kann möglicherweise nicht abgespielt werden.</string>
-    <string name="toastmessage_timer_activated">Sleeptimer aktiviert.</string>
-    <string name="toastmessage_timer_cancelled">Sleeptimer deaktiviert.</string>
+    <string name="toastmessage_timer_activated">Schlaftimer aktiviert.</string>
+    <string name="toastmessage_timer_cancelled">Schlaftimer deaktiviert.</string>
     <string name="toastmessage_timer_duration_increased">Sleeptimer verlängert.</string>
     <string name="toastmessage_timer_start_unable">Bitte zuerst Wiedergabe starten.</string>
     <string name="toastalert_unable_to_connect">Verbindung fehlgeschlagen. Gerät hat keine Verbindung zum Internet oder Stream ist möglicherweise veraltet.</string>
@@ -107,7 +107,7 @@
     <string name="notification_channel_playback_name">Playback-Steuerung</string>
     <string name="notification_channel_playback_description">Playback-Steuerung, Senderlogo und Infos über Programminformationen.</string>
     <!-- onboarding -->
-    <string name="onboarding_app_description">Radio App</string>
+    <string name="onboarding_app_description">Radioapp</string>
     <string name="onboarding_app_get_started">Jetzt starten</string>
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7
