@@ -16,7 +16,7 @@
     <string name="descr_app_icon">Icône d\'application représentant une ancienne radio</string>
     <string name="descr_station_options_button">Options</string>
     <string name="descr_station_name_example">Exemple FM</string>
-    <string name="descr_station_metadata_example">Artiste - Titre</string>
+    <string name="descr_station_metadata_example">Artiste – Titre</string>
     <string name="descr_station_stream_loading">Chargement…</string>
     <string name="descr_playback_button_play">Lecture</string>
     <string name="descr_playback_button_stop">Arrêter</string>
@@ -61,7 +61,7 @@
     <string name="dialog_error_title_fetch_read">Erreur de lecture</string>
     <string name="dialog_error_title_fetch_write">Erreur d\'écriture</string>
     <string name="dialog_error_message_fetch_general_external_storage">Stockage externe :</string>
-    <string name="dialog_error_message_fetch_general_hint_m3u">Astuce: Transistor peut traiter uniquement les flux MP3, AAC et Ogg/Opus ou les liens se terminant par .m3u ou .pls.</string>
+    <string name="dialog_error_message_fetch_general_hint_m3u">Astuce : Transistor peut traiter uniquement les flux MP3, AAC et Ogg/Opus ou les liens se terminant par .m3u ou .pls.</string>
     <string name="dialog_error_message_fetch_general_playlist_type">Type de média du fichier :</string>
     <string name="dialog_error_message_fetch_general_stream_type">Type de flux :</string>
     <string name="dialog_error_message_fetch_general_file_content">Contenu du fichier :</string>
