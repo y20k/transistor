@@ -12,7 +12,7 @@ Help is very welcome. Be it in the form of code, or artwork, or enhancements to 
 **But please** suggest new features or enhancements in advance on the [Issue Tracker](https://github.com/y20k/transistor/issues) before implementing them.
 
 ### Suggested issues to tackle
-[#206](https://github.com/y20k/transistor/issues/206) | [#145](https://github.com/y20k/transistor/issues/145) |  [#136](https://github.com/y20k/transistor/issues/136) | [#126](https://github.com/y20k/transistor/issues/126) | [#121](https://github.com/y20k/transistor/issues/121) | [#89](https://github.com/y20k/transistor/issues/89) 
+[#231](https://github.com/y20k/transistor/issues/231) | [#206](https://github.com/y20k/transistor/issues/206) | [#145](https://github.com/y20k/transistor/issues/145) |  [#136](https://github.com/y20k/transistor/issues/136) | [#126](https://github.com/y20k/transistor/issues/126) | [#121](https://github.com/y20k/transistor/issues/121) | [#89](https://github.com/y20k/transistor/issues/89) 
 
 ### Credit for your contributions
 Contributors - like the main translators for a certain language - are listed as co-autors of this project in [AUTHORS.md](https://github.com/y20k/transistor/blob/master/AUTHORS.md). Bonus: If you are on this list, you are automatically eligable for a free German beverage.
