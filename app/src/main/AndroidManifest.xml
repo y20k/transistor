@@ -17,6 +17,7 @@
     <application
         android:name=".Transistor"
         android:usesCleartextTraffic="true"
+        android:allowAudioPlaybackCapture="true"
         android:allowBackup="true"
         android:supportsRtl="true"
         android:fullBackupContent="@xml/backupscheme"
