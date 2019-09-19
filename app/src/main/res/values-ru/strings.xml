@@ -1,45 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- activities -->
-    <string name="app_name">Транзистор</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
-
+    <string name="app_name">Транзистор</string>
+    <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
     <!-- app shortcuts -->
     <string name="shortcut_last_station_short_label">Последняя станция</string>
     <string name="shortcut_last_station_long_label">Воспроизвести последнюю станцию</string>
     <string name="shortcut_last_station_disabled_message">Ярлык для воспроизведения последней станции отключен.</string>
-
     <!-- menu entries -->
     <string name="menu_icon">Изменить иконку</string>
     <string name="menu_delete">Удалить</string>
     <string name="menu_rename">Переименовать</string>
     <string name="menu_shortcut">Поместить на домашний экран</string>
-
     <!-- descriptions -->
     <string name="descr_app_icon">Значок приложения с изображением старого радио</string>
-    <string name="descr_station_options_button">Показать опции радиостанции</string>
+    <string name="descr_station_options_button">Опции</string>
     <string name="descr_station_name_example">Например FM</string>
     <string name="descr_station_metadata_example">Исполнитель - Название</string>
     <string name="descr_station_stream_loading">Загрузка потока …</string>
     <!--<string name="descr_playback_button_play"></string>-->
     <!--<string name="descr_playback_button_stop"></string>-->
-    <string name="descr_playback_indicator">Индикатор воспроизведения</string>
-    <string name="descr_timer_icon">Иконка таймера сна</string>
+    <string name="descr_playback_indicator">Воспроизводимая станция</string>
+    <string name="descr_timer_icon">Таймер сна</string>
     <!--<string name="descr_player_sheet_button_minimize"></string>-->
-    <string name="descr_player_sheet_content_copy_icon">Иконка копирования контента</string>
+    <string name="descr_player_sheet_content_copy_icon">Копировать</string>
     <string name="descr_player_sheet_p_stream_url">Адрес потока выбранной радиостанции</string>
     <string name="descr_list_add_new">Добавить новую станцию</string>
-    <string name="descr_list_add_select_stream_dropdown">Выпадающего меню со списком потоков</string>
-
+    <string name="descr_list_add_select_stream_dropdown">Выбор потока</string>
     <!-- player -->
-    <string name="player_sheet_h1_details">Details</string>
+    <string name="player_sheet_h1_details">Информация</string>
     <string name="player_sheet_h2_current_session">Текущая сессия</string>
     <string name="player_sheet_h2_station_metadata">Сейчас играет</string>
     <string name="player_sheet_h2_stream_url">Адрес потока</string>
-    <string name="player_sheet_h2_station_mime_type">Тип MIME</string>
+    <string name="player_sheet_h2_station_mime_type">MIME-тип</string>
     <string name="player_sheet_h2_station_channel_count">Число каналов</string>
     <string name="player_sheet_h2_station_sample_rate">Частота дискретизации</string>
     <string name="player_sheet_h2_station_bitrate">Битрейт</string>
-
     <!-- dialogs -->
     <string name="dialog_generic_button_okay">Хорошо</string>
     <string name="dialog_generic_button_cancel">Отмена</string>
@@ -55,7 +51,6 @@
     <string name="dialog_add_station_choose_stream_heading">Найдено несколько потоков</string>
     <string name="dialog_add_station_choose_stream_message">Выберите поток</string>
     <string name="dialog_add_station_choose_stream_button">Выбрать</string>
-
     <!-- error dialogs -->
     <string name="dialog_error_title_default">Ошибка</string>
     <string name="dialog_error_message_default">Произошла ошибка</string>
@@ -75,7 +70,6 @@
     <string name="dialog_error_message_fetch_read">Transistor не может обработать этот файл.</string>
     <string name="dialog_error_message_fetch_read_file_location">Расположение файла:</string>
     <string name="dialog_error_message_fetch_write">Transistor не смог сохранить эту станцию.</string>
-
     <!-- messages -->
     <string name="toastmessage_add_download_started">Скачивается.</string>
     <string name="toastmessage_add_open_file_started">Открытие файла.</string>
@@ -107,19 +101,18 @@
     <string name="toastalert_station_not_found">Невозможно найти станцию.</string>
     <string name="snackbar_request_storage_access">Приложению должно быть предоставлено разрешение на чтение данных на внешнем накопителе.</string>
     <string name="snackbar_message_timer_set">Таймер сна установлен на</string>
-
     <!-- notification -->
     <string name="notification_play">Воспроизвести</string>
     <string name="notification_stop">Остановить</string>
     <string name="notification_channel_playback_name">Управление воспроизведением</string>
     <string name="notification_channel_playback_description">Элементы управления, логотип станции и информация о воспроизведении.</string>
-
     <!-- onboarding -->
     <string name="onboarding_app_description">Радиоприёмник</string>
     <string name="onboarding_app_get_started">Начать</string>
-
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7
     https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
-
+    <string name="descr_playback_button_play">Воспроизведение</string>
+    <string name="descr_playback_button_stop">Стоп</string>
+    <string name="descr_player_sheet_button_minimize">Скрыть информацию о станции</string>
 </resources>
