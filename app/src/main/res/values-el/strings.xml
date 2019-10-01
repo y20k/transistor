@@ -15,7 +15,7 @@
     <string name="menu_shortcut">Τοποθέτηση στην Σπιτική οθόνη</string>
 
     <!-- descriptions -->
-    <string name="descr_app_icon">App icon depicting an old radio</string>
+    <string name="descr_app_icon">Εικονίδιο εφαρμογής που απεικονίζει παλιό ραδιόφωνο</string>
     <string name="descr_station_options_button">Προβολή των επιλογών για το ραδιοσταθμό</string>
     <string name="descr_station_name_example">Παράδειγμα FM</string>
     <string name="descr_station_metadata_example">Καλλιτέχνης - Τίτλος</string>
@@ -74,7 +74,7 @@
     <string name="dialog_error_message_fetch_download_station_url">Ο δεσμός της ροής του σταθμού:</string>
     <string name="dialog_error_message_fetch_read">Το Τρανζιστοράκι έβαλε τα δυνατά του, αλλά δεν μπόρεσε να βγάλει νόημα από το αρχείο.</string>
     <string name="dialog_error_message_fetch_read_file_location">Η τοποθεσία του αρχείου:</string>
-    <string name="dialog_error_message_fetch_write">Το Τρανσιστοράκι έβαλε τα δυνατά του, αλλά δεν μπόρεσε να αποθηκεύσει τον σταθμό.</string>
+    <string name="dialog_error_message_fetch_write">Το Τρανζιστοράκι έβαλε τα δυνατά του, αλλά δεν μπόρεσε να αποθηκεύσει τον σταθμό.</string>
 
     <!-- messages -->
     <string name="toastmessage_add_download_started">Άρχισε η λήψη.</string>
@@ -101,7 +101,7 @@
     <string name="toastalert_rename_unsuccessful">Αδυναμία μετονομασίας του σταθμού. Παρακαλώ, επέλεξε ένα διαφορετικό όνομα.</string>
     <string name="toastalert_delete_successful">Ο σταθμός απομακρύνθηκε.</string>
     <string name="toastalert_no_external_storage">Αδυναμία πρόσβασης στην εξωτερική αποθήκη.</string>
-    <string name="toastalert_no_image_picker">No image picker available. Consider installing a Gallery application.</string>
+    <string name="toastalert_no_image_picker">Δεν υπάρχει διαθέσιμη εφαρμογή επιλογής εικόνας. Παρακαλώ εγκαταστήστε μια εφαρμογή Γκαλερί.</string>
     <string name="toastalert_headphones_unplugged">Τα ακουστικά αποσυνδέθηκαν. Η αναπαραγωγή σταμάτησε.</string>
     <string name="toastalert_permission_denied">Άρνηση δικαιώματος:</string>
     <string name="toastalert_station_not_found">Αδυναμία εύρεσης του σταθμού.</string>
