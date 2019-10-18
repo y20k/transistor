@@ -53,6 +53,8 @@ Slovenian version: [bungabunga](https://github.com/bungabunga) | [weblate versio
 
 Spanish version: [franciscot](https://github.com/franciscot) | [weblate version history](https://hosted.weblate.org/changes/?lang=es&project=transistor)
 
+Thai version [Athicom](https://github.com/athicom) | [weblate version history](https://hosted.weblate.org/changes/?lang=th&project=transistor)
+
 Turkish version [turkceapps](https://hosted.weblate.org/user/turkceapps/) | [weblate version history](https://hosted.weblate.org/changes/?lang=tr&project=transistor)
 
 Ukrainian version: [burunduk](https://github.com/burunduk) | [weblate version history](https://hosted.weblate.org/changes/?lang=uk&project=transistor)
