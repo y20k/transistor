@@ -13,8 +13,8 @@ android {
         applicationId 'org.y20k.transistor'
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 69
-        versionName '3.2.2'
+        versionCode 70
+        versionName '3.2.3'
 
         vectorDrawables.useSupportLibrary = true
         resConfigs "en", "ar", "ca", "cs","de", "el", "es", "eu", "fr", "it", "ja", "kab", "nb-rNO", "nl", "pa", "pl", "pt", "pt-rBR", "ru", "sk", "sl", "sr", "th", "tr", "uk", "zh-rCN"
