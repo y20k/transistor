@@ -50,7 +50,7 @@ dependencies {
 
     implementation "com.google.android.material:material:1.1.0-beta01"
 
-    implementation "com.google.android.exoplayer:exoplayer-core:2.10.5"
-    implementation "com.google.android.exoplayer:exoplayer-hls:2.10.5"
+    implementation "com.google.android.exoplayer:exoplayer-core:2.10.8"
+    implementation "com.google.android.exoplayer:exoplayer-hls:2.10.8"
 
 }
