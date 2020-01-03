@@ -6,20 +6,20 @@
  * This file is part of
  * TRANSISTOR - Radio App for Android
  *
- * Copyright (c) 2015-19 - Y20K.org
+ * Copyright (c) 2015-20 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
  */
 
 package org.y20k.transistor.collection;
 
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.DiffUtil;
+
 import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.TransistorKeys;
 
 import java.util.ArrayList;
-
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.DiffUtil;
 
 
 /**
