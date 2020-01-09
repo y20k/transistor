@@ -6,7 +6,7 @@
  * This file is part of
  * TRANSISTOR - Radio App for Android
  *
- * Copyright (c) 2015-19 - Y20K.org
+ * Copyright (c) 2015-20 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
  */
@@ -184,7 +184,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         if (intent == null) {
             LogHelper.v(LOG_TAG, "Null-Intent received. Stopping self.");
             stopForeground(true); // Remove notification
-            stopSelf();
+            // stopSelf();
         }
 
         // ACTION PLAY
@@ -671,6 +671,8 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             intent.setAction(ACTION_PLAYBACK_STATE_CHANGED);
             intent.putExtra(EXTRA_ERROR_OCCURRED, true);
             LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+            // unregister headphone listener
+            unregisterHeadphoneUnplugReceiver();
             // stop player service
             stopSelf();
             return;
@@ -717,12 +719,7 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         LogHelper.v(LOG_TAG, "LocalBroadcast: ACTION_PLAYBACK_STATE_CHANGED -> PLAYBACK_STATE_STOPPED");
 
         // unregister headphone listener
-        try {
-            this.unregisterReceiver(mHeadphoneUnplugReceiver);
-        } catch (Exception e) {
-            LogHelper.v(LOG_TAG, "Unable to unregister HeadphoneUnplugReceiver");
-            // e.printStackTrace();
-        }
+        unregisterHeadphoneUnplugReceiver();
     }
 
 
@@ -799,6 +796,17 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         if (!mPlayerInitLock) {
             InitializePlayerHelper initializePlayerHelper = new InitializePlayerHelper();
             initializePlayerHelper.execute();
+        }
+    }
+
+
+    /* unregister headphone listener */
+    private void unregisterHeadphoneUnplugReceiver() {
+        try {
+            this.unregisterReceiver(mHeadphoneUnplugReceiver);
+        } catch (Exception e) {
+            LogHelper.v(LOG_TAG, "Unable to unregister HeadphoneUnplugReceiver");
+            // e.printStackTrace();
         }
     }
 

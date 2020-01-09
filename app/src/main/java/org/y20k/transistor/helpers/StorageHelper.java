@@ -6,7 +6,7 @@
  * This file is part of
  * TRANSISTOR - Radio App for Android
  *
- * Copyright (c) 2015-19 - Y20K.org
+ * Copyright (c) 2015-20 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
  */
@@ -17,9 +17,9 @@ package org.y20k.transistor.helpers;
 import android.content.Context;
 import android.os.Environment;
 
-import java.io.File;
-
 import androidx.core.os.EnvironmentCompat;
+
+import java.io.File;
 
 
 /**

@@ -6,7 +6,7 @@
  * This file is part of
  * TRANSISTOR - Radio App for Android
  *
- * Copyright (c) 2015-19 - Y20K.org
+ * Copyright (c) 2015-20 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
  */
@@ -22,9 +22,9 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Toast;
 
-import org.y20k.transistor.R;
-
 import androidx.appcompat.app.AppCompatDelegate;
+
+import org.y20k.transistor.R;
 
 
 /**

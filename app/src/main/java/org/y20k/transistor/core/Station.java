@@ -6,7 +6,7 @@
  * This file is part of
  * TRANSISTOR - Radio App for Android
  *
- * Copyright (c) 2015-19 - Y20K.org
+ * Copyright (c) 2015-20 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
  */
@@ -23,6 +23,8 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.media.MediaMetadataCompat;
+
+import androidx.annotation.NonNull;
 
 import org.y20k.transistor.helpers.LogHelper;
 import org.y20k.transistor.helpers.TransistorKeys;
@@ -46,8 +48,6 @@ import java.util.Locale;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import androidx.annotation.NonNull;
 
 import static android.support.v4.media.MediaMetadataCompat.METADATA_KEY_MEDIA_URI;
 import static android.support.v4.media.MediaMetadataCompat.METADATA_KEY_TITLE;
@@ -481,7 +481,7 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
                         LogHelper.w(LOG_TAG, "Special case \"application/octet-stream\": use file name to set correct content type.");
                         String headerFieldContentDisposition = connection.getHeaderField("Content-Disposition");
                         if (headerFieldContentDisposition != null) {
-                            String fileName = headerFieldContentDisposition.split("=")[1]; //getting value after '='
+                            String fileName = headerFieldContentDisposition.split("=")[1].replace("\"",""); //getting value after '=' & stripping any "s
                             if (fileName.endsWith(FILE_EXTENSION_PLS)) {
                                 contentType.type = CONTENT_TYPES_PLS[0];
                                 LogHelper.i(LOG_TAG, "Found .pls playlist file: " +  fileName);
