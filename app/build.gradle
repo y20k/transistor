@@ -17,7 +17,7 @@ android {
         versionName '3.2.3'
 
         vectorDrawables.useSupportLibrary = true
-        resConfigs "en", "ar", "ca", "cs","de", "el", "es", "eu", "fr", "it", "ja", "kab", "nb-rNO", "nl", "pa", "pl", "pt", "pt-rBR", "ru", "sk", "sl", "sr", "th", "tr", "uk", "zh-rCN"
+        resConfigs "en", "ar", "ca", "cs","de", "el", "es", "eu", "fr", "id", "it", "ja", "kab", "nb-rNO", "nl", "pa", "pl", "pt", "pt-rBR", "ru", "sk", "sl", "sr", "th", "tr", "uk", "zh-rCN"
     }
 
     buildTypes {
@@ -45,8 +45,8 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:1.1.3"
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
     implementation "androidx.media:media:1.1.0"
-    implementation "androidx.lifecycle:lifecycle-runtime:2.1.0"
-    implementation "androidx.lifecycle:lifecycle-extensions:2.1.0"
+    implementation "androidx.lifecycle:lifecycle-runtime:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
 
     implementation "com.google.android.material:material:1.1.0-beta01"
 

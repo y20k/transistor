@@ -27,6 +27,8 @@ German version: [y20k](https://github.com/y20k) | [weblate version history](http
 
 Greek version: [nikoss](https://github.com/nikoss) | [weblate version history](https://hosted.weblate.org/changes/?lang=el&project=transistor)
 
+Indonesian version: [zmni](https://github.com/zmni) | [weblate version history](https://hosted.weblate.org/changes/?lang=id&project=transistor)
+
 Italian version: [pjammo](https://github.com/pjammo) | [weblate version history](https://hosted.weblate.org/changes/?lang=it&project=transistor)
 
 Japanese version: [naofum](https://github.com/naofum) | [weblate version history](https://hosted.weblate.org/changes/?lang=ja&project=transistor)

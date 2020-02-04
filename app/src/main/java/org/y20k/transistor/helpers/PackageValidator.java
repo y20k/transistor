@@ -65,9 +65,7 @@ public class PackageValidator {
                     String packageName = parser.getAttributeValue(null, "package");
                     boolean isRelease = parser.getAttributeBooleanValue(null, "release", false);
                     String certificate = parser.nextText().replaceAll("\\s|\\n", "");
-
                     CallerInfo info = new CallerInfo(name, packageName, isRelease);
-
                     ArrayList<CallerInfo> infos = validCertificates.get(certificate);
                     if (infos == null) {
                         infos = new ArrayList<>();
