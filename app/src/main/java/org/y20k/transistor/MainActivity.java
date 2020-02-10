@@ -13,6 +13,9 @@
 
 package org.y20k.transistor;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -21,13 +24,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
 import org.y20k.transistor.collection.CollectionViewModel;
 import org.y20k.transistor.core.Station;
@@ -39,12 +35,20 @@ import org.y20k.transistor.helpers.ShortcutHelper;
 import org.y20k.transistor.helpers.StationListHelper;
 import org.y20k.transistor.helpers.StorageHelper;
 import org.y20k.transistor.helpers.TransistorKeys;
+import org.y20k.transistor.widgets.WidgetBase;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 
 /**
@@ -398,6 +402,9 @@ public final class MainActivity extends AppCompatActivity implements TransistorK
             public void onChanged(@Nullable ArrayList<Station> newStationList) {
                 // update station list
                 mStationList = newStationList;
+                AppWidgetManager awm = (AppWidgetManager)getSystemService(Context.APPWIDGET_SERVICE);
+                awm.notifyAppWidgetViewDataChanged(awm.getAppWidgetIds(new ComponentName(MainActivity.this, WidgetBase.class)),
+                                                   R.id.widgetGrid);
             }
         };
     }

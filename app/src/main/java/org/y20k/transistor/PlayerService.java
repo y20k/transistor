@@ -16,7 +16,9 @@ package org.y20k.transistor;
 
 import android.annotation.SuppressLint;
 import android.app.UiModeManager;
+import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -40,13 +42,6 @@ import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.text.TextUtils;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.media.AudioAttributesCompat;
-import androidx.media.MediaBrowserServiceCompat;
-import androidx.media.session.MediaButtonReceiver;
 
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.DefaultLoadControl;
@@ -88,6 +83,7 @@ import org.y20k.transistor.helpers.NotificationHelper;
 import org.y20k.transistor.helpers.PackageValidator;
 import org.y20k.transistor.helpers.StationListProvider;
 import org.y20k.transistor.helpers.TransistorKeys;
+import org.y20k.transistor.widgets.WidgetBase;
 
 import java.io.IOException;
 import java.net.URL;
@@ -95,6 +91,13 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.media.AudioAttributesCompat;
+import androidx.media.MediaBrowserServiceCompat;
+import androidx.media.session.MediaButtonReceiver;
 
 import static com.google.android.exoplayer2.ExoPlaybackException.TYPE_RENDERER;
 import static com.google.android.exoplayer2.ExoPlaybackException.TYPE_SOURCE;
@@ -110,7 +113,8 @@ import static org.y20k.transistor.helpers.StationListProvider.MEDIA_ID_ROOT;
 /**
  * PlayerService class
  */
-public final class PlayerService extends MediaBrowserServiceCompat implements TransistorKeys, AudioFocusAwarePlayer, Player.EventListener, MetadataOutput, AnalyticsListener {
+public final class PlayerService extends MediaBrowserServiceCompat implements TransistorKeys, AudioFocusAwarePlayer, Player.EventListener, MetadataOutput,
+        AnalyticsListener {
 
     /* Define log tag */
     private static final String LOG_TAG = PlayerService.class.getSimpleName();
@@ -176,10 +180,8 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         createPlayer();
     }
 
-
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
         // checking for empty intent
         if (intent == null) {
             LogHelper.v(LOG_TAG, "Null-Intent received. Stopping self.");
@@ -233,6 +235,8 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             }
         }
 
+        updateWidgets();
+
         // listen for media button
         MediaButtonReceiver.handleIntent(mSession, intent);
 
@@ -240,6 +244,11 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
         return START_STICKY;
     }
 
+    private void updateWidgets() {
+        AppWidgetManager awm = (AppWidgetManager)getSystemService(Context.APPWIDGET_SERVICE);
+        int [] ids = awm.getAppWidgetIds(new ComponentName(PlayerService.this, WidgetBase.class));
+        awm.notifyAppWidgetViewDataChanged(ids, R.id.widgetGrid);
+    }
 
 
     @Override

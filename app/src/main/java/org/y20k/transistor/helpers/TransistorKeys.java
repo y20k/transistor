@@ -31,11 +31,13 @@ public interface TransistorKeys {
     String ACTION_TIMER_RUNNING = "org.y20k.transistor.action.TIMER_RUNNING";
     String ACTION_TIMER_START = "org.y20k.transistor.action.TIMER_START";
     String ACTION_TIMER_STOP = "org.y20k.transistor.action.TIMER_STOP";
+    String ACTION_WIDGET = "org.y20k.transistor.action.WIDGET";
 
     /* EXTRAS */
     String EXTRA_PLAYBACK_STATE_PREVIOUS_STATION = "PLAYBACK_STATE_PREVIOUS_STATION";
     String EXTRA_PLAYBACK_STATE = "PLAYBACK_STATE";
     String EXTRA_STATION = "STATION";
+    String EXTRA_STATION_ID = "STATION_ID";
     String EXTRA_LAST_STATION = "LAST_STATION";
     String EXTRA_STREAM_URI = "STREAM_URI";
     String EXTRA_TIMER_DURATION = "TIMER_DURATION";

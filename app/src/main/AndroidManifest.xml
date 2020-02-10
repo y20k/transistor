@@ -10,7 +10,6 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
     <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
-
     <!-- DANGEROUS PERMISSIONS, must request -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -24,19 +23,64 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/TransistorAppTheme">
-
         <!-- ANDROID AUTO SUPPORT -->
         <!--  https://developer.android.com/training/auto/audio/ -->
         <meta-data android:name="com.google.android.gms.car.application"
             android:resource="@xml/automotive_app_desc"/>
         <meta-data android:name="com.google.android.gms.car.notification.SmallIcon"
             android:resource="@mipmap/ic_launcher" />
-
         <!-- MEDIA BUTTON RECEIVER -->
         <receiver android:name="androidx.media.session.MediaButtonReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.MEDIA_BUTTON" />
             </intent-filter>
+        </receiver>
+
+        <!-- WIDGETS -->
+        <receiver android:name=".widgets.Widget2C">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_2_info" />
+        </receiver>
+        <receiver android:name=".widgets.Widget3C">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_3_info" />
+        </receiver>
+        <receiver android:name=".widgets.Widget4C">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_4_info" />
+        </receiver>
+        <receiver android:name=".widgets.Widget5C">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_5_info" />
+        </receiver>
+        <receiver android:name=".widgets.Widget6C">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_6_info" />
         </receiver>
 
         <!-- MAIN ACTIVITY -->
@@ -110,9 +154,7 @@
             <!-- App Shortcuts -->
             <meta-data android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
-
         </activity>
-
         <!-- PLAYER SERVICE -->
         <!-- android:exported="true" if used with Android Auto -->
         <service
@@ -132,12 +174,15 @@
                 <action android:name="android.intent.action.MEDIA_BUTTON" />
             </intent-filter>
         </service>
-
         <!-- SLEEP TIMER SERVICE -->
         <service
             android:name=".helpers.SleepTimerService">
         </service>
 
+        <!-- GridView Adapter for widgets -->
+        <service android:name=".widgets.WidgetGridService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"
+            android:exported="false"/>
     </application>
 
 </manifest>
