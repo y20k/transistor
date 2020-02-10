@@ -17,7 +17,7 @@ android {
         versionName '3.2.3'
 
         vectorDrawables.useSupportLibrary = true
-        resConfigs "en", "ar", "ca", "cs","de", "el", "es", "eu", "fr", "id", "it", "ja", "kab", "nb-rNO", "nl", "pa", "pl", "pt", "pt-rBR", "ru", "sk", "sl", "sr", "th", "tr", "uk", "zh-rCN"
+        resConfigs "en", "ar", "ca", "cs","de", "el", "es", "eu", "fr", "id", "in", "it", "ja", "kab", "nb-rNO", "nl", "pa", "pl", "pt", "pt-rBR", "ru", "sk", "sl", "sr", "th", "tr", "uk", "zh-rCN"
     }
 
     buildTypes {
@@ -54,3 +54,27 @@ dependencies {
     implementation "com.google.android.exoplayer:exoplayer-hls:2.10.8"
 
 }
+
+
+// Support legacy language codes
+// https://developer.android.com/reference/java/util/Locale#legacy-language-codes
+// Credit: https://github.com/TeamAmaze/AmazeFileManager/blob/541c98fc77a9415bcd4a1279b85c6c2d38f669c1/app/build.gradle#L212
+
+task supportLegacyLanguageCodes
+
+[['id', 'in'], ['yi', 'ji'], ['he', 'iw']].forEach { sourceCode, destinationCode ->
+    def copyTask = tasks.create('copyStrings' + sourceCode + 'Into' + destinationCode, Copy) {
+        description('copying values-' + sourceCode + ' strings into values-' + destinationCode)
+        from('src/main/res/values-' + sourceCode)
+        into('src/main/res/values-' + destinationCode)
+        include('strings.xml')
+    }
+    supportLegacyLanguageCodes.dependsOn copyTask
+}
+
+project.afterEvaluate {
+    preBuild.dependsOn supportLegacyLanguageCodes
+}
+
+clean.dependsOn supportLegacyLanguageCodes
+clean.mustRunAfter supportLegacyLanguageCodes
