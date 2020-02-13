@@ -5,6 +5,7 @@ import android.util.Log;
 import android.widget.RemoteViewsService;
 
 public class WidgetGridService extends RemoteViewsService {
+
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
         Log.i("TWGS", "init views factory");

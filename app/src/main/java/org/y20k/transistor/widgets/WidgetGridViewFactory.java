@@ -3,6 +3,8 @@ package org.y20k.transistor.widgets;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
@@ -20,10 +22,12 @@ import java.util.List;
 import java.util.Map;
 
 public class WidgetGridViewFactory implements RemoteViewsService.RemoteViewsFactory {
+    public static final String COLUMNS = "COLUMNS";
     private List<Station> m_stations = new ArrayList<>();
     private Context m_context;
     private int m_appWidgetId;
     private int m_itemSize;
+    private final int m_columns;
     private Map<String,Long> m_stationsIds = new HashMap<>();
 
     private long idProvider = System.currentTimeMillis();
@@ -31,19 +35,37 @@ public class WidgetGridViewFactory implements RemoteViewsService.RemoteViewsFact
     WidgetGridViewFactory(Context context, Intent intent) {
         m_context = context;
         m_appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
+        m_columns = intent.getIntExtra(COLUMNS, -1);
+        initCellSize();
+    }
+
+    private void initCellSize() {
+        m_itemSize = m_context.getResources().getDisplayMetrics().widthPixels;
+        Bundle options = AppWidgetManager.getInstance(m_context).getAppWidgetOptions(m_appWidgetId);
+        if(options != null) {
+            int maxW = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH);
+            if(maxW > 0)
+                m_itemSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, maxW, m_context.getResources().getDisplayMetrics());
+        }
+        if(m_columns > 0)
+            m_itemSize /= m_columns;
+
+        LogHelper.i("TWV", "Cell size : " + m_itemSize);
     }
 
     @Override
     public void onCreate() {
         m_stations = StationListHelper.loadStationListFromStorage(this.m_context);
         LogHelper.d("TWV", "Stations count : " + m_stations.size());
-        m_itemSize = 192; // todo
+        initCellSize();
     }
 
     @Override
     public void onDataSetChanged() {
+        initCellSize();
         LogHelper.d("TWV", "updating widget content");
         m_stations = StationListHelper.loadStationListFromStorage(this.m_context);
+        this.m_stationsIds.clear();
     }
 
     @Override

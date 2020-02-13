@@ -6,6 +6,7 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.RemoteViews;
 
@@ -22,7 +23,9 @@ import java.util.List;
 /**
  * Implementation of App Widget functionality.
  */
-public class WidgetBase extends AppWidgetProvider {
+public abstract class WidgetBase extends AppWidgetProvider {
+
+    protected abstract int getColumns();
 
     void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
         Log.i("TWB", "updateAppWidget : " + appWidgetId);
@@ -32,6 +35,7 @@ public class WidgetBase extends AppWidgetProvider {
 
         Intent remoteAdapterIntent = new Intent(context, WidgetGridService.class);
         remoteAdapterIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+        remoteAdapterIntent.putExtra(WidgetGridViewFactory.COLUMNS, getColumns());
         remoteAdapterIntent.setData(Uri.parse(remoteAdapterIntent.toUri(Intent.URI_INTENT_SCHEME)));
         rv.setRemoteAdapter(R.id.widgetGrid, remoteAdapterIntent);
 
@@ -62,6 +66,14 @@ public class WidgetBase extends AppWidgetProvider {
         }
 
         super.onUpdate(context, appWidgetManager, appWidgetIds);
+    }
+
+    @Override
+    public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
+        Log.i("TWB", "onAppWidgetOptionsChanged");
+        super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
+
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.widgetGrid);
     }
 
     @Override
