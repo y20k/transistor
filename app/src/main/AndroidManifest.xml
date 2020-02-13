@@ -37,7 +37,8 @@
         </receiver>
 
         <!-- WIDGETS -->
-        <receiver android:name=".widgets.Widget2C">
+        <receiver android:name=".widgets.Widget2C"
+            android:label="@string/widget_label_2C">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -46,7 +47,8 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_2_info" />
         </receiver>
-        <receiver android:name=".widgets.Widget3C">
+        <receiver android:name=".widgets.Widget3C"
+            android:label="@string/widget_label_3C">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -55,7 +57,8 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_3_info" />
         </receiver>
-        <receiver android:name=".widgets.Widget4C">
+        <receiver android:name=".widgets.Widget4C"
+            android:label="@string/widget_label_4C">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -64,7 +67,8 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_4_info" />
         </receiver>
-        <receiver android:name=".widgets.Widget5C">
+        <receiver android:name=".widgets.Widget5C"
+            android:label="@string/widget_label_5C">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -73,7 +77,8 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_5_info" />
         </receiver>
-        <receiver android:name=".widgets.Widget6C">
+        <receiver android:name=".widgets.Widget6C"
+            android:label="@string/widget_label_6C">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
