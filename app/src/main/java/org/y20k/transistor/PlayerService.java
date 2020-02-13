@@ -43,6 +43,13 @@ import android.support.v4.media.session.PlaybackStateCompat;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.media.AudioAttributesCompat;
+import androidx.media.MediaBrowserServiceCompat;
+import androidx.media.session.MediaButtonReceiver;
+
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultLoadControl.Builder;
@@ -83,6 +90,11 @@ import org.y20k.transistor.helpers.NotificationHelper;
 import org.y20k.transistor.helpers.PackageValidator;
 import org.y20k.transistor.helpers.StationListProvider;
 import org.y20k.transistor.helpers.TransistorKeys;
+import org.y20k.transistor.widgets.Widget2C;
+import org.y20k.transistor.widgets.Widget3C;
+import org.y20k.transistor.widgets.Widget4C;
+import org.y20k.transistor.widgets.Widget5C;
+import org.y20k.transistor.widgets.Widget6C;
 import org.y20k.transistor.widgets.WidgetBase;
 
 import java.io.IOException;
@@ -91,13 +103,6 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.media.AudioAttributesCompat;
-import androidx.media.MediaBrowserServiceCompat;
-import androidx.media.session.MediaButtonReceiver;
 
 import static com.google.android.exoplayer2.ExoPlaybackException.TYPE_RENDERER;
 import static com.google.android.exoplayer2.ExoPlaybackException.TYPE_SOURCE;
@@ -246,8 +251,10 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
     private void updateWidgets() {
         AppWidgetManager awm = (AppWidgetManager)getSystemService(Context.APPWIDGET_SERVICE);
-        int [] ids = awm.getAppWidgetIds(new ComponentName(PlayerService.this, WidgetBase.class));
-        awm.notifyAppWidgetViewDataChanged(ids, R.id.widgetGrid);
+        for(Class cl : new Class[] {Widget2C.class, Widget3C.class, Widget4C.class, Widget5C.class, Widget6C.class}) {
+            int[] ids = awm.getAppWidgetIds(new ComponentName(PlayerService.this, cl));
+            awm.notifyAppWidgetViewDataChanged(ids, R.id.widgetGrid);
+        }
     }
 
 

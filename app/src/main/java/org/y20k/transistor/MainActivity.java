@@ -35,7 +35,11 @@ import org.y20k.transistor.helpers.ShortcutHelper;
 import org.y20k.transistor.helpers.StationListHelper;
 import org.y20k.transistor.helpers.StorageHelper;
 import org.y20k.transistor.helpers.TransistorKeys;
-import org.y20k.transistor.widgets.WidgetBase;
+import org.y20k.transistor.widgets.Widget2C;
+import org.y20k.transistor.widgets.Widget3C;
+import org.y20k.transistor.widgets.Widget4C;
+import org.y20k.transistor.widgets.Widget5C;
+import org.y20k.transistor.widgets.Widget6C;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -402,13 +406,18 @@ public final class MainActivity extends AppCompatActivity implements TransistorK
             public void onChanged(@Nullable ArrayList<Station> newStationList) {
                 // update station list
                 mStationList = newStationList;
-                AppWidgetManager awm = (AppWidgetManager)getSystemService(Context.APPWIDGET_SERVICE);
-                awm.notifyAppWidgetViewDataChanged(awm.getAppWidgetIds(new ComponentName(MainActivity.this, WidgetBase.class)),
-                                                   R.id.widgetGrid);
+                updateWidgets();
             }
         };
     }
 
+    private void updateWidgets() {
+        AppWidgetManager awm = (AppWidgetManager)getSystemService(Context.APPWIDGET_SERVICE);
+        for(Class cl : new Class[] {Widget2C.class, Widget3C.class, Widget4C.class, Widget5C.class, Widget6C.class}) {
+            int[] ids = awm.getAppWidgetIds(new ComponentName(MainActivity.this, cl));
+            awm.notifyAppWidgetViewDataChanged(ids, R.id.widgetGrid);
+        }
+    }
 
     /* Checks state of External Storage */
     private void checkExternalStorageState() {

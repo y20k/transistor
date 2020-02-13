@@ -36,6 +36,9 @@
             </intent-filter>
         </receiver>
 
+        <receiver android:name=".PlayerServiceGateway">
+        </receiver>
+
         <!-- WIDGETS -->
         <receiver android:name=".widgets.Widget2C"
             android:label="@string/widget_label_2C">

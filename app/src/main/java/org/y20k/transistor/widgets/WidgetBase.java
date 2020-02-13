@@ -12,6 +12,7 @@ import android.widget.RemoteViews;
 
 import org.y20k.transistor.MainActivity;
 import org.y20k.transistor.PlayerService;
+import org.y20k.transistor.PlayerServiceGateway;
 import org.y20k.transistor.R;
 import org.y20k.transistor.core.Station;
 import org.y20k.transistor.helpers.StationListHelper;
@@ -41,7 +42,7 @@ public abstract class WidgetBase extends AppWidgetProvider {
 
         rv.setEmptyView(R.id.widgetGrid, R.id.empty_view);
 
-        Intent playIntent = new Intent(context, WidgetBase.class);
+        Intent playIntent = new Intent(context, PlayerServiceGateway.class);
         playIntent.setAction(TransistorKeys.ACTION_WIDGET);
         playIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
         playIntent.setData(Uri.parse(playIntent.toUri(Intent.URI_INTENT_SCHEME)));
@@ -84,40 +85,6 @@ public abstract class WidgetBase extends AppWidgetProvider {
     @Override
     public void onDisabled(Context context) {
         super.onDisabled(context);
-    }
-
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        super.onReceive(context, intent);
-        if(intent.getAction().equals(TransistorKeys.ACTION_WIDGET)) {
-            String id = intent.getStringExtra(TransistorKeys.EXTRA_STATION_ID);
-            if(id == null) {
-                Log.i("TWB", "no station ID");
-                return;
-            }
-            List<Station> stationsList = StationListHelper.loadStationListFromStorage(context);
-            Station station = null;
-            for(Station s : stationsList) {
-                if(s.getStationId().equals(id)) {
-                    station = s;
-                    break;
-                }
-            }
-            Intent playPauseIntent = new Intent(context, PlayerService.class);
-            if(station.getPlaybackState() == TransistorKeys.PLAYBACK_STATE_STOPPED)
-                playPauseIntent.setAction(TransistorKeys.ACTION_PLAY);
-            else
-                playPauseIntent.setAction(TransistorKeys.ACTION_STOP);
-            playPauseIntent.putExtra(TransistorKeys.EXTRA_STATION, station);
-
-            try {
-                PendingIntent.getService(context, 0, playPauseIntent, PendingIntent.FLAG_UPDATE_CURRENT).send();
-                //context.startService(playPauseIntent);
-            }
-            catch (Throwable t) {
-                t.printStackTrace();
-            }
-        }
     }
 }
 
