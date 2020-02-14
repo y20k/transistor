@@ -31,6 +31,7 @@ import android.media.audiofx.AudioEffect;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.RemoteException;
@@ -42,13 +43,6 @@ import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.text.TextUtils;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.media.AudioAttributesCompat;
-import androidx.media.MediaBrowserServiceCompat;
-import androidx.media.session.MediaButtonReceiver;
 
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.DefaultLoadControl;
@@ -90,12 +84,12 @@ import org.y20k.transistor.helpers.NotificationHelper;
 import org.y20k.transistor.helpers.PackageValidator;
 import org.y20k.transistor.helpers.StationListProvider;
 import org.y20k.transistor.helpers.TransistorKeys;
+import org.y20k.transistor.widgets.Widget1C;
 import org.y20k.transistor.widgets.Widget2C;
 import org.y20k.transistor.widgets.Widget3C;
 import org.y20k.transistor.widgets.Widget4C;
 import org.y20k.transistor.widgets.Widget5C;
 import org.y20k.transistor.widgets.Widget6C;
-import org.y20k.transistor.widgets.WidgetBase;
 
 import java.io.IOException;
 import java.net.URL;
@@ -103,6 +97,13 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.media.AudioAttributesCompat;
+import androidx.media.MediaBrowserServiceCompat;
+import androidx.media.session.MediaButtonReceiver;
 
 import static com.google.android.exoplayer2.ExoPlaybackException.TYPE_RENDERER;
 import static com.google.android.exoplayer2.ExoPlaybackException.TYPE_SOURCE;
@@ -250,11 +251,22 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
     }
 
     private void updateWidgets() {
-        AppWidgetManager awm = (AppWidgetManager)getSystemService(Context.APPWIDGET_SERVICE);
-        for(Class cl : new Class[] {Widget2C.class, Widget3C.class, Widget4C.class, Widget5C.class, Widget6C.class}) {
-            int[] ids = awm.getAppWidgetIds(new ComponentName(PlayerService.this, cl));
-            awm.notifyAppWidgetViewDataChanged(ids, R.id.widgetGrid);
-        }
+        // delayed to be sure content is stored
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                AppWidgetManager awm = (AppWidgetManager)getSystemService(Context.APPWIDGET_SERVICE);
+                for(Class cl : new Class[] {Widget2C.class, Widget3C.class, Widget4C.class, Widget5C.class, Widget6C.class}) {
+                    int[] ids = awm.getAppWidgetIds(new ComponentName(PlayerService.this, cl));
+                    awm.notifyAppWidgetViewDataChanged(ids, R.id.widgetGrid);
+                }
+                {
+                    int[] ids = awm.getAppWidgetIds(new ComponentName(PlayerService.this, Widget1C.class));
+                    for(int id : ids)
+                        Widget1C.updateAppWidget(PlayerService.this, awm, id);
+                }
+            }
+        }, 200);
     }
 
 

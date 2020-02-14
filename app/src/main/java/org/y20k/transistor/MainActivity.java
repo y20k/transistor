@@ -22,6 +22,7 @@ import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Toast;
 
@@ -35,6 +36,7 @@ import org.y20k.transistor.helpers.ShortcutHelper;
 import org.y20k.transistor.helpers.StationListHelper;
 import org.y20k.transistor.helpers.StorageHelper;
 import org.y20k.transistor.helpers.TransistorKeys;
+import org.y20k.transistor.widgets.Widget1C;
 import org.y20k.transistor.widgets.Widget2C;
 import org.y20k.transistor.widgets.Widget3C;
 import org.y20k.transistor.widgets.Widget4C;
@@ -412,11 +414,22 @@ public final class MainActivity extends AppCompatActivity implements TransistorK
     }
 
     private void updateWidgets() {
-        AppWidgetManager awm = (AppWidgetManager)getSystemService(Context.APPWIDGET_SERVICE);
-        for(Class cl : new Class[] {Widget2C.class, Widget3C.class, Widget4C.class, Widget5C.class, Widget6C.class}) {
-            int[] ids = awm.getAppWidgetIds(new ComponentName(MainActivity.this, cl));
-            awm.notifyAppWidgetViewDataChanged(ids, R.id.widgetGrid);
-        }
+        // delayed to be sure content is stored
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                AppWidgetManager awm = (AppWidgetManager) getSystemService(Context.APPWIDGET_SERVICE);
+                for (Class cl : new Class[]{Widget2C.class, Widget3C.class, Widget4C.class, Widget5C.class, Widget6C.class}) {
+                    int[] ids = awm.getAppWidgetIds(new ComponentName(MainActivity.this, cl));
+                    awm.notifyAppWidgetViewDataChanged(ids, R.id.widgetGrid);
+                }
+                {
+                    int[] ids = awm.getAppWidgetIds(new ComponentName(MainActivity.this, Widget1C.class));
+                    for (int id : ids)
+                        Widget1C.updateAppWidget(MainActivity.this, awm, id);
+                }
+            }
+        }, 200);
     }
 
     /* Checks state of External Storage */

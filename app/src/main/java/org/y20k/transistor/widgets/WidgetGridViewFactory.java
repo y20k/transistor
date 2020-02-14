@@ -3,6 +3,7 @@ package org.y20k.transistor.widgets;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
@@ -29,6 +30,7 @@ public class WidgetGridViewFactory implements RemoteViewsService.RemoteViewsFact
     private int m_itemSize;
     private final int m_columns;
     private Map<String,Long> m_stationsIds = new HashMap<>();
+    private Map<String,Bitmap> m_stationsBitmaps = new HashMap<>();
 
     private long idProvider = System.currentTimeMillis();
 
@@ -40,17 +42,21 @@ public class WidgetGridViewFactory implements RemoteViewsService.RemoteViewsFact
     }
 
     private void initCellSize() {
-        m_itemSize = m_context.getResources().getDisplayMetrics().widthPixels;
+        int itemSize = m_context.getResources().getDisplayMetrics().widthPixels;
         Bundle options = AppWidgetManager.getInstance(m_context).getAppWidgetOptions(m_appWidgetId);
         if(options != null) {
             int maxW = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH);
             if(maxW > 0)
-                m_itemSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, maxW, m_context.getResources().getDisplayMetrics());
+                itemSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, maxW, m_context.getResources().getDisplayMetrics());
         }
         if(m_columns > 0)
-            m_itemSize /= m_columns;
+            itemSize /= m_columns;
 
         LogHelper.i("TWV", "Cell size : " + m_itemSize);
+        if(itemSize != m_itemSize) {
+            m_itemSize = itemSize;
+            m_stationsBitmaps.clear();
+        }
     }
 
     @Override
@@ -63,9 +69,8 @@ public class WidgetGridViewFactory implements RemoteViewsService.RemoteViewsFact
     @Override
     public void onDataSetChanged() {
         initCellSize();
-        LogHelper.d("TWV", "updating widget content");
+        LogHelper.d("TWV", "***********updating widget content");
         m_stations = StationListHelper.loadStationListFromStorage(this.m_context);
-        this.m_stationsIds.clear();
     }
 
     @Override
@@ -82,16 +87,24 @@ public class WidgetGridViewFactory implements RemoteViewsService.RemoteViewsFact
     public RemoteViews getViewAt(int i) {
         Station station = this.m_stations.get(i);
         LogHelper.d("TWV",
-                    "Create view for station : [" + i + "]" + station.getStationName() + "(" + station.getStationId() + ")");
+                    "Create view for station : [" + i + "]" + station.getStationName() + "(" + station.getStationId() + ") / " + station.getStationImageFile().getAbsolutePath());
         boolean playing = station.getPlaybackState() != TransistorKeys.PLAYBACK_STATE_STOPPED;
         RemoteViews rv = new RemoteViews(this.m_context.getPackageName(), R.layout.widget_item);
+
         ImageHelper imageHelper = new ImageHelper(station, this.m_context);
-        rv.setImageViewBitmap(R.id.widgetItemStationIcon, imageHelper.createSquareImage(this.m_itemSize, false));
+        Bitmap bitmap = m_stationsBitmaps.get(station.getStationId());
+        if(bitmap == null) {
+            bitmap = imageHelper.createSquareImage(this.m_itemSize, false);
+            m_stationsBitmaps.put(station.getStationId(), bitmap);
+        }
+        rv.setImageViewBitmap(R.id.widgetItemStationIcon, bitmap);
         rv.setViewVisibility(R.id.widgetItemPlaying, playing ? View.VISIBLE : View.GONE);
+        rv.setTextViewText(R.id.widgetItemTitle, station.getStationName());
 
         Intent fillInIntent = new Intent();
         fillInIntent.putExtra(TransistorKeys.EXTRA_STATION_ID, station.getStationId());
         rv.setOnClickFillInIntent(R.id.widgetItemStationIcon, fillInIntent);
+
         return rv;
     }
 
@@ -102,7 +115,7 @@ public class WidgetGridViewFactory implements RemoteViewsService.RemoteViewsFact
 
     @Override
     public int getViewTypeCount() {
-        return 2;
+        return 1;
     }
 
     @Override

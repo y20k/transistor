@@ -7,19 +7,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import org.y20k.transistor.MainActivity;
-import org.y20k.transistor.PlayerService;
 import org.y20k.transistor.PlayerServiceGateway;
 import org.y20k.transistor.R;
-import org.y20k.transistor.core.Station;
-import org.y20k.transistor.helpers.StationListHelper;
+import org.y20k.transistor.helpers.LogHelper;
 import org.y20k.transistor.helpers.TransistorKeys;
 
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Implementation of App Widget functionality.
@@ -29,7 +25,7 @@ public abstract class WidgetBase extends AppWidgetProvider {
     protected abstract int getColumns();
 
     void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
-        Log.i("TWB", "updateAppWidget : " + appWidgetId);
+        LogHelper.d("TWB", "updateAppWidget : " + appWidgetId);
 
         // Construct the RemoteViews object
         RemoteViews rv = new RemoteViews(context.getPackageName(), appWidgetManager.getAppWidgetInfo(appWidgetId).initialLayout);
@@ -59,7 +55,7 @@ public abstract class WidgetBase extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        Log.i("TWB", "onUpdate : " + Arrays.toString(appWidgetIds));
+        LogHelper.d("TWB", "onUpdate : " + Arrays.toString(appWidgetIds));
 
         // There may be multiple widgets active, so update all of them
         for (int appWidgetId : appWidgetIds) {
@@ -71,7 +67,7 @@ public abstract class WidgetBase extends AppWidgetProvider {
 
     @Override
     public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
-        Log.i("TWB", "onAppWidgetOptionsChanged");
+        LogHelper.d("TWB", "onAppWidgetOptionsChanged");
         super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
 
         appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.widgetGrid);

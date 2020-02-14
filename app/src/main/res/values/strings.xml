@@ -116,6 +116,7 @@
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7
     https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
+    <string name="widget_label_1C">Transistor 1C</string>
     <string name="widget_label_2C">Transistor 2C</string>
     <string name="widget_label_3C">Transistor 3C</string>
     <string name="widget_label_4C">Transistor 4C</string>

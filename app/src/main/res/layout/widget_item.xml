@@ -18,4 +18,15 @@
         android:layout_height="48dp"
         android:layout_gravity="center"
         android:src="@drawable/ic_playback_indicator_started_24dp" />
+
+    <TextView
+        android:id="@+id/widgetItemTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:padding="2dp"
+        android:background="#66000000"
+        android:text="XYZ TUV"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"/>
 </FrameLayout>

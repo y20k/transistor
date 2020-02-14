@@ -40,6 +40,18 @@
         </receiver>
 
         <!-- WIDGETS -->
+        <activity android:name=".widgets.Widget1CSetup"></activity>
+        <receiver
+            android:name=".widgets.Widget1C"
+            android:label="@string/widget_label_1C">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_1_info" />
+        </receiver>
         <receiver android:name=".widgets.Widget2C"
             android:label="@string/widget_label_2C">
             <intent-filter>
