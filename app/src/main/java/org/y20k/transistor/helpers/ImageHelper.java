@@ -23,14 +23,14 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.net.Uri;
 
-import androidx.palette.graphics.Palette;
-import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
-
 import org.y20k.transistor.R;
 import org.y20k.transistor.core.Station;
 
 import java.io.IOException;
 import java.io.InputStream;
+
+import androidx.palette.graphics.Palette;
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
 
 /**
@@ -43,7 +43,7 @@ public final class ImageHelper {
 
 
     /* Main class variables */
-    private static Bitmap mInputImage;
+    private Bitmap mInputImage;
     private final Context mContext;
 
 
