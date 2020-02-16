@@ -14,13 +14,13 @@
     <string name="menu_shortcut">放在首页</string>
     <!-- descriptions -->
     <!--<string name="descr_app_icon"></string>-->
-    <string name="descr_station_options_button">显示电台选项</string>
+    <string name="descr_station_options_button">选项</string>
     <string name="descr_station_name_example">示例 FM</string>
     <!--<string name="descr_station_metadata_example"></string>-->
     <!--<string name="descr_station_stream_loading"></string>-->
     <!--<string name="descr_playback_button_play"></string>-->
     <!--<string name="descr_playback_button_stop"></string>-->
-    <string name="descr_playback_indicator">播放中指示器</string>
+    <string name="descr_playback_indicator">正在播放的电台</string>
     <!--<string name="descr_timer_icon"></string>-->
     <!--<string name="descr_player_sheet_button_minimize"></string>-->
     <!--<string name="descr_player_sheet_content_copy_icon"></string>-->
@@ -40,9 +40,9 @@
     <string name="dialog_generic_button_okay">确定</string>
     <string name="dialog_generic_button_cancel">取消</string>
     <string name="dialog_add_station_button">添加</string>
-    <string name="dialog_add_station_input_hint">请输入一个有效的流媒体网址</string>
+    <string name="dialog_add_station_input_hint">粘贴流媒体链接</string>
     <string name="dialog_add_station_message">添加新电台</string>
-    <string name="dialog_add_station_howto">您可以添加 MP3 和 OGG 编码的原始音频流，以及封装在 pls 或 m3u 文件中的这些流。您也可以在您的网页浏览器中点击流链接（pls 或 m3u）添加新电台。</string>
+    <string name="dialog_add_station_howto">您可以添加 MP3，AAC 和 Ogg/Opus 编码的原始音频流，以及封装在 PLS 或 M3U 文件中的这些流。您也可以在您的网页浏览器中点击流媒体链接（.pls 或 .m3u）添加新电台。</string>
     <!--<string name="dialog_error_message_fetch_general_playlist_type"></string>-->
     <!--<string name="dialog_error_message_fetch_general_stream_type"></string>-->
     <string name="dialog_delete_station_message">删除电台</string>
@@ -63,13 +63,13 @@
     <string name="dialog_error_title_fetch_read">读取问题</string>
     <string name="dialog_error_title_fetch_write">写入问题</string>
     <string name="dialog_error_message_fetch_general_external_storage">外部存储：</string>
-    <string name="dialog_error_message_fetch_general_hint_m3u">提示：Transistor 只能处理 MP3 和 OGG 编码的流媒体，或者以 .m3u 或 .pls 结尾的 URL。</string>
+    <string name="dialog_error_message_fetch_general_hint_m3u">提示：Transistor 只能处理 MP3，AAC 和 Ogg/Opus 编码的流媒体，或者以 .m3u 或 .pls 结尾的链接。</string>
     <string name="dialog_error_message_fetch_general_file_content">文件内容：</string>
-    <string name="dialog_error_message_fetch_download">Transistor 努力尝试，但没能感应到指定链接。</string>
-    <string name="dialog_error_message_fetch_download_station_url">电台 URL：</string>
-    <string name="dialog_error_message_fetch_read">Transistor 努力尝试，但没能感应到指定文件。</string>
+    <string name="dialog_error_message_fetch_download">Transistor 努力尝试，但没能理解链接。</string>
+    <string name="dialog_error_message_fetch_download_station_url">电台流媒体链接：</string>
+    <string name="dialog_error_message_fetch_read">Transistor 努力尝试，但没能理解文件。</string>
     <string name="dialog_error_message_fetch_read_file_location">文件位置：</string>
-    <string name="dialog_error_message_fetch_write">Transistor 努力尝试，但没能保存指定电台到存储。</string>
+    <string name="dialog_error_message_fetch_write">Transistor 努力尝试，但无法保存电台。</string>
     <!-- messages -->
     <string name="toastmessage_add_download_started">下载开始.</string>
     <string name="toastmessage_add_open_file_started">打开文件.</string>
@@ -112,13 +112,50 @@
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7
     https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
-    <string name="descr_player_sheet_content_copy_icon"/>
-    <string name="descr_player_sheet_p_stream_url"/>
-    <string name="toastmessage_copied_to_clipboard_url"/>
-    <string name="shortcut_last_station_short_label"/>
-    <string name="shortcut_last_station_long_label"/>
-    <string name="player_sheet_h2_station_metadata"/>
-    <string name="descr_list_add_select_stream_dropdown"/>
-    <string name="descr_timer_icon"></string>
-    <string name="player_sheet_h2_station_bitrate">位元率</string>
+    <string name="descr_player_sheet_content_copy_icon">复制</string>
+    <string name="descr_player_sheet_p_stream_url">所选电台的流链接</string>
+    <string name="toastmessage_copied_to_clipboard_url">流媒体链接已复制到剪贴板。</string>
+    <string name="shortcut_last_station_short_label">上一个电台</string>
+    <string name="shortcut_last_station_long_label">播放上一个电台</string>
+    <string name="player_sheet_h2_station_metadata">当前正在播放</string>
+    <string name="descr_list_add_select_stream_dropdown">选择流</string>
+    <string name="descr_timer_icon">睡眠计时器</string>
+    <string name="player_sheet_h2_station_bitrate">比特率</string>
+    <string name="descr_station_metadata_example">艺术家 - 标题</string>
+    <string name="descr_station_stream_loading">正在加载流…</string>
+    <string name="dialog_error_message_fetch_general_playlist_type">文件的媒体类型：</string>
+    <string name="dialog_error_message_fetch_general_stream_type">流的 MIME 类型：</string>
+    <string name="toastmessage_copied_to_clipboard_metadata">元数据已复制到剪贴板。</string>
+    <string name="toastmessage_stream_may_not_work">检测到不支持的音频格式。流可能无法正常播放。</string>
+    <string name="toastalert_station_not_found">无法找到电台。</string>
+    <string name="notification_play">播放</string>
+    <string name="notification_stop">停止</string>
+    <string name="toastalert_unable_to_connect">无法连接。设备没有互联网连接或流可能已过期。</string>
+    <string name="toastmessage_shortcut_not_created">未创建快捷方式。此设备不允许创建快捷方式。</string>
+    <string name="toastmessage_list_refreshed">正在重新加载电台列表。</string>
+    <string name="notification_channel_playback_name">播放控制</string>
+    <string name="notification_channel_playback_description">播放控制，电台图标和正在播放信息。</string>
+    <string name="shortcut_last_station_disabled_message">已禁用播放上一个电台的快捷方式。</string>
+    <string name="player_sheet_h1_details">详细信息</string>
+    <string name="player_sheet_h2_current_session">当前会话</string>
+    <string name="player_sheet_h2_stream_url">流媒体链接</string>
+    <string name="player_sheet_h2_station_mime_type">媒体类型</string>
+    <string name="player_sheet_h2_station_channel_count">频道数</string>
+    <string name="player_sheet_h2_station_sample_rate">采样率</string>
+    <string name="descr_list_add_new">添加新电台</string>
+    <string name="onboarding_app_description">广播应用</string>
+    <string name="onboarding_app_get_started">入门</string>
+    <string name="descr_app_icon">描绘一台旧收音机的应用图标</string>
+    <string name="toastmessage_long_press_change_icon">更改电台图标（检测到长按）</string>
+    <string name="toastmessage_long_press_change_name">重命名电台（检测到长按）</string>
+    <string name="dialog_add_station_choose_stream_message">请选择一个流</string>
+    <string name="dialog_add_station_choose_stream_button">选择</string>
+    <string name="dialog_add_station_choose_stream_heading">找到多个流</string>
+    <string name="toastalert_no_image_picker">没有可用的图像选取器。请考虑安装图库应用。</string>
+    <string name="toastmessage_theme_night">切换到夜间模式（检测到长按）</string>
+    <string name="toastmessage_theme_day">切换到日间模式（检测到长按）</string>
+    <string name="toastmessage_theme_follow_system">切换到跟随系统设置模式（检测到长按）</string>
+    <string name="descr_playback_button_play">播放</string>
+    <string name="descr_playback_button_stop">停止</string>
+    <string name="descr_player_sheet_button_minimize">隐藏电台详细信息</string>
 </resources>
