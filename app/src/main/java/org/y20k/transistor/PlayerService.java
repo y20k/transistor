@@ -42,6 +42,7 @@ import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.widget.Toast;
 
 import com.google.android.exoplayer2.C;
@@ -184,7 +185,12 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
 
         // get instance of mPlayer
         createPlayer();
+
+        // Pré-charge la liste des stations
+        mStationListProvider.retrieveMediaAsync(this, null);
     }
+
+
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -240,8 +246,6 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
                 mSession.setActive(false);
             }
         }
-
-        updateWidgets();
 
         // listen for media button
         MediaButtonReceiver.handleIntent(mSession, intent);
@@ -354,8 +358,9 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             default:
                 // default
                 break;
-
         }
+
+        updateWidgets();
     }
 
 
@@ -1103,6 +1108,25 @@ public final class PlayerService extends MediaBrowserServiceCompat implements Tr
             }
         }
 
+        @Override
+        public boolean onMediaButtonEvent(Intent mediaButtonEvent) {
+            if(mediaButtonEvent != null) {
+                KeyEvent event = mediaButtonEvent.getParcelableExtra(Intent.EXTRA_KEY_EVENT);
+                if(event != null) {
+                    if(event.getAction() == KeyEvent.ACTION_DOWN) {
+                        if(event.getKeyCode() == KeyEvent.KEYCODE_MEDIA_NEXT) {
+                            onSkipToNext();
+                            return true;
+                        }
+                        else if(event.getKeyCode() == KeyEvent.KEYCODE_MEDIA_PREVIOUS) {
+                            onSkipToPrevious();
+                            return true;
+                        }
+                    }
+                }
+            }
+            return super.onMediaButtonEvent(mediaButtonEvent);
+        }
     }
     /**
      * End of inner class
