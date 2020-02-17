@@ -43,7 +43,7 @@ public final class ImageHelper {
 
 
     /* Main class variables */
-    private static Bitmap mInputImage;
+    private static Bitmap mInputImage = null;
     private final Context mContext;
 
 
@@ -53,7 +53,8 @@ public final class ImageHelper {
         if (station != null && station.getStationImageFile() != null && station.getStationImageFile().exists()) {
             // get station image
             mInputImage = decodeSampledBitmapFromFile(station.getStationImageFile().toString(), 72, 72);
-        } else {
+        }
+        if (mInputImage == null) {
             // set default station image
             mInputImage = getBitmap(R.drawable.ic_music_note_black_36dp);
         }
