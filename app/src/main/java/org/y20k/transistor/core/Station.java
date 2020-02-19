@@ -735,6 +735,7 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
     /* Creates a http connection from given url */
     private HttpURLConnection createConnection (URL fileLocation) {
 
+        int numberOfRedirects = 0;
         HttpURLConnection connection = null;
         try {
             // open connection
@@ -751,10 +752,16 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
                     redirect = true;
             }
             if (redirect) {
+                numberOfRedirects++;
                 // get redirect url from "location" header field
                 LogHelper.i(LOG_TAG, "Following a redirect.");
                 String newUrl = connection.getHeaderField("Location");
-                connection = (HttpURLConnection) new URL(newUrl).openConnection();
+                if (numberOfRedirects < 5) {
+                    connection = createConnection(new URL(newUrl));
+                } else {
+                    LogHelper.e(LOG_TAG, "Too many redirects.");
+                    return connection;
+                }
             }
             return connection;
         } catch (IOException e) {
