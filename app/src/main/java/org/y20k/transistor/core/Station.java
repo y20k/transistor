@@ -459,7 +459,7 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
     private ContentType getContentType(URL fileLocation) {
         ContentType contentType = null;
         try {
-            HttpURLConnection connection = createConnection(fileLocation);
+            HttpURLConnection connection = createConnection(fileLocation, 0);
             connection.setConnectTimeout(5000);
             connection.setReadTimeout(5000);
             String contentTypeHeader = connection.getContentType();
@@ -676,7 +676,7 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
         try {
             // try to get image from favicon location
             LogHelper.v(LOG_TAG, "fetching favicon " + mStationImageFile.toString() + "from " + faviconUrlString);
-            HttpURLConnection connection = createConnection(new URL(faviconUrlString));
+            HttpURLConnection connection = createConnection(new URL(faviconUrlString), 0);
 
             // get image data and decode stream
             InputStream inputStream = connection.getInputStream();
@@ -733,42 +733,41 @@ public final class Station implements TransistorKeys, Cloneable, Comparable<Stat
 
 
     /* Creates a http connection from given url */
-    private HttpURLConnection createConnection (URL fileLocation) {
-
-        int numberOfRedirects = 0;
+    private HttpURLConnection createConnection(URL fileLocation, int redirectCount) {
         HttpURLConnection connection = null;
+
         try {
-            // open connection
+            // try to open connection
             LogHelper.i(LOG_TAG, "Opening http connection.");
             connection = (HttpURLConnection)fileLocation.openConnection();
 
-            // handle redirects
-            boolean redirect = false;
+            // check for redirects
             int status = connection.getResponseCode();
             if (status != HttpURLConnection.HTTP_OK) {
-                if (status == HttpURLConnection.HTTP_MOVED_TEMP
-                        || status == HttpURLConnection.HTTP_MOVED_PERM
-                        || status == HttpURLConnection.HTTP_SEE_OTHER)
-                    redirect = true;
-            }
-            if (redirect) {
-                numberOfRedirects++;
-                // get redirect url from "location" header field
-                LogHelper.i(LOG_TAG, "Following a redirect.");
-                String newUrl = connection.getHeaderField("Location");
-                if (numberOfRedirects < 5) {
-                    connection = createConnection(new URL(newUrl));
-                } else {
-                    LogHelper.e(LOG_TAG, "Too many redirects.");
-                    return connection;
+                if (status == HttpURLConnection.HTTP_MOVED_TEMP || status == HttpURLConnection.HTTP_MOVED_PERM || status == HttpURLConnection.HTTP_SEE_OTHER) {
+
+                    // handle redirects
+                    LogHelper.i(LOG_TAG, "Following a redirect.");
+                    // get redirect url from "location" header field
+                    String redirectUrl = connection.getHeaderField("Location");
+                    connection.disconnect();
+                    if (redirectCount < 5) {
+                        // create new connection with redirect url
+                        connection = createConnection(new URL(redirectUrl), redirectCount + 1);
+                    } else {
+                        connection = null;
+                        LogHelper.e(LOG_TAG, "Too many redirects.");
+                    }
+
                 }
             }
-            return connection;
+
         } catch (IOException e) {
             LogHelper.e(LOG_TAG, "Unable to open http connection.");
             e.printStackTrace();
-            return connection;
         }
+
+        return connection;
     }
 
 
