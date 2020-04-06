@@ -32,7 +32,7 @@
     <string name="player_sheet_h2_current_session">Geçerli oturum</string>
     <string name="player_sheet_h2_station_metadata">Şimdi oynatılıyor</string>
     <string name="player_sheet_h2_stream_url">Yayın bağlantısı</string>
-    <string name="player_sheet_h2_station_mime_type">MIME türü</string>
+    <string name="player_sheet_h2_station_mime_type">Ortam türü</string>
     <string name="player_sheet_h2_station_channel_count">Kanal sayısı</string>
     <string name="player_sheet_h2_station_sample_rate">Örnekleme hızı</string>
     <string name="player_sheet_h2_station_bitrate">Bit hızı</string>
@@ -62,7 +62,7 @@
     <string name="dialog_error_title_fetch_write">Yazma Sorunu</string>
     <string name="dialog_error_message_fetch_general_external_storage">Harici depolama:</string>
     <string name="dialog_error_message_fetch_general_hint_m3u">İpucu: Transistor sadece MP3, AAC ve Ogg/Opus ile kodlanmış yayınları veya .m3u veya .pls ile biten bağlantıları işleyebilir.</string>
-    <string name="dialog_error_message_fetch_general_playlist_type">Dosyanın MIME türü:</string>
+    <string name="dialog_error_message_fetch_general_playlist_type">Dosyanın ortam türü:</string>
     <string name="dialog_error_message_fetch_general_stream_type">Yayının MIME türü:</string>
     <string name="dialog_error_message_fetch_general_file_content">Dosyanın içeriği:</string>
     <string name="dialog_error_message_fetch_download">Transistor çok uğraştı fakat bağlantıyı tanıyamadı.</string>
