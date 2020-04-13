@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- activities -->
-    <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
-
+    <string name="app_name">Transistor</string>
+    <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
     <!-- app shortcuts -->
     <string name="shortcut_last_station_short_label">Laatste zender</string>
     <string name="shortcut_last_station_long_label">Speel laatste zender</string>
     <string name="shortcut_last_station_disabled_message">Snelkoppeling voor het afspelen van de laatste zender gedeactiveerd.</string>
-
     <!-- menu entries -->
     <string name="menu_icon">Verander icoon</string>
     <string name="menu_delete">Verwijderen</string>
     <string name="menu_rename">Hernoemen</string>
     <string name="menu_shortcut">Op het startscherm plaatsen</string>
-
     <!-- descriptions -->
     <string name="descr_app_icon">App icoon in de vorm van een oude radio</string>
     <string name="descr_station_options_button">Opties</string>
@@ -22,14 +20,13 @@
     <string name="descr_station_stream_loading">Stream aan het laden…</string>
     <string name="descr_playback_button_play">Afspelen</string>
     <string name="descr_playback_button_stop">Stoppen</string>
-    <string name="descr_playback_indicator">Zender aan het afspelen:</string>
+    <string name="descr_playback_indicator">Zender aan het afspelen</string>
     <string name="descr_timer_icon">Slaap timer</string>
     <string name="descr_player_sheet_button_minimize">Verberg zender informatie</string>
     <string name="descr_player_sheet_content_copy_icon">Kopieer</string>
     <string name="descr_player_sheet_p_stream_url">Stream adres van de geselecteerde zender</string>
     <string name="descr_list_add_new">Een nieuwe zender toevoegen</string>
     <string name="descr_list_add_select_stream_dropdown">Selecteer een stream</string>
-
     <!-- player -->
     <string name="player_sheet_h1_details">Details</string>
     <string name="player_sheet_h2_current_session">Huidige sessie</string>
@@ -39,7 +36,6 @@
     <string name="player_sheet_h2_station_channel_count">Aantal kanalen</string>
     <string name="player_sheet_h2_station_sample_rate">Sample snelheid</string>
     <string name="player_sheet_h2_station_bitrate">Bitrate</string>
-
     <!-- dialogs -->
     <string name="dialog_generic_button_okay">Bevestigen</string>
     <string name="dialog_generic_button_cancel">Annuleren</string>
@@ -55,7 +51,6 @@
     <string name="dialog_add_station_choose_stream_heading">Meerdere streams gevonden</string>
     <string name="dialog_add_station_choose_stream_message">Selecteer een audio-stream</string>
     <string name="dialog_add_station_choose_stream_button">Selecteer</string>
-
     <!-- error dialogs -->
     <string name="dialog_error_title_default">Fout</string>
     <string name="dialog_error_message_default">Er is een fout opgetreden</string>
@@ -75,7 +70,6 @@
     <string name="dialog_error_message_fetch_read">Transistor kan dit bestand niet gebruiken.</string>
     <string name="dialog_error_message_fetch_read_file_location">Locatie van bestand:</string>
     <string name="dialog_error_message_fetch_write">Transistor kan deze zender niet opslaan.</string>
-
     <!-- messages -->
     <string name="toastmessage_add_download_started">Download gestart.</string>
     <string name="toastmessage_add_open_file_started">Bestand aan het openen.</string>
@@ -107,19 +101,15 @@
     <string name="toastalert_station_not_found">De zender kan niet gevonden worden.</string>
     <string name="snackbar_request_storage_access">Transistor heeft leesrechten nodig om gegevens van de externe opslag te lezen.</string>
     <string name="snackbar_message_timer_set">Slaap timer ingesteld op</string>
-
     <!-- notification -->
     <string name="notification_play">Afspelen</string>
     <string name="notification_stop">Stoppen</string>
     <string name="notification_channel_playback_name">Afspeelbediening</string>
     <string name="notification_channel_playback_description">Afspeelbediening</string>
-
     <!-- onboarding -->
     <string name="onboarding_app_description">Radio applicatie</string>
     <string name="onboarding_app_get_started">Begin</string>
-
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7
     https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
-
 </resources>
