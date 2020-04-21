@@ -13,9 +13,6 @@ How to create Transitor's [Adaptive Icon](https://developer.android.com/guide/pr
 5. Foreground Layer: Set Trim to `No`
 6. Foreground Layer: Set Resize to `100%`
 
-## Screnshots v3.1
-... have been taken on a OnePlus 5
-
 ## F-Droid Assets
 F-Droid assets are found in the folder **metadata/\<locale\>/**.
 

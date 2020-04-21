@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <!-- backup only the opml export file -->
+    <include domain="external" path="./collection/collection_opml.xml" />
+</full-backup-content>

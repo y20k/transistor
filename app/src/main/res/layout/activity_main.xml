@@ -1,15 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- this layout is a single-pane layout for normal screens -->
-<!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--android:id="@+id/main_container"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent" />-->
-
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/main_container"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/app_window_background"
-    android:fitsSystemWindows="true">
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    tools:context=".MainActivity">
+
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/main_toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:background="@color/toolbar_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <fragment
+        android:id="@+id/main_host_container"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:navGraph="@navigation/nav_graph_main"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_toolbar" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

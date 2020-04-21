@@ -1,0 +1,24 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="6.35"
+    android:viewportHeight="6.3500004">
+  <path
+      android:pathData="m4.64538,2.53097l1.15815,-0.09217l0.0406,0.51012l-1.96602,0.15646l-0.03066,-0.38532l0.99728,-1.55991l-1.08153,0.08607l-0.04077,-0.5123l1.89815,-0.15106l0.02979,0.37437z"
+      android:strokeWidth="0.11259385"
+      android:fillColor="@color/player_sheet_icon"
+      android:strokeColor="@color/player_sheet_icon"
+      android:fillAlpha="1"/>
+  <path
+      android:pathData="m3.11964,4.07239l1.00824,-0.28561l0.1258,0.44409l-1.71153,0.48484l-0.09503,-0.33545l0.6073,-1.5556l-0.94153,0.26672l-0.12634,-0.44599l1.65244,-0.4681l0.09233,0.32592z"
+      android:strokeWidth="0.1004749"
+      android:fillColor="@color/player_sheet_icon"
+      android:strokeColor="@color/player_sheet_icon"
+      android:fillAlpha="1"/>
+  <path
+      android:pathData="m1.28566,5.18324l0.94958,0.11723l-0.05164,0.41824l-1.61195,-0.19901l0.039,-0.31593l1.0626,-1.09347l-0.88675,-0.10948l0.05186,-0.42004l1.55631,0.19214l-0.0379,0.30696z"
+      android:strokeWidth="0.09514815"
+      android:fillColor="@color/player_sheet_icon"
+      android:strokeColor="@color/player_sheet_icon"
+      android:fillAlpha="1"/>
+</vector>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/station_card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardBackgroundColor="@color/list_card_background"
+    app:cardCornerRadius="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/station_icon"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/shape_cover_small"
+            android:contentDescription="@string/descr_card_station_image"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_default_station_image_24dp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/station_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:elevation="2dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            android:textColor="@color/text_lightweight"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/edit_button"
+            app:layout_constraintStart_toEndOf="@+id/station_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/sample_text_station_name" />
+
+        <ProgressBar
+            android:id="@+id/loading_progress"
+            android:layout_width="40dp"
+            android:layout_height="0dp"
+            android:background="@drawable/circular_progressbar_background"
+            android:contentDescription="@string/descr_card_playback_indicator"
+            android:indeterminateOnly="false"
+            android:max="12"
+            android:progress="12"
+            android:progressDrawable="@drawable/circular_progressbar"
+            android:rotation="270"
+            android:scaleY="-1"
+            app:layout_constraintBottom_toBottomOf="@+id/playback_button"
+            app:layout_constraintEnd_toEndOf="@+id/playback_button"
+            app:layout_constraintStart_toStartOf="@+id/playback_button"
+            app:layout_constraintTop_toTopOf="@+id/playback_button"
+            app:layout_constraintVertical_bias="0.0"
+            tools:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/playback_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:backgroundTint="@color/transistor_transparent"
+            android:clickable="true"
+            android:contentDescription="@string/descr_card_small_play_button"
+            android:elevation="2dp"
+            android:focusable="true"
+            android:paddingStart="16dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="16dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_play_symbol_24dp" />
+
+        <ImageView
+            android:id="@+id/edit_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/descr_card_small_edit_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/playback_button"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_more_vert_24dp" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

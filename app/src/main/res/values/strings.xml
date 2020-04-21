@@ -1,119 +1,207 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- activities -->
+    <!-- App Name -->
     <string name="app_name">Transistor</string>
-    <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
-    <!-- app shortcuts -->
-    <string name="shortcut_last_station_short_label">Last station</string>
-    <string name="shortcut_last_station_long_label">Play last station</string>
-    <string name="shortcut_last_station_disabled_message">Shortcut for playback of last station disabled.</string>
-    <!-- menu entries -->
-    <string name="menu_icon">Change icon</string>
-    <string name="menu_delete">Delete</string>
-    <string name="menu_rename">Rename</string>
-    <string name="menu_shortcut">Place on Home screen</string>
-    <!-- descriptions -->
-    <string name="descr_app_icon">App icon depicting an old radio</string>
-    <string name="descr_station_options_button">Options</string>
-    <string name="descr_station_name_example">Example FM</string>
-    <string name="descr_station_metadata_example">Artist - Title</string>
-    <string name="descr_station_stream_loading">Loading stream …</string>
-    <string name="descr_playback_button_play">Play</string>
-    <string name="descr_playback_button_stop">Stop</string>
-    <string name="descr_playback_indicator">Playing station</string>
-    <string name="descr_timer_icon">Sleep timer</string>
-    <string name="descr_player_sheet_button_minimize">Hide station details</string>
-    <string name="descr_player_sheet_content_copy_icon">Copy</string>
-    <string name="descr_player_sheet_p_stream_url">Streaming link of selected radio station</string>
-    <string name="descr_list_add_new">Add a new station</string>
-    <string name="descr_list_add_select_stream_dropdown">Select a stream</string>
-    <!-- player -->
-    <string name="player_sheet_h1_details">Details</string>
-    <string name="player_sheet_h2_current_session">Current session</string>
-    <string name="player_sheet_h2_station_metadata">Currently playing</string>
-    <string name="player_sheet_h2_stream_url">Streaming link</string>
-    <string name="player_sheet_h2_station_mime_type">Media type</string>
-    <string name="player_sheet_h2_station_channel_count">Channel count</string>
-    <string name="player_sheet_h2_station_sample_rate">Sample rate</string>
-    <string name="player_sheet_h2_station_bitrate">Bitrate</string>
-    <!-- dialogs -->
-    <string name="dialog_generic_button_okay">Okay</string>
-    <string name="dialog_generic_button_cancel">Cancel</string>
-    <string name="dialog_add_station_button">Add</string>
-    <string name="dialog_add_station_input_hint">Paste streaming link</string>
-    <string name="dialog_add_station_message">Add new station</string>
-    <string name="dialog_add_station_howto">You can add raw audio streams encoded in MP3, AAC and Ogg/Opus as well as streams encapsulated in PLS or M3U files. Alternatively you can add new stations by tapping on streaming links (.pls or .m3u) in your web browser.</string>
-    <string name="dialog_delete_station_message">Delete station</string>
-    <string name="dialog_button_delete">Delete</string>
-    <string name="dialog_rename_station_input_hint">Enter a new name</string>
-    <string name="dialog_rename_station_message">Rename station</string>
-    <string name="dialog_button_rename">Rename</string>
-    <string name="dialog_add_station_choose_stream_heading">Multiple streams found</string>
-    <string name="dialog_add_station_choose_stream_message">Please select a stream</string>
-    <string name="dialog_add_station_choose_stream_button">Select</string>
-    <!-- error dialogs -->
-    <string name="dialog_error_title_default">Error</string>
+    <!-- Fragment -->
+    <string name="fragment_settings_title">Settings</string>
+    <!-- Dialogs -->
     <string name="dialog_error_message_default">An error occurred</string>
-    <string name="dialog_error_details_button_default">Show details</string>
-    <string name="dialog_error_details_default">No details available</string>
-    <string name="dialog_error_details_write">This station is probably a duplicate or else you might want to check your external storage.</string>
-    <string name="dialog_error_title_fetch_download">Download Issue</string>
-    <string name="dialog_error_title_fetch_read">Read Issue</string>
-    <string name="dialog_error_title_fetch_write">Write Issue</string>
-    <string name="dialog_error_message_fetch_general_external_storage">External storage:</string>
-    <string name="dialog_error_message_fetch_general_hint_m3u">Hint: Transistor can only process MP3, AAC and Ogg/Opus encoded streams or links ending in .m3u or .pls.</string>
-    <string name="dialog_error_message_fetch_general_playlist_type">Media type of file:</string>
-    <string name="dialog_error_message_fetch_general_stream_type">MIME type of stream:</string>
-    <string name="dialog_error_message_fetch_general_file_content">Content of file:</string>
-    <string name="dialog_error_message_fetch_download">Transistor tried hard but could not make sense of the link.</string>
-    <string name="dialog_error_message_fetch_download_station_url">Streaming link of station:</string>
-    <string name="dialog_error_message_fetch_read">Transistor tried hard but could not make sense of the file.</string>
-    <string name="dialog_error_message_fetch_read_file_location">Location of file:</string>
-    <string name="dialog_error_message_fetch_write">Transistor tried hard but could not save the station.</string>
-    <!-- messages -->
-    <string name="toastmessage_add_download_started">Download started.</string>
-    <string name="toastmessage_add_open_file_started">Opening file.</string>
-    <string name="toastmessage_long_press_playback_stopped">Playback stopped (long press detected)</string>
-    <string name="toastmessage_long_press_playback_started">Playback started (long press detected)</string>
-    <string name="toastmessage_long_press_change_icon">Change station icon (long press detected)</string>
-    <string name="toastmessage_long_press_change_name">Rename station (long press detected)</string>
-    <string name="toastmessage_theme_night">Switching to Night mode (long press detected)</string>
-    <string name="toastmessage_theme_day">Switching to Day mode (long press detected)</string>
-    <string name="toastmessage_theme_follow_system">Switching to Follow System Setting mode (long press detected)</string>
-    <string name="toastmessage_shortcut_created">Shortcut created.</string>
-    <string name="toastmessage_shortcut_not_created">Shortcut not created. This device does not allow the creation of shortcuts.</string>
-    <string name="toastmessage_list_refreshed">Reloading list of stations.</string>
-    <string name="toastmessage_copied_to_clipboard_url">Streaming link copied to clipboard.</string>
-    <string name="toastmessage_copied_to_clipboard_metadata">Metadata copied to clipboard.</string>
-    <string name="toastmessage_station_copied">Station copied to clipboard.</string>
-    <string name="toastmessage_stream_may_not_work">Unsupported audio format detected. Playback of stream may not work properly.</string>
-    <string name="toastmessage_timer_activated">Sleep timer activated.</string>
-    <string name="toastmessage_timer_cancelled">Sleep timer cancelled.</string>
-    <string name="toastmessage_timer_duration_increased">Duration increased.</string>
-    <string name="toastmessage_timer_start_unable">Please start playback first.</string>
-    <string name="toastalert_unable_to_connect">Unable to connect. Device does not have an internet connection or stream may be outdated.</string>
-    <string name="toastalert_rename_unsuccessful">Unable to rename station. Please choose a different name.</string>
-    <string name="toastalert_delete_successful">The station was removed.</string>
-    <string name="toastalert_no_external_storage">Unable to access external storage.</string>
-    <string name="toastalert_no_image_picker">No image picker available. Consider installing a Gallery application.</string>
-    <string name="toastalert_headphones_unplugged">Headphones unplugged. Playback stopped.</string>
-    <string name="toastalert_permission_denied">Permission denied:</string>
-    <string name="toastalert_station_not_found">Unable to find station.</string>
-    <string name="snackbar_request_storage_access">Transistor needs to be granted read permissions to be able access data from external storage.</string>
-    <string name="snackbar_message_timer_set">Sleep timer set to</string>
-    <!-- notification -->
+    <string name="dialog_error_message_no_network">Connect to the Internet.</string>
+    <string name="dialog_error_title_default">Error</string>
+    <string name="dialog_error_title_no_network">Offline</string>
+    <string name="dialog_find_station_button_add">Add</string>
+    <string name="dialog_find_station_hint">Name or stream address</string>
+    <string name="dialog_find_station_no_results">No results found.</string>
+    <string name="dialog_find_station_title">Find Station</string>
+    <string name="dialog_generic_button_cancel">Cancel</string>
+    <string name="dialog_generic_button_okay">OK</string>
+    <string name="dialog_generic_details_button">Show details</string>
+    <string name="dialog_generic_details_default">No details available</string>
+    <string name="dialog_opml_import_button_okay">Import</string>
+    <string name="dialog_opml_import_details_button">Show details</string>
+    <string name="dialog_opml_import_details_default">No details available</string>
+    <string name="dialog_yes_no_message_default">Do you really want to do this?</string>
+    <string name="dialog_yes_no_message_remove_station">Remove this station?</string>
+    <string name="dialog_yes_no_message_update_collection">Look for changes?</string>
+    <string name="dialog_yes_no_message_update_station_images">Download latest version of all station images?</string>
+    <string name="dialog_yes_no_negative_button_add_up_next">Add to \'Up Next\'</string>
+    <string name="dialog_yes_no_negative_button_cancel">Cancel</string>
+    <string name="dialog_yes_no_negative_button_default">No</string>
+    <string name="dialog_yes_no_positive_button_add_up_next">Start Now</string>
+    <string name="dialog_yes_no_positive_button_default">Yes</string>
+    <string name="dialog_yes_no_positive_button_delete_downloads">Delete All</string>
+    <string name="dialog_yes_no_positive_button_non_wifi_download">Download anyway</string>
+    <string name="dialog_yes_no_positive_button_remove_station">Remove</string>
+    <string name="dialog_yes_no_positive_button_update_collection">Update</string>
+    <string name="dialog_yes_no_positive_button_update_covers">Update</string>
+    <string name="dialog_yes_no_positive_button_vpn_download">Download anyway</string>
+    <string name="dialog_yes_no_title_default">Decide</string>
+    <!-- Station Menu -->
+    <string name="menu_update">Update station</string>
+    <!-- Toasts -->
+    <string name="toastmessage_error_missing_storage_permission">Grant \"Read Storage\" permission to open this file.</string>
+    <string name="toastmessage_error_no_station_matches_search">Unable to find a station that matches your search.</string>
+    <string name="toastmessage_error_no_station_found">Unable to start playback. Please add a radio station first.</string>
+    <string name="toastmessage_station_duplicate">Duplicate station.</string>
+    <string name="toastmessage_station_not_valid">Station is not valid.</string>
+    <string name="toastmessage_theme_day">Switching to \'Day mode\' (long press detected)</string>
+    <string name="toastmessage_theme_follow_system">Switching to \'Follow System Setting mode\' (long press detected)</string>
+    <string name="toastmessage_theme_night">Switching to \'Night mode\' (long press detected)</string>
+    <string name="toastmessage_updating_collection">Updating collection of stations.</string>
+    <!-- Station List -->
+    <string name="station_list_button_add_new_station">Add new station</string>
+    <!-- Notification -->
+    <string name="notification_now_playing_channel_name">Playback Controls</string>
+    <string name="notification_now_playing_channel_description">Playback controls, station name and image.</string>
     <string name="notification_play">Play</string>
-    <string name="notification_stop">Stop</string>
-    <string name="notification_channel_playback_name">Playback Controls</string>
-    <string name="notification_channel_playback_description">Playback controls, station logo and now playing info.</string>
-    <!-- onboarding -->
+    <string name="notification_playing">Playing</string>
+    <string name="notification_skip_to_previous">Previous</string>
+    <string name="notification_skip_to_next">Next</string>
+    <!-- Settings -->
+    <string name="pref_delete_all_title">Delete Downloads</string>
+    <string name="pref_general_title">General</string>
+    <string name="pref_maintenance_title">Maintenance</string>
+    <string name="pref_theme_selection_mode_dark">Dark mode</string>
+    <string name="pref_theme_selection_mode_device_default">Same as device</string>
+    <string name="pref_theme_selection_mode_light">Light mode</string>
+    <string name="pref_theme_selection_summary">Current theme:</string>
+    <string name="pref_theme_selection_title">App Theme</string>
+    <string name="pref_update_station_images_summary">Download the latest version of all station images in your collection.</string>
+    <string name="pref_update_station_images_title">Update Station Images</string>
+    <!-- Accessibility Descriptions -->
+    <string name="descr_app_icon">App icon depicting an old radio</string>
+    <string name="descr_card_playback_indicator">Playback progress</string>
+    <string name="descr_card_station_image">Station image</string>
+    <string name="descr_card_settings_button">Settings</string>
+    <string name="descr_card_small_download_button">Download</string>
+    <string name="descr_card_small_play_button">Play/stop</string>
+    <string name="descr_card_small_edit_button">Edit</string>
+    <string name="descr_expanded_player_sleep_timer_cancel_button">Cancel sleep timer</string>
+    <string name="descr_expanded_player_sleep_timer_remaining_time">Time remaining on sleep timer</string>
+    <string name="descr_expanded_player_sleep_timer_start_button">Start sleep timer</string>
+    <string name="descr_player_station_image">Station image</string>
+    <string name="descr_player_playback_button">Play/pause</string>
+    <!-- Onboarding -->
     <string name="onboarding_app_description">Radio App</string>
     <string name="onboarding_app_get_started">Get started</string>
-    <!-- do not translate -->
     <string name="onboarding_app_rodriguez_quote_1" translatable="false">It started out with butterflies</string>
     <string name="onboarding_app_rodriguez_quote_2" translatable="false">On a velvet afternoon</string>
     <string name="player_sheet_p_no_data" translatable="false">-</string>
-    <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
-    The last version containing those strings is v2.3.7
-    https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
+    <!-- Sample Text -->
+    <string name="sample_text_station_metadata" translatable="false">David Bowie - The Man Who Sold The World</string>
+    <string name="sample_text_station_name" translatable="false">Byte FM</string>
+    <string name="sample_text_steam_url" translatable="false">http://bytefm.cast.addradio.de/bytefm/main/mid/stream</string>
+    <string name="sample_text_sleep_timer_remaining_time" translatable="false">00:00</string>
+    <!-- Allowed Caller Template -->
+    <string name="allowed_caller_log" translatable="false">
+        Caller has a valid certificate, but its package doesn\'t match any expected package for the
+        given certificate. To allow this caller, add the following to the allowed callers list:\n
+        <![CDATA[
+        <signature name=\"%1$s\" package=\"%2$s\">\n\t<key>%3$s</key>\n</signature>\n
+        ]]>
+    </string>
+
+    <!-- Strings from Classic Transistor -->
+
+        <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
+        <!-- app shortcuts -->
+        <string name="shortcut_last_station_short_label">Last station</string>
+        <string name="shortcut_last_station_long_label">Play last station</string>
+        <string name="shortcut_last_station_disabled_message">Shortcut for playback of last station disabled.</string>
+        <!-- menu entries -->
+        <string name="menu_icon">Change icon</string>
+        <string name="menu_delete">Delete</string>
+        <string name="menu_rename">Rename</string>
+        <string name="menu_shortcut">Place on Home screen</string>
+        <!-- descriptions -->
+        <string name="descr_station_options_button">Options</string>
+        <string name="descr_station_name_example">Example FM</string>
+        <string name="descr_station_metadata_example">Artist - Title</string>
+        <string name="descr_station_stream_loading">Loading stream …</string>
+        <string name="descr_playback_button_play">Play</string>
+        <string name="descr_playback_button_stop">Stop</string>
+        <string name="descr_playback_indicator">Playing station</string>
+        <string name="descr_timer_icon">Sleep timer</string>
+        <string name="descr_player_sheet_button_minimize">Hide station details</string>
+        <string name="descr_player_sheet_content_copy_icon">Copy</string>
+        <string name="descr_player_sheet_p_stream_url">Streaming link of selected radio station</string>
+        <string name="descr_list_add_new">Add a new station</string>
+        <string name="descr_list_add_select_stream_dropdown">Select a stream</string>
+        <!-- player -->
+        <string name="player_sheet_h1_details">Details</string>
+        <string name="player_sheet_h2_current_session">Current session</string>
+        <string name="player_sheet_h2_station_metadata">Currently playing</string>
+        <string name="player_sheet_h2_stream_url">Streaming link</string>
+        <string name="player_sheet_h2_station_mime_type">Media type</string>
+        <string name="player_sheet_h2_station_channel_count">Channel count</string>
+        <string name="player_sheet_h2_station_sample_rate">Sample rate</string>
+        <string name="player_sheet_h2_station_bitrate">Bitrate</string>
+        <!-- dialogs -->
+        <string name="dialog_add_station_button">Add</string>
+        <string name="dialog_add_station_input_hint">Paste streaming link</string>
+        <string name="dialog_add_station_message">Add new station</string>
+        <string name="dialog_add_station_howto">You can add raw audio streams encoded in MP3, AAC and Ogg/Opus as well as streams encapsulated in PLS or M3U files. Alternatively you can add new stations by tapping on streaming links (.pls or .m3u) in your web browser.</string>
+        <string name="dialog_delete_station_message">Delete station</string>
+        <string name="dialog_button_delete">Delete</string>
+        <string name="dialog_rename_station_input_hint">Enter a new name</string>
+        <string name="dialog_rename_station_message">Rename station</string>
+        <string name="dialog_button_rename">Rename</string>
+        <string name="dialog_add_station_choose_stream_heading">Multiple streams found</string>
+        <string name="dialog_add_station_choose_stream_message">Please select a stream</string>
+        <string name="dialog_add_station_choose_stream_button">Select</string>
+        <!-- error dialogs -->
+        <string name="dialog_error_details_button_default">Show details</string>
+        <string name="dialog_error_details_default">No details available</string>
+        <string name="dialog_error_details_write">This station is probably a duplicate or else you might want to check your external storage.</string>
+        <string name="dialog_error_title_fetch_download">Download Issue</string>
+        <string name="dialog_error_title_fetch_read">Read Issue</string>
+        <string name="dialog_error_title_fetch_write">Write Issue</string>
+        <string name="dialog_error_message_fetch_general_external_storage">External storage:</string>
+        <string name="dialog_error_message_fetch_general_hint_m3u">Hint: Transistor can only process MP3, AAC and Ogg/Opus encoded streams or links ending in .m3u or .pls.</string>
+        <string name="dialog_error_message_fetch_general_playlist_type">Media type of file:</string>
+        <string name="dialog_error_message_fetch_general_stream_type">MIME type of stream:</string>
+        <string name="dialog_error_message_fetch_general_file_content">Content of file:</string>
+        <string name="dialog_error_message_fetch_download">Transistor tried hard but could not make sense of the link.</string>
+        <string name="dialog_error_message_fetch_download_station_url">Streaming link of station:</string>
+        <string name="dialog_error_message_fetch_read">Transistor tried hard but could not make sense of the file.</string>
+        <string name="dialog_error_message_fetch_read_file_location">Location of file:</string>
+        <string name="dialog_error_message_fetch_write">Transistor tried hard but could not save the station.</string>
+        <!-- messages -->
+        <string name="toastmessage_add_download_started">Download started.</string>
+        <string name="toastmessage_add_open_file_started">Opening file.</string>
+        <string name="toastmessage_long_press_playback_stopped">Playback stopped (long press detected)</string>
+        <string name="toastmessage_long_press_playback_started">Playback started (long press detected)</string>
+        <string name="toastmessage_long_press_change_icon">Change station icon (long press detected)</string>
+        <string name="toastmessage_long_press_change_name">Rename station (long press detected)</string>
+        <string name="toastmessage_shortcut_created">Shortcut created.</string>
+        <string name="toastmessage_shortcut_not_created">Shortcut not created. This device does not allow the creation of shortcuts.</string>
+        <string name="toastmessage_list_refreshed">Reloading list of stations.</string>
+        <string name="toastmessage_copied_to_clipboard_url">Streaming link copied to clipboard.</string>
+        <string name="toastmessage_copied_to_clipboard_metadata">Metadata copied to clipboard.</string>
+        <string name="toastmessage_station_copied">Station copied to clipboard.</string>
+        <string name="toastmessage_stream_may_not_work">Unsupported audio format detected. Playback of stream may not work properly.</string>
+        <string name="toastmessage_timer_activated">Sleep timer activated.</string>
+        <string name="toastmessage_timer_cancelled">Sleep timer cancelled.</string>
+        <string name="toastmessage_timer_duration_increased">Duration increased.</string>
+        <string name="toastmessage_sleep_timer_unable_to_start">Please start playback first.</string>
+        <string name="toastalert_unable_to_connect">Unable to connect. Device does not have an internet connection or stream may be outdated.</string>
+        <string name="toastalert_rename_unsuccessful">Unable to rename station. Please choose a different name.</string>
+        <string name="toastalert_delete_successful">The station was removed.</string>
+        <string name="toastalert_no_external_storage">Unable to access external storage.</string>
+        <string name="toastalert_no_image_picker">No image picker available. Consider installing a Gallery application.</string>
+        <string name="toastalert_headphones_unplugged">Headphones unplugged. Playback stopped.</string>
+        <string name="toastalert_permission_denied">Permission denied:</string>
+        <string name="toastalert_station_not_found">Unable to find station.</string>
+        <string name="snackbar_request_storage_access">Transistor needs to be granted read permissions to be able access data from external storage.</string>
+        <string name="snackbar_message_timer_set">Sleep timer set to</string>
+        <!-- notification -->
+        <string name="notification_stop">Stop</string>
+        <string name="notification_channel_playback_name">Playback Controls</string>
+        <string name="notification_channel_playback_description">Playback controls, station logo and now playing info.</string>
+
+
+
+
+
+
 </resources>

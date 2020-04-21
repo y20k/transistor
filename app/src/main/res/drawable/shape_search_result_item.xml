@@ -1,0 +1,7 @@
+<shape
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <solid android:color="@color/search_result_background" />
+    <corners android:radius="4dp" />
+</shape>

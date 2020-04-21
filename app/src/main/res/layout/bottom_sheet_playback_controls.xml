@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_player_sheet_background"
+    android:clickable="true"
+    android:focusable="true"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="72dp"
+    app:layout_behavior="@string/bottom_sheet_behavior">
+
+
+    <!-- main player views -->
+    <!-- ... down here, because lower views are in a layout are above the higher views -->
+
+    <View
+        android:id="@+id/player_background"
+        android:layout_width="0dp"
+        android:layout_height="72dp"
+        android:background="@drawable/shape_player_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/station_icon"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/shape_cover_small"
+        android:contentDescription="@string/descr_player_station_image"
+        app:layout_constraintBottom_toBottomOf="@+id/player_background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_default_station_image_24dp" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/player_station_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+        android:textColor="@color/player_sheet_text_main"
+        app:layout_constraintBottom_toTopOf="@+id/player_station_metadata"
+        app:layout_constraintEnd_toStartOf="@+id/player_play_button"
+        app:layout_constraintStart_toEndOf="@+id/station_icon"
+        app:layout_constraintTop_toTopOf="@+id/station_icon"
+        tools:text="@string/sample_text_station_name" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/player_station_metadata"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        android:textColor="@color/player_sheet_text_main"
+        app:layout_constraintBottom_toBottomOf="@+id/station_icon"
+        app:layout_constraintEnd_toStartOf="@+id/player_play_button"
+        app:layout_constraintStart_toEndOf="@+id/station_icon"
+        app:layout_constraintTop_toBottomOf="@+id/player_station_name"
+        tools:text="@string/sample_text_station_metadata" />
+
+    <ImageView
+        android:id="@+id/player_play_button"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/ic_circular_button_playback_56dp"
+        android:clickable="true"
+        android:contentDescription="@string/descr_player_playback_button"
+        android:focusable="true"
+        android:scaleType="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/player_background"
+        app:srcCompat="@drawable/ic_play_symbol_white_36dp" />
+
+    <ImageView
+        android:id="@+id/sheet_streaming_link_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:padding="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/player_background"
+        app:srcCompat="@drawable/ic_music_note_24dp" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/sheet_streaming_link_headline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/player_sheet_h2_stream_url"
+        android:textAllCaps="true"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        android:textColor="@color/player_sheet_text_main"
+        app:layout_constraintBottom_toTopOf="@+id/sheet_streaming_link"
+        app:layout_constraintStart_toStartOf="@+id/sheet_streaming_link" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/sheet_streaming_link"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        android:textColor="@color/player_sheet_text_main"
+        app:layout_constraintBottom_toBottomOf="@+id/sheet_streaming_link_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/sheet_streaming_link_icon"
+        app:layout_constraintTop_toTopOf="@+id/sheet_streaming_link_icon"
+        tools:text="@string/sample_text_steam_url" />
+
+    <ImageView
+        android:id="@+id/sheet_previous_metadata_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:padding="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sheet_streaming_link_icon"
+        app:srcCompat="@drawable/ic_chevron_left_24dp" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/sheet_metadata_headline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/player_sheet_h2_station_metadata"
+        android:textAllCaps="true"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        android:textColor="@color/player_sheet_text_main"
+        app:layout_constraintBottom_toTopOf="@+id/sheet_metadata_history"
+        app:layout_constraintStart_toStartOf="@+id/sheet_metadata_history" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/sheet_metadata_history"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="marquee"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        android:textColor="@color/player_sheet_text_main"
+        app:layout_constraintBottom_toBottomOf="@+id/sheet_previous_metadata_button"
+        app:layout_constraintEnd_toStartOf="@+id/sheet_next_metadata_button"
+        app:layout_constraintStart_toEndOf="@+id/sheet_previous_metadata_button"
+        app:layout_constraintTop_toTopOf="@+id/sheet_previous_metadata_button"
+        tools:text="@string/sample_text_station_metadata" />
+
+
+    <ImageView
+        android:id="@+id/sheet_next_metadata_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/sheet_previous_metadata_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/sheet_previous_metadata_button"
+        app:srcCompat="@drawable/ic_chevron_right_24dp" />
+
+
+    <ImageView
+        android:id="@+id/sleep_timer_start_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:contentDescription="@string/descr_expanded_player_sleep_timer_start_button"
+        android:focusable="true"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sheet_previous_metadata_button"
+        app:srcCompat="@drawable/ic_sleep_timer_24dp" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/sleep_timer_remaining_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/descr_expanded_player_sleep_timer_remaining_time"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        android:textColor="@color/player_sheet_text_main"
+        app:layout_constraintBottom_toBottomOf="@+id/sleep_timer_start_button"
+        app:layout_constraintEnd_toStartOf="@+id/sleep_timer_start_button"
+        app:layout_constraintTop_toTopOf="@+id/sleep_timer_start_button"
+        tools:text="@string/sample_text_sleep_timer_remaining_time" />
+
+    <ImageView
+        android:id="@+id/sleep_timer_cancel_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:contentDescription="@string/descr_expanded_player_sleep_timer_cancel_button"
+        android:focusable="true"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/sleep_timer_remaining_time"
+        app:layout_constraintEnd_toStartOf="@+id/sleep_timer_remaining_time"
+        app:layout_constraintTop_toTopOf="@+id/sleep_timer_remaining_time"
+        app:srcCompat="@drawable/ic_clear_24dp" />
+
+
+    <!-- Constraintlayout View Groups -->
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/sheet_metadata_views"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="visible"
+        app:constraint_referenced_ids="sheet_metadata_headline,@+id/sheet_metadata_history,sheet_next_metadata_button,sheet_previous_metadata_button" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/sleep_timer_running_views"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:constraint_referenced_ids="sleep_timer_remaining_time,sleep_timer_cancel_button" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

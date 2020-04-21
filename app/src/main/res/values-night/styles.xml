@@ -2,15 +2,23 @@
 <resources>
 
     <!-- Base application theme -->
-    <style name="TransistorAppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
         <!-- Set AppCompat’s colors -->
-        <item name="colorPrimary">@color/transistor_grey_dark</item>
-        <item name="colorPrimaryDark">@color/transistor_black</item>
+        <item name="colorPrimary">@color/transistor_grey_very_light</item>
+        <item name="colorPrimaryDark">@color/transistor_white</item>
         <item name="colorAccent">@color/transistor_red</item>
 
-        <!-- List divider -->
-        <item name="android:listDivider">@drawable/list_divider</item>
+        <!-- Don't show white status bar -->
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:statusBarColor">@color/status_bar_background</item>
+
+        <!-- Default window background used for resizing on v24 -->
+        <item name="android:windowBackgroundFallback">@color/transistor_black</item>
+
+        <!-- Colors used by playback seek bar -->
+        <!-- <item name="android:colorControlActivated"></item> -->
+        <!-- <item name="android:colorControlNormal"></item> -->
 
     </style>
 

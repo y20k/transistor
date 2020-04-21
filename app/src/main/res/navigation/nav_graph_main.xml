@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph.xml"
+    app:startDestination="@id/player_destination">
+
+    <!-- PLAYER -->
+    <fragment
+        android:id="@+id/player_destination"
+        android:name="org.y20k.transistor.PlayerFragment"
+        android:label="Player"
+        tools:layout="@layout/fragment_player">
+        <action
+            android:id="@+id/action_map_fragment_to_settings_fragment"
+            app:destination="@id/settings_destination" />
+    </fragment>
+
+    <!-- SETTINGS -->
+    <fragment
+        android:id="@+id/settings_destination"
+        android:name="org.y20k.transistor.SettingsFragment"
+        android:label="Settings"/>
+
+</navigation>

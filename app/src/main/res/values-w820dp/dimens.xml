@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <!-- Default screen margins for tablets -->
-    <dimen name="activity_horizontal_margin">24dp</dimen>
-    <dimen name="activity_vertical_margin">24dp</dimen>
-
-</resources>

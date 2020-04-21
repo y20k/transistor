@@ -6,7 +6,7 @@
     <rotate
         android:fromDegrees="0"
         android:toDegrees="45"
-        android:duration="350"
+        android:duration="300"
         android:pivotX="50%"
         android:pivotY="50%" />
 

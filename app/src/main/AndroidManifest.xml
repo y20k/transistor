@@ -1,67 +1,59 @@
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="org.y20k.transistor">
 
-    <!-- NORMAL PERMISSIONS, automatically granted -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
-    <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
-    <!-- DANGEROUS PERMISSIONS, must request -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".Transistor"
-        android:usesCleartextTraffic="true"
-        android:allowAudioPlaybackCapture="true"
         android:allowBackup="true"
-        android:supportsRtl="true"
-        android:fullBackupContent="@xml/backupscheme"
+        android:fullBackupContent="@xml/backup_rules"
+        android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/TransistorAppTheme">
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
 
         <!-- ANDROID AUTO SUPPORT -->
         <!--  https://developer.android.com/training/auto/audio/ -->
-        <meta-data android:name="com.google.android.gms.car.application"
+        <!-- <meta-data android:name="com.google.android.gms.car.application"
             android:resource="@xml/automotive_app_desc"/>
         <meta-data android:name="com.google.android.gms.car.notification.SmallIcon"
-            android:resource="@mipmap/ic_launcher" />
+            android:resource="@mipmap/ic_launcher" /> -->
 
-        <!-- MEDIA BUTTON RECEIVER -->
-        <receiver android:name="androidx.media.session.MediaButtonReceiver">
+        <activity android:name=".PlayerServiceStarterActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MEDIA_BUTTON" />
+                <action android:name="org.y20k.transistor.action.START_PLAYER_SERVICE" />
             </intent-filter>
-        </receiver>
+        </activity>
 
-        <!-- MAIN ACTIVITY -->
+        <!-- Main activity for radio station playback on phone -->
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:launchMode="singleTop"
-            android:resizeableActivity="true"
-            android:configChanges="keyboardHidden|orientation|screenSize|screenLayout">
+            android:label="@string/app_name">
 
-            <!-- Launcher -->
+            <!-- react to main intents -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-                <category android:name="android.intent.category.APP_MUSIC" />
-                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
-            <!-- Voice control -->
+            <!-- react to voice searches, like "Play Security Now" -->
             <intent-filter>
                 <action android:name="android.media.action.MEDIA_PLAY_FROM_SEARCH" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
-            <!-- handle file extension intent from web browser -->
+            <!-- react to playlist-links based on file extension -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.BROWSABLE" />
@@ -74,7 +66,7 @@
                 <data android:pathPattern=".*\\.pls" />
             </intent-filter>
 
-            <!-- handle mimetype intent from web browser -->
+            <!-- react to playlist-links based on mimetype -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.BROWSABLE" />
@@ -92,7 +84,7 @@
                 <data android:mimeType="application/octet-stream" />
             </intent-filter>
 
-            <!-- handle file extension intent from file browser -->
+            <!-- react to hls playlist-links based on mimetype -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -107,14 +99,10 @@
                 <data android:mimeType="application/vnd.apple.mpegurl.audio" />
             </intent-filter>
 
-            <!-- App Shortcuts -->
-            <meta-data android:name="android.app.shortcuts"
-                android:resource="@xml/shortcuts" />
-
         </activity>
 
-        <!-- PLAYER SERVICE -->
-        <!-- android:exported="true" if used with Android Auto -->
+
+        <!-- Player Service -->
         <service
             android:name=".PlayerService"
             android:exported="true"
@@ -122,22 +110,38 @@
             tools:ignore="ExportedService">
             <intent-filter>
                 <action android:name="android.media.browse.MediaBrowserService"/>
+                <action android:name="org.y20k.transistor.action.START_PLAYER_SERVICE" />
             </intent-filter>
+        </service>
+
+
+        <!-- handles completed downloads -->
+        <receiver android:name=".helpers.DownloadFinishedReceiver" >
             <intent-filter>
-                <action android:name="org.y20k.transistor.action.PLAY" />
-                <action android:name="org.y20k.transistor.action.STOP" />
-                <action android:name="org.y20k.transistor.action.DISMISS" />
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
             </intent-filter>
+        </receiver>
+
+
+        <!-- handles media buttons -->
+        <receiver android:name="androidx.media.session.MediaButtonReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.MEDIA_BUTTON" />
             </intent-filter>
-        </service>
+        </receiver>
 
-        <!-- SLEEP TIMER SERVICE -->
-        <service
-            android:name=".helpers.SleepTimerService">
-        </service>
+        <!-- file provider for OPML export -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
 
     </application>
+
 
 </manifest>

@@ -1,43 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
 
+<resources>
     <!-- DAY THEME COLORS -->
-    <color name="app_window_background">@color/transistor_white</color>
+    <color name="app_window_background">@color/transistor_grey_very_light</color>
     <color name="status_bar_background">@color/transistor_white</color>
     <color name="app_onboarding_icons">@color/transistor_grey_dark</color>
 
-    <color name="player_sheet_background_main">@color/transistor_grey_darker</color>
-    <color name="player_sheet_background_main_border">@color/transistor_grey_darker</color>
-    <color name="player_sheet_text_main">@color/transistor_white</color>
-    <color name="player_sheet_background_details">@color/transistor_grey_dark</color>
-    <color name="player_sheet_text_details">@color/transistor_white</color>
+    <color name="toolbar_background">@color/transistor_white</color>
+    <!-- <color name="toolbar_text">@color/text_default</color> -->
+
+    <color name="text_default">@color/transistor_grey_dark</color>
+    <color name="text_lightweight">@color/transistor_grey</color>
+
+    <color name="icon_default">@color/transistor_grey</color>
+    <color name="icon_lightweight">@color/transistor_grey_light</color>
+    <color name="icon_very_lightweight">@color/transistor_grey_lighter</color>
+
     <color name="player_button_background">@color/transistor_red</color>
+    <color name="player_background">@color/transistor_grey_darker</color>
+    <color name="player_sheet_text_main">@color/transistor_white</color>
+    <color name="player_sheet_background">@color/transistor_grey_dark</color>
+    <color name="player_sheet_background_border">@color/transistor_grey</color>
+    <color name="player_sheet_text_details">@color/transistor_white</color>
+    <color name="player_sheet_up_next_background">@color/transistor_grey</color>
+    <color name="player_sheet_icon">@color/transistor_white</color>
 
-    <color name="list_item_background">@color/transistor_white</color>
-    <color name="list_item_background_selected">@color/transistor_grey_very_light</color>
-    <color name="list_item_divider">@color/transistor_grey_very_light</color>
+    <color name="show_notes_divider">@color/transistor_grey_very_light</color>
 
-    <color name="station_image_background">@color/transistor_grey_lighter</color>
+    <color name="list_card_background">@color/transistor_white</color>
+    <color name="list_card_background_starred">@color/transistor_red</color>
+    <color name="list_card_cover_background">@color/transistor_grey_very_light</color>
+    <color name="list_card_delete_background">@color/transistor_red</color>
+    <color name="list_card_mark_starred_background">@color/transistor_grey_dark</color>
+    <color name="list_card_station_buffering_progress_background">@color/transistor_grey_lighter</color>
 
+    <color name="search_result_background">@color/transistor_grey_very_light</color>
+    <color name="search_result_background_selected">@color/transistor_grey_lighter</color>
 
     <!-- COLOR NAMES -->
-    <color name="transistor_grey">#FF5F6368</color>             <!-- Material Design 2: Grey 700 -->
-    <color name="transistor_grey_light">#FFBDC1C6</color>       <!-- Material Design 2: Grey 400 -->
-    <color name="transistor_grey_lighter">#FFD2D6DA</color>
-    <color name="transistor_grey_very_light">#FFF1F3F4</color>  <!-- Material Design 2: Grey 100 -->
-    <color name="transistor_grey_dark">#FF3C4043</color>        <!-- Material Design 2: Grey 800 -->
-    <color name="transistor_grey_darker">#FF17181A</color>
+    <color name="transistor_grey">#FF595959</color> <!-- derived from recommended dark theme surface color -->
+    <color name="transistor_grey_light">#FF7D7D7D</color>
+    <color name="transistor_grey_lighter">#FFDADADA</color>
+    <color name="transistor_grey_very_light">#FFF2F2F2</color>
+    <color name="transistor_grey_dark">#FF414141</color>
+    <color name="transistor_grey_darker">#FF2D2D2D</color>
 
-    <color name="transistor_red">#FFDC3D33</color>              <!-- Slightly muted variant of -> Material Design 2: Red 600 -->
+    <color name="transistor_red">#DC3D33</color> <!-- Slightly muted variant of -> Material Design 2: Red 600 -->
     <color name="transistor_red_light">#FFE15950</color>
     <color name="transistor_red_dark">#FFCA2D23</color>
     <color name="transistor_red_darker">#FFAD261E</color>
 
-    <!-- <color name="transistor_blue">#FF3C98DB</color>
-    <color name="transistor_blue_light">#FF4DAEF4</color>
-    <color name="transistor_blue_dark">#FF19405B</color> -->
-
-    <color name="transistor_black">#FF000000</color>
+    <color name="transistor_black">#FF121212</color> <!-- Material Design recommended dark theme surface color -->
     <color name="transistor_white">#FFFFFFFF</color>
     <color name="transistor_transparent">#00ffffff</color>
 
