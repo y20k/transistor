@@ -340,20 +340,20 @@ class PlayerFragment: Fragment(), CoroutineScope,
         when (type) {
             Keys.DIALOG_UPDATE_COLLECTION -> {
                 when (dialogResult) {
-            // user tapped update collection
-            true -> {
-                if (CollectionHelper.hasEnoughTimePassedSinceLastUpdate(activity as Context)) {
-                    // todo implement full update
-                } else {
-                    // todo toast message - not enough time passed
+                    // user tapped update collection
+                    true -> {
+                        if (CollectionHelper.hasEnoughTimePassedSinceLastUpdate(activity as Context)) {
+                            // todo implement full update
+                        } else {
+                            // todo toast message - not enough time passed
+                        }
+                    }
+                    // user tapped cancel - for dev purposes: refresh the station list view // todo check if that can be helpful
+                    false -> {
+                        // collectionAdapter.notifyDataSetChanged() // can be removed
+                    }
                 }
             }
-            // user tapped cancel - for dev purposes: refresh the station list view // todo check if that can be helpful
-            false -> {
-                // collectionAdapter.notifyDataSetChanged() // can be removed
-            }
-        }
-        }
             // handle result of remove dialog
             Keys.DIALOG_REMOVE_STATION -> {
                 when (dialogResult) {
@@ -516,6 +516,7 @@ class PlayerFragment: Fragment(), CoroutineScope,
             when ((activity as Activity).intent.action) {
                 Keys.ACTION_SHOW_PLAYER -> handleShowPlayer()
                 Intent.ACTION_VIEW -> handleViewIntent()
+                Keys.ACTION_START_PLAYER_SERVICE -> handleStartPlayer()
             }
         }
         // clear intent action to prevent double calls
@@ -536,6 +537,14 @@ class PlayerFragment: Fragment(), CoroutineScope,
         if (contentUri != null) {
             val scheme: String = contentUri.scheme ?: String()
             if (scheme.startsWith("http")) DownloadHelper.downloadPlaylists(activity as Context, arrayOf(contentUri.toString()))
+        }
+    }
+
+    /* Handles START_PLAYER_SERVICE request from App Shortcut */
+    private fun handleStartPlayer() {
+        val intent: Intent = (activity as Activity).intent
+        if (intent.hasExtra(Keys.EXTRA_START_LAST_PLAYED_STATION)) {
+            MediaControllerCompat.getMediaController(activity as Activity).transportControls.playFromMediaId(playerState.stationUuid, null)
         }
     }
 

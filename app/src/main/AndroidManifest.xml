@@ -99,6 +99,10 @@
                 <data android:mimeType="application/vnd.apple.mpegurl.audio" />
             </intent-filter>
 
+            <!-- App Shortcuts -->
+            <meta-data android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+
         </activity>
 
 
@@ -130,7 +134,7 @@
             </intent-filter>
         </receiver>
 
-        <!-- file provider for OPML export -->
+        <!-- file provider -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"

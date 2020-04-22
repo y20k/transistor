@@ -31,7 +31,10 @@ class PlayerServiceStarterActivity: Activity() {
             // start player service and start playback
             val startIntent = Intent(this, PlayerService::class.java)
             startIntent.action = Keys.ACTION_START
-            startIntent.putExtra(Keys.EXTRA_STATION_UUID, intent.getStringExtra(Keys.EXTRA_STATION_UUID))
+            if (intent.hasExtra(Keys.EXTRA_STATION_UUID)) {
+                // start station with uuid from intent
+                startIntent.putExtra(Keys.EXTRA_STATION_UUID, intent.getStringExtra(Keys.EXTRA_STATION_UUID))
+            }
             startService(startIntent)
         }
         finish()

@@ -153,9 +153,15 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
             stopPlayback()
         }
 
-        if (intent != null && intent.action == Keys.ACTION_START && intent.hasExtra(Keys.EXTRA_STATION_UUID)) {
-            val stationUuid: String = intent.getStringExtra(Keys.EXTRA_STATION_UUID) ?: String()
+        if (intent != null && intent.action == Keys.ACTION_START) {
+            val stationUuid: String
+            if (intent.hasExtra(Keys.EXTRA_STATION_UUID)) {
+                stationUuid = intent.getStringExtra(Keys.EXTRA_STATION_UUID) ?: String()
+            } else {
+                stationUuid = playerState.stationUuid
+            }
             station = CollectionHelper.getStation(collection, stationUuid)
+            LogHelper.e(TAG, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ${collection.stations.size}")
             if (station.isValid()) {
                 startPlayback()
             }
@@ -571,7 +577,9 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
 
     /* Updates and saves the state of the player ui */
     private fun updatePlayerState (station: Station, playbackState: Int) {
-        playerState.stationUuid = station.uuid
+        if (station.isValid()) {
+            playerState.stationUuid = station.uuid
+        }
         playerState.playbackState = playbackState
         PreferencesHelper.savePlayerState(this, playerState)
     }

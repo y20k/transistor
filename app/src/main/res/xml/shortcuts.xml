@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="lastStation"
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_play_circle_24dp"
+        android:shortcutShortLabel="@string/shortcut_last_station_short_label"
+        android:shortcutLongLabel="@string/shortcut_last_station_long_label"
+        android:shortcutDisabledMessage="@string/shortcut_last_station_disabled_message">
+        <intent
+            android:action="org.y20k.transistor.action.START_PLAYER_SERVICE"
+            android:targetPackage="org.y20k.transistor"
+            android:targetClass="org.y20k.transistor.MainActivity" >
+            <extra android:name="START_LAST_PLAYED_STATION" android:value="true" />
+        </intent>
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+</shortcuts>

@@ -53,6 +53,7 @@ object Keys {
     // intent extras
     const val EXTRA_COLLECTION_MODIFICATION_DATE: String = "COLLECTION_MODIFICATION_DATE"
     const val EXTRA_STATION_UUID: String = "STATION_UUID"
+    const val EXTRA_START_LAST_PLAYED_STATION: String = "START_LAST_PLAYED_STATION"
 
     // keys
     const val KEY_DOWNLOAD_WORK_REQUEST: String = "DOWNLOAD_WORK_REQUEST"
@@ -165,7 +166,7 @@ object Keys {
 
     // server addresses
     const val RADIO_BROWSER_API_BASE: String = "all.api.radio-browser.info"
-    const val RADIO_BROWSER_API_DEFAULT: String = "https://de1.api.radio-browser.info"
+    const val RADIO_BROWSER_API_DEFAULT: String = "de1.api.radio-browser.info"
 
     // locations
     const val LOCATION_DEFAULT_STATION_IMAGE: String = "android.resource://org.y20k.transistor/drawable/ic_default_station_image_24dp"
@@ -203,6 +204,5 @@ object Keys {
 
     // unique names
     const val NAME_PERIODIC_COLLECTION_UPDATE_WORK: String = "PERIODIC_COLLECTION_UPDATE_WORK"
-
 
 }

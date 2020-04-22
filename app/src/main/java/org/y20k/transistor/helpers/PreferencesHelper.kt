@@ -21,7 +21,6 @@ import androidx.preference.PreferenceManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.gson.Gson
 import org.y20k.transistor.Keys
-import org.y20k.transistor.core.Collection
 import org.y20k.transistor.ui.PlayerState
 import java.util.*
 
@@ -172,14 +171,6 @@ object PreferencesHelper {
         editor.putInt(Keys.PREF_PLAYER_STATE_BOTTOM_SHEET_STATE, playerState.bottomSheetState)
         editor.putInt(Keys.PREF_PLAYER_STATE_SLEEP_TIMER_STATE, playerState.sleepTimerState)
         editor.apply()
-    }
-
-
-    /* Reset and save player state if audio file is no longer available */ // todo remove - not necessary
-    fun updatePlayerState(context: Context, collection: Collection, playerState: PlayerState = loadPlayerState(context)) {
-        if (CollectionHelper.getStation(collection, playerState.stationUuid).streamUris.isEmpty()) {
-            savePlayerState(context, PlayerState())
-        }
     }
 
 

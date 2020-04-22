@@ -2,13 +2,14 @@ package org.y20k.transistor.search
 
 import android.content.Context
 import com.android.volley.*
-import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import org.json.JSONArray
 import org.y20k.transistor.Keys
 import org.y20k.transistor.R
 import org.y20k.transistor.helpers.LogHelper
@@ -41,6 +42,7 @@ class RadioBrowserSearch(private var context: Context, private var radioBrowserS
     }
 
 
+    /* Searches station(s) on radio-browser.info */
     fun searchStation(context: Context, query: String, searchType: Int) {
         LogHelper.v(TAG, "Search - Querying $radioBrowserApi for: $query")
 
@@ -55,7 +57,7 @@ class RadioBrowserSearch(private var context: Context, private var radioBrowserS
         }
 
         // request data from request URL
-        val stringRequest = object: StringRequest(Method.GET, requestUrl, responseListener, errorListener) {
+        val stringRequest = object: JsonArrayRequest(Method.GET, requestUrl, null, responseListener, errorListener) {
             @Throws(AuthFailureError::class)
             override fun getHeaders(): Map<String, String> {
                 val params = HashMap<String, String>()
@@ -109,12 +111,11 @@ class RadioBrowserSearch(private var context: Context, private var radioBrowserS
 
 
     /* Listens for (positive) server responses to search requests */
-    private val responseListener: Response.Listener<String> = Response.Listener<String> { response ->
+    private val responseListener: Response.Listener<JSONArray> = Response.Listener<JSONArray> { response ->
         if (response != null) {
-            radioBrowserSearchListener.onRadioBrowserSearchResults(createRadioBrowserResult(response))
+            radioBrowserSearchListener.onRadioBrowserSearchResults(createRadioBrowserResult(response.toString()))
         }
     }
-
 
     /* Listens for error response from server */
     private val errorListener: Response.ErrorListener = Response.ErrorListener { error ->
