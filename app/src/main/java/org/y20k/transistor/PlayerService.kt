@@ -660,10 +660,14 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
 
         override fun onSkipToPrevious() {
             LogHelper.d(TAG, "onSkipToPrevious")
+            station = CollectionHelper.getPreviousStation(collection, station.uuid)
+            startPlayback()
         }
 
         override fun onSkipToNext() {
             LogHelper.d(TAG, "onSkipToNext")
+            station = CollectionHelper.getNextStation(collection, station.uuid)
+            startPlayback()
         }
 
         override fun onSeekTo(posistion: Long) {

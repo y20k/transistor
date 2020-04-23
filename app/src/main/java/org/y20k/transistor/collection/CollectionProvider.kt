@@ -85,9 +85,9 @@ class CollectionProvider {
 
 
     /* Get next station as media item */
-    fun getNextStation(mediaId: String): MediaBrowserCompat.MediaItem? {
+    fun getNextStation(stationUuid: String): MediaBrowserCompat.MediaItem? {
         stationListByName.forEachIndexed { index, mediaItem ->
-            if (mediaItem.description.mediaId == mediaId) {
+            if (mediaItem.description.mediaId == stationUuid) {
                 if (index + 1 > stationListByName.size) {
                     // return next station
                     return stationListByName[index + 1]
@@ -100,9 +100,9 @@ class CollectionProvider {
 
 
     /* Get previous station as media item */
-    fun getPreviousStation(mediaId: String): MediaBrowserCompat.MediaItem? {
+    fun getPreviousStation(stationUuid: String): MediaBrowserCompat.MediaItem? {
         stationListByName.forEachIndexed { index, mediaItem ->
-            if (mediaItem.description.mediaId == mediaId) {
+            if (mediaItem.description.mediaId == stationUuid) {
                 if (index - 1 >= 0) {
                     // return previous station
                     return stationListByName[index - 1]

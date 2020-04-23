@@ -102,6 +102,7 @@ object CollectionHelper {
         updatedCollection.stations.forEach {
             if (it.uuid == stationUuid) {
                 it.name = newStationName
+                it.nameManuallySet = true
             }
             // sort and save collection
             updatedCollection = sortCollection(updatedCollection)
@@ -239,10 +240,38 @@ object CollectionHelper {
     }
 
 
+    /* Gets next station within collection */
+    fun getNextStation(collection: Collection, stationUuid: String): Station {
+        val currentStationPosition: Int = getStationPosition(collection, stationUuid)
+        LogHelper.d(TAG, "Number of stations: ${collection.stations.size} | current position: $currentStationPosition") // todo remove
+        if (collection.stations.isEmpty() || currentStationPosition == -1) {
+            return Station()
+        } else if (currentStationPosition < collection.stations.size -1) {
+            return collection.stations[currentStationPosition + 1]
+        } else {
+            return collection.stations.first()
+        }
+    }
+
+
+    /* Gets previous station within collection */
+    fun getPreviousStation(collection: Collection, stationUuid: String): Station {
+        val currentStationPosition: Int = getStationPosition(collection, stationUuid)
+        LogHelper.d(TAG, "Number of stations: ${collection.stations.size} | current position: $currentStationPosition") // todo remove
+        if (collection.stations.isEmpty() || currentStationPosition == -1) {
+            return Station()
+        } else if (currentStationPosition > 0) {
+            return collection.stations[currentStationPosition - 1]
+        } else {
+            return collection.stations.last()
+        }
+    }
+
+
     /* Get the position from collection for given UUID */
-    fun getStationPosition(collection: Collection, uuid: String): Int {
+    fun getStationPosition(collection: Collection, stationUuid: String): Int {
         collection.stations.forEachIndexed { stationId, station ->
-            if (station.uuid == uuid) {
+            if (station.uuid == stationUuid) {
                 return stationId
             }
         }
