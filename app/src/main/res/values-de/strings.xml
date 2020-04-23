@@ -37,7 +37,7 @@
     <string name="player_sheet_h2_station_sample_rate">Samplerate</string>
     <string name="player_sheet_h2_station_bitrate">Bitrate</string>
     <!-- dialogs -->
-    <string name="dialog_generic_button_okay">Bestätigen</string>
+    <string name="dialog_generic_button_okay">OK</string>
     <string name="dialog_generic_button_cancel">Abbrechen</string>
     <string name="dialog_add_station_button">Hinzufügen</string>
     <string name="dialog_add_station_input_hint">Streaming-Adresse einfügen</string>
@@ -112,4 +112,34 @@
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7
     https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
+    <string name="descr_card_small_edit_button">Bearbeiten</string>
+    <string name="descr_card_settings_button">Einstellungen</string>
+    <string name="pref_theme_selection_title">App-Design</string>
+    <string name="pref_theme_selection_summary">Aktuelles Design:</string>
+    <string name="pref_theme_selection_mode_light">Heller Modus</string>
+    <string name="pref_theme_selection_mode_device_default">Identisch zum Gerät</string>
+    <string name="pref_theme_selection_mode_dark">Dunkler Modus</string>
+    <string name="pref_general_title">Allgemein</string>
+    <string name="pref_delete_all_title">Downloads löschen</string>
+    <string name="toastmessage_error_missing_storage_permission">Erteile die Berechtigung \"Speicher lesen\", um diese Datei zu öffnen.</string>
+    <string name="dialog_yes_no_positive_button_update_covers">Aktualisieren</string>
+    <string name="dialog_yes_no_positive_button_update_collection">Aktualisieren</string>
+    <string name="dialog_yes_no_positive_button_remove_station">Entfernen</string>
+    <string name="dialog_yes_no_positive_button_delete_downloads">Alle löschen</string>
+    <string name="dialog_yes_no_positive_button_default">Ja</string>
+    <string name="dialog_yes_no_positive_button_add_up_next">Jetzt starten</string>
+    <string name="dialog_yes_no_negative_button_default">Nein</string>
+    <string name="dialog_yes_no_negative_button_cancel">Abbrechen</string>
+    <string name="dialog_yes_no_negative_button_add_up_next">Zu \'Als Nächstes\' hinzufügen</string>
+    <string name="dialog_yes_no_message_default">Willst du das wirklich tun\?</string>
+    <string name="dialog_opml_import_details_default">Keine Details verfügbar</string>
+    <string name="dialog_opml_import_details_button">Details anzeigen</string>
+    <string name="dialog_opml_import_button_okay">Import</string>
+    <string name="dialog_generic_details_default">Keine Details verfügbar</string>
+    <string name="dialog_generic_details_button">Details anzeigen</string>
+    <string name="dialog_find_station_no_results">Keine Ergebnisse gefunden.</string>
+    <string name="dialog_find_station_button_add">Hinzufügen</string>
+    <string name="dialog_error_title_no_network">Offline</string>
+    <string name="dialog_error_message_no_network">Mit dem Internet verbinden.</string>
+    <string name="fragment_settings_title">Einstellungen</string>
 </resources>
