@@ -21,14 +21,10 @@ import android.support.v4.media.session.PlaybackStateCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.cardview.widget.CardView
-import androidx.core.content.ContextCompat.getColor
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -66,7 +62,6 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
     /* Listener Interface */
     interface CollectionAdapterListener {
         fun onPlayButtonTapped(stationUuid: String, playbackState: Int)
-        fun onEditButtonTapped(stationUuid: String)
         fun onAddNewButtonTapped()
         fun onChangeImageButtonTapped(stationUuid: String)
     }
@@ -128,7 +123,7 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
                 val stationViewHolder: StationViewHolder = holder
 
                 // set up station views
-                setStationCardBackground(stationViewHolder, station)
+                setStarredIcon(stationViewHolder, station)
                 setStationName(stationViewHolder, station, position)
                 setStationImage(stationViewHolder, station, position)
                 setStationButtons(stationViewHolder, station, position)
@@ -185,10 +180,11 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
     }
 
 
-    private fun setStationCardBackground(stationViewHolder: StationViewHolder, station: Station) {
+    /* Toggles the starred icon */
+    private fun setStarredIcon(stationViewHolder: StationViewHolder, station: Station) {
         when (station.starred) {
-            true -> stationViewHolder.stationCardView.setCardBackgroundColor(getColor(context, R.color.list_card_background_starred))
-            false -> stationViewHolder.stationCardView.setCardBackgroundColor(getColor(context,R.color.list_card_background))
+            true -> stationViewHolder.stationStarredView.visibility = View.VISIBLE
+            false -> stationViewHolder.stationStarredView.visibility = View.GONE
         }
     }
 
@@ -220,15 +216,25 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
         stationViewHolder.playButtonView.setOnClickListener {
             collectionAdapterListener.onPlayButtonTapped(station.uuid, playbackState)
         }
-        stationViewHolder.editButtonView.setOnClickListener {
-            showStationPopupMenu(it, station.uuid, position)
-        }
-        stationViewHolder.editButtonView.setOnLongClickListener {
+        stationViewHolder.playButtonView.setOnLongClickListener {
             val v = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
             v.vibrate(50)
             // v.vibrate(VibrationEffect.createOneShot(50, android.os.VibrationEffect.DEFAULT_AMPLITUDE)); // todo check if there is an androidx vibrator
-            // todo implement REFRESH STATION
+            Toast.makeText(context, R.string.toastmessage_updating_station, Toast.LENGTH_SHORT).show()
+            updateStation(context, collection, station.uuid)
             return@setOnLongClickListener true
+        }
+        stationViewHolder.stationStarredView.setOnLongClickListener {
+            val v = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+            v.vibrate(50)
+            // v.vibrate(VibrationEffect.createOneShot(50, android.os.VibrationEffect.DEFAULT_AMPLITUDE)); // todo check if there is an androidx vibrator
+            // create shortcut
+            ShortcutHelper.placeShortcut(context, station)
+            return@setOnLongClickListener true
+        }
+
+        stationViewHolder.menuButtonView.setOnClickListener {
+            showStationPopupMenu(it, station.uuid, position)
         }
     }
 
@@ -257,6 +263,7 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
 //                }
                 R.id.menu_update -> {
                     // update this station
+                    Toast.makeText(context, R.string.toastmessage_updating_station, Toast.LENGTH_SHORT).show()
                     updateStation(context, collection, stationUuid)
                     true
                 }
@@ -429,7 +436,8 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
         val stationCardView: CardView = stationCardLayout.findViewById(R.id.station_card)
         val stationImageView: ImageView = stationCardLayout.findViewById(R.id.station_icon)
         val stationNameView: TextView = stationCardLayout.findViewById(R.id.station_name)
-        val editButtonView: ImageView = stationCardLayout.findViewById(R.id.edit_button)
+        val stationStarredView: ImageView = stationCardLayout.findViewById(R.id.starred_icon)
+        val menuButtonView: ImageView = stationCardLayout.findViewById(R.id.menu_button)
         val playButtonView: ImageView = stationCardLayout.findViewById(R.id.playback_button)
         val loadingProgressView: ProgressBar = stationCardLayout.findViewById(R.id.loading_progress)
     }

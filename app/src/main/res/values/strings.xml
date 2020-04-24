@@ -48,6 +48,8 @@
     <string name="toastmessage_theme_follow_system">Switching to \'Follow System Setting mode\' (long press detected)</string>
     <string name="toastmessage_theme_night">Switching to \'Night mode\' (long press detected)</string>
     <string name="toastmessage_updating_collection">Updating collection of stations.</string>
+    <string name="toastmessage_updating_station">Updating station.</string>
+
     <!-- Station List -->
     <string name="station_list_button_add_new_station">Add new station</string>
     <!-- Notification -->
@@ -71,11 +73,12 @@
     <!-- Accessibility Descriptions -->
     <string name="descr_app_icon">App icon depicting an old radio</string>
     <string name="descr_card_playback_indicator">Playback progress</string>
-    <string name="descr_card_station_image">Station image</string>
     <string name="descr_card_settings_button">Settings</string>
     <string name="descr_card_small_download_button">Download</string>
     <string name="descr_card_small_play_button">Play/stop</string>
     <string name="descr_card_small_edit_button">Edit</string>
+    <string name="descr_card_starred_station">Starred station</string>
+    <string name="descr_card_station_image">Station image</string>
     <string name="descr_expanded_player_sleep_timer_cancel_button">Cancel sleep timer</string>
     <string name="descr_expanded_player_sleep_timer_remaining_time">Time remaining on sleep timer</string>
     <string name="descr_expanded_player_sleep_timer_start_button">Start sleep timer</string>

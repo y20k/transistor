@@ -315,12 +315,6 @@ class PlayerFragment: Fragment(), CoroutineScope,
     }
 
 
-    /* Overrides onEditButtonTapped from CollectionAdapterListener */
-    override fun onEditButtonTapped(stationUuid: String) {
-        TODO("Not yet implemented")
-    }
-
-
     /* Overrides onAddNewButtonTapped from CollectionAdapterListener */
     override fun onAddNewButtonTapped() {
         FindStationDialog(activity as Activity, this as FindStationDialog.FindFindStationDialogListener).show()
