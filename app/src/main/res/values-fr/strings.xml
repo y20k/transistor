@@ -175,4 +175,6 @@
     <string name="dialog_error_title_no_network">Hors-ligne</string>
     <string name="dialog_error_message_no_network">Connectez-vous à Internet.</string>
     <string name="fragment_settings_title">Paramètres</string>
+    <string name="descr_card_starred_station">Station favorite</string>
+    <string name="toastmessage_updating_station">Mise à jour de la station.</string>
 </resources>
