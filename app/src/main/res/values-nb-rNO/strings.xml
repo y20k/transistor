@@ -37,10 +37,10 @@
     <string name="player_sheet_h2_station_sample_rate">Samplingsrate</string>
     <string name="player_sheet_h2_station_bitrate">Bitrate</string>
     <!-- dialogs -->
-    <string name="dialog_generic_button_okay">Godta</string>
+    <string name="dialog_generic_button_okay">OK</string>
     <string name="dialog_generic_button_cancel">Avbryt</string>
     <string name="dialog_add_station_button">Legg til</string>
-    <string name="dialog_add_station_input_hint">Lim inn lenkestrøm</string>
+    <string name="dialog_add_station_input_hint">Lim inn strømmelenke</string>
     <string name="dialog_add_station_message">Legg til en ny stasjon</string>
     <string name="dialog_add_station_howto">Du kan legge til råe lydstrømmer kodet som MP3, AAC og OGG/Opus sågar også strømmer innkapslet i PLS- eller M3U -filer. Alternativt kan du legge til nye stasjoner ved å trykke på strømmingslenker (.pls eller .m3u) i nettleseren din.</string>
     <string name="dialog_delete_station_message">Slett stasjon</string>
@@ -112,4 +112,49 @@
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7
     https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
+    <string name="dialog_error_message_no_network">Koble til Internett.</string>
+    <string name="dialog_find_station_hint">Navn eller strømmingsadresse</string>
+    <string name="toastmessage_updating_station">Oppdaterer stasjon…</string>
+    <string name="toastmessage_station_not_valid">Ugyldig stasjon.</string>
+    <string name="dialog_generic_details_default">Ingen detaljer tilgjengelig</string>
+    <string name="pref_theme_selection_title">Programdrakt</string>
+    <string name="pref_theme_selection_summary">Nåværende drakt:</string>
+    <string name="pref_theme_selection_mode_light">Lys drakt</string>
+    <string name="pref_theme_selection_mode_dark">Mørk drakt</string>
+    <string name="pref_theme_selection_mode_device_default">Samme som enhet</string>
+    <string name="pref_delete_all_title">Slett nedlastninger</string>
+    <string name="dialog_yes_no_message_default">Ønsker du virkelig å gjøre dette\?</string>
+    <string name="dialog_opml_import_details_default">Ingen detaljer tilgjengelig</string>
+    <string name="dialog_opml_import_details_button">Vis detaljer</string>
+    <string name="dialog_opml_import_button_okay">Importer</string>
+    <string name="toastmessage_sleep_timer_unable_to_start">Start avspilling først.</string>
+    <string name="descr_player_playback_button">Spill av/pause</string>
+    <string name="descr_card_starred_station">Stjernemerket stasjon</string>
+    <string name="descr_card_small_edit_button">Rediger</string>
+    <string name="descr_card_small_play_button">Spill av/stopp</string>
+    <string name="descr_card_small_download_button">Last ned</string>
+    <string name="descr_card_settings_button">Innstillinger</string>
+    <string name="notification_skip_to_next">Neste</string>
+    <string name="notification_skip_to_previous">Forrige</string>
+    <string name="notification_now_playing_channel_name">Avspillingskontroller</string>
+    <string name="station_list_button_add_new_station">Legg til ny stasjon</string>
+    <string name="menu_update">Oppdater stasjon</string>
+    <string name="dialog_yes_no_positive_button_vpn_download">Last ned uansett</string>
+    <string name="dialog_yes_no_positive_button_update_covers">Oppdater</string>
+    <string name="dialog_yes_no_positive_button_update_collection">Oppdater</string>
+    <string name="dialog_yes_no_positive_button_remove_station">Fjern</string>
+    <string name="dialog_yes_no_positive_button_non_wifi_download">Last ned uansett</string>
+    <string name="dialog_yes_no_positive_button_delete_downloads">Slett alle</string>
+    <string name="dialog_yes_no_positive_button_default">Ja</string>
+    <string name="dialog_yes_no_positive_button_add_up_next">Start nå</string>
+    <string name="dialog_yes_no_negative_button_default">Nei</string>
+    <string name="dialog_yes_no_negative_button_cancel">Avbryt</string>
+    <string name="dialog_yes_no_message_update_collection">Se etter endringer\?</string>
+    <string name="dialog_yes_no_message_remove_station">Fjern denne stasjonen\?</string>
+    <string name="dialog_generic_details_button">Vis detaljer</string>
+    <string name="dialog_find_station_title">Finn stasjon</string>
+    <string name="dialog_find_station_no_results">Resultatløst.</string>
+    <string name="dialog_find_station_button_add">Legg til</string>
+    <string name="dialog_error_title_no_network">Frakoblet</string>
+    <string name="fragment_settings_title">Innstillinger</string>
 </resources>
