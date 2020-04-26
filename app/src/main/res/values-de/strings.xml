@@ -5,7 +5,7 @@
     <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
     <!-- app shortcuts -->
     <string name="shortcut_last_station_short_label">Letzter Sender</string>
-    <string name="shortcut_last_station_long_label">Wiedergabe letzter Sender</string>
+    <string name="shortcut_last_station_long_label">Letzten Sender wiedergeben</string>
     <string name="shortcut_last_station_disabled_message">Shortcut für Wiedergabe des letzten Senders deaktiviert.</string>
     <!-- menu entries -->
     <string name="menu_icon">Symbol ändern</string>
@@ -26,7 +26,7 @@
     <string name="descr_player_sheet_content_copy_icon">Kopieren</string>
     <string name="descr_player_sheet_p_stream_url">Streaming-Adresse des gewählten Radiosenders</string>
     <string name="descr_list_add_new">Einen neuen Sender hinzufügen</string>
-    <string name="descr_list_add_select_stream_dropdown">Dropdown-Menü mit einer Auswahl von Streams</string>
+    <string name="descr_list_add_select_stream_dropdown">Wähle einen Stream</string>
     <!-- player -->
     <string name="player_sheet_h1_details">Details</string>
     <string name="player_sheet_h2_current_session">Laufende Sendung</string>
@@ -66,7 +66,7 @@
     <string name="dialog_error_message_fetch_general_stream_type">MIME-Type des Streams:</string>
     <string name="dialog_error_message_fetch_general_file_content">Inhalt der Datei:</string>
     <string name="dialog_error_message_fetch_download">Transistor hat sich viel Mühe gegeben, konnte aber keinen Sinn für den Link finden.</string>
-    <string name="dialog_error_message_fetch_download_station_url">Streaming-Adresse des Radiosenders:</string>
+    <string name="dialog_error_message_fetch_download_station_url">Streaming-Adresse des Senders:</string>
     <string name="dialog_error_message_fetch_read">Transistor hat sich viel Mühe gegeben, konnte aber keinen Sinn für die Datei finden.</string>
     <string name="dialog_error_message_fetch_read_file_location">Speicherort:</string>
     <string name="dialog_error_message_fetch_write">Transistor hat es versucht, kann diese Datei aber nicht speichern.</string>
@@ -77,9 +77,9 @@
     <string name="toastmessage_long_press_playback_started">Wiedergabe gestartet (Längeres Drücken erkannt)</string>
     <string name="toastmessage_long_press_change_icon">Symbol ändern (Längeres Drücken erkannt)</string>
     <string name="toastmessage_long_press_change_name">Sender umbenennen (Längeres Drücken erkannt)</string>
-    <string name="toastmessage_theme_night">Nachtmodus aktiviert (Längeres Drücken erkannt)</string>
-    <string name="toastmessage_theme_day">Tagmodus aktiviert (Längeres Drücken erkannt)</string>
-    <string name="toastmessage_theme_follow_system">Modus Systemeinstellung Beachten aktiviert (Längeres Drücken erkannt)</string>
+    <string name="toastmessage_theme_night">Wechsle zu \'Nachtmodus\' (Langes Tippen erkannt)</string>
+    <string name="toastmessage_theme_day">Wechsle zu \'Tagmodus\' (Langes Tippen erkannt)</string>
+    <string name="toastmessage_theme_follow_system">Wechsle zum \'Systemeinstellungsmodus\' (Langes Tippen erkannt)</string>
     <string name="toastmessage_shortcut_created">Sender auf Startbildschirm platziert.</string>
     <string name="toastmessage_shortcut_not_created">Sender nicht auf Startbildschirm platziert. Das Gerät unterbindet das Platzieren von Verknüpfungen.</string>
     <string name="toastmessage_list_refreshed">Aktualisiere Senderliste.</string>
@@ -142,4 +142,39 @@
     <string name="dialog_error_title_no_network">Offline</string>
     <string name="dialog_error_message_no_network">Mit dem Internet verbinden.</string>
     <string name="fragment_settings_title">Einstellungen</string>
+    <string name="descr_card_small_play_button">Start/Stopp</string>
+    <string name="descr_card_starred_station">Markierter Sender</string>
+    <string name="toastmessage_sleep_timer_unable_to_start">Bitte zuerst die Wiedergabe starten.</string>
+    <string name="descr_player_playback_button">Start/Pause</string>
+    <string name="descr_player_station_image">Senderbild</string>
+    <string name="descr_expanded_player_sleep_timer_start_button">Sleep-Timer starten</string>
+    <string name="descr_expanded_player_sleep_timer_remaining_time">Verbleibende Zeit des Sleep-Timers</string>
+    <string name="descr_expanded_player_sleep_timer_cancel_button">Sleep-Timer abbrechen</string>
+    <string name="descr_card_station_image">Senderbild</string>
+    <string name="descr_card_small_download_button">Herunterladen</string>
+    <string name="descr_card_playback_indicator">Wiedergabefortschritt</string>
+    <string name="pref_update_station_images_title">Senderbilder aktualisieren</string>
+    <string name="pref_update_station_images_summary">Lade die neueste Version aller Senderbilder in deiner Sammlung herunter.</string>
+    <string name="pref_maintenance_title">Wartung</string>
+    <string name="notification_skip_to_next">Nächster</string>
+    <string name="notification_skip_to_previous">Vorheriger</string>
+    <string name="notification_playing">Wiedergabe</string>
+    <string name="notification_now_playing_channel_description">Wiedergabesteuerungen, Sendername und Bild.</string>
+    <string name="notification_now_playing_channel_name">Wiedergabesteuerung</string>
+    <string name="station_list_button_add_new_station">Neuen Sender hinzufügen</string>
+    <string name="toastmessage_updating_station">Sender aktualisieren.</string>
+    <string name="toastmessage_updating_collection">Sammlung von Sendern aktualisieren.</string>
+    <string name="toastmessage_station_not_valid">Sender ist ungültig.</string>
+    <string name="toastmessage_station_duplicate">Sender duplizieren.</string>
+    <string name="toastmessage_error_no_station_found">Die Wiedergabe konnte nicht gestartet werden. Bitte füge zuerst einen Radiosender hinzu.</string>
+    <string name="toastmessage_error_no_station_matches_search">Es konnte kein Sender gefunden werden, der deiner Suche entspricht.</string>
+    <string name="menu_update">Sender aktualisieren</string>
+    <string name="dialog_yes_no_title_default">Entscheide</string>
+    <string name="dialog_yes_no_positive_button_vpn_download">Trotzdem herunterladen</string>
+    <string name="dialog_yes_no_positive_button_non_wifi_download">Trotzdem herunterladen</string>
+    <string name="dialog_yes_no_message_update_station_images">Neueste Version aller Senderbilder herunterladen\?</string>
+    <string name="dialog_yes_no_message_update_collection">Nach Änderungen suchen\?</string>
+    <string name="dialog_yes_no_message_remove_station">Diesen Sender entfernen\?</string>
+    <string name="dialog_find_station_title">Sender finden</string>
+    <string name="dialog_find_station_hint">Name oder Stream-Adresse</string>
 </resources>
