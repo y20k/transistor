@@ -161,4 +161,6 @@
     <string name="dialog_error_title_no_network">Luring</string>
     <string name="dialog_error_message_no_network">Sambungkan ke internet.</string>
     <string name="fragment_settings_title">Pengaturan</string>
+    <string name="descr_card_starred_station">Stasiun favorit</string>
+    <string name="toastmessage_updating_station">Memperbarui stasiun.</string>
 </resources>
