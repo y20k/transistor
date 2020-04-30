@@ -177,4 +177,12 @@
     <string name="dialog_yes_no_message_remove_station">Diesen Sender entfernen\?</string>
     <string name="dialog_find_station_title">Sender finden</string>
     <string name="dialog_find_station_hint">Name oder Stream-Adresse</string>
+    <string name="descr_dialog_edit_place_on_home_screen_icon">Auf dem Startbildschirm platzieren</string>
+    <string name="dialog_edit_place_on_home_screen">Auf dem Startbildschirm platzieren</string>
+    <string name="dialog_edit_choose_station_image">Auswählen</string>
+    <string name="dialog_button_save">Änderungen speichern</string>
+    <string name="descr_dialog_edit_update_icon">Aktualisieren</string>
+    <string name="descr_dialog_edit_station_image">Senderbild</string>
+    <string name="dialog_edit_update_station">Sender aktualisieren</string>
+    <string name="dialog_edit_title">Sender bearbeiten</string>
 </resources>
