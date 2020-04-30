@@ -177,4 +177,12 @@
     <string name="fragment_settings_title">Paramètres</string>
     <string name="descr_card_starred_station">Station favorite</string>
     <string name="toastmessage_updating_station">Mise à jour de la station.</string>
+    <string name="dialog_button_save">Enregistrer les modifications</string>
+    <string name="descr_dialog_edit_update_icon">Mettre à jour</string>
+    <string name="descr_dialog_edit_station_image">Image de la station</string>
+    <string name="descr_dialog_edit_place_on_home_screen_icon">Ajouter sur l\'écran d\'accueil</string>
+    <string name="dialog_edit_update_station">Mettre à jour la station</string>
+    <string name="dialog_edit_title">Modifier la station</string>
+    <string name="dialog_edit_place_on_home_screen">Ajouter sur l\'écran d\'accueil</string>
+    <string name="dialog_edit_choose_station_image">Sélectionner</string>
 </resources>
