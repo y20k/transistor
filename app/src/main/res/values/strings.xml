@@ -5,6 +5,10 @@
     <!-- Fragment -->
     <string name="fragment_settings_title">Settings</string>
     <!-- Dialogs -->
+    <string name="dialog_edit_choose_station_image">Choose</string>
+    <string name="dialog_edit_place_on_home_screen">Place on Home screen</string>
+    <string name="dialog_edit_title">Edit Station</string>
+    <string name="dialog_edit_update_station">Update station</string>
     <string name="dialog_error_message_default">An error occurred</string>
     <string name="dialog_error_message_no_network">Connect to the Internet.</string>
     <string name="dialog_error_title_default">Error</string>
@@ -79,6 +83,9 @@
     <string name="descr_card_small_edit_button">Edit</string>
     <string name="descr_card_starred_station">Starred station</string>
     <string name="descr_card_station_image">Station image</string>
+    <string name="descr_dialog_edit_place_on_home_screen_icon">Place on Home screen</string>
+    <string name="descr_dialog_edit_station_image">Station image</string>
+    <string name="descr_dialog_edit_update_icon">Update</string>
     <string name="descr_expanded_player_sleep_timer_cancel_button">Cancel sleep timer</string>
     <string name="descr_expanded_player_sleep_timer_remaining_time">Time remaining on sleep timer</string>
     <string name="descr_expanded_player_sleep_timer_start_button">Start sleep timer</string>
@@ -149,6 +156,7 @@
         <string name="dialog_rename_station_input_hint">Enter a new name</string>
         <string name="dialog_rename_station_message">Rename station</string>
         <string name="dialog_button_rename">Rename</string>
+        <string name="dialog_button_save">Save changes</string>
         <string name="dialog_add_station_choose_stream_heading">Multiple streams found</string>
         <string name="dialog_add_station_choose_stream_message">Please select a stream</string>
         <string name="dialog_add_station_choose_stream_button">Select</string>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/place_on_home_screen_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:contentDescription="@string/descr_dialog_edit_place_on_home_screen_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/place_on_home_screen_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/place_on_home_screen_image"
+        app:srcCompat="@drawable/ic_add_to_home_screen_24dp" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/place_on_home_screen_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="24dp"
+        android:text="@string/dialog_edit_place_on_home_screen"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+        android:textColor="@color/text_lightweight"
+        app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
+        app:layout_constraintStart_toEndOf="@+id/place_on_home_screen_text" />
+
+    <ImageView
+        android:id="@+id/update_station_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:contentDescription="@string/descr_dialog_edit_update_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/update_station_text"
+        app:layout_constraintEnd_toStartOf="@+id/update_station_text"
+        app:layout_constraintTop_toTopOf="@+id/update_station_text"
+        app:srcCompat="@drawable/ic_refresh_24dp" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/update_station_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
+        android:text="@string/dialog_edit_update_station"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+        android:textColor="@color/text_lightweight"
+        app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/station_image"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="16dp"
+        android:contentDescription="@string/descr_dialog_edit_station_image"
+        app:layout_constraintBottom_toBottomOf="@+id/textInputLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textInputLayout"
+        app:srcCompat="@drawable/ic_default_station_image_24dp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="64dp"
+        android:hint="@string/dialog_rename_station_input_hint"
+        android:maxLines="1"
+        app:endIconMode="clear_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/station_image"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_station_input_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="@string/descr_station_name_example" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/update_image_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="@string/dialog_edit_choose_station_image"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+        android:textColor="@color/text_lightweight"
+        app:layout_constraintStart_toStartOf="@+id/station_image"
+        app:layout_constraintTop_toBottomOf="@+id/station_image" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

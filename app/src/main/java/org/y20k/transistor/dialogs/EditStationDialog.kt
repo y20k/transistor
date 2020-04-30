@@ -1,7 +1,7 @@
 /*
- * RenameTrackDialog.kt
- * Implements the RenameTrackDialog class
- * A RenameTrackDialog shows an dialog in which the station name can be changed
+ * EditStationDialog.kt
+ * Implements the EditStationDialog class
+ * A EditStationDialog shows an dialog in which the station properties can be changed
  *
  * This file is part of
  * TRANSISTOR - Radio App for Android
@@ -14,23 +14,26 @@
 package org.y20k.transistor.dialogs;
 
 import android.content.Context
+import android.net.Uri
 import android.text.InputType
 import android.view.LayoutInflater
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.y20k.transistor.R
+import org.y20k.transistor.core.Station
 import org.y20k.transistor.helpers.LogHelper
 
 
 /*
- * RenameStationDialog class
+ * EditStationDialog class
  */
-class RenameStationDialog (private var renameStationListener: RenameStationListener) {
+class EditStationDialog (private var editStationListener: EditStationListener) {
 
 /* Interface used to communicate back to activity */
-interface RenameStationListener {
-    fun onRenameStationDialog(textInput: String, stationUuid: String, position: Int) {
+interface EditStationListener {
+    fun onEditStationDialog(textInput: String, stationUuid: String, position: Int) {
     }
 }
 
@@ -39,28 +42,36 @@ interface RenameStationListener {
 
 
     /* Construct and show dialog */
-    fun show(context: Context, stationName: String, stationUuid: String, position: Int) {
+    fun show(context: Context, station: Station, position: Int) {
         // prepare dialog builder
         val builder: MaterialAlertDialogBuilder = MaterialAlertDialogBuilder(context)
 
         // get input field
         val inflater = LayoutInflater.from(context)
-        val view = inflater.inflate(R.layout.dialog_rename_station, null)
+        val view = inflater.inflate(R.layout.dialog_edit_station, null)
         val inputField = view.findViewById<EditText>(R.id.edit_station_input_edit_text)
+        val stationImageView = view.findViewById<ImageView>(R.id.station_image)
 
         // pre-fill with current track name
-        inputField.setText(stationName, TextView.BufferType.EDITABLE)
-        inputField.setSelection(stationName.length)
+        inputField.setText(station.name, TextView.BufferType.EDITABLE)
+        inputField.setSelection(station.name.length)
         inputField.inputType = InputType.TYPE_CLASS_TEXT
+
+        // set station image
+        stationImageView.setImageURI(Uri.parse(station.smallImage))
+        stationImageView.contentDescription = "${context.getString(R.string.descr_player_station_image)}: ${station.name}"
 
         // set dialog view
         builder.setView(view)
 
+        // set title
+        builder.setTitle(R.string.dialog_edit_title)
+
         // add "add" button
-        builder.setPositiveButton(R.string.dialog_button_rename) { _, _ ->
+        builder.setPositiveButton(R.string.dialog_button_save) { _, _ ->
             // hand text over to initiating activity
             inputField.text?.let {
-                renameStationListener.onRenameStationDialog(it.toString(), stationUuid, position)
+                editStationListener.onEditStationDialog(it.toString(), station.uuid, position)
             }
         }
 

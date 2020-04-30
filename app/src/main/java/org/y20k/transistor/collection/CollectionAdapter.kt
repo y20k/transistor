@@ -35,6 +35,7 @@ import org.y20k.transistor.Keys
 import org.y20k.transistor.R
 import org.y20k.transistor.core.Collection
 import org.y20k.transistor.core.Station
+import org.y20k.transistor.dialogs.EditStationDialog
 import org.y20k.transistor.dialogs.RenameStationDialog
 import org.y20k.transistor.helpers.CollectionHelper
 import org.y20k.transistor.helpers.DownloadHelper
@@ -47,7 +48,7 @@ import org.y20k.transistor.search.RadioBrowserSearch
 /*
  * CollectionAdapter class
  */
-class CollectionAdapter(private val context: Context, private val collectionAdapterListener: CollectionAdapterListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), RadioBrowserSearch.RadioBrowserSearchListener, RenameStationDialog.RenameStationListener {
+class CollectionAdapter(private val context: Context, private val collectionAdapterListener: CollectionAdapterListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), RadioBrowserSearch.RadioBrowserSearchListener, RenameStationDialog.RenameStationListener, EditStationDialog.EditStationListener {
 
     /* Define log tag */
     private val TAG: String = LogHelper.makeLogTag(CollectionAdapter::class.java)
@@ -167,6 +168,19 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
     }
 
 
+    /* Overrides onEditStationDialog from EditStationListener */
+    override fun onEditStationDialog(textInput: String, stationUuid: String, position: Int) {
+        // rename station (and sort collection)
+        collection = CollectionHelper.renameStation(context, collection, stationUuid, textInput)
+        val newPosition: Int = CollectionHelper.getStationPosition(collection, stationUuid)
+        if (position != newPosition && newPosition != -1) {
+            notifyItemMoved(position, newPosition)
+            notifyItemChanged(position)
+        }
+        notifyItemChanged(newPosition)
+    }
+
+
     /* Sets the station name view */
     private fun setStationName(stationViewHolder: StationViewHolder, station: Station, position: Int) {
         stationViewHolder.stationNameView.text = station.name
@@ -183,7 +197,12 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
     /* Toggles the starred icon */
     private fun setStarredIcon(stationViewHolder: StationViewHolder, station: Station) {
         when (station.starred) {
-            true -> stationViewHolder.stationStarredView.visibility = View.VISIBLE
+            true -> {
+                if (station.imageColor != -1) {
+                    stationViewHolder.stationStarredView.setColorFilter(station.imageColor)
+                }
+                stationViewHolder.stationStarredView.visibility = View.VISIBLE
+            }
             false -> stationViewHolder.stationStarredView.visibility = View.GONE
         }
     }
@@ -234,6 +253,7 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
         }
 
         stationViewHolder.menuButtonView.setOnClickListener {
+            // EditStationDialog(this).show(context, station, position) // Todo
             showStationPopupMenu(it, station.uuid, position)
         }
     }
