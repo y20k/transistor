@@ -157,4 +157,6 @@
     <string name="dialog_find_station_button_add">Legg til</string>
     <string name="dialog_error_title_no_network">Frakoblet</string>
     <string name="fragment_settings_title">Innstillinger</string>
+    <string name="dialog_yes_no_title_default">Avgjør</string>
+    <string name="descr_card_playback_indicator">Avspillingsframdrift</string>
 </resources>
