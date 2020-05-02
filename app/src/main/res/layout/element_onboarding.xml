@@ -79,7 +79,7 @@
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/rodriguez_quote_1"
         android:layout_width="wrap_content"
-        android:layout_height="22dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
         android:text="@string/onboarding_app_rodriguez_quote_1"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
@@ -92,7 +92,7 @@
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/rodriguez_quote_2"
         android:layout_width="wrap_content"
-        android:layout_height="18dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="@string/onboarding_app_rodriguez_quote_2"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"

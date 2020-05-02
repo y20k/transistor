@@ -199,6 +199,7 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
         when (station.starred) {
             true -> {
                 if (station.imageColor != -1) {
+                    // stationViewHolder.stationCardView.setCardBackgroundColor(station.imageColor)
                     stationViewHolder.stationStarredView.setColorFilter(station.imageColor)
                 }
                 stationViewHolder.stationStarredView.visibility = View.VISIBLE
