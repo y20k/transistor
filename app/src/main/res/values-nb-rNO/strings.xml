@@ -157,4 +157,22 @@
     <string name="dialog_find_station_button_add">Legg til</string>
     <string name="dialog_error_title_no_network">Frakoblet</string>
     <string name="fragment_settings_title">Innstillinger</string>
+    <string name="dialog_yes_no_title_default">Avgjør</string>
+    <string name="descr_card_playback_indicator">Avspillingsframdrift</string>
+    <string name="dialog_button_save">Lagre endringer</string>
+    <string name="descr_player_station_image">Stasjonsbilde</string>
+    <string name="descr_dialog_edit_update_icon">Oppdater</string>
+    <string name="descr_dialog_edit_station_image">Stasjonsbilde</string>
+    <string name="descr_dialog_edit_place_on_home_screen_icon">Plasser på hjemmeskjerm</string>
+    <string name="descr_card_station_image">Stasjonsbilde</string>
+    <string name="pref_update_station_images_title">Oppdater stasjonsbilder</string>
+    <string name="toastmessage_station_duplicate">Kanal lagt til fra før.</string>
+    <string name="toastmessage_error_no_station_found">Kunne ikke starte avspilling. Legg til en radiostasjon først.</string>
+    <string name="toastmessage_error_no_station_matches_search">Fant ingen stasjoner som samsvarer med søket ditt.</string>
+    <string name="toastmessage_error_missing_storage_permission">Innvilg tilgangegn \"Les lagring\" for å åpne denne filen.</string>
+    <string name="dialog_edit_update_station">Oppdater stasjon</string>
+    <string name="dialog_edit_title">Rediger stasjon</string>
+    <string name="dialog_edit_place_on_home_screen">Plasser på hjemmeskjerm</string>
+    <string name="dialog_yes_no_message_update_station_images">Last ned siste versjon av alle stasjonsbilder\?</string>
+    <string name="dialog_edit_choose_station_image">Velg</string>
 </resources>

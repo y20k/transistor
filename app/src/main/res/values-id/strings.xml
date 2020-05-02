@@ -163,4 +163,12 @@
     <string name="fragment_settings_title">Pengaturan</string>
     <string name="descr_card_starred_station">Stasiun favorit</string>
     <string name="toastmessage_updating_station">Memperbarui stasiun.</string>
+    <string name="descr_dialog_edit_place_on_home_screen_icon">Membuat pintasan di layar Beranda</string>
+    <string name="dialog_edit_place_on_home_screen">Pintasan di layar Beranda</string>
+    <string name="dialog_button_save">Simpan perubahan</string>
+    <string name="descr_dialog_edit_update_icon">Perbarui</string>
+    <string name="descr_dialog_edit_station_image">Gambar stasiun</string>
+    <string name="dialog_edit_update_station">Perbarui stasiun</string>
+    <string name="dialog_edit_title">Sunting Stasiun</string>
+    <string name="dialog_edit_choose_station_image">Pilih</string>
 </resources>
