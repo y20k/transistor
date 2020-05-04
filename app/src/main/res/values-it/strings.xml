@@ -163,4 +163,12 @@
     <string name="dialog_error_title_no_network">Disconnesso</string>
     <string name="dialog_error_message_no_network">Connettersi a Internet.</string>
     <string name="fragment_settings_title">Impostazioni</string>
+    <string name="descr_dialog_edit_place_on_home_screen_icon">Scorciatoia nella Schermata Iniziale</string>
+    <string name="descr_dialog_edit_station_image">Immagine Stazione</string>
+    <string name="dialog_button_save">Salva Modifiche</string>
+    <string name="descr_dialog_edit_update_icon">Aggiorna</string>
+    <string name="dialog_edit_update_station">Aggiorna Stazione</string>
+    <string name="dialog_edit_title">Modifica Stazione</string>
+    <string name="dialog_edit_place_on_home_screen">Scorciatoia nella Schermata Iniziale</string>
+    <string name="dialog_edit_choose_station_image">Scegli</string>
 </resources>
