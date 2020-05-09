@@ -6,7 +6,7 @@
     <!-- app shortcuts -->
     <string name="shortcut_last_station_short_label">Последняя станция</string>
     <string name="shortcut_last_station_long_label">Воспроизвести последнюю станцию</string>
-    <string name="shortcut_last_station_disabled_message">Ярлык для воспроизведения последней станции отключен.</string>
+    <string name="shortcut_last_station_disabled_message">Ярлык для воспроизведения последней станции отключён.</string>
     <!-- menu entries -->
     <string name="menu_icon">Изменить иконку</string>
     <string name="menu_delete">Удалить</string>
