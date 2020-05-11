@@ -14,12 +14,10 @@
 
 package org.y20k.transistor.dialogs
 
-import android.app.Activity
 import android.content.Context
 import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.ProgressBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
@@ -209,8 +207,8 @@ class FindStationDialog (private var context: Context, private var listener: Fin
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = true
         searchRequestProgressIndicator.visibility = View.GONE
         noSearchResultsTextView.visibility = View.GONE
-        val imm: InputMethodManager = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(stationSearchBoxView.windowToken, 0)
+        // val imm: InputMethodManager = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        // imm.hideSoftInputFromWindow(stationSearchBoxView.windowToken, 0)
     }
 
 
