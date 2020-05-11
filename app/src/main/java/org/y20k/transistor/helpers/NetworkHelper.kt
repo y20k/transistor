@@ -108,9 +108,9 @@ object NetworkHelper {
             val contentTypeHeaderParts: List<String> = contentTypeHeader.split(";")
             contentTypeHeaderParts.forEachIndexed { index, part ->
                 if (index == 0 && part.isNotEmpty()) {
-                    contentType.type = part
+                    contentType.type = part.trim()
                 } else if (part.contains("charset=")) {
-                    contentType.charset = part.substringAfter("charset=")
+                    contentType.charset = part.substringAfter("charset=").trim()
                 }
             }
             connection.disconnect()

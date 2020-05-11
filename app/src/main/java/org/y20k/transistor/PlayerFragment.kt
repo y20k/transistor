@@ -539,6 +539,9 @@ class PlayerFragment: Fragment(), CoroutineScope,
         val intent: Intent = (activity as Activity).intent
         if (intent.hasExtra(Keys.EXTRA_START_LAST_PLAYED_STATION)) {
             MediaControllerCompat.getMediaController(activity as Activity).transportControls.playFromMediaId(playerState.stationUuid, null)
+        } else if (intent.hasExtra(Keys.EXTRA_STATION_UUID)) {
+            val uuid: String? = intent.getStringExtra(Keys.EXTRA_STATION_UUID)
+            MediaControllerCompat.getMediaController(activity as Activity).transportControls.playFromMediaId(uuid, null)
         }
     }
 
