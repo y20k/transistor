@@ -96,7 +96,6 @@
     <string name="toastmessage_timer_activated">Ενεργοποιημένος ο χρονοδιακόπτης νανουρίσματος.</string>
     <string name="toastmessage_timer_cancelled">Ακυρωμένος ο χρονοδιακόπτης νανουρίσματος.</string>
     <string name="toastmessage_timer_duration_increased">Αυξήθηκε η διάρκεια.</string>
-    <string name="toastmessage_timer_start_unable">Παρακαλώ, ξεκίνα πρώτα την αναπαραγωγή.</string>
     <string name="toastalert_unable_to_connect">Αδυναμία σύνδεσης. Η συσκευή δεν έχει σύνδεση στο διαδίκτυο, ή, ίσως, ροή να είναι απαρχαιωμένη.</string>
     <string name="toastalert_rename_unsuccessful">Αδυναμία μετονομασίας του σταθμού. Παρακαλώ, επέλεξε ένα διαφορετικό όνομα.</string>
     <string name="toastalert_delete_successful">Ο σταθμός απομακρύνθηκε.</string>

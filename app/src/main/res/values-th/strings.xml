@@ -88,7 +88,6 @@
     <string name="descr_app_icon">ไอคอนแอพแสดงถึงวิทยุเก่า</string>
     <string name="toastmessage_theme_follow_system">สลับเป็นโหมดติดตามการตั้งค่าระบบ (ตรวจพบการกดค้าง)</string>
     <string name="app_name">วิทยุทรานซิสเตอร์</string>
-    <string name="toastmessage_timer_start_unable">โปรดเริ่มเล่นก่อน</string>
     <string name="toastmessage_copied_to_clipboard_metadata">คัดลอกข้อมูลไปยังคลิปบอร์ดแล้ว</string>
     <string name="dialog_error_message_default">เกิดข้อผิดพลาด</string>
     <string name="descr_player_sheet_content_copy_icon">สำเนา</string>

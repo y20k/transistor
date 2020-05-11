@@ -91,7 +91,6 @@
     <string name="toastmessage_timer_cancelled">Minuteur de veille annulé.</string>
     <string name="toastmessage_timer_duration_increased">Durée augmentée.</string>
     <string name="toastalert_unable_to_connect">Impossible de se connecter. L\'appareil ne dispose pas d’une connexion internet ou le flux est peut être obsolète.</string>
-    <string name="toastmessage_timer_start_unable">Veuillez d\'abord démarrer la lecture.</string>
     <string name="toastalert_rename_unsuccessful">Impossible de renommer la station. Veuillez choisir un nom différent.</string>
     <string name="toastalert_delete_successful">La station a été supprimée.</string>
     <string name="toastalert_no_external_storage">Impossible d\'accéder au stockage externe.</string>

@@ -88,7 +88,6 @@
     <string name="descr_app_icon">Icona dell\'app raffigurante una vecchia radio</string>
     <string name="toastmessage_theme_follow_system">Passaggio alla modalità segui impostazione di sistema (pressione prolungata rilevata)</string>
     <string name="app_name">Transistor</string>
-    <string name="toastmessage_timer_start_unable">Prima avviare la riproduzione.</string>
     <string name="toastmessage_copied_to_clipboard_metadata">Metadati copiati negli appunti.</string>
     <string name="dialog_error_message_default">Si è verificato un errore</string>
     <string name="descr_player_sheet_content_copy_icon">Copia</string>

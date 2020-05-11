@@ -88,7 +88,6 @@
     <string name="descr_app_icon">Ikona aplikace znázorňuje staré rádio</string>
     <string name="toastmessage_theme_follow_system">Vzhled přepnutý do režimu sledovat nastavení systému (rozpoznané dlouhé stlačení)</string>
     <string name="app_name">Transistor</string>
-    <string name="toastmessage_timer_start_unable">Prosím, nejprve spusťte přehrávání.</string>
     <string name="toastmessage_copied_to_clipboard_metadata">Metadata zkopírovaná do schránky.</string>
     <string name="dialog_error_message_default">Vyskytla se chyba</string>
     <string name="descr_player_sheet_content_copy_icon">Kopírovat</string>

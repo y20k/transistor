@@ -90,7 +90,6 @@
     <string name="toastmessage_timer_activated">Slaap timer geactiveerd.</string>
     <string name="toastmessage_timer_cancelled">Slaap timer gedeactiveerd.</string>
     <string name="toastmessage_timer_duration_increased">Tijdsduur verlengd.</string>
-    <string name="toastmessage_timer_start_unable">Start het afspelen eerst.</string>
     <string name="toastalert_unable_to_connect">Verbindingsfout. Het apparaat heeft geen internetverbinding of de zender is verouderd.</string>
     <string name="toastalert_delete_successful">De zender is verwijderd.</string>
     <string name="toastalert_rename_unsuccessful">Zender kan niet hernoemd worden. Kies alsublieft een andere naam.</string>

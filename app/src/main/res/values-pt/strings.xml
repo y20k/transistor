@@ -90,7 +90,6 @@
     <string name="toastmessage_timer_activated">Temporizador de desligar ativado.</string>
     <string name="toastmessage_timer_cancelled">Temporizador de desligar cancelado.</string>
     <string name="toastmessage_timer_duration_increased">Duração aumentada.</string>
-    <string name="toastmessage_timer_start_unable">Primeiro inicie a reprodução.</string>
     <string name="toastalert_unable_to_connect">Não foi possível conectar. O dispositivo não está conectado à Internet ou a transmissão pode estar desatualizada.</string>
     <string name="toastalert_rename_unsuccessful">Não foi possível alterar o nome da estação. Por favor escolha um nome diferente.</string>
     <string name="toastalert_delete_successful">A estação foi removida.</string>

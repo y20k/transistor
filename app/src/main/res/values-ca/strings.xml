@@ -90,7 +90,6 @@
     <string name="toastmessage_timer_activated">Temporitzador d\'apagat activat.</string>
     <string name="toastmessage_timer_cancelled">Temporitzador d\'apagat cancel·lat.</string>
     <string name="toastmessage_timer_duration_increased">Incrementar la duració (+ 15 min).</string>
-    <string name="toastmessage_timer_start_unable">Si us plau inicia la reproducció abans.</string>
     <string name="toastalert_unable_to_connect">No es pot connectar. El dispositiu no té connexió a Internet o el flux pot estar obsolet.</string>
     <string name="toastalert_rename_unsuccessful">Incapaç de canviar el nom de l\'emissora. Si us plau, escolliu un nom diferent.</string>
     <string name="toastalert_delete_successful">Emissora ha estat esborrada.</string>

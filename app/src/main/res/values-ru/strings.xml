@@ -90,7 +90,6 @@
     <string name="toastmessage_timer_activated">Таймер сна активирован.</string>
     <string name="toastmessage_timer_cancelled">Таймер сна отключён.</string>
     <string name="toastmessage_timer_duration_increased">Время увеличено.</string>
-    <string name="toastmessage_timer_start_unable">Сперва запустите воспроизведение.</string>
     <string name="toastalert_unable_to_connect">Невозможно подключиться. У устройства отсутствует подключение к интернету или ссылка на поток больше не действительна.</string>
     <string name="toastalert_rename_unsuccessful">Невозможно переименовать станцию. Пожалуйста, выберите другое имя.</string>
     <string name="toastalert_delete_successful">Станция была удалена.</string>

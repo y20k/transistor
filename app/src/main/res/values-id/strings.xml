@@ -82,7 +82,6 @@
     <string name="toastmessage_timer_activated">Pengatur waktu tidur diaktifkan.</string>
     <string name="toastmessage_timer_cancelled">Pengatur waktu tidur dibatalkan.</string>
     <string name="toastmessage_timer_duration_increased">Durasi diperpanjang.</string>
-    <string name="toastmessage_timer_start_unable">Silakan mulai pemutaran terlebih dahulu.</string>
     <string name="toastalert_unable_to_connect">Gagal memutar stream. Perangkat tidak memiliki akses internet atau terdapat kesalahan pada tautan stream.</string>
     <string name="toastalert_rename_unsuccessful">Tidak bisa mengubah nama stream. Silakan pilih nama yang berbeda.</string>
     <string name="toastalert_delete_successful">Stasiun telah dihapus.</string>

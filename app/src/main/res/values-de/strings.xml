@@ -90,7 +90,6 @@
     <string name="toastmessage_timer_activated">Sleep-Timer aktiviert.</string>
     <string name="toastmessage_timer_cancelled">Sleep-Timer deaktiviert.</string>
     <string name="toastmessage_timer_duration_increased">Sleep-Timer verlängert.</string>
-    <string name="toastmessage_timer_start_unable">Bitte zuerst Wiedergabe starten.</string>
     <string name="toastalert_unable_to_connect">Verbindung fehlgeschlagen. Gerät hat keine Verbindung zum Internet oder Stream ist möglicherweise veraltet.</string>
     <string name="toastalert_rename_unsuccessful">Sender kann nicht umbenannt werden. Bitte wählen Sie einen anderen Namen.</string>
     <string name="toastalert_delete_successful">Die Sender wurde entfernt.</string>

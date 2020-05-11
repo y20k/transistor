@@ -90,7 +90,6 @@
     <string name="toastmessage_timer_activated">Tidsavbrudd aktivert.</string>
     <string name="toastmessage_timer_cancelled">Tidsavbrudd avbrutt.</string>
     <string name="toastmessage_timer_duration_increased">Varighet økt.</string>
-    <string name="toastmessage_timer_start_unable">Start avspilling først.</string>
     <string name="toastalert_unable_to_connect">Kunne ikke koble til. Enheten mangler internettilknytning, eller så er strømmen utdatert.</string>
     <string name="toastalert_rename_unsuccessful">Kunne ikke endre navn på stasjon. Velg et annet navn.</string>
     <string name="toastalert_delete_successful">Stasjonen ble fjernet.</string>

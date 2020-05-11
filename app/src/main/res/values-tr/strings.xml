@@ -90,7 +90,6 @@
     <string name="toastmessage_timer_activated">Uyku zamanlayıcısı etkin.</string>
     <string name="toastmessage_timer_cancelled">Uyku zamanlayıcısı iptal edildi.</string>
     <string name="toastmessage_timer_duration_increased">Süre arttı.</string>
-    <string name="toastmessage_timer_start_unable">Lütfen ilk önce oynatmayı başlatın.</string>
     <string name="toastalert_unable_to_connect">Bağlanılamıyor. Aygıtın bir internet bağlantısı yok ya da yayın güncel olmayabilir.</string>
     <string name="toastalert_rename_unsuccessful">İstasyon yeniden adlandırılamadı. Lütfen farklı bir ad seçin.</string>
     <string name="toastalert_delete_successful">İstasyon kaldırıldı.</string>

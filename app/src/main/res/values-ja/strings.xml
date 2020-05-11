@@ -90,7 +90,6 @@
     <string name="toastmessage_timer_activated">スリープタイマーを有効にしました。</string>
     <string name="toastmessage_timer_cancelled">スリープタイマーを取り消しました。</string>
     <string name="toastmessage_timer_duration_increased">時間を追加しました。</string>
-    <string name="toastmessage_timer_start_unable">まず再生を開始してください。</string>
     <string name="toastalert_unable_to_connect">接続できません。デバイスがインターネットに接続されていない、またはストリームが古い可能性があります。</string>
     <string name="toastalert_rename_unsuccessful">放送局の名前を変更できません。別の名前を選択してください。</string>
     <string name="toastalert_delete_successful">放送局が削除されました。</string>

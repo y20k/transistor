@@ -96,7 +96,6 @@
     <string name="toastmessage_timer_activated">Aktivovaný časovač zaspávania.</string>
     <string name="toastmessage_timer_cancelled">Časovač zaspávania zrušený.</string>
     <string name="toastmessage_timer_duration_increased">Predĺžený čas zaspávania.</string>
-    <string name="toastmessage_timer_start_unable">Prosím, najprv spustite prehrávanie.</string>
     <string name="toastalert_unable_to_connect">Nie je možné sa pripojiť. Nemáte funkčný prístup na internet alebo stream nie je viac platný.</string>
     <string name="toastalert_rename_unsuccessful">Nie je možné premenovať stanicu. Prosím, skúste iný názov.</string>
     <string name="toastalert_delete_successful">Stanica bola odstránená.</string>

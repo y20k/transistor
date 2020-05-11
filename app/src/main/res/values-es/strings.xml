@@ -90,7 +90,6 @@
     <string name="toastmessage_timer_activated">Temporizador de apagado activado.</string>
     <string name="toastmessage_timer_cancelled">Temporizador de apagado cancelado.</string>
     <string name="toastmessage_timer_duration_increased">Duración incrementada.</string>
-    <string name="toastmessage_timer_start_unable">Por favor inicia primero la reproducción.</string>
     <string name="toastalert_unable_to_connect">No se puede conectar. El dispositivo no tiene conexión a Internet o el stream puede estar desactualizado.</string>
     <string name="toastalert_rename_unsuccessful">No se puede cambiar el nombre de la emisora. Elija un nombre diferente.</string>
     <string name="toastalert_delete_successful">La emisora fue borrada.</string>

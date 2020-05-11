@@ -90,7 +90,6 @@
     <string name="toastmessage_timer_activated">Wyłącznik czasowy uruchomiony.</string>
     <string name="toastmessage_timer_cancelled">Wyłącznik czasowy anulowany.</string>
     <string name="toastmessage_timer_duration_increased">Wydłużono czas działania.</string>
-    <string name="toastmessage_timer_start_unable">Proszę najpierw rozpocząć odtwarzanie.</string>
     <string name="toastalert_unable_to_connect">Nie można połączyć. Urządzenie nie ma połączenia z internetem lub strumień może być nieaktualny.</string>
     <string name="toastalert_rename_unsuccessful">Nie udało się zmienić nazwy stacji. Proszę wybrać inną nazwę.</string>
     <string name="toastalert_delete_successful">Stacja została usunięta.</string>
