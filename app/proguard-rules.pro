@@ -26,4 +26,4 @@
 
 -keep public class org.y20k.transistor.PlayerService  { *; }
 
--keep public class org.y20k.transistor.search.GpodderResult  { *; }
+-keep public class org.y20k.transistor.search.RadioBrowserResult  { *; }

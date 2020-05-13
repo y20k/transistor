@@ -29,8 +29,8 @@ data class RadioBrowserResult (@Expose val changeuuid: String,
                                @Expose val name: String,
                                @Expose val url: String,
                                @Expose val url_resolved: String,
-                               @Expose val favicon: String,
-                               @Expose val homepage: String) {
+                               @Expose val homepage: String,
+                               @Expose val favicon: String) {
 
     /* Converts RadioBrowserResult to Station  */
     fun toStation(): Station = Station(

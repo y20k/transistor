@@ -39,47 +39,45 @@ object ImportHelper {
     fun convertOldStations(context: Context): Boolean {
         val oldStations: ArrayList<Station> = arrayListOf()
         val oldCollectionFolder: File? = context.getExternalFilesDir(Keys.TRANSISTOR_LEGACY_FOLDER_COLLECTION)
-        if (oldCollectionFolder != null && oldCollectionFolder.exists() && oldCollectionFolder.isDirectory) {
-            val oldCollectionFiles = oldCollectionFolder.listFiles()
-            // check if folder contains more than one file (more than e.g. collection.json)
-            if (oldCollectionFiles != null && oldCollectionFiles.size > 1 ) {
-                GlobalScope.launch {
-                    // start import
-                    var success: Boolean = false
-                    oldCollectionFiles?.forEach { file ->
-                        if (file.name.endsWith(Keys.TRANSISTOR_LEGACY_STATION_FILE_EXTENSION)) {
-                            // read stream uri and name
-                            val station: Station = FileHelper.readStationPlaylist(file.inputStream())
-                            station.nameManuallySet = true
-                            // detect stream content
-                            station.streamContent = NetworkHelper.detectContentType(station.getStreamUri()).type
-                            // try to also import station image
-                            val sourceImageUri: Uri = getLegacyStationImageFileUri(context, station)
-                            if (sourceImageUri != Keys.LOCATION_DEFAULT_STATION_IMAGE.toUri()) {
-                                // create and add image and small image + get main color
-                                station.image = FileHelper.saveStationImage(context, station.uuid, sourceImageUri, Keys.SIZE_STATION_IMAGE_CARD, Keys.STATION_SMALL_IMAGE_FILE).toString()
-                                station.smallImage = FileHelper.saveStationImage(context, station.uuid, sourceImageUri, Keys.SIZE_STATION_IMAGE_MAXIMUM, Keys.STATION_IMAGE_FILE).toString()
-                                station.imageColor = ImageHelper.getMainColor(context, sourceImageUri)
-                                station.imageManuallySet = true
-                            }
-                            if (station.name.isEmpty()) {
-                                station.name = file.name.substring(0, file.name.lastIndexOf("."))
-                                station.nameManuallySet = false
-                            }
-                            station.modificationDate = GregorianCalendar.getInstance().time
-                            // add station
-                            oldStations.add(station)
-                            success = true
+        if (oldCollectionFolder != null && shouldStartImport(oldCollectionFolder)) {
+            GlobalScope.launch {
+                var success: Boolean = false
+                // start import
+                oldCollectionFolder.listFiles()?.forEach { file ->
+                    // look for station files from Transistor v3
+                    if (file.name.endsWith(Keys.TRANSISTOR_LEGACY_STATION_FILE_EXTENSION)) {
+                        // read stream uri and name
+                        val station: Station = FileHelper.readStationPlaylist(file.inputStream())
+                        station.nameManuallySet = true
+                        // detect stream content
+                        station.streamContent = NetworkHelper.detectContentType(station.getStreamUri()).type
+                        // try to also import station image
+                        val sourceImageUri: Uri = getLegacyStationImageFileUri(context, station)
+                        if (sourceImageUri != Keys.LOCATION_DEFAULT_STATION_IMAGE.toUri()) {
+                            // create and add image and small image + get main color
+                            station.image = FileHelper.saveStationImage(context, station.uuid, sourceImageUri, Keys.SIZE_STATION_IMAGE_CARD, Keys.STATION_SMALL_IMAGE_FILE).toString()
+                            station.smallImage = FileHelper.saveStationImage(context, station.uuid, sourceImageUri, Keys.SIZE_STATION_IMAGE_MAXIMUM, Keys.STATION_IMAGE_FILE).toString()
+                            station.imageColor = ImageHelper.getMainColor(context, sourceImageUri)
+                            station.imageManuallySet = true
                         }
+                        // improvise a name if empty
+                        if (station.name.isEmpty()) {
+                            station.name = file.name.substring(0, file.name.lastIndexOf("."))
+                            station.nameManuallySet = false
+                        }
+                        station.modificationDate = GregorianCalendar.getInstance().time
+                        // add station
+                        oldStations.add(station)
+                        success = true
                     }
-                    // check for success (= at least one station was found)
-                    if (success) {
-                        // delete files from Transistor v3
-                        oldCollectionFolder.deleteRecursively()
-                        // save collection
-                        val newCollection: Collection = Collection(stations = oldStations)
-                        CollectionHelper.saveCollection(context, newCollection)
-                    }
+                }
+                // check for success (= at least one station was found)
+                if (success) {
+                    // delete files from Transistor v3
+                    oldCollectionFolder.deleteRecursively()
+                    // save collection
+                    val newCollection: Collection = Collection(stations = oldStations)
+                    CollectionHelper.saveCollection(context, newCollection)
                 }
             }
             // import has been started
@@ -87,7 +85,17 @@ object ImportHelper {
         } else {
             // import has NOT been started
             return false
+
         }
+    }
+
+
+    /* Checks if conditions for a station import are met */
+    private fun shouldStartImport(oldCollectionFolder: File): Boolean {
+        return oldCollectionFolder.exists() &&
+                oldCollectionFolder.isDirectory &&
+                oldCollectionFolder.listFiles()?.isNotEmpty()!! &&
+                !FileHelper.checkForCollectionFile(oldCollectionFolder)
     }
 
 

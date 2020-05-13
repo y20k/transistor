@@ -187,6 +187,16 @@ object FileHelper {
     }
 
 
+    /* Checks if a folder contains a collection.json file */
+    fun checkForCollectionFile(folder: File): Boolean {
+        if (folder.exists() && folder.isDirectory) {
+            val collectionFiles = folder.listFiles { _, name -> name?.equals(Keys.COLLECTION_FILE) ?: false }
+            return collectionFiles?.isNotEmpty() ?: false
+        }
+        return false
+    }
+
+
 
     /* Reads m3u or pls playlists */
     fun readStationPlaylist(playlistInputStream: InputStream?): Station {
