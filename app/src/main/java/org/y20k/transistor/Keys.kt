@@ -70,13 +70,11 @@ object Keys {
 
     // preferences
     const val PREF_RADIO_BROWSER_API: String = "RADIO_BROWSER_API"
-    const val PREF_ONE_TIME_HOUSEKEEPING_NECESSARY: String = "ONE_TIME_HOUSEKEEPING_NECESSARY_VERSIONCODE_72" // increment to current app version code to trigger housekeeping that runs only once
+    const val PREF_ONE_TIME_HOUSEKEEPING_NECESSARY: String = "ONE_TIME_HOUSEKEEPING_NECESSARY_VERSIONCODE_721" // increment to current app version code to trigger housekeeping that runs only once
     const val PREF_THEME_SELECTION: String= "THEME_SELECTION"
     const val PREF_LAST_UPDATE_COLLECTION: String = "LAST_UPDATE_COLLECTION"
     const val PREF_COLLECTION_MODIFICATION_DATE: String = "COLLECTION_MODIFICATION_DATE"
-    const val PREF_CURRENT_MEDIA_ID: String = "CURRENT_MEDIA_ID"
     const val PREF_CURRENT_PLAYBACK_STATE: String = "CURRENT_PLAYBACK_STATE"
-    const val PREF_UP_NEXT_MEDIA_ID: String = "UP_NEXT_MEDIA_ID"
     const val PREF_ACTIVE_DOWNLOADS: String = "ACTIVE_DOWNLOADS"
     const val PREF_DOWNLOAD_OVER_MOBILE: String = "DOWNLOAD_OVER_MOBILE"
     const val PREF_KEEP_DEBUG_LOG: String = "KEEP_DEBUG_LOG"
@@ -129,7 +127,6 @@ object Keys {
     // file types
     const val FILE_TYPE_DEFAULT: Int = 0
     const val FILE_TYPE_PLAYLIST: Int = 10
-    const val FILE_TYPE_RSS: Int = 10
     const val FILE_TYPE_AUDIO: Int  = 20
     const val FILE_TYPE_IMAGE: Int  = 3
 
@@ -196,8 +193,6 @@ object Keys {
     const val RESULT_DATA_SLEEP_TIMER_REMAINING: String = "DATA_SLEEP_TIMER_REMAINING"
     const val RESULT_CODE_PERIODIC_PROGRESS_UPDATE: Int = 1
     const val RESULT_DATA_METADATA: String = "DATA_PLAYBACK_PROGRESS"
-    const val RESULT_CODE_PLAYBACK_SPEED: Int = 2
-    const val RESULT_DATA_PLAYBACK_SPEED: String = "DATA_PLAYBACK_SPEED"
 
     // theme states
     const val STATE_THEME_FOLLOW_SYSTEM: String = "stateFollowSystem"
