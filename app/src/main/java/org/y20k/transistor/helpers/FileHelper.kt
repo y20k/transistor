@@ -189,7 +189,7 @@ object FileHelper {
 
 
     /* Reads m3u or pls playlists */
-    fun readStationPlaylist(context: Context, playlistInputStream: InputStream?, remoteFileLocation: String = String()): Station {
+    fun readStationPlaylist(playlistInputStream: InputStream?): Station {
         val station: Station = Station()
         if (playlistInputStream != null) {
             val reader: BufferedReader = BufferedReader(InputStreamReader(playlistInputStream))
@@ -199,7 +199,7 @@ object FileHelper {
                     // M3U: found station name
                     line.contains("#EXTINF:-1,") -> station.name = line.substring(11).trim()
                     // M3U: found stream URL
-                    line.startsWith("http") -> station.streamUris.add(line.trim())
+                    line.startsWith("http") -> station.streamUris.add(0, line.trim())
                     // PLS: found station name
                     line.matches(Regex("^Title[0-9]+=.*")) -> station.name = line.substring(line.indexOf("=") + 1).trim()
                     // PLS: found stream URL

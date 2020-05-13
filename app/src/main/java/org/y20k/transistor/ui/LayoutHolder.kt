@@ -71,6 +71,8 @@ data class LayoutHolder(var rootView: View) {
     var sheetSleepTimerCancelButtonView: ImageView
     private var sheetSleepTimerRemainingTimeView: TextView
     private var onboardingLayout: ConstraintLayout
+    private var onboardingQuoteViews: Group
+    private var onboardingImportViews: Group
     private var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
     private var metadataHistory: MutableList<String>
     private var metadataHistoryPosition: Int
@@ -97,6 +99,8 @@ data class LayoutHolder(var rootView: View) {
         sheetSleepTimerCancelButtonView = rootView.findViewById(R.id.sleep_timer_cancel_button)
         sheetSleepTimerRemainingTimeView = rootView.findViewById(R.id.sleep_timer_remaining_time)
         onboardingLayout = rootView.findViewById(R.id.onboarding_layout)
+        onboardingQuoteViews = rootView.findViewById(R.id.onboarding_quote_views)
+        onboardingImportViews = rootView.findViewById(R.id.onboarding_import_views)
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
         metadataHistory = PreferencesHelper.loadMetadataHistory(rootView.context)
         metadataHistoryPosition = metadataHistory.size - 1
@@ -206,6 +210,18 @@ data class LayoutHolder(var rootView: View) {
                 playButtonView.setImageResource(R.drawable.ic_play_symbol_white_36dp)
                 metadataView.text
             }
+        }
+    }
+
+
+    /* Toggle the Import Running indicator  */
+    fun toggleImportingStationViews() {
+        if (onboardingImportViews.visibility == View.INVISIBLE) {
+            onboardingImportViews.visibility = View.VISIBLE
+            onboardingQuoteViews.visibility = View.INVISIBLE
+        } else {
+            onboardingImportViews.visibility = View.INVISIBLE
+            onboardingQuoteViews.visibility = View.VISIBLE
         }
     }
 

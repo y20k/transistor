@@ -4,7 +4,7 @@
     android:id="@+id/onboarding_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:visibility="gone">
+    android:visibility="visible">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/onboarding_headline"
@@ -76,6 +76,27 @@
         app:layout_constraintStart_toStartOf="@+id/app_name"
         app:layout_constraintTop_toBottomOf="@+id/app_name" />
 
+    <ProgressBar
+        android:id="@+id/progress_indicator"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="42dp"
+        app:layout_constraintEnd_toEndOf="@+id/app_description"
+        app:layout_constraintStart_toStartOf="@+id/app_description"
+        app:layout_constraintTop_toBottomOf="@+id/app_description" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/import_running_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/onboarding_app_import_running"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        android:textColor="@color/text_lightweight"
+        app:layout_constraintEnd_toEndOf="@+id/progress_indicator"
+        app:layout_constraintStart_toStartOf="@+id/progress_indicator"
+        app:layout_constraintTop_toBottomOf="@+id/progress_indicator" />
+
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/rodriguez_quote_1"
         android:layout_width="wrap_content"
@@ -93,14 +114,29 @@
         android:id="@+id/rodriguez_quote_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
         android:text="@string/onboarding_app_rodriguez_quote_2"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
         android:textColor="@color/text_lightweight"
         android:textStyle="italic"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/rodriguez_quote_1"
         app:layout_constraintStart_toStartOf="@+id/rodriguez_quote_1"
         app:layout_constraintTop_toBottomOf="@+id/rodriguez_quote_1" />
+
+    <!-- Constraintlayout View Groups -->
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/onboarding_import_views"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="invisible"
+        app:constraint_referenced_ids="progress_indicator,import_running_text" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/onboarding_quote_views"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="visible"
+        app:constraint_referenced_ids="rodriguez_quote_1,rodriguez_quote_2" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

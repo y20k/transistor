@@ -84,7 +84,7 @@ object CollectionHelper {
     /* Creates station from previously downloaded playlist file */
     fun createStationFromPlaylistFile(context: Context, localFileUri: Uri, remoteFileLocation: String): Station {
         // read station playlist
-        val station: Station = FileHelper.readStationPlaylist(context, context.contentResolver.openInputStream(localFileUri), remoteFileLocation)
+        val station: Station = FileHelper.readStationPlaylist(context.contentResolver.openInputStream(localFileUri))
         if (station.name.isEmpty()) {
             // construct name from file name - strips file extension
             station.name = FileHelper.getFileName(context, localFileUri).substringBeforeLast(".")
@@ -220,21 +220,23 @@ object CollectionHelper {
     }
 
 
-    /* Get the UUID from collection for given station */ // todo does not make sense - delete
-    fun getStationUuid(collection: Collection, station: Station): String {
-        collection.stations.forEach {
-            if (it.uuid == station.uuid) return station.uuid
-        }
-        return String()
-    }
-
-
     /* Get station from collection for given UUID */
     fun getStation(collection: Collection, stationUuid: String): Station {
         collection.stations.forEach { station ->
                 if (station.uuid == stationUuid) {
                     return station
                 }
+        }
+        return Station()
+    }
+
+
+    /* Get station from collection for given Stream Uri */
+    fun getStationWithStreamUri(collection: Collection, streamUri: String): Station {
+        collection.stations.forEach { station ->
+            if (station.getStreamUri() == streamUri) {
+                return station
+            }
         }
         return Station()
     }
@@ -299,6 +301,7 @@ object CollectionHelper {
         }
         return String()
     }
+
 
 
     /* Saves the playback state of a given station */
@@ -385,7 +388,6 @@ object CollectionHelper {
     /* Sorts radio stations by name */ // todo
     fun sortCollection(collection: Collection): Collection {
         collection.stations = collection.stations.sortedWith(compareByDescending<Station> { it.starred }.thenBy { it.name }) as MutableList<Station>
-        collection.stations.forEach { station -> LogHelper.e(TAG, station.name) } // todo remove
         return collection
     }
 

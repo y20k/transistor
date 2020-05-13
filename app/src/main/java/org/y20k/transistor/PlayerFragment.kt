@@ -112,12 +112,6 @@ class PlayerFragment: Fragment(), CoroutineScope,
         // Create MediaBrowserCompat
         mediaBrowser = MediaBrowserCompat(activity as Context, ComponentName(activity as Context, PlayerService::class.java), mediaBrowserConnectionCallback, null)
 
-        // convert old stations (one-time import)
-        if (PreferencesHelper.isHouseKeepingNecessary(activity as Context)) {
-            ImportHelper.convertOldStations(activity as Context)
-            // PreferencesHelper.saveHouseKeepingNecessaryState(activity as Context) // todo uncomment
-        }
-
     }
 
 
@@ -128,6 +122,12 @@ class PlayerFragment: Fragment(), CoroutineScope,
         val rootView: View = inflater.inflate(R.layout.fragment_player, container, false);
         layout = LayoutHolder(rootView)
         initializeViews()
+
+        // convert old stations (one-time import)
+        if (PreferencesHelper.isHouseKeepingNecessary(activity as Context)) {
+            if (ImportHelper.convertOldStations(activity as Context)) layout.toggleImportingStationViews()
+            PreferencesHelper.saveHouseKeepingNecessaryState(activity as Context)
+        }
 
         // hide action bar
         (activity as AppCompatActivity).supportActionBar?.hide()
@@ -252,15 +252,11 @@ class PlayerFragment: Fragment(), CoroutineScope,
     override fun onFindStationDialog(remoteStationLocation: String, station: Station) {
         super.onFindStationDialog(remoteStationLocation, station)
         if (remoteStationLocation.isNotEmpty()) {
-            LogHelper.e(TAG, "Station address entered:\n$remoteStationLocation") // todo remove
-
-            // todo move to CollectionHelper
             // detect content type on background thread
             launch {
                 val deferred: Deferred<NetworkHelper.ContentType> = async(Dispatchers.Default) { NetworkHelper.detectContentTypeSuspended(remoteStationLocation) }
                 // wait for result
                 val contentType: NetworkHelper.ContentType = deferred.await()
-
                 // CASE: playlist detected
                 if (Keys.MIME_TYPES_M3U.contains(contentType.type) or
                     Keys.MIME_TYPES_PLS.contains(contentType.type)) {
@@ -270,6 +266,7 @@ class PlayerFragment: Fragment(), CoroutineScope,
                 // CASE: stream address detected
                 else if (Keys.MIME_TYPES_MPEG.contains(contentType.type) or
                          Keys.MIME_TYPES_OGG.contains(contentType.type) or
+                         Keys.MIME_TYPES_AAC.contains(contentType.type) or
                          Keys.MIME_TYPES_HLS.contains(contentType.type)) {
                     // create station and add to collection
                     val newStation: Station = Station(name = remoteStationLocation, streamUris = mutableListOf(remoteStationLocation), streamContent = contentType.type, modificationDate = GregorianCalendar.getInstance().time)
@@ -279,7 +276,6 @@ class PlayerFragment: Fragment(), CoroutineScope,
                 else {
                     Toast.makeText(activity as Context, R.string.toastmessage_station_not_valid, Toast.LENGTH_LONG).show()
                 }
-
             }
         }
 
@@ -542,6 +538,9 @@ class PlayerFragment: Fragment(), CoroutineScope,
         } else if (intent.hasExtra(Keys.EXTRA_STATION_UUID)) {
             val uuid: String? = intent.getStringExtra(Keys.EXTRA_STATION_UUID)
             MediaControllerCompat.getMediaController(activity as Activity).transportControls.playFromMediaId(uuid, null)
+        } else if (intent.hasExtra(Keys.EXTRA_STREAM_URI)) {
+            val streamUri: String = intent.getStringExtra(Keys.EXTRA_STREAM_URI) ?: String()
+            MediaControllerCompat.getMediaController(activity as Activity).sendCommand(Keys.CMD_PLAY_STREAM, bundleOf(Pair(Keys.KEY_STREAM_URI, streamUri)), null)
         }
     }
 

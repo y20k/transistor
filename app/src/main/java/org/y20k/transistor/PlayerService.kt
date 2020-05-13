@@ -676,6 +676,11 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
 
         override fun onCommand(command: String?, extras: Bundle?, cb: ResultReceiver?) {
             when (command) {
+                Keys.CMD_PLAY_STREAM -> {
+                    val streamUri: String = extras?.getString(Keys.KEY_STREAM_URI) ?: String()
+                    station = CollectionHelper.getStationWithStreamUri(collection, streamUri)
+                    startPlayback()
+                }
                 Keys.CMD_RELOAD_PLAYER_STATE -> {
                     playerState = PreferencesHelper.loadPlayerState(this@PlayerService)
                 }
