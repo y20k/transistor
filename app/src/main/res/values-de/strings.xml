@@ -184,4 +184,5 @@
     <string name="descr_dialog_edit_station_image">Senderbild</string>
     <string name="dialog_edit_update_station">Sender aktualisieren</string>
     <string name="dialog_edit_title">Sender bearbeiten</string>
+    <string name="onboarding_app_import_running">Importiere deine Sender. Bitte warten.</string>
 </resources>
