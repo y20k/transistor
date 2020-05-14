@@ -370,7 +370,9 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
         // remove station from collection
         newCollection.stations.removeAt(position)
         // update list
+        //notifyDataSetChanged()
         notifyItemRemoved(position)
+        notifyItemRangeChanged(position, itemCount)
         // save collection and broadcast changes
         CollectionHelper.saveCollection(context, newCollection)
     }
