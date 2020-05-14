@@ -99,6 +99,16 @@
                 <data android:mimeType="application/vnd.apple.mpegurl.audio" />
             </intent-filter>
 
+            <!-- react to "start player service" intents -->
+            <intent-filter>
+                <action android:name="org.y20k.transistor.action.START_PLAYER_SERVICE" />
+            </intent-filter>
+
+            <!-- react to "start player service" intents -->
+            <intent-filter>
+                <action android:name="org.y20k.transistor.action.START_PLAYER_SERVICE" />
+            </intent-filter>
+
             <!-- App Shortcuts -->
             <meta-data android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
