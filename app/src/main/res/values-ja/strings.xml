@@ -111,4 +111,7 @@
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7
     https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
+    <string name="dialog_edit_place_on_home_screen">ホーム画面に配置</string>
+    <string name="dialog_edit_choose_station_image">選択</string>
+    <string name="fragment_settings_title">設定</string>
 </resources>
