@@ -170,4 +170,5 @@
     <string name="dialog_edit_title">Modifica Stazione</string>
     <string name="dialog_edit_place_on_home_screen">Scorciatoia nella Schermata Iniziale</string>
     <string name="dialog_edit_choose_station_image">Scegli</string>
+    <string name="onboarding_app_import_running">Importazione delle tue stazioni. Si prega di attendere.</string>
 </resources>
