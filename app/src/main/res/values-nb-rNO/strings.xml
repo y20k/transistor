@@ -174,4 +174,8 @@
     <string name="dialog_edit_place_on_home_screen">Plasser på hjemmeskjerm</string>
     <string name="dialog_yes_no_message_update_station_images">Last ned siste versjon av alle stasjonsbilder\?</string>
     <string name="dialog_edit_choose_station_image">Velg</string>
+    <string name="descr_expanded_player_sleep_timer_cancel_button">Avbryt vekkeur</string>
+    <string name="descr_expanded_player_sleep_timer_start_button">Start vekkeur</string>
+    <string name="descr_expanded_player_sleep_timer_remaining_time">Tid til vekkeur</string>
+    <string name="onboarding_app_import_running">Importerer stasjonene dine… Vent.</string>
 </resources>

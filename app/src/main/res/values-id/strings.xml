@@ -170,4 +170,5 @@
     <string name="dialog_edit_update_station">Perbarui stasiun</string>
     <string name="dialog_edit_title">Sunting Stasiun</string>
     <string name="dialog_edit_choose_station_image">Pilih</string>
+    <string name="onboarding_app_import_running">Mengimpor stasiun anda. Silakan tunggu.</string>
 </resources>
