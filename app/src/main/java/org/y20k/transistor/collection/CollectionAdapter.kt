@@ -418,14 +418,13 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
 
     /* Updates the station list - redraws the views with changed content */
     private fun updateRecyclerView(oldCollection: Collection, newCollection: Collection) {
+        collection = newCollection
         if (oldCollection.stations.size == 0 && newCollection.stations.size > 0) {
             // data set has been initialized - redraw the whole list
-            collection = newCollection
             notifyDataSetChanged()
         } else {
             // calculate differences between current collection and new collection - and inform this adapter about the changes
             val diffResult = DiffUtil.calculateDiff(CollectionDiffCallback(oldCollection, newCollection), true)
-            collection = newCollection
             diffResult.dispatchUpdatesTo(this@CollectionAdapter)
         }
     }

@@ -211,7 +211,8 @@ class PlayerFragment: Fragment(), CoroutineScope,
                 if (resultCode == RESULT_OK && data != null) {
                     val imageUri: Uri? = data.data
                     if (imageUri != null) {
-                        collection = CollectionHelper.setStationImage(activity as Context, collection, imageUri, imageManuallySet = true)
+                        collection = CollectionHelper.setStationImageWithStationUuid(activity as Context, collection, imageUri, tempStationUuid, imageManuallySet = true)
+                        tempStationUuid = String()
                     }
                 }
             }
@@ -492,7 +493,7 @@ class PlayerFragment: Fragment(), CoroutineScope,
             val pickImageIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             val imagePickerApps: List<ResolveInfo> = (activity as Context).packageManager.queryIntentActivities(pickImageIntent, 0)
             if (imagePickerApps.isNotEmpty()) {
-                startActivityForResult(pickImageIntent, Keys.REQUEST_LOAD_IMAGE, bundleOf(Pair("test", tempStationUuid)))
+                startActivityForResult(pickImageIntent, Keys.REQUEST_LOAD_IMAGE, null )
             } else {
                 Toast.makeText(context, R.string.toastalert_no_image_picker, Toast.LENGTH_LONG).show()
             }
@@ -576,9 +577,6 @@ class PlayerFragment: Fragment(), CoroutineScope,
             layout.updatePlayerViews(activity as Context, station)
             // handle start intent
             handleStartIntent()
-
-            collectionAdapter
-
         })
     }
 

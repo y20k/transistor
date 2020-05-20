@@ -105,6 +105,7 @@ object NetworkHelper {
         val connection: HttpURLConnection? = createConnection(urlString)
         if (connection != null) {
             val contentTypeHeader: String = connection.contentType ?: String()
+            LogHelper.v(TAG, "Raw content type header: $contentTypeHeader")
             val contentTypeHeaderParts: List<String> = contentTypeHeader.split(";")
             contentTypeHeaderParts.forEachIndexed { index, part ->
                 if (index == 0 && part.isNotEmpty()) {
