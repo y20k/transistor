@@ -174,10 +174,7 @@ data class LayoutHolder(var rootView: View) {
             if (metadataHistory.last() != metadataView.text) {
                 metadataHistoryPosition = metadataHistory.size - 1
                 val metadataString = metadataHistory[metadataHistoryPosition]
-                when (playbackState) {
-                    PlaybackStateCompat.STATE_PLAYING -> metadataView.text = metadataString
-                    else -> metadataView.text = stationName
-                }
+                metadataView.text = metadataString
                 sheetMetadataHistoryView.text = metadataString
                 sheetMetadataHistoryView.isSelected = true
             }
@@ -208,7 +205,9 @@ data class LayoutHolder(var rootView: View) {
             }
             else -> {
                 playButtonView.setImageResource(R.drawable.ic_play_symbol_white_36dp)
-                metadataView.text
+                metadataView.text = stationNameView.text
+                sheetMetadataHistoryView.text = stationNameView.text
+                sheetMetadataHistoryView.isSelected = true
             }
         }
     }

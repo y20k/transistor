@@ -154,14 +154,15 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
         }
 
         if (intent != null && intent.action == Keys.ACTION_START) {
-            val stationUuid: String
             if (intent.hasExtra(Keys.EXTRA_STATION_UUID)) {
-                stationUuid = intent.getStringExtra(Keys.EXTRA_STATION_UUID) ?: String()
+                val stationUuid: String = intent.getStringExtra(Keys.EXTRA_STATION_UUID) ?: String()
+                station = CollectionHelper.getStation(collection, stationUuid)
+            } else if(intent.hasExtra(Keys.EXTRA_STREAM_URI)) {
+                val streamUri: String = intent.getStringExtra(Keys.EXTRA_STREAM_URI) ?: String()
+                station = CollectionHelper.getStationWithStreamUri(collection, streamUri)
             } else {
-                stationUuid = playerState.stationUuid
+                station = CollectionHelper.getStation(collection, playerState.stationUuid)
             }
-            station = CollectionHelper.getStation(collection, stationUuid)
-            LogHelper.e(TAG, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ${collection.stations.size}")
             if (station.isValid()) {
                 startPlayback()
             }
@@ -220,12 +221,15 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
 
     /* Updates metadata */
     private fun updateMetadata(metadata: String?) {
-        if (metadata != null && metadata.isNotEmpty() && !metadataHistory.contains(metadata)) {
+        if (metadata != null && metadata.isNotEmpty()) {
             // append metadata to metadata history
-            metadataHistory.add(metadata.substring(0, min(metadata.length, Keys.DEFAULT_MAX_LENGTH_OF_METADATA_ENTRY)))
+            val metadataString: String = metadata.substring(0, min(metadata.length, Keys.DEFAULT_MAX_LENGTH_OF_METADATA_ENTRY))
+            if (!metadataHistory.contains(metadataString)) {
+                metadataHistory.add(metadataString)
+            }
         } else if (metadata == null || metadata.isEmpty()) {
             // fallback: use station name
-            metadataHistory.replaceAll { station.name }
+            metadataHistory.removeIf { it == station.name }
             metadataHistory.add(station.name)
         }
         // trim metadata list
