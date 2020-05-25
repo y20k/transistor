@@ -444,7 +444,7 @@ class PlayerFragment: Fragment(), CoroutineScope,
             station = collection.stations[0]
             playerState.stationUuid = station.uuid
         }
-        layout.updatePlayerViews(activity as Context, station)
+        layout.updatePlayerViews(activity as Context, station, playerState.playbackState)
     }
 
 
@@ -463,7 +463,7 @@ class PlayerFragment: Fragment(), CoroutineScope,
         // setup ui
         var station: Station = CollectionHelper.getStation(collection, playerState.stationUuid)
         if (!station.isValid() && collection.stations.isNotEmpty()) station = collection.stations[0]
-        layout.updatePlayerViews(activity as Context, station)
+        layout.updatePlayerViews(activity as Context, station, playerState.playbackState)
         // start / pause playback
         when (startPlayback) {
             true -> MediaControllerCompat.getMediaController(activity as Activity).transportControls.playFromMediaId(station.uuid, null)
@@ -574,7 +574,7 @@ class PlayerFragment: Fragment(), CoroutineScope,
             station = CollectionHelper.getStation(collection, playerState.stationUuid)
             if (!station.isValid() && collection.stations.isNotEmpty()) station = collection.stations[0]
             // update player views
-            layout.updatePlayerViews(activity as Context, station)
+            layout.updatePlayerViews(activity as Context, station, playerState.playbackState)
             // handle start intent
             handleStartIntent()
         })
@@ -600,11 +600,8 @@ class PlayerFragment: Fragment(), CoroutineScope,
             // finish building the UI
             buildPlaybackControls()
 
-            // request current playback position
-            MediaControllerCompat.getMediaController(activity as Activity).sendCommand(Keys.CMD_REQUEST_PERIODIC_PROGRESS_UPDATE, null, resultReceiver)
-
-            // start requesting position updates if playback is running
             if (playerState.playbackState == PlaybackStateCompat.STATE_PLAYING) {
+                // start requesting continuous progess updates
                 handler.removeCallbacks(periodicProgressUpdateRequestRunnable)
                 handler.postDelayed(periodicProgressUpdateRequestRunnable, 0)
             }

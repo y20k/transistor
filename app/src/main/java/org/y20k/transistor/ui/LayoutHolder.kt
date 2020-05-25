@@ -138,9 +138,16 @@ data class LayoutHolder(var rootView: View) {
 
 
     /* Updates the player views */
-    fun updatePlayerViews(context: Context, station: Station, metadataHistory: ArrayList<String> = arrayListOf()) {
+    fun updatePlayerViews(context: Context, station: Station, playbackState: Int) {
         // update name
         stationNameView.text = station.name
+
+        // set default metadata views
+        if (playbackState != PlaybackStateCompat.STATE_PLAYING) {
+            metadataView.text = stationNameView.text
+            sheetMetadataHistoryView.text = stationNameView.text
+            sheetMetadataHistoryView.isSelected = true
+        }
 
         // update cover
         if (station.imageColor != -1) {
@@ -205,9 +212,6 @@ data class LayoutHolder(var rootView: View) {
             }
             else -> {
                 playButtonView.setImageResource(R.drawable.ic_play_symbol_white_36dp)
-                metadataView.text = stationNameView.text
-                sheetMetadataHistoryView.text = stationNameView.text
-                sheetMetadataHistoryView.isSelected = true
             }
         }
     }

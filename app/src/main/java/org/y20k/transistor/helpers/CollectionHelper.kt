@@ -397,7 +397,7 @@ object CollectionHelper {
         val mediaDescriptionBuilder = MediaDescriptionCompat.Builder()
         mediaDescriptionBuilder.setMediaId(station.uuid)
         mediaDescriptionBuilder.setTitle(station.name)
-        mediaDescriptionBuilder.setIconUri(Uri.parse(station.image))
+        //mediaDescriptionBuilder.setIconUri(Uri.parse(station.image))
         return MediaBrowserCompat.MediaItem(mediaDescriptionBuilder.build(), MediaBrowserCompat.MediaItem.FLAG_PLAYABLE)
     }
 
