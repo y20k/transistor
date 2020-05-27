@@ -297,7 +297,7 @@ class PlayerFragment: Fragment(), CoroutineScope,
 
     /* Overrides onPlayButtonTapped from CollectionAdapterListener */
     override fun onPlayButtonTapped(stationUuid: String, playbackState: Int) {
-        when (playerState.playbackState) {
+        when (playbackState) {
             // PLAYER STATE: PLAYING
             PlaybackStateCompat.STATE_PLAYING -> {
                 // stop playback

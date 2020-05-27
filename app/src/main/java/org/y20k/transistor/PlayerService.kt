@@ -21,6 +21,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.media.audiofx.AudioEffect
+import android.media.session.PlaybackState
 import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -575,6 +576,11 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
             val deferred: Deferred<Collection> = async(Dispatchers.Default) { FileHelper.readCollectionSuspended(context) }
             // wait for result and update collection
             collection = deferred.await()
+            // special case: trigger metadata view update for stations that have no metadata
+            if (playerState.playbackState == PlaybackState.STATE_PLAYING && station.name == metadataHistory.last()) {
+                station = CollectionHelper.getStation(collection, station.uuid)
+                updateMetadata(null)
+            }
         }
     }
 

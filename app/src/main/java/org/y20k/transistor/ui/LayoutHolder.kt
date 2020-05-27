@@ -139,15 +139,16 @@ data class LayoutHolder(var rootView: View) {
 
     /* Updates the player views */
     fun updatePlayerViews(context: Context, station: Station, playbackState: Int) {
-        // update name
-        stationNameView.text = station.name
 
-        // set default metadata views
+        // set default metadata views, when playback has stopped
         if (playbackState != PlaybackStateCompat.STATE_PLAYING) {
-            metadataView.text = stationNameView.text
-            sheetMetadataHistoryView.text = stationNameView.text
+            metadataView.text = station.name
+            sheetMetadataHistoryView.text = station.name
             sheetMetadataHistoryView.isSelected = true
         }
+
+        // update name
+        stationNameView.text = station.name
 
         // update cover
         if (station.imageColor != -1) {
