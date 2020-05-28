@@ -1,6 +1,6 @@
 ---
 name: Station Issue
-about: Enter name of radio station here
+about: Provide information on radio stations that do not work
 title: "[Station]"
 labels: station issue
 assignees: ''
