@@ -74,6 +74,9 @@ class RadioBrowserResultAdapter(private val listener: RadioBrowserResultAdapterL
         searchResultViewHolder.streamView.text = searchResult.url
         // mark selected if necessary
         searchResultViewHolder.searchResultLayout.isSelected = selectedPosition == position
+        // toggle text scrolling (marquee) if necessary
+        searchResultViewHolder.nameView.isSelected = selectedPosition == position
+        searchResultViewHolder.streamView.isSelected = selectedPosition == position
         // attach touch listener
         searchResultViewHolder.searchResultLayout.setOnClickListener {
             // move marked position
