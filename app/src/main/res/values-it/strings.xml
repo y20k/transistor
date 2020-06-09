@@ -127,7 +127,7 @@
     <string name="notification_now_playing_channel_description">Controlli di riproduzione, nome e immagine della stazione.</string>
     <string name="notification_now_playing_channel_name">Controlli Riproduzione</string>
     <string name="station_list_button_add_new_station">Aggiungi Stazione</string>
-    <string name="toastmessage_updating_station">Aggiornamento stazioni.</string>
+    <string name="toastmessage_updating_station">Aggiornamento stazione…</string>
     <string name="toastmessage_updating_collection">Aggiornamento della raccolta delle stazioni.</string>
     <string name="toastmessage_station_not_valid">Stazione non valida.</string>
     <string name="toastmessage_station_duplicate">Stazione già presente.</string>
