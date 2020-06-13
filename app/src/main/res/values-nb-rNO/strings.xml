@@ -178,4 +178,11 @@
     <string name="descr_expanded_player_sleep_timer_start_button">Start vekkeur</string>
     <string name="descr_expanded_player_sleep_timer_remaining_time">Tid til vekkeur</string>
     <string name="onboarding_app_import_running">Importerer stasjonene dine… Vent.</string>
+    <string name="pref_update_station_images_summary">Last ned siste versjon av alle stasjonsbilder i samlingen din.</string>
+    <string name="pref_maintenance_title">Vedlikehold</string>
+    <string name="pref_general_title">Generelt</string>
+    <string name="notification_playing">Spiller</string>
+    <string name="notification_now_playing_channel_description">Avspillingskontroller, stasjonsnavn og bilde.</string>
+    <string name="toastmessage_updating_collection">Oppdaterer stasjonssamling.</string>
+    <string name="dialog_yes_no_negative_button_add_up_next">Legg til i \"Spilles etterpå\"</string>
 </resources>
