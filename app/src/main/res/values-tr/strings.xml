@@ -26,7 +26,7 @@
     <string name="descr_player_sheet_content_copy_icon">Kopyala</string>
     <string name="descr_player_sheet_p_stream_url">Seçili radyo istasyonunun yayın bağlantısı</string>
     <string name="descr_list_add_new">Yeni istasyon ekle</string>
-    <string name="descr_list_add_select_stream_dropdown">Seçili akışları barındıran aşağı kayan menü</string>
+    <string name="descr_list_add_select_stream_dropdown">Bir yayın seçin</string>
     <!-- player -->
     <string name="player_sheet_h1_details">Details</string>
     <string name="player_sheet_h2_current_session">Geçerli oturum</string>
@@ -48,13 +48,13 @@
     <string name="dialog_rename_station_input_hint">Yeni isim girin</string>
     <string name="dialog_rename_station_message">İstasyonunu yeniden adlandır</string>
     <string name="dialog_button_rename">Yeniden adlandır</string>
-    <string name="dialog_add_station_choose_stream_heading">Birden çok akış bulundu</string>
-    <string name="dialog_add_station_choose_stream_message">"Lütfen bir akış seçin "</string>
+    <string name="dialog_add_station_choose_stream_heading">Birden çok yayın bulundu</string>
+    <string name="dialog_add_station_choose_stream_message">Lütfen bir yayın seçin</string>
     <string name="dialog_add_station_choose_stream_button">Seç</string>
     <!-- error dialogs -->
     <string name="dialog_error_title_default">Hata</string>
     <string name="dialog_error_message_default">Bir hata oluştu</string>
-    <string name="dialog_error_details_button_default">Detayları göster</string>
+    <string name="dialog_error_details_button_default">Ayrıntıları göster</string>
     <string name="dialog_error_details_default">Kullanılabilir ayrıntı yok</string>
     <string name="dialog_error_details_write">Bu istasyon muhtemelen zaten var ya da yoksa, harici depolamanızı doğrulamak isteyebilirsiniz.</string>
     <string name="dialog_error_title_fetch_download">İndirme Sorunu</string>
@@ -73,9 +73,9 @@
     <!-- messages -->
     <string name="toastmessage_add_download_started">İndirme başladı.</string>
     <string name="toastmessage_add_open_file_started">Dosya açılıyor.</string>
-    <string name="toastmessage_long_press_playback_stopped">Oynatma durdurdu (uzun dokunuş algılandı)</string>
+    <string name="toastmessage_long_press_playback_stopped">Oynatma durdu (uzun dokunuş algılandı)</string>
     <string name="toastmessage_long_press_playback_started">Oynatma başladı (uzun dokunuş algılandı)</string>
-    <string name="toastmessage_long_press_change_icon">"İstasyon simgesini değiştir  (uzun basma algılandı)"</string>
+    <string name="toastmessage_long_press_change_icon">İstasyon simgesini değiştir (uzun basma algılandı)</string>
     <string name="toastmessage_long_press_change_name">İstasyonu yeniden adlandır (uzun basma algılandı)</string>
     <string name="toastmessage_theme_night">\'Gece modu\'na geçme (uzun basma algılandı)</string>
     <string name="toastmessage_theme_day">\'Gündüz modu\'na geçme (uzun basma algılandı)</string>
@@ -86,7 +86,7 @@
     <string name="toastmessage_copied_to_clipboard_url">Yayın bağlantısı panoya kopyalandı.</string>
     <string name="toastmessage_copied_to_clipboard_metadata">Meta veri panoya kopyalandı.</string>
     <string name="toastmessage_station_copied">İstasyon panoya kopyalandı.</string>
-    <string name="toastmessage_stream_may_not_work">Desteklenmeyen ses formatı algılandı. Yayın düzgün oynatılamayabilir.</string>
+    <string name="toastmessage_stream_may_not_work">Desteklenmeyen ses biçimi algılandı. Yayın düzgün oynatılamayabilir.</string>
     <string name="toastmessage_timer_activated">Uyku zamanlayıcısı etkin.</string>
     <string name="toastmessage_timer_cancelled">Uyku zamanlayıcısı iptal edildi.</string>
     <string name="toastmessage_timer_duration_increased">Süre arttı.</string>
@@ -94,7 +94,7 @@
     <string name="toastalert_rename_unsuccessful">İstasyon yeniden adlandırılamadı. Lütfen farklı bir ad seçin.</string>
     <string name="toastalert_delete_successful">İstasyon kaldırıldı.</string>
     <string name="toastalert_no_external_storage">Harici depolamaya erişilemiyor.</string>
-    <string name="toastalert_no_image_picker">Görüntü seçici mevcut değil. Bir Galeri uygulaması yüklemeyi düşünün.</string>
+    <string name="toastalert_no_image_picker">Kullanılabilir görüntü seçici yok. Bir galeri uygulaması yüklemeyi düşünün.</string>
     <string name="toastalert_headphones_unplugged">Kulaklık çıkarıldı. Oynatma durdu.</string>
     <string name="toastalert_permission_denied">İzin reddedildi:</string>
     <string name="toastalert_station_not_found">İstasyon bulunamıyor.</string>
@@ -103,12 +103,87 @@
     <!-- notification -->
     <string name="notification_play">Oynat</string>
     <string name="notification_stop">Stop</string>
-    <string name="notification_channel_playback_name">Oynatma Kontrolleri</string>
-    <string name="notification_channel_playback_description">Oynatma kontrolleri, istasyon logosu ve şimdi yürütülüyor bilgisi.</string>
+    <string name="notification_channel_playback_name">Oynatma Denetimleri</string>
+    <string name="notification_channel_playback_description">Oynatma denetimleri, istasyon logosu ve şimdi yürütülüyor bilgisi.</string>
     <!-- onboarding -->
     <string name="onboarding_app_description">Radyo uygulaması</string>
     <string name="onboarding_app_get_started">Başlayın</string>
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7
     https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
+    <string name="toastmessage_sleep_timer_unable_to_start">Lütfen önce oynatmayı başlatın.</string>
+    <string name="dialog_button_save">Değişiklikleri kaydet</string>
+    <string name="onboarding_app_import_running">İstasyonlarınız içe aktarılıyor. Lütfen bekleyin.</string>
+    <string name="descr_player_playback_button">Oynat/duraklat</string>
+    <string name="descr_player_station_image">İstasyon görüntüsü</string>
+    <string name="descr_expanded_player_sleep_timer_start_button">Uyku zamanlayıcısını başlat</string>
+    <string name="descr_expanded_player_sleep_timer_remaining_time">Uyku zamanlayıcısında kalan süre</string>
+    <string name="descr_expanded_player_sleep_timer_cancel_button">Uyku zamanlayıcısını iptal et</string>
+    <string name="descr_dialog_edit_update_icon">Güncelle</string>
+    <string name="descr_dialog_edit_station_image">İstasyon görüntüsü</string>
+    <string name="descr_dialog_edit_place_on_home_screen_icon">Ana ekrana ekle</string>
+    <string name="descr_card_station_image">İstasyon görüntüsü</string>
+    <string name="descr_card_starred_station">Favori istasyon</string>
+    <string name="descr_card_small_edit_button">Düzenle</string>
+    <string name="descr_card_small_play_button">Oynat/durdur</string>
+    <string name="descr_card_small_download_button">İndir</string>
+    <string name="descr_card_settings_button">Ayarlar</string>
+    <string name="descr_card_playback_indicator">Oynatma ilerlemesi</string>
+    <string name="pref_update_station_images_title">İstasyon Görüntülerini Güncelle</string>
+    <string name="pref_update_station_images_summary">Koleksiyonunuzdaki tüm istasyon görüntülerinin en son sürümünü indirin.</string>
+    <string name="pref_theme_selection_title">Uygulama Teması</string>
+    <string name="pref_theme_selection_summary">Geçerli tema:</string>
+    <string name="pref_theme_selection_mode_light">Aydınlık mod</string>
+    <string name="pref_theme_selection_mode_device_default">Aygıt ile aynı</string>
+    <string name="pref_theme_selection_mode_dark">Karanlık mod</string>
+    <string name="pref_maintenance_title">Bakım</string>
+    <string name="pref_general_title">Genel</string>
+    <string name="pref_delete_all_title">İndirilenleri Sil</string>
+    <string name="notification_skip_to_next">Sonraki</string>
+    <string name="notification_skip_to_previous">Önceki</string>
+    <string name="notification_playing">Oynatılıyor</string>
+    <string name="notification_now_playing_channel_description">Oynatma denetimleri, istasyon adı ve görüntüsü.</string>
+    <string name="notification_now_playing_channel_name">Oynatma Denetimleri</string>
+    <string name="station_list_button_add_new_station">Yeni istasyon ekle</string>
+    <string name="toastmessage_updating_station">İstasyon güncelleniyor…</string>
+    <string name="toastmessage_updating_collection">İstasyon koleksiyonu güncelleniyor.</string>
+    <string name="toastmessage_station_not_valid">İstasyon geçerli değil.</string>
+    <string name="toastmessage_station_duplicate">Yinelenen istasyon.</string>
+    <string name="toastmessage_error_no_station_found">Oynatma başlatılamadı. Lütfen önce bir radyo istasyonu ekleyin.</string>
+    <string name="toastmessage_error_no_station_matches_search">Aramanızla eşleşen bir istasyon bulunamadı.</string>
+    <string name="toastmessage_error_missing_storage_permission">Bu dosyayı açmak için \"Depolamayı Oku\" izni verin.</string>
+    <string name="toastmessage_error_download_error">İndirme hatası</string>
+    <string name="menu_update">İstasyonu güncelle</string>
+    <string name="dialog_yes_no_title_default">Karar ver</string>
+    <string name="dialog_yes_no_positive_button_vpn_download">Yine de indir</string>
+    <string name="dialog_yes_no_positive_button_update_covers">Güncelle</string>
+    <string name="dialog_yes_no_positive_button_update_collection">Güncelle</string>
+    <string name="dialog_yes_no_positive_button_remove_station">Kaldır</string>
+    <string name="dialog_yes_no_positive_button_non_wifi_download">Yine de indir</string>
+    <string name="dialog_yes_no_positive_button_delete_downloads">Hepsini Sil</string>
+    <string name="dialog_yes_no_positive_button_default">Evet</string>
+    <string name="dialog_yes_no_positive_button_add_up_next">Şimdi Başlat</string>
+    <string name="dialog_yes_no_negative_button_add_up_next">\'Sonraki\'ne ekle</string>
+    <string name="dialog_yes_no_negative_button_default">Hayır</string>
+    <string name="dialog_yes_no_negative_button_cancel">İptal</string>
+    <string name="dialog_yes_no_message_update_station_images">Tüm istasyon görüntülerinin son sürümü indirilsin mi\?</string>
+    <string name="dialog_yes_no_message_update_collection">Değişiklikler denetlensin mi\?</string>
+    <string name="dialog_yes_no_message_remove_station">Bu istasyon kaldırılsın mı\?</string>
+    <string name="dialog_yes_no_message_default">Gerçekten bunu yapmak istiyor musunuz\?</string>
+    <string name="dialog_opml_import_details_default">Kullanılabilir ayrıntı yok</string>
+    <string name="dialog_opml_import_details_button">Ayrıntıları göster</string>
+    <string name="dialog_opml_import_button_okay">İçe aktar</string>
+    <string name="dialog_generic_details_default">Kullanılabilir ayrıntı yok</string>
+    <string name="dialog_generic_details_button">Ayrıntıları göster</string>
+    <string name="dialog_find_station_title">İstasyon Bul</string>
+    <string name="dialog_find_station_no_results">Sonuç bulunamadı.</string>
+    <string name="dialog_find_station_hint">İsim veya yayın adresi</string>
+    <string name="dialog_edit_place_on_home_screen">Ana ekrana ekle</string>
+    <string name="dialog_find_station_button_add">Ekle</string>
+    <string name="dialog_error_message_no_network">İnternete bağlanın.</string>
+    <string name="dialog_error_title_no_network">Çevrim dışı</string>
+    <string name="dialog_edit_update_station">İstasyonu güncelle</string>
+    <string name="dialog_edit_title">İstasyonu Düzenle</string>
+    <string name="dialog_edit_choose_station_image">Seç</string>
+    <string name="fragment_settings_title">Ayarlar</string>
 </resources>
