@@ -375,7 +375,6 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
         player.setAudioAttributes(audioAttributes, true)
         player.addAnalyticsListener(analyticsListener)
         player.addMetadataOutput(this)
-        // player.seekTo(playerState.playbackPosition)
         return player
     }
 
@@ -420,10 +419,15 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
     /* Start playback with current station */
     private fun startPlayback() {
         LogHelper.d(TAG, "Starting Playback. Station: ${station.name}.")
-        // sanity check
-        if (station.streamUris.isEmpty()) {
+        // check if station is valid and collection has stations
+        if (!station.isValid() && collection.stations.isNullOrEmpty()) {
             LogHelper.e(TAG, "Unable to start playback. Station has no stream addresses.")
             return
+        }
+        // default to first station, if no station has been selected
+        if (!station.isValid() && collection.stations.isNotEmpty()) {
+            LogHelper.w(TAG, "No station has been selected. Starting playback of first station.")
+            station = collection.stations[0]
         }
         // prepare player
         preparePlayer()
@@ -648,12 +652,34 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
                 } else {
                     // unable to get the first station - notify user
                     Toast.makeText(this@PlayerService, R.string.toastmessage_error_no_station_found, Toast.LENGTH_LONG).show()
-                    LogHelper.e(TAG, "Unable to start playback. Please add a radio station first.")
+                    LogHelper.e(TAG, "Unable to start playback. Please add a radio station first. (Collection size = ${collection.stations.size} | provider initialized = ${collectionProvider.isInitialized()})")
                 }
             }
             // NORMAL CASE: Try to match station name and voice query
             else {
-                // todo implement
+                val queryLowercase: String = query.toLowerCase(Locale.getDefault())
+                collectionProvider.stationListByName.forEach { mediaItem ->
+                    // get station name (here -> title)
+                    val stationName: String = mediaItem.description.title.toString().toLowerCase(Locale.getDefault())
+                    // FIRST: try to match the whole query
+                    if (stationName == queryLowercase) {
+                        // start playback
+                        onPlayFromMediaId(mediaItem.description.mediaId, null)
+                        return
+                    }
+                    // SECOND: try to match parts of the query
+                    else {
+                        val words: List<String> = queryLowercase.split(" ")
+                        words.forEach { word ->
+                            if (stationName.contains(word)) {
+                                // start playback
+                                onPlayFromMediaId(mediaItem.description.mediaId, null)
+                                return
+                            }
+                        }
+                    }
+                }
+                // NO MATCH: unable to match query - notify user
                 Toast.makeText(this@PlayerService, R.string.toastmessage_error_no_station_matches_search, Toast.LENGTH_LONG).show()
                 LogHelper.e(TAG, "Unable to find a station that matches your search query: $query")
             }

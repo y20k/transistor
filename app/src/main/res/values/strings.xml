@@ -43,6 +43,7 @@
     <!-- Station Menu -->
     <string name="menu_update">Update station</string>
     <!-- Toasts -->
+    <string name="toastmessage_error_download_error">Download error</string>
     <string name="toastmessage_error_missing_storage_permission">Grant \"Read Storage\" permission to open this file.</string>
     <string name="toastmessage_error_no_station_matches_search">Unable to find a station that matches your search.</string>
     <string name="toastmessage_error_no_station_found">Unable to start playback. Please add a radio station first.</string>

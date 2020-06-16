@@ -81,8 +81,8 @@ dependencies {
 
     implementation "android.arch.work:work-runtime-ktx:1.0.1"
 
-    implementation "com.google.android.exoplayer:exoplayer:2.11.4"
-    implementation "com.google.android.exoplayer:extension-mediasession:2.11.4"
+    implementation "com.google.android.exoplayer:exoplayer:2.11.5"
+    implementation "com.google.android.exoplayer:extension-mediasession:2.11.5"
     implementation "com.google.code.gson:gson:2.8.6"
 
     implementation 'com.android.volley:volley:1.1.1'

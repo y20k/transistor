@@ -18,10 +18,12 @@ import android.app.DownloadManager
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
+import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.preference.PreferenceManager
 import kotlinx.coroutines.*
 import org.y20k.transistor.Keys
+import org.y20k.transistor.R
 import org.y20k.transistor.core.Collection
 import org.y20k.transistor.core.Station
 import org.y20k.transistor.extensions.copy
@@ -93,7 +95,9 @@ object DownloadHelper {
         // get local Uri in content://downloads/all_downloads/ for download ID
         val downloadResult: Uri? = downloadManager.getUriForDownloadedFile(downloadId)
         if (downloadResult == null) {
-            LogHelper.w(TAG, "Download not successful. Error code = ${getDownloadError(downloadId)}")
+            val downloadError: Int = getDownloadError(downloadId)
+            Toast.makeText(context, "${context.getString(R.string.toastmessage_error_download_error)} ($downloadError)", Toast.LENGTH_LONG).show()
+            LogHelper.w(TAG, "Download not successful. Error code = $downloadError")
             removeFromActiveDownloads(context, arrayOf(downloadId), deleteDownload = true)
             return
         } else {

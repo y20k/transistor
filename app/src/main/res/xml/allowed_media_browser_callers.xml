@@ -85,7 +85,8 @@ Adding New Keys:
     - grab the signature with the new key
     -->
     <signature name="Media Controller Tester" package="com.example.android.mediacontroller">
-        <key>46:ba:05:de:f6:0c:f2:65:23:4e:dc:e2:c3:69:c4:9c:63:80:bf:ba:42:b0:8c:05:d9:4a:6f:51:22:ed:06:66</key>
+        <key>7b:2a:46:f8:1e:cd:01:c0:b5:c7:bd:c9:9a:ca:6a:85:5b:f7:64:26:f5:4e:9a:d3:29:80:b1:da:41:76:63:e9</key>
+        <!-- <key>46:ba:05:de:f6:0c:f2:65:23:4e:dc:e2:c3:69:c4:9c:63:80:bf:ba:42:b0:8c:05:d9:4a:6f:51:22:ed:06:66</key> -->
     </signature>
 
 </allowed_callers>

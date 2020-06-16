@@ -402,6 +402,12 @@ object CollectionHelper {
     }
 
 
+    /* Creates a fallback station - stupid hack for Android Auto compatibility :-/ */
+    fun createFallbackStation(): Station {
+        return Station(name = "KCSB", streamUris = mutableListOf("http://live.kcsb.org:80/KCSB_128"), streamContent = Keys.MIME_TYPE_MPEG)
+    }
+
+
     /* Sorts radio stations by name */ // todo
     fun sortCollection(collection: Collection): Collection {
         collection.stations = collection.stations.sortedWith(compareByDescending<Station> { it.starred }.thenBy { it.name }) as MutableList<Station>
