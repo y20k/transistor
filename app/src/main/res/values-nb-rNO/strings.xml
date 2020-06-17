@@ -185,4 +185,5 @@
     <string name="notification_now_playing_channel_description">Avspillingskontroller, stasjonsnavn og bilde.</string>
     <string name="toastmessage_updating_collection">Oppdaterer stasjonssamling.</string>
     <string name="dialog_yes_no_negative_button_add_up_next">Legg til i \"Spilles etterpå\"</string>
+    <string name="toastmessage_error_download_error">Nedlastingsfeil</string>
 </resources>
