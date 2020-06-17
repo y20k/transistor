@@ -56,13 +56,14 @@ data class LayoutHolder(var rootView: View) {
     var recyclerView: RecyclerView
     val layoutManager: LinearLayoutManager
     private var bottomSheet: ConstraintLayout
-    private var sheetMetadataViews: Group
+    //private var sheetMetadataViews: Group
     var sleepTimerRunningViews: Group
     private var downloadProgressIndicator: ProgressBar
     private var stationImageView: ImageView
     private var stationNameView: TextView
     private var metadataView: TextView
     var playButtonView: ImageView
+    var bufferingIndicator: ProgressBar
     private var sheetStreamingLinkView: TextView
     private var sheetMetadataHistoryView: TextView
     var sheetNextMetadataView: ImageView
@@ -84,13 +85,14 @@ data class LayoutHolder(var rootView: View) {
         swipeRefreshLayout = rootView.findViewById(R.id.swipe_refresh_layout)
         recyclerView = rootView.findViewById(R.id.station_list)
         bottomSheet = rootView.findViewById(R.id.bottom_sheet)
-        sheetMetadataViews = rootView.findViewById(R.id.sheet_metadata_views)
+        //sheetMetadataViews = rootView.findViewById(R.id.sheet_metadata_views)
         sleepTimerRunningViews = rootView.findViewById(R.id.sleep_timer_running_views)
         downloadProgressIndicator = rootView.findViewById(R.id.download_progress_indicator)
         stationImageView = rootView.findViewById(R.id.station_icon)
         stationNameView = rootView.findViewById(R.id.player_station_name)
         metadataView = rootView.findViewById(R.id.player_station_metadata)
         playButtonView = rootView.findViewById(R.id.player_play_button)
+        bufferingIndicator = rootView.findViewById(R.id.player_buffering_indicator)
         sheetStreamingLinkView = rootView.findViewById(R.id.sheet_streaming_link)
         sheetMetadataHistoryView = rootView.findViewById(R.id.sheet_metadata_history)
         sheetNextMetadataView = rootView.findViewById(R.id.sheet_next_metadata_button)
@@ -145,6 +147,13 @@ data class LayoutHolder(var rootView: View) {
             metadataView.text = station.name
             sheetMetadataHistoryView.text = station.name
             sheetMetadataHistoryView.isSelected = true
+        }
+
+        // toggle buffering indicator
+        if (playbackState == PlaybackStateCompat.STATE_BUFFERING) {
+            bufferingIndicator.visibility = View.VISIBLE
+        } else {
+            bufferingIndicator.visibility = View.INVISIBLE
         }
 
         // update name

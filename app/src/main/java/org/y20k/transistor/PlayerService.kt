@@ -93,6 +93,7 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
     private lateinit var collectionChangedReceiver: BroadcastReceiver
     private lateinit var sleepTimer: CountDownTimer
     private var sleepTimerTimeRemaining: Long = 0L
+    private var playbackRestartCounter: Int = 0
 
 
     /* Overrides coroutineContext variable */
@@ -295,28 +296,24 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
                 if (playerState == Player.STATE_READY) {
                     // active playback: update media session and save state
                     handlePlaybackChange(PlaybackStateCompat.STATE_PLAYING)
-                    LogHelper.e(TAG, "playWhenReady AND STATE_READY") // todo remove
                 } else if (playerState == Player.STATE_ENDED) {
                     // playback reached end: stop / end playback
                     handlePlaybackEnded()
-                    LogHelper.e(TAG, "playWhenReady AND STATE_ENDED") // todo remove
                 } else {
-                    LogHelper.e(TAG, "playWhenReady AND OTHER (BUFFERING?)") // todo remove
-                    // not playing because the player is buffering, stopped or failed - check playbackState and player.getPlaybackError for details)
+                    // not playing because the player is buffering, stopped or failed - check playbackState and player.getPlaybackError for details
+                    handlePlaybackChange(PlaybackStateCompat.STATE_BUFFERING)
                 }
             }
             // CASE: playWhenReady = false
             false -> {
                 if (playerState == Player.STATE_READY) {
-                    LogHelper.e(TAG, "NOT playWhenReady AND STATE_READY") // todo remove
                     // stopped by app: update media session and save state
                     handlePlaybackChange(PlaybackStateCompat.STATE_PAUSED)
                 } else if (playerState == Player.STATE_ENDED) {
-                    LogHelper.e(TAG, "NOT playWhenReady AND STATE_ENDED") // todo remove
                     // ended by app: update media session and save state
                     handlePlaybackChange(PlaybackStateCompat.STATE_STOPPED)
                 } else {
-                    LogHelper.e(TAG, "NOT playWhenReady AND OTHER") // todo remove
+                    LogHelper.w(TAG, "Unhandled player state change.")
                 }
                 // stop sleep timer - if running
                 cancelSleepTimer()
@@ -327,6 +324,8 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
 
     /* Updates media session and save state */
     private fun handlePlaybackChange(playbackState: Int) {
+        // reset restart counter
+        playbackRestartCounter = 0
         // save collection state and player state
         collection = CollectionHelper.savePlaybackState(this, collection, station, playbackState)
         updatePlayerState(station, playbackState)
@@ -336,9 +335,16 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
     }
 
 
-    /*  */
+    /* Try to restart Playback */
     private fun handlePlaybackEnded() {
-       // todo implement
+        // restart playback for up to five times
+        if (playbackRestartCounter < 5) {
+            playbackRestartCounter++
+            startPlayback()
+        } else {
+            stopPlayback()
+            Toast.makeText(this, this.getString(R.string.toastmessage_error_restart_playback_failed), Toast.LENGTH_LONG).show()
+        }
     }
 
 

@@ -43,17 +43,20 @@
     <!-- Station Menu -->
     <string name="menu_update">Update station</string>
     <!-- Toasts -->
+    <string name="toastmessage_collection_update_not_necessary">Collection of stations is up-to-date.</string>
     <string name="toastmessage_error_download_error">Download error</string>
     <string name="toastmessage_error_missing_storage_permission">Grant \"Read Storage\" permission to open this file.</string>
     <string name="toastmessage_error_no_station_matches_search">Unable to find a station that matches your search.</string>
     <string name="toastmessage_error_no_station_found">Unable to start playback. Please add a radio station first.</string>
+    <string name="toastmessage_error_restart_playback_failed">Unable to restart playback.</string>
     <string name="toastmessage_station_duplicate">Duplicate station.</string>
     <string name="toastmessage_station_not_valid">Station is not valid.</string>
     <string name="toastmessage_theme_day">Switching to \'Day mode\' (long press detected)</string>
     <string name="toastmessage_theme_follow_system">Switching to \'Follow System Setting mode\' (long press detected)</string>
     <string name="toastmessage_theme_night">Switching to \'Night mode\' (long press detected)</string>
     <string name="toastmessage_updating_collection">Updating collection of stations.</string>
-    <string name="toastmessage_updating_station">Updating station…</string>
+    <string name="toastmessage_updating_station">Updating station.</string>
+    <string name="toastmessage_updating_station_images">Updating station images.</string>
     <!-- Station List -->
     <string name="station_list_button_add_new_station">Add new station</string>
     <!-- Notification -->

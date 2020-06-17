@@ -75,7 +75,10 @@ object DownloadHelper {
         // initialize main class variables, if necessary
         initialize(context)
         // re-download all stations
-        // todo implement
+        PreferencesHelper.saveLastUpdateCollection(context)
+        // todo implement in CollectionHelper
+        // all station.remoteImageLocation => enqueue
+        // all station.radioBrowserStationUuid => get from radio-browser
     }
 
 
@@ -84,7 +87,16 @@ object DownloadHelper {
         // initialize main class variables, if necessary
         initialize(context)
         // re-download all station images
-        // todo implement
+        PreferencesHelper.saveLastUpdateCollection(context)
+        val uris: MutableList<Uri> = mutableListOf()
+        collection.stations.forEach { station ->
+            station.radioBrowserStationUuid
+            if (!station.imageManuallySet) {
+                uris.add(station.remoteImageLocation.toUri())
+            }
+        }
+        enqueueDownload(context, uris.toTypedArray(), Keys.FILE_TYPE_IMAGE)
+        LogHelper.i(TAG, "Updating all station images.")
     }
 
 
@@ -95,9 +107,10 @@ object DownloadHelper {
         // get local Uri in content://downloads/all_downloads/ for download ID
         val downloadResult: Uri? = downloadManager.getUriForDownloadedFile(downloadId)
         if (downloadResult == null) {
-            val downloadError: Int = getDownloadError(downloadId)
-            Toast.makeText(context, "${context.getString(R.string.toastmessage_error_download_error)} ($downloadError)", Toast.LENGTH_LONG).show()
-            LogHelper.w(TAG, "Download not successful. Error code = $downloadError")
+            val downloadErrorCode: Int = getDownloadError(downloadId)
+            val downloadErrorFileName: String = getDownloadFileName(downloadManager, downloadId)
+            Toast.makeText(context, "${context.getString(R.string.toastmessage_error_download_error)}: $downloadErrorFileName ($downloadErrorCode)", Toast.LENGTH_LONG).show()
+            LogHelper.w(TAG, "Download not successful: File name = $downloadErrorFileName Error code = $downloadErrorCode")
             removeFromActiveDownloads(context, arrayOf(downloadId), deleteDownload = true)
             return
         } else {
@@ -275,6 +288,18 @@ object DownloadHelper {
         if (cursor.count > 0) {
             cursor.moveToFirst()
             remoteFileLocation = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_URI))
+        }
+        return remoteFileLocation
+    }
+
+
+    /* Determines the file name for given download id (the original URL) */
+    private fun getDownloadFileName(downloadManager: DownloadManager, downloadId: Long): String {
+        var remoteFileLocation: String = ""
+        val cursor: Cursor = downloadManager.query(DownloadManager.Query().setFilterById(downloadId))
+        if (cursor.count > 0) {
+            cursor.moveToFirst()
+            remoteFileLocation = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_TITLE))
         }
         return remoteFileLocation
     }

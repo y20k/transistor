@@ -18,10 +18,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.*
 import org.y20k.transistor.dialogs.YesNoDialog
 import org.y20k.transistor.helpers.AppThemeHelper
+import org.y20k.transistor.helpers.DownloadHelper
 import org.y20k.transistor.helpers.LogHelper
 
 
@@ -122,7 +124,8 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
                 when (dialogResult) {
                     // user tapped: refresh station images
                     true -> {
-                        // DownloadHelper.updateStationImages(activity as Context)
+                        DownloadHelper.updateStationImages(activity as Context)
+                        Toast.makeText(activity, getString(R.string.toastmessage_updating_station_images), Toast.LENGTH_LONG).show()
                     }
                 }
             }

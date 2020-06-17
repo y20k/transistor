@@ -334,14 +334,10 @@ class PlayerFragment: Fragment(), CoroutineScope,
                     // user tapped update collection
                     true -> {
                         if (CollectionHelper.hasEnoughTimePassedSinceLastUpdate(activity as Context)) {
-                            // todo implement full update
+                            updateCollection()
                         } else {
-                            // todo toast message - not enough time passed
+                            Toast.makeText(activity as Context, R.string.toastmessage_collection_update_not_necessary, Toast.LENGTH_LONG).show()
                         }
-                    }
-                    // user tapped cancel - for dev purposes: refresh the station list view // todo check if that can be helpful
-                    false -> {
-                        // collectionAdapter.notifyDataSetChanged() // can be removed
                     }
                 }
             }
