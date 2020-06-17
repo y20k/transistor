@@ -161,7 +161,7 @@
     <string name="dialog_error_message_no_network">Sambungkan ke internet.</string>
     <string name="fragment_settings_title">Pengaturan</string>
     <string name="descr_card_starred_station">Stasiun favorit</string>
-    <string name="toastmessage_updating_station">Memperbarui stasiun.</string>
+    <string name="toastmessage_updating_station">Memperbarui stasiun…</string>
     <string name="descr_dialog_edit_place_on_home_screen_icon">Membuat pintasan di layar Beranda</string>
     <string name="dialog_edit_place_on_home_screen">Pintasan di layar Beranda</string>
     <string name="dialog_button_save">Simpan perubahan</string>
@@ -171,4 +171,5 @@
     <string name="dialog_edit_title">Sunting Stasiun</string>
     <string name="dialog_edit_choose_station_image">Pilih</string>
     <string name="onboarding_app_import_running">Mengimpor stasiun anda. Silakan tunggu.</string>
+    <string name="toastmessage_error_download_error">Gagal mengunduh</string>
 </resources>
