@@ -145,7 +145,7 @@
     <string name="notification_now_playing_channel_description">Oynatma denetimleri, istasyon adı ve görüntüsü.</string>
     <string name="notification_now_playing_channel_name">Oynatma Denetimleri</string>
     <string name="station_list_button_add_new_station">Yeni istasyon ekle</string>
-    <string name="toastmessage_updating_station">İstasyon güncelleniyor…</string>
+    <string name="toastmessage_updating_station">İstasyon güncelleniyor.</string>
     <string name="toastmessage_updating_collection">İstasyon koleksiyonu güncelleniyor.</string>
     <string name="toastmessage_station_not_valid">İstasyon geçerli değil.</string>
     <string name="toastmessage_station_duplicate">Yinelenen istasyon.</string>
@@ -186,4 +186,7 @@
     <string name="dialog_edit_title">İstasyonu Düzenle</string>
     <string name="dialog_edit_choose_station_image">Seç</string>
     <string name="fragment_settings_title">Ayarlar</string>
+    <string name="toastmessage_updating_station_images">İstasyon görüntüleri güncelleniyor.</string>
+    <string name="toastmessage_error_restart_playback_failed">Oynatma yeniden başlatılamadı.</string>
+    <string name="toastmessage_collection_update_not_necessary">İstasyon koleksiyonu güncel.</string>
 </resources>
