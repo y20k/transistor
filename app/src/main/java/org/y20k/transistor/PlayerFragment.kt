@@ -472,7 +472,8 @@ class PlayerFragment: Fragment(), CoroutineScope,
     private fun updateCollection() {
         if (NetworkHelper.isConnectedToNetwork(activity as Context)) {
             Toast.makeText(activity as Context, R.string.toastmessage_updating_collection, Toast.LENGTH_LONG).show()
-            DownloadHelper.updateCollection(activity as Context)
+            val updateHelper: UpdateHelper = UpdateHelper(activity as Context, collectionAdapter, collection)
+            updateHelper.updateCollection()
         } else {
             ErrorDialog().show(activity as Context, R.string.dialog_error_title_no_network, R.string.dialog_error_message_no_network)
         }

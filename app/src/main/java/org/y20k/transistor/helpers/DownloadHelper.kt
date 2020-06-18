@@ -70,18 +70,6 @@ object DownloadHelper {
     }
 
 
-    /* Updates collection of stations*/
-    fun updateCollection(context: Context) {
-        // initialize main class variables, if necessary
-        initialize(context)
-        // re-download all stations
-        PreferencesHelper.saveLastUpdateCollection(context)
-        // todo implement in CollectionHelper
-        // all station.remoteImageLocation => enqueue
-        // all station.radioBrowserStationUuid => get from radio-browser
-    }
-
-
     /* Updates all station images */
     fun updateStationImages(context: Context) {
         // initialize main class variables, if necessary

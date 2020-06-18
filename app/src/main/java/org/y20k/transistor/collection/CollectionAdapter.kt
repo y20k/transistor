@@ -21,7 +21,10 @@ import android.support.v4.media.session.PlaybackStateCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.cardview.widget.CardView
@@ -38,17 +41,15 @@ import org.y20k.transistor.core.Station
 import org.y20k.transistor.dialogs.EditStationDialog
 import org.y20k.transistor.dialogs.RenameStationDialog
 import org.y20k.transistor.helpers.CollectionHelper
-import org.y20k.transistor.helpers.DownloadHelper
 import org.y20k.transistor.helpers.LogHelper
 import org.y20k.transistor.helpers.ShortcutHelper
-import org.y20k.transistor.search.RadioBrowserResult
-import org.y20k.transistor.search.RadioBrowserSearch
+import org.y20k.transistor.helpers.UpdateHelper
 
 
 /*
  * CollectionAdapter class
  */
-class CollectionAdapter(private val context: Context, private val collectionAdapterListener: CollectionAdapterListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), RadioBrowserSearch.RadioBrowserSearchListener, RenameStationDialog.RenameStationListener, EditStationDialog.EditStationListener {
+class CollectionAdapter(private val context: Context, private val collectionAdapterListener: CollectionAdapterListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), UpdateHelper.UpdateHelperListener, RenameStationDialog.RenameStationListener, EditStationDialog.EditStationListener {
 
     /* Define log tag */
     private val TAG: String = LogHelper.makeLogTag(CollectionAdapter::class.java)
@@ -132,26 +133,15 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
         }
     }
 
-
-    /* Overrides onRadioBrowserSearchResults from RadioBrowserSearchListener */
-    override fun onRadioBrowserSearchResults(results: Array<RadioBrowserResult>) {
-        if (results.isNotEmpty()){
-            // get station from results
-            val station: Station = results[0].toStation()
-            // get position
-            val positionPriorUpdate = CollectionHelper.getStationPositionFromRadioBrowserStationUuid(collection, station.radioBrowserStationUuid)
-            // update (and sort) collection
-            collection = CollectionHelper.updateStation(context, collection, station)
-            // get new position
-            val positionAfterUpdate: Int = CollectionHelper.getStationPositionFromRadioBrowserStationUuid(collection, station.radioBrowserStationUuid)
-            // check if position has changed after update and move stations around if necessary
-            if (positionPriorUpdate != positionAfterUpdate && positionPriorUpdate != -1 && positionAfterUpdate != -1) {
-                notifyItemMoved(positionPriorUpdate, positionAfterUpdate)
-                notifyItemChanged(positionPriorUpdate)
-            }
-            // update station (e.g. name)
-            notifyItemChanged(positionAfterUpdate)
+    /* Overrides onStationUpdated from UpdateHelperListener */
+    override fun onStationUpdated(collection: Collection, positionPriorUpdate: Int, positionAfterUpdate: Int) {
+        // check if position has changed after update and move stations around if necessary
+        if (positionPriorUpdate != positionAfterUpdate && positionPriorUpdate != -1 && positionAfterUpdate != -1) {
+            notifyItemMoved(positionPriorUpdate, positionAfterUpdate)
+            notifyItemChanged(positionPriorUpdate)
         }
+        // update station (e.g. name)
+        notifyItemChanged(positionAfterUpdate)
     }
 
 
@@ -230,8 +220,8 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
     private fun setStationButtons(stationViewHolder: StationViewHolder, station: Station, position: Int) {
         val playbackState: Int = station.playbackState
         when (playbackState) {
-            PlaybackStateCompat.STATE_PLAYING -> stationViewHolder.playButtonView.setImageResource(R.drawable.ic_stop_symbol_24dp)
-            else -> stationViewHolder.playButtonView.setImageResource(R.drawable.ic_play_symbol_24dp)
+            PlaybackStateCompat.STATE_PLAYING -> stationViewHolder.playButtonView.setImageResource(R.drawable.ic_stop_circle_outline_36dp)
+            else -> stationViewHolder.playButtonView.setImageResource(R.drawable.ic_play_circle_outline_36dp)
         }
         stationViewHolder.playButtonView.setOnClickListener {
             collectionAdapterListener.onPlayButtonTapped(station.uuid, playbackState)
@@ -241,7 +231,8 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
             v.vibrate(50)
             // v.vibrate(VibrationEffect.createOneShot(50, android.os.VibrationEffect.DEFAULT_AMPLITUDE)); // todo check if there is an androidx vibrator
             Toast.makeText(context, R.string.toastmessage_updating_station, Toast.LENGTH_SHORT).show()
-            updateStation(context, collection, station.uuid)
+            val updateHelper: UpdateHelper = UpdateHelper(context, this, collection)
+            updateHelper.updateStation(station)
             return@setOnLongClickListener true
         }
         stationViewHolder.stationStarredView.setOnLongClickListener {
@@ -285,7 +276,8 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
                 R.id.menu_update -> {
                     // update this station
                     Toast.makeText(context, R.string.toastmessage_updating_station, Toast.LENGTH_SHORT).show()
-                    updateStation(context, collection, stationUuid)
+                    val updateHelper: UpdateHelper = UpdateHelper(context, this, collection)
+                    updateHelper.updateStation(CollectionHelper.getStation(collection, stationUuid))
                     true
                 }
                 R.id.menu_shortcut -> {
@@ -298,14 +290,6 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
             }
         }
         popup.show()
-    }
-
-
-    /* Sets up the circular progress bar */
-    private fun setStationPlaybackProgress(stationViewHolder: StationViewHolder, progress: Double) {
-        // start => 12 => playbackPosition = 0
-        // finish => 0 => playbackPosition = duration
-        stationViewHolder.loadingProgressView.progress = progress.toInt()
     }
 
 
@@ -393,20 +377,19 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
     }
 
 
-    /* Initiates update of a station's information */
-    private fun updateStation(context: Context, collection: Collection, stationUuid: String) {
-        val station: Station = CollectionHelper.getStation(collection, stationUuid)
-        if (station.radioBrowserStationUuid.isNotEmpty()) {
-            // get updated station from radio browser - results are handled by onRadioBrowserSearchResults
-            val radioBrowserSearch: RadioBrowserSearch = RadioBrowserSearch(context, this)
-            radioBrowserSearch.searchStation(context, station.radioBrowserStationUuid, Keys.SEARCH_TYPE_BY_UUID)
-        } else if (station.remoteStationLocation.isNotEmpty()) {
-            // download playlist // todo check content type detection is necessary here
-            DownloadHelper.downloadPlaylists(context, arrayOf(station.remoteStationLocation))
-        } else {
-            LogHelper.w(TAG, "Unable to update station: ${station.name}.")
-        }
-    }
+//    /* Initiates update of a station's information */ // todo move to CollectionHelper
+//    private fun updateStation(context: Context, station: Station) {
+//        if (station.radioBrowserStationUuid.isNotEmpty()) {
+//            // get updated station from radio browser - results are handled by onRadioBrowserSearchResults
+//            val radioBrowserSearch: RadioBrowserSearch = RadioBrowserSearch(context, this)
+//            radioBrowserSearch.searchStation(context, station.radioBrowserStationUuid, Keys.SEARCH_TYPE_BY_UUID)
+//        } else if (station.remoteStationLocation.isNotEmpty()) {
+//            // download playlist // todo check content type detection is necessary here
+//            DownloadHelper.downloadPlaylists(context, arrayOf(station.remoteStationLocation))
+//        } else {
+//            LogHelper.w(TAG, "Unable to update station: ${station.name}.")
+//        }
+//    }
 
 
 
@@ -460,7 +443,6 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
         val stationStarredView: ImageView = stationCardLayout.findViewById(R.id.starred_icon)
         val menuButtonView: ImageView = stationCardLayout.findViewById(R.id.menu_button)
         val playButtonView: ImageView = stationCardLayout.findViewById(R.id.playback_button)
-        val loadingProgressView: ProgressBar = stationCardLayout.findViewById(R.id.loading_progress)
     }
     /*
      * End of inner class
