@@ -185,4 +185,5 @@
     <string name="dialog_edit_place_on_home_screen">Ajouter sur l\'écran d\'accueil</string>
     <string name="dialog_edit_choose_station_image">Sélectionner</string>
     <string name="onboarding_app_import_running">Importation de vos stations. Veuillez patienter.</string>
+    <string name="toastmessage_error_download_error">Erreur de téléchargement</string>
 </resources>
