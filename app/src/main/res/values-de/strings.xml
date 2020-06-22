@@ -77,9 +77,9 @@
     <string name="toastmessage_long_press_playback_started">Wiedergabe gestartet (Längeres Drücken erkannt)</string>
     <string name="toastmessage_long_press_change_icon">Symbol ändern (Längeres Drücken erkannt)</string>
     <string name="toastmessage_long_press_change_name">Sender umbenennen (Längeres Drücken erkannt)</string>
-    <string name="toastmessage_theme_night">Wechsle zu \'Nachtmodus\' (Langes Tippen erkannt)</string>
-    <string name="toastmessage_theme_day">Wechsle zu \'Tagmodus\' (Langes Tippen erkannt)</string>
-    <string name="toastmessage_theme_follow_system">Wechsle zum \'Systemeinstellungsmodus\' (Langes Tippen erkannt)</string>
+    <string name="toastmessage_theme_night">Wechsle zu „Nachtmodus“ (Langes Tippen erkannt)</string>
+    <string name="toastmessage_theme_day">Wechsle zu „Tagmodus“ (Langes Tippen erkannt)</string>
+    <string name="toastmessage_theme_follow_system">Wechsle zum „Systemeinstellungsmodus“ (Langes Tippen erkannt)</string>
     <string name="toastmessage_shortcut_created">Sender auf Startbildschirm platziert.</string>
     <string name="toastmessage_shortcut_not_created">Sender nicht auf Startbildschirm platziert. Das Gerät unterbindet das Platzieren von Verknüpfungen.</string>
     <string name="toastmessage_list_refreshed">Aktualisiere Senderliste.</string>
@@ -120,7 +120,7 @@
     <string name="pref_theme_selection_mode_dark">Dunkler Modus</string>
     <string name="pref_general_title">Allgemein</string>
     <string name="pref_delete_all_title">Downloads löschen</string>
-    <string name="toastmessage_error_missing_storage_permission">Erteile die Berechtigung \"Speicher lesen\", um diese Datei zu öffnen.</string>
+    <string name="toastmessage_error_missing_storage_permission">Erteile die Berechtigung „Speicher lesen“, um diese Datei zu öffnen.</string>
     <string name="dialog_yes_no_positive_button_update_covers">Aktualisieren</string>
     <string name="dialog_yes_no_positive_button_update_collection">Aktualisieren</string>
     <string name="dialog_yes_no_positive_button_remove_station">Entfernen</string>
@@ -129,7 +129,7 @@
     <string name="dialog_yes_no_positive_button_add_up_next">Jetzt starten</string>
     <string name="dialog_yes_no_negative_button_default">Nein</string>
     <string name="dialog_yes_no_negative_button_cancel">Abbrechen</string>
-    <string name="dialog_yes_no_negative_button_add_up_next">Zu \'Als Nächstes\' hinzufügen</string>
+    <string name="dialog_yes_no_negative_button_add_up_next">Zu „Als Nächstes“ hinzufügen</string>
     <string name="dialog_yes_no_message_default">Willst du das wirklich tun\?</string>
     <string name="dialog_opml_import_details_default">Keine Details verfügbar</string>
     <string name="dialog_opml_import_details_button">Details anzeigen</string>
@@ -146,9 +146,9 @@
     <string name="toastmessage_sleep_timer_unable_to_start">Bitte zuerst die Wiedergabe starten.</string>
     <string name="descr_player_playback_button">Start/Pause</string>
     <string name="descr_player_station_image">Senderbild</string>
-    <string name="descr_expanded_player_sleep_timer_start_button">Sleep-Timer starten</string>
-    <string name="descr_expanded_player_sleep_timer_remaining_time">Verbleibende Zeit des Sleep-Timers</string>
-    <string name="descr_expanded_player_sleep_timer_cancel_button">Sleep-Timer abbrechen</string>
+    <string name="descr_expanded_player_sleep_timer_start_button">Schlaf-Timer starten</string>
+    <string name="descr_expanded_player_sleep_timer_remaining_time">Verbleibende Zeit des Schlaf-Timers</string>
+    <string name="descr_expanded_player_sleep_timer_cancel_button">Schlaf-Timer abbrechen</string>
     <string name="descr_card_station_image">Senderbild</string>
     <string name="descr_card_small_download_button">Herunterladen</string>
     <string name="descr_card_playback_indicator">Wiedergabefortschritt</string>
@@ -161,7 +161,7 @@
     <string name="notification_now_playing_channel_description">Wiedergabesteuerungen, Sendername und Bild.</string>
     <string name="notification_now_playing_channel_name">Wiedergabesteuerung</string>
     <string name="station_list_button_add_new_station">Neuen Sender hinzufügen</string>
-    <string name="toastmessage_updating_station">Sender aktualisieren.</string>
+    <string name="toastmessage_updating_station">Aktualisierung des Senders.</string>
     <string name="toastmessage_updating_collection">Sammlung von Sendern aktualisieren.</string>
     <string name="toastmessage_station_not_valid">Sender ist ungültig.</string>
     <string name="toastmessage_station_duplicate">Sender duplizieren.</string>
@@ -185,4 +185,8 @@
     <string name="dialog_edit_update_station">Sender aktualisieren</string>
     <string name="dialog_edit_title">Sender bearbeiten</string>
     <string name="onboarding_app_import_running">Importiere deine Sender. Bitte warten.</string>
+    <string name="toastmessage_collection_update_not_necessary">Die Sammlung der Sender ist aktuell.</string>
+    <string name="toastmessage_updating_station_images">Aktualisierung von Senderbildern.</string>
+    <string name="toastmessage_error_restart_playback_failed">Die Wiedergabe konnte nicht neu gestartet werden.</string>
+    <string name="toastmessage_error_download_error">Fehler beim Herunterladen</string>
 </resources>
