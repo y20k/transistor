@@ -325,15 +325,28 @@ object FileHelper {
 
 
     /* Create nomedia file in given folder to prevent media scanning */
-    fun createNomediaFile(folder: File) {
-        val noMediaOutStream: FileOutputStream = FileOutputStream(getNoMediaFile(folder))
-        noMediaOutStream.write(0)
+    fun createNomediaFile(folder: File?) {
+        if (folder != null && folder.exists() && folder.isDirectory) {
+            val nomediaFile: File = getNoMediaFile(folder)
+            if (!nomediaFile.exists()) {
+                val noMediaOutStream: FileOutputStream = FileOutputStream(getNoMediaFile(folder))
+                noMediaOutStream.write(0)
+            } else {
+                LogHelper.v(TAG, ".nomedia file exists already in given folder.")
+            }
+        } else  {
+            LogHelper.w(TAG, "Unable to create .nomedia file. Given folder is not valid.")
+        }
     }
 
 
     /* Delete nomedia file in given folder */
-    fun deleteNoMediaFile(folder: File) {
-        getNoMediaFile(folder).delete()
+    fun deleteNoMediaFile(folder: File?) {
+        if (folder != null && folder.exists() && folder.isDirectory) {
+            getNoMediaFile(folder).delete()
+        } else  {
+            LogHelper.w(TAG, "Unable to delete .nomedia file. Given folder is not valid.")
+        }
     }
 
 

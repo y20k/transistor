@@ -12,6 +12,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 
 import androidx.preference.PreferenceManager
 import org.y20k.transistor.helpers.AppThemeHelper
+import org.y20k.transistor.helpers.FileHelper
 import org.y20k.transistor.helpers.LogHelper
 import org.y20k.transistor.helpers.PreferencesHelper
 
@@ -31,6 +32,9 @@ class MainActivity: AppCompatActivity() {
 
         // set up views
         setContentView(R.layout.activity_main)
+
+        // create .nomedia file - if not yet existing
+        FileHelper.createNomediaFile(getExternalFilesDir(null))
 
         // set up action bar
         setSupportActionBar(findViewById(R.id.main_toolbar))
@@ -57,6 +61,7 @@ class MainActivity: AppCompatActivity() {
         // unregister listener for changes in shared preferences
         PreferenceManager.getDefaultSharedPreferences(this as Context).unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener)
     }
+
 
     /*
      * Defines the listener for changes in shared preferences
