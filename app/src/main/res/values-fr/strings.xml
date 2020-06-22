@@ -150,7 +150,7 @@
     <string name="dialog_yes_no_positive_button_vpn_download">Télécharger quand même</string>
     <string name="dialog_yes_no_positive_button_update_covers">Mettre à jour</string>
     <string name="dialog_yes_no_positive_button_update_collection">Mettre à jour</string>
-    <string name="dialog_yes_no_positive_button_remove_station">Supprimer</string>
+    <string name="dialog_yes_no_positive_button_remove_station">Retirer</string>
     <string name="dialog_yes_no_positive_button_non_wifi_download">Télécharger quand même</string>
     <string name="dialog_yes_no_positive_button_delete_downloads">Tout supprimer</string>
     <string name="dialog_yes_no_positive_button_default">Oui</string>
