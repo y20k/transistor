@@ -144,7 +144,7 @@
     <string name="notification_now_playing_channel_description">Sterowanie odtwarzaniem, nazwa stacji i obraz.</string>
     <string name="notification_now_playing_channel_name">Sterowanie odtwarzaniem</string>
     <string name="station_list_button_add_new_station">Dodaj nową stację</string>
-    <string name="toastmessage_updating_station">Aktualizacja stacji…</string>
+    <string name="toastmessage_updating_station">Aktualizacja stacji.</string>
     <string name="toastmessage_updating_collection">Aktualizacja kolekcji stacji.</string>
     <string name="toastmessage_station_not_valid">Stacja jest nieprawidłowa.</string>
     <string name="toastmessage_station_duplicate">Zduplikowana stacja.</string>
@@ -185,4 +185,8 @@
     <string name="dialog_edit_choose_station_image">Wybierz</string>
     <string name="fragment_settings_title">Ustawienia</string>
     <string name="onboarding_app_import_running">Importowanie swoich stacji. Proszę czekać.</string>
+    <string name="toastmessage_updating_station_images">Aktualizowanie obrazów stacji.</string>
+    <string name="toastmessage_error_restart_playback_failed">Nie można ponownie uruchomić odtwarzania.</string>
+    <string name="toastmessage_error_download_error">Błąd pobierania</string>
+    <string name="toastmessage_collection_update_not_necessary">Zbiór stacji jest aktualny.</string>
 </resources>
