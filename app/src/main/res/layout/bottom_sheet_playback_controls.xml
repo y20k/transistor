@@ -10,6 +10,7 @@
     android:focusable="true"
     app:behavior_hideable="true"
     app:behavior_peekHeight="72dp"
+    app:gestureInsetBottomIgnored="true"
     app:layout_behavior="@string/bottom_sheet_behavior">
 
 

@@ -48,8 +48,9 @@ import com.google.android.exoplayer2.metadata.Metadata
 import com.google.android.exoplayer2.metadata.MetadataOutput
 import com.google.android.exoplayer2.metadata.icy.IcyHeaders
 import com.google.android.exoplayer2.metadata.icy.IcyInfo
+import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
-import com.google.android.exoplayer2.source.hls.HlsTrackMetadataEntry
+import com.google.android.exoplayer2.source.hls.HlsMediaSource
 import com.google.android.exoplayer2.upstream.*
 import com.google.android.exoplayer2.util.Util
 import kotlinx.coroutines.*
@@ -211,12 +212,12 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
             } else if (entry is IcyHeaders) {
                 val icyHeaders = entry as IcyHeaders
                 LogHelper.i(TAG, "icyHeaders:" + icyHeaders.name + " - " + icyHeaders.genre)
-            } else if (entry is HlsTrackMetadataEntry) {
-                val hlsTrackMetadataEntry = entry as HlsTrackMetadataEntry
+            } else {
+                LogHelper.w(TAG, "Unsupported metadata received (type = ${entry.javaClass.simpleName})")
+                updateMetadata(null)
             }
-            // TODO implement HLS metadata extraction
+            // TODO implement HLS metadata extraction (Id3Frame / PrivFrame)
             // https://exoplayer.dev/doc/reference/com/google/android/exoplayer2/metadata/Metadata.Entry.html
-            // https://exoplayer.dev/doc/reference/com/google/android/exoplayer2/source/hls/HlsTrackMetadataEntry.html
         }
     }
 
@@ -390,13 +391,17 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
         // todo only prepare if not already prepared
         // create DataSource.Factory - produces DataSource instances through which media data is loaded
         val dataSourceFactory: DataSource.Factory = createDataSourceFactory(this, Util.getUserAgent(this, userAgent), null)
-        // create MediaSource
-        val mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory).setContinueLoadingCheckIntervalBytes(32).createMediaSource(Uri.parse(station.getStreamUri()))
 
-        // todo check if hls
-        // TODO HLS does not work reliable
-        // Toast.makeText(this, this.getString(R.string.toastmessage_stream_may_not_work), Toast.LENGTH_LONG).show()
-        // val hlsMediaSource = HlsMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse(station.getStreamUri()))
+        // create MediaSource
+        val mediaSource: MediaSource
+        if (station.streamContent in Keys.MIME_TYPE_HLS) {
+            // HLS media source
+            Toast.makeText(this, this.getString(R.string.toastmessage_stream_may_not_work), Toast.LENGTH_LONG).show()
+            mediaSource = HlsMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse(station.getStreamUri()))
+        } else {
+            // MPEG or OGG media source
+            mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory).setContinueLoadingCheckIntervalBytes(32).createMediaSource(Uri.parse(station.getStreamUri()))
+        }
 
         // prepare player with source
         player.prepare(mediaSource)
