@@ -275,7 +275,9 @@ class PlayerFragment: Fragment(), CoroutineScope,
                 }
                 // CASE: invalid address
                 else {
-                    Toast.makeText(activity as Context, R.string.toastmessage_station_not_valid, Toast.LENGTH_LONG).show()
+                    // todo: evaluate (this is just a test for issue #266)
+                    UiHelper.displaySnackbar(layout.rootView, layout.bottomSheet, R.string.toastmessage_station_not_valid)
+                    // Toast.makeText(activity as Context, R.string.toastmessage_station_not_valid, Toast.LENGTH_LONG).show()
                 }
             }
         }

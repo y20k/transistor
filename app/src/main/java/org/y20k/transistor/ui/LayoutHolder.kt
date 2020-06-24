@@ -55,7 +55,7 @@ data class LayoutHolder(var rootView: View) {
     var swipeRefreshLayout: SwipeRefreshLayout
     var recyclerView: RecyclerView
     val layoutManager: LinearLayoutManager
-    private var bottomSheet: ConstraintLayout
+    var bottomSheet: ConstraintLayout
     //private var sheetMetadataViews: Group
     var sleepTimerRunningViews: Group
     private var downloadProgressIndicator: ProgressBar

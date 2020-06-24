@@ -25,6 +25,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import org.y20k.transistor.Keys
 import org.y20k.transistor.R
 
@@ -59,6 +60,14 @@ object UiHelper {
         val t: Int = ((height / 100.0f) * top).toInt()
         val b: Int = ((height / 100.0f) * bottom).toInt()
         setViewMargins(context, view, l, r, t, b)
+    }
+
+
+    /* Displays a simple Snackbar message and anchors it to given view */
+    fun displaySnackbar(contextView: View, anchorView: View, text: Int) {
+        Snackbar.make(contextView, text, Snackbar.LENGTH_SHORT)
+                .setAnchorView(anchorView)
+                .show()
     }
 
 
