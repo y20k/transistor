@@ -440,7 +440,8 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
             LogHelper.w(TAG, "No station has been selected. Starting playback of first station.")
             station = collection.stations[0]
         }
-        // prepare player
+        // update metadata and prepare player
+        updateMetadata(station.name)
         preparePlayer()
         // start playback
         player.playWhenReady = true
@@ -707,13 +708,25 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
 
         override fun onSkipToPrevious() {
             LogHelper.d(TAG, "onSkipToPrevious")
+            // stop current playback, if necessary
+            if (playerState.playbackState == PlaybackStateCompat.STATE_PLAYING) {
+                stopPlayback()
+            }
+            // get station, set metadata and start playback
             station = CollectionHelper.getPreviousStation(collection, station.uuid)
+            mediaSession.setMetadata(CollectionHelper.buildStationMediaMetadata(this@PlayerService, station))
             startPlayback()
         }
 
         override fun onSkipToNext() {
             LogHelper.d(TAG, "onSkipToNext")
+            // stop current playback, if necessary
+            if (playerState.playbackState == PlaybackStateCompat.STATE_PLAYING) {
+                stopPlayback()
+            }
+            // get station, set metadata and start playback
             station = CollectionHelper.getNextStation(collection, station.uuid)
+            mediaSession.setMetadata(CollectionHelper.buildStationMediaMetadata(this@PlayerService, station))
             startPlayback()
         }
 

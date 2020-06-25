@@ -40,10 +40,7 @@ import org.y20k.transistor.core.Collection
 import org.y20k.transistor.core.Station
 import org.y20k.transistor.dialogs.EditStationDialog
 import org.y20k.transistor.dialogs.RenameStationDialog
-import org.y20k.transistor.helpers.CollectionHelper
-import org.y20k.transistor.helpers.LogHelper
-import org.y20k.transistor.helpers.ShortcutHelper
-import org.y20k.transistor.helpers.UpdateHelper
+import org.y20k.transistor.helpers.*
 
 
 /*
@@ -478,11 +475,12 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
             if (oldStation.starred != newStation.starred) return false
             if (oldStation.name != newStation.name) return false
             if (oldStation.stream != newStation.stream) return false
-            if (oldStation.image != newStation.image) return false
-            if (oldStation.smallImage != newStation.smallImage) return false
             if (oldStation.remoteImageLocation != newStation.remoteImageLocation) return false
             if (oldStation.remoteStationLocation != newStation.remoteStationLocation) return false
             if (!oldStation.streamUris.containsAll(newStation.streamUris)) return false
+            if (oldStation.imageColor != newStation.imageColor) return false
+            if (FileHelper.getFileSize(context, Uri.parse(oldStation.image)) != FileHelper.getFileSize(context, Uri.parse(newStation.image))) return false
+            if (FileHelper.getFileSize(context, Uri.parse(oldStation.smallImage)) != FileHelper.getFileSize(context, Uri.parse(newStation.smallImage))) return false
 
             // none of the above -> contents are the same
             return true

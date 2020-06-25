@@ -64,10 +64,19 @@ object UiHelper {
 
 
     /* Displays a simple Snackbar message and anchors it to given view */
-    fun displaySnackbar(contextView: View, anchorView: View, text: Int) {
-        Snackbar.make(contextView, text, Snackbar.LENGTH_SHORT)
-                .setAnchorView(anchorView)
-                .show()
+    fun displaySnackbar(contextView: View, anchorView: View, text: Int, requireConfirmation: Boolean) {
+        if (requireConfirmation) {
+            Snackbar.make(contextView, text, Snackbar.LENGTH_INDEFINITE)
+                    .setAnchorView(anchorView)
+                    .setAction(R.string.dialog_generic_button_okay) {
+                        // snackbar ok button has clicked - just dismiss / do nothing
+                    }
+                    .show()
+        } else {
+            Snackbar.make(contextView, text, Snackbar.LENGTH_SHORT)
+                    .setAnchorView(anchorView)
+                    .show()
+        }
     }
 
 

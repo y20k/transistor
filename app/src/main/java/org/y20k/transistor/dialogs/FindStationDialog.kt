@@ -190,11 +190,11 @@ class FindStationDialog (private var context: Context, private var listener: Fin
     /* Handles live user input into search box */
     private fun handleSearchBoxLiveInput(context: Context, query: String) {
         currentSearchString = query
-        if (query.startsWith("http")) {
+        if (query.startsWith("htt")) {
             // handle direct URL input
             remoteStationLocation = query
             activateAddButton()
-        } else if (query.contains(" ") || query.length > 2) {
+        } else if (query.contains(" ") || query.length > 2 ) {
             // show progress indicator
             showProgressIndicator()
             // handle search string input - delay request to manage server load (not sure if necessary)
