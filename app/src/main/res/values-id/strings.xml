@@ -75,8 +75,7 @@
     <string name="toastmessage_shortcut_created">Pintasan dibuat.</string>
     <string name="toastmessage_shortcut_not_created">Pintasan gagal dibuat. Perangkat ini tidak mengizinkan pintasan di layar Beranda.</string>
     <string name="toastmessage_list_refreshed">Memuat ulang daftar stasiun.</string>
-    <string name="toastmessage_copied_to_clipboard_url">Tautan stream disalin ke papan klip.</string>
-    <string name="toastmessage_copied_to_clipboard_metadata">Metadata disalin ke papan klip.</string>
+    <string name="toastmessage_copied_to_clipboard">Tautan stream disalin ke papan klip.</string>
     <string name="toastmessage_station_copied">Stasiun disalin ke papan klip.</string>
     <string name="toastmessage_stream_may_not_work">Mendeteksi format audio yang tidak didukung. Pemutaran stream mungkin tidak akan berfungsi dengan baik.</string>
     <string name="toastmessage_timer_activated">Pengatur waktu tidur diaktifkan.</string>

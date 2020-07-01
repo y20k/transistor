@@ -83,8 +83,7 @@
     <string name="toastmessage_shortcut_created">Sender auf Startbildschirm platziert.</string>
     <string name="toastmessage_shortcut_not_created">Sender nicht auf Startbildschirm platziert. Das Gerät unterbindet das Platzieren von Verknüpfungen.</string>
     <string name="toastmessage_list_refreshed">Aktualisiere Senderliste.</string>
-    <string name="toastmessage_copied_to_clipboard_url">Streaming-Adresse in die Zwischenablage kopiert.</string>
-    <string name="toastmessage_copied_to_clipboard_metadata">Metadaten in die Zwischenablage kopiert.</string>
+    <string name="toastmessage_copied_to_clipboard">In die Zwischenablage kopiert.</string>
     <string name="toastmessage_station_copied">Sender in die Zwischenablage kopiert.</string>
     <string name="toastmessage_stream_may_not_work">Nicht unterstütztes Audioformat gefunden. Stream kann möglicherweise nicht abgespielt werden.</string>
     <string name="toastmessage_timer_activated">Sleep-Timer aktiviert.</string>

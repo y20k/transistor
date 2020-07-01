@@ -83,8 +83,7 @@
     <string name="toastmessage_shortcut_created">Lasterbidea sortu da.</string>
     <string name="toastmessage_shortcut_not_created">Ez da lasterbidea sortu. Gailu honek ez du lasterbideak sortzea ahalbidetzen.</string>
     <string name="toastmessage_list_refreshed">Irratien zerrenda birkargatzen.</string>
-    <string name="toastmessage_copied_to_clipboard_url">Jarioaren esteka arbelera kopiatu da.</string>
-    <string name="toastmessage_copied_to_clipboard_metadata">Metadatuak arbelera kopiatu dira.</string>
+    <string name="toastmessage_copied_to_clipboard">Jarioaren esteka arbelera kopiatu da.</string>
     <string name="toastmessage_station_copied">Estazioa arbelera kopiatu da.</string>
     <string name="toastmessage_stream_may_not_work">Onartu gabeko audio formatua atzeman da. Jarioaren erreprodukzioa agian ez da behar bezalakoa izango.</string>
     <string name="toastmessage_timer_activated">Itzaltzeko atzera kontaketa gaitu da.</string>

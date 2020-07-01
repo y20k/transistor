@@ -78,7 +78,7 @@
     <string name="descr_playback_button_stop">Interrompi</string>
     <string name="toastalert_no_image_picker">Nessun selezionatore di immagini disponibile. Considerare l\'installazione di un\'app Galleria.</string>
     <string name="player_sheet_h2_station_metadata">Traccia in riproduzione</string>
-    <string name="toastmessage_copied_to_clipboard_url">Collegamento stream copiato negli appunti.</string>
+    <string name="toastmessage_copied_to_clipboard">Collegamento stream copiato negli appunti.</string>
     <string name="descr_player_sheet_button_minimize">Nascondi dettagli della stazione</string>
     <string name="menu_rename">Rinomina</string>
     <string name="shortcut_last_station_short_label">Ultima stazione</string>
@@ -88,7 +88,6 @@
     <string name="descr_app_icon">Icona dell\'app raffigurante una vecchia radio</string>
     <string name="toastmessage_theme_follow_system">Passaggio alla modalità segui impostazione di sistema (pressione prolungata rilevata)</string>
     <string name="app_name">Transistor</string>
-    <string name="toastmessage_copied_to_clipboard_metadata">Metadati copiati negli appunti.</string>
     <string name="dialog_error_message_default">Si è verificato un errore</string>
     <string name="descr_player_sheet_content_copy_icon">Copia</string>
     <string name="player_sheet_h1_details">Dettagli</string>

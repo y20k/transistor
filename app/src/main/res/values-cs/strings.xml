@@ -78,7 +78,7 @@
     <string name="descr_playback_button_stop">Zastavit</string>
     <string name="toastalert_no_image_picker">Není k dispozici žádná aplikace na výběr obrázků. Měli byste si nainstalovat aplikaci Galerie.</string>
     <string name="player_sheet_h2_station_metadata">Právě hraje</string>
-    <string name="toastmessage_copied_to_clipboard_url">Odkaz na stream zkopírovaný do schránky.</string>
+    <string name="toastmessage_copied_to_clipboard">Odkaz na stream zkopírovaný do schránky.</string>
     <string name="descr_player_sheet_button_minimize">Skryj podrobnosti o stanici</string>
     <string name="menu_rename">Přejmenovat</string>
     <string name="shortcut_last_station_short_label">Poslední přehrávaná stanice</string>
@@ -88,7 +88,6 @@
     <string name="descr_app_icon">Ikona aplikace znázorňuje staré rádio</string>
     <string name="toastmessage_theme_follow_system">Vzhled přepnutý do režimu sledovat nastavení systému (rozpoznané dlouhé stlačení)</string>
     <string name="app_name">Transistor</string>
-    <string name="toastmessage_copied_to_clipboard_metadata">Metadata zkopírovaná do schránky.</string>
     <string name="dialog_error_message_default">Vyskytla se chyba</string>
     <string name="descr_player_sheet_content_copy_icon">Kopírovat</string>
     <string name="player_sheet_h1_details">Podrobnosti</string>

@@ -83,8 +83,7 @@
     <string name="toastmessage_shortcut_created">Ярлык создан.</string>
     <string name="toastmessage_shortcut_not_created">Ярлык не создан. Устройство не позволяет создавать ярлыки.</string>
     <string name="toastmessage_list_refreshed">Перезагрузка списка станций.</string>
-    <string name="toastmessage_copied_to_clipboard_url">Адрес потока скопирован в буфер обмена.</string>
-    <string name="toastmessage_copied_to_clipboard_metadata">Метаданные скопированы в буфер обмена.</string>
+    <string name="toastmessage_copied_to_clipboard">Адрес потока скопирован в буфер обмена.</string>
     <string name="toastmessage_station_copied">Станция скопирована в буфер обмена.</string>
     <string name="toastmessage_stream_may_not_work">Обнаружен неподдерживаемый аудиоформат. Воспроизведение потока может не работать должным образом.</string>
     <string name="toastmessage_timer_activated">Таймер сна активирован.</string>

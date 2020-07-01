@@ -83,8 +83,7 @@
     <string name="toastmessage_shortcut_created">Snelkoppeling gecreëerd.</string>
     <string name="toastmessage_shortcut_not_created">Snelkoppeling niet gecreëerd omdat dit apparaat het niet ondersteunt.</string>
     <string name="toastmessage_list_refreshed">Zenderlijst aan het herladen.</string>
-    <string name="toastmessage_copied_to_clipboard_url">Zenderadres naar het klembord gekopieerd.</string>
-    <string name="toastmessage_copied_to_clipboard_metadata">Metadata naar het klembord gekopieerd.</string>
+    <string name="toastmessage_copied_to_clipboard">Zenderadres naar het klembord gekopieerd.</string>
     <string name="toastmessage_station_copied">Zender naar het klembord gekopieerd.</string>
     <string name="toastmessage_stream_may_not_work">Het gedetecteerde audioformaat wordt niet ondersteund. Het afspelen kan verhinderd worden.</string>
     <string name="toastmessage_timer_activated">Slaap timer geactiveerd.</string>

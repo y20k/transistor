@@ -83,8 +83,7 @@
     <string name="toastmessage_shortcut_created">Kısayol oluşturuldu.</string>
     <string name="toastmessage_shortcut_not_created">Kısayol oluşturulmadı. Bu aygıt kısayolların oluşturulmasına izin vermiyor.</string>
     <string name="toastmessage_list_refreshed">İstasyonların listesi ön yükleniyor.</string>
-    <string name="toastmessage_copied_to_clipboard_url">Yayın bağlantısı panoya kopyalandı.</string>
-    <string name="toastmessage_copied_to_clipboard_metadata">Meta veri panoya kopyalandı.</string>
+    <string name="toastmessage_copied_to_clipboard">Yayın bağlantısı panoya kopyalandı.</string>
     <string name="toastmessage_station_copied">İstasyon panoya kopyalandı.</string>
     <string name="toastmessage_stream_may_not_work">Desteklenmeyen ses biçimi algılandı. Yayın düzgün oynatılamayabilir.</string>
     <string name="toastmessage_timer_activated">Uyku zamanlayıcısı etkin.</string>

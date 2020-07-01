@@ -89,8 +89,7 @@
     <string name="toastmessage_shortcut_created">Пречица направљена.</string>
     <string name="toastmessage_shortcut_not_created">Пречица није направљена. Овај уређај не допушта прављење пречица.</string>
     <string name="toastmessage_list_refreshed">Поново учитавам списак станица.</string>
-    <string name="toastmessage_copied_to_clipboard_url">Веза тока копирана на клипборд.</string>
-    <string name="toastmessage_copied_to_clipboard_metadata">Метаподаци копирани на клипборд.</string>
+    <string name="toastmessage_copied_to_clipboard">Веза тока копирана на клипборд.</string>
     <string name="toastmessage_station_copied">Станица копирана на клипборд.</string>
     <string name="toastmessage_stream_may_not_work">Откривен неподржани формат звука. Пуштање тока можда неће радити исправно.</string>
     <string name="toastmessage_timer_activated">Тајмер активиран.</string>

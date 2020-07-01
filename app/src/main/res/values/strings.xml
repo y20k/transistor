@@ -2,6 +2,8 @@
 <resources>
     <!-- App Name -->
     <string name="app_name">Transistor</string>
+    <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
+    <string name="app_version_name" translatable="false">\"Andy Warhol\"</string>
     <!-- Fragment -->
     <string name="fragment_settings_title">Settings</string>
     <!-- Dialogs -->
@@ -67,9 +69,14 @@
     <string name="notification_skip_to_previous">Previous</string>
     <string name="notification_skip_to_next">Next</string>
     <!-- Settings -->
+    <string name="pref_about_title">About</string>
+    <string name="pref_app_version_summary">Version</string>
+    <string name="pref_app_version_title">App Version</string>
     <string name="pref_delete_all_title">Delete Downloads</string>
     <string name="pref_general_title">General</string>
     <string name="pref_maintenance_title">Maintenance</string>
+    <string name="pref_report_issue_summary">Report bugs and suggest improvements on GitHub.</string>
+    <string name="pref_report_issue_title">Report Issue</string>
     <string name="pref_theme_selection_mode_dark">Dark mode</string>
     <string name="pref_theme_selection_mode_device_default">Same as device</string>
     <string name="pref_theme_selection_mode_light">Light mode</string>
@@ -189,8 +196,7 @@
     <string name="toastmessage_shortcut_created">Shortcut created.</string>
     <string name="toastmessage_shortcut_not_created">Shortcut not created. This device does not allow the creation of shortcuts.</string>
     <string name="toastmessage_list_refreshed">Reloading list of stations.</string>
-    <string name="toastmessage_copied_to_clipboard_url">Streaming link copied to clipboard.</string>
-    <string name="toastmessage_copied_to_clipboard_metadata">Metadata copied to clipboard.</string>
+    <string name="toastmessage_copied_to_clipboard">Copied to clipboard.</string>
     <string name="toastmessage_station_copied">Station copied to clipboard.</string>
     <string name="toastmessage_stream_may_not_work">Unsupported audio format detected. Playback of stream may not work properly.</string>
     <string name="toastmessage_timer_activated">Sleep timer activated.</string>

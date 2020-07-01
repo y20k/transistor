@@ -89,8 +89,7 @@
     <string name="toastmessage_shortcut_created">Odkaz vytvorený.</string>
     <string name="toastmessage_shortcut_not_created">Odkaz nie je vytvorený. Toto zariadenie neumožňuje pridávať odkazy na domovskú obrazovku.</string>
     <string name="toastmessage_list_refreshed">Opätovné načítanie zoznamu staníc.</string>
-    <string name="toastmessage_copied_to_clipboard_url">Odkaz na stream skopírovaný do schránky.</string>
-    <string name="toastmessage_copied_to_clipboard_metadata">Meta údaje skopírované do schránky.</string>
+    <string name="toastmessage_copied_to_clipboard">Odkaz na stream skopírovaný do schránky.</string>
     <string name="toastmessage_station_copied">Stanica skopírovaná do schránky.</string>
     <string name="toastmessage_stream_may_not_work">Zistený nepodporovaný formát. Prehrávanie tohoto streamu nemusí fungovať správne.</string>
     <string name="toastmessage_timer_activated">Aktivovaný časovač zaspávania.</string>

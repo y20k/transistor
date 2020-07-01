@@ -14,8 +14,11 @@
 
 package org.y20k.transistor
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -85,6 +88,35 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
             return@setOnPreferenceClickListener true
         }
 
+        // set up "App Version" preference
+        val preferenceAppVersion: Preference = Preference(context)
+        preferenceAppVersion.title = getString(R.string.pref_app_version_title)
+        preferenceAppVersion.setIcon(R.drawable.ic_info_24dp)
+        preferenceAppVersion.summary = "${getString(R.string.pref_app_version_summary)} ${BuildConfig.VERSION_NAME} (${getString(R.string.app_version_name)})"
+        preferenceAppVersion.setOnPreferenceClickListener {
+            // copy to clipboard
+            val clip: ClipData = ClipData.newPlainText("simple text", preferenceAppVersion.summary)
+            val cm: ClipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            cm.setPrimaryClip(clip)
+            Toast.makeText(activity as Context, R.string.toastmessage_copied_to_clipboard, Toast.LENGTH_LONG).show()
+            return@setOnPreferenceClickListener true
+        }
+
+        // set up "Report Issue" preference
+        val preferenceReportIssue: Preference = Preference(context)
+        preferenceReportIssue.title = getString(R.string.pref_report_issue_title)
+        preferenceReportIssue.setIcon(R.drawable.ic_bug_report_24dp)
+        preferenceReportIssue.summary = getString(R.string.pref_report_issue_summary)
+        preferenceReportIssue.setOnPreferenceClickListener {
+            // open web browser
+            val intent = Intent().apply {
+                action = Intent.ACTION_VIEW
+                data = Uri.parse("https://github.com/y20k/transistor/issues")
+            }
+            startActivity(intent)
+            return@setOnPreferenceClickListener true
+        }
+
 
         // set preference categories
         val preferenceCategoryGeneral: PreferenceCategory = PreferenceCategory(activity as Context)
@@ -95,12 +127,20 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
         preferenceCategoryMaintenance.title = getString(R.string.pref_maintenance_title)
         preferenceCategoryMaintenance.contains(preferenceUpdateStationImages)
 
+        val preferenceCategoryAbout: PreferenceCategory = PreferenceCategory(context)
+        preferenceCategoryAbout.title = getString(R.string.pref_about_title)
+        preferenceCategoryAbout.contains(preferenceAppVersion)
+        preferenceCategoryAbout.contains(preferenceReportIssue)
+
 
         // setup preference screen
         screen.addPreference(preferenceCategoryGeneral)
         screen.addPreference(preferenceThemeSelection)
         screen.addPreference(preferenceCategoryMaintenance)
         screen.addPreference(preferenceUpdateStationImages)
+        screen.addPreference(preferenceCategoryAbout)
+        screen.addPreference(preferenceAppVersion)
+        screen.addPreference(preferenceReportIssue)
         preferenceScreen = screen
     }
 

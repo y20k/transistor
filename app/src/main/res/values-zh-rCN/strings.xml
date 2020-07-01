@@ -113,7 +113,7 @@
     https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
     <string name="descr_player_sheet_content_copy_icon">复制</string>
     <string name="descr_player_sheet_p_stream_url">所选电台的流链接</string>
-    <string name="toastmessage_copied_to_clipboard_url">流媒体链接已复制到剪贴板。</string>
+    <string name="toastmessage_copied_to_clipboard">流媒体链接已复制到剪贴板。</string>
     <string name="shortcut_last_station_short_label">上一个电台</string>
     <string name="shortcut_last_station_long_label">播放上一个电台</string>
     <string name="player_sheet_h2_station_metadata">当前正在播放</string>
@@ -124,7 +124,6 @@
     <string name="descr_station_stream_loading">正在加载流…</string>
     <string name="dialog_error_message_fetch_general_playlist_type">文件的媒体类型：</string>
     <string name="dialog_error_message_fetch_general_stream_type">流的 MIME 类型：</string>
-    <string name="toastmessage_copied_to_clipboard_metadata">元数据已复制到剪贴板。</string>
     <string name="toastmessage_stream_may_not_work">检测到不支持的音频格式。流可能无法正常播放。</string>
     <string name="toastalert_station_not_found">无法找到电台。</string>
     <string name="notification_play">播放</string>

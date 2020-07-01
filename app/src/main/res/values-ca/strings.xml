@@ -83,8 +83,7 @@
     <string name="toastmessage_shortcut_created">Accés directe creat.</string>
     <string name="toastmessage_shortcut_not_created">La drecera no s\'ha creat. Aquest dispositiu no permet crear dreceres.</string>
     <string name="toastmessage_list_refreshed">Tornar a carregar les emissores.</string>
-    <string name="toastmessage_copied_to_clipboard_url">El flux s\'ha copiat al porta-retalls.</string>
-    <string name="toastmessage_copied_to_clipboard_metadata">La metadada s\'ha copiar al porta-retalls.</string>
+    <string name="toastmessage_copied_to_clipboard">El flux s\'ha copiat al porta-retalls.</string>
     <string name="toastmessage_station_copied">Emissora copiada al porta-retalls.</string>
     <string name="toastmessage_stream_may_not_work">Detectat format d\'àudio no suportat. La reproducció del flux de dades no pot funcionar.</string>
     <string name="toastmessage_timer_activated">Temporitzador d\'apagat activat.</string>

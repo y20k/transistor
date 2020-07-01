@@ -78,7 +78,7 @@
     <string name="descr_playback_button_stop">หยุด</string>
     <string name="toastalert_no_image_picker">ไม่มีตัวเลือกรูปภาพ พิจารณาติดตั้งแอปพลิเคชั่นคลังภาพ</string>
     <string name="player_sheet_h2_station_metadata">กำลังเล่น</string>
-    <string name="toastmessage_copied_to_clipboard_url">คัดลอกสถานีไปยังคลิปบอร์ดแล้ว</string>
+    <string name="toastmessage_copied_to_clipboard">คัดลอกสถานีไปยังคลิปบอร์ดแล้ว</string>
     <string name="descr_player_sheet_button_minimize">ซ่อนรายละเอียดสถานี</string>
     <string name="menu_rename">ตั้งชื่อใหม่</string>
     <string name="shortcut_last_station_short_label">สถานีสุดท้าย</string>
@@ -88,7 +88,6 @@
     <string name="descr_app_icon">ไอคอนแอพแสดงถึงวิทยุเก่า</string>
     <string name="toastmessage_theme_follow_system">สลับเป็นโหมดติดตามการตั้งค่าระบบ (ตรวจพบการกดค้าง)</string>
     <string name="app_name">วิทยุทรานซิสเตอร์</string>
-    <string name="toastmessage_copied_to_clipboard_metadata">คัดลอกข้อมูลไปยังคลิปบอร์ดแล้ว</string>
     <string name="dialog_error_message_default">เกิดข้อผิดพลาด</string>
     <string name="descr_player_sheet_content_copy_icon">สำเนา</string>
     <string name="player_sheet_h1_details">รายละเอียด</string>

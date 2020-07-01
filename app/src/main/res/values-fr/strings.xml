@@ -83,8 +83,7 @@
     <string name="toastmessage_shortcut_created">Raccourci créé.</string>
     <string name="toastmessage_shortcut_not_created">Raccourci non créé. Cet appareil ne permet pas la création de raccourcis.</string>
     <string name="toastmessage_list_refreshed">Recharger la liste des stations.</string>
-    <string name="toastmessage_copied_to_clipboard_url">Lien de diffusion copié dans le presse-papiers.</string>
-    <string name="toastmessage_copied_to_clipboard_metadata">Métadonnées copiées dans le presse-papiers.</string>
+    <string name="toastmessage_copied_to_clipboard">Lien de diffusion copié dans le presse-papiers.</string>
     <string name="toastmessage_station_copied">Station copiée dans le presse-papier.</string>
     <string name="toastmessage_stream_may_not_work">Format audio non pris en charge détecté. La lecture du flux peut ne pas fonctionner correctement.</string>
     <string name="toastmessage_timer_activated">Minuteur de veille activé.</string>

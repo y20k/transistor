@@ -83,8 +83,7 @@
     <string name="toastmessage_shortcut_created">Atalho criado.</string>
     <string name="toastmessage_shortcut_not_created">Atalho não criado. Este dispositivo não permite a criação de atalhos.</string>
     <string name="toastmessage_list_refreshed">A recarregar a lista de estações.</string>
-    <string name="toastmessage_copied_to_clipboard_url">Link de transmissão copiado.</string>
-    <string name="toastmessage_copied_to_clipboard_metadata">Metadados copiados.</string>
+    <string name="toastmessage_copied_to_clipboard">Link de transmissão copiado.</string>
     <string name="toastmessage_station_copied">Estação copiada.</string>
     <string name="toastmessage_stream_may_not_work">Detetado formato de áudio não suportado. A transmissão pode não funcionar corretamente.</string>
     <string name="toastmessage_timer_activated">Temporizador de desligar ativado.</string>

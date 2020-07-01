@@ -174,13 +174,13 @@ data class LayoutHolder(var rootView: View) {
             val clip: ClipData = ClipData.newPlainText("simple text", sheetStreamingLinkView.text)
             val cm: ClipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             cm.setPrimaryClip(clip)
-            Toast.makeText(context, R.string.toastmessage_copied_to_clipboard_url, Toast.LENGTH_LONG).show()
+            Toast.makeText(context, R.string.toastmessage_copied_to_clipboard, Toast.LENGTH_LONG).show()
         }
         sheetMetadataHistoryView.setOnClickListener {
             val clip: ClipData = ClipData.newPlainText("simple text", sheetMetadataHistoryView.text)
             val cm: ClipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             cm.setPrimaryClip(clip)
-            Toast.makeText(context, R.string.toastmessage_copied_to_clipboard_metadata, Toast.LENGTH_LONG).show()        }
+            Toast.makeText(context, R.string.toastmessage_copied_to_clipboard, Toast.LENGTH_LONG).show()        }
     }
 
 

@@ -83,8 +83,7 @@
     <string name="toastmessage_shortcut_created">Skrót utworzony.</string>
     <string name="toastmessage_shortcut_not_created">Skrót nie został utworzony. To urządzenie nie pozwala na tworzenie skrótów.</string>
     <string name="toastmessage_list_refreshed">Przeładowywanie listy stacji.</string>
-    <string name="toastmessage_copied_to_clipboard_url">Link do transmisji strumieniowej skopiowany do schowka.</string>
-    <string name="toastmessage_copied_to_clipboard_metadata">Metadane skopiowane do schowka.</string>
+    <string name="toastmessage_copied_to_clipboard">Link do transmisji strumieniowej skopiowany do schowka.</string>
     <string name="toastmessage_station_copied">Stacja skopiowana do schowka.</string>
     <string name="toastmessage_stream_may_not_work">Wykryto niewspierany format audio. Odtwarzanie strumienia może nie działać poprawnie.</string>
     <string name="toastmessage_timer_activated">Wyłącznik czasowy uruchomiony.</string>

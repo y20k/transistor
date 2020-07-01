@@ -89,8 +89,7 @@
     <string name="toastmessage_shortcut_created">Δημιουργήθηκε συντόμευση.</string>
     <string name="toastmessage_shortcut_not_created">Δεν δημιουργήθηκε συντόμευση. Αυτή η συσκευή δεν επιτρέπει τη δημιουργία συντομεύσεων.</string>
     <string name="toastmessage_list_refreshed">Φορτώνεται ξανά το κατάστιχο των σταθμών.</string>
-    <string name="toastmessage_copied_to_clipboard_url">Ο δεσμός της ροής αντιγράφηκε στο πρόχειρο.</string>
-    <string name="toastmessage_copied_to_clipboard_metadata">Τα μεταδεδομένα αντιγράφηκαν στο πρόχειρο.</string>
+    <string name="toastmessage_copied_to_clipboard">Ο δεσμός της ροής αντιγράφηκε στο πρόχειρο.</string>
     <string name="toastmessage_station_copied">Ο σταθμός αντιγράφηκε στο πρόχειρο.</string>
     <string name="toastmessage_stream_may_not_work">Εντοπίστηκε μη υποστηριζόμενη μορφή ηλεκτρονικού ήχου. Ίσως να μην δουλέψει κανονικά η αναπαραγωγή της ροής.</string>
     <string name="toastmessage_timer_activated">Ενεργοποιημένος ο χρονοδιακόπτης νανουρίσματος.</string>

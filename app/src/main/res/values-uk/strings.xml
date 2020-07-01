@@ -83,8 +83,7 @@
     <string name="toastmessage_shortcut_created">Посилання створено.</string>
     <string name="toastmessage_shortcut_not_created">Ярлик не створено. Цей пристрій не дозволяє створювати ярлики.</string>
     <string name="toastmessage_list_refreshed">Перезавантаження списку станцій.</string>
-    <string name="toastmessage_copied_to_clipboard_url">Потокове посилання скопійовано до буферу обміну.</string>
-    <string name="toastmessage_copied_to_clipboard_metadata">Метадані скопійовано до буферу обміну.</string>
+    <string name="toastmessage_copied_to_clipboard">Потокове посилання скопійовано до буферу обміну.</string>
     <string name="toastmessage_station_copied">Станцію скопійовано до буферу обміну.</string>
     <string name="toastmessage_stream_may_not_work">"Виявлено аудіо формат, який не підтримується.  Відтворення потоку може працювати не коректно."</string>
     <string name="toastmessage_timer_activated">Таймер сну увімкнуто.</string>

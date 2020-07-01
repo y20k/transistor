@@ -83,8 +83,7 @@
     <string name="toastmessage_shortcut_created">ショートカットを作成しました。</string>
     <string name="toastmessage_shortcut_not_created">ショートカットは作成されません。このデバイスは、ショートカットの作成を許可していません。</string>
     <string name="toastmessage_list_refreshed">局のリストを再読み込みしています。</string>
-    <string name="toastmessage_copied_to_clipboard_url">ストリームのリンクをクリップボードにコピーしました。</string>
-    <string name="toastmessage_copied_to_clipboard_metadata">メタデータをクリップボードにコピーしました。</string>
+    <string name="toastmessage_copied_to_clipboard">ストリームのリンクをクリップボードにコピーしました。</string>
     <string name="toastmessage_station_copied">放送局をクリップボードにコピーしました。</string>
     <string name="toastmessage_stream_may_not_work">サポートされていないオーディオ形式が検出されました。ストリームの再生が正しく動作しない場合があります。</string>
     <string name="toastmessage_timer_activated">スリープタイマーを有効にしました。</string>
