@@ -188,4 +188,9 @@
     <string name="toastmessage_updating_station_images">Aktualisierung von Senderbildern.</string>
     <string name="toastmessage_error_restart_playback_failed">Die Wiedergabe konnte nicht neu gestartet werden.</string>
     <string name="toastmessage_error_download_error">Fehler beim Herunterladen</string>
+    <string name="pref_report_issue_title">Fehler melden</string>
+    <string name="pref_report_issue_summary">Fehler melden und Verbesserungen vorschlagen auf GitHub.</string>
+    <string name="pref_app_version_title">App-Version</string>
+    <string name="pref_app_version_summary">Version</string>
+    <string name="pref_about_title">Über</string>
 </resources>
