@@ -188,4 +188,9 @@
     <string name="toastmessage_updating_station_images">Mise à jour des images de la station.</string>
     <string name="toastmessage_error_restart_playback_failed">Impossible de relancer la lecture.</string>
     <string name="toastmessage_collection_update_not_necessary">La collection de stations est à jour.</string>
+    <string name="pref_report_issue_title">Signaler un problème</string>
+    <string name="pref_report_issue_summary">Signalez des problèmes ou proposez des améliorations sur GitHub.</string>
+    <string name="pref_app_version_title">Version de l\'application</string>
+    <string name="pref_app_version_summary">Version</string>
+    <string name="pref_about_title">À propos</string>
 </resources>
