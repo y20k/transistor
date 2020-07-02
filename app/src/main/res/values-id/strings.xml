@@ -174,4 +174,9 @@
     <string name="toastmessage_collection_update_not_necessary">Stasiun sudah yang terbaru.</string>
     <string name="toastmessage_updating_station_images">Memperbarui gambar stasiun.</string>
     <string name="toastmessage_error_restart_playback_failed">Tidak bisa memulai ulang pemutaran.</string>
+    <string name="pref_report_issue_title">Laporkan Masalah</string>
+    <string name="pref_report_issue_summary">Laporkan kesalahan dan sarankan fitur di GitHub.</string>
+    <string name="pref_app_version_title">Versi Apl</string>
+    <string name="pref_app_version_summary">Versi</string>
+    <string name="pref_about_title">Tentang</string>
 </resources>
