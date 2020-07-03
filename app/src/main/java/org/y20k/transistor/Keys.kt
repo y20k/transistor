@@ -136,11 +136,12 @@ object Keys {
     const val MIME_TYPE_PNG = "image/png"
     const val MIME_TYPE_MPEG = "audio/mpeg"
     const val MIME_TYPE_HLS = "application/vnd.apple.mpegurl.audio"
-    const val MIME_TYPE_M3U = "audio/x-mpequrl"
+    const val MIME_TYPE_M3U = "audio/x-mpegurl"
     const val MIME_TYPE_PLS = "audio/x-scpls"
     const val MIME_TYPE_XML = "text/xml"
+    const val MIME_TYPE_OCTET_STREAM = "application/octet-stream"
     const val MIME_TYPE_UNSUPPORTED = "unsupported"
-    val MIME_TYPES_M3U = arrayOf("audio/mpegurl", "application/x-mpegurl", "application/x-mpegURL", "audio/x-mpegurl", "application/x-mpegurl", "audio/x-scpls", "application/pls+xml")
+    val MIME_TYPES_M3U = arrayOf("application/mpegurl", "application/x-mpegurl", "audio/mpegurl", "audio/x-mpegurl")
     val MIME_TYPES_PLS = arrayOf("audio/x-scpls", "application/pls+xml")
     val MIME_TYPES_HLS = arrayOf("application/vnd.apple.mpegurl", "application/vnd.apple.mpegurl.audio")
     val MIME_TYPES_MPEG = arrayOf("audio/mpeg")

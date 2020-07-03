@@ -114,6 +114,19 @@ object NetworkHelper {
                     contentType.charset = part.substringAfter("charset=").trim()
                 }
             }
+
+            // special treatment for octet-stream - try to get content type from file extension
+            if (contentType.type.contains(Keys.MIME_TYPE_OCTET_STREAM)) {
+                LogHelper.w(TAG, "Special case \"application/octet-stream\"")
+                val headerFieldContentDisposition: String? = connection.getHeaderField("Content-Disposition")
+                if (headerFieldContentDisposition != null) {
+                    val fileName: String = headerFieldContentDisposition.split("=")[1].replace("\"", "") //getting value after '=' & stripping any "s
+                    contentType.type = FileHelper.getContentTypeFromExtension(fileName)
+                } else {
+                    LogHelper.i(TAG, "Unable to get file name from \"Content-Disposition\" header field.")
+                }
+            }
+
             connection.disconnect()
         }
         LogHelper.i(TAG, "content type: ${contentType.type} | character set: ${contentType.charset}")

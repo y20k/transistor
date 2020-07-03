@@ -87,22 +87,29 @@ object FileHelper {
     }
 
 
-    /* Get MIME type for given file */
-    fun getFileType(context: Context, uri: Uri): String {
+    /* Get content type for given file */
+    fun getContentType(context: Context, uri: Uri): String {
         // get file type from content resolver
-        val fileType: String = context.contentResolver.getType(uri) ?: Keys.MIME_TYPE_UNSUPPORTED
-        if (fileType != Keys.MIME_TYPE_UNSUPPORTED) {
-            // return the found file type
-            return fileType
+        val contentType: String = context.contentResolver.getType(uri) ?: Keys.MIME_TYPE_UNSUPPORTED
+        if (contentType != Keys.MIME_TYPE_UNSUPPORTED && !contentType.contains(Keys.MIME_TYPE_OCTET_STREAM)) {
+            // return the found content type
+            return contentType
         } else {
             // fallback: try to determine file type based on file extension
-            val fileName = getFileName(context, uri)
-            if (fileName.endsWith("m3u", true)) return Keys.MIME_TYPE_M3U
-            if (fileName.endsWith("pls", true)) return Keys.MIME_TYPE_PLS
-            if (fileName.endsWith("png", true)) return Keys.MIME_TYPE_PNG
-            if (fileName.endsWith("jpg", true)) return Keys.MIME_TYPE_JPG
-            if (fileName.endsWith("jpeg", true)) return Keys.MIME_TYPE_JPG
+            return getContentTypeFromExtension(getFileName(context, uri))
         }
+    }
+
+
+    /* Determine content type based on file extension */
+    fun getContentTypeFromExtension(fileName: String): String {
+        LogHelper.i(TAG, "Deducing content type from file name: $fileName")
+        if (fileName.endsWith("m3u", true)) return Keys.MIME_TYPE_M3U
+        if (fileName.endsWith("pls", true)) return Keys.MIME_TYPE_PLS
+        if (fileName.endsWith("png", true)) return Keys.MIME_TYPE_PNG
+        if (fileName.endsWith("jpg", true)) return Keys.MIME_TYPE_JPG
+        if (fileName.endsWith("jpeg", true)) return Keys.MIME_TYPE_JPG
+        // default return
         return Keys.MIME_TYPE_UNSUPPORTED
     }
 

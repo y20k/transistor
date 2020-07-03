@@ -105,8 +105,8 @@ object DownloadHelper {
             val localFileUri: Uri = downloadResult
             // get remote URL for download ID
             val remoteFileLocation: String = getRemoteFileLocation(downloadManager, downloadId)
-            // determine what to
-            val fileType = FileHelper.getFileType(context, localFileUri)
+            // determine what to do
+            val fileType = FileHelper.getContentType(context, localFileUri)
             if ((fileType in Keys.MIME_TYPES_M3U || fileType in Keys.MIME_TYPES_PLS) && CollectionHelper.isNewStation(collection, remoteFileLocation)) {
                 addStation(context, localFileUri, remoteFileLocation)
             } else if ((fileType in Keys.MIME_TYPES_M3U || fileType in Keys.MIME_TYPES_PLS) && !CollectionHelper.isNewStation(collection, remoteFileLocation)) {
