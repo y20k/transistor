@@ -75,8 +75,8 @@ object ImportHelper {
                 if (success) {
                     // delete files from Transistor v3
                     oldCollectionFolder.deleteRecursively()
-                    // save collection
-                    val newCollection: Collection = Collection(stations = oldStations)
+                    // sort and save collection
+                    val newCollection: Collection = CollectionHelper.sortCollection(Collection(stations = oldStations))
                     CollectionHelper.saveCollection(context, newCollection)
                 }
             }
