@@ -239,6 +239,9 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
         if (metadataHistory.size > Keys.DEFAULT_SIZE_OF_METADATA_HISTORY) {
             metadataHistory.removeAt(0)
         }
+        // update notification
+        mediaController.playbackState?.let { updateNotification(it) }
+        // save history to
         PreferencesHelper.saveMetadataHistory(this, metadataHistory)
     }
 
@@ -611,6 +614,59 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
     }
 
 
+    /* Updates notification */
+    private fun updateNotification(state: PlaybackStateCompat) {
+        // skip building a notification when state is "none" and metadata is null
+        // val notification = if (mediaController.metadata != null && state.state != PlaybackStateCompat.STATE_NONE) {
+        val notification = if (state.state != PlaybackStateCompat.STATE_NONE) {
+            val metadataString: String = if(metadataHistory.isNotEmpty()) metadataHistory.last() else String()
+            notificationHelper.buildNotification(mediaSession.sessionToken, station, metadataString)
+        } else {
+            null
+        }
+
+        when (state.isActive) {
+            // CASE: Playback has started
+            true -> {
+                /**
+                 * This may look strange, but the documentation for [Service.startForeground]
+                 * notes that "calling this method does *not* put the service in the started
+                 * state itself, even though the name sounds like it."
+                 */
+                if (notification != null) {
+                    notificationManager.notify(Keys.NOTIFICATION_NOW_PLAYING_ID, notification)
+                    if (!isForegroundService) {
+                        ContextCompat.startForegroundService(applicationContext, Intent(applicationContext, this@PlayerService.javaClass))
+                        startForeground(Keys.NOTIFICATION_NOW_PLAYING_ID, notification)
+                        isForegroundService = true
+                    }
+                }
+            }
+            // CASE: Playback has stopped
+            false -> {
+                if (isForegroundService) {
+                    stopForeground(false)
+                    isForegroundService = false
+
+                    // if playback has ended, also stop the service.
+                    if (state.state == PlaybackStateCompat.STATE_NONE) {
+                        stopSelf()
+                    }
+
+                    if (notification != null && state.state != PlaybackStateCompat.STATE_STOPPED) {
+                        notificationManager.notify(Keys.NOTIFICATION_NOW_PLAYING_ID, notification)
+                    } else {
+                        // remove notification - playback ended (or buildNotification failed)
+                        stopForeground(true)
+                    }
+                }
+
+            }
+        }
+    }
+
+
+
 
     /*
      * Custom AnalyticsListener that enables AudioFX equalizer integration
@@ -779,56 +835,6 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
 
         override fun onPlaybackStateChanged(state: PlaybackStateCompat?) {
             state?.let { updateNotification(it) }
-        }
-
-        private fun updateNotification(state: PlaybackStateCompat) {
-            // skip building a notification when state is "none" and metadata is null
-            // val notification = if (mediaController.metadata != null && state.state != PlaybackStateCompat.STATE_NONE) {
-            val notification = if (state.state != PlaybackStateCompat.STATE_NONE) {
-                val metadataString: String = if(metadataHistory.isNotEmpty()) metadataHistory.last() else String()
-                notificationHelper.buildNotification(mediaSession.sessionToken, station, metadataString)
-            } else {
-                null
-            }
-
-            when (state.isActive) {
-                // CASE: Playback has started
-                true -> {
-                    /**
-                     * This may look strange, but the documentation for [Service.startForeground]
-                     * notes that "calling this method does *not* put the service in the started
-                     * state itself, even though the name sounds like it."
-                     */
-                    if (notification != null) {
-                        notificationManager.notify(Keys.NOTIFICATION_NOW_PLAYING_ID, notification)
-                        if (!isForegroundService) {
-                            ContextCompat.startForegroundService(applicationContext, Intent(applicationContext, this@PlayerService.javaClass))
-                            startForeground(Keys.NOTIFICATION_NOW_PLAYING_ID, notification)
-                            isForegroundService = true
-                        }
-                    }
-                }
-                // CASE: Playback has stopped
-                false -> {
-                    if (isForegroundService) {
-                        stopForeground(false)
-                        isForegroundService = false
-
-                        // if playback has ended, also stop the service.
-                        if (state.state == PlaybackStateCompat.STATE_NONE) {
-                            stopSelf()
-                        }
-
-                        if (notification != null && state.state != PlaybackStateCompat.STATE_STOPPED) {
-                            notificationManager.notify(Keys.NOTIFICATION_NOW_PLAYING_ID, notification)
-                        } else {
-                            // remove notification - playback ended (or buildNotification failed)
-                            stopForeground(true)
-                        }
-                    }
-
-                }
-            }
         }
     }
 
