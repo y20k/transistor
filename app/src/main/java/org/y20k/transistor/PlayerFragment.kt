@@ -257,20 +257,20 @@ class PlayerFragment: Fragment(), CoroutineScope,
             launch {
                 val deferred: Deferred<NetworkHelper.ContentType> = async(Dispatchers.Default) { NetworkHelper.detectContentTypeSuspended(remoteStationLocation) }
                 // wait for result
-                val contentType: NetworkHelper.ContentType = deferred.await()
+                val contentType: String = deferred.await().type.toLowerCase(Locale.getDefault())
                 // CASE: playlist detected
-                if (Keys.MIME_TYPES_M3U.contains(contentType.type) or
-                    Keys.MIME_TYPES_PLS.contains(contentType.type)) {
+                if (Keys.MIME_TYPES_M3U.contains(contentType) or
+                    Keys.MIME_TYPES_PLS.contains(contentType)) {
                     // download playlist
                     DownloadHelper.downloadPlaylists(activity as Context, arrayOf(remoteStationLocation))
                 }
                 // CASE: stream address detected
-                else if (Keys.MIME_TYPES_MPEG.contains(contentType.type) or
-                         Keys.MIME_TYPES_OGG.contains(contentType.type) or
-                         Keys.MIME_TYPES_AAC.contains(contentType.type) or
-                         Keys.MIME_TYPES_HLS.contains(contentType.type)) {
+                else if (Keys.MIME_TYPES_MPEG.contains(contentType) or
+                         Keys.MIME_TYPES_OGG.contains(contentType) or
+                         Keys.MIME_TYPES_AAC.contains(contentType) or
+                         Keys.MIME_TYPES_HLS.contains(contentType)) {
                     // create station and add to collection
-                    val newStation: Station = Station(name = remoteStationLocation, streamUris = mutableListOf(remoteStationLocation), streamContent = contentType.type, modificationDate = GregorianCalendar.getInstance().time)
+                    val newStation: Station = Station(name = remoteStationLocation, streamUris = mutableListOf(remoteStationLocation), streamContent = contentType, modificationDate = GregorianCalendar.getInstance().time)
                     collection = CollectionHelper.addStation(activity as Context, collection, newStation)
                 }
                 // CASE: invalid address

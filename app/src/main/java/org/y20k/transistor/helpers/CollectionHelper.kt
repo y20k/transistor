@@ -408,9 +408,9 @@ object CollectionHelper {
     }
 
 
-    /* Sorts radio stations by name */ // todo
+    /* Sorts radio stations by name */
     fun sortCollection(collection: Collection): Collection {
-        collection.stations = collection.stations.sortedWith(compareByDescending<Station> { it.starred }.thenBy { it.name }) as MutableList<Station>
+        collection.stations = collection.stations.sortedWith(compareByDescending<Station> { it.starred }.thenBy { it.name.toLowerCase(Locale.getDefault()) }) as MutableList<Station>
         return collection
     }
 

@@ -90,7 +90,8 @@ object FileHelper {
     /* Get content type for given file */
     fun getContentType(context: Context, uri: Uri): String {
         // get file type from content resolver
-        val contentType: String = context.contentResolver.getType(uri) ?: Keys.MIME_TYPE_UNSUPPORTED
+        var contentType: String = context.contentResolver.getType(uri) ?: Keys.MIME_TYPE_UNSUPPORTED
+        contentType = contentType.toLowerCase(Locale.getDefault())
         if (contentType != Keys.MIME_TYPE_UNSUPPORTED && !contentType.contains(Keys.MIME_TYPE_OCTET_STREAM)) {
             // return the found content type
             return contentType

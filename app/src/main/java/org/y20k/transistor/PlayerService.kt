@@ -224,17 +224,18 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
 
     /* Updates metadata */
     private fun updateMetadata(metadata: String?) {
+        // get metadata string
+        val metadataString: String
         if (metadata != null && metadata.isNotEmpty()) {
-            // append metadata to metadata history
-            val metadataString: String = metadata.substring(0, min(metadata.length, Keys.DEFAULT_MAX_LENGTH_OF_METADATA_ENTRY))
-            if (!metadataHistory.contains(metadataString)) {
-                metadataHistory.add(metadataString)
-            }
-        } else if (metadata == null || metadata.isEmpty()) {
-            // fallback: use station name
-            metadataHistory.removeIf { it == station.name }
-            metadataHistory.add(station.name)
+            metadataString = metadata.substring(0, min(metadata.length, Keys.DEFAULT_MAX_LENGTH_OF_METADATA_ENTRY))
+        } else {
+            metadataString = station.name
         }
+        // append metadata to metadata history
+        if (metadataHistory.contains(metadataString)) {
+            metadataHistory.removeIf { it == metadataString }
+        }
+        metadataHistory.add(metadataString)
         // trim metadata list
         if (metadataHistory.size > Keys.DEFAULT_SIZE_OF_METADATA_HISTORY) {
             metadataHistory.removeAt(0)
@@ -397,9 +398,9 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
 
         // create MediaSource
         val mediaSource: MediaSource
-        if (station.streamContent in Keys.MIME_TYPE_HLS) {
+        if (station.streamContent in Keys.MIME_TYPE_HLS || station.streamContent in Keys.MIME_TYPES_M3U) {
             // HLS media source
-            Toast.makeText(this, this.getString(R.string.toastmessage_stream_may_not_work), Toast.LENGTH_LONG).show()
+            //Toast.makeText(this, this.getString(R.string.toastmessage_stream_may_not_work), Toast.LENGTH_LONG).show()
             mediaSource = HlsMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse(station.getStreamUri()))
         } else {
             // MPEG or OGG media source
