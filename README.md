@@ -12,9 +12,9 @@ Transistor is free software. It is published under the [MIT open source license]
 ## Install Transistor
 You can install Transistor via F-Froid and Google Play - or you can go and grab the latest APK on [GitHub](https://github.com/y20k/transistor/releases).
 
-[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="80">](https://play.google.com/store/apps/details?id=org.y20k.transistor)
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/repository/browse/?fdid=org.y20k.transistor)
 
-[<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="80">](https://f-droid.org/repository/browse/?fdid=org.y20k.transistor)
+[<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="80">](https://play.google.com/store/apps/details?id=org.y20k.transistor)
 
 ## Frequent Questions
 
