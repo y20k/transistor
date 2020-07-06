@@ -383,9 +383,11 @@ object CollectionHelper {
 
 
     /* Creates MediaMetadata for a single station - used in media session*/
-    fun buildStationMediaMetadata(context: Context, station: Station): MediaMetadataCompat {
+    fun buildStationMediaMetadata(context: Context, station: Station, metadata: String): MediaMetadataCompat {
         return MediaMetadataCompat.Builder().apply {
-            putString(MediaMetadataCompat.METADATA_KEY_TITLE, station.name)
+            putString(MediaMetadataCompat.METADATA_KEY_ARTIST, station.name)
+            putString(MediaMetadataCompat.METADATA_KEY_TITLE, metadata)
+            putString(MediaMetadataCompat.METADATA_KEY_ALBUM, context.getString(R.string.app_name))
             putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI, station.getStreamUri())
             putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, ImageHelper.getStationImage(context, Uri.parse(station.image), Keys.SIZE_COVER_LOCK_SCREEN))
         }.build()
