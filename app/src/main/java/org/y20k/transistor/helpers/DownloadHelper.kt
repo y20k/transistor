@@ -208,9 +208,10 @@ object DownloadHelper {
         val station: Station = CollectionHelper.createStationFromPlaylistFile(context, localFileUri, remoteFileLocation)
         // detect content type on background thread
         GlobalScope.launch {
-            val deferred: Deferred<NetworkHelper.ContentType> = async(Dispatchers.Default) { NetworkHelper.detectContentTypeSuspended(remoteFileLocation) }
+            val deferred: Deferred<NetworkHelper.ContentType> = async(Dispatchers.Default) { NetworkHelper.detectContentTypeSuspended(station.getStreamUri()) }
             // wait for result
             val contentType: NetworkHelper.ContentType = deferred.await()
+            LogHelper.e(TAG, "DING $localFileUri $remoteFileLocation ${contentType.type}") // todo remove
             // set content type
             station.streamContent = contentType.type
             // add station and save collection
