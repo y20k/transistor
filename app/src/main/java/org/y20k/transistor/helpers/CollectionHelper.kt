@@ -123,6 +123,7 @@ object CollectionHelper {
                 if (it.radioBrowserStationUuid.equals(station.radioBrowserStationUuid)) {
                     // update station in collection with values from new station
                     it.streamUris[it.stream] = station.getStreamUri()
+                    it.streamContent = station.streamContent
                     it.remoteImageLocation = station.remoteImageLocation
                     it.remoteStationLocation = station.remoteStationLocation
                     it.homepage = station.homepage
@@ -141,8 +142,9 @@ object CollectionHelper {
         else if (station.remoteStationLocation.isNotEmpty()) {
             updatedCollection.stations.forEach { it ->
                 if (it.remoteStationLocation.equals(station.remoteStationLocation)) {
-                    // update stream uri and station image url
+                    // update stream uri, mime type and station image url
                     it.streamUris[it.stream] = station.getStreamUri()
+                    it.streamContent = station.streamContent
                     it.remoteImageLocation = station.remoteImageLocation
                     // update name - if not changed previously by user
                     if (!it.nameManuallySet) it.name = station.name
