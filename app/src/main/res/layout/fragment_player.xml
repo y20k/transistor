@@ -23,20 +23,12 @@
         tools:context="org.y20k.transistor.PlayerFragment">
 
         <!-- STATION LIST -->
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipe_refresh_layout"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/station_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="2dp"
-            android:layout_marginBottom="0dp">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/station_list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="visible" />
-
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            android:visibility="visible" />
 
         <!-- ONBOARDING -->
         <include layout="@layout/element_onboarding" />

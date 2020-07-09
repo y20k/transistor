@@ -31,7 +31,6 @@ import androidx.constraintlayout.widget.Group
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import org.y20k.transistor.Keys
 import org.y20k.transistor.R
@@ -52,7 +51,6 @@ data class LayoutHolder(var rootView: View) {
 
 
     /* Main class variables */
-    var swipeRefreshLayout: SwipeRefreshLayout
     var recyclerView: RecyclerView
     val layoutManager: LinearLayoutManager
     var bottomSheet: ConstraintLayout
@@ -82,7 +80,6 @@ data class LayoutHolder(var rootView: View) {
     /* Init block */
     init {
         // find views
-        swipeRefreshLayout = rootView.findViewById(R.id.swipe_refresh_layout)
         recyclerView = rootView.findViewById(R.id.station_list)
         bottomSheet = rootView.findViewById(R.id.bottom_sheet)
         //sheetMetadataViews = rootView.findViewById(R.id.sheet_metadata_views)
@@ -295,7 +292,7 @@ data class LayoutHolder(var rootView: View) {
 
     /* Shows player */
     private fun showPlayer(context: Context): Boolean {
-        UiHelper.setViewMargins(context, swipeRefreshLayout, 0,0,0, Keys.BOTTOM_SHEET_PEEK_HEIGHT)
+        UiHelper.setViewMargins(context, recyclerView, 0,0,0, Keys.BOTTOM_SHEET_PEEK_HEIGHT)
         if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_HIDDEN && onboardingLayout.visibility == View.GONE) {
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
         }
@@ -305,7 +302,7 @@ data class LayoutHolder(var rootView: View) {
 
     /* Hides player */
     private fun hidePlayer(context: Context): Boolean {
-        UiHelper.setViewMargins(context, swipeRefreshLayout, 0,0,0, 0)
+        UiHelper.setViewMargins(context, recyclerView, 0,0,0, 0)
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         return true
     }

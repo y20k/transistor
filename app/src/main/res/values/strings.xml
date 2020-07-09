@@ -82,8 +82,11 @@
     <string name="pref_theme_selection_mode_light">Light mode</string>
     <string name="pref_theme_selection_summary">Current theme:</string>
     <string name="pref_theme_selection_title">App Theme</string>
-    <string name="pref_update_station_images_summary">Download the latest version of all station images in your collection.</string>
+    <string name="pref_update_collection_summary">Look for updated audio streams and new station images.</string>
+    <string name="pref_update_collection_title">Update Stations</string>
+    <string name="pref_update_station_images_summary">Download latest version of all station images.</string>
     <string name="pref_update_station_images_title">Update Station Images</string>
+
     <!-- Accessibility Descriptions -->
     <string name="descr_app_icon">App icon depicting an old radio</string>
     <string name="descr_card_playback_indicator">Playback progress</string>

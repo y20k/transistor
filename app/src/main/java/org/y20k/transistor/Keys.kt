@@ -56,6 +56,10 @@ object Keys {
     const val EXTRA_STREAM_URI: String = "STREAM_URI"
     const val EXTRA_START_LAST_PLAYED_STATION: String = "START_LAST_PLAYED_STATION"
 
+    // arguments
+    const val ARG_UPDATE_COLLECTION: String = "ArgUpdateCollection"
+    const val ARG_UPDATE_IMAGES: String = "ArgUpdateImages"
+
     // keys
     const val KEY_DOWNLOAD_WORK_REQUEST: String = "DOWNLOAD_WORK_REQUEST"
     const val KEY_SAVE_INSTANCE_STATE_STATION_LIST: String = "SAVE_INSTANCE_STATE_STATION_LIST"

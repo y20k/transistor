@@ -23,11 +23,13 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.findNavController
 import androidx.preference.*
+import org.y20k.transistor.dialogs.ErrorDialog
 import org.y20k.transistor.dialogs.YesNoDialog
 import org.y20k.transistor.helpers.AppThemeHelper
-import org.y20k.transistor.helpers.DownloadHelper
 import org.y20k.transistor.helpers.LogHelper
+import org.y20k.transistor.helpers.NetworkHelper
 
 
 /*
@@ -88,6 +90,19 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
             return@setOnPreferenceClickListener true
         }
 
+
+        // set up "Update Stations" preference
+        val preferenceUpdateCollection: Preference = Preference(activity as Context)
+        preferenceUpdateCollection.title = getString(R.string.pref_update_collection_title)
+        preferenceUpdateCollection.setIcon(R.drawable.ic_refresh_24dp)
+        preferenceUpdateCollection.summary = getString(R.string.pref_update_collection_summary)
+        preferenceUpdateCollection.setOnPreferenceClickListener {
+            // show dialog
+            YesNoDialog(this).show(context = activity as Context, type = Keys.DIALOG_UPDATE_COLLECTION, message = R.string.dialog_yes_no_message_update_collection, yesButton = R.string.dialog_yes_no_positive_button_update_collection)
+            return@setOnPreferenceClickListener true
+        }
+
+
         // set up "App Version" preference
         val preferenceAppVersion: Preference = Preference(context)
         preferenceAppVersion.title = getString(R.string.pref_app_version_title)
@@ -101,6 +116,7 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
             Toast.makeText(activity as Context, R.string.toastmessage_copied_to_clipboard, Toast.LENGTH_LONG).show()
             return@setOnPreferenceClickListener true
         }
+
 
         // set up "Report Issue" preference
         val preferenceReportIssue: Preference = Preference(context)
@@ -126,6 +142,7 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
         val preferenceCategoryMaintenance: PreferenceCategory = PreferenceCategory(activity as Context)
         preferenceCategoryMaintenance.title = getString(R.string.pref_maintenance_title)
         preferenceCategoryMaintenance.contains(preferenceUpdateStationImages)
+        preferenceCategoryMaintenance.contains(preferenceUpdateCollection)
 
         val preferenceCategoryAbout: PreferenceCategory = PreferenceCategory(context)
         preferenceCategoryAbout.title = getString(R.string.pref_about_title)
@@ -138,6 +155,7 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
         screen.addPreference(preferenceThemeSelection)
         screen.addPreference(preferenceCategoryMaintenance)
         screen.addPreference(preferenceUpdateStationImages)
+        screen.addPreference(preferenceUpdateCollection)
         screen.addPreference(preferenceCategoryAbout)
         screen.addPreference(preferenceAppVersion)
         screen.addPreference(preferenceReportIssue)
@@ -151,21 +169,21 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
         super.onYesNoDialog(type, dialogResult, payload, payloadString)
 
         when (type) {
-            Keys.DIALOG_DELETE_DOWNLOADS -> {
-                when (dialogResult) {
-                    // user tapped: delete all downloads
-                    true -> {
-                        // todo implement or remove
-                    }
-                }
-            }
 
             Keys.DIALOG_UPDATE_STATION_IMAGES -> {
                 when (dialogResult) {
                     // user tapped: refresh station images
                     true -> {
-                        DownloadHelper.updateStationImages(activity as Context)
-                        Toast.makeText(activity, getString(R.string.toastmessage_updating_station_images), Toast.LENGTH_LONG).show()
+                        updateStationImages()
+                    }
+                }
+            }
+
+            Keys.DIALOG_UPDATE_COLLECTION -> {
+                when (dialogResult) {
+                    // user tapped update collection
+                    true -> {
+                        updateCollection()
                     }
                 }
             }
@@ -185,5 +203,34 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
             else -> super.onActivityResult(requestCode, resultCode, data)
         }
     }
+
+
+    /* Updates collection */
+    private fun updateCollection() {
+        if (NetworkHelper.isConnectedToNetwork(activity as Context)) {
+            Toast.makeText(activity as Context, R.string.toastmessage_updating_collection, Toast.LENGTH_LONG).show()
+            // update collection in player screen
+            val bundle: Bundle = Bundle()
+            bundle.putBoolean(Keys.ARG_UPDATE_COLLECTION, true)
+            this.findNavController().navigate(R.id.player_destination, bundle)
+        } else {
+            ErrorDialog().show(activity as Context, R.string.dialog_error_title_no_network, R.string.dialog_error_message_no_network)
+        }
+    }
+
+
+    /* Updates station images */
+    private fun updateStationImages() {
+        if (NetworkHelper.isConnectedToNetwork(activity as Context)) {
+            Toast.makeText(activity as Context, R.string.toastmessage_updating_station_images, Toast.LENGTH_LONG).show()
+            // update collection in player screen
+            val bundle: Bundle = Bundle()
+            bundle.putBoolean(Keys.ARG_UPDATE_IMAGES, true)
+            this.findNavController().navigate(R.id.player_destination, bundle)
+        } else {
+            ErrorDialog().show(activity as Context, R.string.dialog_error_title_no_network, R.string.dialog_error_message_no_network)
+        }
+    }
+
 
 }
