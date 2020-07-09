@@ -129,7 +129,7 @@
     <string name="descr_card_settings_button">Ayarlar</string>
     <string name="descr_card_playback_indicator">Oynatma ilerlemesi</string>
     <string name="pref_update_station_images_title">İstasyon Görüntülerini Güncelle</string>
-    <string name="pref_update_station_images_summary">Koleksiyonunuzdaki tüm istasyon görüntülerinin en son sürümünü indirin.</string>
+    <string name="pref_update_station_images_summary">Tüm istasyon görüntülerinin en son sürümünü indirin.</string>
     <string name="pref_theme_selection_title">Uygulama Teması</string>
     <string name="pref_theme_selection_summary">Geçerli tema:</string>
     <string name="pref_theme_selection_mode_light">Aydınlık mod</string>
@@ -193,4 +193,6 @@
     <string name="pref_app_version_title">Uygulama Sürümü</string>
     <string name="pref_app_version_summary">Sürüm</string>
     <string name="pref_about_title">Hakkında</string>
+    <string name="pref_update_collection_title">İstasyonları Güncelle</string>
+    <string name="pref_update_collection_summary">Güncellenmiş ses yayınlarını ve yeni istasyon görüntülerini arayın.</string>
 </resources>
