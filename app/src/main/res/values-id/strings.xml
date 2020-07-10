@@ -111,7 +111,7 @@
     <string name="descr_card_station_image">Gambar stasiun</string>
     <string name="descr_card_playback_indicator">Laju pemutaran</string>
     <string name="pref_update_station_images_title">Perbarui Gambar Stasiun</string>
-    <string name="pref_update_station_images_summary">Unduh versi terbaru dari semua gambar stasiun di dalam koleksi anda.</string>
+    <string name="pref_update_station_images_summary">Mengunduh versi terbaru dari semua gambar stasiun.</string>
     <string name="pref_theme_selection_title">Tema Apl</string>
     <string name="pref_theme_selection_summary">Tema saat ini:</string>
     <string name="pref_theme_selection_mode_device_default">Mengikuti sistem</string>
@@ -179,4 +179,6 @@
     <string name="pref_app_version_title">Versi Apl</string>
     <string name="pref_app_version_summary">Versi</string>
     <string name="pref_about_title">Tentang</string>
+    <string name="pref_update_collection_title">Perbarui Stasiun</string>
+    <string name="pref_update_collection_summary">Memperbarui stream audio dan gambar stasiun yang baru.</string>
 </resources>
