@@ -117,13 +117,13 @@
     <string name="descr_expanded_player_sleep_timer_remaining_time">Temps restant sur la minuterie de sommeil</string>
     <string name="descr_expanded_player_sleep_timer_cancel_button">Annuler la minuterie de sommeil</string>
     <string name="descr_card_small_edit_button">Modifier</string>
-    <string name="descr_card_small_play_button">Lecture/Stop</string>
+    <string name="descr_card_small_play_button">Lecture/Arrêt</string>
     <string name="descr_card_small_download_button">Télécharger</string>
     <string name="descr_card_settings_button">Paramètres</string>
     <string name="descr_card_station_image">Image de la station</string>
     <string name="descr_card_playback_indicator">Progression de la lecture</string>
     <string name="pref_update_station_images_title">Mettre à jour les images de station</string>
-    <string name="pref_update_station_images_summary">Télécharger la dernière version de toutes les images de station dans votre collection.</string>
+    <string name="pref_update_station_images_summary">Télécharger la dernière version de toutes les images de station.</string>
     <string name="pref_theme_selection_title">Thème de l\'application</string>
     <string name="pref_theme_selection_summary">Thème actuel :</string>
     <string name="pref_theme_selection_mode_device_default">Mode de l\'appareil</string>
@@ -193,4 +193,6 @@
     <string name="pref_app_version_title">Version de l\'application</string>
     <string name="pref_app_version_summary">Version</string>
     <string name="pref_about_title">À propos</string>
+    <string name="pref_update_collection_title">Mettre à jour les stations</string>
+    <string name="pref_update_collection_summary">Recherchez des flux audio mis à jour et de nouvelles images de stations.</string>
 </resources>
