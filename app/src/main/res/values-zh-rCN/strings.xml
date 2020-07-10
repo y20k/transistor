@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- activities -->
-    <string name="app_name">Transistor</string>
+    <string name="app_name">晶体管</string>
     <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
     <!-- app shortcuts -->
     <!--<string name="shortcut_last_station_short_label"></string>-->
@@ -156,4 +156,6 @@
     <string name="descr_playback_button_play">播放</string>
     <string name="descr_playback_button_stop">停止</string>
     <string name="descr_player_sheet_button_minimize">隐藏电台详细信息</string>
+    <string name="dialog_edit_choose_station_image">选择</string>
+    <string name="fragment_settings_title">设置</string>
 </resources>
