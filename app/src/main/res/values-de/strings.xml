@@ -20,8 +20,8 @@
     <string name="descr_station_stream_loading">Lade Stream …</string>
     <string name="descr_playback_button_play">Abspielen</string>
     <string name="descr_playback_button_stop">Stopp</string>
-    <string name="descr_playback_indicator">Playback Status</string>
-    <string name="descr_timer_icon">Sleep-Timer</string>
+    <string name="descr_playback_indicator">Abspiel-Status</string>
+    <string name="descr_timer_icon">Schlaf-Timer</string>
     <string name="descr_player_sheet_button_minimize">Stationsdetails ausblenden</string>
     <string name="descr_player_sheet_content_copy_icon">Kopieren</string>
     <string name="descr_player_sheet_p_stream_url">Streaming-Adresse des gewählten Radiosenders</string>
@@ -152,7 +152,7 @@
     <string name="descr_card_small_download_button">Herunterladen</string>
     <string name="descr_card_playback_indicator">Wiedergabefortschritt</string>
     <string name="pref_update_station_images_title">Senderbilder aktualisieren</string>
-    <string name="pref_update_station_images_summary">Lade die neueste Version aller Senderbilder in deiner Sammlung herunter.</string>
+    <string name="pref_update_station_images_summary">Neueste Version aller Senderbilder herunterladen.</string>
     <string name="pref_maintenance_title">Wartung</string>
     <string name="notification_skip_to_next">Nächster</string>
     <string name="notification_skip_to_previous">Vorheriger</string>
@@ -193,4 +193,6 @@
     <string name="pref_app_version_title">App-Version</string>
     <string name="pref_app_version_summary">Version</string>
     <string name="pref_about_title">Über</string>
+    <string name="pref_update_collection_title">Sender aktualisieren</string>
+    <string name="pref_update_collection_summary">Suchen Sie nach aktualisierten Audiostreams und neuen Senderbildern.</string>
 </resources>
