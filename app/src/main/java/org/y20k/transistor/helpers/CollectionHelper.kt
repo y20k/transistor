@@ -246,7 +246,12 @@ object CollectionHelper {
                     return station
                 }
         }
-        return Station()
+        // fallback: return first station
+        if (collection.stations.isNotEmpty()) {
+            return collection.stations.first()
+        } else {
+            return Station()
+        }
     }
 
 
@@ -257,7 +262,12 @@ object CollectionHelper {
                 return station
             }
         }
-        return Station()
+        // fallback: return first station
+        if (collection.stations.isNotEmpty()) {
+            return collection.stations.first()
+        } else {
+            return Station()
+        }
     }
 
 
@@ -320,7 +330,6 @@ object CollectionHelper {
         }
         return String()
     }
-
 
 
     /* Saves the playback state of a given station */

@@ -441,10 +441,10 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
             LogHelper.e(TAG, "Unable to start playback. Station has no stream addresses.")
             return
         }
-        // default to first station, if no station has been selected
+        // default to last played station, if no station has been selected
         if (!station.isValid() && collection.stations.isNotEmpty()) {
-            LogHelper.w(TAG, "No station has been selected. Starting playback of first station.")
-            station = collection.stations[0]
+            LogHelper.w(TAG, "No station has been selected. Starting playback of last played station.")
+            station = CollectionHelper.getStation(collection, PreferencesHelper.loadLastPlayedStation(this@PlayerService))
         }
         // update metadata and prepare player
         updateMetadata(station.name)
@@ -691,14 +691,15 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
      */
     private var mediaSessionCallback = object: MediaSessionCompat.Callback() {
         override fun onPlay() {
-            startPlayback()
-        }
-
-        override fun onPlayFromMediaId(mediaId: String?, extras: Bundle?) {
             // stop current playback, if necessary
             if (playerState.playbackState == PlaybackStateCompat.STATE_PLAYING) {
                 stopPlayback()
             }
+            // start playback of current station
+            startPlayback()
+        }
+
+        override fun onPlayFromMediaId(mediaId: String?, extras: Bundle?) {
             // get station, set metadata and start playback
             station = CollectionHelper.getStation(collection, mediaId ?: String())
 //            mediaSession.setMetadata(CollectionHelper.buildStationMediaMetadata(this@PlayerService, station, metadataHistory.last()))
@@ -716,10 +717,11 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
         override fun onPlayFromSearch(query: String?, extras: Bundle?) {
             // SPECIAL CASE: Empty query - user provided generic string e.g. 'Play music'
             if (query.isNullOrEmpty()) {
-                // try to get newest station
-                val stationMediaItem: MediaBrowserCompat.MediaItem? = collectionProvider.getFirstStation()
-                if (stationMediaItem != null) {
-                    onPlayFromMediaId(stationMediaItem.mediaId, null)
+                // try to get last played station
+                station = CollectionHelper.getStation(collection, PreferencesHelper.loadLastPlayedStation(this@PlayerService))
+                if (station.isValid()) {
+                    LogHelper.e(TAG, "onPlayFromSearch => ${station.name}")
+                    startPlayback()
                 } else {
                     // unable to get the first station - notify user
                     Toast.makeText(this@PlayerService, R.string.toastmessage_error_no_station_found, Toast.LENGTH_LONG).show()
