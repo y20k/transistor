@@ -179,7 +179,8 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
     /* Overrides onTaskRemoved from Service */
     override fun onTaskRemoved(rootIntent: Intent) {
         super.onTaskRemoved(rootIntent)
-        stopSelf()
+        // kill service, if MainActivity was canceled through task switcher
+        //stopSelf()
     }
 
 
@@ -299,7 +300,7 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
 //    override fun onPlayerError(error: ExoPlaybackException) {
 //        when (error.type) {
 //            ExoPlaybackException.TYPE_SOURCE -> LogHelper.e(TAG, "ExoPlaybackException TYPE_SOURCE: " + error.sourceException.message)
-//            ExoPlaybackException.TYPE_RENDERER -> LogHelper.e(TAG, "ExoPlaybackException TYPE_RENDERER: " + error.rendererException.message)
+//            ExoPlaybackException.TYPE_RENDERER -> ftop(TAG, "ExoPlaybackException TYPE_RENDERER: " + error.rendererException.message)
 //            ExoPlaybackException.TYPE_UNEXPECTED -> LogHelper.e(TAG, "ExoPlaybackException TYPE_UNEXPECTED: " + error.unexpectedException.message)
 //            else -> LogHelper.e(TAG, "ExoPlaybackException OTHER: " + error.type)
 //        }
