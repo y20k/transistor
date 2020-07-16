@@ -297,8 +297,8 @@ class PlayerFragment: Fragment(), CoroutineScope,
     /* Overrides onPlayButtonTapped from CollectionAdapterListener */
     override fun onPlayButtonTapped(stationUuid: String, playbackState: Int) {
         when (playbackState) {
-            // PLAYER STATE: PLAYING
-            PlaybackStateCompat.STATE_PLAYING -> {
+            // PLAYER STATE: PLAYING or BUFFERING
+            PlaybackStateCompat.STATE_PLAYING, PlaybackStateCompat.STATE_BUFFERING-> {
                 // stop playback
                 togglePlayback(false, stationUuid, playbackState)
             }
@@ -399,7 +399,8 @@ class PlayerFragment: Fragment(), CoroutineScope,
 
         // main play/pause button
         layout.playButtonView.setOnClickListener {
-            onPlayButtonTapped(playerState.stationUuid, mediaController.playbackState.state)
+            onPlayButtonTapped(playerState.stationUuid, playerState.playbackState)
+            // onPlayButtonTapped(playerState.stationUuid, mediaController.playbackState.state) todo remove
         }
 
         // register a callback to stay in sync

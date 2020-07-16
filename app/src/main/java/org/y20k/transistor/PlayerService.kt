@@ -295,6 +295,17 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
     }
 
 
+//    /* Overrides onPlayerError from Player.EventListener  */
+//    override fun onPlayerError(error: ExoPlaybackException) {
+//        when (error.type) {
+//            ExoPlaybackException.TYPE_SOURCE -> LogHelper.e(TAG, "ExoPlaybackException TYPE_SOURCE: " + error.sourceException.message)
+//            ExoPlaybackException.TYPE_RENDERER -> LogHelper.e(TAG, "ExoPlaybackException TYPE_RENDERER: " + error.rendererException.message)
+//            ExoPlaybackException.TYPE_UNEXPECTED -> LogHelper.e(TAG, "ExoPlaybackException TYPE_UNEXPECTED: " + error.unexpectedException.message)
+//            else -> LogHelper.e(TAG, "ExoPlaybackException OTHER: " + error.type)
+//        }
+//    }
+
+
     /* Overrides onPlayerStateChanged from Player.EventListener */
     override fun onPlayerStateChanged(playWhenReady: Boolean, playerState: Int) {
         when (playWhenReady) {
@@ -320,7 +331,8 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
                     // ended by app: update media session and save state
                     handlePlaybackChange(PlaybackStateCompat.STATE_STOPPED)
                 } else {
-                    LogHelper.w(TAG, "Unhandled player state change.")
+                    LogHelper.w(TAG, "Unhandled player state change. Treat state as: playback stopped by app.")
+                    handlePlaybackChange(PlaybackStateCompat.STATE_STOPPED)
                 }
                 // stop sleep timer - if running
                 cancelSleepTimer()
@@ -384,7 +396,7 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
         val player = SimpleExoPlayer.Builder(this).build()
         player.addListener(this@PlayerService)
         player.setHandleAudioBecomingNoisy(true)
-        player.setHandleWakeLock(true)
+        player.setWakeMode(C.WAKE_MODE_NETWORK)
         player.setAudioAttributes(audioAttributes, true)
         player.addAnalyticsListener(analyticsListener)
         player.addMetadataOutput(this)
@@ -720,7 +732,6 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
                 // try to get last played station
                 station = CollectionHelper.getStation(collection, PreferencesHelper.loadLastPlayedStation(this@PlayerService))
                 if (station.isValid()) {
-                    LogHelper.e(TAG, "onPlayFromSearch => ${station.name}")
                     startPlayback()
                 } else {
                     // unable to get the first station - notify user
