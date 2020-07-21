@@ -115,6 +115,22 @@ object PreferencesHelper {
     }
 
 
+    /* Loads size of collection from shared preferences */
+    fun loadCollectionSize(context: Context): Int {
+        val settings = PreferenceManager.getDefaultSharedPreferences(context)
+        return settings.getInt(Keys.PREF_COLLECTION_SIZE, -1)
+    }
+
+
+    /* Saves site of collection to shared preferences */
+    fun saveCollectionSize(context: Context, size: Int) {
+        val settings = PreferenceManager.getDefaultSharedPreferences(context)
+        val editor = settings.edit()
+        editor.putInt(Keys.PREF_COLLECTION_SIZE, size)
+        editor.apply()
+    }
+
+
     /* Loads date of last save operation from shared preferences */
     fun loadCollectionModificationDate(context: Context): Date {
         val settings = PreferenceManager.getDefaultSharedPreferences(context)

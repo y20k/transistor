@@ -178,19 +178,26 @@ object FileHelper {
     /* Saves collection of radio stations as JSON text file */
     fun saveCollection(context: Context, collection: Collection, lastSave: Date) {
         LogHelper.v(TAG, "Saving collection - Thread: ${Thread.currentThread().name}")
-        // convert to JSON
-        val gson: Gson = getCustomGson()
-        var json: String = String()
-        try {
-            json = gson.toJson(collection)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        if (json.isNotBlank()) {
-            // save modification date
-            PreferencesHelper.saveCollectionModificationDate(context, lastSave)
-            // write text file
-            writeTextFile(context, json, Keys.FOLDER_COLLECTION, Keys.COLLECTION_FILE)
+        val collectionSize: Int = collection.stations.size
+        // do not override an existing collection with an empty one - except when last station is deleted
+        if (collectionSize > 0 || PreferencesHelper.loadCollectionSize(context) == 1) {
+            // convert to JSON
+            val gson: Gson = getCustomGson()
+            var json: String = String()
+            try {
+                json = gson.toJson(collection)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            if (json.isNotBlank()) {
+                // save modification date and collection size
+                PreferencesHelper.saveCollectionModificationDate(context, lastSave)
+                PreferencesHelper.saveCollectionSize(context, collection.stations.size)
+                // write text file
+                writeTextFile(context, json, Keys.FOLDER_COLLECTION, Keys.COLLECTION_FILE)
+            }
+        } else {
+            LogHelper.w(TAG, "Not saving collection. Collection is empty.")
         }
     }
 

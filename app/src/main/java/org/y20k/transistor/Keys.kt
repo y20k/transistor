@@ -77,6 +77,7 @@ object Keys {
     const val PREF_ONE_TIME_HOUSEKEEPING_NECESSARY: String = "ONE_TIME_HOUSEKEEPING_NECESSARY_VERSIONCODE_72" // increment to current app version code to trigger housekeeping that runs only once
     const val PREF_THEME_SELECTION: String= "THEME_SELECTION"
     const val PREF_LAST_UPDATE_COLLECTION: String = "LAST_UPDATE_COLLECTION"
+    const val PREF_COLLECTION_SIZE: String = "COLLECTION_SIZE"
     const val PREF_COLLECTION_MODIFICATION_DATE: String = "COLLECTION_MODIFICATION_DATE"
     const val PREF_CURRENT_PLAYBACK_STATE: String = "CURRENT_PLAYBACK_STATE"
     const val PREF_ACTIVE_DOWNLOADS: String = "ACTIVE_DOWNLOADS"
