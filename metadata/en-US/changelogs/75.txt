@@ -2,7 +2,7 @@
 
 **2020-07-22**
 
-- Android Auto resumes plackback of last played station
+- Android Auto resumes playback of last played station
 - updated and new translations
 - a couple of small bug fixes
 
