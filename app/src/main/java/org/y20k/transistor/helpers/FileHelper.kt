@@ -167,8 +167,8 @@ object FileHelper {
 
 
     /* Creates and save a scaled version of the station image */
-    fun saveStationImage(context: Context, stationUuid: String, sourceImageUri: Uri, size: Int, fileName: String): Uri {
-        val coverBitmap: Bitmap = ImageHelper.getStationImage(context, sourceImageUri, size)
+    fun saveStationImage(context: Context, stationUuid: String, sourceImageUri: String, size: Int, fileName: String): Uri {
+        val coverBitmap: Bitmap = ImageHelper.getScaledStationImage(context, sourceImageUri, size)
         val file: File = File(context.getExternalFilesDir(determineDestinationFolderPath(Keys.FILE_TYPE_IMAGE, stationUuid)), fileName)
         writeImageFile(coverBitmap, file, Bitmap.CompressFormat.JPEG, quality = 75)
         return file.toUri()

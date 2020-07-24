@@ -112,9 +112,9 @@ object DownloadHelper {
             } else if ((fileType in Keys.MIME_TYPES_M3U || fileType in Keys.MIME_TYPES_PLS) && !CollectionHelper.isNewStation(collection, remoteFileLocation)) {
                 updateStation(context, localFileUri, remoteFileLocation)
             } else if (fileType in Keys.MIME_TYPES_IMAGE) {
-                collection = CollectionHelper.setStationImageWithRemoteLocation(context, collection, localFileUri, remoteFileLocation, false)
+                collection = CollectionHelper.setStationImageWithRemoteLocation(context, collection, localFileUri.toString(), remoteFileLocation, false)
             } else if (fileType in Keys.MIME_TYPES_FAVICON) {
-                collection = CollectionHelper.setStationImageWithRemoteLocation(context, collection, localFileUri, remoteFileLocation, false)
+                collection = CollectionHelper.setStationImageWithRemoteLocation(context, collection, localFileUri.toString(), remoteFileLocation, false)
             }
             // remove ID from active downloads
             removeFromActiveDownloads(context, arrayOf(downloadId))

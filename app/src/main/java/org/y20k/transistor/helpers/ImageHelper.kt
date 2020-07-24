@@ -20,6 +20,7 @@ import android.net.Uri
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.palette.graphics.Palette
+import org.y20k.transistor.Keys
 import org.y20k.transistor.R
 import java.io.IOException
 import java.io.InputStream
@@ -40,9 +41,31 @@ object ImageHelper {
 
 
     /* Get a scaled version of the station image */
-    fun getStationImage(context: Context, imageUri: Uri, imageSize: Int): Bitmap {
+    fun getScaledStationImage(context: Context, imageUriString: String, imageSize: Int): Bitmap {
         val size: Int = (imageSize * getDensityScalingFactor(context)).toInt()
-        return decodeSampledBitmapFromUri(context, imageUri, size, size)
+        return decodeSampledBitmapFromUri(context, imageUriString, size, size)
+    }
+
+
+    /* Get an unscaled version of the station image */
+    fun getStationImage(context: Context, imageUriString: String): Bitmap {
+        var bitmap: Bitmap? = null
+
+        if (imageUriString != Keys.LOCATION_DEFAULT_STATION_IMAGE) {
+            try {
+                // just decode the file
+                bitmap = BitmapFactory.decodeFile(Uri.parse(imageUriString).path)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        // get default image
+        if (bitmap == null) {
+            bitmap = ContextCompat.getDrawable(context, R.drawable.ic_default_cover_rss_icon_24dp)!!.toBitmap()
+        }
+
+        return bitmap
     }
 
 
@@ -86,7 +109,7 @@ object ImageHelper {
 
 
     /* Extracts color from an image */
-    fun getMainColor(context: Context, imageUri: Uri): Int {
+    fun getMainColor(context: Context, imageUri: String): Int {
 
         // extract color palette from station image
         val palette: Palette = Palette.from(decodeSampledBitmapFromUri(context, imageUri, 72, 72)).generate()
@@ -114,28 +137,31 @@ object ImageHelper {
 
 
     /* Return sampled down image for given Uri */
-    private fun decodeSampledBitmapFromUri(context: Context, imageUri: Uri, reqWidth: Int, reqHeight: Int): Bitmap {
+    private fun decodeSampledBitmapFromUri(context: Context, imageUriString: String, reqWidth: Int, reqHeight: Int): Bitmap {
 
         var bitmap: Bitmap? = null
-        try {
-            // first decode with inJustDecodeBounds=true to check dimensions
-            var stream: InputStream? = context.contentResolver.openInputStream(imageUri)
-            val options = BitmapFactory.Options()
-            options.inJustDecodeBounds = true
-            BitmapFactory.decodeStream(stream, null, options)
-            stream?.close()
+        if (imageUriString != Keys.LOCATION_DEFAULT_STATION_IMAGE) {
+            try {
+                val imageUri: Uri = Uri.parse(imageUriString)
 
-            // calculate inSampleSize
-            options.inSampleSize = calculateSampleParameter(options, reqWidth, reqHeight)
+                // first decode with inJustDecodeBounds=true to check dimensions
+                var stream: InputStream? = context.contentResolver.openInputStream(imageUri)
+                val options = BitmapFactory.Options()
+                options.inJustDecodeBounds = true
+                BitmapFactory.decodeStream(stream, null, options)
+                stream?.close()
 
-            // decode bitmap with inSampleSize set
-            stream = context.contentResolver.openInputStream(imageUri)
-            options.inJustDecodeBounds = false
-            bitmap = BitmapFactory.decodeStream(stream, null, options)
-            stream?.close()
+                // calculate inSampleSize
+                options.inSampleSize = calculateSampleParameter(options, reqWidth, reqHeight)
 
-        } catch (e: IOException) {
-            e.printStackTrace()
+                // decode bitmap with inSampleSize set
+                stream = context.contentResolver.openInputStream(imageUri)
+                options.inJustDecodeBounds = false
+                bitmap = BitmapFactory.decodeStream(stream, null, options)
+                stream?.close()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
         }
 
         // get default image

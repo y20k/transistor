@@ -15,8 +15,6 @@
 package org.y20k.transistor.helpers
 
 import android.content.Context
-import android.net.Uri
-import androidx.core.net.toUri
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.y20k.transistor.Keys
@@ -52,8 +50,8 @@ object ImportHelper {
                         // detect stream content
                         station.streamContent = NetworkHelper.detectContentType(station.getStreamUri()).type
                         // try to also import station image
-                        val sourceImageUri: Uri = getLegacyStationImageFileUri(context, station)
-                        if (sourceImageUri != Keys.LOCATION_DEFAULT_STATION_IMAGE.toUri()) {
+                        val sourceImageUri: String = getLegacyStationImageFileUri(context, station)
+                        if (sourceImageUri != Keys.LOCATION_DEFAULT_STATION_IMAGE) {
                             // create and add image and small image + get main color
                             station.image = FileHelper.saveStationImage(context, station.uuid, sourceImageUri, Keys.SIZE_STATION_IMAGE_CARD, Keys.STATION_SMALL_IMAGE_FILE).toString()
                             station.smallImage = FileHelper.saveStationImage(context, station.uuid, sourceImageUri, Keys.SIZE_STATION_IMAGE_MAXIMUM, Keys.STATION_IMAGE_FILE).toString()
@@ -100,18 +98,18 @@ object ImportHelper {
 
 
     /* Gets Uri for station images created by older Transistor versions */
-    private fun getLegacyStationImageFileUri(context: Context, station: Station): Uri {
+    private fun getLegacyStationImageFileUri(context: Context, station: Station): String {
         val collectionFolder: File? = context.getExternalFilesDir(Keys.TRANSISTOR_LEGACY_FOLDER_COLLECTION)
         if (collectionFolder != null && collectionFolder.exists() && collectionFolder.isDirectory) {
             val stationNameCleaned: String = station.name.replace(Regex("[:/]"), "_")
             val legacyStationImage = File("$collectionFolder/$stationNameCleaned.png")
             if (legacyStationImage.exists()) {
-                return legacyStationImage.toUri()
+                return legacyStationImage.toString()
             } else {
-                return Keys.LOCATION_DEFAULT_STATION_IMAGE.toUri()
+                return Keys.LOCATION_DEFAULT_STATION_IMAGE
             }
         } else {
-            return Keys.LOCATION_DEFAULT_STATION_IMAGE.toUri()
+            return Keys.LOCATION_DEFAULT_STATION_IMAGE
         }
     }
 

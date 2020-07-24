@@ -14,7 +14,6 @@
 package org.y20k.transistor.dialogs;
 
 import android.content.Context
-import android.net.Uri
 import android.text.InputType
 import android.view.LayoutInflater
 import android.widget.EditText
@@ -23,6 +22,7 @@ import android.widget.TextView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.y20k.transistor.R
 import org.y20k.transistor.core.Station
+import org.y20k.transistor.helpers.ImageHelper
 import org.y20k.transistor.helpers.LogHelper
 
 
@@ -58,7 +58,7 @@ interface EditStationListener {
         inputField.inputType = InputType.TYPE_CLASS_TEXT
 
         // set station image
-        stationImageView.setImageURI(Uri.parse(station.smallImage))
+        stationImageView.setImageBitmap(ImageHelper.getStationImage(context, station.smallImage))
         stationImageView.contentDescription = "${context.getString(R.string.descr_player_station_image)}: ${station.name}"
 
         // set dialog view

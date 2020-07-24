@@ -17,7 +17,6 @@ package org.y20k.transistor.ui
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-import android.net.Uri
 import android.support.v4.media.session.PlaybackStateCompat
 import android.view.View
 import android.view.animation.Animation
@@ -35,10 +34,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import org.y20k.transistor.Keys
 import org.y20k.transistor.R
 import org.y20k.transistor.core.Station
-import org.y20k.transistor.helpers.DateTimeHelper
-import org.y20k.transistor.helpers.LogHelper
-import org.y20k.transistor.helpers.PreferencesHelper
-import org.y20k.transistor.helpers.UiHelper
+import org.y20k.transistor.helpers.*
 
 
 /*
@@ -160,7 +156,7 @@ data class LayoutHolder(var rootView: View) {
         if (station.imageColor != -1) {
             stationImageView.setBackgroundColor(station.imageColor)
         }
-        stationImageView.setImageURI(Uri.parse(station.smallImage))
+        stationImageView.setImageBitmap(ImageHelper.getStationImage(context, station.smallImage))
         stationImageView.contentDescription = "${context.getString(R.string.descr_player_station_image)}: ${station.name}"
 
         // update streaming link

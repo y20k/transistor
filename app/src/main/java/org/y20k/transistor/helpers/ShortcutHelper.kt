@@ -22,7 +22,6 @@ import android.widget.Toast
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
-import androidx.core.net.toUri
 import org.y20k.transistor.Keys
 import org.y20k.transistor.PlayerServiceStarterActivity
 import org.y20k.transistor.R
@@ -62,7 +61,7 @@ object ShortcutHelper {
             // from API level 26 ("Android O") on shortcuts are handled by ShortcutManager, which cannot remove shortcuts. The user must remove them manually.
         } else {
             // the pre 26 way: create and launch intent put shortcut on Home screen
-            val stationImageBitmap: Bitmap = ImageHelper.getStationImage(context, station.image.toUri(),192)
+            val stationImageBitmap: Bitmap = ImageHelper.getScaledStationImage(context, station.image,192)
             val removeIntent = Intent()
             removeIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, station.name)
             removeIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON, ImageHelper.createSquareImage(context, stationImageBitmap, station.imageColor, 192, false))
@@ -87,7 +86,7 @@ object ShortcutHelper {
 
     /* Create shortcut icon */
     private fun createShortcutIcon(context: Context, stationImage: String, stationImageColor: Int): IconCompat {
-        val stationImageBitmap: Bitmap = ImageHelper.getStationImage(context, stationImage.toUri(),192)
+        val stationImageBitmap: Bitmap = ImageHelper.getScaledStationImage(context, stationImage,192)
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             IconCompat.createWithAdaptiveBitmap(ImageHelper.createSquareImage(context, stationImageBitmap, stationImageColor, 192, true))
         } else {

@@ -201,7 +201,7 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
         if (station.imageColor != -1) {
             stationViewHolder.stationImageView.setBackgroundColor(station.imageColor)
         }
-        stationViewHolder.stationImageView.setImageURI(Uri.parse(station.smallImage))
+        stationViewHolder.stationImageView.setImageBitmap(ImageHelper.getStationImage(context, station.smallImage))
         stationViewHolder.stationImageView.contentDescription = "${context.getString(R.string.descr_player_station_image)}: ${station.name}"
         stationViewHolder.stationImageView.setOnLongClickListener {
             val v = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator

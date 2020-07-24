@@ -210,7 +210,7 @@ class PlayerFragment: Fragment(), CoroutineScope,
                 if (resultCode == RESULT_OK && data != null) {
                     val imageUri: Uri? = data.data
                     if (imageUri != null) {
-                        collection = CollectionHelper.setStationImageWithStationUuid(activity as Context, collection, imageUri, tempStationUuid, imageManuallySet = true)
+                        collection = CollectionHelper.setStationImageWithStationUuid(activity as Context, collection, imageUri.toString(), tempStationUuid, imageManuallySet = true)
                         tempStationUuid = String()
                     }
                 }

@@ -191,11 +191,11 @@ object CollectionHelper {
 
 
     /* Sets station image - determines station by remote image file location */
-    fun setStationImageWithRemoteLocation(context: Context, collection: Collection, tempImageFileUri: Uri, remoteFileLocation: String, imageManuallySet: Boolean = false): Collection {
+    fun setStationImageWithRemoteLocation(context: Context, collection: Collection, tempImageFileUri: String, remoteFileLocation: String, imageManuallySet: Boolean = false): Collection {
         collection.stations.forEach { station ->
             // compare image location protocol-agnostic (= without http / https)
             if (station.remoteImageLocation.substringAfter(":") == remoteFileLocation.substringAfter(":")) {
-                station.smallImage = FileHelper.saveStationImage(context, station.uuid, tempImageFileUri, Keys.SIZE_STATION_IMAGE_CARD, Keys.STATION_SMALL_IMAGE_FILE).toString()
+                station.smallImage = FileHelper.saveStationImage(context, station.uuid, tempImageFileUri.toString(), Keys.SIZE_STATION_IMAGE_CARD, Keys.STATION_SMALL_IMAGE_FILE).toString()
                 station.image = FileHelper.saveStationImage(context, station.uuid, tempImageFileUri, Keys.SIZE_STATION_IMAGE_MAXIMUM, Keys.STATION_IMAGE_FILE).toString()
                 station.imageColor = ImageHelper.getMainColor(context, tempImageFileUri)
                 station.imageManuallySet = imageManuallySet
@@ -208,7 +208,7 @@ object CollectionHelper {
 
 
     /* Sets station image - determines station by remote image file location */
-    fun setStationImageWithStationUuid(context: Context, collection: Collection, tempImageFileUri: Uri, stationUuid: String, imageManuallySet: Boolean = false): Collection {
+    fun setStationImageWithStationUuid(context: Context, collection: Collection, tempImageFileUri: String, stationUuid: String, imageManuallySet: Boolean = false): Collection {
         collection.stations.forEach { station ->
             // find stattion by uuid
             if (station.uuid == stationUuid) {
@@ -400,7 +400,7 @@ object CollectionHelper {
             putString(MediaMetadataCompat.METADATA_KEY_TITLE, metadata)
             putString(MediaMetadataCompat.METADATA_KEY_ALBUM, context.getString(R.string.app_name))
             putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI, station.getStreamUri())
-            putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, ImageHelper.getStationImage(context, Uri.parse(station.image), Keys.SIZE_COVER_LOCK_SCREEN))
+            putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, ImageHelper.getScaledStationImage(context, station.image, Keys.SIZE_COVER_LOCK_SCREEN))
         }.build()
     }
 
