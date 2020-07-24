@@ -1,0 +1,9 @@
+# v4.0.3 - Andy Warhol
+
+**2020-07-22**
+
+- Android Auto resumes playback of last played station
+- updated and new translations
+- a couple of small bug fixes
+
+The v4 update was pretty big, find out more: https://github.com/y20k/transistor/blob/master/metadata/en-US/changelogs/72.txt

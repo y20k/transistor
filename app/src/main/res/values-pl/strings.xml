@@ -128,7 +128,7 @@
     <string name="descr_card_settings_button">Ustawienia</string>
     <string name="descr_card_playback_indicator">Postęp odtwarzania</string>
     <string name="pref_update_station_images_title">Aktualizuj zdjęcia stacji</string>
-    <string name="pref_update_station_images_summary">Pobierz najnowszą wersję wszystkich obrazów stacji w swojej kolekcji.</string>
+    <string name="pref_update_station_images_summary">Pobierz najnowszą wersję wszystkich obrazów stacji.</string>
     <string name="pref_theme_selection_title">Motyw aplikacji</string>
     <string name="pref_theme_selection_summary">Aktualny motyw:</string>
     <string name="pref_theme_selection_mode_light">Tryb jasny</string>
@@ -174,7 +174,7 @@
     <string name="dialog_generic_details_button">Pokaż szczegóły</string>
     <string name="dialog_find_station_title">Znajdź stację</string>
     <string name="dialog_find_station_no_results">Brak wyników.</string>
-    <string name="dialog_find_station_hint">Nazwa lub adres streamu</string>
+    <string name="dialog_find_station_hint">Nazwa lub adres strumienia</string>
     <string name="dialog_find_station_button_add">Dodaj</string>
     <string name="dialog_error_title_no_network">Offline</string>
     <string name="dialog_error_message_no_network">Połącz się z internetem.</string>
@@ -188,4 +188,11 @@
     <string name="toastmessage_error_restart_playback_failed">Nie można ponownie uruchomić odtwarzania.</string>
     <string name="toastmessage_error_download_error">Błąd pobierania</string>
     <string name="toastmessage_collection_update_not_necessary">Zbiór stacji jest aktualny.</string>
+    <string name="pref_update_collection_title">Aktualizacja Stacji</string>
+    <string name="pref_update_collection_summary">Poszukaj zaktualizowanych strumieni audio i nowych obrazów stacji.</string>
+    <string name="pref_report_issue_title">Zgłoś problem</string>
+    <string name="pref_report_issue_summary">Zgłaszaj błędy i zaproponuj ulepszenia w usłudze GitHub.</string>
+    <string name="pref_app_version_title">Wersja aplikacji</string>
+    <string name="pref_app_version_summary">Wersja</string>
+    <string name="pref_about_title">O programie</string>
 </resources>
