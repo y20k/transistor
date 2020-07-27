@@ -11,7 +11,6 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.y20k.transistor.Keys
-import org.y20k.transistor.R
 import org.y20k.transistor.helpers.LogHelper
 import org.y20k.transistor.helpers.NetworkHelper
 import org.y20k.transistor.helpers.PreferencesHelper
@@ -61,7 +60,7 @@ class RadioBrowserSearch(private var context: Context, private var radioBrowserS
             @Throws(AuthFailureError::class)
             override fun getHeaders(): Map<String, String> {
                 val params = HashMap<String, String>()
-                params["User-Agent"] = context.getString(R.string.app_name)
+                params["User-Agent"] = "$Keys.APPLICATION_NAME ${BuildConfig.VERSION_NAME}"
                 return params
             }
         }
