@@ -534,26 +534,6 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
     }
 
 
-    /* Updates / increases the playback speed */
-    private fun updatePlaybackSpeed(currentSpeed: Float = 1f): Float {
-        var newSpeed: Float = 1f
-        // circle through the speed presets
-        val iterator = Keys.PLAYBACK_SPEEDS.iterator()
-        while (iterator.hasNext()) {
-            // found current speed in array
-            if (iterator.next() == currentSpeed) {
-                if (iterator.hasNext()) {
-                    newSpeed = iterator.next()
-                }
-                break
-            }
-        }
-        // apply new speed
-        setPlaybackSpeed(newSpeed)
-        return newSpeed
-    }
-
-
     /* Sets playback speed */
     private fun setPlaybackSpeed(speed: Float = 1f) {
         // update playback parameters - speed up playback
@@ -562,7 +542,6 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
         // playerState.playbackSpeed = speed
         PreferencesHelper.savePlayerPlaybackSpeed(this, speed)
     }
-
 
 
     /* Loads media items into result - assumes that collectionProvider is initialized */

@@ -537,7 +537,6 @@ class PlayerFragment: Fragment(), CoroutineScope,
             onboarding = layout.toggleOnboarding(activity as Context, collection.stations.size)
             // get station
             station = CollectionHelper.getStation(collection, playerState.stationUuid)
-            if (!station.isValid() && collection.stations.isNotEmpty()) station = collection.stations[0]
             // update player views
             layout.updatePlayerViews(activity as Context, station, playerState.playbackState)
             // handle start intent
