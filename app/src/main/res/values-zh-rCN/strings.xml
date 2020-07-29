@@ -85,7 +85,6 @@
     <string name="pref_update_collection_title">更新电台</string>
     <string name="pref_update_station_images_summary">下载所有电台图标的最新版。</string>
     <string name="pref_update_station_images_title">更新电台图标</string>
-
     <!-- Accessibility Descriptions -->
     <string name="descr_app_icon">程序图标代表一个旧电台</string>
     <string name="descr_card_playback_indicator">回放进度</string>
@@ -201,4 +200,6 @@
     <string name="notification_stop">停止</string>
     <string name="notification_channel_playback_name">回放控制</string>
     <string name="notification_channel_playback_description">回放控制，电台图标和正在播放的信息。</string>
+    <string name="dialog_button_delete">删除</string>
+    <string name="dialog_delete_station_message">删除电台</string>
 </resources>
