@@ -15,7 +15,7 @@ Basque version: [osoitz](https://github.com/osoitz) | [weblate version history](
 
 Catalan version: [Zagur](https://github.com/Zagur) | [weblate version history](https://hosted.weblate.org/changes/?lang=ca&project=transistor)
 
-Chinese version: [YFdyh000](https://github.com/yfdyh000) | [weblate version history](https://hosted.weblate.org/changes/?lang=zh_Hans&project=transistor)
+Chinese version: [YFdyh000](https://github.com/yfdyh000), [Zo Shin](https://github.com/zo-shin) | [weblate version history](https://hosted.weblate.org/changes/?lang=zh_Hans&project=transistor)
 
 Croatian version: [milotype](https://github.com/milotype) | [weblate version history](https://hosted.weblate.org/changes/?lang=hr&project=transistor)
 
