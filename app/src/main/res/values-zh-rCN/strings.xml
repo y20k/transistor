@@ -145,6 +145,8 @@
     <string name="dialog_add_station_input_hint">粘贴流媒体链接</string>
     <string name="dialog_add_station_message">添加新电台</string>
     <string name="dialog_add_station_howto">您可以添加 MP3，AAC 和 Ogg/Opus 编码的原始音频流，以及封装在 PLS 或 M3U 文件中的音频流。您也可以在您的网页浏览器中点击流媒体链接（.pls 或 .m3u）添加新电台。</string>
+    <string name="dialog_delete_station_message">删除电台</string>
+    <string name="dialog_button_delete">删除</string>
     <string name="dialog_rename_station_input_hint">请输入一个新名称</string>
     <string name="dialog_rename_station_message">重命名电台</string>
     <string name="dialog_button_rename">重命名</string>
@@ -200,6 +202,4 @@
     <string name="notification_stop">停止</string>
     <string name="notification_channel_playback_name">回放控制</string>
     <string name="notification_channel_playback_description">回放控制，电台图标和正在播放的信息。</string>
-    <string name="dialog_button_delete">删除</string>
-    <string name="dialog_delete_station_message">删除电台</string>
 </resources>
