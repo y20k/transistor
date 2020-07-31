@@ -5,9 +5,9 @@ README
 
 **Version 4.0.x ("Andy Warhol")**
 
-Transistor is an app for listening to radio programs over the internet. Transistor is a radio app with a minimalistic approach, that may not be to everyone's liking. It has no radio station discovery feature. Transistor only offers a very simple search option and it imports audio streaming links when you tap them in a web browser.
+Transistor is an app with a minimalistic approach for listening to radio programs over the internet, which may not be to everyone's liking. It has no radio station discovery feature. Transistor only offers a very simple search option and it imports audio streaming links when you tap them in a web browser.
 
-Transistor is free software. It is published under the [MIT open source license](https://opensource.org/licenses/MIT). Want to help? Please check out the notes in [CONTRIBUTING.md](https://github.com/y20k/transistor/blob/master/CONTRIBUTING.md) first.
+Transistor is free software. It is published under the [MIT open source license](https://opensource.org/licenses/MIT). Want to help? Please check out the notes in [CONTRIBUTE.md](https://github.com/y20k/transistor/blob/master/CONTRIBUTE.md) first.
 
 ## Install Transistor
 You can install Transistor via F-Froid and Google Play - or you can go and grab the latest APK on [GitHub](https://github.com/y20k/transistor/releases).
