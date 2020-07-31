@@ -172,7 +172,7 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
         }
 
         MediaButtonReceiver.handleIntent(mediaSession, intent)
-        return Service.START_STICKY
+        return Service.START_NOT_STICKY
     }
 
 
