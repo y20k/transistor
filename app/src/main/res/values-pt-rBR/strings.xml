@@ -75,7 +75,7 @@
     <string name="toastmessage_add_open_file_started">Abrindo arquivo.</string>
     <string name="toastmessage_long_press_playback_stopped">Pausa na reprodução (toque longo detectado)</string>
     <string name="toastmessage_long_press_playback_started">Iniciando reprodução (toque longo detectado)</string>
-    <string name="toastmessage_long_press_change_icon">"Mudar ícone da estação  (toque longo detectado)"</string>
+    <string name="toastmessage_long_press_change_icon">Mudar ícone de rádio (toque longo detectado)</string>
     <string name="toastmessage_long_press_change_name">Renomear estação (toque longo detectado)</string>
     <string name="toastmessage_theme_night">Mudando para \'Modo Noturno\' (toque longo detectado)</string>
     <string name="toastmessage_theme_day">Mudando para \'Modo Diurno\' (toque longo detectado)</string>
@@ -113,7 +113,7 @@
     <string name="toastmessage_sleep_timer_unable_to_start">por favor iniciar reprodução primeiro.</string>
     <string name="descr_player_playback_button">Tocar/ Parar</string>
     <string name="pref_update_station_images_title">Atualizar imagens da estação</string>
-    <string name="pref_update_station_images_summary">Baixe a versão mais recente de todas as imagens da estação em sua coleção.</string>
+    <string name="pref_update_station_images_summary">Baixar todas as mais recentes imagens de rádios.</string>
     <string name="descr_player_station_image">Imagem da estação</string>
     <string name="descr_expanded_player_sleep_timer_start_button">Iniciar temporizador</string>
     <string name="descr_expanded_player_sleep_timer_remaining_time">Tempo restante no temporizador</string>
@@ -139,7 +139,7 @@
     <string name="notification_now_playing_channel_description">Controles de reprodução, nome da estação e imagem.</string>
     <string name="notification_now_playing_channel_name">Controles de reprodução</string>
     <string name="station_list_button_add_new_station">Adicionar uma nova estação</string>
-    <string name="toastmessage_updating_station">Atualizando estação.</string>
+    <string name="toastmessage_updating_station">Atualizando rádio.</string>
     <string name="toastmessage_updating_collection">Atualização de coleção das estações.</string>
     <string name="toastmessage_error_no_station_matches_search">Incapaz de encontrar a estação que corresponda com a sua pesquisa.</string>
     <string name="toastmessage_error_missing_storage_permission">Conceda a permissão \"Ler armazenamento\" para poder abrir este arquivo.</string>
@@ -175,4 +175,24 @@
     <string name="dialog_error_title_no_network">Offline</string>
     <string name="dialog_error_message_no_network">Conecte na internet.</string>
     <string name="fragment_settings_title">Configurações</string>
+    <string name="dialog_button_save">Salvar alterações</string>
+    <string name="onboarding_app_import_running">Importando seus rádios. Por favor, aguarde.</string>
+    <string name="descr_dialog_edit_update_icon">Atualizar</string>
+    <string name="descr_dialog_edit_station_image">Imagem de rádio</string>
+    <string name="descr_dialog_edit_place_on_home_screen_icon">Colocar na tela inicial</string>
+    <string name="pref_update_collection_title">Atualize rádio streams</string>
+    <string name="pref_update_collection_summary">Procure áudio streams atualizados e novas imagens de rádios.</string>
+    <string name="pref_report_issue_title">Relatar bugs</string>
+    <string name="pref_report_issue_summary">Relatar bugs e sugerir melhorias no GitHub.</string>
+    <string name="pref_app_version_title">Versão de App</string>
+    <string name="pref_app_version_summary">Versão</string>
+    <string name="pref_about_title">Sobre</string>
+    <string name="toastmessage_updating_station_images">Atualizando imagens de rádios.</string>
+    <string name="toastmessage_error_restart_playback_failed">Não foi possível reestabelecer a reprodução.</string>
+    <string name="toastmessage_error_download_error">Erro no download</string>
+    <string name="toastmessage_collection_update_not_necessary">Rádios estão atualizados.</string>
+    <string name="dialog_edit_update_station">Atualizar rádio stream</string>
+    <string name="dialog_edit_title">Editar rádio stream</string>
+    <string name="dialog_edit_place_on_home_screen">Colocar na tela inicial</string>
+    <string name="dialog_edit_choose_station_image">Escolha</string>
 </resources>
