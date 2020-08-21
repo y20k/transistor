@@ -132,7 +132,7 @@
     <string name="descr_card_settings_button">Настройки</string>
     <string name="descr_card_playback_indicator">Прогресс воспроизведения</string>
     <string name="pref_update_station_images_title">Обновить изображения станций</string>
-    <string name="pref_update_station_images_summary">Скачать последнюю версию всех изображений станций в своей коллекции.</string>
+    <string name="pref_update_station_images_summary">Скачать последнюю версию всех изображений станции.</string>
     <string name="pref_theme_selection_title">Тема приложения</string>
     <string name="pref_theme_selection_summary">Текущая тема:</string>
     <string name="pref_theme_selection_mode_light">Дневной режим</string>
@@ -186,4 +186,16 @@
     <string name="dialog_edit_title">Править станцию</string>
     <string name="dialog_edit_choose_station_image">Выбор</string>
     <string name="fragment_settings_title">Настройки</string>
+    <string name="onboarding_app_import_running">Импорт станций. Подождите.</string>
+    <string name="pref_update_collection_title">Обновить станции</string>
+    <string name="pref_update_collection_summary">Просмотр обновлений аудиопотоков и новых изображений станций.</string>
+    <string name="pref_report_issue_title">Сообщить о проблеме</string>
+    <string name="pref_report_issue_summary">Сообщайте об ошибках и предлагайте улучшения на GitHub.</string>
+    <string name="pref_app_version_title">Версия приложения</string>
+    <string name="pref_app_version_summary">Версия</string>
+    <string name="pref_about_title">О приложении</string>
+    <string name="toastmessage_updating_station_images">Обновление изображений станций.</string>
+    <string name="toastmessage_error_restart_playback_failed">Невозможно перезапустить воспроизведение.</string>
+    <string name="toastmessage_error_download_error">Ошибка загрузки</string>
+    <string name="toastmessage_collection_update_not_necessary">Коллекция станций актуальна.</string>
 </resources>
