@@ -1,19 +1,17 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- activities -->
-    <string name="app_name">Transistor</string> <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
-
+    <string name="app_name">Transistor</string>
+    <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
     <!-- app shortcuts -->
     <string name="shortcut_last_station_short_label">Ṛṛadyu taneggaru</string>
     <string name="shortcut_last_station_long_label">Urar ṛṛadyyu taneggarut</string>
     <!--<string name="shortcut_last_station_disabled_message"></string>-->
-
     <!-- menu entries -->
     <string name="menu_icon">Beddel tignit</string>
     <string name="menu_delete">Kkes</string>
     <string name="menu_rename">Snifel isem</string>
     <string name="menu_shortcut">Sers deg ugdil agejdan</string>
-
     <!-- descriptions -->
     <!--<string name="descr_app_icon"></string>-->
     <string name="descr_station_options_button">Iɣewwaṛen n uskan n ṛṛadyu</string>
@@ -29,7 +27,6 @@
     <string name="descr_player_sheet_p_stream_url">Aseɣwen n usuddem n ṛṛadyu yettwafernen</string>
     <!--<string name="descr_list_add_new"></string>-->
     <!--<string name="descr_list_add_select_stream_dropdown"></string>-->
-
     <!-- player -->
     <!--<string name="player_sheet_h1_details"></string>-->
     <!--<string name="player_sheet_h2_current_session"></string>-->
@@ -39,7 +36,6 @@
     <string name="player_sheet_h2_station_channel_count">Amḍan n ṛṛadyuwat</string>
     <string name="player_sheet_h2_station_sample_rate">Amedya n tezmilt</string>
     <string name="player_sheet_h2_station_bitrate">Aktum</string>
-
     <!-- dialogs -->
     <string name="dialog_generic_button_okay">IH</string>
     <string name="dialog_generic_button_cancel">Sefsex</string>
@@ -55,7 +51,6 @@
     <!--<string name="dialog_add_station_choose_stream_heading"></string>-->
     <!--<string name="dialog_add_station_choose_stream_message"></string>-->
     <!--<string name="dialog_add_station_choose_stream_button"></string>-->
-
     <!-- error dialogs -->
     <string name="dialog_error_title_default">Tuccḍa</string>
     <string name="dialog_error_message_default">Teḍra-d tuccḍa</string>
@@ -75,7 +70,6 @@
     <!--<string name="dialog_error_message_fetch_read"></string>-->
     <!--<string name="dialog_error_message_fetch_read_file_location"></string>-->
     <!--<string name="dialog_error_message_fetch_write"></string>-->
-
     <!-- messages -->
     <!--<string name="toastmessage_add_download_started"></string>-->
     <string name="toastmessage_add_open_file_started">Tuccḍa di tulya n ufaylu.</string>
@@ -107,19 +101,17 @@
     <!--<string name="toastalert_station_not_found"></string>-->
     <!--<string name="snackbar_request_storage_access"></string>-->
     <!--<string name="snackbar_message_timer_set"></string>-->
-
     <!-- notification -->
     <string name="notification_play">Urar</string>
     <string name="notification_stop">Seḥbes</string>
     <!--<string name="notification_channel_playback_name"></string>-->
     <!--<string name="notification_channel_playback_description"></string>-->
-
     <!-- onboarding -->
     <!--<string name="onboarding_app_description"></string>-->
     <!--<string name="onboarding_app_get_started"></string>-->
-
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7
     https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
-
+    <string name="dialog_edit_choose_station_image">Xtir</string>
+    <string name="fragment_settings_title">Iɣewwaṛen</string>
 </resources>
