@@ -35,11 +35,11 @@
     <string name="dialog_yes_no_positive_button_add_up_next">现在开始</string>
     <string name="dialog_yes_no_positive_button_default">是</string>
     <string name="dialog_yes_no_positive_button_delete_downloads">全部删除</string>
-    <string name="dialog_yes_no_positive_button_non_wifi_download">强制下载</string>
+    <string name="dialog_yes_no_positive_button_non_wifi_download">仍然下载</string>
     <string name="dialog_yes_no_positive_button_remove_station">移除</string>
     <string name="dialog_yes_no_positive_button_update_collection">更新</string>
     <string name="dialog_yes_no_positive_button_update_covers">更新</string>
-    <string name="dialog_yes_no_positive_button_vpn_download">强制更新</string>
+    <string name="dialog_yes_no_positive_button_vpn_download">仍然下载</string>
     <string name="dialog_yes_no_title_default">决定</string>
     <!-- Station Menu -->
     <string name="menu_update">更新电台</string>
