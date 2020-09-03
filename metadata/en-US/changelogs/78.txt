@@ -1,0 +1,6 @@
+# v4.0.6 - Andy Warhol
+
+**2020-09-03**
+
+- fixes the reappearing notification zombie
+- updated translations
