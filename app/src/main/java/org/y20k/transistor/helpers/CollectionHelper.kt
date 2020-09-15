@@ -114,7 +114,6 @@ object CollectionHelper {
 
     /* Updates radio station in collection */
     fun updateStation(context: Context, collection: Collection, station: Station): Collection {
-
         var updatedCollection: Collection = collection
 
         // CASE: Update station retrieved from radio browser

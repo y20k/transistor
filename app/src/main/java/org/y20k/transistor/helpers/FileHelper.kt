@@ -414,7 +414,9 @@ object FileHelper {
 
     /* Writes given text to file on storage */
     private fun writeTextFile(context: Context, text: String, folder: String, fileName: String) {
-        File(context.getExternalFilesDir(folder), fileName).writeText(text)
+        if (text.isNotBlank()) {
+            File(context.getExternalFilesDir(folder), fileName).writeText(text)
+        }
     }
 
 
