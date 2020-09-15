@@ -87,13 +87,12 @@ class NotificationHelper(private val playerService: PlayerService) {
                 .setShowActionsInCompactView(playPauseIndex)
                 .setShowCancelButton(true)
 
-        // todo !! Metadata
-        return builder.setContentIntent(controller.sessionActivity) // todo check if sessionActivity is correct
+        return builder.setCategory(NotificationCompat.CATEGORY_TRANSPORT)
+                .setContentIntent(controller.sessionActivity) // todo check if sessionActivity is correct
                 .setContentTitle(station.name)
                 .setContentText(metadata)
                 .setDeleteIntent(stopPendingIntent)
                 .setLargeIcon(ImageHelper.getScaledStationImage(playerService, station.image, Keys.SIZE_COVER_NOTIFICATION_LARGE_ICON))
-                .setOnlyAlertOnce(true)
                 .setSmallIcon(R.drawable.ic_notification_app_icon_white_24dp)
                 .setStyle(mediaStyle)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
