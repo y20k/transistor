@@ -416,15 +416,21 @@ object FileHelper {
     private fun writeTextFile(context: Context, text: String, folder: String, fileName: String) {
         if (text.isNotBlank()) {
             File(context.getExternalFilesDir(folder), fileName).writeText(text)
+        } else {
+            LogHelper.w(TAG, "Writing text file $fileName failed. Empty text string text was provided.")
         }
     }
 
 
     /* Writes given text to file specified by destinationUri */
     private fun writeTextToUri(context: Context, text: String, destinationUri: Uri) {
-        val resolver: ContentResolver = context.contentResolver
-        val outputStream: OutputStream? = resolver.openOutputStream(destinationUri)
-        outputStream?.write(text.toByteArray(Charsets.UTF_8))
+        if (text.isNotBlank()) {
+            val resolver: ContentResolver = context.contentResolver
+            val outputStream: OutputStream? = resolver.openOutputStream(destinationUri)
+            outputStream?.write(text.toByteArray(Charsets.UTF_8))
+        } else {
+            LogHelper.w(TAG, "Writing text file $destinationUri failed. Empty text string text was provided.")
+        }
     }
 
 
