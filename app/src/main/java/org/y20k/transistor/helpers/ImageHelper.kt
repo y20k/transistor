@@ -139,6 +139,8 @@ object ImageHelper {
     /* Return sampled down image for given Uri */
     private fun decodeSampledBitmapFromUri(context: Context, imageUriString: String, reqWidth: Int, reqHeight: Int): Bitmap {
 
+        LogHelper.e(TAG, "===> $imageUriString")
+
         var bitmap: Bitmap? = null
         if (imageUriString != Keys.LOCATION_DEFAULT_STATION_IMAGE) {
             try {

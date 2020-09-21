@@ -21,10 +21,8 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.graphics.Bitmap
 import android.media.audiofx.AudioEffect
 import android.media.session.PlaybackState
-import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.ResultReceiver
@@ -34,7 +32,6 @@ import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import android.widget.Toast
-import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -86,9 +83,7 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
     private lateinit var packageValidator: PackageValidator
     private lateinit var mediaSession: MediaSessionCompat
     private lateinit var mediaController: MediaControllerCompat
-    private lateinit var notificationManager: NotificationManagerCompat
     private lateinit var playerNotificationManager: PlayerNotificationManager
-    //private lateinit var notificationHelper: NotificationHelper
     private lateinit var userAgent: String
     private lateinit var modificationDate: Date
     private lateinit var collectionChangedReceiver: BroadcastReceiver
@@ -135,31 +130,9 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
             it.registerCallback(MediaControllerCallback())
         }
 
-        // initialize notification helper and notification manager
-        //notificationHelper = NotificationHelper(this)
-        notificationManager = NotificationManagerCompat.from(this)
-
-//        // todo move
-//        playerNotificationManager = PlayerNotificationManager.createWithNotificationChannel(
-//                context = this@PlayerService,
-//                channelId = Keys.NOTIFICATION_NOW_PLAYING_CHANNEL,
-//                channelName = R.string.notification_now_playing_channel_name,
-//                channelDescription = R.string.notification_now_playing_channel_description,
-//                notificationId = Keys.NOTIFICATION_NOW_PLAYING_ID,
-//                mediaDescriptionAdapter = DescriptionAdapter(mediaController),
-//                notificationListener = PlayerNotificationListener()
-//        )
-        playerNotificationManager = PlayerNotificationManager.createWithNotificationChannel(
-                this@PlayerService,
-                Keys.NOTIFICATION_NOW_PLAYING_CHANNEL,
-                R.string.notification_now_playing_channel_name,
-                R.string.notification_now_playing_channel_description,
-                Keys.NOTIFICATION_NOW_PLAYING_ID,
-                DescriptionAdapter(mediaController),
-                PlayerNotificationListener()
-        )
-        playerNotificationManager.setPlayer(player)
-
+        // initialize and setup player notification manager
+        playerNotificationManager = NotificationHelper(this, mediaController).createPlayerNotificationManager(PlayerNotificationListener())
+        setUpPlayerNotificationManager()
 
         // create and register collection changed receiver
         collectionChangedReceiver = createCollectionChangedReceiver()
@@ -478,6 +451,14 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
     }
 
 
+    /* Sets up custom notification properties */
+    private fun setUpPlayerNotificationManager() {
+        playerNotificationManager.setPlayer(player)
+        playerNotificationManager.setMediaSessionToken(mediaSession.sessionToken)
+        playerNotificationManager.setSmallIcon(R.drawable.ic_notification_app_icon_white_24dp)
+    }
+
+
     /* Start playback with current station */
     private fun startPlayback() {
         LogHelper.d(TAG, "Starting Playback. Station: ${station.name}.")
@@ -642,60 +623,6 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
     }
 
 
-    /* Updates notification */
-//    private fun updateNotification(state: PlaybackStateCompat) {
-//        // skip building a notification when state is "none" and metadata is null
-//        // val notification = if (mediaController.metadata != null && state.state != PlaybackStateCompat.STATE_NONE) {
-//        val notification = if (state.state != PlaybackStateCompat.STATE_NONE) {
-//            val metadataString: String = if(metadataHistory.isNotEmpty()) metadataHistory.last() else String()
-//            notificationHelper.buildNotification(mediaSession.sessionToken, station, metadataString)
-//        } else {
-//            null
-//        }
-//
-//        when (state.isActive) {
-//            // CASE: Playback has started
-//            true -> {
-//                /**
-//                 * This may look strange, but the documentation for [Service.startForeground]
-//                 * notes that "calling this method does *not* put the service in the started
-//                 * state itself, even though the name sounds like it."
-//                 */
-//                if (notification != null) {
-//                    notificationManager.notify(Keys.NOTIFICATION_NOW_PLAYING_ID, notification)
-//                    if (!isForegroundService) {
-//                        ContextCompat.startForegroundService(applicationContext, Intent(applicationContext, this@PlayerService.javaClass))
-//                        startForeground(Keys.NOTIFICATION_NOW_PLAYING_ID, notification)
-//                        isForegroundService = true
-//                    }
-//                }
-//            }
-//            // CASE: Playback has stopped
-//            false -> {
-//                if (isForegroundService) {
-//                    //stopForeground(false)
-//                    ServiceCompat.stopForeground(this@PlayerService, ServiceCompat.STOP_FOREGROUND_DETACH)
-//                    isForegroundService = false
-//
-//                    // if playback has ended, also stop the service.
-//                    if (state.state == PlaybackStateCompat.STATE_NONE) {
-//                        stopSelf()
-//                    }
-//
-//                    //if (notification != null && state.state != PlaybackStateCompat.STATE_STOPPED) {
-//                    if (notification != null) {
-//                        notificationManager.notify(Keys.NOTIFICATION_NOW_PLAYING_ID, notification)
-//                    } else {
-//                        // remove notification - playback ended (or buildNotification failed)
-//                        stopForeground(true)
-//                    }
-//                }
-//
-//            }
-//        }
-//    }
-
-
     /*
      * Custom AnalyticsListener that enables AudioFX equalizer integration
      */
@@ -720,7 +647,6 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
             if (playerState.playbackState == PlaybackStateCompat.STATE_PLAYING) {
                 stopPlayback()
             }
-            LogHelper.e(TAG, "onPlay")
             // start playback of current station
             startPlayback()
         }
@@ -728,7 +654,6 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
         override fun onPlayFromMediaId(mediaId: String?, extras: Bundle?) {
             // get station, set metadata and start playback
             station = CollectionHelper.getStation(collection, mediaId ?: String())
-            LogHelper.e(TAG, "onPlayFromMediaId")
             startPlayback()
         }
 
@@ -870,7 +795,7 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
 
 
     /*
-     * Inner class: Listen for notification events
+     * Inner class: Listen for notification events and toggle foreground status
      */
     private inner class PlayerNotificationListener : PlayerNotificationManager.NotificationListener {
         override fun onNotificationPosted(notificationId: Int, notification: Notification, ongoing: Boolean) {
@@ -885,27 +810,6 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
             isForegroundService = false
             stopSelf()
         }
-    }
-
-    /*
-     * Inner class: DescriptionAdapter ... todo describe
-     */
-    private inner class DescriptionAdapter(private val controller: MediaControllerCompat): PlayerNotificationManager.MediaDescriptionAdapter {
-        var currentIconUri: Uri? = null
-        var currentBitmap: Bitmap? = null
-
-        override fun createCurrentContentIntent(player: Player): PendingIntent? = controller.sessionActivity
-
-        override fun getCurrentContentText(player: Player) = controller.metadata.description.subtitle.toString()
-
-        override fun getCurrentContentTitle(player: Player) = controller.metadata.description.title.toString()
-
-        override fun getCurrentLargeIcon(player: Player, callback: PlayerNotificationManager.BitmapCallback): Bitmap? {
-            val iconUri = controller.metadata.description.iconUri
-            return ImageHelper.getScaledStationImage(this@PlayerService, iconUri.toString(), Keys.SIZE_COVER_NOTIFICATION_LARGE_ICON)
-        }
-        // todo implement caching https://github.com/android/uamp/blob/7080a323ae5181cc44d11b319feab81fd4e568d1/common/src/main/java/com/example/android/uamp/media/UampNotificationManager.kt
-
     }
 
 }

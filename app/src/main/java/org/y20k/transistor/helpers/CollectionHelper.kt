@@ -399,6 +399,7 @@ object CollectionHelper {
             putString(MediaMetadataCompat.METADATA_KEY_TITLE, metadata)
             putString(MediaMetadataCompat.METADATA_KEY_ALBUM, context.getString(R.string.app_name))
             putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI, station.getStreamUri())
+            putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI, station.image)
             putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, ImageHelper.getScaledStationImage(context, station.image, Keys.SIZE_COVER_LOCK_SCREEN))
         }.build()
     }
