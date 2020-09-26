@@ -116,7 +116,7 @@
     <string name="sample_text_steam_url" translatable="false">http://bytefm.cast.addradio.de/bytefm/main/mid/stream</string>
     <string name="sample_text_sleep_timer_remaining_time" translatable="false">00:00</string>
     <!-- Allowed Caller Template -->
-    <string name="allowed_caller_log" translatable="false">
+    <string name="allowed_caller_log">
         Caller has a valid certificate, but its package doesn\'t match any expected package for the
         given certificate. To allow this caller, add the following to the allowed callers list:\n
         <![CDATA[
@@ -128,7 +128,7 @@
     <!-- app shortcuts -->
     <string name="shortcut_last_station_short_label">Last station</string>
     <string name="shortcut_last_station_long_label">Play last station</string>
-    <string name="shortcut_last_station_disabled_message">Shortcut for playback of last station disabled.</string>
+    <string name="shortcut_last_station_disabled_message">Shortcut for playback of last station turned off.</string>
     <!-- menu entries -->
     <string name="menu_icon">Change icon</string>
     <string name="menu_delete">Delete</string>
