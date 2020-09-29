@@ -13,7 +13,7 @@
     <string name="menu_rename">Alternar nome</string>
     <string name="menu_shortcut">Colocar no ecrã inicial</string>
     <!-- descriptions -->
-    <string name="descr_app_icon">Ícone da aplicação que representa um rádio antigo</string>
+    <string name="descr_app_icon">Ícone da app que representa um rádio antigo</string>
     <string name="descr_station_options_button">Opções</string>
     <string name="descr_station_name_example">Exemplo FM</string>
     <string name="descr_station_metadata_example">Artista - Título</string>
