@@ -117,7 +117,7 @@
     <string name="sample_text_sleep_timer_remaining_time" translatable="false">00:00</string>
     <!-- Allowed Caller Template -->
     <string name="allowed_caller_log">
-        Caller has a valid certificate, but its package doesn\'t match any expected package for the
+        The caller has a valid certificate, but its package doesn\'t match any expected package for the
         given certificate. To allow this caller, add the following to the allowed callers list:\n
         <![CDATA[
         <signature name=\"%1$s\" package=\"%2$s\">\n\t<key>%3$s</key>\n</signature>\n
