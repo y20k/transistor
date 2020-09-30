@@ -14,7 +14,6 @@
 
 package org.y20k.transistor
 
-import android.app.Notification
 import android.app.PendingIntent
 import android.app.Service
 import android.content.BroadcastReceiver
@@ -32,6 +31,7 @@ import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import android.widget.Toast
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -47,13 +47,13 @@ import com.google.android.exoplayer2.metadata.icy.IcyInfo
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
-import com.google.android.exoplayer2.ui.PlayerNotificationManager
 import com.google.android.exoplayer2.upstream.*
 import com.google.android.exoplayer2.util.Util
 import kotlinx.coroutines.*
 import org.y20k.transistor.collection.CollectionProvider
 import org.y20k.transistor.core.Collection
 import org.y20k.transistor.core.Station
+import org.y20k.transistor.extensions.isActive
 import org.y20k.transistor.helpers.*
 import org.y20k.transistor.ui.PlayerState
 import java.util.*
@@ -83,7 +83,8 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
     private lateinit var packageValidator: PackageValidator
     private lateinit var mediaSession: MediaSessionCompat
     private lateinit var mediaController: MediaControllerCompat
-    private lateinit var playerNotificationManager: PlayerNotificationManager
+    private lateinit var notificationManager: NotificationManagerCompat
+    private lateinit var notificationHelper: NotificationHelper
     private lateinit var userAgent: String
     private lateinit var modificationDate: Date
     private lateinit var collectionChangedReceiver: BroadcastReceiver
@@ -130,9 +131,9 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
             it.registerCallback(MediaControllerCallback())
         }
 
-        // initialize and setup player notification manager
-        playerNotificationManager = NotificationHelper(this, mediaController).createPlayerNotificationManager(PlayerNotificationListener())
-        setUpPlayerNotificationManager()
+        // initialize notification helper and notification manager
+        notificationHelper = NotificationHelper(this)
+        notificationManager = NotificationManagerCompat.from(this)
 
         // create and register collection changed receiver
         collectionChangedReceiver = createCollectionChangedReceiver()
@@ -194,8 +195,6 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
         player.removeAnalyticsListener(analyticsListener)
         player.removeMetadataOutput(this)
         player.release()
-        // todo
-        playerNotificationManager.setPlayer(null)
     }
 
 
@@ -239,7 +238,7 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
             metadataHistory.removeAt(0)
         }
         // update notification
-        //mediaController.playbackState?.let { updateNotification(it) }
+        mediaController.playbackState?.let { updateNotification(it) }
         // update metadata
         mediaSession.setMetadata(CollectionHelper.buildStationMediaMetadata(this@PlayerService, station, metadataHistory.last()))
         // save history to
@@ -451,14 +450,6 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
     }
 
 
-    /* Sets up custom notification properties */
-    private fun setUpPlayerNotificationManager() {
-        playerNotificationManager.setPlayer(player)
-        playerNotificationManager.setMediaSessionToken(mediaSession.sessionToken)
-        playerNotificationManager.setSmallIcon(R.drawable.ic_notification_app_icon_white_24dp)
-    }
-
-
     /* Start playback with current station */
     private fun startPlayback() {
         LogHelper.d(TAG, "Starting Playback. Station: ${station.name}.")
@@ -471,7 +462,6 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
         if (!station.isValid() && collection.stations.isNotEmpty()) {
             LogHelper.w(TAG, "No station has been selected. Starting playback of last played station.")
             station = CollectionHelper.getStation(collection, PreferencesHelper.loadLastPlayedStation(this@PlayerService))
-            LogHelper.w(TAG, "==> ${station.name}.") // todo remove
         }
         // update metadata and prepare player
         updateMetadata(station.name)
@@ -623,6 +613,58 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
     }
 
 
+    /* Updates notification */
+    private fun updateNotification(state: PlaybackStateCompat) {
+        // skip building a notification when state is "none" and metadata is null
+        // val notification = if (mediaController.metadata != null && state.state != PlaybackStateCompat.STATE_NONE) {
+        val notification = if (state.state != PlaybackStateCompat.STATE_NONE) {
+            val metadataString: String = if(metadataHistory.isNotEmpty()) metadataHistory.last() else String()
+            notificationHelper.buildNotification(mediaSession.sessionToken, station, metadataString)
+        } else {
+            null
+        }
+
+        when (state.isActive) {
+            // CASE: Playback has started
+            true -> {
+                /**
+                 * This may look strange, but the documentation for [Service.startForeground]
+                 * notes that "calling this method does *not* put the service in the started
+                 * state itself, even though the name sounds like it."
+                 */
+                if (notification != null) {
+                    notificationManager.notify(Keys.NOTIFICATION_NOW_PLAYING_ID, notification)
+                    if (!isForegroundService) {
+                        ContextCompat.startForegroundService(applicationContext, Intent(applicationContext, this@PlayerService.javaClass))
+                        startForeground(Keys.NOTIFICATION_NOW_PLAYING_ID, notification)
+                        isForegroundService = true
+                    }
+                }
+            }
+            // CASE: Playback has stopped
+            false -> {
+                if (isForegroundService) {
+                    stopForeground(false)
+                    isForegroundService = false
+
+                    // if playback has ended, also stop the service.
+                    if (state.state == PlaybackStateCompat.STATE_NONE) {
+                        stopSelf()
+                    }
+
+                    if (notification != null && state.state != PlaybackStateCompat.STATE_STOPPED) {
+                        notificationManager.notify(Keys.NOTIFICATION_NOW_PLAYING_ID, notification)
+                    } else {
+                        // remove notification - playback ended (or buildNotification failed)
+                        stopForeground(true)
+                    }
+                }
+
+            }
+        }
+    }
+
+
     /*
      * Custom AnalyticsListener that enables AudioFX equalizer integration
      */
@@ -654,6 +696,7 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
         override fun onPlayFromMediaId(mediaId: String?, extras: Bundle?) {
             // get station, set metadata and start playback
             station = CollectionHelper.getStation(collection, mediaId ?: String())
+
             startPlayback()
         }
 
@@ -755,7 +798,7 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
                 Keys.CMD_RELOAD_PLAYER_STATE -> {
                     playerState = PreferencesHelper.loadPlayerState(this@PlayerService)
                 }
-                Keys.CMD_REQUEST_PERIODIC_PROGRESS_UPDATE -> {
+                Keys.CMD_REQUEST_PROGRESS_UPDATE -> {
                     if (cb != null) {
                         val playbackProgressBundle: Bundle = bundleOf(Keys.RESULT_DATA_METADATA to metadataHistory)
                         if (sleepTimerTimeRemaining > 0L) {
@@ -785,30 +828,11 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
      */
     private inner class MediaControllerCallback : MediaControllerCompat.Callback() {
         override fun onMetadataChanged(metadata: MediaMetadataCompat?) {
-            //mediaController.playbackState?.let { updateNotification(it) }
+            mediaController.playbackState?.let { updateNotification(it) }
         }
 
         override fun onPlaybackStateChanged(state: PlaybackStateCompat?) {
-            //state?.let { updateNotification(it) }
-        }
-    }
-
-
-    /*
-     * Inner class: Listen for notification events and toggle foreground status
-     */
-    private inner class PlayerNotificationListener : PlayerNotificationManager.NotificationListener {
-        override fun onNotificationPosted(notificationId: Int, notification: Notification, ongoing: Boolean) {
-            if (ongoing && !isForegroundService) {
-                ContextCompat.startForegroundService(applicationContext, Intent(applicationContext, this@PlayerService.javaClass))
-                startForeground(notificationId, notification)
-                isForegroundService = true
-            }
-        }
-        override fun onNotificationCancelled(notificationId: Int, dismissedByUser: Boolean) {
-            stopForeground(true)
-            isForegroundService = false
-            stopSelf()
+            state?.let { updateNotification(it) }
         }
     }
 

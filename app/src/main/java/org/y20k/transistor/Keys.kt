@@ -67,7 +67,7 @@ object Keys {
 
     // custom MediaController commands
     const val CMD_RELOAD_PLAYER_STATE: String = "RELOAD_PLAYER_STATE"
-    const val CMD_REQUEST_PERIODIC_PROGRESS_UPDATE: String = "REQUEST_PERIODIC_PROGRESS_UPDATE"
+    const val CMD_REQUEST_PROGRESS_UPDATE: String = "REQUEST_PROGRESS_UPDATE"
     const val CMD_START_SLEEP_TIMER: String = "START_SLEEP_TIMER"
     const val CMD_CANCEL_SLEEP_TIMER: String = "CANCEL_SLEEP_TIMER"
     const val CMD_PLAY_STREAM: String = "PLAY_STREAM"

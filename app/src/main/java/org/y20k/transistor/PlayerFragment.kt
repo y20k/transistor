@@ -541,12 +541,13 @@ class PlayerFragment: Fragment(), CoroutineScope,
             layout.updatePlayerViews(activity as Context, station, playerState.playbackState)
             // handle start intent
             handleStartIntent()
-
+            // handle navigation arguments
             handleNavigationArguments()
         })
     }
 
 
+    /* Handles arguments handed over by navigation (from SettingsFragment) */
     private fun handleNavigationArguments() {
         val updateCollection: Boolean = arguments?.getBoolean(Keys.ARG_UPDATE_COLLECTION, false) ?: false
         val updateStationImages: Boolean = arguments?.getBoolean(Keys.ARG_UPDATE_IMAGES, false) ?: false
@@ -659,7 +660,7 @@ class PlayerFragment: Fragment(), CoroutineScope,
     private val periodicProgressUpdateRequestRunnable: Runnable = object : Runnable {
         override fun run() {
             // request current playback position
-            MediaControllerCompat.getMediaController(activity as Activity).sendCommand(Keys.CMD_REQUEST_PERIODIC_PROGRESS_UPDATE, null, resultReceiver)
+            MediaControllerCompat.getMediaController(activity as Activity).sendCommand(Keys.CMD_REQUEST_PROGRESS_UPDATE, null, resultReceiver)
             // use the handler to start runnable again after specified delay
             handler.postDelayed(this, 500)
         }
