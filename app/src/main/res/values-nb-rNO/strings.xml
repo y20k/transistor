@@ -177,7 +177,7 @@
     <string name="descr_expanded_player_sleep_timer_start_button">Start vekkeur</string>
     <string name="descr_expanded_player_sleep_timer_remaining_time">Tid til vekkeur</string>
     <string name="onboarding_app_import_running">Importerer stasjonene dine… Vent.</string>
-    <string name="pref_update_station_images_summary">Last ned siste versjon av alle stasjonsbilder i samlingen din.</string>
+    <string name="pref_update_station_images_summary">Last ned siste versjon av alle stasjonsbilder.</string>
     <string name="pref_maintenance_title">Vedlikehold</string>
     <string name="pref_general_title">Generelt</string>
     <string name="notification_playing">Spiller</string>
@@ -188,4 +188,11 @@
     <string name="toastmessage_collection_update_not_necessary">Stasjonsbibliotek er oppdatert.</string>
     <string name="toastmessage_error_restart_playback_failed">Kunne ikke starte avspilling igjen.</string>
     <string name="toastmessage_updating_station_images">Oppdaterer stasjonsbilder.</string>
+    <string name="pref_update_collection_summary">Hent oppdaterte lydstrømmer og nye stasjonsbilder.</string>
+    <string name="pref_update_collection_title">Oppdater stasjoner</string>
+    <string name="pref_report_issue_title">Innrapporter feil</string>
+    <string name="pref_report_issue_summary">Innrapporter feil og foreslå forbedringer på GitHub.</string>
+    <string name="pref_app_version_title">Programversjon</string>
+    <string name="pref_app_version_summary">Versjon</string>
+    <string name="pref_about_title">Om</string>
 </resources>
