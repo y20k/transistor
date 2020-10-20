@@ -59,7 +59,7 @@ Spanish version: [franciscot](https://github.com/franciscot) | [weblate version 
 
 Thai version [Athicom](https://github.com/athicom) | [weblate version history](https://hosted.weblate.org/changes/?lang=th&project=transistor)
 
-Turkish version [turkceapps](https://hosted.weblate.org/user/turkceapps/) | [weblate version history](https://hosted.weblate.org/changes/?lang=tr&project=transistor)
+Turkish version [turkceapps](https://hosted.weblate.org/user/turkceapps/), [Oğuz Ersen](https://hosted.weblate.org/user/ersen/) | [weblate version history](https://hosted.weblate.org/changes/?lang=tr&project=transistor)
 
 Ukrainian version: [burunduk](https://github.com/burunduk) | [weblate version history](https://hosted.weblate.org/changes/?lang=uk&project=transistor)
 

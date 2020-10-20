@@ -77,9 +77,9 @@
     <string name="toastmessage_long_press_playback_started">Oynatma başladı (uzun dokunuş algılandı)</string>
     <string name="toastmessage_long_press_change_icon">İstasyon simgesini değiştir (uzun basma algılandı)</string>
     <string name="toastmessage_long_press_change_name">İstasyonu yeniden adlandır (uzun basma algılandı)</string>
-    <string name="toastmessage_theme_night">\'Gece modu\'na geçme (uzun basma algılandı)</string>
-    <string name="toastmessage_theme_day">\'Gündüz modu\'na geçme (uzun basma algılandı)</string>
-    <string name="toastmessage_theme_follow_system">\'Sistem Ayarı Takip modu\'na geçme (uzun basma algılandı)</string>
+    <string name="toastmessage_theme_night">\'Gece modu\'na geçiliyor (uzun basma algılandı)</string>
+    <string name="toastmessage_theme_day">\'Gündüz modu\'na geçiliyor (uzun basma algılandı)</string>
+    <string name="toastmessage_theme_follow_system">\'Sistem Ayarını Takip modu\'na geçiliyor (uzun basma algılandı)</string>
     <string name="toastmessage_shortcut_created">Kısayol oluşturuldu.</string>
     <string name="toastmessage_shortcut_not_created">Kısayol oluşturulmadı. Bu aygıt kısayolların oluşturulmasına izin vermiyor.</string>
     <string name="toastmessage_list_refreshed">İstasyonların listesi ön yükleniyor.</string>
