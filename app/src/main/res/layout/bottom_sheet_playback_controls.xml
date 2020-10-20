@@ -97,9 +97,9 @@
         android:layout_height="68dp"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="2dp"
+        android:indeterminateTint="@color/transistor_red_lighter"
         android:indeterminateTintMode="src_in"
-        android:indeterminateTint="@color/transistor_red_light"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/player_background" />
 

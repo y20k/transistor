@@ -100,8 +100,9 @@ object Keys {
     const val ACTIVE_DOWNLOADS_EMPTY: String = "zero"
 
     // media browser
-    const val MEDIA_ID_ROOT = "__ROOT__"
-    const val MEDIA_ID_EMPTY_ROOT = "__EMPTY__"
+    const val MEDIA_BROWSER_ROOT = "__ROOT__"
+    const val MEDIA_BROWSER_ROOT_RECENT = "__RECENT__"
+    const val MEDIA_BROWSER_ROOT_EMPTY = "@empty@"
 
     // view types
     const val VIEW_TYPE_ADD_NEW: Int = 1

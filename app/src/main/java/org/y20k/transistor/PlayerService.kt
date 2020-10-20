@@ -36,6 +36,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.media.MediaBrowserServiceCompat
+import androidx.media.MediaBrowserServiceCompat.BrowserRoot.EXTRA_RECENT
 import androidx.media.session.MediaButtonReceiver
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.analytics.AnalyticsListener
@@ -256,7 +257,7 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
             LogHelper.i(TAG, "OnGetRoot: Browsing NOT ALLOWED for unknown caller. "
                     + "Returning empty browser root so all apps can use MediaController."
                     + clientPackageName)
-            return BrowserRoot(Keys.MEDIA_ID_EMPTY_ROOT, null)
+            return BrowserRoot(Keys.MEDIA_BROWSER_ROOT_EMPTY, null)
         } else {
             // content style extras: see https://developer.android.com/training/cars/media#apply_content_style
             val CONTENT_STYLE_SUPPORTED = "android.media.browse.CONTENT_STYLE_SUPPORTED"
@@ -264,11 +265,14 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
             val CONTENT_STYLE_BROWSABLE_HINT = "android.media.browse.CONTENT_STYLE_BROWSABLE_HINT"
             val CONTENT_STYLE_LIST_ITEM_HINT_VALUE = 1
             val CONTENT_STYLE_GRID_ITEM_HINT_VALUE = 2
-            val extras = Bundle()
-            extras.putBoolean(CONTENT_STYLE_SUPPORTED, true)
-            extras.putInt(CONTENT_STYLE_BROWSABLE_HINT, CONTENT_STYLE_GRID_ITEM_HINT_VALUE)
-            extras.putInt(CONTENT_STYLE_PLAYABLE_HINT, CONTENT_STYLE_LIST_ITEM_HINT_VALUE)
-            return BrowserRoot(Keys.MEDIA_ID_ROOT, extras)
+            val rootExtras = Bundle()
+            rootExtras.putBoolean(CONTENT_STYLE_SUPPORTED, true)
+            rootExtras.putInt(CONTENT_STYLE_BROWSABLE_HINT, CONTENT_STYLE_GRID_ITEM_HINT_VALUE)
+            rootExtras.putInt(CONTENT_STYLE_PLAYABLE_HINT, CONTENT_STYLE_LIST_ITEM_HINT_VALUE)
+            // check if rootHints contained EXTRA_RECENT - return BrowserRoot with MEDIA_BROWSER_ROOT_RECENT in that case
+            val isRecentRequest = rootHints?.getBoolean(EXTRA_RECENT) ?: false
+            val browserRootPath: String = if (isRecentRequest) Keys.MEDIA_BROWSER_ROOT_RECENT else Keys.MEDIA_BROWSER_ROOT
+            return BrowserRoot(browserRootPath, rootExtras)
         }
     }
 
@@ -552,12 +556,17 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
     private fun loadChildren(parentId: String, result: Result<MutableList<MediaBrowserCompat.MediaItem>>) {
         val mediaItems = ArrayList<MediaBrowserCompat.MediaItem>()
         when (parentId) {
-            Keys.MEDIA_ID_ROOT -> {
+            Keys.MEDIA_BROWSER_ROOT -> {
                 collectionProvider.stationListByName.forEach { item ->
                     mediaItems.add(item)
                 }
             }
-            Keys.MEDIA_ID_EMPTY_ROOT -> {
+            Keys.MEDIA_BROWSER_ROOT_RECENT -> {
+                LogHelper.w(TAG, "recent station requested.") // todo remove
+                val recentStation = collectionProvider.getFirstStation() // todo change
+                if (recentStation != null) mediaItems.add(recentStation)
+            }
+            Keys.MEDIA_BROWSER_ROOT_EMPTY -> {
                 // do nothing
             }
             else -> {

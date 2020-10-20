@@ -45,8 +45,9 @@
     <color name="transistor_grey_dark">#FF414141</color>
     <color name="transistor_grey_darker">#FF2D2D2D</color>
 
-    <color name="transistor_red">#DC3D33</color> <!-- Slightly muted variant of -> Material Design 2: Red 600 -->
+    <color name="transistor_red">#FFDC3D33</color> <!-- Slightly muted variant of -> Material Design 2: Red 600 -->
     <color name="transistor_red_light">#FFE15950</color>
+    <color name="transistor_red_lighter">#FFE17E77</color>
     <color name="transistor_red_dark">#FFCA2D23</color>
     <color name="transistor_red_darker">#FFAD261E</color>
 
