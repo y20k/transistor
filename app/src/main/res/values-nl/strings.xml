@@ -110,4 +110,25 @@
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7
     https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
+    <string name="dialog_yes_no_positive_button_update_covers">Update</string>
+    <string name="dialog_yes_no_positive_button_update_collection">Update</string>
+    <string name="dialog_yes_no_positive_button_remove_station">Verwijder</string>
+    <string name="dialog_yes_no_positive_button_non_wifi_download">Toch downloaden</string>
+    <string name="dialog_yes_no_positive_button_delete_downloads">Verwijder alles</string>
+    <string name="dialog_yes_no_positive_button_default">Ja</string>
+    <string name="dialog_yes_no_negative_button_default">Nee</string>
+    <string name="dialog_yes_no_message_default">Weet je zeker dat je dit wilt doen\?</string>
+    <string name="dialog_opml_import_details_default">Geen details beschikbaar</string>
+    <string name="dialog_opml_import_details_button">Toon details</string>
+    <string name="dialog_opml_import_button_okay">Importeer</string>
+    <string name="dialog_generic_details_default">Geen details beschikbaar</string>
+    <string name="dialog_generic_details_button">Details</string>
+    <string name="dialog_find_station_title">Zoek Station</string>
+    <string name="dialog_find_station_no_results">Geen resultaten gevonden.</string>
+    <string name="dialog_find_station_hint">Naam of stream-adres</string>
+    <string name="dialog_error_title_no_network">Offline</string>
+    <string name="dialog_edit_update_station">Updaten Station</string>
+    <string name="dialog_edit_title">Aanpassen Station</string>
+    <string name="dialog_edit_place_on_home_screen">Plaats op Startscherm</string>
+    <string name="fragment_settings_title">Instellingen</string>
 </resources>
