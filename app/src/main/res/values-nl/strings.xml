@@ -37,7 +37,7 @@
     <string name="player_sheet_h2_station_sample_rate">Sample snelheid</string>
     <string name="player_sheet_h2_station_bitrate">Bitrate</string>
     <!-- dialogs -->
-    <string name="dialog_generic_button_okay">Bevestigen</string>
+    <string name="dialog_generic_button_okay">OK</string>
     <string name="dialog_generic_button_cancel">Annuleren</string>
     <string name="dialog_add_station_button">Toevoegen</string>
     <string name="dialog_add_station_input_hint">Streaming adres plakken</string>
@@ -131,4 +131,18 @@
     <string name="dialog_edit_title">Aanpassen Station</string>
     <string name="dialog_edit_place_on_home_screen">Plaats op Startscherm</string>
     <string name="fragment_settings_title">Instellingen</string>
+    <string name="toastmessage_error_missing_storage_permission">Sta \"Opslag lezen\" toe om dit bestand te lezen.</string>
+    <string name="toastmessage_error_download_error">Download error</string>
+    <string name="toastmessage_collection_update_not_necessary">Collectie van up-to-date stations.</string>
+    <string name="menu_update">Station updaten</string>
+    <string name="dialog_yes_no_positive_button_vpn_download">Download hoe dan ook</string>
+    <string name="dialog_yes_no_positive_button_add_up_next">Start nu</string>
+    <string name="dialog_yes_no_negative_button_cancel">Annuleer</string>
+    <string name="dialog_yes_no_negative_button_add_up_next">Voeg toe aan \'Volgende\'</string>
+    <string name="dialog_yes_no_message_update_station_images">Download meest recente versie van alle station logo\'s\?</string>
+    <string name="dialog_yes_no_message_update_collection">Zoeken naar wijzigingen\?</string>
+    <string name="dialog_yes_no_message_remove_station">Station verwijderen\?</string>
+    <string name="dialog_find_station_button_add">Voeg toe</string>
+    <string name="dialog_error_message_no_network">Verbind met het internet.</string>
+    <string name="dialog_edit_choose_station_image">Kies</string>
 </resources>
