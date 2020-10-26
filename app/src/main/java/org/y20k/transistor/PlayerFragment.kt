@@ -23,7 +23,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import android.content.pm.ResolveInfo
 import android.media.AudioManager
 import android.net.Uri
 import android.os.Bundle
@@ -456,10 +455,10 @@ class PlayerFragment: Fragment(), CoroutineScope,
         } else {
             // permission READ_EXTERNAL_STORAGE granted - get system picker for images
             val pickImageIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            val imagePickerApps: List<ResolveInfo> = (activity as Context).packageManager.queryIntentActivities(pickImageIntent, 0)
-            if (imagePickerApps.isNotEmpty()) {
+            try {
                 startActivityForResult(pickImageIntent, Keys.REQUEST_LOAD_IMAGE, null )
-            } else {
+            } catch (e: Exception) {
+                LogHelper.e(TAG, "Unable to select image. Probably no image picker available.")
                 Toast.makeText(context, R.string.toastalert_no_image_picker, Toast.LENGTH_LONG).show()
             }
         }
