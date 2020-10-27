@@ -13,9 +13,9 @@
     <string name="menu_rename">إعادة التسمية</string>
     <string name="menu_shortcut">ضعه على الصفحة الرئيسية</string>
     <!-- descriptions -->
-    <string name="descr_app_icon">App icon depicting an old radio</string>
+    <string name="descr_app_icon">أيقونة التطبيق يصور راديو قديم</string>
     <string name="descr_station_options_button">عرض خيارات المحطة الإذاعية</string>
-    <string name="descr_station_name_example">مثلًا أف أم</string>
+    <string name="descr_station_name_example">مثلًا FM</string>
     <string name="descr_station_metadata_example">الفنان - العنوان</string>
     <string name="descr_station_stream_loading">جارٍ تحميل البث…</string>
     <!--<string name="descr_playback_button_play"></string>-->
@@ -25,7 +25,7 @@
     <!--<string name="descr_player_sheet_button_minimize"></string>-->
     <!--<string name="descr_player_sheet_content_copy_icon"></string>-->
     <!--<string name="descr_player_sheet_p_stream_url"></string>-->
-    <string name="descr_list_add_new">إضافة محطة إذاعية جديدة</string>
+    <string name="descr_list_add_new">أضف محطة جديدة</string>
     <!--<string name="descr_list_add_select_stream_dropdown"></string>-->
     <!-- player -->
     <string name="player_sheet_h1_details">التفاصيل</string>
@@ -41,21 +41,21 @@
     <string name="dialog_generic_button_cancel">إلغاء</string>
     <string name="dialog_add_station_button">إضافة</string>
     <string name="dialog_add_station_input_hint">إلصق رابط البث</string>
-    <string name="dialog_add_station_message">إضافة محطة إذاعية جديدة</string>
+    <string name="dialog_add_station_message">أضف محطة جديدة</string>
     <!--<string name="dialog_add_station_howto"></string>-->
-    <string name="dialog_delete_station_message">حذف المحطة الإذاعية</string>
+    <string name="dialog_delete_station_message">حذف المحطة</string>
     <string name="dialog_button_delete">حذف</string>
-    <string name="dialog_rename_station_input_hint">قم بإدخال إسم جديد</string>
-    <string name="dialog_rename_station_message">إعادة تسمية المحطة الإذاعية</string>
+    <string name="dialog_rename_station_input_hint">أدخل اسمًا جديدًا</string>
+    <string name="dialog_rename_station_message">إعادة تسمية المحطة</string>
     <string name="dialog_button_rename">إعادة التسمية</string>
     <!--<string name="dialog_add_station_choose_stream_heading"></string>-->
     <string name="dialog_add_station_choose_stream_message">الرجاء اختيار تيار بث</string>
     <string name="dialog_add_station_choose_stream_button">اختيار</string>
     <!-- error dialogs -->
     <string name="dialog_error_title_default">خطأ</string>
-    <string name="dialog_error_message_default">طرأ هناك خطأ</string>
+    <string name="dialog_error_message_default">حدث خطأ</string>
     <string name="dialog_error_details_button_default">عرض التفاصيل</string>
-    <string name="dialog_error_details_default">لا توجد أية تفاصيل</string>
+    <string name="dialog_error_details_default">لا توجد تفاصيل متاحة</string>
     <!--<string name="dialog_error_details_write"></string>-->
     <string name="dialog_error_title_fetch_download">خلل في التنزيل</string>
     <string name="dialog_error_title_fetch_read">خلل في القراءة</string>
@@ -82,7 +82,7 @@
     <!--<string name="toastmessage_theme_follow_system"></string>-->
     <string name="toastmessage_shortcut_created">تم إنشاء الإختصار.</string>
     <!--<string name="toastmessage_shortcut_not_created"></string>-->
-    <string name="toastmessage_list_refreshed">إعادة تحديث قائمة المحطات الإذاعية.</string>
+    <string name="toastmessage_list_refreshed">إعادة تحميل قائمة المحطات.</string>
     <!--<string name="toastmessage_copied_to_clipboard_url"></string>-->
     <!--<string name="toastmessage_copied_to_clipboard_metadata"></string>-->
     <!--<string name="toastmessage_station_copied"></string>-->
@@ -112,4 +112,55 @@
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7
     https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
+    <string name="notification_play">تشغيل</string>
+    <string name="notification_now_playing_channel_description">ضوابط التشغيل واسم المحطة والصورة.</string>
+    <string name="notification_now_playing_channel_name">ضوابط التشغيل</string>
+    <string name="station_list_button_add_new_station">أضف محطة جديدة</string>
+    <string name="toastmessage_updating_station_images">تحديث صور المحطة.</string>
+    <string name="toastmessage_updating_station">تحديث المحطة.</string>
+    <string name="toastmessage_updating_collection">تحديث مجموعة المحطات.</string>
+    <string name="toastmessage_theme_night">تغيير إلى \"الوضع الليلي\" (تم الكشف عن الضغط لفترة طويلة)</string>
+    <string name="toastmessage_theme_follow_system">تغيير إلى \"وضع متابعة إعداد النظام\" (تم الكشف عن الضغط لفترة طويلة)</string>
+    <string name="toastmessage_theme_day">تغيير إلى \"وضع اليوم\" (تم الكشف عن الضغط لفترة طويلة)</string>
+    <string name="toastmessage_station_not_valid">المحطة غير صالحة.</string>
+    <string name="toastmessage_station_duplicate">محطة مكررة.</string>
+    <string name="toastmessage_error_restart_playback_failed">غير قادر على إعادة التشغيل.</string>
+    <string name="toastmessage_error_no_station_found">تعذر بدء التشغيل. الرجاء إضافة محطة راديو أولا.</string>
+    <string name="toastmessage_error_no_station_matches_search">تعذر العثور على المحطة التي تطابق بحثك.</string>
+    <string name="toastmessage_error_missing_storage_permission">امنح إذن \"قراءة التخزين\" لفتح هذا الملف.</string>
+    <string name="toastmessage_error_download_error">فشل التحميل</string>
+    <string name="toastmessage_collection_update_not_necessary">مجموعة المحطات محدثة.</string>
+    <string name="menu_update">تحديث المحطة</string>
+    <string name="dialog_yes_no_title_default">قرر</string>
+    <string name="dialog_yes_no_positive_button_vpn_download">تحميل على أي حال</string>
+    <string name="dialog_yes_no_positive_button_update_covers">تحديث</string>
+    <string name="dialog_yes_no_positive_button_update_collection">تحديث</string>
+    <string name="dialog_yes_no_positive_button_remove_station">إزالة</string>
+    <string name="dialog_yes_no_positive_button_non_wifi_download">تحميل على أي حال</string>
+    <string name="dialog_yes_no_positive_button_delete_downloads">حذف الكل</string>
+    <string name="dialog_yes_no_positive_button_default">نعم</string>
+    <string name="dialog_yes_no_positive_button_add_up_next">ابدأ الآن</string>
+    <string name="dialog_yes_no_negative_button_default">لا</string>
+    <string name="dialog_yes_no_negative_button_cancel">إلغاء</string>
+    <string name="dialog_yes_no_negative_button_add_up_next">أضف إلى \"التالي\"</string>
+    <string name="dialog_yes_no_message_update_station_images">تنزيل أحدث إصدار لجميع صور المحطة؟</string>
+    <string name="dialog_yes_no_message_update_collection">ابحث عن التغييرات؟</string>
+    <string name="dialog_yes_no_message_remove_station">إزالة هذه المحطة؟</string>
+    <string name="dialog_yes_no_message_default">هل تريد حقا أن تفعل هذا؟</string>
+    <string name="dialog_opml_import_details_default">لا توجد تفاصيل متاحة</string>
+    <string name="dialog_opml_import_details_button">اظهر التفاصيل</string>
+    <string name="dialog_opml_import_button_okay">استيراد</string>
+    <string name="dialog_generic_details_default">لا توجد تفاصيل متاحة</string>
+    <string name="dialog_generic_details_button">اظهر التفاصيل</string>
+    <string name="dialog_find_station_title">ابحث عن محطة</string>
+    <string name="dialog_find_station_no_results">لم يتم العثور على نتائج.</string>
+    <string name="dialog_find_station_hint">الاسم أو عنوان البث</string>
+    <string name="dialog_find_station_button_add">أضف</string>
+    <string name="dialog_error_title_no_network">غير متصل</string>
+    <string name="dialog_error_message_no_network">اتصل بالإنترنت.</string>
+    <string name="dialog_edit_update_station">تحديث المحطة</string>
+    <string name="dialog_edit_title">تعديل المحطة</string>
+    <string name="dialog_edit_place_on_home_screen">ضع على الشاشة الرئيسية</string>
+    <string name="dialog_edit_choose_station_image">أختر</string>
+    <string name="fragment_settings_title">إעعدادات</string>
 </resources>
