@@ -399,17 +399,18 @@ object CollectionHelper {
             putString(MediaMetadataCompat.METADATA_KEY_TITLE, metadata)
             putString(MediaMetadataCompat.METADATA_KEY_ALBUM, context.getString(R.string.app_name))
             putString(MediaMetadataCompat.METADATA_KEY_MEDIA_URI, station.getStreamUri())
-            putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI, station.image)
             putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, ImageHelper.getScaledStationImage(context, station.image, Keys.SIZE_COVER_LOCK_SCREEN))
+            //putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI, station.image)
         }.build()
     }
 
 
     /* Creates MediaItem for a station - used by collection provider */
-    fun buildStationMediaMetaItem(station: Station): MediaBrowserCompat.MediaItem {
+    fun buildStationMediaMetaItem(context: Context, station: Station): MediaBrowserCompat.MediaItem {
         val mediaDescriptionBuilder = MediaDescriptionCompat.Builder()
         mediaDescriptionBuilder.setMediaId(station.uuid)
         mediaDescriptionBuilder.setTitle(station.name)
+        mediaDescriptionBuilder.setIconBitmap(ImageHelper.getScaledStationImage(context, station.image, Keys.SIZE_COVER_LOCK_SCREEN))
         //mediaDescriptionBuilder.setIconUri(Uri.parse(station.image))
         return MediaBrowserCompat.MediaItem(mediaDescriptionBuilder.build(), MediaBrowserCompat.MediaItem.FLAG_PLAYABLE)
     }
