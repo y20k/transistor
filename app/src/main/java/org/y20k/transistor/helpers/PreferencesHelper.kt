@@ -17,6 +17,7 @@ package org.y20k.transistor.helpers
 import android.content.Context
 import android.content.SharedPreferences
 import android.support.v4.media.session.PlaybackStateCompat
+import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.gson.Gson
@@ -44,9 +45,9 @@ object PreferencesHelper {
     /* Saves address of radio-browser.info API to shared preferences */
     fun saveRadioBrowserApiAddress(context: Context, radioBrowserApi: String) {
         val settings = PreferenceManager.getDefaultSharedPreferences(context)
-        val editor = settings.edit()
-        editor.putString(Keys.PREF_RADIO_BROWSER_API, radioBrowserApi)
-        editor.apply()
+        settings.edit {
+            putString(Keys.PREF_RADIO_BROWSER_API, radioBrowserApi)
+        }
     }
 
 
@@ -60,9 +61,9 @@ object PreferencesHelper {
     /* Saves keepDebugLog true or false */
     fun saveKeepDebugLog(context: Context, keepDebugLog: Boolean = false) {
         val settings = PreferenceManager.getDefaultSharedPreferences(context)
-        val editor = settings.edit()
-        editor.putBoolean(Keys.PREF_KEEP_DEBUG_LOG, keepDebugLog)
-        editor.apply()
+        settings.edit {
+            putBoolean(Keys.PREF_KEEP_DEBUG_LOG, keepDebugLog)
+        }
     }
 
 
@@ -76,9 +77,9 @@ object PreferencesHelper {
     /* Saves state of playback for player / PlayerService to shared preferences */
     fun savePlayerPlaybackState(context: Context, playbackState: Int) {
         val settings = PreferenceManager.getDefaultSharedPreferences(context)
-        val editor = settings.edit()
-        editor.putInt(Keys.PREF_CURRENT_PLAYBACK_STATE, playbackState)
-        editor.apply()
+        settings.edit {
+            putInt(Keys.PREF_CURRENT_PLAYBACK_STATE, playbackState)
+        }
     }
 
 
@@ -92,9 +93,9 @@ object PreferencesHelper {
     /* Saves state of playback for player / PlayerService to shared preferences */
     fun savePlayerPlaybackSpeed(context: Context, playbackSpeed: Float) {
         val settings = PreferenceManager.getDefaultSharedPreferences(context)
-        val editor = settings.edit()
-        editor.putFloat(Keys.PREF_PLAYER_STATE_PLAYBACK_SPEED, playbackSpeed)
-        editor.apply()
+        settings.edit {
+            putFloat(Keys.PREF_PLAYER_STATE_PLAYBACK_SPEED, playbackSpeed)
+        }
     }
 
 
@@ -109,9 +110,9 @@ object PreferencesHelper {
     /* Saves last update to shared preferences */
     fun saveLastUpdateCollection(context: Context, lastUpdate: Date = Calendar.getInstance().time) {
         val settings = PreferenceManager.getDefaultSharedPreferences(context)
-        val editor = settings.edit()
-        editor.putString(Keys.PREF_LAST_UPDATE_COLLECTION, DateTimeHelper.convertToRfc2822(lastUpdate))
-        editor.apply()
+        settings.edit {
+            putString(Keys.PREF_LAST_UPDATE_COLLECTION, DateTimeHelper.convertToRfc2822(lastUpdate))
+        }
     }
 
 
@@ -125,9 +126,9 @@ object PreferencesHelper {
     /* Saves site of collection to shared preferences */
     fun saveCollectionSize(context: Context, size: Int) {
         val settings = PreferenceManager.getDefaultSharedPreferences(context)
-        val editor = settings.edit()
-        editor.putInt(Keys.PREF_COLLECTION_SIZE, size)
-        editor.apply()
+        settings.edit {
+            putInt(Keys.PREF_COLLECTION_SIZE, size)
+        }
     }
 
 
@@ -142,9 +143,9 @@ object PreferencesHelper {
     /* Saves date of last save operation to shared preferences */
     fun saveCollectionModificationDate(context: Context, lastSave: Date = Calendar.getInstance().time) {
         val settings = PreferenceManager.getDefaultSharedPreferences(context)
-        val editor = settings.edit()
-        editor.putString(Keys.PREF_COLLECTION_MODIFICATION_DATE, DateTimeHelper.convertToRfc2822(lastSave))
-        editor.apply()
+        settings.edit {
+            putString(Keys.PREF_COLLECTION_MODIFICATION_DATE, DateTimeHelper.convertToRfc2822(lastSave))
+        }
     }
 
 
@@ -160,9 +161,9 @@ object PreferencesHelper {
     /* Saves active downloads to shared preferences */
     fun saveActiveDownloads(context: Context, activeDownloadsString: String = String()) {
         val settings = PreferenceManager.getDefaultSharedPreferences(context)
-        val editor = settings.edit()
-        editor.putString(Keys.PREF_ACTIVE_DOWNLOADS, activeDownloadsString)
-        editor.apply()
+        settings.edit {
+            putString(Keys.PREF_ACTIVE_DOWNLOADS, activeDownloadsString)
+        }
     }
 
 
@@ -181,12 +182,12 @@ object PreferencesHelper {
     /* Saves state of player user interface to shared preferences */
     fun savePlayerState(context: Context, playerState: PlayerState) {
         val settings = PreferenceManager.getDefaultSharedPreferences(context)
-        val editor = settings.edit()
-        editor.putString(Keys.PREF_PLAYER_STATE_STATION_UUID, playerState.stationUuid)
-        editor.putInt(Keys.PREF_PLAYER_STATE_PLAYBACK_STATE, playerState.playbackState)
-        editor.putInt(Keys.PREF_PLAYER_STATE_BOTTOM_SHEET_STATE, playerState.bottomSheetState)
-        editor.putInt(Keys.PREF_PLAYER_STATE_SLEEP_TIMER_STATE, playerState.sleepTimerState)
-        editor.apply()
+        settings.edit {
+            putString(Keys.PREF_PLAYER_STATE_STATION_UUID, playerState.stationUuid)
+            putInt(Keys.PREF_PLAYER_STATE_PLAYBACK_STATE, playerState.playbackState)
+            putInt(Keys.PREF_PLAYER_STATE_BOTTOM_SHEET_STATE, playerState.bottomSheetState)
+            putInt(Keys.PREF_PLAYER_STATE_SLEEP_TIMER_STATE, playerState.sleepTimerState)
+        }
     }
 
 
@@ -200,11 +201,11 @@ object PreferencesHelper {
     /* Saves history of metadata in shared preferences */
     fun saveMetadataHistory(context: Context, metadataHistory: MutableList<String>) {
         val settings = PreferenceManager.getDefaultSharedPreferences(context)
-        val editor = settings.edit()
         val gson = Gson()
         val json = gson.toJson(metadataHistory)
-        editor.putString(Keys.PREF_PLAYER_METADATA_HISTORY, json)
-        editor.apply()
+        settings.edit {
+            putString(Keys.PREF_PLAYER_METADATA_HISTORY, json)
+        }
     }
 
 
@@ -242,9 +243,9 @@ object PreferencesHelper {
     /* Saves state of housekeeping */
     fun saveHouseKeepingNecessaryState(context: Context, state: Boolean = false) {
         val settings = PreferenceManager.getDefaultSharedPreferences(context)
-        val editor = settings.edit()
-        editor.putBoolean(Keys.PREF_ONE_TIME_HOUSEKEEPING_NECESSARY, state)
-        editor.apply()
+        settings.edit {
+            putBoolean(Keys.PREF_ONE_TIME_HOUSEKEEPING_NECESSARY, state)
+        }
     }
 
 

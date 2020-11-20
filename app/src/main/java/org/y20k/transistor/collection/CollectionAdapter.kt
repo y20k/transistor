@@ -15,7 +15,6 @@
 package org.y20k.transistor.collection
 
 import android.content.Context
-import android.net.Uri
 import android.os.Vibrator
 import android.support.v4.media.session.PlaybackStateCompat
 import android.view.LayoutInflater
@@ -28,6 +27,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.cardview.widget.CardView
+import androidx.core.net.toUri
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -189,9 +191,9 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
                     // stationViewHolder.stationCardView.setCardBackgroundColor(station.imageColor)
                     stationViewHolder.stationStarredView.setColorFilter(station.imageColor)
                 }
-                stationViewHolder.stationStarredView.visibility = View.VISIBLE
+                stationViewHolder.stationStarredView.isVisible = true
             }
-            false -> stationViewHolder.stationStarredView.visibility = View.GONE
+            false -> stationViewHolder.stationStarredView.isGone = true
         }
     }
 
@@ -479,8 +481,8 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
             if (oldStation.remoteStationLocation != newStation.remoteStationLocation) return false
             if (!oldStation.streamUris.containsAll(newStation.streamUris)) return false
             if (oldStation.imageColor != newStation.imageColor) return false
-            if (FileHelper.getFileSize(context, Uri.parse(oldStation.image)) != FileHelper.getFileSize(context, Uri.parse(newStation.image))) return false
-            if (FileHelper.getFileSize(context, Uri.parse(oldStation.smallImage)) != FileHelper.getFileSize(context, Uri.parse(newStation.smallImage))) return false
+            if (FileHelper.getFileSize(context, oldStation.image.toUri()) != FileHelper.getFileSize(context, newStation.image.toUri())) return false
+            if (FileHelper.getFileSize(context, oldStation.smallImage.toUri()) != FileHelper.getFileSize(context, newStation.smallImage.toUri())) return false
 
             // none of the above -> contents are the same
             return true

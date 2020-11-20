@@ -27,6 +27,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Group
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -144,9 +146,9 @@ data class LayoutHolder(var rootView: View) {
 
         // toggle buffering indicator
         if (playbackState == PlaybackStateCompat.STATE_BUFFERING) {
-            bufferingIndicator.visibility = View.VISIBLE
+            bufferingIndicator.isVisible = true
         } else {
-            bufferingIndicator.visibility = View.INVISIBLE
+            bufferingIndicator.isVisible = false
         }
 
         // update name
@@ -196,10 +198,10 @@ data class LayoutHolder(var rootView: View) {
     fun updateSleepTimer(context: Context, timeRemaining: Long = 0L) {
         when (timeRemaining) {
             0L -> {
-                sleepTimerRunningViews.visibility = View.GONE
+                sleepTimerRunningViews.isGone = true
             }
             else -> {
-                sleepTimerRunningViews.visibility = View.VISIBLE
+                sleepTimerRunningViews.isVisible = true
                 val sleepTimerTimeRemaining = DateTimeHelper.convertToMinutesAndSeconds(timeRemaining)
                 sheetSleepTimerRemainingTimeView.text = sleepTimerTimeRemaining
                 sheetSleepTimerRemainingTimeView.contentDescription = "${context.getString(R.string.descr_expanded_player_sleep_timer_remaining_time)}: ${sleepTimerTimeRemaining}"            }
@@ -223,11 +225,11 @@ data class LayoutHolder(var rootView: View) {
     /* Toggle the Import Running indicator  */
     fun toggleImportingStationViews() {
         if (onboardingImportViews.visibility == View.INVISIBLE) {
-            onboardingImportViews.visibility = View.VISIBLE
-            onboardingQuoteViews.visibility = View.INVISIBLE
+            onboardingImportViews.isVisible = true
+            onboardingQuoteViews.isVisible = false
         } else {
-            onboardingImportViews.visibility = View.INVISIBLE
-            onboardingQuoteViews.visibility = View.VISIBLE
+            onboardingImportViews.isVisible = false
+            onboardingQuoteViews.isVisible = true
         }
     }
 
@@ -246,8 +248,8 @@ data class LayoutHolder(var rootView: View) {
     /* Toggles visibility of the download progress indicator */
     fun toggleDownloadProgressIndicator(context: Context) {
         when (PreferencesHelper.loadActiveDownloads(context)) {
-            Keys.ACTIVE_DOWNLOADS_EMPTY -> downloadProgressIndicator.visibility = View.GONE
-            else -> downloadProgressIndicator.visibility = View.VISIBLE
+            Keys.ACTIVE_DOWNLOADS_EMPTY -> downloadProgressIndicator.isGone = true
+            else -> downloadProgressIndicator.isVisible = true
         }
     }
 
@@ -255,11 +257,11 @@ data class LayoutHolder(var rootView: View) {
     /* Toggles visibility of the onboarding screen */
     fun toggleOnboarding(context: Context, collectionSize: Int): Boolean {
         if (collectionSize == 0) {
-            onboardingLayout.visibility = View.VISIBLE
+            onboardingLayout.isVisible = true
             hidePlayer(context)
             return true
         } else {
-            onboardingLayout.visibility = View.GONE
+            onboardingLayout.isGone = true
             showPlayer(context)
             return false
         }

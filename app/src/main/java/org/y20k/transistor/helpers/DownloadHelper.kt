@@ -51,7 +51,7 @@ object DownloadHelper {
         // initialize main class variables, if necessary
         initialize(context)
         // convert array
-        val uris: Array<Uri> = Array<Uri>(playlistUrlStrings.size) { index -> Uri.parse(playlistUrlStrings[index]) }
+        val uris: Array<Uri> = Array<Uri>(playlistUrlStrings.size) { index -> playlistUrlStrings[index].toUri() }
         // enqueue playlists
         enqueueDownload(context, uris, Keys.FILE_TYPE_PLAYLIST)
     }

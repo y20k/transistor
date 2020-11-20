@@ -411,7 +411,7 @@ object CollectionHelper {
         mediaDescriptionBuilder.setMediaId(station.uuid)
         mediaDescriptionBuilder.setTitle(station.name)
         mediaDescriptionBuilder.setIconBitmap(ImageHelper.getScaledStationImage(context, station.image, Keys.SIZE_COVER_LOCK_SCREEN))
-        //mediaDescriptionBuilder.setIconUri(Uri.parse(station.image))
+        // mediaDescriptionBuilder.setIconUri(station.image.toUri())
         return MediaBrowserCompat.MediaItem(mediaDescriptionBuilder.build(), MediaBrowserCompat.MediaItem.FLAG_PLAYABLE)
     }
 

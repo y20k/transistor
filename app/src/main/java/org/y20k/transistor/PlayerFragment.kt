@@ -41,6 +41,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -380,7 +381,7 @@ class PlayerFragment: Fragment(), CoroutineScope,
         // set up sleep timer cancel button
         layout.sheetSleepTimerCancelButtonView.setOnClickListener {
             MediaControllerCompat.getMediaController(activity as Activity).sendCommand(Keys.CMD_CANCEL_SLEEP_TIMER, null, null)
-            layout.sleepTimerRunningViews.visibility = View.GONE
+            layout.sleepTimerRunningViews.isGone = true
         }
 
     }
@@ -519,7 +520,7 @@ class PlayerFragment: Fragment(), CoroutineScope,
             }
             false -> {
                 handler.removeCallbacks(periodicProgressUpdateRequestRunnable)
-                layout.sleepTimerRunningViews.visibility = View.GONE
+                layout.sleepTimerRunningViews.isGone = true
             }
         }
     }

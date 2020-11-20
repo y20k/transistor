@@ -18,11 +18,11 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.navigation.fragment.findNavController
 import androidx.preference.*
 import org.y20k.transistor.dialogs.ErrorDialog
@@ -72,7 +72,7 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
         preferenceThemeSelection.setOnPreferenceChangeListener { preference, newValue ->
             if (preference is ListPreference) {
                 val index: Int = preference.entryValues.indexOf(newValue)
-                preferenceThemeSelection.summary = "${getString(R.string.pref_theme_selection_summary)} ${preference.entries.get(index)}"
+                preferenceThemeSelection.summary = "${getString(R.string.pref_theme_selection_summary)} ${preference.entries[index]}"
                 return@setOnPreferenceChangeListener true
             } else {
                 return@setOnPreferenceChangeListener false
@@ -127,7 +127,7 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
             // open web browser
             val intent = Intent().apply {
                 action = Intent.ACTION_VIEW
-                data = Uri.parse("https://github.com/y20k/transistor/issues")
+                data = "https://github.com/y20k/transistor/issues".toUri()
             }
             startActivity(intent)
             return@setOnPreferenceClickListener true

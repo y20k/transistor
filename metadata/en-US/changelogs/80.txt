@@ -1,0 +1,8 @@
+# v4.0.8 - Andy Warhol
+
+**2020-11-25**
+
+- Hebrew language version
+- updated translations
+- Android Auto station image display fixed
+- manual station image selection on Android 11 fixed
