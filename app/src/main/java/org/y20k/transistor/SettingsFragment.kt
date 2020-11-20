@@ -23,6 +23,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.preference.*
 import org.y20k.transistor.dialogs.ErrorDialog
@@ -210,8 +211,9 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
         if (NetworkHelper.isConnectedToNetwork(activity as Context)) {
             Toast.makeText(activity as Context, R.string.toastmessage_updating_collection, Toast.LENGTH_LONG).show()
             // update collection in player screen
-            val bundle: Bundle = Bundle()
-            bundle.putBoolean(Keys.ARG_UPDATE_COLLECTION, true)
+            val bundle: Bundle = bundleOf(
+                    Keys.ARG_UPDATE_COLLECTION to true
+            )
             this.findNavController().navigate(R.id.player_destination, bundle)
         } else {
             ErrorDialog().show(activity as Context, R.string.dialog_error_title_no_network, R.string.dialog_error_message_no_network)
@@ -224,8 +226,9 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
         if (NetworkHelper.isConnectedToNetwork(activity as Context)) {
             Toast.makeText(activity as Context, R.string.toastmessage_updating_station_images, Toast.LENGTH_LONG).show()
             // update collection in player screen
-            val bundle: Bundle = Bundle()
-            bundle.putBoolean(Keys.ARG_UPDATE_IMAGES, true)
+            val bundle: Bundle = bundleOf(
+                    Keys.ARG_UPDATE_IMAGES to true
+            )
             this.findNavController().navigate(R.id.player_destination, bundle)
         } else {
             ErrorDialog().show(activity as Context, R.string.dialog_error_title_no_network, R.string.dialog_error_message_no_network)

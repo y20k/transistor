@@ -265,10 +265,11 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
             val CONTENT_STYLE_BROWSABLE_HINT = "android.media.browse.CONTENT_STYLE_BROWSABLE_HINT"
             val CONTENT_STYLE_LIST_ITEM_HINT_VALUE = 1
             val CONTENT_STYLE_GRID_ITEM_HINT_VALUE = 2
-            val rootExtras = Bundle()
-            rootExtras.putBoolean(CONTENT_STYLE_SUPPORTED, true)
-            rootExtras.putInt(CONTENT_STYLE_BROWSABLE_HINT, CONTENT_STYLE_GRID_ITEM_HINT_VALUE)
-            rootExtras.putInt(CONTENT_STYLE_PLAYABLE_HINT, CONTENT_STYLE_LIST_ITEM_HINT_VALUE)
+            val rootExtras = bundleOf(
+                    CONTENT_STYLE_SUPPORTED to true,
+                    CONTENT_STYLE_BROWSABLE_HINT to CONTENT_STYLE_GRID_ITEM_HINT_VALUE,
+                    CONTENT_STYLE_PLAYABLE_HINT to CONTENT_STYLE_LIST_ITEM_HINT_VALUE
+            )
             // check if rootHints contained EXTRA_RECENT - return BrowserRoot with MEDIA_BROWSER_ROOT_RECENT in that case
             val isRecentRequest = rootHints?.getBoolean(EXTRA_RECENT) ?: false
             val browserRootPath: String = if (isRecentRequest) Keys.MEDIA_BROWSER_ROOT_RECENT else Keys.MEDIA_BROWSER_ROOT
