@@ -115,13 +115,14 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/sheet_streaming_link_headline"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/player_sheet_h2_stream_url"
         android:textAllCaps="true"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
         android:textColor="@color/player_sheet_text_main"
         app:layout_constraintBottom_toTopOf="@+id/sheet_streaming_link"
+        app:layout_constraintEnd_toEndOf="@+id/sheet_streaming_link"
         app:layout_constraintStart_toStartOf="@+id/sheet_streaming_link" />
 
     <com.google.android.material.textview.MaterialTextView
@@ -151,13 +152,14 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/sheet_metadata_headline"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/player_sheet_h2_station_metadata"
         android:textAllCaps="true"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
         android:textColor="@color/player_sheet_text_main"
         app:layout_constraintBottom_toTopOf="@+id/sheet_metadata_history"
+        app:layout_constraintEnd_toEndOf="@+id/sheet_metadata_history"
         app:layout_constraintStart_toStartOf="@+id/sheet_metadata_history" />
 
     <com.google.android.material.textview.MaterialTextView

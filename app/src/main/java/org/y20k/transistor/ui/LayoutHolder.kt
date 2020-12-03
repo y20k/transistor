@@ -60,7 +60,9 @@ data class LayoutHolder(var rootView: View) {
     private var metadataView: TextView
     var playButtonView: ImageView
     var bufferingIndicator: ProgressBar
+    private var sheetStreamingLinkHeadline: TextView
     private var sheetStreamingLinkView: TextView
+    private var sheetMetadataHistoryHeadline: TextView
     private var sheetMetadataHistoryView: TextView
     var sheetNextMetadataView: ImageView
     var sheetPreviousMetadataView: ImageView
@@ -89,6 +91,8 @@ data class LayoutHolder(var rootView: View) {
         playButtonView = rootView.findViewById(R.id.player_play_button)
         bufferingIndicator = rootView.findViewById(R.id.player_buffering_indicator)
         sheetStreamingLinkView = rootView.findViewById(R.id.sheet_streaming_link)
+        sheetStreamingLinkHeadline = rootView.findViewById(R.id.sheet_streaming_link_headline)
+        sheetMetadataHistoryHeadline = rootView.findViewById(R.id.sheet_metadata_headline)
         sheetMetadataHistoryView = rootView.findViewById(R.id.sheet_metadata_history)
         sheetNextMetadataView = rootView.findViewById(R.id.sheet_next_metadata_button)
         sheetPreviousMetadataView = rootView.findViewById(R.id.sheet_previous_metadata_button)
@@ -165,17 +169,20 @@ data class LayoutHolder(var rootView: View) {
         sheetStreamingLinkView.text = station.getStreamUri()
 
         // update click listeners
-        sheetStreamingLinkView.setOnClickListener{
-            val clip: ClipData = ClipData.newPlainText("simple text", sheetStreamingLinkView.text)
-            val cm: ClipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            cm.setPrimaryClip(clip)
-            Toast.makeText(context, R.string.toastmessage_copied_to_clipboard, Toast.LENGTH_LONG).show()
-        }
-        sheetMetadataHistoryView.setOnClickListener {
-            val clip: ClipData = ClipData.newPlainText("simple text", sheetMetadataHistoryView.text)
-            val cm: ClipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            cm.setPrimaryClip(clip)
-            Toast.makeText(context, R.string.toastmessage_copied_to_clipboard, Toast.LENGTH_LONG).show()        }
+        sheetStreamingLinkHeadline.setOnClickListener{ copyToClipboard(context, sheetStreamingLinkView.text) }
+        sheetStreamingLinkView.setOnClickListener{ copyToClipboard(context, sheetStreamingLinkView.text) }
+        sheetMetadataHistoryHeadline.setOnClickListener { copyToClipboard(context, sheetMetadataHistoryView.text) }
+        sheetMetadataHistoryView.setOnClickListener { copyToClipboard(context, sheetMetadataHistoryView.text) }
+
+    }
+
+
+    /* Copies given string to clipboard */
+    private fun copyToClipboard(context: Context, clipString: CharSequence) {
+        val clip: ClipData = ClipData.newPlainText("simple text", clipString)
+        val cm: ClipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        cm.setPrimaryClip(clip)
+        Toast.makeText(context, R.string.toastmessage_copied_to_clipboard, Toast.LENGTH_LONG).show()
     }
 
 
