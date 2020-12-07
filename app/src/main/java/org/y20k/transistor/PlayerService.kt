@@ -479,6 +479,9 @@ class PlayerService(): MediaBrowserServiceCompat(), Player.EventListener, Metada
     /* Stop playback */
     private fun stopPlayback() {
         LogHelper.d(TAG, "Stopping Playback")
+        if (!player.isPlaying) {
+            handlePlaybackChange(PlaybackStateCompat.STATE_STOPPED)
+        }
         // pauses playback
         player.playWhenReady = false
     }
