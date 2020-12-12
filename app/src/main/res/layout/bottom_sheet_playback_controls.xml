@@ -75,17 +75,16 @@
         app:layout_constraintTop_toBottomOf="@+id/player_station_name"
         tools:text="@string/sample_text_station_metadata" />
 
-    <ImageView
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/player_play_button"
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/ic_circular_button_playback_56dp"
-        android:clickable="true"
+        app:backgroundTint="@color/player_button_background"
+        app:tint="@color/transistor_white"
+        app:maxImageSize="36dp"
         android:contentDescription="@string/descr_player_playback_button"
-        android:focusable="true"
-        android:scaleType="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/player_background"
         app:srcCompat="@drawable/ic_play_symbol_white_36dp" />
@@ -93,12 +92,9 @@
     <ProgressBar
         android:id="@+id/player_buffering_indicator"
         style="?android:attr/progressBarStyle"
-        android:layout_width="68dp"
-        android:layout_height="68dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="2dp"
-        android:indeterminateTint="@color/transistor_red_lighter"
-        android:indeterminateTintMode="src_in"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:indeterminateTint="@color/transistor_white"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/player_background" />
