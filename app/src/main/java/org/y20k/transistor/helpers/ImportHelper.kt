@@ -53,7 +53,7 @@ object ImportHelper {
                         val sourceImageUri: String = getLegacyStationImageFileUri(context, station)
                         if (sourceImageUri != Keys.LOCATION_DEFAULT_STATION_IMAGE) {
                             // create and add image and small image + get main color
-                            station.image = FileHelper.saveStationImage(context, station.uuid, sourceImageUri, Keys.SIZE_STATION_IMAGE_CARD, Keys.STATION_SMALL_IMAGE_FILE).toString()
+                            station.image = FileHelper.saveStationImage(context, station.uuid, sourceImageUri, Keys.SIZE_STATION_IMAGE_CARD, Keys.STATION_IMAGE_FILE).toString()
                             station.smallImage = FileHelper.saveStationImage(context, station.uuid, sourceImageUri, Keys.SIZE_STATION_IMAGE_MAXIMUM, Keys.STATION_IMAGE_FILE).toString()
                             station.imageColor = ImageHelper.getMainColor(context, sourceImageUri)
                             station.imageManuallySet = true

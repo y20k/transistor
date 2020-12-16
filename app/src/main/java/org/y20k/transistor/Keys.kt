@@ -166,7 +166,6 @@ object Keys {
     // file names and extensions
     const val COLLECTION_FILE: String = "collection.json"
     const val STATION_IMAGE_FILE: String = "station-image.jpg"
-    const val STATION_SMALL_IMAGE_FILE: String = "station-image-small.jpg"
     const val DEBUG_LOG_FILE: String = "log-can-be-deleted.txt"
     const val TRANSISTOR_LEGACY_STATION_FILE_EXTENSION: String = ".m3u"
 
