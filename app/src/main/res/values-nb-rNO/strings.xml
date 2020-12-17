@@ -22,7 +22,7 @@
     <string name="descr_playback_button_stop">Stopp</string>
     <string name="descr_playback_indicator">Spillende stasjon</string>
     <string name="descr_timer_icon">Tidsavbruddsindikator</string>
-    <string name="descr_player_sheet_button_minimize">Skjul stasjonsdetaljer</string>
+    <string name="descr_player_sheet_button_minimize">Skjule detaljer om kanalen</string>
     <string name="descr_player_sheet_content_copy_icon">Kopier</string>
     <string name="descr_player_sheet_p_stream_url">Strømningslenke for valgt radiostasjon</string>
     <string name="descr_list_add_new">Legg til en ny stasjon</string>
@@ -77,9 +77,9 @@
     <string name="toastmessage_long_press_playback_started">Avspilling startet (langt trykk enset)</string>
     <string name="toastmessage_long_press_change_icon">Endre stasjonsikon (langt trykk oppdaget)</string>
     <string name="toastmessage_long_press_change_name">Gi stasjon nytt navn (langt trykk oppdaget)</string>
-    <string name="toastmessage_theme_night">Veksler til \"Nattmodus\" (langt trykk oppdaget)</string>
-    <string name="toastmessage_theme_day">Veksler til \"Dagmodus\" (langt trykk oppdaget)</string>
-    <string name="toastmessage_theme_follow_system">Veksler til \"Følg systeminnstillingsmodus\" (oppdaget langt trykk)</string>
+    <string name="toastmessage_theme_night">Bytte til \'Night mode\" (langt trykk oppdaget)</string>
+    <string name="toastmessage_theme_day">Bytte til \"Dag-modus\" (langt trykk oppdaget)</string>
+    <string name="toastmessage_theme_follow_system">Veksle til å Følge Systemet innstillingsmodus\' (langt trykk oppdaget)</string>
     <string name="toastmessage_shortcut_created">Snarvei opprettet.</string>
     <string name="toastmessage_shortcut_not_created">Snarveien ble ikke opprettet. Denne enheten tillater ikke opprettelse av snarveier.</string>
     <string name="toastmessage_list_refreshed">Laster inn stasjonsliste igjen.</string>
@@ -112,7 +112,7 @@
     https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
     <string name="dialog_error_message_no_network">Koble til Internett.</string>
     <string name="dialog_find_station_hint">Navn eller strømmingsadresse</string>
-    <string name="toastmessage_updating_station">Oppdaterer stasjon…</string>
+    <string name="toastmessage_updating_station">Oppdatering-banestasjon.</string>
     <string name="toastmessage_station_not_valid">Ugyldig stasjon.</string>
     <string name="dialog_generic_details_default">Ingen detaljer tilgjengelig</string>
     <string name="pref_theme_selection_title">Programdrakt</string>
@@ -164,7 +164,7 @@
     <string name="descr_dialog_edit_place_on_home_screen_icon">Plasser på hjemmeskjerm</string>
     <string name="descr_card_station_image">Stasjonsbilde</string>
     <string name="pref_update_station_images_title">Oppdater stasjonsbilder</string>
-    <string name="toastmessage_station_duplicate">Kanal lagt til fra før.</string>
+    <string name="toastmessage_station_duplicate">Duplikat-banestasjon.</string>
     <string name="toastmessage_error_no_station_found">Kunne ikke starte avspilling. Legg til en radiostasjon først.</string>
     <string name="toastmessage_error_no_station_matches_search">Fant ingen stasjoner som samsvarer med søket ditt.</string>
     <string name="toastmessage_error_missing_storage_permission">Innvilg tilgangegn \"Les lagring\" for å åpne denne filen.</string>
@@ -176,14 +176,14 @@
     <string name="descr_expanded_player_sleep_timer_cancel_button">Avbryt vekkeur</string>
     <string name="descr_expanded_player_sleep_timer_start_button">Start vekkeur</string>
     <string name="descr_expanded_player_sleep_timer_remaining_time">Tid til vekkeur</string>
-    <string name="onboarding_app_import_running">Importerer stasjonene dine… Vent.</string>
+    <string name="onboarding_app_import_running">Importere stasjoner. Vennligst vent.</string>
     <string name="pref_update_station_images_summary">Last ned siste versjon av alle stasjonsbilder.</string>
     <string name="pref_maintenance_title">Vedlikehold</string>
     <string name="pref_general_title">Generelt</string>
     <string name="notification_playing">Spiller</string>
     <string name="notification_now_playing_channel_description">Avspillingskontroller, stasjonsnavn og bilde.</string>
-    <string name="toastmessage_updating_collection">Oppdaterer stasjonssamling.</string>
-    <string name="dialog_yes_no_negative_button_add_up_next">Legg til i \"Spilles etterpå\"</string>
+    <string name="toastmessage_updating_collection">Oppdatering samling av stasjoner.</string>
+    <string name="dialog_yes_no_negative_button_add_up_next">Legg til i \'Neste\'</string>
     <string name="toastmessage_error_download_error">Nedlastingsfeil</string>
     <string name="toastmessage_collection_update_not_necessary">Stasjonsbibliotek er oppdatert.</string>
     <string name="toastmessage_error_restart_playback_failed">Kunne ikke starte avspilling igjen.</string>
