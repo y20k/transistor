@@ -48,7 +48,7 @@ interface RenameStationListener {
         val view = inflater.inflate(R.layout.dialog_rename_station, null)
         val inputField = view.findViewById<EditText>(R.id.edit_station_input_edit_text)
 
-        // pre-fill with current track name
+        // pre-fill with current station name
         inputField.setText(stationName, TextView.BufferType.EDITABLE)
         inputField.setSelection(stationName.length)
         inputField.inputType = InputType.TYPE_CLASS_TEXT
@@ -60,7 +60,9 @@ interface RenameStationListener {
         builder.setPositiveButton(R.string.dialog_button_rename) { _, _ ->
             // hand text over to initiating activity
             inputField.text?.let {
-                renameStationListener.onRenameStationDialog(it.toString(), stationUuid, position)
+                var newStationName: String = it.toString()
+                if (newStationName.isEmpty()) newStationName = stationName
+                renameStationListener.onRenameStationDialog(newStationName, stationUuid, position)
             }
         }
 
