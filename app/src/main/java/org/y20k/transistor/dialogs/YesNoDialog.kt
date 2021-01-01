@@ -6,7 +6,7 @@
  * This file is part of
  * TRANSISTOR - Radio App for Android
  *
- * Copyright (c) 2015-20 - Y20K.org
+ * Copyright (c) 2015-21 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
  */
@@ -50,7 +50,7 @@ class YesNoDialog (private var yesNoDialogListener: YesNoDialogListener) {
         show(context, type, title, context.getString(message), yesButton, noButton, payload, payloadString)
     }
 
-    
+
     /* Construct and show dialog */
     fun show(context: Context,
              type: Int,

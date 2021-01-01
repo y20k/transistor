@@ -1,0 +1,5 @@
+# v4.0.10 - Andy Warhol
+
+**2021-01-01**
+
+- fixes a bug in the Update Stations feature, that could leave Transistor in a weired state, where only single station is playable (see also: https://github.com/y20k/transistor/issues/291)

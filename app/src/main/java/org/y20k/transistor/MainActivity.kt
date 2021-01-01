@@ -1,3 +1,17 @@
+/*
+ * MainActivity.kt
+ * Implements the MainActivity class
+ * MainActivity is the default activity that can host the player fragment and the settings fragment
+ *
+ * This file is part of
+ * TRANSISTOR - Radio App for Android
+ *
+ * Copyright (c) 2015-21 - Y20K.org
+ * Licensed under the MIT-License
+ * http://opensource.org/licenses/MIT
+ */
+
+
 package org.y20k.transistor
 
 import android.content.Context
@@ -16,6 +30,10 @@ import org.y20k.transistor.helpers.FileHelper
 import org.y20k.transistor.helpers.LogHelper
 import org.y20k.transistor.helpers.PreferencesHelper
 
+
+/*
+ * MainActivity class
+ */
 class MainActivity: AppCompatActivity() {
 
     /* Define log tag */

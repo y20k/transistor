@@ -6,7 +6,7 @@
  * This file is part of
  * TRANSISTOR - Radio App for Android
  *
- * Copyright (c) 2015-20 - Y20K.org
+ * Copyright (c) 2015-21 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
  */
@@ -176,8 +176,10 @@ object CollectionHelper {
         // all clear -> add station
         else {
             var updatedCollection: Collection = collection
+            val updatedStationList: MutableList<Station> = collection.stations.toMutableList()
             // add station
-            updatedCollection.stations.add(newStation)
+            updatedStationList.add(newStation)
+            updatedCollection.stations = updatedStationList
             // sort and save collection
             updatedCollection = sortCollection(updatedCollection)
             saveCollection(context, updatedCollection, false)

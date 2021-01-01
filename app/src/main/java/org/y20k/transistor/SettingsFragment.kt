@@ -6,7 +6,7 @@
  * This file is part of
  * TRANSISTOR - Radio App for Android
  *
- * Copyright (c) 2015-20 - Y20K.org
+ * Copyright (c) 2015-21 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
  */
@@ -211,9 +211,7 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
         if (NetworkHelper.isConnectedToNetwork(activity as Context)) {
             Toast.makeText(activity as Context, R.string.toastmessage_updating_collection, Toast.LENGTH_LONG).show()
             // update collection in player screen
-            val bundle: Bundle = bundleOf(
-                    Keys.ARG_UPDATE_COLLECTION to true
-            )
+            val bundle: Bundle = bundleOf(Keys.ARG_UPDATE_COLLECTION to true)
             this.findNavController().navigate(R.id.player_destination, bundle)
         } else {
             ErrorDialog().show(activity as Context, R.string.dialog_error_title_no_network, R.string.dialog_error_message_no_network)

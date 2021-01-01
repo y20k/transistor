@@ -6,7 +6,7 @@
  * This file is part of
  * TRANSISTOR - Radio App for Android
  *
- * Copyright (c) 2015-20 - Y20K.org
+ * Copyright (c) 2015-21 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
  */
@@ -80,6 +80,7 @@ class UpdateHelper(private val context: Context, private val updateHelperListene
     /* Updates the whole collection of stations */
     fun updateCollection() {
         PreferencesHelper.saveLastUpdateCollection(context)
+        var counter: Boolean
         collection.stations.forEach {station ->
             if (station.radioBrowserStationUuid.isNotEmpty()) {
                 // increase counter
@@ -87,11 +88,16 @@ class UpdateHelper(private val context: Context, private val updateHelperListene
                 // request download from radio browser
                 downloadFromRadioBrowser(station.radioBrowserStationUuid)
             } else if (station.remoteStationLocation.isNotEmpty()) {
-                // add playlist link to list for later download
+                // add playlist link to list for later(!) download in onRadioBrowserSearchResults
                 remoteStationLocationsList.add(station.remoteStationLocation)
             } else {
                 LogHelper.w(TAG, "Unable to update station: ${station.name}.")
             }
+        }
+        // special case: collection contained only playlist files
+        if (radioBrowserSearchCounter == 0) {
+            // direct download of playlists
+            DownloadHelper.downloadPlaylists(context, remoteStationLocationsList.toTypedArray())
         }
     }
 
