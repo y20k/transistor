@@ -30,7 +30,6 @@ import android.util.Log
 import androidx.annotation.XmlRes
 import org.xmlpull.v1.XmlPullParserException
 import org.y20k.transistor.BuildConfig
-import org.y20k.transistor.R
 import java.io.IOException
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
@@ -153,12 +152,11 @@ class PackageValidator(context: Context, @XmlRes xmlResId: Int) {
      */
     private fun logUnknownCaller(callerPackageInfo: CallerPackageInfo) {
         if (BuildConfig.DEBUG && callerPackageInfo.signature != null) {
-            val formattedLog =
-                    context.getString(
-                            R.string.allowed_caller_log,
-                            callerPackageInfo.name,
-                            callerPackageInfo.packageName,
-                            callerPackageInfo.signature)
+            val formattedLog: String = "Caller has a valid certificate, but its package doesn't match any expected package for the given certificate. To allow this caller, add the following to the allowed callers list:\n" +
+                    "<signature name=\"${callerPackageInfo.name}\" " +
+                    "package=\"${callerPackageInfo.packageName}\">\n" +
+                    "\t<key>${callerPackageInfo.signature}</key>\n" +
+                    "</signature>\n"
             Log.i(TAG, formattedLog)
         }
     }
