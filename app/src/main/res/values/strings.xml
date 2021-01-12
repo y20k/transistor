@@ -174,7 +174,7 @@
     <!-- error dialogs -->
     <string name="dialog_error_details_button_default">Show details</string>
     <string name="dialog_error_details_default">No details available</string>
-    <string name="dialog_error_details_write">Check your external storage if this station isn't a duplicate.</string>
+    <string name="dialog_error_details_write">Station possibly duplicated.</string>
     <string name="dialog_error_title_fetch_download">Download Issue</string>
     <string name="dialog_error_title_fetch_read">Read Issue</string>
     <string name="dialog_error_title_fetch_write">Write Issue</string>
