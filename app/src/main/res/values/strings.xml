@@ -116,13 +116,6 @@
     <string name="sample_text_steam_url" translatable="false">https://bytefm.cast.addradio.de/bytefm/main/mid/stream</string>
     <string name="sample_text_sleep_timer_remaining_time" translatable="false">00:00</string>
     <!-- Allowed Template -->
-    <string name="allowed_caller_log">
-        The caller has a valid certificate, but the wrong package for it.
-        To allow this caller, add the following to the allowed callers list:\n
-        <![CDATA[
-        <signature name=\"%1$s\" package=\"%2$s\">\n\t<key>%3$s</key>\n</signature>\n
-        ]]>
-    </string>
     <!-- Strings from Classic Transistor -->
     <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
     <!-- app shortcuts -->
