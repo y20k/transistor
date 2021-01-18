@@ -14,10 +14,12 @@
 
 package org.y20k.transistor
 
+import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -26,11 +28,12 @@ import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.preference.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.y20k.transistor.dialogs.ErrorDialog
 import org.y20k.transistor.dialogs.YesNoDialog
-import org.y20k.transistor.helpers.AppThemeHelper
-import org.y20k.transistor.helpers.LogHelper
-import org.y20k.transistor.helpers.NetworkHelper
+import org.y20k.transistor.helpers.*
 
 
 /*
@@ -119,6 +122,17 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
         }
 
 
+        // set up "M3U Export" preference
+        val preferenceM3uExport: Preference = Preference(activity as Context)
+        preferenceM3uExport.title = getString(R.string.pref_m3u_export_title)
+        preferenceM3uExport.setIcon(R.drawable.ic_save_24dp)
+        preferenceM3uExport.summary = getString(R.string.pref_m3u_export_summary)
+        preferenceM3uExport.setOnPreferenceClickListener {
+            openSaveM3uDialog()
+            return@setOnPreferenceClickListener true
+        }
+
+
         // set up "Report Issue" preference
         val preferenceReportIssue: Preference = Preference(context)
         preferenceReportIssue.title = getString(R.string.pref_report_issue_title)
@@ -144,6 +158,7 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
         preferenceCategoryMaintenance.title = getString(R.string.pref_maintenance_title)
         preferenceCategoryMaintenance.contains(preferenceUpdateStationImages)
         preferenceCategoryMaintenance.contains(preferenceUpdateCollection)
+        preferenceCategoryMaintenance.contains(preferenceM3uExport)
 
         val preferenceCategoryAbout: PreferenceCategory = PreferenceCategory(context)
         preferenceCategoryAbout.title = getString(R.string.pref_about_title)
@@ -157,6 +172,7 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
         screen.addPreference(preferenceCategoryMaintenance)
         screen.addPreference(preferenceUpdateStationImages)
         screen.addPreference(preferenceUpdateCollection)
+        screen.addPreference(preferenceM3uExport)
         screen.addPreference(preferenceCategoryAbout)
         screen.addPreference(preferenceAppVersion)
         screen.addPreference(preferenceReportIssue)
@@ -197,9 +213,20 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
     /* Overrides onActivityResult from Fragment */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode) {
-            // save OPML file to result file location
-//            Keys.REQUEST_SAVE_OPML -> {
-//            }
+            // save M3U file to result file location
+            Keys.REQUEST_SAVE_M3U -> {
+                if (resultCode == Activity.RESULT_OK && data != null) {
+                    val sourceUri: Uri? = FileHelper.getM3ulUri(activity as Activity)
+                    val targetUri: Uri? = data.data
+                    if (targetUri != null && sourceUri != null) {
+                        // copy file async (= fire & forget - no return value needed)
+                        CoroutineScope(Dispatchers.IO).launch { FileHelper.saveCopyOfFileSuspended(activity as Context, sourceUri, targetUri) }
+                        Toast.makeText(activity as Context, R.string.toastmessage_save_m3u, Toast.LENGTH_LONG).show()
+                    } else {
+                        LogHelper.w(TAG, "M3U export failed.")
+                    }
+                }
+            }
             // let activity handle result
             else -> super.onActivityResult(requestCode, resultCode, data)
         }
@@ -230,6 +257,23 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
             this.findNavController().navigate(R.id.player_destination, bundle)
         } else {
             ErrorDialog().show(activity as Context, R.string.dialog_error_title_no_network, R.string.dialog_error_message_no_network)
+        }
+    }
+
+
+    /* Opens up a file picker to select the save location */
+    private fun openSaveM3uDialog() {
+        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = Keys.MIME_TYPE_M3U
+            putExtra(Intent.EXTRA_TITLE, Keys.COLLECTION_M3U_FILE)
+        }
+        // file gets saved in onActivityResult
+        try {
+            startActivityForResult(intent, Keys.REQUEST_SAVE_M3U)
+        } catch (exception: Exception) {
+            LogHelper.e(TAG, "Unable to save M3U.\n$exception")
+            Toast.makeText(activity as Context, R.string.toastmessage_install_file_helper, Toast.LENGTH_LONG).show()
         }
     }
 

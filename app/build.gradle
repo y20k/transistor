@@ -11,8 +11,8 @@ android {
         applicationId 'org.y20k.transistor'
         minSdkVersion 25
         targetSdkVersion 30
-        versionCode 81
-        versionName '4.0.10'
+        versionCode 82
+        versionName '4.0.11'
         resConfigs "en", "ar", "ca", "cs","de", "el", "es", "eu", "fr", "he", "hr", "id", "in", "it", "ja", "kab", "nb-rNO", "nl", "pa", "pl", "pt", "pt-rBR", "ru", "sk", "sl", "sr", "th", "tr", "uk", "zh-rCN"
     }
 
@@ -79,8 +79,8 @@ dependencies {
 
     implementation "android.arch.work:work-runtime-ktx:1.0.1"
 
-    implementation "com.google.android.exoplayer:exoplayer:2.12.2"
-    implementation "com.google.android.exoplayer:extension-mediasession:2.12.2"
+    implementation "com.google.android.exoplayer:exoplayer:2.12.3"
+    implementation "com.google.android.exoplayer:extension-mediasession:2.12.3"
     implementation "com.google.code.gson:gson:2.8.6"
 
     implementation 'com.android.volley:volley:1.1.1'

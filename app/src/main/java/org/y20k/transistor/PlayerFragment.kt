@@ -544,6 +544,10 @@ class PlayerFragment: Fragment(), CoroutineScope,
             // handle navigation arguments
             handleNavigationArguments()
         })
+        collectionViewModel.collectionSizeLiveData.observe(this, Observer<Int> { it ->
+            // size of collection changed
+            CollectionHelper.exportCollectionM3u(activity as Context, collection)
+        })
     }
 
 

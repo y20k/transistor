@@ -196,7 +196,7 @@ object DownloadHelper {
 
 
     /* Saves collection of radio station to storage */
-    private fun saveCollection(context: Context, opmlExport: Boolean = false) {
+    private fun saveCollection(context: Context, m3uExport: Boolean = false) {
         // save collection (not async) - and store modification date
         modificationDate = CollectionHelper.saveCollection(context, collection, async = false)
     }

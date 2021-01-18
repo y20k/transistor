@@ -14,12 +14,14 @@
 
 package org.y20k.transistor.helpers
 
+import android.app.Activity
 import android.content.ContentResolver
 import android.content.Context
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.OpenableColumns
+import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -284,6 +286,19 @@ object FileHelper {
     }
 
 
+    /* Get content Uri for M3U file */
+    fun getM3ulUri(activity: Activity): Uri? {
+        var m3ulUri: Uri? = null
+        // try to get an existing M3U File
+        var m3uFile = File(activity.getExternalFilesDir(Keys.FOLDER_COLLECTION), Keys.COLLECTION_M3U_FILE)
+        if (!m3uFile.exists()) { m3uFile = File(activity.getExternalFilesDir(Keys.TRANSISTOR_LEGACY_FOLDER_COLLECTION), Keys.COLLECTION_M3U_FILE) }
+        // get Uri for existing M3U File
+        if (m3uFile.exists()) { m3ulUri = FileProvider.getUriForFile(activity, "${activity.applicationContext.packageName}.provider", m3uFile) }
+        return m3ulUri
+    }
+
+
+
     /* Suspend function: Wrapper for saveCollection */
     suspend fun saveCollectionSuspended(context: Context, collection: Collection, lastUpdate: Date) {
         return suspendCoroutine { cont ->
@@ -304,6 +319,18 @@ object FileHelper {
     suspend fun saveCopyOfFileSuspended(context: Context, originalFileUri: Uri, targetFileUri: Uri): Boolean {
         return suspendCoroutine { cont ->
             cont.resume(copyFile(context, originalFileUri, targetFileUri, deleteOriginal = true))
+        }
+    }
+
+
+    /* Suspend function: Exports collection of stations as M3U file - local backup copy */
+    suspend fun backupCollectionAsM3uSuspended(context: Context, collection: Collection) {
+        return suspendCoroutine { cont ->
+            LogHelper.v(TAG, "Backing up collection as M3U - Thread: ${Thread.currentThread().name}")
+            // create M3U string
+            val m3uString: String = CollectionHelper.createM3uString(collection)
+            // save M3U as text file
+            cont.resume(writeTextFile(context, m3uString, Keys.FOLDER_COLLECTION, Keys.COLLECTION_M3U_FILE))
         }
     }
 

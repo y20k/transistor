@@ -384,6 +384,42 @@ object CollectionHelper {
     }
 
 
+    /* Export collection of stations as M3U */
+    fun exportCollectionM3u(context: Context, collection: Collection) {
+        LogHelper.v(TAG, "Exporting collection of stations as M3U")
+        // export collection as M3U - launch = fire & forget (no return value from save collection)
+        if (collection.stations.size > 0) {
+            CoroutineScope(Dispatchers.IO).launch { FileHelper.backupCollectionAsM3uSuspended(context, collection) }
+        }
+    }
+
+
+    /* Create M3U string from collection of stations */
+    fun createM3uString(collection: Collection): String {
+        val m3uString = StringBuilder()
+        /* Extended M3U Format
+        #EXTM3U
+        #EXTINF:-1,My Cool Stream
+        http://www.site.com:8000/listen.pls
+         */
+
+        // add opening tag
+        m3uString.append("#EXTM3U\n")
+
+        // add name and stream address
+        collection.stations.forEach { station ->
+            m3uString.append("#EXTINF:-1,")
+            m3uString.append(station.name)
+            m3uString.append("\n")
+            m3uString.append(station.getStreamUri())
+            m3uString.append("\n")
+        }
+
+        return m3uString.toString()
+    }
+
+
+
     /* Sends a broadcast containing the collection as parcel */
     private fun sendCollectionBroadcast(context: Context, modificationDate: Date) {
         LogHelper.v(TAG, "Broadcasting that collection has changed.")
