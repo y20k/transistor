@@ -195,4 +195,8 @@
     <string name="pref_about_title">Über</string>
     <string name="pref_update_collection_title">Sender aktualisieren</string>
     <string name="pref_update_collection_summary">Suchen Sie nach aktualisierten Audiostreams und neuen Senderbildern.</string>
+    <string name="pref_m3u_export_title">Export M3U</string>
+    <string name="pref_m3u_export_summary">Speichert deine Radiosender in einer M3U-Playlistdatei, die in andere Player importiert werden kann.</string>
+    <string name="toastmessage_save_m3u">Radiosender als M3U speichern.</string>
+    <string name="toastmessage_install_file_helper">Bitte installiere einen Dateimanager.</string>
 </resources>
