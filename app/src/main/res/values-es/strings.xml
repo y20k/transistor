@@ -195,4 +195,8 @@
     <string name="dialog_edit_title">Editar Emisora</string>
     <string name="dialog_edit_choose_station_image">Seleccionar</string>
     <string name="fragment_settings_title">Configuración</string>
+    <string name="pref_m3u_export_summary">Guarde sus emisoras de radio en un archivo de lista de reproducción M3U para que se pueda importar a otros reproductores.</string>
+    <string name="pref_m3u_export_title">Exportar M3U</string>
+    <string name="toastmessage_save_m3u">Guardar emisora de radio como M3U.</string>
+    <string name="toastmessage_install_file_helper">Por favor instale un administrador de archivos.</string>
 </resources>
