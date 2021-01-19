@@ -404,10 +404,12 @@ object CollectionHelper {
          */
 
         // add opening tag
-        m3uString.append("#EXTM3U\n")
+        m3uString.append("#EXTM3U")
+        m3uString.append("\n")
 
         // add name and stream address
         collection.stations.forEach { station ->
+            m3uString.append("\n")
             m3uString.append("#EXTINF:-1,")
             m3uString.append(station.name)
             m3uString.append("\n")
