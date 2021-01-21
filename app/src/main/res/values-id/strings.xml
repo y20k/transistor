@@ -181,4 +181,8 @@
     <string name="pref_about_title">Tentang</string>
     <string name="pref_update_collection_title">Perbarui Stasiun</string>
     <string name="pref_update_collection_summary">Memperbarui stream audio dan gambar stasiun yang baru.</string>
+    <string name="pref_m3u_export_title">Ekspor M3U</string>
+    <string name="pref_m3u_export_summary">Simpan stasiun radio anda ke berkas daftar putar M3U yang bisa diimpor ke pemutar lain.</string>
+    <string name="toastmessage_save_m3u">Menyimpan stasiun radio sebagai M3U.</string>
+    <string name="toastmessage_install_file_helper">Silakan pasang pengelola berkas.</string>
 </resources>
