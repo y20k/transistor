@@ -181,4 +181,8 @@
     <string name="toastmessage_theme_night">Mijenjanje u „Tamni modus” (otkriven dugi pritisak)</string>
     <string name="dialog_find_station_title">Pronađi stanicu</string>
     <string name="dialog_yes_no_message_remove_station">Ukloniti ovu stanicu\?</string>
+    <string name="pref_m3u_export_title">Izvezi M3U</string>
+    <string name="pref_m3u_export_summary">Spremi radio stanice u M3U-datoteku popisa za reprodukciju, koja se može uvesti u druge uređaje za reprodukciju.</string>
+    <string name="toastmessage_save_m3u">Spremanje radio stanica kao M3U.</string>
+    <string name="toastmessage_install_file_helper">Instaliraj upravljač datoteka.</string>
 </resources>
