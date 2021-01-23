@@ -181,4 +181,8 @@
     <string name="pref_app_version_title">Versione dell\'applicazione</string>
     <string name="pref_app_version_summary">Versione</string>
     <string name="pref_about_title">Informazioni</string>
+    <string name="pref_m3u_export_title">Esporta M3U</string>
+    <string name="pref_m3u_export_summary">Salva le stazioni radio in un file M3U che potrà essere usato anche da altri lettori.</string>
+    <string name="toastmessage_save_m3u">Salvataggio delle stazioni radio in formato M3U.</string>
+    <string name="toastmessage_install_file_helper">Installare un gestore di file.</string>
 </resources>
