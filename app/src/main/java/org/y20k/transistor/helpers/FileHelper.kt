@@ -229,6 +229,7 @@ object FileHelper {
                 when {
                     // M3U: found station name
                     line.contains("#EXTINF:-1,") -> station.name = line.substring(11).trim()
+                    line.contains("#EXTINF:0,") -> station.name = line.substring(10).trim()
                     // M3U: found stream URL
                     line.startsWith("http") -> station.streamUris.add(0, line.trim())
                     // PLS: found station name
