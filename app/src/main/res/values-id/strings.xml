@@ -57,9 +57,9 @@
     <string name="descr_playback_button_play">Putar</string>
     <string name="descr_playback_indicator">Stasiun yang diputar</string>
     <string name="descr_timer_icon">Pengatur waktu tidur</string>
-    <string name="dialog_add_station_howto">Anda bisa menambahkan stream raw audio dalam format MP3, AAC dan Ogg/Opus dan juga berkas stream PLS atau M3U. Anda juga bisa menambahkan stasiun baru dengan cara mengklik tautan stream (.pls atau .m3u) di peramban web anda.</string>
+    <string name="dialog_add_station_howto">Anda bisa menambahkan stream raw audio dalam format MP3, AAC dan Ogg/Opus dan juga berkas stream PLS atau M3U. Anda juga bisa menambahkan stasiun baru dengan cara mengklik tautan stream (.pls atau .m3u) di peramban web Anda.</string>
     <string name="dialog_add_station_choose_stream_heading">Ditemukan beberapa stream</string>
-    <string name="dialog_error_details_write">Stasiun ini mungkin sudah ada, silakan periksa penyimpanan eksternal anda.</string>
+    <string name="dialog_error_details_write">Stasiun ini mungkin sudah ada, silakan periksa penyimpanan eksternal Anda.</string>
     <string name="dialog_error_message_fetch_general_hint_m3u">Info: Transistor hanya bisa memproses stream MP3, AAC dan Ogg/Opus atau tautan yang berakhir dengan ekstensi .m3u atau .pls.</string>
     <string name="dialog_error_message_fetch_download">Telah terjadi kesalahan saat memproses tautan.</string>
     <string name="dialog_error_message_fetch_read">Telah terjadi kesalahan saat memproses berkas.</string>
@@ -130,7 +130,7 @@
     <string name="toastmessage_station_not_valid">Stasiun tidak valid.</string>
     <string name="toastmessage_station_duplicate">Duplikat stasiun.</string>
     <string name="toastmessage_error_no_station_found">Tidak bisa memulai pemutaran. Silakan tambahkan stasiun radio terlebih dahulu.</string>
-    <string name="toastmessage_error_no_station_matches_search">Tidak ditemukan stasiun yang sesuai dengan pencarian anda.</string>
+    <string name="toastmessage_error_no_station_matches_search">Tidak ditemukan stasiun yang sesuai dengan pencarian Anda.</string>
     <string name="toastmessage_error_missing_storage_permission">Berikan izin \"Akses Penyimpanan\" untuk membuka berkas ini.</string>
     <string name="menu_update">Perbarui stasiun</string>
     <string name="dialog_yes_no_positive_button_vpn_download">Tetap mengunduh</string>
@@ -146,7 +146,7 @@
     <string name="dialog_yes_no_negative_button_add_up_next">Tambahkan ke \'Berikutnya\'</string>
     <string name="dialog_yes_no_message_update_station_images">Unduh dan perbarui semua gambar stasiun\?</string>
     <string name="dialog_yes_no_message_remove_station">Buang stasiun ini\?</string>
-    <string name="dialog_yes_no_message_default">Apakah anda yakin ingin melakukan hal ini\?</string>
+    <string name="dialog_yes_no_message_default">Apakah Anda yakin ingin melakukan hal ini\?</string>
     <string name="dialog_opml_import_details_default">Detail tidak tersedia</string>
     <string name="dialog_opml_import_details_button">Tampilkan detail</string>
     <string name="dialog_opml_import_button_okay">Impor</string>
@@ -169,7 +169,7 @@
     <string name="dialog_edit_update_station">Perbarui stasiun</string>
     <string name="dialog_edit_title">Sunting Stasiun</string>
     <string name="dialog_edit_choose_station_image">Pilih</string>
-    <string name="onboarding_app_import_running">Mengimpor stasiun anda. Silakan tunggu.</string>
+    <string name="onboarding_app_import_running">Mengimpor stasiun Anda. Silakan tunggu.</string>
     <string name="toastmessage_error_download_error">Gagal mengunduh</string>
     <string name="toastmessage_collection_update_not_necessary">Stasiun sudah yang terbaru.</string>
     <string name="toastmessage_updating_station_images">Memperbarui gambar stasiun.</string>
@@ -182,7 +182,7 @@
     <string name="pref_update_collection_title">Perbarui Stasiun</string>
     <string name="pref_update_collection_summary">Memperbarui stream audio dan gambar stasiun yang baru.</string>
     <string name="pref_m3u_export_title">Ekspor M3U</string>
-    <string name="pref_m3u_export_summary">Simpan stasiun radio anda ke berkas daftar putar M3U yang bisa diimpor ke pemutar lain.</string>
+    <string name="pref_m3u_export_summary">Simpan stasiun radio Anda ke berkas daftar putar M3U yang bisa diimpor ke pemutar lain.</string>
     <string name="toastmessage_save_m3u">Menyimpan stasiun radio sebagai M3U.</string>
     <string name="toastmessage_install_file_helper">Silakan pasang pengelola berkas.</string>
 </resources>
