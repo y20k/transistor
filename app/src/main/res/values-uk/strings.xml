@@ -201,4 +201,8 @@
     <string name="dialog_edit_place_on_home_screen">Розмістити на головному екрані</string>
     <string name="dialog_edit_choose_station_image">Обрати</string>
     <string name="fragment_settings_title">Налаштування</string>
+    <string name="pref_m3u_export_title">Експорт M3U</string>
+    <string name="pref_m3u_export_summary">Збережіть свої радіостанції у файлі списку відтворення M3U, який можна імпортувати в інші програвачі.</string>
+    <string name="toastmessage_save_m3u">Збереження радіостанцій у форматі M3U.</string>
+    <string name="toastmessage_install_file_helper">Будь ласка, встановіть менеджер файлів.</string>
 </resources>
