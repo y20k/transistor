@@ -13,14 +13,14 @@
     <string name="menu_rename">Перейменувати</string>
     <string name="menu_shortcut">Розмістити на домашньому екрані</string>
     <!-- descriptions -->
-    <string name="descr_app_icon">Значок програми із зображенням старого радіо</string>
+    <string name="descr_app_icon">Піктограма застосунку з зображенням старого радіо</string>
     <string name="descr_station_options_button">Налаштування</string>
     <string name="descr_station_name_example">Приклад FM</string>
     <string name="descr_station_metadata_example">Артист - Заголовок</string>
     <string name="descr_station_stream_loading">Завантаження потоку …</string>
     <!--<string name="descr_playback_button_play"></string>-->
     <!--<string name="descr_playback_button_stop"></string>-->
-    <string name="descr_playback_indicator">Відтворювальна станція</string>
+    <string name="descr_playback_indicator">Відтворювана станція</string>
     <string name="descr_timer_icon">Часовідлік сну</string>
     <!--<string name="descr_player_sheet_button_minimize"></string>-->
     <string name="descr_player_sheet_content_copy_icon">Копіювати</string>
@@ -30,7 +30,7 @@
     <!-- player -->
     <string name="player_sheet_h1_details">Подробиці</string>
     <string name="player_sheet_h2_current_session">Поточний сеанс</string>
-    <string name="player_sheet_h2_station_metadata">В даний час грає</string>
+    <string name="player_sheet_h2_station_metadata">Зараз відтворюється</string>
     <string name="player_sheet_h2_stream_url">URL потоку</string>
     <string name="player_sheet_h2_station_mime_type">Тип носія</string>
     <string name="player_sheet_h2_station_channel_count">Кількість каналів</string>
@@ -41,19 +41,19 @@
     <string name="dialog_add_station_button">Додати</string>
     <string name="dialog_add_station_input_hint">Вставити потокове посилання</string>
     <string name="dialog_add_station_message">Додати нову станцію</string>
-    <string name="dialog_add_station_howto">Ви можете додавати аудіо потоки, закодовані в MP3, AAC і Ogg / Opus, а також потоки, що містяться у файлах PLS або M3U. Крім того, ви можете додавати нові станції, натискаючи потокове посилання (.pls або .m3u) у своєму веб-браузері.</string>
+    <string name="dialog_add_station_howto">Ви можете додавати звукові потоки, закодовані в MP3, AAC і Ogg/Opus, а також потоки, що містяться у файлах PLS або M3U. Крім того, ви можете додавати нові станції, натискаючи потокове посилання (.pls або .m3u) у своєму переглядачі мережі.</string>
     <string name="dialog_delete_station_message">Видалити станцію</string>
     <string name="dialog_button_delete">Видалити</string>
     <string name="dialog_generic_button_okay">Гаразд</string>
     <string name="dialog_rename_station_input_hint">Ввести нову назву</string>
     <string name="dialog_rename_station_message">Перейменувати станцію</string>
     <string name="dialog_button_rename">Перейменувати</string>
-    <string name="dialog_add_station_choose_stream_heading">Знайдено декілька потоків</string>
+    <string name="dialog_add_station_choose_stream_heading">Знайдено кілька потоків</string>
     <string name="dialog_add_station_choose_stream_message">Будь ласка, виберіть потік</string>
     <string name="dialog_add_station_choose_stream_button">Вибрати</string>
     <!-- error dialogs -->
     <string name="dialog_error_title_default">Помилка</string>
-    <string name="dialog_error_message_default">Трапилась помилка</string>
+    <string name="dialog_error_message_default">Сталась помилка</string>
     <string name="dialog_error_details_button_default">Показати подробиці</string>
     <string name="dialog_error_details_default">Подробиці відсутні</string>
     <string name="dialog_error_details_write">Ця станція, ймовірно, є дубльованою, або ви можете перевірити зовнішню пам\'ять.</string>
@@ -61,7 +61,7 @@
     <string name="dialog_error_title_fetch_read">Проблема під час читання</string>
     <string name="dialog_error_title_fetch_write">Проблема під час запису</string>
     <string name="dialog_error_message_fetch_general_external_storage">Зовнішнє сховище:</string>
-    <string name="dialog_error_message_fetch_general_hint_m3u">Підказка: транзистор може обробляти тільки потоки, які закодовані в MP3, AAC і Ogg/Opus, або посилання, що закінчуються .m3u або .pls.</string>
+    <string name="dialog_error_message_fetch_general_hint_m3u">Підказка: Transistor може обробляти лише закодовані в MP3, AAC і Ogg/Opus потоки, або посилання, що закінчуються на .m3u або .pls.</string>
     <string name="dialog_error_message_fetch_general_playlist_type">Тип носія файлу:</string>
     <string name="dialog_error_message_fetch_general_stream_type">MIME тип потоку:</string>
     <string name="dialog_error_message_fetch_general_file_content">Вміст віддаленого файлу:</string>
@@ -83,37 +83,37 @@
     <string name="toastmessage_shortcut_created">Посилання створено.</string>
     <string name="toastmessage_shortcut_not_created">Ярлик не створено. Цей пристрій не дозволяє створювати ярлики.</string>
     <string name="toastmessage_list_refreshed">Перезавантаження списку станцій.</string>
-    <string name="toastmessage_copied_to_clipboard">Потокове посилання скопійовано до буферу обміну.</string>
-    <string name="toastmessage_station_copied">Станцію скопійовано до буферу обміну.</string>
-    <string name="toastmessage_stream_may_not_work">"Виявлено аудіо формат, який не підтримується.  Відтворення потоку може працювати не коректно."</string>
+    <string name="toastmessage_copied_to_clipboard">Потокове посилання скопійовано до буфера обміну.</string>
+    <string name="toastmessage_station_copied">Станцію скопійовано до буфера обміну.</string>
+    <string name="toastmessage_stream_may_not_work">Виявлено не підтримуваний звуковий формат. Відтворення потоку може працювати не коректно.</string>
     <string name="toastmessage_timer_activated">Таймер сну увімкнуто.</string>
     <string name="toastmessage_timer_cancelled">Таймер сну вимкнено.</string>
     <string name="toastmessage_timer_duration_increased">Тривалість збільшено.</string>
-    <string name="toastalert_unable_to_connect">Неможливо підключитися. Пристрій не має з\'єднання з Інтернетом, або потік може бути застарілим.</string>
+    <string name="toastalert_unable_to_connect">Неможливо під\'єднатися. Пристрій не має з\'єднання з Інтернетом або потік може бути застарілим.</string>
     <string name="toastalert_rename_unsuccessful">Не вдалося перейменувати станцію. Будь ласка, оберіть іншу назву.</string>
     <string name="toastalert_delete_successful">Станція була вилучена.</string>
     <string name="toastalert_no_external_storage">Не вдалося отримати доступ до зовнішнього сховища.</string>
-    <string name="toastalert_no_image_picker">No image picker available. Consider installing a Gallery application.</string>
-    <string name="toastalert_headphones_unplugged">Навушники відключені. Відтворення призупинено.</string>
+    <string name="toastalert_no_image_picker">Немає доступного застосунку вибору зображень. Спробуйте встановити застосунок Галерея.</string>
+    <string name="toastalert_headphones_unplugged">Навушники від\'єднано. Відтворення зупинено.</string>
     <string name="toastalert_permission_denied">Доступ не надано:</string>
     <string name="toastalert_station_not_found">Не вдалося знайти станцію.</string>
-    <string name="snackbar_request_storage_access">Transistor потребує доступу для читання даних зі зовнішнього сховища.</string>
+    <string name="snackbar_request_storage_access">Transistor потребує доступу для читання даних із зовнішнього сховища.</string>
     <string name="snackbar_message_timer_set">Таймер сну встановлено на</string>
     <!-- notification -->
-    <string name="notification_play">Грати</string>
-    <string name="notification_stop">Призупинити</string>
-    <string name="notification_channel_playback_name">Елементи управління відтворенням</string>
-    <string name="notification_channel_playback_description">Елементи управління відтворенням, логотип станції та інформація про програвання.</string>
+    <string name="notification_play">Відтворити</string>
+    <string name="notification_stop">Зупинити</string>
+    <string name="notification_channel_playback_name">Елементи керування відтворенням</string>
+    <string name="notification_channel_playback_description">Елементи керування відтворенням, логотип станції та дані відтворення.</string>
     <!-- onboarding -->
-    <string name="onboarding_app_description">Радіо-додаток</string>
+    <string name="onboarding_app_description">Застосунок радіо</string>
     <string name="onboarding_app_get_started">Розпочати</string>
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7
     https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
     <string name="toastmessage_theme_night">Перехід у нічний режим (виявлено довге натискання)</string>
-    <string name="toastmessage_theme_day">Перехід у режим дня (виявлено довге натискання)</string>
+    <string name="toastmessage_theme_day">Перехід у денний режим (виявлено довге натискання)</string>
     <string name="toastmessage_theme_follow_system">Перехід до режиму налаштувань системи (виявлено довге натискання)</string>
-    <string name="descr_playback_button_play">Відтворення</string>
+    <string name="descr_playback_button_play">Відтворити</string>
     <string name="descr_playback_button_stop">Зупинити</string>
     <string name="descr_player_sheet_button_minimize">Приховати відомості про станцію</string>
     <string name="toastmessage_sleep_timer_unable_to_start">Будь ласка, спочатку почніть відтворення.</string>
@@ -122,7 +122,7 @@
     <string name="descr_player_playback_button">Відтворення/Зупинка</string>
     <string name="descr_player_station_image">Зображення станції</string>
     <string name="descr_expanded_player_sleep_timer_start_button">Запустити відлік сну</string>
-    <string name="descr_expanded_player_sleep_timer_remaining_time">Час, що залишився на відліці сну</string>
+    <string name="descr_expanded_player_sleep_timer_remaining_time">Час до сну</string>
     <string name="descr_expanded_player_sleep_timer_cancel_button">Скасувати відлік сну</string>
     <string name="descr_dialog_edit_update_icon">Оновити</string>
     <string name="descr_dialog_edit_station_image">Зображення станції</string>
@@ -135,13 +135,13 @@
     <string name="descr_card_settings_button">Налаштування</string>
     <string name="descr_card_playback_indicator">Перебіг відтворення</string>
     <string name="pref_update_station_images_title">Оновити зображення станцій</string>
-    <string name="pref_update_station_images_summary">Завантажити останню версію всіх зображень станцій.</string>
+    <string name="pref_update_station_images_summary">Завантажити найновіші версії всіх зображень станцій.</string>
     <string name="pref_update_collection_title">Оновити станції</string>
     <string name="pref_update_collection_summary">Шукайте оновлені аудіопотоки та нові зображення станцій.</string>
     <string name="pref_theme_selection_title">Тема застосунку</string>
     <string name="pref_theme_selection_summary">Поточна тема:</string>
     <string name="pref_theme_selection_mode_light">Світлий режим</string>
-    <string name="pref_theme_selection_mode_device_default">Усталено</string>
+    <string name="pref_theme_selection_mode_device_default">Тема пристрою</string>
     <string name="pref_theme_selection_mode_dark">Темний режим</string>
     <string name="pref_report_issue_title">Повідомити про помилку</string>
     <string name="pref_report_issue_summary">Повідомте про помилки та запропонуйте вдосконалення на GitHub.</string>
@@ -154,8 +154,8 @@
     <string name="notification_skip_to_next">Наступна</string>
     <string name="notification_skip_to_previous">Попередня</string>
     <string name="notification_playing">Відтворюється</string>
-    <string name="notification_now_playing_channel_description">Керунки відтворенням, назва станції та зображення.</string>
-    <string name="notification_now_playing_channel_name">Керунки відтворенням</string>
+    <string name="notification_now_playing_channel_description">Елементи керування відтворенням, назва станції та зображення.</string>
+    <string name="notification_now_playing_channel_name">Елементи керування відтворенням</string>
     <string name="station_list_button_add_new_station">Додати нову станцію</string>
     <string name="toastmessage_updating_station_images">Оновлення зображень станції.</string>
     <string name="toastmessage_updating_station">Оновлення станції.</string>
@@ -165,7 +165,7 @@
     <string name="toastmessage_error_restart_playback_failed">Неможливо перезапустити відтворення.</string>
     <string name="toastmessage_error_no_station_found">Не вдається розпочати відтворення. Спочатку додайте радіостанцію.</string>
     <string name="toastmessage_error_no_station_matches_search">Не вдається знайти станцію, яка відповідає вашому пошуку.</string>
-    <string name="toastmessage_error_missing_storage_permission">Надайте дозвіл на читання сховища для відкриття цього файлу.</string>
+    <string name="toastmessage_error_missing_storage_permission">Надайте доступ до сховища для відкриття цього файлу.</string>
     <string name="toastmessage_error_download_error">Помилка завантаження</string>
     <string name="toastmessage_collection_update_not_necessary">Набір станцій найновіший.</string>
     <string name="menu_update">Оновити станцію</string>
@@ -181,7 +181,7 @@
     <string name="dialog_yes_no_negative_button_default">Ні</string>
     <string name="dialog_yes_no_negative_button_cancel">Скасувати</string>
     <string name="dialog_yes_no_negative_button_add_up_next">Додати до \"Наступного\"</string>
-    <string name="dialog_yes_no_message_update_station_images">Завантажити останню версію всіх зображень станцій\?</string>
+    <string name="dialog_yes_no_message_update_station_images">Завантажити найновіші версії всіх зображень станцій\?</string>
     <string name="dialog_yes_no_message_update_collection">Шукати зміни\?</string>
     <string name="dialog_yes_no_message_remove_station">Видалити цю станцію\?</string>
     <string name="dialog_yes_no_message_default">Ви справді хочете це зробити\?</string>
@@ -191,13 +191,13 @@
     <string name="dialog_generic_details_default">Подробиці недоступні</string>
     <string name="dialog_generic_details_button">Показати подробиці</string>
     <string name="dialog_find_station_title">Знайти станцію</string>
-    <string name="dialog_find_station_no_results">Нема підсумків.</string>
+    <string name="dialog_find_station_no_results">Нічого не знайдено.</string>
     <string name="dialog_find_station_hint">Назва або адреса потоку</string>
     <string name="dialog_find_station_button_add">Додати</string>
     <string name="dialog_error_title_no_network">Безмережно</string>
-    <string name="dialog_error_message_no_network">Підключитися до Інтернету.</string>
+    <string name="dialog_error_message_no_network">Під\'єднатися до Інтернету.</string>
     <string name="dialog_edit_update_station">Оновити станцію</string>
-    <string name="dialog_edit_title">Правити станцію</string>
+    <string name="dialog_edit_title">Редагувати станцію</string>
     <string name="dialog_edit_place_on_home_screen">Розмістити на головному екрані</string>
     <string name="dialog_edit_choose_station_image">Обрати</string>
     <string name="fragment_settings_title">Налаштування</string>
