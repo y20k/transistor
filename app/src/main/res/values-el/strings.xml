@@ -35,10 +35,10 @@
     <string name="player_sheet_h2_station_mime_type">Μορφή MIME</string>
     <string name="player_sheet_h2_station_channel_count">Καταμέτρηση καναλιών</string>
     <string name="player_sheet_h2_station_sample_rate">Ρυθμός δειγματοληψίας</string>
-    <string name="player_sheet_h2_station_bitrate">Ρυθμός μπιτιών</string>
+    <string name="player_sheet_h2_station_bitrate">Ρυθμός bit</string>
     <!-- dialogs -->
     <string name="dialog_generic_button_okay">Εντάξει</string>
-    <string name="dialog_generic_button_cancel">Ακύρωση</string>
+    <string name="dialog_generic_button_cancel">Άκυρο</string>
     <string name="dialog_add_station_button">Προσθήκη</string>
     <string name="dialog_add_station_input_hint">Επικόλληση του δεσμού της ροής</string>
     <string name="dialog_add_station_message">Προσθήκη νέου σταθμού</string>
