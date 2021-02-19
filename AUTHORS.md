@@ -23,6 +23,8 @@ Czech version: [Paper Mountain Studio ](https://github.com/PaperMountainStudio) 
 
 Dutch version: [hypothermic](https://github.com/hypothermic) | [weblate version history](https://hosted.weblate.org/changes/?lang=nl&project=transistor)
 
+Esperanto version: [Jakub Fabijan](https://hosted.weblate.org/user/JakubFabijan/) | [weblate version history](https://hosted.weblate.org/changes/?lang=eo&project=transistor)
+
 French version: [M2ck](https://github.com/M2ck), [ButterflyOfFire](https://github.com/BoFFire) | [weblate version history](https://hosted.weblate.org/changes/?lang=fr&project=transistor)
 
 German version: [y20k](https://github.com/y20k) | [weblate version history](https://hosted.weblate.org/changes/?lang=de&project=transistor)

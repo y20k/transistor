@@ -114,7 +114,7 @@
 
         <!-- Player Service -->
         <service
-            android:name=".PlayerService"
+            android:name=".playback.PlayerService"
             android:exported="true"
             android:stopWithTask="false"
             tools:ignore="ExportedService">

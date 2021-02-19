@@ -14,132 +14,126 @@
 
 package org.y20k.transistor.helpers
 
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
-import android.os.Build
+import android.graphics.Bitmap
+import android.net.Uri
 import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.MediaSessionCompat
-import android.support.v4.media.session.PlaybackStateCompat
-import androidx.annotation.RequiresApi
-import androidx.core.app.NotificationCompat
-import androidx.media.session.MediaButtonReceiver
+import com.google.android.exoplayer2.DefaultControlDispatcher
+import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.ui.PlayerNotificationManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.y20k.transistor.Keys
-import org.y20k.transistor.PlayerService
 import org.y20k.transistor.R
-import org.y20k.transistor.core.Station
-import org.y20k.transistor.extensions.isFastForwardEnabled
-import org.y20k.transistor.extensions.isPlayEnabled
-import org.y20k.transistor.extensions.isPlaying
-import org.y20k.transistor.extensions.isRewindEnabled
 
 
 /*
  * NotificationHelper class
+ * Credit: https://github.com/android/uamp/blob/5bae9316b60ba298b6080de1fcad53f6f74eb0bf/common/src/main/java/com/example/android/uamp/media/UampNotificationManager.kt
  */
-class NotificationHelper(private val playerService: PlayerService) {
+class NotificationHelper(private val context: Context, sessionToken: MediaSessionCompat.Token, notificationListener: PlayerNotificationManager.NotificationListener) {
 
     /* Define log tag */
     private val TAG: String = LogHelper.makeLogTag(NotificationHelper::class.java)
 
 
     /* Main class variables */
-    private val notificationManager: NotificationManager = playerService.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    private val serviceJob = SupervisorJob()
+    private val serviceScope = CoroutineScope(Main + serviceJob)
+    private val notificationManager: PlayerNotificationManager
 
 
-    /* Creates notification */
-    fun buildNotification(sessionToken: MediaSessionCompat.Token, station: Station, metadataString: String): Notification {
-        if (shouldCreateNowPlayingChannel()) {
-            createNowPlayingChannel()
+    /* Constructor */
+    init {
+        val mediaController = MediaControllerCompat(context, sessionToken)
+        notificationManager = PlayerNotificationManager.createWithNotificationChannel(
+                context,
+                Keys.NOW_PLAYING_NOTIFICATION_CHANNEL_ID,
+                R.string.notification_now_playing_channel_name,
+                R.string.notification_now_playing_channel_description,
+                Keys.NOW_PLAYING_NOTIFICATION_ID,
+                DescriptionAdapter(mediaController),
+                notificationListener
+        ).apply {
+            // note: notification icons are customized in values.xml
+            setMediaSessionToken(sessionToken)
+            setSmallIcon(R.drawable.ic_notification_app_icon_white_24dp)
+            setUsePlayPauseActions(true)
+            setControlDispatcher(DefaultControlDispatcher(0L, 0L)) // hide fastforward and reweind
+            setUseStopAction(false) // set true to display the dismiss button
+            setUsePreviousAction(false)
+            setUsePreviousActionInCompactView(false)
+            setUseNextAction(false)
+            setUseNextActionInCompactView(false)
+            setUseChronometer(true)
         }
-
-        val controller = MediaControllerCompat(playerService, sessionToken)
-        val playbackState = controller.playbackState
-
-        val builder = NotificationCompat.Builder(playerService, Keys.NOTIFICATION_NOW_PLAYING_CHANNEL)
-
-        // add actions for rewind, play/pause, fast forward, based on what's enabled
-        var playPauseIndex = 0
-        if (playbackState.isRewindEnabled) {
-            builder.addAction(rewindAction)
-            ++playPauseIndex
-        }
-        if (playbackState.isPlaying) {
-            builder.addAction(pauseAction)
-        } else if (playbackState.isPlayEnabled) {
-            builder.addAction(playAction)
-        }
-        if (playbackState.isFastForwardEnabled) {
-            builder.addAction(fastForwardAction)
-        }
-
-        val metadata: String
-        if (playbackState.isPlaying && metadataString.isNotEmpty()) {
-            metadata = metadataString
-        } else {
-            metadata = station.name
-        }
-
-        val mediaStyle = androidx.media.app.NotificationCompat.MediaStyle()
-                .setCancelButtonIntent(stopPendingIntent)
-                .setMediaSession(sessionToken)
-                .setShowActionsInCompactView(playPauseIndex)
-                .setShowCancelButton(true)
-
-        return builder.setCategory(NotificationCompat.CATEGORY_TRANSPORT)
-                .setContentIntent(controller.sessionActivity) // todo check if sessionActivity is correct
-                .setContentTitle(station.name)
-                .setContentText(metadata)
-                .setDeleteIntent(stopPendingIntent)
-                .setLargeIcon(ImageHelper.getScaledStationImage(playerService, station.image, Keys.SIZE_COVER_NOTIFICATION_LARGE_ICON))
-                .setSmallIcon(R.drawable.ic_notification_app_icon_white_24dp)
-                .setStyle(mediaStyle)
-                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                .build()
     }
 
 
-    /* Checks if notification channel should be created */
-    private fun shouldCreateNowPlayingChannel() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && !nowPlayingChannelExists()
+    /* Hides notification via notification manager */
+    fun hideNotification() {
+        notificationManager.setPlayer(null)
+    }
 
 
-    /* Checks if notification channel exists */
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun nowPlayingChannelExists() = notificationManager.getNotificationChannel(Keys.NOTIFICATION_NOW_PLAYING_CHANNEL) != null
+    /* Displays notification via notification manager */
+    fun showNotificationForPlayer(player: Player) {
+        notificationManager.setPlayer(player)
+    }
 
 
-    /* Create a notification channel */
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun createNowPlayingChannel() {
-        val notificationChannel = NotificationChannel(Keys.NOTIFICATION_NOW_PLAYING_CHANNEL,
-                playerService.getString(R.string.notification_now_playing_channel_name),
-                NotificationManager.IMPORTANCE_LOW)
-                .apply {
-                    description = playerService.getString(R.string.notification_now_playing_channel_description)
+    /* Triggers notification */
+    fun updateNotification() {
+        notificationManager.invalidate()
+    }
+
+
+    /*
+     * Inner class: Create content of notification from metaddata
+     */
+    private inner class DescriptionAdapter(private val controller: MediaControllerCompat) : PlayerNotificationManager.MediaDescriptionAdapter {
+
+        var currentIconUri: Uri? = null
+        var currentBitmap: Bitmap? = null
+
+        override fun createCurrentContentIntent(player: Player): PendingIntent? = controller.sessionActivity
+
+        override fun getCurrentContentText(player: Player) = controller.metadata.description.subtitle.toString()
+
+        override fun getCurrentContentTitle(player: Player) = controller.metadata.description.title.toString()
+
+        override fun getCurrentLargeIcon(player: Player, callback: PlayerNotificationManager.BitmapCallback): Bitmap? {
+            val iconUri: Uri? = controller.metadata.description.iconUri
+            return if (currentIconUri != iconUri || currentBitmap == null) {
+                // Cache the bitmap for the current song so that successive calls to
+                // `getCurrentLargeIcon` don't cause the bitmap to be recreated.
+                currentIconUri = iconUri
+                serviceScope.launch {
+                    currentBitmap = iconUri?.let {
+                        resolveUriAsBitmap(it)
+                    }
+                    currentBitmap?.let { callback.onBitmap(it) }
                 }
-        notificationManager.createNotificationChannel(notificationChannel)
+                null
+            } else {
+                currentBitmap
+            }
+        }
+
+        private suspend fun resolveUriAsBitmap(currentIconUri: Uri): Bitmap {
+            return withContext(IO) {
+                // Block on downloading artwork.
+                ImageHelper.getStationImage(context, currentIconUri.toString())
+            }
+        }
     }
-
-
-    /* Notification actions */
-    private val fastForwardAction = NotificationCompat.Action(
-            R.drawable.ic_notification_skip_to_next_36dp,
-            playerService.getString(R.string.notification_skip_to_next),
-            MediaButtonReceiver.buildMediaButtonPendingIntent(playerService, PlaybackStateCompat.ACTION_SKIP_TO_NEXT))
-    private val playAction = NotificationCompat.Action(
-            R.drawable.ic_notification_play_36dp,
-            playerService.getString(R.string.notification_play),
-            MediaButtonReceiver.buildMediaButtonPendingIntent(playerService, PlaybackStateCompat.ACTION_PLAY))
-    private val pauseAction = NotificationCompat.Action(
-            R.drawable.ic_notification_stop_36dp,
-            playerService.getString(R.string.notification_stop),
-            MediaButtonReceiver.buildMediaButtonPendingIntent(playerService, PlaybackStateCompat.ACTION_PAUSE))
-    private val rewindAction = NotificationCompat.Action(
-            R.drawable.ic_notification_skip_to_previous_36dp,
-            playerService.getString(R.string.notification_skip_to_previous),
-            MediaButtonReceiver.buildMediaButtonPendingIntent(playerService, PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS))
-    private val stopPendingIntent =
-            MediaButtonReceiver.buildMediaButtonPendingIntent(playerService, PlaybackStateCompat.ACTION_STOP)
-
+    /*
+    * End of inner class
+    */
 }

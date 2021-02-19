@@ -16,7 +16,9 @@ package org.y20k.transistor.helpers
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Bundle
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaDescriptionCompat
 import android.support.v4.media.MediaMetadataCompat
@@ -454,6 +456,25 @@ object CollectionHelper {
         // mediaDescriptionBuilder.setIconUri(station.image.toUri())
         return MediaBrowserCompat.MediaItem(mediaDescriptionBuilder.build(), MediaBrowserCompat.MediaItem.FLAG_PLAYABLE)
     }
+
+
+    /* Creates description for a single episode - used in MediaSessionConnector */
+    fun buildStationMediaDescription(context: Context, station: Station): MediaDescriptionCompat {
+        val coverBitmap: Bitmap = ImageHelper.getScaledStationImage(context, station.image, Keys.SIZE_COVER_LOCK_SCREEN)
+        val extras: Bundle = Bundle()
+        extras.putParcelable(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, coverBitmap)
+        extras.putParcelable(MediaMetadataCompat.METADATA_KEY_DISPLAY_ICON, coverBitmap)
+        return MediaDescriptionCompat.Builder().apply {
+            setMediaId(station.uuid)
+            setIconBitmap(coverBitmap)
+            setTitle(station.name)
+            setSubtitle(station.name) // metadata
+            //setDescription(episode.podcastName)
+            setExtras(extras)
+        }.build()
+    }
+
+
 
 
     /* Creates a fallback station - stupid hack for Android Auto compatibility :-/ */
