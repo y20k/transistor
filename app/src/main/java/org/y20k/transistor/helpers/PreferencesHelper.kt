@@ -192,7 +192,7 @@ object PreferencesHelper {
 
 
     /* Loads uuid of last played station from shared preferences */
-    fun loadLastPlayedStation(context: Context): String {
+    fun loadLastPlayedStationUuid(context: Context): String {
         val settings = PreferenceManager.getDefaultSharedPreferences(context)
         return settings.getString(Keys.PREF_PLAYER_STATE_STATION_UUID, String()) ?: String()
     }

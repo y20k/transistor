@@ -66,7 +66,7 @@ import kotlin.math.min
 /*
  * PlayerService class
  */
-class PlayerService(): MediaBrowserServiceCompat(), MetadataOutput {
+class PlayerService(): MediaBrowserServiceCompat() {
 
 
     /* Define log tag */
@@ -78,13 +78,12 @@ class PlayerService(): MediaBrowserServiceCompat(), MetadataOutput {
     private var collectionProvider: CollectionProvider = CollectionProvider()
     private var station: Station = Station()
     private var isForegroundService: Boolean = false
-    private lateinit var player: SimpleExoPlayer
     private lateinit var playerState: PlayerState
     private lateinit var metadataHistory: MutableList<String>
     private lateinit var backgroundJob: Job
     private lateinit var packageValidator: PackageValidator
-    private lateinit var mediaSession: MediaSessionCompat
-    private lateinit var mediaSessionConnector: MediaSessionConnector
+    protected lateinit var mediaSession: MediaSessionCompat
+    protected lateinit var mediaSessionConnector: MediaSessionConnector
     private lateinit var notificationHelper: NotificationHelper
     private lateinit var userAgent: String
     private lateinit var modificationDate: Date
@@ -92,6 +91,21 @@ class PlayerService(): MediaBrowserServiceCompat(), MetadataOutput {
     private lateinit var sleepTimer: CountDownTimer
     private var sleepTimerTimeRemaining: Long = 0L
     private var playbackRestartCounter: Int = 0
+
+    private val attributes = AudioAttributes.Builder()
+            .setContentType(C.CONTENT_TYPE_MUSIC)
+            .setUsage(C.USAGE_MEDIA)
+            .build()
+
+    private val player: SimpleExoPlayer by lazy {
+        SimpleExoPlayer.Builder(this).build().apply {
+            setAudioAttributes(attributes, true)
+            setHandleAudioBecomingNoisy(true)
+            addListener(playerListener)
+            addMetadataOutput(metadataOutput)
+            addAnalyticsListener(analyticsListener)
+        }
+    }
 
 
     /* Overrides onCreate from Service */
@@ -116,9 +130,6 @@ class PlayerService(): MediaBrowserServiceCompat(), MetadataOutput {
         // fetch the metadata history
         metadataHistory = PreferencesHelper.loadMetadataHistory(this)
 
-        // create player
-        createPlayer()
-
         // create a new MediaSession
         createMediaSession()
 
@@ -133,12 +144,10 @@ class PlayerService(): MediaBrowserServiceCompat(), MetadataOutput {
                 return CollectionHelper.buildStationMediaDescription(this@PlayerService, station)
             }
             override fun onSkipToPrevious(player: Player, controlDispatcher: ControlDispatcher) {
-                if (player.isPlaying) { player.pause() }
                 station = CollectionHelper.getPreviousStation(collection, station.uuid)
                 preparePlayer(true)
             }
             override fun onSkipToNext(player: Player, controlDispatcher: ControlDispatcher) {
-                if (player.isPlaying) { player.pause() }
                 station = CollectionHelper.getNextStation(collection, station.uuid)
                 preparePlayer(true)
             }
@@ -205,29 +214,9 @@ class PlayerService(): MediaBrowserServiceCompat(), MetadataOutput {
         backgroundJob.cancel()
         // release player
         player.removeAnalyticsListener(analyticsListener)
-        player.removeMetadataOutput(this)
+        player.removeListener(playerListener)
+        player.removeMetadataOutput(metadataOutput)
         player.release()
-    }
-
-
-    /* Overrides onMetadata from MetadataOutput */
-    override fun onMetadata(metadata: Metadata) {
-        for (i in 0 until metadata.length()) {
-            val entry = metadata[i]
-            // extract IceCast metadata
-            if (entry is IcyInfo) {
-                val icyInfo: IcyInfo = entry as IcyInfo
-                updateMetadata(icyInfo.title)
-            } else if (entry is IcyHeaders) {
-                val icyHeaders = entry as IcyHeaders
-                LogHelper.i(TAG, "icyHeaders:" + icyHeaders.name + " - " + icyHeaders.genre)
-            } else {
-                LogHelper.w(TAG, "Unsupported metadata received (type = ${entry.javaClass.simpleName})")
-                updateMetadata(null)
-            }
-            // TODO implement HLS metadata extraction (Id3Frame / PrivFrame)
-            // https://exoplayer.dev/doc/reference/com/google/android/exoplayer2/metadata/Metadata.Entry.html
-        }
     }
 
 
@@ -346,26 +335,6 @@ class PlayerService(): MediaBrowserServiceCompat(), MetadataOutput {
     }
 
 
-    /* Creates a simple exo player */
-    private fun createPlayer() {
-        if (!this::player.isInitialized) {
-            val audioAttributes: AudioAttributes = AudioAttributes.Builder()
-                    .setContentType(C.CONTENT_TYPE_MUSIC)
-                    .setUsage(C.USAGE_MEDIA)
-                    .build()
-            player = SimpleExoPlayer.Builder(this)
-                    .setWakeMode(C.WAKE_MODE_NETWORK)
-                    .setAudioAttributes(audioAttributes, true)
-                    .setHandleAudioBecomingNoisy(true)
-                    // player.setMediaSourceFactory() does not make sense here, since Transistor selects MediaSourceFactory based on stream type
-                    .build()
-            player.addListener(playerListener)
-            player.addMetadataOutput(this)
-            player.addAnalyticsListener(analyticsListener)
-        }
-    }
-
-
     /* Prepares player with media source created from current station */
     private fun preparePlayer(playWhenReady: Boolean) {
         // sanity check
@@ -373,6 +342,9 @@ class PlayerService(): MediaBrowserServiceCompat(), MetadataOutput {
             LogHelper.e(TAG, "Unable to start playback. No radio station has been loaded.")
             return
         }
+
+        // stop playback if necessary
+        if (player.isPlaying) { player.pause() }
 
         // build media item.
         val mediaItem: MediaItem = MediaItem.fromUri(station.getStreamUri())
@@ -569,8 +541,8 @@ class PlayerService(): MediaBrowserServiceCompat(), MetadataOutput {
             if (!playWhenReady) {
                 when (reason) {
                     Player.PLAY_WHEN_READY_CHANGE_REASON_END_OF_MEDIA_ITEM -> {
-                        // playback reached end: stop / end playback
-                        handlePlaybackChange(PlaybackStateCompat.STATE_STOPPED)
+                        // playback reached end: try to resume
+                        handlePlaybackEnded()
                     }
                     else -> {
                         // playback has been paused by user or OS: update media session and save state
@@ -581,6 +553,8 @@ class PlayerService(): MediaBrowserServiceCompat(), MetadataOutput {
                         handlePlaybackChange(PlaybackStateCompat.STATE_STOPPED)
                     }
                 }
+            } else if (playWhenReady && player.playbackState == Player.STATE_BUFFERING) {
+                handlePlaybackChange(PlaybackStateCompat.STATE_BUFFERING)
             }
         }
     }
@@ -615,6 +589,34 @@ class PlayerService(): MediaBrowserServiceCompat(), MetadataOutput {
      */
 
 
+    /*
+     * MetadataOutput: handles metadata associated with current playback time
+     */
+    private val metadataOutput = object : MetadataOutput {
+        override fun onMetadata(metadata: Metadata) {
+            for (i in 0 until metadata.length()) {
+                val entry = metadata[i]
+                // extract IceCast metadata
+                if (entry is IcyInfo) {
+                    val icyInfo: IcyInfo = entry as IcyInfo
+                    updateMetadata(icyInfo.title)
+                } else if (entry is IcyHeaders) {
+                    val icyHeaders = entry as IcyHeaders
+                    LogHelper.i(TAG, "icyHeaders:" + icyHeaders.name + " - " + icyHeaders.genre)
+                } else {
+                    LogHelper.w(TAG, "Unsupported metadata received (type = ${entry.javaClass.simpleName})")
+                    updateMetadata(null)
+                }
+                // TODO implement HLS metadata extraction (Id3Frame / PrivFrame)
+                // https://exoplayer.dev/doc/reference/com/google/android/exoplayer2/metadata/Metadata.Entry.html
+            }
+        }
+    }
+    /*
+     * End of declaration
+     */
+
+
 //    /*
 //     * MediaMetadataProvider: creates metadata for currently playing station
 //     */
@@ -639,12 +641,18 @@ class PlayerService(): MediaBrowserServiceCompat(), MetadataOutput {
                         PlaybackStateCompat.ACTION_PREPARE_FROM_SEARCH or
                         PlaybackStateCompat.ACTION_PLAY_FROM_SEARCH
 
-        override fun onPrepare(playWhenReady: Boolean) = Unit
         override fun onPrepareFromUri(uri: Uri, playWhenReady: Boolean, extras: Bundle?) = Unit
 
+        override fun onPrepare(playWhenReady: Boolean) {
+            if (station.isValid()) {
+                preparePlayer(playWhenReady)
+            } else {
+                val currentStationUuid: String = PreferencesHelper.loadLastPlayedStationUuid(this@PlayerService)
+                onPrepareFromMediaId(currentStationUuid, playWhenReady, null)
+            }
+        }
+
         override fun onPrepareFromMediaId(mediaId: String, playWhenReady: Boolean, extras: Bundle?) {
-            // stop playback if necessary
-            if (player.isPlaying) { player.pause() }
             // get station and start playback
             station = CollectionHelper.getStation(collection, mediaId ?: String())
             preparePlayer(playWhenReady)
@@ -726,8 +734,6 @@ class PlayerService(): MediaBrowserServiceCompat(), MetadataOutput {
                     return true
                 }
                 Keys.CMD_PLAY_STREAM -> {
-                    // stop playback if necessary
-                    if (player.isPlaying) { player.pause() }
                     // get station and start playback
                     val streamUri: String = extras?.getString(Keys.KEY_STREAM_URI) ?: String()
                     station = CollectionHelper.getStationWithStreamUri(collection, streamUri)
