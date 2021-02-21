@@ -302,9 +302,8 @@ class PlayerService(): MediaBrowserServiceCompat() {
         // save collection state and player state
         collection = CollectionHelper.savePlaybackState(this, collection, station, playbackState)
         updatePlayerState(station, playbackState)
-        // update media session
-        mediaSession.setPlaybackState(createPlaybackState(playbackState, 0))
-        mediaSession.isActive = playbackState != PlaybackStateCompat.STATE_STOPPED
+        // display notification (notification is hidden via CMD_DISMISS_NOTIFICATION)
+        if (player.isPlaying) notificationHelper.showNotificationForPlayer(player)
     }
 
 
@@ -392,32 +391,6 @@ class PlayerService(): MediaBrowserServiceCompat() {
                 listener,
                 httpDataSourceFactory
         )
-    }
-
-
-    /* Creates playback state - actions for playback state to be used in media session callback */
-    private fun createPlaybackState(state: Int, position: Long): PlaybackStateCompat {
-        val skipActions: Long = PlaybackStateCompat.ACTION_FAST_FORWARD or PlaybackStateCompat.ACTION_REWIND or PlaybackStateCompat.ACTION_SKIP_TO_NEXT or  PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS
-        when(state) {
-            PlaybackStateCompat.STATE_PLAYING -> {
-                return PlaybackStateCompat.Builder()
-                        .setState(PlaybackStateCompat.STATE_PLAYING, position, 1f)
-                        .setActions(PlaybackStateCompat.ACTION_STOP or PlaybackStateCompat.ACTION_PAUSE or PlaybackStateCompat.ACTION_PREPARE_FROM_MEDIA_ID or skipActions)
-                        .build()
-            }
-            PlaybackStateCompat.STATE_PAUSED -> {
-                return PlaybackStateCompat.Builder()
-                        .setState(PlaybackStateCompat.STATE_PAUSED, position, 0f)
-                        .setActions(PlaybackStateCompat.ACTION_PLAY)
-                        .build()
-            }
-            else -> {
-                return PlaybackStateCompat.Builder()
-                        .setState(PlaybackStateCompat.STATE_STOPPED, position, 0f)
-                        .setActions(PlaybackStateCompat.ACTION_PLAY)
-                        .build()
-            }
-        }
     }
 
 
@@ -740,7 +713,12 @@ class PlayerService(): MediaBrowserServiceCompat() {
                     preparePlayer(true)
                     return true
                 }
-
+                Keys.CMD_DISMISS_NOTIFICATION -> {
+                    // pause playback and hide notification
+                    player.pause()
+                    notificationHelper.hideNotification()
+                    return true
+                }
                 else -> {
                     return false
                 }
