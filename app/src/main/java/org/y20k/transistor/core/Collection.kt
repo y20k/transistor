@@ -16,7 +16,7 @@ package org.y20k.transistor.core
 import android.os.Parcelable
 import androidx.annotation.Keep
 import com.google.gson.annotations.Expose
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 import org.y20k.transistor.Keys
 import java.util.*
 

@@ -67,9 +67,9 @@ class NotificationHelper(private val context: Context, sessionToken: MediaSessio
             setUsePlayPauseActions(true)
             setControlDispatcher(Dispatcher())
             setUseStopAction(true) // set true to display the dismiss button
-            setUsePreviousAction(false)
+            setUsePreviousAction(true)
             setUsePreviousActionInCompactView(false)
-            setUseNextAction(false)
+            setUseNextAction(true) // only visible, if player is set to Player.REPEAT_MODE_ALL
             setUseNextActionInCompactView(false)
             setUseChronometer(true)
         }
@@ -101,6 +101,14 @@ class NotificationHelper(private val context: Context, sessionToken: MediaSessio
         override fun dispatchStop(player: Player, reset: Boolean): Boolean {
             // Default implementation see: https://github.com/google/ExoPlayer/blob/b1000940eaec9e1202d9abf341a48a58b728053f/library/core/src/main/java/com/google/android/exoplayer2/DefaultControlDispatcher.java#L137
             mediaController.sendCommand(Keys.CMD_DISMISS_NOTIFICATION, null, null)
+            return true
+        }
+        override fun dispatchPrevious(player: Player): Boolean {
+            mediaController.sendCommand(Keys.CMD_PREVIOUS_STATION, null, null)
+            return true
+        }
+        override fun dispatchNext(player: Player): Boolean {
+            mediaController.sendCommand(Keys.CMD_NEXT_STATION, null, null)
             return true
         }
     }
@@ -149,6 +157,6 @@ class NotificationHelper(private val context: Context, sessionToken: MediaSessio
         }
     }
     /*
-    * End of inner class
-    */
+     * End of inner class
+     */
 }

@@ -30,6 +30,7 @@ import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaDescriptionCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
+import android.view.KeyEvent
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -101,6 +102,7 @@ class PlayerService(): MediaBrowserServiceCompat() {
         SimpleExoPlayer.Builder(this).build().apply {
             setAudioAttributes(attributes, true)
             setHandleAudioBecomingNoisy(true)
+            setRepeatMode(Player.REPEAT_MODE_ALL)
             addListener(playerListener)
             addMetadataOutput(metadataOutput)
             addAnalyticsListener(analyticsListener)
@@ -136,20 +138,20 @@ class PlayerService(): MediaBrowserServiceCompat() {
         // ExoPlayer manages MediaSession
         mediaSessionConnector = MediaSessionConnector(mediaSession)
         mediaSessionConnector.setPlaybackPreparer(preparer)
-        //mediaSessionConnector.setMediaButtonEventHandler(buttonEventHandler)
+        mediaSessionConnector.setMediaButtonEventHandler(buttonEventHandler)
         //mediaSessionConnector.setMediaMetadataProvider(metadataProvider)
         mediaSessionConnector.setQueueNavigator(object : TimelineQueueNavigator(mediaSession) {
             override fun getMediaDescription(player: Player, windowIndex: Int): MediaDescriptionCompat {
                 // create media description - used in notification
-                return CollectionHelper.buildStationMediaDescription(this@PlayerService, station)
+                return CollectionHelper.buildStationMediaDescription(this@PlayerService, station, metadataHistory.last())
             }
             override fun onSkipToPrevious(player: Player, controlDispatcher: ControlDispatcher) {
-                station = CollectionHelper.getPreviousStation(collection, station.uuid)
-                preparePlayer(true)
+                LogHelper.d(TAG, "onSkipToPrevious called") // todo remove
+                skipToPreviousStation()
             }
             override fun onSkipToNext(player: Player, controlDispatcher: ControlDispatcher) {
-                station = CollectionHelper.getNextStation(collection, station.uuid)
-                preparePlayer(true)
+                LogHelper.d(TAG, "onSkipToNext called") // todo remove
+                skipToNextStation()
             }
         })
 
@@ -239,6 +241,9 @@ class PlayerService(): MediaBrowserServiceCompat() {
             metadataHistory.removeAt(0)
         }
         // update notification
+        // see: https://github.com/google/ExoPlayer/issues/5494#issuecomment-462476576
+        mediaSessionConnector.invalidateMediaSessionQueue()
+        mediaSessionConnector.invalidateMediaSessionMetadata()
         notificationHelper.updateNotification()
         // save history
         PreferencesHelper.saveMetadataHistory(this, metadataHistory)
@@ -303,7 +308,10 @@ class PlayerService(): MediaBrowserServiceCompat() {
         collection = CollectionHelper.savePlaybackState(this, collection, station, playbackState)
         updatePlayerState(station, playbackState)
         // display notification (notification is hidden via CMD_DISMISS_NOTIFICATION)
-        if (player.isPlaying) notificationHelper.showNotificationForPlayer(player)
+        if (player.isPlaying) {
+            //player.seekTo(player.bufferedPosition)
+            notificationHelper.showNotificationForPlayer(player)
+        }
     }
 
 
@@ -496,6 +504,27 @@ class PlayerService(): MediaBrowserServiceCompat() {
         PreferencesHelper.savePlayerState(this, playerState)
     }
 
+
+    /* Load next station and start playback */
+    private fun skipToNextStation() {
+        // stop current playback, if necessary
+        if (player.isPlaying) player.stop()
+        // get station start playback
+        station = CollectionHelper.getNextStation(collection, station.uuid)
+        preparer.onPrepare(true)
+    }
+
+
+    /* Load next station and start playback */
+    private fun skipToPreviousStation() {
+        // stop current playback, if necessary
+        if (player.isPlaying) player.stop()
+        // get station start playback
+        station = CollectionHelper.getPreviousStation(collection, station.uuid)
+        preparer.onPrepare(true)
+    }
+
+
     /*
      * EventListener: Listener for ExoPlayer Events
      */
@@ -582,6 +611,30 @@ class PlayerService(): MediaBrowserServiceCompat() {
                 }
                 // TODO implement HLS metadata extraction (Id3Frame / PrivFrame)
                 // https://exoplayer.dev/doc/reference/com/google/android/exoplayer2/metadata/Metadata.Entry.html
+            }
+        }
+    }
+    /*
+     * End of declaration
+     */
+
+
+    /*
+     * MediaButtonEventHandler: overrides headphone next/previous button behavior
+     */
+    private val buttonEventHandler = object : MediaSessionConnector.MediaButtonEventHandler {
+        override fun onMediaButtonEvent(player: Player, controlDispatcher: ControlDispatcher, mediaButtonEvent: Intent): Boolean {
+            val event: KeyEvent? = mediaButtonEvent.getParcelableExtra(Intent.EXTRA_KEY_EVENT)
+            when (event?.keyCode) {
+                KeyEvent.KEYCODE_MEDIA_NEXT -> {
+                    skipToNextStation()
+                    return true
+                }
+                KeyEvent.KEYCODE_MEDIA_PREVIOUS -> {
+                    skipToPreviousStation()
+                    return true
+                }
+                else -> return false
             }
         }
     }
@@ -713,6 +766,14 @@ class PlayerService(): MediaBrowserServiceCompat() {
                     preparePlayer(true)
                     return true
                 }
+                Keys.CMD_PREVIOUS_STATION -> {
+                    skipToPreviousStation()
+                    return true
+                }
+                Keys.CMD_NEXT_STATION -> {
+                    skipToNextStation()
+                    return true
+                }
                 Keys.CMD_DISMISS_NOTIFICATION -> {
                     // pause playback and hide notification
                     player.pause()
@@ -743,5 +804,8 @@ class PlayerService(): MediaBrowserServiceCompat() {
             sendBroadcast(intent)
         }
     }
+    /*
+     * End of declaration
+     */
 
 }

@@ -459,7 +459,7 @@ object CollectionHelper {
 
 
     /* Creates description for a single episode - used in MediaSessionConnector */
-    fun buildStationMediaDescription(context: Context, station: Station): MediaDescriptionCompat {
+    fun buildStationMediaDescription(context: Context, station: Station, metadata: String): MediaDescriptionCompat {
         val coverBitmap: Bitmap = ImageHelper.getScaledStationImage(context, station.image, Keys.SIZE_COVER_LOCK_SCREEN)
         val extras: Bundle = Bundle()
         extras.putParcelable(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, coverBitmap)
@@ -468,8 +468,7 @@ object CollectionHelper {
             setMediaId(station.uuid)
             setIconBitmap(coverBitmap)
             setTitle(station.name)
-            setSubtitle(station.name) // metadata
-            //setDescription(episode.podcastName)
+            setSubtitle(metadata)
             setExtras(extras)
         }.build()
     }

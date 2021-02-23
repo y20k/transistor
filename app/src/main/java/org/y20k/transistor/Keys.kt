@@ -31,8 +31,6 @@ object Keys {
     // time values
     const val UPDATE_REPEAT_INTERVAL: Long = 4L             // every 4 hours
     const val MINIMUM_TIME_BETWEEN_UPDATES: Long = 180000L  // 3 minutes in milliseconds
-    const val SKIP_BACK_TIME_SPAN: Long = 10000L            // 10 seconds in milliseconds
-    const val SKIP_FORWARD_TIME_SPAN: Long = 30000L         // 30 seconds in milliseconds
     const val SLEEP_TIMER_DURATION: Long = 900000L          // 15 minutes in  milliseconds
     const val SLEEP_TIMER_INTERVAL: Long = 1000L            // 1 second in milliseconds
 
@@ -72,6 +70,9 @@ object Keys {
     const val CMD_CANCEL_SLEEP_TIMER: String = "CANCEL_SLEEP_TIMER"
     const val CMD_PLAY_STREAM: String = "PLAY_STREAM"
     const val CMD_DISMISS_NOTIFICATION: String = "DISMISS_NOTIFICATION"
+    const val CMD_NEXT_STATION: String = "NEXT_STATION"
+    const val CMD_PREVIOUS_STATION: String = "PREVIOUS_STATION"
+
 
     // preferences
     const val PREF_RADIO_BROWSER_API: String = "RADIO_BROWSER_API"
