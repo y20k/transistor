@@ -4,3 +4,4 @@
 
 - Esperanto language version
 - updated translations
+- changed notification behavior

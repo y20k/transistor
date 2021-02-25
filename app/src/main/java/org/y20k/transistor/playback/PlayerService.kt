@@ -143,7 +143,7 @@ class PlayerService(): MediaBrowserServiceCompat() {
         mediaSessionConnector.setQueueNavigator(object : TimelineQueueNavigator(mediaSession) {
             override fun getMediaDescription(player: Player, windowIndex: Int): MediaDescriptionCompat {
                 // create media description - used in notification
-                return CollectionHelper.buildStationMediaDescription(this@PlayerService, station, metadataHistory.last())
+                 return CollectionHelper.buildStationMediaDescription(this@PlayerService, station, getCurrentMetadata())
             }
             override fun onSkipToPrevious(player: Player, controlDispatcher: ControlDispatcher) {
                 LogHelper.d(TAG, "onSkipToPrevious called") // todo remove
@@ -378,6 +378,9 @@ class PlayerService(): MediaBrowserServiceCompat() {
         // update media session connector
         mediaSessionConnector.setPlayer(player)
 
+        // reset metadata to station name
+        updateMetadata(station.name)
+
         // set playWhenReady state
         player.playWhenReady = playWhenReady
     }
@@ -487,7 +490,7 @@ class PlayerService(): MediaBrowserServiceCompat() {
             // wait for result and update collection
             collection = deferred.await()
             // special case: trigger metadata view update for stations that have no metadata
-            if (playerState.playbackState == PlaybackState.STATE_PLAYING && station.name == metadataHistory.last()) {
+            if (playerState.playbackState == PlaybackState.STATE_PLAYING && station.name == getCurrentMetadata()) {
                 station = CollectionHelper.getStation(collection, station.uuid)
                 updateMetadata(null)
             }
@@ -502,6 +505,18 @@ class PlayerService(): MediaBrowserServiceCompat() {
         }
         playerState.playbackState = playbackState
         PreferencesHelper.savePlayerState(this, playerState)
+    }
+
+
+    /* Gets the most current metadata string */
+    private fun getCurrentMetadata(): String {
+        val metadataString: String
+        if (metadataHistory.isEmpty()) {
+            metadataString = station.name
+        } else {
+            metadataString = metadataHistory.last()
+        }
+        return metadataString
     }
 
 
@@ -627,11 +642,11 @@ class PlayerService(): MediaBrowserServiceCompat() {
             val event: KeyEvent? = mediaButtonEvent.getParcelableExtra(Intent.EXTRA_KEY_EVENT)
             when (event?.keyCode) {
                 KeyEvent.KEYCODE_MEDIA_NEXT -> {
-                    skipToNextStation()
+                    if (event.action == KeyEvent.ACTION_UP) skipToNextStation()
                     return true
                 }
                 KeyEvent.KEYCODE_MEDIA_PREVIOUS -> {
-                    skipToPreviousStation()
+                    if (event.action == KeyEvent.ACTION_UP) skipToPreviousStation()
                     return true
                 }
                 else -> return false
@@ -648,7 +663,7 @@ class PlayerService(): MediaBrowserServiceCompat() {
 //     */
 //    private val metadataProvider = object : MediaSessionConnector.MediaMetadataProvider {
 //        override fun getMetadata(player: Player): MediaMetadataCompat {
-//            return CollectionHelper.buildStationMediaMetadata(this@PlayerService, station, metadataHistory.last())
+//            return CollectionHelper.buildStationMediaMetadata(this@PlayerService, station, getCurrentMetadata())
 //        }
 //    }
 //    /*
