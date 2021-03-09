@@ -172,6 +172,7 @@ class PlayerService(): MediaBrowserServiceCompat() {
     /* Overrides onStartCommand from Service */
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         super.onStartCommand(intent, flags, startId)
+        // handle start/stop requests issued via Intent - used for example by the home screen shortcuts
         if (intent != null && intent.action == Keys.ACTION_STOP) {
             player.stop()
         }
