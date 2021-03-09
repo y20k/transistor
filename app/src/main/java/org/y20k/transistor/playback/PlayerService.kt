@@ -16,6 +16,7 @@ package org.y20k.transistor.playback
 
 import android.app.Notification
 import android.app.PendingIntent
+import android.app.Service
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -168,31 +169,28 @@ class PlayerService(): MediaBrowserServiceCompat() {
     }
 
 
-//    /* Overrides onStartCommand from Service */
-//    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-//        super.onStartCommand(intent, flags, startId)
-//        if (intent != null && intent.action == Keys.ACTION_STOP) {
-//            stopPlayback()
-//        }
-//
-//        if (intent != null && intent.action == Keys.ACTION_START) {
-//            if (intent.hasExtra(Keys.EXTRA_STATION_UUID)) {
-//                val stationUuid: String = intent.getStringExtra(Keys.EXTRA_STATION_UUID) ?: String()
-//                station = CollectionHelper.getStation(collection, stationUuid)
-//            } else if(intent.hasExtra(Keys.EXTRA_STREAM_URI)) {
-//                val streamUri: String = intent.getStringExtra(Keys.EXTRA_STREAM_URI) ?: String()
-//                station = CollectionHelper.getStationWithStreamUri(collection, streamUri)
-//            } else {
-//                station = CollectionHelper.getStation(collection, playerState.stationUuid)
-//            }
-//            if (station.isValid()) {
-//                startPlayback()
-//            }
-//        }
-//
-//        MediaButtonReceiver.handleIntent(mediaSession, intent)
-//        return Service.START_NOT_STICKY
-//    }
+    /* Overrides onStartCommand from Service */
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        super.onStartCommand(intent, flags, startId)
+        if (intent != null && intent.action == Keys.ACTION_STOP) {
+            player.stop()
+        }
+        if (intent != null && intent.action == Keys.ACTION_START) {
+            if (intent.hasExtra(Keys.EXTRA_STATION_UUID)) {
+                val stationUuid: String = intent.getStringExtra(Keys.EXTRA_STATION_UUID) ?: String()
+                station = CollectionHelper.getStation(collection, stationUuid)
+            } else if(intent.hasExtra(Keys.EXTRA_STREAM_URI)) {
+                val streamUri: String = intent.getStringExtra(Keys.EXTRA_STREAM_URI) ?: String()
+                station = CollectionHelper.getStationWithStreamUri(collection, streamUri)
+            } else {
+                station = CollectionHelper.getStation(collection, playerState.stationUuid)
+            }
+            if (station.isValid()) {
+                preparePlayer(true)
+            }
+        }
+        return Service.START_NOT_STICKY
+    }
 
 
     /* Overrides onTaskRemoved from Service */
