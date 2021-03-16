@@ -199,7 +199,7 @@ class PlayerFragment: Fragment(), CoroutineScope,
     override fun onStop() {
         super.onStop()
         // (see "stay in sync with the MediaSession")
-        playerController.unregisterCallback(mediaControllerCallback)
+        if (this::playerController.isInitialized) playerController.unregisterCallback(mediaControllerCallback)
         mediaBrowser.disconnect()
         playerServiceConnected = false
     }
@@ -665,7 +665,7 @@ class PlayerFragment: Fragment(), CoroutineScope,
     private val periodicProgressUpdateRequestRunnable: Runnable = object : Runnable {
         override fun run() {
             // request current playback position
-            playerController.requestProgressUpdate(resultReceiver)
+            if (this@PlayerFragment::playerController.isInitialized) playerController.requestProgressUpdate(resultReceiver)
             // use the handler to start runnable again after specified delay
             handler.postDelayed(this, 500)
         }

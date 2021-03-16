@@ -310,6 +310,9 @@ class PlayerService(): MediaBrowserServiceCompat() {
         if (player.isPlaying) {
             //player.seekTo(player.bufferedPosition)
             notificationHelper.showNotificationForPlayer(player)
+        } else {
+            // reset metadata
+            updateMetadata(null)
         }
     }
 
