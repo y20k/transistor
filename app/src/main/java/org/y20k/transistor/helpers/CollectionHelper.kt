@@ -467,8 +467,8 @@ object CollectionHelper {
         return MediaDescriptionCompat.Builder().apply {
             setMediaId(station.uuid)
             setIconBitmap(coverBitmap)
-            setTitle(station.name)
-            setSubtitle(metadata)
+            setTitle(metadata)
+            setSubtitle(station.name)
             setExtras(extras)
         }.build()
     }

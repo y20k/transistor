@@ -430,7 +430,7 @@ object FileHelper {
 
         // check if file exists
         val file: File = File(context.getExternalFilesDir(folder), fileName)
-        if (!file.exists()) {
+        if (!file.exists() || !file.canRead()) {
             return String()
         }
         // readSuspended until last line reached

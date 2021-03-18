@@ -150,10 +150,12 @@ object DownloadHelper {
         for (i in uris.indices) {
             LogHelper.v(TAG, "DownloadManager enqueue: ${uris[i]}")
             // check if valid url and prevent double download
-            val scheme: String = uris[i].scheme ?: String()
-            if (scheme.startsWith("http") && isNotInDownloadQueue(uris[i].toString())) {
-                val fileName: String = uris[i].pathSegments.last() ?: String()
-                val request: DownloadManager.Request = DownloadManager.Request(uris[i])
+            val uri: Uri = uris[i]
+            val scheme: String = uri.scheme ?: String()
+            val pathSegments: List<String> = uri.pathSegments
+            if (scheme.startsWith("http") && isNotInDownloadQueue(uri.toString()) && pathSegments.isNotEmpty()) {
+                val fileName: String = pathSegments.last() ?: String()
+                val request: DownloadManager.Request = DownloadManager.Request(uri)
                         .setAllowedNetworkTypes(allowedNetworkTypes)
                         .setTitle(fileName)
                         .setDestinationInExternalFilesDir(context, Keys.FOLDER_TEMP, fileName)
