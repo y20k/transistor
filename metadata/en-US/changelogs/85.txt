@@ -1,0 +1,6 @@
+# v4.0.14 - Andy Warhol
+
+**2021-03-20**
+
+- small change to notification
+- fixes another rare crash
