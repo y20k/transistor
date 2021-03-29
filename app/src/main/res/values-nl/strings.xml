@@ -83,7 +83,7 @@
     <string name="toastmessage_shortcut_created">Snelkoppeling gecreëerd.</string>
     <string name="toastmessage_shortcut_not_created">Snelkoppeling niet gecreëerd omdat dit apparaat het niet ondersteunt.</string>
     <string name="toastmessage_list_refreshed">Zenderlijst aan het herladen.</string>
-    <string name="toastmessage_copied_to_clipboard">Zenderadres naar het klembord gekopieerd.</string>
+    <string name="toastmessage_copied_to_clipboard">Gekopieerd naar het klembord.</string>
     <string name="toastmessage_station_copied">Zender naar het klembord gekopieerd.</string>
     <string name="toastmessage_stream_may_not_work">Het gedetecteerde audioformaat wordt niet ondersteund. Het afspelen kan verhinderd worden.</string>
     <string name="toastmessage_timer_activated">Slaap timer geactiveerd.</string>
@@ -145,4 +145,10 @@
     <string name="dialog_find_station_button_add">Voeg toe</string>
     <string name="dialog_error_message_no_network">Verbind met het internet.</string>
     <string name="dialog_edit_choose_station_image">Kies</string>
+    <string name="toastmessage_station_not_valid">Station is ongeldig.</string>
+    <string name="toastmessage_station_duplicate">Dupliceer station.</string>
+    <string name="toastmessage_install_file_helper">Installeer een bestandsverkenner.</string>
+    <string name="toastmessage_error_restart_playback_failed">Kan afspelen niet herstarten.</string>
+    <string name="toastmessage_error_no_station_found">Kan afspelen niet starten. Voeg eerst een radiostation toe.</string>
+    <string name="toastmessage_error_no_station_matches_search">Kon geen station vinden dat aan je zoekopdracht voldoet.</string>
 </resources>
