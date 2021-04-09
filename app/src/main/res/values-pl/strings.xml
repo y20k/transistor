@@ -190,6 +190,8 @@
     <string name="toastmessage_collection_update_not_necessary">Zbiór stacji jest aktualny.</string>
     <string name="pref_update_collection_title">Aktualizacja Stacji</string>
     <string name="pref_update_collection_summary">Poszukaj zaktualizowanych strumieni audio i nowych obrazów stacji.</string>
+    <string name="pref_m3u_export_title">Eksport M3U</string>
+    <string name="pref_m3u_export_summary">Zapisz swoje stacje jako playlistę M3U, aby np. zaimportować ją w innym odtwarzaczu.</string>
     <string name="pref_report_issue_title">Zgłoś problem</string>
     <string name="pref_report_issue_summary">Zgłaszaj błędy i zaproponuj ulepszenia w usłudze GitHub.</string>
     <string name="pref_app_version_title">Wersja aplikacji</string>
