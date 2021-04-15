@@ -181,7 +181,14 @@
     <string name="pref_app_version_summary">Versie</string>
     <string name="pref_update_station_images_title">Update stationlogo\'s</string>
     <string name="pref_update_station_images_summary">Update de logo\'s van alle stations.</string>
-    <string name="descr_card_small_download_button">Downloaden</string>
+    <string name="descr_card_small_download_button">Download</string>
     <string name="descr_card_settings_button">Instellingen</string>
     <string name="descr_card_playback_indicator">Voortgang van het afspelen</string>
+    <string name="descr_expanded_player_sleep_timer_cancel_button">Annuleer slaaptimer</string>
+    <string name="descr_dialog_edit_update_icon">Update</string>
+    <string name="descr_dialog_edit_station_image">Stationslogo</string>
+    <string name="descr_dialog_edit_place_on_home_screen_icon">Plaats op homescherm</string>
+    <string name="descr_card_station_image">Stationslogo</string>
+    <string name="descr_card_starred_station">Favoriete stations</string>
+    <string name="descr_card_small_edit_button">Bewerk</string>
 </resources>
