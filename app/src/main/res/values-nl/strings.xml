@@ -24,7 +24,7 @@
     <string name="descr_timer_icon">Slaaptimer</string>
     <string name="descr_player_sheet_button_minimize">Verberg zenderinformatie</string>
     <string name="descr_player_sheet_content_copy_icon">Kopieren</string>
-    <string name="descr_player_sheet_p_stream_url">Stream-adres van gekozen station</string>
+    <string name="descr_player_sheet_p_stream_url">Streamadres van gekozen station</string>
     <string name="descr_list_add_new">Nieuw station toevoegen</string>
     <string name="descr_list_add_select_stream_dropdown">Kies een stream</string>
     <!-- player -->
@@ -40,7 +40,7 @@
     <string name="dialog_generic_button_okay">Oké</string>
     <string name="dialog_generic_button_cancel">Annuleer</string>
     <string name="dialog_add_station_button">Toevoegen</string>
-    <string name="dialog_add_station_input_hint">Plak stream-adres</string>
+    <string name="dialog_add_station_input_hint">Plak streamadres</string>
     <string name="dialog_add_station_message">Nieuw station toevoegen</string>
     <string name="dialog_add_station_howto">In de app kun je radio-streams toevoegen in MP3, AAC, Ogg/Opus formaat en als stream-bestanden (.PLS en .M3U). Ook kun je stations toevoegen door stream-bestanden in de browser te openen.</string>
     <string name="dialog_delete_station_message">Station verwijderen</string>
@@ -49,7 +49,7 @@
     <string name="dialog_rename_station_message">Station hernoemen</string>
     <string name="dialog_button_rename">Hernoemen</string>
     <string name="dialog_add_station_choose_stream_heading">Meerdere streams gevonden</string>
-    <string name="dialog_add_station_choose_stream_message">Selecteer een audio-stream</string>
+    <string name="dialog_add_station_choose_stream_message">Selecteer een audiostream</string>
     <string name="dialog_add_station_choose_stream_button">Selecteer</string>
     <!-- error dialogs -->
     <string name="dialog_error_title_default">Fout</string>
@@ -63,10 +63,10 @@
     <string name="dialog_error_message_fetch_general_external_storage">Externe opslag:</string>
     <string name="dialog_error_message_fetch_general_hint_m3u">Tip: Transistor kan alleen MP3, AAC en Ogg/Opus streams openen en bestanden die eindigen in .pls of .m3u.</string>
     <string name="dialog_error_message_fetch_general_playlist_type">Mediatype van het bestand:</string>
-    <string name="dialog_error_message_fetch_general_stream_type">MIME-type van de stream:</string>
+    <string name="dialog_error_message_fetch_general_stream_type">Mediatype van de stream:</string>
     <string name="dialog_error_message_fetch_general_file_content">Inhoud van bestand:</string>
     <string name="dialog_error_message_fetch_download">Transistor kan dit adres niet gebruiken.</string>
-    <string name="dialog_error_message_fetch_download_station_url">Streaming adres van de zender:</string>
+    <string name="dialog_error_message_fetch_download_station_url">Streamadres van de zender:</string>
     <string name="dialog_error_message_fetch_read">Transistor kan dit bestand niet gebruiken.</string>
     <string name="dialog_error_message_fetch_read_file_location">Locatie van bestand:</string>
     <string name="dialog_error_message_fetch_write">Transistor kan deze zender niet opslaan.</string>
@@ -85,7 +85,7 @@
     <string name="toastmessage_list_refreshed">Zenderlijst aan het herladen.</string>
     <string name="toastmessage_copied_to_clipboard">Gekopieerd naar het klembord.</string>
     <string name="toastmessage_station_copied">Zender naar het klembord gekopieerd.</string>
-    <string name="toastmessage_stream_may_not_work">Het gedetecteerde audioformaat wordt niet ondersteund. Het afspelen kan verhinderd worden.</string>
+    <string name="toastmessage_stream_may_not_work">Het gedetecteerde audioformaat wordt niet ondersteund. Afspelen van de stream kan verhinderd worden.</string>
     <string name="toastmessage_timer_activated">Slaap timer geactiveerd.</string>
     <string name="toastmessage_timer_cancelled">Slaap timer gedeactiveerd.</string>
     <string name="toastmessage_timer_duration_increased">Tijdsduur verlengd.</string>
