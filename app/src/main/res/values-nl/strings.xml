@@ -37,8 +37,8 @@
     <string name="player_sheet_h2_station_sample_rate">Sample snelheid</string>
     <string name="player_sheet_h2_station_bitrate">Bitrate</string>
     <!-- dialogs -->
-    <string name="dialog_generic_button_okay">OK</string>
-    <string name="dialog_generic_button_cancel">Annuleren</string>
+    <string name="dialog_generic_button_okay">Oké</string>
+    <string name="dialog_generic_button_cancel">Annuleer</string>
     <string name="dialog_add_station_button">Toevoegen</string>
     <string name="dialog_add_station_input_hint">Streaming adres plakken</string>
     <string name="dialog_add_station_message">Nieuw station toevoegen</string>
@@ -53,7 +53,7 @@
     <string name="dialog_add_station_choose_stream_button">Selecteer</string>
     <!-- error dialogs -->
     <string name="dialog_error_title_default">Fout</string>
-    <string name="dialog_error_message_default">Foutmelding</string>
+    <string name="dialog_error_message_default">Er is een fout opgetreden</string>
     <string name="dialog_error_details_button_default">Bekijk details</string>
     <string name="dialog_error_details_default">Geen details beschikbaar</string>
     <string name="dialog_error_details_write">Deze zender bestaat al of er is een opslagfout.</string>
@@ -77,9 +77,9 @@
     <string name="toastmessage_long_press_playback_started">Afspelen gestart (lange druk gedetecteerd)</string>
     <string name="toastmessage_long_press_change_icon">Zender icoon veranderen (lange druk gedetecteerd)</string>
     <string name="toastmessage_long_press_change_name">Zender hernoemen (lange druk gedetecteerd)</string>
-    <string name="toastmessage_theme_night">Nacht-modus (lang aanraken gedetecteerd)</string>
-    <string name="toastmessage_theme_day">Dag-modus (lang aanraken gedetecteerd)</string>
-    <string name="toastmessage_theme_follow_system">Automatische dag/nacht modus (lang aanraken gedetecteerd)</string>
+    <string name="toastmessage_theme_night">Wisselen naar nachtmodus (lang aanraken gedetecteerd)</string>
+    <string name="toastmessage_theme_day">Wisselen naar dagmodus (lang aanraken gedetecteerd)</string>
+    <string name="toastmessage_theme_follow_system">Wisselen naar systeemmodus (lang aanraken gedetecteerd)</string>
     <string name="toastmessage_shortcut_created">Snelkoppeling gecreëerd.</string>
     <string name="toastmessage_shortcut_not_created">Snelkoppeling niet gecreëerd omdat dit apparaat het niet ondersteunt.</string>
     <string name="toastmessage_list_refreshed">Zenderlijst aan het herladen.</string>
@@ -100,7 +100,7 @@
     <string name="snackbar_request_storage_access">Transistor heeft leesrechten nodig om gegevens van de externe opslag te lezen.</string>
     <string name="snackbar_message_timer_set">Slaap timer ingesteld op</string>
     <!-- notification -->
-    <string name="notification_play">Afspelen</string>
+    <string name="notification_play">Speel af</string>
     <string name="notification_stop">Stoppen</string>
     <string name="notification_channel_playback_name">Afspeelbediening</string>
     <string name="notification_channel_playback_description">Afspeelbediening</string>
@@ -110,39 +110,39 @@
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7
     https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
-    <string name="dialog_yes_no_positive_button_update_covers">Updaten</string>
-    <string name="dialog_yes_no_positive_button_update_collection">Updaten</string>
-    <string name="dialog_yes_no_positive_button_remove_station">Verwijderen</string>
+    <string name="dialog_yes_no_positive_button_update_covers">Update</string>
+    <string name="dialog_yes_no_positive_button_update_collection">Update</string>
+    <string name="dialog_yes_no_positive_button_remove_station">Verwijder</string>
     <string name="dialog_yes_no_positive_button_non_wifi_download">Toch downloaden</string>
-    <string name="dialog_yes_no_positive_button_delete_downloads">Alle verwijderen</string>
+    <string name="dialog_yes_no_positive_button_delete_downloads">Verwijder alle</string>
     <string name="dialog_yes_no_positive_button_default">Ja</string>
     <string name="dialog_yes_no_negative_button_default">Nee</string>
     <string name="dialog_yes_no_message_default">Wil je dit echt doen\?</string>
-    <string name="dialog_opml_import_details_default">Geen details beschikbaar</string>
-    <string name="dialog_opml_import_details_button">Details tonen</string>
-    <string name="dialog_opml_import_button_okay">Importeren</string>
+    <string name="dialog_opml_import_details_default">Er zijn geen details beschikbaar</string>
+    <string name="dialog_opml_import_details_button">Toon details</string>
+    <string name="dialog_opml_import_button_okay">Importeer</string>
     <string name="dialog_generic_details_default">Geen details beschikbaar</string>
-    <string name="dialog_generic_details_button">Details</string>
-    <string name="dialog_find_station_title">Station zoeken</string>
-    <string name="dialog_find_station_no_results">Niet gevonden.</string>
-    <string name="dialog_find_station_hint">Naam of stream-adres</string>
+    <string name="dialog_generic_details_button">Toon details</string>
+    <string name="dialog_find_station_title">Zoek station</string>
+    <string name="dialog_find_station_no_results">Geen resultaten gevonden.</string>
+    <string name="dialog_find_station_hint">Naam of streamadres</string>
     <string name="dialog_error_title_no_network">Offline</string>
-    <string name="dialog_edit_update_station">Station updaten</string>
-    <string name="dialog_edit_title">Station bewerken</string>
-    <string name="dialog_edit_place_on_home_screen">Plaats op Home scherm</string>
+    <string name="dialog_edit_update_station">Update station</string>
+    <string name="dialog_edit_title">Bewerk station</string>
+    <string name="dialog_edit_place_on_home_screen">Plaats op homescherm</string>
     <string name="fragment_settings_title">Instellingen</string>
     <string name="toastmessage_error_missing_storage_permission">Sta \"Opslag lezen\" toe om dit bestand te lezen.</string>
-    <string name="toastmessage_error_download_error">Download fout</string>
+    <string name="toastmessage_error_download_error">Downloadfout</string>
     <string name="toastmessage_collection_update_not_necessary">Verzameling van stations is up-to-date.</string>
-    <string name="menu_update">Station updaten</string>
+    <string name="menu_update">Update station</string>
     <string name="dialog_yes_no_positive_button_vpn_download">Toch downloaden</string>
-    <string name="dialog_yes_no_positive_button_add_up_next">Nu starten</string>
+    <string name="dialog_yes_no_positive_button_add_up_next">Start nu</string>
     <string name="dialog_yes_no_negative_button_cancel">Annuleer</string>
     <string name="dialog_yes_no_negative_button_add_up_next">Voeg toe aan \'Volgende\'</string>
-    <string name="dialog_yes_no_message_update_station_images">Recente versie van alle stationlogo\'s ophalen\?</string>
-    <string name="dialog_yes_no_message_update_collection">Zoeken naar veranderingen\?</string>
-    <string name="dialog_yes_no_message_remove_station">Dit station verwijderen\?</string>
-    <string name="dialog_find_station_button_add">Toevoegen</string>
+    <string name="dialog_yes_no_message_update_station_images">Download meest recente versie van alle stationlogo\'s\?</string>
+    <string name="dialog_yes_no_message_update_collection">Zoek naar veranderingen\?</string>
+    <string name="dialog_yes_no_message_remove_station">Verwijder dit station\?</string>
+    <string name="dialog_find_station_button_add">Voeg toe</string>
     <string name="dialog_error_message_no_network">Verbind met internet.</string>
     <string name="dialog_edit_choose_station_image">Kies</string>
     <string name="toastmessage_station_not_valid">Station is ongeldig.</string>
@@ -156,13 +156,13 @@
     <string name="notification_skip_to_previous">Vorige</string>
     <string name="notification_playing">Afspelen</string>
     <string name="notification_now_playing_channel_description">Afspeelknoppen, naam en logo van zender.</string>
-    <string name="notification_now_playing_channel_name">Afspeel Bediening</string>
-    <string name="station_list_button_add_new_station">Nieuw station toevoegen</string>
-    <string name="toastmessage_updating_station_images">Stationlogo\'s updaten.</string>
-    <string name="toastmessage_updating_station">Station updaten.</string>
+    <string name="notification_now_playing_channel_name">Afspeelbediening</string>
+    <string name="station_list_button_add_new_station">Voeg nieuw station toe</string>
+    <string name="toastmessage_updating_station_images">Stationlogo\'s aan het updaten.</string>
+    <string name="toastmessage_updating_station">Station aan het updaten.</string>
     <string name="toastmessage_updating_collection">Verzameling van stations updaten.</string>
-    <string name="toastmessage_save_m3u">Radiostations opslan als M3U.</string>
-    <string name="dialog_yes_no_title_default">Beslissen</string>
+    <string name="toastmessage_save_m3u">Radiostations opslaan als M3U.</string>
+    <string name="dialog_yes_no_title_default">Beslis</string>
     <string name="pref_update_collection_title">Stations bijwerken</string>
     <string name="pref_update_collection_summary">Zoek bijgewerkte audio streams en nieuwe station logo\'s.</string>
     <string name="pref_theme_selection_title">App-thema</string>
