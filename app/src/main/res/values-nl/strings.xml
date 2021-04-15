@@ -9,8 +9,8 @@
     <string name="shortcut_last_station_disabled_message">Snelkoppeling voor het afspelen van de laatste zender gedeactiveerd.</string>
     <!-- menu entries -->
     <string name="menu_icon">Verander icoon</string>
-    <string name="menu_delete">Verwijderen</string>
-    <string name="menu_rename">Hernoemen</string>
+    <string name="menu_delete">Verwijder</string>
+    <string name="menu_rename">Hernoem</string>
     <string name="menu_shortcut">Op het startscherm plaatsen</string>
     <!-- descriptions -->
     <string name="descr_app_icon">Appicoon in de vorm van een oude radio</string>
@@ -18,20 +18,20 @@
     <string name="descr_station_name_example">Voorbeeld FM</string>
     <string name="descr_station_metadata_example">Artiest - Titel</string>
     <string name="descr_station_stream_loading">Stream aan het laden…</string>
-    <string name="descr_playback_button_play">Afspelen</string>
-    <string name="descr_playback_button_stop">Stoppen</string>
+    <string name="descr_playback_button_play">Speel af</string>
+    <string name="descr_playback_button_stop">Stop</string>
     <string name="descr_playback_indicator">Zender aan het afspelen</string>
-    <string name="descr_timer_icon">Slaap timer</string>
-    <string name="descr_player_sheet_button_minimize">Verberg zender informatie</string>
+    <string name="descr_timer_icon">Slaaptimer</string>
+    <string name="descr_player_sheet_button_minimize">Verberg zenderinformatie</string>
     <string name="descr_player_sheet_content_copy_icon">Kopieer</string>
-    <string name="descr_player_sheet_p_stream_url">Stream adres van de geselecteerde zender</string>
+    <string name="descr_player_sheet_p_stream_url">Streamadres van de geselecteerde zender</string>
     <string name="descr_list_add_new">Een nieuwe zender toevoegen</string>
     <string name="descr_list_add_select_stream_dropdown">Selecteer een stream</string>
     <!-- player -->
     <string name="player_sheet_h1_details">Details</string>
     <string name="player_sheet_h2_current_session">Huidige sessie</string>
     <string name="player_sheet_h2_station_metadata">Nu aan het afspelen</string>
-    <string name="player_sheet_h2_stream_url">Stream adres</string>
+    <string name="player_sheet_h2_stream_url">Streamadres</string>
     <string name="player_sheet_h2_station_mime_type">MIME-type</string>
     <string name="player_sheet_h2_station_channel_count">Aantal kanalen</string>
     <string name="player_sheet_h2_station_sample_rate">Sample snelheid</string>
@@ -39,14 +39,14 @@
     <!-- dialogs -->
     <string name="dialog_generic_button_okay">Oké</string>
     <string name="dialog_generic_button_cancel">Annuleer</string>
-    <string name="dialog_add_station_button">Toevoegen</string>
-    <string name="dialog_add_station_input_hint">Streaming adres plakken</string>
-    <string name="dialog_add_station_message">Nieuw station toevoegen</string>
+    <string name="dialog_add_station_button">Voeg toe</string>
+    <string name="dialog_add_station_input_hint">Plak streamingadres</string>
+    <string name="dialog_add_station_message">Voeg nieuw station toe</string>
     <string name="dialog_add_station_howto">Je kunt radio streams toevoegen in MP3, AAC, Ogg/Opus formaat en ook uit PLS en M3U bestanden. Ook is het mogelijk om zenders toe te voegen door stream bestanden (.pls en .m3u) in de browser te openen.</string>
-    <string name="dialog_delete_station_message">Zender verwijderen</string>
-    <string name="dialog_button_delete">Verwijderen</string>
+    <string name="dialog_delete_station_message">Verwijder zender</string>
+    <string name="dialog_button_delete">Verwijder</string>
     <string name="dialog_rename_station_input_hint">Voer de nieuwe naam in</string>
-    <string name="dialog_rename_station_message">Zender hernoemen</string>
+    <string name="dialog_rename_station_message">Herbenoem zender</string>
     <string name="dialog_button_rename">Hernoemen</string>
     <string name="dialog_add_station_choose_stream_heading">Meerdere streams gevonden</string>
     <string name="dialog_add_station_choose_stream_message">Selecteer een audio-stream</string>
@@ -105,7 +105,7 @@
     <string name="notification_channel_playback_name">Afspeelbediening</string>
     <string name="notification_channel_playback_description">Afspeelbediening</string>
     <!-- onboarding -->
-    <string name="onboarding_app_description">Radio applicatie</string>
+    <string name="onboarding_app_description">Radioapp</string>
     <string name="onboarding_app_get_started">Begin</string>
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7
@@ -192,4 +192,6 @@
     <string name="descr_card_starred_station">Favoriete stations</string>
     <string name="descr_card_small_edit_button">Bewerk</string>
     <string name="descr_card_small_play_button">Start/Stop</string>
+    <string name="descr_player_station_image">Stationslogo</string>
+    <string name="descr_expanded_player_sleep_timer_start_button">Start slaaptimer</string>
 </resources>
