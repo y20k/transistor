@@ -32,7 +32,7 @@
     <string name="player_sheet_h2_current_session">Huidige sessie</string>
     <string name="player_sheet_h2_station_metadata">Nu aan het afspelen</string>
     <string name="player_sheet_h2_stream_url">Streamadres</string>
-    <string name="player_sheet_h2_station_mime_type">MIME-type</string>
+    <string name="player_sheet_h2_station_mime_type">Mediatype</string>
     <string name="player_sheet_h2_station_channel_count">Aantal kanalen</string>
     <string name="player_sheet_h2_station_sample_rate">Sample snelheid</string>
     <string name="player_sheet_h2_station_bitrate">Bitrate</string>
@@ -62,7 +62,7 @@
     <string name="dialog_error_title_fetch_write">Fout bij het opslaan</string>
     <string name="dialog_error_message_fetch_general_external_storage">Externe opslag:</string>
     <string name="dialog_error_message_fetch_general_hint_m3u">Tip: Transistor kan alleen MP3, AAC en Ogg/Opus streams openen en bestanden die eindigen in .pls of .m3u.</string>
-    <string name="dialog_error_message_fetch_general_playlist_type">MIME-type van het bestand:</string>
+    <string name="dialog_error_message_fetch_general_playlist_type">Mediatype van het bestand:</string>
     <string name="dialog_error_message_fetch_general_stream_type">MIME-type van de stream:</string>
     <string name="dialog_error_message_fetch_general_file_content">Inhoud van bestand:</string>
     <string name="dialog_error_message_fetch_download">Transistor kan dit adres niet gebruiken.</string>
@@ -103,7 +103,7 @@
     <string name="notification_play">Speel af</string>
     <string name="notification_stop">Stoppen</string>
     <string name="notification_channel_playback_name">Afspeelbediening</string>
-    <string name="notification_channel_playback_description">Afspeelbediening</string>
+    <string name="notification_channel_playback_description">Afspeelbediening, stationslogo en afspleelinformatie.</string>
     <!-- onboarding -->
     <string name="onboarding_app_description">Radio-app</string>
     <string name="onboarding_app_get_started">Begin nu</string>
@@ -197,4 +197,6 @@
     <string name="descr_expanded_player_sleep_timer_remaining_time">Resterende slaapstand-tijd</string>
     <string name="onboarding_app_import_running">Stations invoeren. Wacht.</string>
     <string name="descr_player_playback_button">Start/Stop</string>
+    <string name="toastmessage_sleep_timer_unable_to_start">Start a.u.b. eerst afspelen.</string>
+    <string name="dialog_button_save">Sla wijzigingen op</string>
 </resources>
