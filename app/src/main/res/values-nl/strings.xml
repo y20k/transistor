@@ -43,18 +43,18 @@
     <string name="dialog_add_station_input_hint">Plak streamadres</string>
     <string name="dialog_add_station_message">Nieuw station toevoegen</string>
     <string name="dialog_add_station_howto">In de app kun je radio-streams toevoegen in MP3, AAC, Ogg/Opus formaat en als stream-bestanden (.PLS en .M3U). Ook kun je stations toevoegen door stream-bestanden in de browser te openen.</string>
-    <string name="dialog_delete_station_message">Station verwijderen</string>
+    <string name="dialog_delete_station_message">Verwijder station</string>
     <string name="dialog_button_delete">Verwijderen</string>
     <string name="dialog_rename_station_input_hint">Voer de nieuwe naam in</string>
     <string name="dialog_rename_station_message">Station hernoemen</string>
     <string name="dialog_button_rename">Hernoemen</string>
     <string name="dialog_add_station_choose_stream_heading">Meerdere streams gevonden</string>
     <string name="dialog_add_station_choose_stream_message">Kies een audiostream</string>
-    <string name="dialog_add_station_choose_stream_button">Kiezen</string>
+    <string name="dialog_add_station_choose_stream_button">Kies</string>
     <!-- error dialogs -->
     <string name="dialog_error_title_default">Fout</string>
     <string name="dialog_error_message_default">Er is een fout opgetreden</string>
-    <string name="dialog_error_details_button_default">Details tonen</string>
+    <string name="dialog_error_details_button_default">Toon details</string>
     <string name="dialog_error_details_default">Geen details beschikbaar</string>
     <string name="dialog_error_details_write">Dit station is waarschijnlijk een duplicaat of anders moet u uw externe opslag controleren.</string>
     <string name="dialog_error_title_fetch_download">Download fout</string>
@@ -66,7 +66,7 @@
     <string name="dialog_error_message_fetch_general_stream_type">Mediatype stream:</string>
     <string name="dialog_error_message_fetch_general_file_content">Inhoud van bestand:</string>
     <string name="dialog_error_message_fetch_download">Transistor kan dit adres niet gebruiken.</string>
-    <string name="dialog_error_message_fetch_download_station_url">Stream-adres van het station:</string>
+    <string name="dialog_error_message_fetch_download_station_url">Streamadres van het station:</string>
     <string name="dialog_error_message_fetch_read">Transistor kan dit bestand niet gebruiken.</string>
     <string name="dialog_error_message_fetch_read_file_location">Bestandslocatie:</string>
     <string name="dialog_error_message_fetch_write">Transistor kan deze zender niet opslaan.</string>
@@ -194,7 +194,7 @@
     <string name="descr_card_small_play_button">Start/Stop</string>
     <string name="descr_player_station_image">Stationslogo</string>
     <string name="descr_expanded_player_sleep_timer_start_button">Slaapstand starten</string>
-    <string name="descr_expanded_player_sleep_timer_remaining_time">Resterende slaapstand-tijd</string>
+    <string name="descr_expanded_player_sleep_timer_remaining_time">Resterende slaapstandtijd</string>
     <string name="onboarding_app_import_running">Stations invoeren. Wacht.</string>
     <string name="descr_player_playback_button">Start/Stop</string>
     <string name="toastmessage_sleep_timer_unable_to_start">Start a.u.b. eerst afspelen.</string>
