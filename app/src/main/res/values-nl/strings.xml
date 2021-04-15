@@ -42,11 +42,11 @@
     <string name="dialog_add_station_button">Toevoegen</string>
     <string name="dialog_add_station_input_hint">Plak stream-adres</string>
     <string name="dialog_add_station_message">Nieuw station toevoegen</string>
-    <string name="dialog_add_station_howto">Je kunt radio streams toevoegen in MP3, AAC, Ogg/Opus formaat en ook uit PLS en M3U bestanden. Ook is het mogelijk om zenders toe te voegen door stream bestanden (.pls en .m3u) in de browser te openen.</string>
-    <string name="dialog_delete_station_message">Verwijder zender</string>
-    <string name="dialog_button_delete">Verwijder</string>
+    <string name="dialog_add_station_howto">In de app kun je radio-streams toevoegen in MP3, AAC, Ogg/Opus formaat en als stream-bestanden (.PLS en .M3U). Ook kun je stations toevoegen door stream-bestanden in de browser te openen.</string>
+    <string name="dialog_delete_station_message">Station verwijderen</string>
+    <string name="dialog_button_delete">Verwijderen</string>
     <string name="dialog_rename_station_input_hint">Voer de nieuwe naam in</string>
-    <string name="dialog_rename_station_message">Herbenoem zender</string>
+    <string name="dialog_rename_station_message">Station hernoemen</string>
     <string name="dialog_button_rename">Hernoemen</string>
     <string name="dialog_add_station_choose_stream_heading">Meerdere streams gevonden</string>
     <string name="dialog_add_station_choose_stream_message">Selecteer een audio-stream</string>
