@@ -13,7 +13,7 @@
     <string name="menu_rename">Hernoemen</string>
     <string name="menu_shortcut">Op het startscherm plaatsen</string>
     <!-- descriptions -->
-    <string name="descr_app_icon">App-icoon in de vorm van een oude radio</string>
+    <string name="descr_app_icon">Appicoon in de vorm van een oude radio</string>
     <string name="descr_station_options_button">Opties</string>
     <string name="descr_station_name_example">Voorbeeld FM</string>
     <string name="descr_station_metadata_example">Artiest - Titel</string>
@@ -179,8 +179,8 @@
     <string name="pref_delete_all_title">Verwijder downloads</string>
     <string name="pref_app_version_title">Appversie</string>
     <string name="pref_app_version_summary">Versie</string>
-    <string name="pref_update_station_images_title">Stationlogo\'s bijwerken</string>
-    <string name="pref_update_station_images_summary">Werk de logo\'s van alle stations bij.</string>
+    <string name="pref_update_station_images_title">Update stationlogo\'s</string>
+    <string name="pref_update_station_images_summary">Update de logo\'s van alle stations.</string>
     <string name="descr_card_small_download_button">Downloaden</string>
     <string name="descr_card_settings_button">Instellingen</string>
     <string name="descr_card_playback_indicator">Voortgang van het afspelen</string>
