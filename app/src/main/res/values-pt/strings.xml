@@ -81,7 +81,7 @@
     <string name="toastmessage_theme_day">A mudar para o \'Modo diurno\' (toque longo detetado)</string>
     <string name="toastmessage_theme_follow_system">A mudar para o \'Modo de seguir configuração do sistema\' (toque longo detetado)</string>
     <string name="toastmessage_shortcut_created">Atalho criado.</string>
-    <string name="toastmessage_shortcut_not_created">Atalho não criado. Este dispositivo não permite a criação de atalhos.</string>
+    <string name="toastmessage_shortcut_not_created">Atalho não criado. Este aparelho não permite a criação de atalhos.</string>
     <string name="toastmessage_list_refreshed">A recarregar a lista de estações.</string>
     <string name="toastmessage_copied_to_clipboard">Link de transmissão copiado.</string>
     <string name="toastmessage_station_copied">Estação copiada.</string>
@@ -89,7 +89,7 @@
     <string name="toastmessage_timer_activated">Temporizador de desligar ativado.</string>
     <string name="toastmessage_timer_cancelled">Temporizador de desligar cancelado.</string>
     <string name="toastmessage_timer_duration_increased">Duração aumentada.</string>
-    <string name="toastalert_unable_to_connect">Não foi possível conectar. O dispositivo não está conectado à Internet ou a transmissão pode estar desatualizada.</string>
+    <string name="toastalert_unable_to_connect">Não foi possível conectar. O aparelho não está conectado à Internet ou a transmissão pode estar desatualizada.</string>
     <string name="toastalert_rename_unsuccessful">Não foi possível alterar o nome da estação. Por favor escolha um nome diferente.</string>
     <string name="toastalert_delete_successful">A estação foi removida.</string>
     <string name="toastalert_no_external_storage">Não foi possível aceder ao armazenamento externo.</string>
