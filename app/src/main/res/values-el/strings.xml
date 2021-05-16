@@ -115,4 +115,5 @@
     <string name="dialog_error_title_no_network">Εκτός σύνδεσης</string>
     <string name="dialog_edit_choose_station_image">Επιλογή</string>
     <string name="fragment_settings_title">Ρυθμίσεις</string>
+    <string name="dialog_edit_place_on_home_screen">Τοποθετήστε στην αρχική οθόνη</string>
 </resources>
