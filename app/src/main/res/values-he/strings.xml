@@ -181,4 +181,8 @@
     <string name="dialog_edit_choose_station_image">בחר</string>
     <string name="fragment_settings_title">הגדרות</string>
     <string name="app_name">Transistor</string>
+    <string name="pref_m3u_export_title">ייצוא M3U</string>
+    <string name="pref_m3u_export_summary">ניתן לשמור את תחנות הרדיו שלך לקובץ רשימת נגינה מסוג M3U כדי שניתן יהיה לייבא אותן לנגנים אחרים.</string>
+    <string name="toastmessage_save_m3u">תחנות הרדיו נשמרות כ־M3U.</string>
+    <string name="toastmessage_install_file_helper">נא להתקין מנהל קבצים.</string>
 </resources>
