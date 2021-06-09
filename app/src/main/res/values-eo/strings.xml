@@ -124,4 +124,8 @@
     <string name="dialog_yes_no_positive_button_vpn_download">Elŝuti malgraŭ tio</string>
     <string name="dialog_yes_no_positive_button_update_covers">Ĝisdatigi</string>
     <string name="dialog_yes_no_positive_button_update_collection">Ĝisdatigi</string>
+    <string name="dialog_error_message_fetch_read_file_location">Loko de dosiero:</string>
+    <string name="dialog_error_message_fetch_general_external_storage">Ekstera konservejo:</string>
+    <string name="menu_shortcut">Meti sur ĉefekranon</string>
+    <string name="descr_dialog_edit_update_icon">Ĝisdatigi</string>
 </resources>
