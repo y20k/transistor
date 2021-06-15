@@ -308,7 +308,6 @@ class PlayerService(): MediaBrowserServiceCompat() {
         updatePlayerState(station, playbackState)
         // display notification (notification is hidden via CMD_DISMISS_NOTIFICATION)
         if (player.isPlaying) {
-            //player.seekTo(player.bufferedPosition)
             notificationHelper.showNotificationForPlayer(player)
         } else {
             // reset metadata
@@ -339,6 +338,12 @@ class PlayerService(): MediaBrowserServiceCompat() {
         mediaSession = MediaSessionCompat(this, TAG).apply {
             setSessionActivity(sessionActivityPendingIntent)
             isActive = true
+//            setCallback(object : MediaSessionCompat.Callback() { // todo remove
+//                override fun onPause() {
+//                    LogHelper.e(TAG, "Ding")
+//                    super.onPause()
+//                }
+//            })
         }
         sessionToken = mediaSession.sessionToken
     }
@@ -545,7 +550,7 @@ class PlayerService(): MediaBrowserServiceCompat() {
     /*
      * EventListener: Listener for ExoPlayer Events
      */
-    private val playerListener = object : Player.EventListener {
+    private val playerListener = object : Player.Listener {
         override fun onIsPlayingChanged(isPlaying: Boolean){
             if (isPlaying) {
                 // active playback
@@ -637,18 +642,29 @@ class PlayerService(): MediaBrowserServiceCompat() {
 
 
     /*
-     * MediaButtonEventHandler: overrides headphone next/previous button behavior
+     * MediaButtonEventHandler: overrides headphone next/previous/playpause button behavior
      */
     private val buttonEventHandler = object : MediaSessionConnector.MediaButtonEventHandler {
         override fun onMediaButtonEvent(player: Player, controlDispatcher: ControlDispatcher, mediaButtonEvent: Intent): Boolean {
             val event: KeyEvent? = mediaButtonEvent.getParcelableExtra(Intent.EXTRA_KEY_EVENT)
+            LogHelper.e(TAG, "onMediaButtonEvent") // todo remove
             when (event?.keyCode) {
                 KeyEvent.KEYCODE_MEDIA_NEXT -> {
+                    // debug: adb shell input keyevent 87
                     if (event.action == KeyEvent.ACTION_UP) skipToNextStation()
                     return true
                 }
                 KeyEvent.KEYCODE_MEDIA_PREVIOUS -> {
+                    // debug: adb shell input keyevent 88
                     if (event.action == KeyEvent.ACTION_UP) skipToPreviousStation()
+                    return true
+                }
+                KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE -> {
+                    // debug: adb shell input keyevent 85
+                    if (event.action == KeyEvent.ACTION_UP) {
+                        if (player.isPlaying) player.pause()
+                        else preparer.onPrepare(true)
+                    }
                     return true
                 }
                 else -> return false
