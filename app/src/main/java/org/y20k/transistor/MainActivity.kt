@@ -18,12 +18,11 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-
+import androidx.appcompat.widget.Toolbar
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-
 import androidx.preference.PreferenceManager
 import org.y20k.transistor.helpers.AppThemeHelper
 import org.y20k.transistor.helpers.FileHelper
@@ -56,9 +55,12 @@ class MainActivity: AppCompatActivity() {
 
         // set up action bar
         setSupportActionBar(findViewById(R.id.main_toolbar))
-        val navController = findNavController(R.id.main_host_container)
+        val toolbar: Toolbar = findViewById<Toolbar>(R.id.main_toolbar)
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.main_host_container) as NavHostFragment
+        val navController = navHostFragment.navController
         appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration)
+        supportActionBar?.hide()
 
         // register listener for changes in shared preferences
         PreferenceManager.getDefaultSharedPreferences(this as Context).registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener)
@@ -68,7 +70,8 @@ class MainActivity: AppCompatActivity() {
     /* Overrides onSupportNavigateUp from AppCompatActivity */
     override fun onSupportNavigateUp(): Boolean {
         // Taken from: https://developer.android.com/guide/navigation/navigation-ui#action_bar
-        val navController = findNavController(R.id.main_host_container)
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.main_host_container) as NavHostFragment
+        val navController = navHostFragment.navController
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 

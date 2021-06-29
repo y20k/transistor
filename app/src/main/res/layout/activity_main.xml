@@ -12,13 +12,14 @@
         android:id="@+id/main_toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:minHeight="?attr/actionBarSize"
         android:background="@color/toolbar_background"
+        android:minHeight="?attr/actionBarSize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="gone" />
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/main_host_container"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"

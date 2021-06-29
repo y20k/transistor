@@ -31,7 +31,6 @@ import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaDescriptionCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
-import android.view.KeyEvent
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -139,7 +138,6 @@ class PlayerService(): MediaBrowserServiceCompat() {
         // ExoPlayer manages MediaSession
         mediaSessionConnector = MediaSessionConnector(mediaSession)
         mediaSessionConnector.setPlaybackPreparer(preparer)
-        mediaSessionConnector.setMediaButtonEventHandler(buttonEventHandler)
         //mediaSessionConnector.setMediaMetadataProvider(metadataProvider)
         mediaSessionConnector.setQueueNavigator(object : TimelineQueueNavigator(mediaSession) {
             override fun getMediaDescription(player: Player, windowIndex: Int): MediaDescriptionCompat {
@@ -633,41 +631,6 @@ class PlayerService(): MediaBrowserServiceCompat() {
                 }
                 // TODO implement HLS metadata extraction (Id3Frame / PrivFrame)
                 // https://exoplayer.dev/doc/reference/com/google/android/exoplayer2/metadata/Metadata.Entry.html
-            }
-        }
-    }
-    /*
-     * End of declaration
-     */
-
-
-    /*
-     * MediaButtonEventHandler: overrides headphone next/previous/playpause button behavior
-     */
-    private val buttonEventHandler = object : MediaSessionConnector.MediaButtonEventHandler {
-        override fun onMediaButtonEvent(player: Player, controlDispatcher: ControlDispatcher, mediaButtonEvent: Intent): Boolean {
-            val event: KeyEvent? = mediaButtonEvent.getParcelableExtra(Intent.EXTRA_KEY_EVENT)
-            LogHelper.e(TAG, "onMediaButtonEvent") // todo remove
-            when (event?.keyCode) {
-                KeyEvent.KEYCODE_MEDIA_NEXT -> {
-                    // debug: adb shell input keyevent 87
-                    if (event.action == KeyEvent.ACTION_UP) skipToNextStation()
-                    return true
-                }
-                KeyEvent.KEYCODE_MEDIA_PREVIOUS -> {
-                    // debug: adb shell input keyevent 88
-                    if (event.action == KeyEvent.ACTION_UP) skipToPreviousStation()
-                    return true
-                }
-                KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE -> {
-                    // debug: adb shell input keyevent 85
-                    if (event.action == KeyEvent.ACTION_UP) {
-                        if (player.isPlaying) player.pause()
-                        else preparer.onPrepare(true)
-                    }
-                    return true
-                }
-                else -> return false
             }
         }
     }
