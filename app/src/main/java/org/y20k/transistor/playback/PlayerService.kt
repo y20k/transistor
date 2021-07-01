@@ -138,19 +138,12 @@ class PlayerService(): MediaBrowserServiceCompat() {
         // ExoPlayer manages MediaSession
         mediaSessionConnector = MediaSessionConnector(mediaSession)
         mediaSessionConnector.setPlaybackPreparer(preparer)
+        mediaSessionConnector.setControlDispatcher(dispatcher)
         //mediaSessionConnector.setMediaMetadataProvider(metadataProvider)
         mediaSessionConnector.setQueueNavigator(object : TimelineQueueNavigator(mediaSession) {
             override fun getMediaDescription(player: Player, windowIndex: Int): MediaDescriptionCompat {
                 // create media description - used in notification
                  return CollectionHelper.buildStationMediaDescription(this@PlayerService, station, getCurrentMetadata())
-            }
-            override fun onSkipToPrevious(player: Player, controlDispatcher: ControlDispatcher) {
-                LogHelper.d(TAG, "onSkipToPrevious called") // todo remove
-                skipToPreviousStation()
-            }
-            override fun onSkipToNext(player: Player, controlDispatcher: ControlDispatcher) {
-                LogHelper.d(TAG, "onSkipToNext called") // todo remove
-                skipToNextStation()
             }
         })
 
@@ -650,6 +643,32 @@ class PlayerService(): MediaBrowserServiceCompat() {
 //    /*
 //     * End of declaration
 //     */
+
+    /*
+     * DefaultControlDispatcher: intercepts commands from MediaSessionConnector
+     */
+    private val dispatcher = object : DefaultControlDispatcher() {
+        override fun dispatchSetPlayWhenReady(player: Player, playWhenReady: Boolean): Boolean {
+            // changes the default behavior of !playWhenReady from player.pause() to player.stop()
+            when (playWhenReady) {
+                true -> player.play()
+                false -> player.stop()
+            }
+            return true
+        }
+        override fun dispatchNext(player: Player): Boolean {
+            skipToNextStation()
+            return true
+        }
+        override fun dispatchPrevious(player: Player): Boolean {
+            skipToPreviousStation()
+            return true
+        }
+    }
+    /*
+     * End of declaration
+     */
+
 
 
     /*

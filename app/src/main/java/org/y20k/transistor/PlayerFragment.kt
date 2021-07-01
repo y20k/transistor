@@ -439,10 +439,10 @@ class PlayerFragment: Fragment(), CoroutineScope,
         var station: Station = CollectionHelper.getStation(collection, playerState.stationUuid)
         if (!station.isValid() && collection.stations.isNotEmpty()) station = collection.stations[0]
         layout.updatePlayerViews(activity as Context, station, playerState.playbackState)
-        // start / pause playback
+        // start / stop playback
         when (startPlayback) {
             true -> playerController.play(station.uuid)
-            false -> playerController.pause()
+            false -> playerController.stop()
         }
     }
 

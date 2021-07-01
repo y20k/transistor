@@ -43,9 +43,9 @@ class PlayerController (private val mediaController: MediaControllerCompat) {
     }
 
 
-    /* Pause playback */
-    fun pause() {
-        transportControls.pause()
+    /* Stop playback */
+    fun stop() {
+        transportControls.stop()
     }
 
     /* Skip back 10 seconds */

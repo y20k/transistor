@@ -103,14 +103,27 @@ class NotificationHelper(private val context: Context, sessionToken: MediaSessio
             mediaController.sendCommand(Keys.CMD_DISMISS_NOTIFICATION, null, null)
             return true
         }
+
+        override fun dispatchSetPlayWhenReady(player: Player, playWhenReady: Boolean): Boolean {
+            // changes the default behavior of !playWhenReady from player.pause() to player.stop()
+            when (playWhenReady) {
+                true -> player.play()
+                false -> player.stop()
+            }
+            return true
+        }
+
         override fun dispatchPrevious(player: Player): Boolean {
-            mediaController.sendCommand(Keys.CMD_PREVIOUS_STATION, null, null)
-            return true
+            return super.dispatchPrevious(player)
         }
-        override fun dispatchNext(player: Player): Boolean {
-            mediaController.sendCommand(Keys.CMD_NEXT_STATION, null, null)
-            return true
-        }
+//        override fun dispatchPrevious(player: Player): Boolean {
+//            mediaController.sendCommand(Keys.CMD_PREVIOUS_STATION, null, null)
+//            return true
+//        }
+//        override fun dispatchNext(player: Player): Boolean {
+//            mediaController.sendCommand(Keys.CMD_NEXT_STATION, null, null)
+//            return true
+//        }
     }
     /*
      * End of inner class
