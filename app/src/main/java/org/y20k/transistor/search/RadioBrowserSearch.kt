@@ -15,7 +15,7 @@ import org.y20k.transistor.helpers.LogHelper
 import org.y20k.transistor.helpers.NetworkHelper
 import org.y20k.transistor.helpers.PreferencesHelper
 
-class RadioBrowserSearch(private var context: Context, private var radioBrowserSearchListener: RadioBrowserSearchListener) {
+class RadioBrowserSearch(private var radioBrowserSearchListener: RadioBrowserSearchListener) {
 
     /* Interface used to send back search results */
     interface RadioBrowserSearchListener {
@@ -36,7 +36,7 @@ class RadioBrowserSearch(private var context: Context, private var radioBrowserS
     /* Init constructor */
     init {
         // get address of radio-browser.info api and update it in background
-        radioBrowserApi = PreferencesHelper.loadRadioBrowserApiAddress(context)
+        radioBrowserApi = PreferencesHelper.loadRadioBrowserApiAddress()
         updateRadioBrowserApi()
     }
 
@@ -103,7 +103,7 @@ class RadioBrowserSearch(private var context: Context, private var radioBrowserS
     /* Updates the address of the radio-browser.info api */
     private fun updateRadioBrowserApi() {
         GlobalScope.launch {
-            val deferred: Deferred<String> = async { NetworkHelper.getRadioBrowserServerSuspended(context) }
+            val deferred: Deferred<String> = async { NetworkHelper.getRadioBrowserServerSuspended() }
             radioBrowserApi = deferred.await()
         }
     }

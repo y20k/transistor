@@ -52,11 +52,11 @@ class DownloadWorker(context : Context, params : WorkerParameters): Worker(conte
 
     /* Execute one-time housekeeping */
     private fun doOneTimeHousekeeping() {
-        if (PreferencesHelper.isHouseKeepingNecessary(applicationContext)) {
+        if (PreferencesHelper.isHouseKeepingNecessary()) {
             /* add whatever housekeeping is necessary here */
 
             // housekeeping finished - save state
-            // PreferencesHelper.saveHouseKeepingNecessaryState(applicationContext) // TODO uncomment if you need to do housekeeping here
+            // PreferencesHelper.saveHouseKeepingNecessaryState() // TODO uncomment if you need to do housekeeping here
         }
     }
 

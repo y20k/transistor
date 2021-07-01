@@ -121,16 +121,16 @@ class PlayerService(): MediaBrowserServiceCompat() {
         userAgent = Util.getUserAgent(this, Keys.APPLICATION_NAME)
 
         // load modification date of collection
-        modificationDate = PreferencesHelper.loadCollectionModificationDate(this)
+        modificationDate = PreferencesHelper.loadCollectionModificationDate()
 
         // get the package validator // todo can be local?
         packageValidator = PackageValidator(this, R.xml.allowed_media_browser_callers)
 
         // fetch the player state
-        playerState = PreferencesHelper.loadPlayerState(this)
+        playerState = PreferencesHelper.loadPlayerState()
 
         // fetch the metadata history
-        metadataHistory = PreferencesHelper.loadMetadataHistory(this)
+        metadataHistory = PreferencesHelper.loadMetadataHistory()
 
         // create a new MediaSession
         createMediaSession()
@@ -236,7 +236,7 @@ class PlayerService(): MediaBrowserServiceCompat() {
         mediaSessionConnector.invalidateMediaSessionMetadata()
         notificationHelper.updateNotification()
         // save history
-        PreferencesHelper.saveMetadataHistory(this, metadataHistory)
+        PreferencesHelper.saveMetadataHistory(metadataHistory)
     }
 
 
@@ -502,7 +502,7 @@ class PlayerService(): MediaBrowserServiceCompat() {
             playerState.stationUuid = station.uuid
         }
         playerState.playbackState = playbackState
-        PreferencesHelper.savePlayerState(this, playerState)
+        PreferencesHelper.savePlayerState(playerState)
     }
 
 
@@ -688,7 +688,7 @@ class PlayerService(): MediaBrowserServiceCompat() {
             if (station.isValid()) {
                 preparePlayer(playWhenReady)
             } else {
-                val currentStationUuid: String = PreferencesHelper.loadLastPlayedStationUuid(this@PlayerService)
+                val currentStationUuid: String = PreferencesHelper.loadLastPlayedStationUuid()
                 onPrepareFromMediaId(currentStationUuid, playWhenReady, null)
             }
         }
@@ -746,7 +746,7 @@ class PlayerService(): MediaBrowserServiceCompat() {
         override fun onCommand(player: Player, controlDispatcher: ControlDispatcher, command: String, extras: Bundle?, cb: ResultReceiver?): Boolean {
             when (command) {
                 Keys.CMD_RELOAD_PLAYER_STATE -> {
-                    playerState = PreferencesHelper.loadPlayerState(this@PlayerService)
+                    playerState = PreferencesHelper.loadPlayerState()
                     return true
                 }
                 Keys.CMD_REQUEST_PROGRESS_UPDATE -> {

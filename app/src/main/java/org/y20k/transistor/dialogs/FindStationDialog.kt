@@ -93,7 +93,7 @@ class FindStationDialog (private var context: Context, private var listener: Fin
     /* Construct and show dialog */
     fun show() {
         // initialize a radio browser search
-        radioBrowserSearch = RadioBrowserSearch(context, this)
+        radioBrowserSearch = RadioBrowserSearch(this)
 
         // prepare dialog builder
         val builder: MaterialAlertDialogBuilder = MaterialAlertDialogBuilder(context)

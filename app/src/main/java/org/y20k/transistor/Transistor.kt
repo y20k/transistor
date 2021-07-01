@@ -18,6 +18,7 @@ import android.app.Application
 import org.y20k.transistor.helpers.AppThemeHelper
 import org.y20k.transistor.helpers.LogHelper
 import org.y20k.transistor.helpers.PreferencesHelper
+import org.y20k.transistor.helpers.PreferencesHelper.initPreferences
 
 
 /**
@@ -33,8 +34,9 @@ class Transistor: Application () {
     override fun onCreate() {
         super.onCreate()
         LogHelper.v(TAG, "Transistor application started.")
+        initPreferences()
         // set Dark / Light theme state
-        AppThemeHelper.setTheme(PreferencesHelper.loadThemeSelection(this))
+        AppThemeHelper.setTheme(PreferencesHelper.loadThemeSelection())
     }
 
 

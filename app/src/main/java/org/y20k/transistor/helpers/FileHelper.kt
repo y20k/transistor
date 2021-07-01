@@ -184,7 +184,7 @@ object FileHelper {
         LogHelper.v(TAG, "Saving collection - Thread: ${Thread.currentThread().name}")
         val collectionSize: Int = collection.stations.size
         // do not override an existing collection with an empty one - except when last station is deleted
-        if (collectionSize > 0 || PreferencesHelper.loadCollectionSize(context) == 1) {
+        if (collectionSize > 0 || PreferencesHelper.loadCollectionSize() == 1) {
             // convert to JSON
             val gson: Gson = getCustomGson()
             var json: String = String()
@@ -197,8 +197,8 @@ object FileHelper {
                 // write text file
                 writeTextFile(context, json, Keys.FOLDER_COLLECTION, Keys.COLLECTION_FILE)
                 // save modification date and collection size
-                PreferencesHelper.saveCollectionModificationDate(context, lastSave)
-                PreferencesHelper.saveCollectionSize(context, collectionSize)
+                PreferencesHelper.saveCollectionModificationDate(lastSave)
+                PreferencesHelper.saveCollectionSize(collectionSize)
             } else {
                 LogHelper.w(TAG, "Not writing collection file. Reason: JSON string was completely empty.")
             }

@@ -125,9 +125,9 @@ class PlayerFragment: Fragment(), CoroutineScope,
         initializeViews()
 
         // convert old stations (one-time import)
-        if (PreferencesHelper.isHouseKeepingNecessary(activity as Context)) {
+        if (PreferencesHelper.isHouseKeepingNecessary()) {
             if (ImportHelper.convertOldStations(activity as Context)) layout.toggleImportingStationViews()
-            PreferencesHelper.saveHouseKeepingNecessaryState(activity as Context)
+            PreferencesHelper.saveHouseKeepingNecessaryState()
         }
 
         // hide action bar
@@ -171,14 +171,14 @@ class PlayerFragment: Fragment(), CoroutineScope,
         // assign volume buttons to music volume
         activity?.volumeControlStream = AudioManager.STREAM_MUSIC
         // try to recreate player state
-        playerState = PreferencesHelper.loadPlayerState(activity as Context)
+        playerState = PreferencesHelper.loadPlayerState()
         // setup ui
         setupPlayer()
         setupList()
         // start watching for changes in shared preferences
-        PreferencesHelper.registerPreferenceChangeListener(activity as Context, this as SharedPreferences.OnSharedPreferenceChangeListener)
+        PreferencesHelper.registerPreferenceChangeListener(this as SharedPreferences.OnSharedPreferenceChangeListener)
         // toggle download progress indicator
-        layout.toggleDownloadProgressIndicator(activity as Context)
+        layout.toggleDownloadProgressIndicator()
     }
 
 
@@ -186,11 +186,11 @@ class PlayerFragment: Fragment(), CoroutineScope,
     override fun onPause() {
         super.onPause()
         // save player state
-        PreferencesHelper.savePlayerState(activity as Context, playerState)
+        PreferencesHelper.savePlayerState(playerState)
         // stop receiving playback progress updates
         handler.removeCallbacks(periodicProgressUpdateRequestRunnable)
         // stop watching for changes in shared preferences
-        PreferencesHelper.unregisterPreferenceChangeListener(activity as Context, this as SharedPreferences.OnSharedPreferenceChangeListener)
+        PreferencesHelper.unregisterPreferenceChangeListener(this as SharedPreferences.OnSharedPreferenceChangeListener)
 
     }
 
@@ -245,7 +245,7 @@ class PlayerFragment: Fragment(), CoroutineScope,
     /* Overrides onSharedPreferenceChanged from OnSharedPreferenceChangeListener */
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         if (key == Keys.PREF_ACTIVE_DOWNLOADS) {
-            layout.toggleDownloadProgressIndicator(activity as Context)
+            layout.toggleDownloadProgressIndicator()
         }
     }
 
@@ -394,7 +394,7 @@ class PlayerFragment: Fragment(), CoroutineScope,
     private fun buildPlaybackControls() {
 
         // get player state
-        playerState = PreferencesHelper.loadPlayerState(activity as Context)
+        playerState = PreferencesHelper.loadPlayerState()
 
         // main play/pause button
         layout.playButtonView.setOnClickListener {
@@ -531,7 +531,7 @@ class PlayerFragment: Fragment(), CoroutineScope,
             // update collection
             collection = it
             // updates current station in player views
-            playerState = PreferencesHelper.loadPlayerState(activity as Context)
+            playerState = PreferencesHelper.loadPlayerState()
             // toggle onboarding layout
             onboarding = layout.toggleOnboarding(activity as Context, collection.stations.size)
             // get station
