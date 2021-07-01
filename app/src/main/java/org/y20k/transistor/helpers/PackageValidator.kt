@@ -277,7 +277,7 @@ class PackageValidator(context: Context, @XmlRes xmlResId: Int) {
         var eventType = parser.next()
         while (eventType != XmlResourceParser.END_TAG) {
             val isRelease = parser.getAttributeBooleanValue(null, "release", false)
-            val signature = parser.nextText().replace(WHITESPACE_REGEX, "").toLowerCase(Locale.ROOT)
+            val signature = parser.nextText().replace(WHITESPACE_REGEX, "").lowercase(Locale.ROOT)
             callerSignatures += KnownSignature(signature, isRelease)
 
             eventType = parser.next()

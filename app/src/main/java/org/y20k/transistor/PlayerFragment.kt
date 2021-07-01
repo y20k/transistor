@@ -258,7 +258,7 @@ class PlayerFragment: Fragment(), CoroutineScope,
             launch {
                 val deferred: Deferred<NetworkHelper.ContentType> = async(Dispatchers.Default) { NetworkHelper.detectContentTypeSuspended(remoteStationLocation) }
                 // wait for result
-                val contentType: String = deferred.await().type.toLowerCase(Locale.getDefault())
+                val contentType: String = deferred.await().type.lowercase(Locale.getDefault())
                 // CASE: playlist detected
                 if (Keys.MIME_TYPES_M3U.contains(contentType) or
                     Keys.MIME_TYPES_PLS.contains(contentType)) {
