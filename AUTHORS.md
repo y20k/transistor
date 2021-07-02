@@ -4,7 +4,7 @@ AUTHORS
 ### Development
 Transistor is designed, developed and maintained by: [y20k](https://github.com/y20k)
 
-Contributing developer(s): [azixMcAze](https://github.com/azixMcAze) & [meonwax](https://github.com/meonwax) & [mook](https://github.com/mook) & [pelya](https://github.com/pelya)
+Contributing developer(s): [azixMcAze](https://github.com/azixMcAze) & [meonwax](https://github.com/meonwax) & [mook](https://github.com/mook) & [pelya](https://github.com/pelya) & [TacoTheDank](https://github.com/TacoTheDank)
 
 Icon Design: [Munadi Kiehl](https://github.com/munadikieh)
 
