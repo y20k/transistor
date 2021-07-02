@@ -715,10 +715,10 @@ class PlayerService(): MediaBrowserServiceCompat() {
             }
             // NORMAL CASE: Try to match podcast name and voice query
             else {
-                val queryLowercase: String = query.toLowerCase(Locale.getDefault())
+                val queryLowercase: String = query.lowercase(Locale.getDefault())
                 collectionProvider.stationListByName.forEach { mediaItem ->
                     // get station name (here -> title)
-                    val stationName: String = mediaItem.description.title.toString().toLowerCase(Locale.getDefault())
+                    val stationName: String = mediaItem.description.title.toString().lowercase(Locale.getDefault())
                     // FIRST: try to match the whole query
                     if (stationName == queryLowercase) {
                         // start playback of newest podcast episode
