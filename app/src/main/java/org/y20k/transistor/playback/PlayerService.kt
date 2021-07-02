@@ -547,7 +547,8 @@ class PlayerService(): MediaBrowserServiceCompat() {
                 // active playback
                 handlePlaybackChange(PlaybackStateCompat.STATE_PLAYING)
             } else {
-                // handled in onPlayWhenReadyChanged
+                // playback stopped by user
+                handlePlaybackChange(PlaybackStateCompat.STATE_STOPPED)
             }
         }
 
@@ -560,7 +561,7 @@ class PlayerService(): MediaBrowserServiceCompat() {
                         handlePlaybackEnded()
                     }
                     else -> {
-                        // playback has been paused by user or OS: update media session and save state
+                        // playback has been paused by OS
                         // PLAY_WHEN_READY_CHANGE_REASON_USER_REQUEST or
                         // PLAY_WHEN_READY_CHANGE_REASON_AUDIO_FOCUS_LOSS or
                         // PLAY_WHEN_READY_CHANGE_REASON_AUDIO_BECOMING_NOISY or
@@ -648,6 +649,10 @@ class PlayerService(): MediaBrowserServiceCompat() {
      * DefaultControlDispatcher: intercepts commands from MediaSessionConnector
      */
     private val dispatcher = object : DefaultControlDispatcher() {
+        // emulate headphone buttons
+        // start/pause: adb shell input keyevent 85
+        // next: adb shell input keyevent 87
+        // prev: adb shell input keyevent 88
         override fun dispatchSetPlayWhenReady(player: Player, playWhenReady: Boolean): Boolean {
             // changes the default behavior of !playWhenReady from player.pause() to player.stop()
             when (playWhenReady) {
