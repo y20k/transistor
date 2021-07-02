@@ -23,6 +23,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.core.os.bundleOf
@@ -209,26 +211,25 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
 
     }
 
+    /* Register the ActivityResultLauncher */
+    private val requestSaveM3uLauncher =
+        registerForActivityResult(StartActivityForResult(), this::requestSaveM3uResult)
 
-    /* Overrides onActivityResult from Fragment */
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        when (requestCode) {
-            // save M3U file to result file location
-            Keys.REQUEST_SAVE_M3U -> {
-                if (resultCode == Activity.RESULT_OK && data != null) {
-                    val sourceUri: Uri? = FileHelper.getM3ulUri(activity as Activity)
-                    val targetUri: Uri? = data.data
-                    if (targetUri != null && sourceUri != null) {
-                        // copy file async (= fire & forget - no return value needed)
-                        CoroutineScope(Dispatchers.IO).launch { FileHelper.saveCopyOfFileSuspended(activity as Context, sourceUri, targetUri) }
-                        Toast.makeText(activity as Context, R.string.toastmessage_save_m3u, Toast.LENGTH_LONG).show()
-                    } else {
-                        LogHelper.w(TAG, "M3U export failed.")
-                    }
+    /* Pass the activity result */
+    private fun requestSaveM3uResult(result: ActivityResult) {
+        // save M3U file to result file location
+        if (result.resultCode == Activity.RESULT_OK && result.data != null) {
+            val sourceUri: Uri? = FileHelper.getM3ulUri(activity as Activity)
+            val targetUri: Uri? = result.data?.data
+            if (targetUri != null && sourceUri != null) {
+                // copy file async (= fire & forget - no return value needed)
+                CoroutineScope(Dispatchers.IO).launch {
+                    FileHelper.saveCopyOfFileSuspended(activity as Context, sourceUri, targetUri)
                 }
+                Toast.makeText(activity as Context, R.string.toastmessage_save_m3u, Toast.LENGTH_LONG).show()
+            } else {
+                LogHelper.w(TAG, "M3U export failed.")
             }
-            // let activity handle result
-            else -> super.onActivityResult(requestCode, resultCode, data)
         }
     }
 
@@ -268,9 +269,9 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
             type = Keys.MIME_TYPE_M3U
             putExtra(Intent.EXTRA_TITLE, Keys.COLLECTION_M3U_FILE)
         }
-        // file gets saved in onActivityResult
+        // file gets saved in the ActivityResult
         try {
-            startActivityForResult(intent, Keys.REQUEST_SAVE_M3U)
+            requestSaveM3uLauncher.launch(intent)
         } catch (exception: Exception) {
             LogHelper.e(TAG, "Unable to save M3U.\n$exception")
             Toast.makeText(activity as Context, R.string.toastmessage_install_file_helper, Toast.LENGTH_LONG).show()

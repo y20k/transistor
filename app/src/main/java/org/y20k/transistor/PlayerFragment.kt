@@ -38,6 +38,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
@@ -204,40 +207,29 @@ class PlayerFragment: Fragment(), CoroutineScope,
         playerServiceConnected = false
     }
 
+    /* Register the ActivityResultLauncher */
+    private val requestLoadImageLauncher =
+        registerForActivityResult(StartActivityForResult(), this::requestLoadImageResult)
 
-    /* Overrides onActivityResult from Fragment */
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        when (requestCode) {
-            Keys.REQUEST_LOAD_IMAGE -> {
-                if (resultCode == RESULT_OK && data != null) {
-                    val imageUri: Uri? = data.data
-                    if (imageUri != null) {
-                        collection = CollectionHelper.setStationImageWithStationUuid(activity as Context, collection, imageUri.toString(), tempStationUuid, imageManuallySet = true)
-                        tempStationUuid = String()
-                    }
-                }
+    /* Pass the activity result */
+    private fun requestLoadImageResult(result: ActivityResult) {
+        if (result.resultCode == RESULT_OK && result.data != null) {
+            val imageUri: Uri? = result.data?.data
+            if (imageUri != null) {
+                collection = CollectionHelper.setStationImageWithStationUuid(activity as Context, collection, imageUri.toString(), tempStationUuid, imageManuallySet = true)
+                tempStationUuid = String()
             }
-            // let activity handle result
-            else -> super.onActivityResult(requestCode, resultCode, data)
         }
     }
 
-
-    /* Overrides onRequestPermissionsResult from Fragment */
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        when (requestCode) {
-            Keys.PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE -> {
-                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    // permission granted
-                    pickImage()
-                } else {
-                    // permission denied
-                    Toast.makeText(activity as Context, R.string.toastmessage_error_missing_storage_permission, Toast.LENGTH_LONG).show()
-                }
-            }
-            // let activity handle result
-            else -> super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
+    /* Register permission launcher */
+    private val requestPermissionLauncher = registerForActivityResult(RequestPermission()) { isGranted: Boolean ->
+        if (isGranted) {
+            // permission granted
+            pickImage()
+        } else {
+            // permission denied
+            Toast.makeText(activity as Context, R.string.toastmessage_error_missing_storage_permission, Toast.LENGTH_LONG).show()
         }
     }
 
@@ -451,12 +443,12 @@ class PlayerFragment: Fragment(), CoroutineScope,
     private fun pickImage() {
         if (ContextCompat.checkSelfPermission(activity as Context, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             // permission READ_EXTERNAL_STORAGE not granted - request permission
-            requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), Keys.PERMISSION_REQUEST_IMAGE_PICKER_READ_EXTERNAL_STORAGE)
+            requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
         } else {
             // permission READ_EXTERNAL_STORAGE granted - get system picker for images
             val pickImageIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             try {
-                startActivityForResult(pickImageIntent, Keys.REQUEST_LOAD_IMAGE, null )
+                requestLoadImageLauncher.launch(pickImageIntent)
             } catch (e: Exception) {
                 LogHelper.e(TAG, "Unable to select image. Probably no image picker available.")
                 Toast.makeText(context, R.string.toastalert_no_image_picker, Toast.LENGTH_LONG).show()
