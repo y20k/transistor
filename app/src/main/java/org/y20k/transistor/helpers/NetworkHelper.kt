@@ -143,7 +143,7 @@ object NetworkHelper {
 
 
     /* Suspend function: Gets a random radio-browser.info api address - async using coroutine */
-    suspend fun getRadioBrowserServerSuspended(context: Context): String {
+    suspend fun getRadioBrowserServerSuspended(): String {
         return suspendCoroutine { cont ->
             var serverAddress: String
             try {
@@ -154,7 +154,7 @@ object NetworkHelper {
             } catch (e: UnknownHostException) {
                 serverAddress = Keys.RADIO_BROWSER_API_DEFAULT
             }
-            PreferencesHelper.saveRadioBrowserApiAddress(context, serverAddress)
+            PreferencesHelper.saveRadioBrowserApiAddress(serverAddress)
             cont.resume(serverAddress)
         }
     }

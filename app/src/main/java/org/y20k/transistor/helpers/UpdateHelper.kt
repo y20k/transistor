@@ -79,7 +79,7 @@ class UpdateHelper(private val context: Context, private val updateHelperListene
 
     /* Updates the whole collection of stations */
     fun updateCollection() {
-        PreferencesHelper.saveLastUpdateCollection(context)
+        PreferencesHelper.saveLastUpdateCollection()
         var counter: Boolean
         collection.stations.forEach {station ->
             if (station.radioBrowserStationUuid.isNotEmpty()) {
@@ -118,7 +118,7 @@ class UpdateHelper(private val context: Context, private val updateHelperListene
 
     /* Get updated station from radio browser - results are handled by onRadioBrowserSearchResults */
     private fun downloadFromRadioBrowser(radioBrowserStationUuid: String) {
-        val radioBrowserSearch: RadioBrowserSearch = RadioBrowserSearch(context, this)
+        val radioBrowserSearch: RadioBrowserSearch = RadioBrowserSearch(this)
         radioBrowserSearch.searchStation(context, radioBrowserStationUuid, Keys.SEARCH_TYPE_BY_UUID)
     }
 

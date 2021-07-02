@@ -74,7 +74,7 @@ object AppThemeHelper {
 
     /* Returns a readable String for currently selected App Theme */
     fun getCurrentTheme(context: Context): String {
-        return when (PreferencesHelper.loadThemeSelection(context)) {
+        return when (PreferencesHelper.loadThemeSelection()) {
             Keys.STATE_THEME_LIGHT_MODE -> context.getString(R.string.pref_theme_selection_mode_light)
             Keys.STATE_THEME_DARK_MODE -> context.getString(R.string.pref_theme_selection_mode_dark)
             else -> context.getString(R.string.pref_theme_selection_mode_device_default)

@@ -80,7 +80,7 @@ object LogHelper {
     }
 
     fun save(context: Context, tag: String, t: Throwable?, vararg messages: Any) {
-        if (PreferencesHelper.loadKeepDebugLog(context)) {
+        if (PreferencesHelper.loadKeepDebugLog()) {
             val sb = StringBuilder()
             sb.append(DateTimeHelper.convertToRfc2822(Calendar.getInstance().time))
             sb.append(" | ")

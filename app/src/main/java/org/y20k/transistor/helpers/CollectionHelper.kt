@@ -65,17 +65,17 @@ object CollectionHelper {
 
 
     /* Checks if enough time passed since last update */
-    fun hasEnoughTimePassedSinceLastUpdate(context: Context): Boolean {
-        val lastUpdate: Date = PreferencesHelper.loadLastUpdateCollection(context)
+    fun hasEnoughTimePassedSinceLastUpdate(): Boolean {
+        val lastUpdate: Date = PreferencesHelper.loadLastUpdateCollection()
         val currentDate: Date = Calendar.getInstance().time
         return currentDate.time - lastUpdate.time  > Keys.MINIMUM_TIME_BETWEEN_UPDATES
     }
 
 
     /* Checks if a newer collection of radio stations is available on storage */
-    fun isNewerCollectionAvailable(context: Context, date: Date): Boolean {
+    fun isNewerCollectionAvailable(date: Date): Boolean {
         var newerCollectionAvailable = false
-        val modificationDate: Date = PreferencesHelper.loadCollectionModificationDate(context)
+        val modificationDate: Date = PreferencesHelper.loadCollectionModificationDate()
         if (modificationDate.after(date) || date == Keys.DEFAULT_DATE) {
             newerCollectionAvailable = true
         }
@@ -348,7 +348,7 @@ object CollectionHelper {
         // save collection and store modification date
         collection.modificationDate = saveCollection(context, collection)
         // save playback state of PlayerService
-        PreferencesHelper.savePlayerPlaybackState(context, playbackState)
+        PreferencesHelper.savePlayerPlaybackState(playbackState)
         return collection
     }
 

@@ -103,7 +103,7 @@ data class LayoutHolder(var rootView: View) {
         onboardingQuoteViews = rootView.findViewById(R.id.onboarding_quote_views)
         onboardingImportViews = rootView.findViewById(R.id.onboarding_import_views)
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
-        metadataHistory = PreferencesHelper.loadMetadataHistory(rootView.context)
+        metadataHistory = PreferencesHelper.loadMetadataHistory()
         metadataHistoryPosition = metadataHistory.size - 1
 
         // set up RecyclerView
@@ -253,8 +253,8 @@ data class LayoutHolder(var rootView: View) {
 
 
     /* Toggles visibility of the download progress indicator */
-    fun toggleDownloadProgressIndicator(context: Context) {
-        when (PreferencesHelper.loadActiveDownloads(context)) {
+    fun toggleDownloadProgressIndicator() {
+        when (PreferencesHelper.loadActiveDownloads()) {
             Keys.ACTIVE_DOWNLOADS_EMPTY -> downloadProgressIndicator.isGone = true
             else -> downloadProgressIndicator.isVisible = true
         }

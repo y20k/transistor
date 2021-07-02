@@ -14,7 +14,6 @@
 
 package org.y20k.transistor
 
-import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -23,7 +22,6 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.navigateUp
-import androidx.preference.PreferenceManager
 import org.y20k.transistor.helpers.AppThemeHelper
 import org.y20k.transistor.helpers.FileHelper
 import org.y20k.transistor.helpers.LogHelper
@@ -63,7 +61,7 @@ class MainActivity: AppCompatActivity() {
         supportActionBar?.hide()
 
         // register listener for changes in shared preferences
-        PreferenceManager.getDefaultSharedPreferences(this as Context).registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener)
+        PreferencesHelper.registerPreferenceChangeListener(sharedPreferenceChangeListener)
     }
 
 
@@ -80,7 +78,7 @@ class MainActivity: AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         // unregister listener for changes in shared preferences
-        PreferenceManager.getDefaultSharedPreferences(this as Context).unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener)
+        PreferencesHelper.unregisterPreferenceChangeListener(sharedPreferenceChangeListener)
     }
 
 
@@ -90,7 +88,7 @@ class MainActivity: AppCompatActivity() {
     private val sharedPreferenceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
         when (key) {
             Keys.PREF_THEME_SELECTION -> {
-                AppThemeHelper.setTheme(PreferencesHelper.loadThemeSelection(this@MainActivity))
+                AppThemeHelper.setTheme(PreferencesHelper.loadThemeSelection())
             }
         }
     }
