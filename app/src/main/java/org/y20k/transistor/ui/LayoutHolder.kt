@@ -313,6 +313,16 @@ data class LayoutHolder(var rootView: View) {
     }
 
 
+    fun minimizePlayerIfExpanded(context: Context): Boolean {
+        return if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            true
+        } else {
+            false
+        }
+    }
+
+
     /* Creates AnimationListener for play button */
     private fun createAnimationListener(playbackState: Int): Animation.AnimationListener {
         return object : Animation.AnimationListener {

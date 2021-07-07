@@ -38,6 +38,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
@@ -106,6 +107,17 @@ class PlayerFragment: Fragment(), CoroutineScope,
 
         // initialize background job
         backgroundJob = Job()
+
+        // handle back press
+        requireActivity().onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // minimize player sheet - or if already minimized let activity handle back press
+                if (isEnabled && !layout.minimizePlayerIfExpanded(activity as Context)) {
+                    isEnabled = false
+                    activity?.onBackPressed()
+                }
+            }
+        })
 
         // create view model and observe changes in collection view model
         collectionViewModel = ViewModelProvider(this).get(CollectionViewModel::class.java)
@@ -206,6 +218,7 @@ class PlayerFragment: Fragment(), CoroutineScope,
         mediaBrowser.disconnect()
         playerServiceConnected = false
     }
+
 
     /* Register the ActivityResultLauncher */
     private val requestLoadImageLauncher =
