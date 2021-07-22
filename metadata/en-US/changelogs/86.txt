@@ -1,0 +1,7 @@
+# v4.0.15 - Andy Warhol
+
+**2021-07-28**
+
+- new language: Frisian
+- updated translations
+- Transistor now stops buffering immediately, when playback has been stopped
