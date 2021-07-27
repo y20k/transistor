@@ -112,7 +112,7 @@
     https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
     <string name="dialog_error_message_no_network">Koble til Internett.</string>
     <string name="dialog_find_station_hint">Navn eller strømmingsadresse</string>
-    <string name="toastmessage_updating_station">Oppdaterer stasjon…</string>
+    <string name="toastmessage_updating_station">Oppdaterer stasjon …</string>
     <string name="toastmessage_station_not_valid">Ugyldig stasjon.</string>
     <string name="dialog_generic_details_default">Ingen detaljer tilgjengelig</string>
     <string name="pref_theme_selection_title">Programdrakt</string>
@@ -176,7 +176,7 @@
     <string name="descr_expanded_player_sleep_timer_cancel_button">Avbryt vekkeur</string>
     <string name="descr_expanded_player_sleep_timer_start_button">Start vekkeur</string>
     <string name="descr_expanded_player_sleep_timer_remaining_time">Tid til vekkeur</string>
-    <string name="onboarding_app_import_running">Importerer stasjonene dine … Vent.</string>
+    <string name="onboarding_app_import_running">Importerer stasjonene dine …</string>
     <string name="pref_update_station_images_summary">Last ned siste versjon av alle stasjonsbilder.</string>
     <string name="pref_maintenance_title">Vedlikehold</string>
     <string name="pref_general_title">Generelt</string>
@@ -195,8 +195,8 @@
     <string name="pref_app_version_title">Programversjon</string>
     <string name="pref_app_version_summary">Versjon</string>
     <string name="pref_about_title">Om</string>
-    <string name="pref_m3u_export_title">Ekspoert M3U</string>
+    <string name="pref_m3u_export_title">Eksporter M3U</string>
     <string name="pref_m3u_export_summary">Lagre din radiostasjon til en M3U-spilleliste som kan importeres inn i andre avspillere.</string>
-    <string name="toastmessage_save_m3u">Lagrer radiostasjoner som M3U.</string>
+    <string name="toastmessage_save_m3u">Lagrer radiostasjoner som M3U …</string>
     <string name="toastmessage_install_file_helper">Installer en filbehandler.</string>
 </resources>
