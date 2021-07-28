@@ -112,7 +112,7 @@
     https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
     <string name="toastmessage_sleep_timer_unable_to_start">Lütfen önce oynatmayı başlatın.</string>
     <string name="dialog_button_save">Değişiklikleri kaydet</string>
-    <string name="onboarding_app_import_running">İstasyonlarınız içe aktarılıyor. Lütfen bekleyin.</string>
+    <string name="onboarding_app_import_running">İstasyonlarınız içe aktarılıyor…</string>
     <string name="descr_player_playback_button">Oynat/duraklat</string>
     <string name="descr_player_station_image">İstasyon görüntüsü</string>
     <string name="descr_expanded_player_sleep_timer_start_button">Uyku zamanlayıcısını başlat</string>
@@ -144,7 +144,7 @@
     <string name="notification_now_playing_channel_description">Oynatma denetimleri, istasyon adı ve görüntüsü.</string>
     <string name="notification_now_playing_channel_name">Oynatma Denetimleri</string>
     <string name="station_list_button_add_new_station">Yeni istasyon ekle</string>
-    <string name="toastmessage_updating_station">İstasyon güncelleniyor.</string>
+    <string name="toastmessage_updating_station">İstasyon güncelleniyor…</string>
     <string name="toastmessage_updating_collection">İstasyon koleksiyonu güncelleniyor.</string>
     <string name="toastmessage_station_not_valid">İstasyon geçerli değil.</string>
     <string name="toastmessage_station_duplicate">Yinelenen istasyon.</string>
@@ -197,6 +197,6 @@
     <string name="pref_update_collection_summary">Güncellenmiş ses yayınlarını ve yeni istasyon görüntülerini arayın.</string>
     <string name="pref_m3u_export_title">M3U Dosyasına Aktar</string>
     <string name="pref_m3u_export_summary">Radyo istasyonlarınızı diğer oynatıcılara aktarılabilen bir M3U oynatma listesi dosyasına kaydedin.</string>
-    <string name="toastmessage_save_m3u">Radyo istasyonları M3U olarak kaydediliyor.</string>
+    <string name="toastmessage_save_m3u">Radyo istasyonları M3U olarak kaydediliyor…</string>
     <string name="toastmessage_install_file_helper">Lütfen bir dosya yöneticisi kurun.</string>
 </resources>
