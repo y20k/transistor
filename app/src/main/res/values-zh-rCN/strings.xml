@@ -51,14 +51,14 @@
     <string name="toastmessage_error_no_station_found">无法开始回放。请先添加一个广播电台。</string>
     <string name="toastmessage_error_restart_playback_failed">无法重新回放。</string>
     <string name="toastmessage_install_file_helper">请安装一个文件管理器。</string>
-    <string name="toastmessage_save_m3u">正在将电台保存为 M3U。</string>
+    <string name="toastmessage_save_m3u">正将电台保存为 M3U…</string>
     <string name="toastmessage_station_duplicate">重复电台。</string>
     <string name="toastmessage_station_not_valid">电台无效。</string>
     <string name="toastmessage_theme_day">正在切换到“日间模式“（检测到长按）</string>
     <string name="toastmessage_theme_follow_system">正在切换到“跟随系统设置模式“（检测到长按）</string>
     <string name="toastmessage_theme_night">正在切换到“夜间模式“（检测到长按）</string>
     <string name="toastmessage_updating_collection">正在更新电台集。</string>
-    <string name="toastmessage_updating_station">正在更新电台。</string>
+    <string name="toastmessage_updating_station">正在更新电台…</string>
     <string name="toastmessage_updating_station_images">正在更新电台图标。</string>
     <!-- Station List -->
     <string name="station_list_button_add_new_station">添加新电台</string>
@@ -109,7 +109,7 @@
     <!-- Onboarding -->
     <string name="onboarding_app_description">广播程序</string>
     <string name="onboarding_app_get_started">开始</string>
-    <string name="onboarding_app_import_running">正在导入您的电台。请稍候。</string>
+    <string name="onboarding_app_import_running">正在导入您的电台…</string>
     <!-- Strings from Classic Transistor -->
     <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
     <!-- app shortcuts -->
