@@ -118,7 +118,7 @@
     <string name="descr_player_sheet_button_minimize">Приховати відомості про станцію</string>
     <string name="toastmessage_sleep_timer_unable_to_start">Будь ласка, спочатку почніть відтворення.</string>
     <string name="dialog_button_save">Зберегти зміни</string>
-    <string name="onboarding_app_import_running">Імпорт ваших станцій. Будь ласка, почекайте.</string>
+    <string name="onboarding_app_import_running">Імпортування ваших станцій…</string>
     <string name="descr_player_playback_button">Відтворення/Зупинка</string>
     <string name="descr_player_station_image">Зображення станції</string>
     <string name="descr_expanded_player_sleep_timer_start_button">Запустити відлік сну</string>
@@ -158,7 +158,7 @@
     <string name="notification_now_playing_channel_name">Елементи керування відтворенням</string>
     <string name="station_list_button_add_new_station">Додати нову станцію</string>
     <string name="toastmessage_updating_station_images">Оновлення зображень станції.</string>
-    <string name="toastmessage_updating_station">Оновлення станції.</string>
+    <string name="toastmessage_updating_station">Оновлення станції…</string>
     <string name="toastmessage_updating_collection">Оновлення набору станцій.</string>
     <string name="toastmessage_station_not_valid">Станція недійсна.</string>
     <string name="toastmessage_station_duplicate">Подвоєння станції.</string>
@@ -203,6 +203,6 @@
     <string name="fragment_settings_title">Налаштування</string>
     <string name="pref_m3u_export_title">Експорт M3U</string>
     <string name="pref_m3u_export_summary">Збережіть свої радіостанції у файлі списку відтворення M3U, який можна імпортувати в інші програвачі.</string>
-    <string name="toastmessage_save_m3u">Збереження радіостанцій у форматі M3U.</string>
+    <string name="toastmessage_save_m3u">Збереження радіостанцій у форматі M3U…</string>
     <string name="toastmessage_install_file_helper">Будь ласка, встановіть менеджер файлів.</string>
 </resources>
