@@ -80,7 +80,7 @@
     <string name="dialog_rename_station_message">Preimenuj stanicu</string>
     <string name="toastmessage_add_open_file_started">Otvaranje datoteke.</string>
     <string name="snackbar_message_timer_set">Odbrojavanje postavljeno na</string>
-    <string name="toastmessage_updating_station">Aktualiziranje stanice.</string>
+    <string name="toastmessage_updating_station">Aktualiziranje stanice …</string>
     <string name="dialog_error_message_fetch_general_hint_m3u">Savjet: Transistor obrađuje samo MP3, AAC i Ogg/Opus kodirane emisije ili poveznice s nastavkom .m3u ili .pls.</string>
     <string name="descr_player_sheet_p_stream_url">Poveznica emisije odabrane radio stanice</string>
     <string name="dialog_yes_no_positive_button_update_covers">Aktualiziraj</string>
@@ -88,7 +88,7 @@
     <string name="dialog_yes_no_positive_button_remove_station">Ukloni</string>
     <string name="descr_playback_button_stop">Prekini</string>
     <string name="dialog_button_delete">Izbriši</string>
-    <string name="onboarding_app_import_running">Tvoje stanice se uvoz. Pričekaj.</string>
+    <string name="onboarding_app_import_running">Uvoz tvojih stanica …</string>
     <string name="dialog_error_title_no_network">Odspojen</string>
     <string name="dialog_generic_details_default">Nema detalja</string>
     <string name="toastmessage_station_copied">Stanica kopirana u međuspremnik.</string>
@@ -183,6 +183,6 @@
     <string name="dialog_yes_no_message_remove_station">Ukloniti ovu stanicu\?</string>
     <string name="pref_m3u_export_title">Izvezi M3U</string>
     <string name="pref_m3u_export_summary">Spremi radio stanice u M3U-datoteku popisa za reprodukciju, koja se može uvesti u druge uređaje za reprodukciju.</string>
-    <string name="toastmessage_save_m3u">Spremanje radio stanica kao M3U.</string>
+    <string name="toastmessage_save_m3u">Spremanje radio stanica kao M3U …</string>
     <string name="toastmessage_install_file_helper">Instaliraj upravljač datoteka.</string>
 </resources>
