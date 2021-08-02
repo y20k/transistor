@@ -160,7 +160,7 @@
     <string name="notification_now_playing_channel_description">Wiedergabesteuerungen, Sendername und Bild.</string>
     <string name="notification_now_playing_channel_name">Wiedergabesteuerung</string>
     <string name="station_list_button_add_new_station">Neuen Sender hinzufügen</string>
-    <string name="toastmessage_updating_station">Aktualisierung des Senders.</string>
+    <string name="toastmessage_updating_station">Aktualisierung des Senders…</string>
     <string name="toastmessage_updating_collection">Sammlung von Sendern aktualisieren.</string>
     <string name="toastmessage_station_not_valid">Sender ist ungültig.</string>
     <string name="toastmessage_station_duplicate">Sender duplizieren.</string>
@@ -183,7 +183,7 @@
     <string name="descr_dialog_edit_station_image">Senderbild</string>
     <string name="dialog_edit_update_station">Sender aktualisieren</string>
     <string name="dialog_edit_title">Sender bearbeiten</string>
-    <string name="onboarding_app_import_running">Importiere deine Sender. Bitte warten.</string>
+    <string name="onboarding_app_import_running">Importiere deine Sender…</string>
     <string name="toastmessage_collection_update_not_necessary">Die Sammlung der Sender ist aktuell.</string>
     <string name="toastmessage_updating_station_images">Aktualisierung von Senderbildern.</string>
     <string name="toastmessage_error_restart_playback_failed">Die Wiedergabe konnte nicht neu gestartet werden.</string>
@@ -197,6 +197,6 @@
     <string name="pref_update_collection_summary">Suchen Sie nach aktualisierten Audiostreams und neuen Senderbildern.</string>
     <string name="pref_m3u_export_title">M3U-Playlist exportieren</string>
     <string name="pref_m3u_export_summary">Speichert deine Radiosender in einer M3U-Playlistdatei, die in andere Player importiert werden kann.</string>
-    <string name="toastmessage_save_m3u">Radiosender als M3U speichern.</string>
+    <string name="toastmessage_save_m3u">Radiosender als M3U speichern…</string>
     <string name="toastmessage_install_file_helper">Bitte installiere einen Dateimanager.</string>
 </resources>
