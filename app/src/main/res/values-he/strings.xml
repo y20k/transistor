@@ -86,7 +86,7 @@
     <string name="shortcut_last_station_disabled_message">קיצור הדרך להפעלת התחנה האחרונה מושבת.</string>
     <string name="shortcut_last_station_long_label">הפעל תחנה אחרונה</string>
     <string name="shortcut_last_station_short_label">תחנה אחרונה</string>
-    <string name="onboarding_app_import_running">מייבא את התחנות שלך. המתן בבקשה.</string>
+    <string name="onboarding_app_import_running">התחנות שלך מיובאות…</string>
     <string name="onboarding_app_get_started">להתחיל</string>
     <string name="onboarding_app_description">אפליקציית רדיו</string>
     <string name="descr_player_playback_button">הפעל/השהה</string>
@@ -130,7 +130,7 @@
     <string name="notification_now_playing_channel_description">פקדי השמעה, שם תחנה ותמונה.</string>
     <string name="station_list_button_add_new_station">הוסף תחנה חדשה</string>
     <string name="toastmessage_updating_station_images">מעדכן תמונות תחנה.</string>
-    <string name="toastmessage_updating_station">מעדכן תחנה.</string>
+    <string name="toastmessage_updating_station">התחנה מתעדכנת…</string>
     <string name="toastmessage_updating_collection">מעדכן אוסף התחנות.</string>
     <string name="toastmessage_theme_night">מעבר ל \'מצב לילה\' (זוהתה לחיצה ארוכה)</string>
     <string name="toastmessage_theme_follow_system">מעבר למצב \'עקוב אחר הגדרת המערכת\' (זוהתה לחיצה ארוכה)</string>
@@ -183,6 +183,6 @@
     <string name="app_name">Transistor</string>
     <string name="pref_m3u_export_title">ייצוא M3U</string>
     <string name="pref_m3u_export_summary">ניתן לשמור את תחנות הרדיו שלך לקובץ רשימת נגינה מסוג M3U כדי שניתן יהיה לייבא אותן לנגנים אחרים.</string>
-    <string name="toastmessage_save_m3u">תחנות הרדיו נשמרות כ־M3U.</string>
+    <string name="toastmessage_save_m3u">תחנות הרדיו נשמרות כ־M3U…</string>
     <string name="toastmessage_install_file_helper">נא להתקין מנהל קבצים.</string>
 </resources>
