@@ -83,7 +83,7 @@
     <string name="toastmessage_shortcut_created">Snarvei opprettet.</string>
     <string name="toastmessage_shortcut_not_created">Snarveien ble ikke opprettet. Denne enheten tillater ikke opprettelse av snarveier.</string>
     <string name="toastmessage_list_refreshed">Laster inn stasjonsliste igjen.</string>
-    <string name="toastmessage_copied_to_clipboard">Strømningslenke kopiert til utklippstavle.</string>
+    <string name="toastmessage_copied_to_clipboard">Kopiert til utklippstavlen.</string>
     <string name="toastmessage_station_copied">Stasjon kopiert til utklippstavle.</string>
     <string name="toastmessage_stream_may_not_work">Ustøttet lydformat oppdaget. Avspilling av strømmen kan bli skadelidende.</string>
     <string name="toastmessage_timer_activated">Tidsavbrudd aktivert.</string>
