@@ -174,7 +174,7 @@
     <string name="dialog_error_message_no_network">Connectez-vous à Internet.</string>
     <string name="fragment_settings_title">Paramètres</string>
     <string name="descr_card_starred_station">Station favorite</string>
-    <string name="toastmessage_updating_station">Mise à jour de la station.</string>
+    <string name="toastmessage_updating_station">Mise à jour de la station…</string>
     <string name="dialog_button_save">Enregistrer les modifications</string>
     <string name="descr_dialog_edit_update_icon">Mettre à jour</string>
     <string name="descr_dialog_edit_station_image">Image de la station</string>
@@ -183,7 +183,7 @@
     <string name="dialog_edit_title">Modifier la station</string>
     <string name="dialog_edit_place_on_home_screen">Ajouter sur l\'écran d\'accueil</string>
     <string name="dialog_edit_choose_station_image">Sélectionner</string>
-    <string name="onboarding_app_import_running">Importation de vos stations. Veuillez patienter.</string>
+    <string name="onboarding_app_import_running">Importation de vos stations…</string>
     <string name="toastmessage_error_download_error">Erreur de téléchargement</string>
     <string name="toastmessage_updating_station_images">Mise à jour des images de la station.</string>
     <string name="toastmessage_error_restart_playback_failed">Impossible de relancer la lecture.</string>
@@ -197,6 +197,6 @@
     <string name="pref_update_collection_summary">Recherchez des flux audio mis à jour et de nouvelles images de stations.</string>
     <string name="pref_m3u_export_title">Exporter au format M3U</string>
     <string name="pref_m3u_export_summary">Enregistrez vos stations de radio dans un fichier de liste de lecture M3U qui peut être importé dans d\'autres lecteurs.</string>
-    <string name="toastmessage_save_m3u">Enregistrement des stations de radio au format M3U.</string>
+    <string name="toastmessage_save_m3u">Enregistrement des stations de radio au format M3U…</string>
     <string name="toastmessage_install_file_helper">Veuillez installer un gestionnaire de fichiers.</string>
 </resources>

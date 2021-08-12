@@ -126,7 +126,7 @@
     <string name="notification_now_playing_channel_description">Controlli di riproduzione, nome e immagine della stazione.</string>
     <string name="notification_now_playing_channel_name">Controlli riproduzione</string>
     <string name="station_list_button_add_new_station">Aggiungi Stazione</string>
-    <string name="toastmessage_updating_station">Aggiornamento stazione.</string>
+    <string name="toastmessage_updating_station">Aggiornamento stazione…</string>
     <string name="toastmessage_updating_collection">Aggiornamento della raccolta delle stazioni.</string>
     <string name="toastmessage_station_not_valid">Stazione non valida.</string>
     <string name="toastmessage_station_duplicate">Stazione già presente.</string>
@@ -169,7 +169,7 @@
     <string name="dialog_edit_title">Modifica stazione</string>
     <string name="dialog_edit_place_on_home_screen">Scorciatoia nella schermata iniziale</string>
     <string name="dialog_edit_choose_station_image">Scegli</string>
-    <string name="onboarding_app_import_running">Importazione delle tue stazioni. Si prega di attendere.</string>
+    <string name="onboarding_app_import_running">Importazione stazioni…</string>
     <string name="toastmessage_updating_station_images">Aggiornamento delle immagini stazione.</string>
     <string name="toastmessage_error_restart_playback_failed">Impossibile riavviare la riproduzione.</string>
     <string name="toastmessage_error_download_error">Errore di scaricamento</string>
@@ -183,6 +183,6 @@
     <string name="pref_about_title">Informazioni</string>
     <string name="pref_m3u_export_title">Esporta M3U</string>
     <string name="pref_m3u_export_summary">Salva le stazioni radio in un file M3U che potrà essere usato anche da altri lettori.</string>
-    <string name="toastmessage_save_m3u">Salvataggio delle stazioni radio in formato M3U.</string>
+    <string name="toastmessage_save_m3u">Salvataggio delle stazioni radio in formato M3U…</string>
     <string name="toastmessage_install_file_helper">Installare un gestore di file.</string>
 </resources>

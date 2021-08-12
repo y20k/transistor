@@ -52,14 +52,14 @@
     <string name="toastmessage_error_no_station_found">Unable to start playback. Please add a radio station first.</string>
     <string name="toastmessage_error_restart_playback_failed">Unable to restart playback.</string>
     <string name="toastmessage_install_file_helper">Please install a file manager.</string>
-    <string name="toastmessage_save_m3u">Saving radio stations as M3U.</string>
+    <string name="toastmessage_save_m3u">Saving radio stations as M3U…</string>
     <string name="toastmessage_station_duplicate">Duplicate station.</string>
     <string name="toastmessage_station_not_valid">Station is not valid.</string>
     <string name="toastmessage_theme_day">Switching to \'Day mode\' (long press detected)</string>
     <string name="toastmessage_theme_follow_system">Switching to \'Follow System Setting mode\' (long press detected)</string>
     <string name="toastmessage_theme_night">Switching to \'Night mode\' (long press detected)</string>
     <string name="toastmessage_updating_collection">Updating collection of stations.</string>
-    <string name="toastmessage_updating_station">Updating station.</string>
+    <string name="toastmessage_updating_station">Updating station…</string>
     <string name="toastmessage_updating_station_images">Updating station images.</string>
     <!-- Station List -->
     <string name="station_list_button_add_new_station">Add new station</string>
@@ -110,7 +110,7 @@
     <!-- Onboarding -->
     <string name="onboarding_app_description">Radio App</string>
     <string name="onboarding_app_get_started">Get started</string>
-    <string name="onboarding_app_import_running">Importing your stations. Please wait.</string>
+    <string name="onboarding_app_import_running">Importing your stations…</string>
     <string name="onboarding_app_rodriguez_quote_1" translatable="false">It started out with butterflies</string>
     <string name="onboarding_app_rodriguez_quote_2" translatable="false">On a velvet afternoon</string>
     <string name="player_sheet_p_no_data" translatable="false">-</string>
