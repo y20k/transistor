@@ -160,7 +160,7 @@
     <string name="dialog_error_message_no_network">Sambungkan ke internet.</string>
     <string name="fragment_settings_title">Pengaturan</string>
     <string name="descr_card_starred_station">Stasiun favorit</string>
-    <string name="toastmessage_updating_station">Memperbarui stasiun.</string>
+    <string name="toastmessage_updating_station">Memperbarui stasiun…</string>
     <string name="descr_dialog_edit_place_on_home_screen_icon">Membuat pintasan di layar Beranda</string>
     <string name="dialog_edit_place_on_home_screen">Pintasan di layar Beranda</string>
     <string name="dialog_button_save">Simpan perubahan</string>
@@ -169,7 +169,7 @@
     <string name="dialog_edit_update_station">Perbarui stasiun</string>
     <string name="dialog_edit_title">Sunting Stasiun</string>
     <string name="dialog_edit_choose_station_image">Pilih</string>
-    <string name="onboarding_app_import_running">Mengimpor stasiun Anda. Silakan tunggu.</string>
+    <string name="onboarding_app_import_running">Mengimpor stasiun Anda…</string>
     <string name="toastmessage_error_download_error">Gagal mengunduh</string>
     <string name="toastmessage_collection_update_not_necessary">Stasiun sudah yang terbaru.</string>
     <string name="toastmessage_updating_station_images">Memperbarui gambar stasiun.</string>
@@ -183,6 +183,6 @@
     <string name="pref_update_collection_summary">Memperbarui stream audio dan gambar stasiun yang baru.</string>
     <string name="pref_m3u_export_title">Ekspor M3U</string>
     <string name="pref_m3u_export_summary">Simpan stasiun radio Anda ke berkas daftar putar M3U yang bisa diimpor ke pemutar lain.</string>
-    <string name="toastmessage_save_m3u">Menyimpan stasiun radio sebagai M3U.</string>
+    <string name="toastmessage_save_m3u">Menyimpan stasiun radio sebagai M3U…</string>
     <string name="toastmessage_install_file_helper">Silakan pasang pengelola berkas.</string>
 </resources>
