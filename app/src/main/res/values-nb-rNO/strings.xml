@@ -106,7 +106,7 @@
     <string name="notification_channel_playback_description">Avspillingskontroller, stasjonslogo og info om hva som spilles.</string>
     <!-- onboarding -->
     <string name="onboarding_app_description">Radio-program</string>
-    <string name="onboarding_app_get_started">Kom igang</string>
+    <string name="onboarding_app_get_started">Begynn</string>
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7
     https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
