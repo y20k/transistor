@@ -121,7 +121,7 @@
     <string name="toastmessage_error_restart_playback_failed">Não foi possível reestabelecer a reprodução.</string>
     <string name="toastmessage_collection_update_not_necessary">A coleção de estações está atualizada.</string>
     <string name="toastmessage_error_download_error">Erro no descrarregamento</string>
-    <string name="onboarding_app_import_running">A importar os seus rádios. Por favor, aguarde.</string>
+    <string name="onboarding_app_import_running">A importando as suas estações…</string>
     <string name="dialog_button_save">Gravar alterações</string>
     <string name="descr_dialog_edit_update_icon">Atualizar</string>
     <string name="descr_dialog_edit_station_image">Imagem da estação</string>
@@ -131,7 +131,7 @@
     <string name="dialog_edit_place_on_home_screen">Pôr no ecrã inicial</string>
     <string name="dialog_edit_choose_station_image">Escolha</string>
     <string name="descr_card_starred_station">Estação com estrela</string>
-    <string name="toastmessage_updating_station">Atualizando rádio.</string>
+    <string name="toastmessage_updating_station">A atualizar a estação…</string>
     <string name="toastmessage_sleep_timer_unable_to_start">Por favor iniciar a reprodução primeiro.</string>
     <string name="descr_player_playback_button">Reproduzir/parar</string>
     <string name="descr_player_station_image">Imagem da estação</string>
@@ -195,4 +195,8 @@
     <string name="dialog_error_title_no_network">Offline</string>
     <string name="dialog_error_message_no_network">Conecte à Internet.</string>
     <string name="fragment_settings_title">Configurações</string>
+    <string name="pref_m3u_export_title">Exportar M3U</string>
+    <string name="pref_m3u_export_summary">Grave as suas estações de rádio num ficheiro de lista de reprodução M3U que pode ser importado em outros reprodutores.</string>
+    <string name="toastmessage_save_m3u">A gravar estações de rádio como M3U…</string>
+    <string name="toastmessage_install_file_helper">Por favor, instale um gestor de ficheiros.</string>
 </resources>
