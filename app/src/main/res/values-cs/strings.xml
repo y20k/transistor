@@ -125,7 +125,7 @@
     <string name="dialog_yes_no_negative_button_add_up_next">Přidat do \'Fronty\'</string>
     <string name="toastmessage_sleep_timer_unable_to_start">Nejprve spusťte přehrávání.</string>
     <string name="dialog_button_save">Uložit změny</string>
-    <string name="onboarding_app_import_running">Importují se vaše stanice. Počkejte prosím.</string>
+    <string name="onboarding_app_import_running">Importují se vaše stanice…</string>
     <string name="descr_player_playback_button">Přehrát/pozastavit</string>
     <string name="descr_player_station_image">Obrázek stanice</string>
     <string name="descr_expanded_player_sleep_timer_start_button">Spustit časovač spánku</string>
@@ -167,11 +167,11 @@
     <string name="notification_now_playing_channel_name">Ovládací prvky přehrávání</string>
     <string name="station_list_button_add_new_station">Přidat novou stanici</string>
     <string name="toastmessage_updating_station_images">Aktualizace obrázků stanic.</string>
-    <string name="toastmessage_updating_station">Aktualizace stanice.</string>
+    <string name="toastmessage_updating_station">Aktualizace stanice…</string>
     <string name="toastmessage_updating_collection">Aktualizace kolekce stanic.</string>
     <string name="toastmessage_station_not_valid">Stanice není platná.</string>
     <string name="toastmessage_station_duplicate">Duplicitní stanice.</string>
-    <string name="toastmessage_save_m3u">Ukládání rozhlasových stanic jako M3U.</string>
+    <string name="toastmessage_save_m3u">Ukládání rozhlasových stanic jako M3U…</string>
     <string name="toastmessage_install_file_helper">Nainstalujte správce souborů.</string>
     <string name="toastmessage_error_restart_playback_failed">Přehrávání nelze restartovat.</string>
     <string name="toastmessage_error_no_station_found">Přehrávání nelze spustit. Nejprve přidejte rozhlasovou stanici.</string>
