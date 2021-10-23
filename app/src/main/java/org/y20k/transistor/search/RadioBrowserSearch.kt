@@ -10,6 +10,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import org.json.JSONArray
+import org.y20k.transistor.BuildConfig
 import org.y20k.transistor.Keys
 import org.y20k.transistor.helpers.LogHelper
 import org.y20k.transistor.helpers.NetworkHelper

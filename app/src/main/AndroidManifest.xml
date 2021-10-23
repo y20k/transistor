@@ -31,7 +31,9 @@
         <meta-data android:name="com.google.android.gms.car.notification.SmallIcon"
             android:resource="@mipmap/ic_launcher" />
 
-        <activity android:name=".PlayerServiceStarterActivity">
+        <activity
+            android:name=".PlayerServiceStarterActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="org.y20k.transistor.action.START_PLAYER_SERVICE" />
             </intent-filter>
@@ -40,7 +42,8 @@
         <!-- Main activity for radio station playback on phone -->
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:exported="true">
 
             <!-- react to main intents -->
             <intent-filter>
@@ -126,7 +129,9 @@
 
 
         <!-- handles completed downloads -->
-        <receiver android:name=".helpers.DownloadFinishedReceiver" >
+        <receiver
+            android:name=".helpers.DownloadFinishedReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
             </intent-filter>
@@ -134,7 +139,9 @@
 
 
         <!-- handles media buttons -->
-        <receiver android:name="androidx.media.session.MediaButtonReceiver">
+        <receiver
+            android:name="androidx.media.session.MediaButtonReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MEDIA_BUTTON" />
             </intent-filter>
