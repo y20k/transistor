@@ -50,6 +50,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginBottom="2dp"
             android:contentDescription="@string/descr_card_starred_station"
+            android:foregroundTint="@color/icon_default"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/station_icon"
             app:layout_constraintTop_toTopOf="parent"

@@ -156,7 +156,7 @@ object UiHelper {
      */
     abstract class SwipeToMarkStarredCallback(context: Context): ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
 
-        private val starIcon = ContextCompat.getDrawable(context, R.drawable.ic_star_white_24dp)
+        private val starIcon = ContextCompat.getDrawable(context, R.drawable.ic_star_24dp)
         private val intrinsicWidth: Int = starIcon?.intrinsicWidth ?: 0
         private val intrinsicHeight: Int = starIcon?.intrinsicHeight ?: 0
         private val background: ColorDrawable = ColorDrawable()

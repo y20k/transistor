@@ -97,7 +97,7 @@
         android:layout_height="68dp"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="2dp"
-        android:indeterminateTint="@color/transistor_accent_light"
+        android:indeterminateTint="@color/player_button_buffering"
         android:indeterminateTintMode="src_in"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
