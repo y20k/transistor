@@ -5,16 +5,16 @@
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
         <!-- Set AppCompat’s colors -->
-        <item name="colorPrimary">@color/transistor_grey_dark</item>
-        <item name="colorPrimaryDark">@color/transistor_grey_darker</item>
-        <item name="colorAccent">@color/transistor_red</item>
+        <item name="colorPrimary">@color/transistor_neutral_darker</item>
+        <item name="colorPrimaryDark">@color/transistor_neutral_very_dark</item>
+        <item name="colorAccent">@color/transistor_accent_dimmed</item>
 
         <!-- Show white status bar -->
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:statusBarColor">@color/status_bar_background</item>
 
         <!-- Default window background used for resizing on v24) -->
-        <item name="android:windowBackgroundFallback">@color/transistor_grey_darker</item>
+        <item name="android:windowBackgroundFallback">@color/transistor_neutral_very_dark</item>
 
         <!-- Colors used by playback seek bar -->
         <!-- <item name="android:colorControlActivated"></item> -->

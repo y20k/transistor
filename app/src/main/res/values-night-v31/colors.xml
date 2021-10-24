@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <!-- NIGHT THEME COLORS -->
+    <color name="player_play_pause_icon">@color/transistor_neutral_very_dark</color>
+
+</resources>

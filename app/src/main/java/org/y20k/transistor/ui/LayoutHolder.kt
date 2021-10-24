@@ -220,10 +220,10 @@ data class LayoutHolder(var rootView: View) {
     fun togglePlayButton(playbackState: Int) {
         when (playbackState) {
             PlaybackStateCompat.STATE_PLAYING -> {
-                playButtonView.setImageResource(R.drawable.ic_stop_symbol_white_36dp)
+                playButtonView.setImageResource(R.drawable.ic_player_stop_symbol_36dp)
             }
             else -> {
-                playButtonView.setImageResource(R.drawable.ic_play_symbol_white_36dp)
+                playButtonView.setImageResource(R.drawable.ic_player_play_symbol_36dp)
             }
         }
     }

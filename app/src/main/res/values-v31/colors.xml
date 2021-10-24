@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <!-- DAY THEME COLORS -->
+    <color name="player_play_pause_icon">@color/transistor_neutral_very_dark</color>
+
+
+    <!-- ADAPTIVE BASE COLORS - Android S - https://developer.android.com/reference/android/R.color#system_accent1_0 -->
+    <color name="transistor_neutral_dark1">#FF595959</color>
+    <color name="transistor_neutral_dark">@android:color/system_neutral1_600</color>
+
+    <color name="transistor_neutral_darker1">#FF414141</color>
+    <color name="transistor_neutral_darker">@android:color/system_neutral1_800</color>
+
+    <color name="transistor_neutral_very_dark1">#FF2D2D2D</color>
+    <color name="transistor_neutral_very_dark">@android:color/system_neutral1_900</color>
+
+    <color name="transistor_neutral_medium_light1">#FF7D7D7D</color>
+    <color name="transistor_neutral_medium_light">@android:color/system_neutral1_300</color>
+
+    <color name="transistor_neutral_light1">#FFDADADA</color>
+    <color name="transistor_neutral_light">@android:color/system_neutral1_100</color>
+
+    <color name="transistor_neutral_lighter1">#FFDADADA</color>
+    <color name="transistor_neutral_lighter">@android:color/system_neutral1_50</color>
+
+    <color name="transistor_neutral_very_light1">#FFF2F2F2</color>
+    <color name="transistor_neutral_very_light">@android:color/system_neutral1_10</color>
+
+    <color name="transistor_accent_intense1">#FFDC3D33</color>
+    <color name="transistor_accent_intense">@android:color/system_accent1_100</color>
+
+    <color name="transistor_accent_light1">#FFE17E77</color>
+    <color name="transistor_accent_light">@android:color/system_accent1_50</color>
+
+    <color name="transistor_accent_dimmed1">#FFAD261E</color>
+    <color name="transistor_accent_dimmed">@android:color/system_accent1_600</color>
+
+    <color name="transistor_neutral_black1">#FF121212</color>
+    <color name="transistor_neutral_black">@android:color/system_neutral1_1000</color>
+
+    <color name="transistor_neutral_white1">#FFFFFFFF</color>
+    <color name="transistor_neutral_white">@android:color/system_neutral1_0</color>
+
+</resources>

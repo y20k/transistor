@@ -2,39 +2,40 @@
 <resources>
 
     <!-- NIGHT THEME COLORS -->
-    <color name="app_window_background">@color/transistor_black</color>
-    <color name="status_bar_background">@color/transistor_black</color>
-    <color name="app_onboarding_icons">@color/transistor_white</color>
+    <color name="app_window_background">@color/transistor_neutral_black</color>
+    <color name="status_bar_background">@color/transistor_neutral_black</color>
+    <color name="app_onboarding_icons">@color/transistor_neutral_white</color>
 
-    <color name="toolbar_background">@color/transistor_black</color>
+    <color name="toolbar_background">@color/transistor_neutral_black</color>
     <!-- <color name="toolbar_text">@color/transistor_white</color> -->
 
-    <color name="text_default">@color/transistor_white</color>
-    <color name="text_lightweight">@color/transistor_grey_very_light</color>
+    <color name="text_default">@color/transistor_neutral_white</color>
+    <color name="text_lightweight">@color/transistor_neutral_very_light</color>
 
-    <color name="icon_default">@color/transistor_white</color>
-    <color name="icon_lightweight">@color/transistor_grey_very_light</color>
-    <color name="icon_very_lightweight">@color/transistor_grey_lighter</color>
+    <color name="icon_default">@color/transistor_neutral_white</color>
+    <color name="icon_lightweight">@color/transistor_neutral_very_light</color>
+    <color name="icon_very_lightweight">@color/transistor_neutral_light</color>
 
-    <color name="player_button_background">@color/transistor_red</color>
-    <color name="player_background">@color/transistor_grey_dark</color>
-    <color name="player_sheet_text_main">@color/transistor_white</color>
-    <color name="player_sheet_background">@color/transistor_grey_darker</color>
-    <color name="player_sheet_background_border">@color/transistor_grey_dark</color>
+    <color name="player_play_pause_icon">@color/transistor_neutral_very_light</color>
+    <color name="player_button_background">@color/transistor_accent_intense</color>
+    <color name="player_background">@color/transistor_neutral_darker</color>
+    <color name="player_sheet_text_main">@color/transistor_neutral_white</color>
+    <color name="player_sheet_background">@color/transistor_neutral_very_dark</color>
+    <color name="player_sheet_background_border">@color/transistor_neutral_darker</color>
     <!-- <color name="player_sheet_background">@color/transistor_grey_dark</color> -->
-    <color name="player_sheet_text_details">@color/transistor_white</color>
-    <color name="player_sheet_icon">@color/transistor_white</color>
+    <color name="player_sheet_text_details">@color/transistor_neutral_white</color>
+    <color name="player_sheet_icon">@color/transistor_neutral_white</color>
 
-    <color name="show_notes_divider">@color/transistor_grey</color>
+    <color name="show_notes_divider">@color/transistor_neutral_dark</color>
 
-    <color name="list_card_background">@color/transistor_grey_dark</color>
-    <color name="list_card_background_starred">@color/transistor_red_darker</color>
-    <color name="list_card_cover_background">@color/transistor_grey_darker</color>
-    <color name="list_card_delete_background">@color/transistor_red</color>
-    <color name="list_card_mark_starred_background">@color/transistor_grey_darker</color>
-    <color name="list_card_station_buffering_progress_background">@color/transistor_grey_light</color>
+    <color name="list_card_background">@color/transistor_neutral_darker</color>
+    <color name="list_card_background_starred">@color/transistor_accent_dimmed</color>
+    <color name="list_card_cover_background">@color/transistor_neutral_very_dark</color>
+    <color name="list_card_delete_background">@color/transistor_accent_intense</color>
+    <color name="list_card_mark_starred_background">@color/transistor_neutral_very_dark</color>
+    <color name="list_card_station_buffering_progress_background">@color/transistor_neutral_medium_light</color>
 
-    <color name="search_result_background">@color/transistor_grey_dark</color>
-    <color name="search_result_background_selected">@color/transistor_grey</color>
+    <color name="search_result_background">@color/transistor_neutral_darker</color>
+    <color name="search_result_background_selected">@color/transistor_neutral_dark</color>
 
 </resources>
