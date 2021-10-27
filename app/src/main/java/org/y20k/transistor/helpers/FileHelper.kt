@@ -25,8 +25,10 @@ import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.y20k.transistor.Keys
 import org.y20k.transistor.core.Collection
 import org.y20k.transistor.core.Station
@@ -310,11 +312,10 @@ object FileHelper {
 
 
     /* Suspend function: Wrapper for readCollection */
-    suspend fun readCollectionSuspended(context: Context): Collection {
-        return suspendCoroutine {cont ->
-            cont.resume(readCollection(context))
+    suspend fun readCollectionSuspended(context: Context): Collection =
+        withContext(Dispatchers.IO) {
+            readCollection(context)
         }
-    }
 
 
     /* Suspend function: Wrapper for copyFile */

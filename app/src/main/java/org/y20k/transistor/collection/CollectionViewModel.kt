@@ -21,6 +21,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import kotlinx.coroutines.*
 import org.y20k.transistor.Keys
@@ -44,8 +45,6 @@ class CollectionViewModel(application: Application) : AndroidViewModel(applicati
     val collectionSizeLiveData: MutableLiveData<Int> = MutableLiveData<Int>()
     private var modificationDateViewModel: Date = Date()
     private var collectionChangedReceiver: BroadcastReceiver
-    private val backgroundJob = Job()
-    private val uiScope = CoroutineScope(Dispatchers.Main + backgroundJob)
 
 
     /* Init constructor */
@@ -61,7 +60,6 @@ class CollectionViewModel(application: Application) : AndroidViewModel(applicati
     /* Overrides onCleared */
     override fun onCleared() {
         super.onCleared()
-        backgroundJob.cancel()
         LocalBroadcastManager.getInstance(getApplication()).unregisterReceiver(collectionChangedReceiver)
     }
 
@@ -86,11 +84,9 @@ class CollectionViewModel(application: Application) : AndroidViewModel(applicati
     /* Reads collection of radio stations from storage using GSON */
     private fun loadCollection(context: Context) {
         LogHelper.v(TAG, "Loading collection of stations from storage")
-        uiScope.launch {
+        viewModelScope.launch {
             // load collection on background thread
-            val deferred: Deferred<Collection> = async(Dispatchers.Default) { FileHelper.readCollectionSuspended(getApplication()) }
-            // wait for result
-            val collection: Collection = deferred.await()
+            val collection: Collection = FileHelper.readCollectionSuspended(getApplication())
             // get updated modification date
             modificationDateViewModel = collection.modificationDate
             // update collection view model
