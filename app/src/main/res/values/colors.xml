@@ -3,12 +3,10 @@
 <resources>
     <!-- DAY THEME COLORS -->
     <color name="app_window_background">@color/transistor_neutral_lighter</color>
-    <color name="status_bar_background">@color/transistor_neutral_white</color>
-    <color name="action_bar_background">@color/transistor_neutral_very_light</color>
+    <color name="status_bar_background">@color/transistor_neutral_light</color>
     <color name="app_onboarding_icons">@color/transistor_neutral_darker</color>
 
-    <color name="toolbar_background">@color/transistor_neutral_white</color>
-    <!-- <color name="toolbar_text">@color/text_default</color> -->
+    <color name="toolbar_background">@color/transistor_neutral_light</color>
 
     <color name="text_default">@color/transistor_neutral_darker</color>
     <color name="text_lightweight">@color/transistor_neutral_dark</color>
@@ -16,27 +14,24 @@
 
     <color name="icon_default">@color/transistor_neutral_dark</color>
     <color name="icon_lightweight">@color/transistor_neutral_medium_light</color>
-    <color name="icon_very_lightweight">@color/transistor_neutral_light</color>
 
     <color name="player_play_pause_icon">@color/transistor_neutral_very_light</color>
     <color name="player_button_background">@color/transistor_accent_intense</color>
     <color name="player_button_buffering">@color/transistor_accent_light</color>
-    <color name="player_sheet_text_main">@color/transistor_neutral_white</color>
     <color name="player_sheet_background">@color/transistor_neutral_darker</color>
     <color name="player_sheet_background_border">@color/transistor_neutral_dark</color>
+    <color name="player_sheet_text_main">@color/transistor_neutral_white</color>
     <color name="player_sheet_text_details">@color/transistor_neutral_white</color>
     <color name="player_sheet_icon">@color/transistor_neutral_white</color>
 
-    <color name="list_card_background">@color/transistor_neutral_white</color>
-    <color name="list_card_background_starred">@color/transistor_accent_intense</color>
-    <color name="list_card_cover_background">@color/transistor_neutral_very_light</color>
-    <color name="list_card_delete_background">@color/escapepod_red</color>
+    <color name="list_card_background">@color/transistor_neutral_very_light</color>
+    <color name="list_card_cover_background">@color/transistor_neutral_lighter</color>
+    <color name="list_card_delete_background">@color/transistor_red</color>
     <color name="list_card_mark_starred_background">@color/transistor_neutral_medium_light</color>
     <color name="list_card_mark_starred_star">@color/transistor_neutral_very_light</color>
-    <color name="list_card_station_buffering_progress_background">@color/transistor_neutral_light</color>
 
     <color name="search_result_background">@color/transistor_neutral_very_light</color>
-    <color name="search_result_background_selected">@color/transistor_neutral_light</color>
+    <color name="search_result_background_selected">@color/transistor_neutral_lighter</color>
 
     <!-- BASES COLORS -->
     <color name="transistor_neutral_dark">#FF595959</color> <!-- derived from recommended dark theme surface color -->
@@ -55,7 +50,7 @@
     <color name="transistor_neutral_white">#FFFFFFFF</color>
     <color name="transistor_transparent">#00ffffff</color>
 
-    <color name="escapepod_red">#FFDC3D33</color><!-- Slightly muted variant of -> Material Design 2: Red 600 -->
+    <color name="transistor_red">#FFDC3D33</color><!-- Slightly muted variant of -> Material Design 2: Red 600 -->
 <!--    <color name="transistor_red_light">#FFE15950</color>-->
 <!--    <color name="transistor_red_dark">#FFCA2D23</color>-->
 

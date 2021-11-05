@@ -9,7 +9,7 @@
         <item name="colorPrimaryDark">@color/transistor_neutral_very_dark</item>
         <item name="colorAccent">@color/transistor_accent_dimmed</item>
 
-        <!-- Show white status bar -->
+        <!-- Show light status bar -->
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:statusBarColor">@color/status_bar_background</item>
 
