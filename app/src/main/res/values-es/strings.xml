@@ -112,7 +112,7 @@
     https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
     <string name="toastmessage_sleep_timer_unable_to_start">Por favor, inicie reproducción primero.</string>
     <string name="dialog_button_save">Guardar cambios</string>
-    <string name="onboarding_app_import_running">Importando emisoras. Espere por favor.</string>
+    <string name="onboarding_app_import_running">Importando emisoras…</string>
     <string name="descr_player_playback_button">Iniciar/pausar</string>
     <string name="descr_player_station_image">Imagen de emisora</string>
     <string name="descr_expanded_player_sleep_timer_start_button">Iniciar tiempo de apagado</string>
@@ -152,7 +152,7 @@
     <string name="notification_now_playing_channel_name">Controles de Reproducción</string>
     <string name="station_list_button_add_new_station">Agregar nueva emisora</string>
     <string name="toastmessage_updating_station_images">Actualizando imágenes de emisora.</string>
-    <string name="toastmessage_updating_station">Actualizando emisora.</string>
+    <string name="toastmessage_updating_station">Actualizando emisora…</string>
     <string name="toastmessage_updating_collection">Actualizando colección de emisoras.</string>
     <string name="toastmessage_station_not_valid">Emisora no valida.</string>
     <string name="toastmessage_error_no_station_found">No pudo iniciarse la reproducción. Por favor, agregue primero una emisora.</string>
@@ -197,6 +197,6 @@
     <string name="fragment_settings_title">Configuración</string>
     <string name="pref_m3u_export_summary">Guarde sus emisoras de radio en un archivo de lista de reproducción M3U para que se pueda importar a otros reproductores.</string>
     <string name="pref_m3u_export_title">Exportar M3U</string>
-    <string name="toastmessage_save_m3u">Guardar emisora de radio como M3U.</string>
+    <string name="toastmessage_save_m3u">Guardar emisora de radio como M3U…</string>
     <string name="toastmessage_install_file_helper">Por favor instale un administrador de archivos.</string>
 </resources>
