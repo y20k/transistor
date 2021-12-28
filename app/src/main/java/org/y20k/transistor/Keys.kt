@@ -71,6 +71,8 @@ object Keys {
     const val CMD_CANCEL_SLEEP_TIMER: String = "CANCEL_SLEEP_TIMER"
     const val CMD_PLAY_STREAM: String = "PLAY_STREAM"
 
+    const val CMD_UPDATE_AUDIO_FOCUS_SETTING: String = "UPDATE_AUDIO_FOCUS_SETTING"
+
     // preferences
     const val PREF_RADIO_BROWSER_API: String = "RADIO_BROWSER_API"
     const val PREF_ONE_TIME_HOUSEKEEPING_NECESSARY: String = "ONE_TIME_HOUSEKEEPING_NECESSARY_VERSIONCODE_72" // increment to current app version code to trigger housekeeping that runs only once
@@ -92,6 +94,7 @@ object Keys {
     const val PREF_EDIT_STATIONS: String = "EDIT_STATIONS"
     const val PREF_EDIT_STREAMS_URIS: String = "EDIT_STREAMS_URIS"
 
+    const val PREF_HANDLE_AUDIO_FOCUS: String = "PREF_HANDLE_AUDIO_FOCUS"
 
     // states
     const val STATE_SLEEP_TIMER_STOPPED: Int = 0

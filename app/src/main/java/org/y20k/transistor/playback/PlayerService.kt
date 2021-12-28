@@ -92,6 +92,7 @@ class PlayerService(): MediaBrowserServiceCompat() {
     private lateinit var sleepTimer: CountDownTimer
     private var sleepTimerTimeRemaining: Long = 0L
     private var playbackRestartCounter: Int = 0
+    private var handleAudioFocus: Boolean = true
 
     private val attributes = AudioAttributes.Builder()
             .setContentType(C.CONTENT_TYPE_MUSIC)
@@ -126,6 +127,10 @@ class PlayerService(): MediaBrowserServiceCompat() {
 
         // fetch the metadata history
         metadataHistory = PreferencesHelper.loadMetadataHistory()
+
+        // fetch handle audio focus setting
+        handleAudioFocus = PreferencesHelper.loadHandleAudioFocus()
+        player.setAudioAttributes(attributes, handleAudioFocus)
 
         // create a new MediaSession
         createMediaSession()
@@ -739,6 +744,15 @@ class PlayerService(): MediaBrowserServiceCompat() {
                     station = CollectionHelper.getStationWithStreamUri(collection, streamUri)
                     preparePlayer(true)
                     return true
+                }
+                Keys.CMD_UPDATE_AUDIO_FOCUS_SETTING -> {
+                    if (player is SimpleExoPlayer) {
+                        handleAudioFocus = PreferencesHelper.loadHandleAudioFocus()
+                        player.setAudioAttributes(attributes, handleAudioFocus)
+                        return true
+                    } else {
+                        return false
+                    }
                 }
                 else -> {
                     return false
