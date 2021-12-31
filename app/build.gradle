@@ -82,7 +82,7 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
 
-    implementation 'androidx.work:work-runtime-ktx:2.7.0'
+    implementation 'androidx.work:work-runtime-ktx:2.7.1'
 
     def exoplayerVersion = "2.15.1"
     implementation "com.google.android.exoplayer:exoplayer:$exoplayerVersion"
