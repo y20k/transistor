@@ -6,7 +6,7 @@
  * This file is part of
  * TRANSISTOR - Radio App for Android
  *
- * Copyright (c) 2015-21 - Y20K.org
+ * Copyright (c) 2015-22 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
  */
@@ -46,22 +46,6 @@ class PlayerController (private val mediaController: MediaControllerCompat) {
     /* Stop playback */
     fun stop() {
         transportControls.stop()
-    }
-
-    /* Skip back 10 seconds */
-    fun skipBack() {
-        transportControls.skipToPrevious()
-    }
-
-    /* Skip forward 30 seconds */
-    fun skipForward(episodeDuration: Long) {
-        transportControls.skipToNext()
-    }
-
-
-    /* Seek to given position */
-    fun seekTo(position: Long) {
-        transportControls.seekTo(position)
     }
 
 

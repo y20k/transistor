@@ -6,7 +6,7 @@
  * This file is part of
  * TRANSISTOR - Radio App for Android
  *
- * Copyright (c) 2015-21 - Y20K.org
+ * Copyright (c) 2015-22 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
  */
@@ -708,7 +708,7 @@ class PlayerService(): MediaBrowserServiceCompat() {
 
             // SPECIAL CASE: Empty query - user provided generic string e.g. 'Play music'
             if (query.isEmpty()) {
-                // try to get newest episode
+                // try to get first station
                 val stationMediaItem: MediaBrowserCompat.MediaItem? = collectionProvider.getFirstStation()
                 if (stationMediaItem != null) {
                     onPrepareFromMediaId(stationMediaItem.mediaId!!, playWhenReady = true, extras = null)
@@ -718,7 +718,7 @@ class PlayerService(): MediaBrowserServiceCompat() {
                     LogHelper.e(TAG, "Unable to start playback. Please add a radio station first. (Collection size = ${collection.stations.size} | provider initialized = ${collectionProvider.isInitialized()})")
                 }
             }
-            // NORMAL CASE: Try to match podcast name and voice query
+            // NORMAL CASE: Try to match station name and voice query
             else {
                 val queryLowercase: String = query.lowercase(Locale.getDefault())
                 collectionProvider.stationListByName.forEach { mediaItem ->
@@ -726,7 +726,7 @@ class PlayerService(): MediaBrowserServiceCompat() {
                     val stationName: String = mediaItem.description.title.toString().lowercase(Locale.getDefault())
                     // FIRST: try to match the whole query
                     if (stationName == queryLowercase) {
-                        // start playback of newest podcast episode
+                        // start playback
                         onPrepareFromMediaId(mediaItem.description.mediaId!!, playWhenReady = true, extras = null)
                         return
                     }
@@ -756,7 +756,7 @@ class PlayerService(): MediaBrowserServiceCompat() {
                 }
                 Keys.CMD_REQUEST_PROGRESS_UPDATE -> {
                     if (cb != null) {
-                        // check if episode has been prepared - assumes that then the player has been prepared as well
+                        // check if station is valid - assumes that then the player has been prepared as well
                         if (station.isValid()) {
                             val playbackProgressBundle: Bundle = bundleOf(Keys.RESULT_DATA_METADATA to metadataHistory)
                             if (sleepTimerTimeRemaining > 0L) {

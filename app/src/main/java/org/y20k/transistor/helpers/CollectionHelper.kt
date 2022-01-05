@@ -6,7 +6,7 @@
  * This file is part of
  * TRANSISTOR - Radio App for Android
  *
- * Copyright (c) 2015-21 - Y20K.org
+ * Copyright (c) 2015-22 - Y20K.org
  * Licensed under the MIT-License
  * http://opensource.org/licenses/MIT
  */
@@ -458,7 +458,7 @@ object CollectionHelper {
     }
 
 
-    /* Creates description for a single episode - used in MediaSessionConnector */
+    /* Creates description for a station - used in MediaSessionConnector */
     fun buildStationMediaDescription(context: Context, station: Station, metadata: String): MediaDescriptionCompat {
         val coverBitmap: Bitmap = ImageHelper.getScaledStationImage(context, station.image, Keys.SIZE_COVER_LOCK_SCREEN)
         val extras: Bundle = Bundle()
@@ -472,8 +472,6 @@ object CollectionHelper {
             setExtras(extras)
         }.build()
     }
-
-
 
 
     /* Creates a fallback station - stupid hack for Android Auto compatibility :-/ */

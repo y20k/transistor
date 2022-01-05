@@ -1,3 +1,17 @@
+/*
+ * RadioBrowserSearch.kt
+ * Implements the RadioBrowserSearch class
+ * A RadioBrowserSearch performs searches on the radio-browser.info database
+ *
+ * This file is part of
+ * TRANSISTOR - Radio App for Android
+ *
+ * Copyright (c) 2015-22 - Y20K.org
+ * Licensed under the MIT-License
+ * http://opensource.org/licenses/MIT
+ */
+
+
 package org.y20k.transistor.search
 
 import android.content.Context
@@ -16,6 +30,10 @@ import org.y20k.transistor.helpers.LogHelper
 import org.y20k.transistor.helpers.NetworkHelper
 import org.y20k.transistor.helpers.PreferencesHelper
 
+
+/*
+ * RadioBrowserSearch class
+ */
 class RadioBrowserSearch(private var radioBrowserSearchListener: RadioBrowserSearchListener) {
 
     /* Interface used to send back search results */
