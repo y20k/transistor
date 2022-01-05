@@ -24,6 +24,7 @@ import android.support.v4.media.MediaDescriptionCompat
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import android.widget.Toast
+import androidx.core.net.toUri
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.*
@@ -467,6 +468,7 @@ object CollectionHelper {
         return MediaDescriptionCompat.Builder().apply {
             setMediaId(station.uuid)
             setIconBitmap(coverBitmap)
+            setIconUri(station.image.toUri())
             setTitle(metadata)
             setSubtitle(station.name)
             setExtras(extras)
