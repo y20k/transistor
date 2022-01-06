@@ -3,7 +3,8 @@
 
     <!-- NIGHT THEME COLORS -->
     <color name="app_window_background">@color/transistor_neutral_black</color>
-    <color name="status_bar_background">@color/transistor_neutral_darker</color>
+    <color name="status_bar_background">@color/transistor_neutral_very_dark</color>
+    <color name="dialog_background">@color/transistor_neutral_darker</color>
     <color name="app_onboarding_icons">@color/transistor_neutral_white</color>
 
     <color name="toolbar_background">@color/transistor_neutral_darker</color>
@@ -27,6 +28,8 @@
     <color name="list_card_background">@color/transistor_neutral_very_dark</color>
     <color name="list_card_cover_background">@color/transistor_neutral_very_dark</color>
     <color name="list_card_delete_background">@color/transistor_red</color>
+<!--    <color name="list_card_mark_starred_star">@color/transistor_neutral_very_dark</color>-->
+<!--    <color name="list_card_mark_starred_background">@color/transistor_accent_intense</color>-->
     <color name="list_card_mark_starred_background">@color/transistor_neutral_medium_light</color>
     <color name="list_card_mark_starred_star">@color/transistor_neutral_very_light</color>
 

@@ -18,8 +18,8 @@
 
         <ImageView
             android:id="@+id/station_icon"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
@@ -30,28 +30,12 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_default_station_image_24dp" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/station_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:elevation="2dp"
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-            android:textColor="@color/text_lightweight"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/menu_button"
-            app:layout_constraintStart_toEndOf="@+id/starred_icon"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/sample_text_station_name" />
-
         <ImageView
             android:id="@+id/starred_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="2dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginBottom="3dp"
             android:contentDescription="@string/descr_card_starred_station"
             android:foregroundTint="@color/icon_default"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -60,6 +44,22 @@
             app:layout_constraintVertical_bias="0.535"
             app:srcCompat="@drawable/ic_star_default_24dp"
             tools:visibility="visible" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/station_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:elevation="2dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+            android:textColor="@color/text_default"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/menu_button"
+            app:layout_constraintStart_toEndOf="@+id/starred_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/sample_text_station_name" />
 
         <ImageView
             android:id="@+id/menu_button"

@@ -4,6 +4,7 @@
     <!-- DAY THEME COLORS -->
     <color name="app_window_background">@color/transistor_neutral_lighter</color>
     <color name="status_bar_background">@color/transistor_neutral_light</color>
+    <color name="dialog_background">@color/transistor_neutral_very_light</color>
     <color name="app_onboarding_icons">@color/transistor_neutral_darker</color>
 
     <color name="toolbar_background">@color/transistor_neutral_light</color>
@@ -29,6 +30,9 @@
     <color name="list_card_delete_background">@color/transistor_red</color>
     <color name="list_card_mark_starred_background">@color/transistor_neutral_medium_light</color>
     <color name="list_card_mark_starred_star">@color/transistor_neutral_very_light</color>
+<!--    <color name="list_card_mark_starred_star">@color/transistor_neutral_very_dark</color>-->
+<!--    <color name="list_card_mark_starred_background">@color/transistor_accent_intense</color>-->
+
 
     <color name="search_result_background">@color/transistor_neutral_very_light</color>
     <color name="search_result_background_selected">@color/transistor_neutral_lighter</color>
@@ -45,6 +49,9 @@
     <color name="transistor_accent_intense">#FFDC3D33</color>
     <color name="transistor_accent_light">#FFE17E77</color>
     <color name="transistor_accent_dimmed">#FFAD261E</color>
+<!--    <color name="transistor_accent_intense">#FFEADDFF</color> &lt;!&ndash; colorPrimary - Light Theme &ndash;&gt;-->
+<!--    <color name="transistor_accent_light">#FFF4EEFF</color>-->
+<!--    <color name="transistor_accent_dimmed">#FF625b71</color> &lt;!&ndash; colorSecondary - Light Theme &ndash;&gt;-->
 
     <color name="transistor_neutral_black">#FF121212</color> <!-- Material Design recommended dark theme surface color -->
     <color name="transistor_neutral_white">#FFFFFFFF</color>

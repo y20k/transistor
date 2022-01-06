@@ -44,7 +44,7 @@ interface EditStationListener {
     /* Construct and show dialog */
     fun show(context: Context, station: Station, position: Int) {
         // prepare dialog builder
-        val builder: MaterialAlertDialogBuilder = MaterialAlertDialogBuilder(context)
+        val builder: MaterialAlertDialogBuilder = MaterialAlertDialogBuilder(context, R.style.AlertDialogTheme)
 
         // get input field
         val inflater = LayoutInflater.from(context)

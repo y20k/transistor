@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/dialog_find_station_no_results"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
         android:textColor="@color/text_lightweight"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/search_request_progress_indicator"

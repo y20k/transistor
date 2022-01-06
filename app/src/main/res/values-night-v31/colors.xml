@@ -4,7 +4,7 @@
 
     <!-- NIGHT THEME COLORS -->
     <color name="player_play_pause_icon">@color/transistor_neutral_very_dark</color>
-    <color name="list_card_mark_starred_star">@color/transistor_neutral_very_dark</color>
-    <color name="list_card_mark_starred_background">@color/transistor_accent_intense</color>
+<!--    <color name="list_card_mark_starred_star">@color/transistor_neutral_very_dark</color>-->
+<!--    <color name="list_card_mark_starred_background">@color/transistor_accent_intense</color>-->
 
 </resources>

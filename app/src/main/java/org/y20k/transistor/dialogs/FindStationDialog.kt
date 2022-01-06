@@ -96,7 +96,7 @@ class FindStationDialog (private var context: Context, private var listener: Fin
         radioBrowserSearch = RadioBrowserSearch(this)
 
         // prepare dialog builder
-        val builder: MaterialAlertDialogBuilder = MaterialAlertDialogBuilder(context)
+        val builder: MaterialAlertDialogBuilder = MaterialAlertDialogBuilder(context, R.style.AlertDialogTheme)
 
         // set title
         builder.setTitle(R.string.dialog_find_station_title)

@@ -11,8 +11,8 @@ android {
         applicationId 'org.y20k.transistor'
         minSdkVersion 25
         targetSdkVersion 31
-        versionCode 88
-        versionName '4.0.17'
+        versionCode 89
+        versionName '4.0.18'
         resConfigs "en", "ar", "ca", "cs", "de", "el", "eo", "es", "eu", "fr", "fy", "he", "hr", "id", "in", "it", "ja", "kab", "nb-rNO", "nl", "pa", "pl", "pt", "pt-rBR", "ru", "sk", "sl", "sr", "th", "tr", "uk", "zh-rCN"
     }
 
@@ -67,7 +67,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
 
-    implementation "com.google.android.material:material:1.4.0"
+    implementation 'com.google.android.material:material:1.6.0-alpha01'
 
     implementation "androidx.activity:activity-ktx:1.4.0"
     implementation "androidx.appcompat:appcompat:1.4.0"
