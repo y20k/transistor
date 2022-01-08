@@ -67,7 +67,7 @@
         android:ellipsize="end"
         android:singleLine="true"
         android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
+        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
         android:textColor="@color/player_sheet_text_main"
         app:layout_constraintBottom_toBottomOf="@+id/station_icon"
         app:layout_constraintEnd_toStartOf="@+id/player_play_button"

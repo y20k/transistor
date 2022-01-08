@@ -27,6 +27,8 @@
             android:padding="8dp"
             android:text="@string/station_list_button_add_new_station"
             android:textAlignment="center"
+            android:letterSpacing="0.05"
+            android:textAllCaps="true"
             android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
             android:textColor="@color/text_default" />
 
