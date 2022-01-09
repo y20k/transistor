@@ -9,7 +9,7 @@
     android:clickable="true"
     android:focusable="true"
     app:behavior_hideable="true"
-    app:behavior_peekHeight="72dp"
+    app:behavior_peekHeight="80dp"
     app:gestureInsetBottomIgnored="true"
     app:layout_behavior="@string/bottom_sheet_behavior">
 
@@ -20,7 +20,7 @@
     <View
         android:id="@+id/player_background"
         android:layout_width="0dp"
-        android:layout_height="72dp"
+        android:layout_height="80dp"
         android:background="@drawable/shape_player_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -29,8 +29,8 @@
 
     <ImageView
         android:id="@+id/station_icon"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
@@ -77,15 +77,15 @@
 
     <ImageView
         android:id="@+id/player_play_button"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/ic_circular_button_playback_56dp"
         android:clickable="true"
         android:contentDescription="@string/descr_player_playback_button"
         android:focusable="true"
         android:scaleType="center"
+        app:layout_constraintBottom_toBottomOf="@+id/player_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/player_background"
         app:srcCompat="@drawable/ic_player_play_symbol_36dp" />
@@ -93,13 +93,13 @@
     <ProgressBar
         android:id="@+id/player_buffering_indicator"
         style="?android:attr/progressBarStyle"
-        android:layout_width="68dp"
-        android:layout_height="68dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="2dp"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="3dp"
         android:indeterminateTint="@color/player_button_buffering"
         android:indeterminateTintMode="src_in"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/player_background" />
 
