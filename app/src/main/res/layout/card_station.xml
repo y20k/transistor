@@ -1,96 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/station_card"
+    android:background="@android:color/transparent"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="64dp"
     android:layout_marginStart="8dp"
     android:layout_marginTop="16dp"
     android:layout_marginEnd="8dp"
-    android:layout_marginBottom="0dp"
-    app:cardBackgroundColor="@color/list_card_background"
-    app:cardCornerRadius="4dp">
+    android:layout_marginBottom="0dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/station_icon"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="0dp"
+        android:background="@null"
+        android:contentDescription="@string/descr_card_station_image"
+        app:shapeAppearanceOverlay="@style/RoundedCornerLeftTopLeftBottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_default_station_image_24dp" />
 
-        <ImageView
-            android:id="@+id/station_icon"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/shape_cover_small"
-            android:contentDescription="@string/descr_card_station_image"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_default_station_image_24dp" />
+    <ImageView
+        android:id="@+id/starred_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginBottom="3dp"
+        android:contentDescription="@string/descr_card_starred_station"
+        android:foregroundTint="@color/icon_default"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/station_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.535"
+        app:srcCompat="@drawable/ic_star_default_24dp"
+        tools:visibility="visible" />
 
-        <ImageView
-            android:id="@+id/starred_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginBottom="3dp"
-            android:contentDescription="@string/descr_card_starred_station"
-            android:foregroundTint="@color/icon_default"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/station_icon"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.535"
-            app:srcCompat="@drawable/ic_star_default_24dp"
-            tools:visibility="visible" />
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/station_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:paddingStart="12dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="8dp"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/playback_button"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@+id/starred_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/sample_text_station_name" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/station_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-            android:textColor="@color/text_lightweight"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/menu_button"
-            app:layout_constraintStart_toEndOf="@+id/starred_icon"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/sample_text_station_name" />
+    <ImageButton
+        android:id="@+id/playback_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:backgroundTint="@color/transistor_transparent"
+        android:clickable="true"
+        android:contentDescription="@string/descr_card_small_play_button"
+        android:focusable="true"
+        android:visibility="visible"
+        android:paddingStart="8dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_play_circle_outline_24dp" />
 
-        <ImageView
-            android:id="@+id/menu_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/descr_card_small_edit_button"
-            android:paddingStart="8dp"
-            android:paddingTop="8dp"
-            android:paddingEnd="0dp"
-            android:paddingBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/playback_button"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_more_vert_24dp" />
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/station_icon" />
+</androidx.constraintlayout.widget.ConstraintLayout>
 
-        <ImageView
-            android:id="@+id/playback_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:backgroundTint="@color/transistor_transparent"
-            android:clickable="true"
-            android:contentDescription="@string/descr_card_small_play_button"
-            android:focusable="true"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_play_circle_outline_36dp" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.cardview.widget.CardView>

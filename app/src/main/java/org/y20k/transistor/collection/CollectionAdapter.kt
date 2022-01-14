@@ -20,13 +20,12 @@ import android.support.v4.media.session.PlaybackStateCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
-import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.net.toUri
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -36,6 +35,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
 import org.y20k.transistor.Keys
 import org.y20k.transistor.R
 import org.y20k.transistor.core.Collection
@@ -219,8 +219,8 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
     private fun setStationButtons(stationViewHolder: StationViewHolder, station: Station, position: Int) {
         val playbackState: Int = station.playbackState
         when (playbackState) {
-            PlaybackStateCompat.STATE_PLAYING -> stationViewHolder.playButtonView.setImageResource(R.drawable.ic_stop_circle_outline_36dp)
-            else -> stationViewHolder.playButtonView.setImageResource(R.drawable.ic_play_circle_outline_36dp)
+            PlaybackStateCompat.STATE_PLAYING -> stationViewHolder.playButtonView.setImageResource(R.drawable.ic_stop_circle_outline_24dp)
+            else -> stationViewHolder.playButtonView.setImageResource(R.drawable.ic_play_circle_outline_24dp)
         }
         stationViewHolder.playButtonView.setOnClickListener {
             collectionAdapterListener.onPlayButtonTapped(station.uuid, playbackState)
@@ -243,9 +243,10 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
             return@setOnLongClickListener true
         }
 
-        stationViewHolder.menuButtonView.setOnClickListener {
+        stationViewHolder.stationCardView.setOnLongClickListener {
             // EditStationDialog(this).show(context, station, position) // Todo
             showStationPopupMenu(it, station.uuid, position)
+            return@setOnLongClickListener true
         }
     }
 
@@ -424,8 +425,8 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
      * Inner class: ViewHolder for the Add New Station action
      */
     private inner class AddNewViewHolder (listItemAddNewLayout: View) : RecyclerView.ViewHolder(listItemAddNewLayout) {
-        val addNewStationView: CardView = listItemAddNewLayout.findViewById(R.id.card_add_new_station)
-        val settingsButtonView: ImageButton = listItemAddNewLayout.findViewById(R.id.settings_button)
+        val addNewStationView: MaterialButton = listItemAddNewLayout.findViewById(R.id.card_add_new_station)
+        val settingsButtonView: MaterialButton = listItemAddNewLayout.findViewById(R.id.card_settings)
     }
     /*
      * End of inner class
@@ -436,11 +437,11 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
      * Inner class: ViewHolder for a station
      */
     private inner class StationViewHolder (stationCardLayout: View): RecyclerView.ViewHolder(stationCardLayout) {
-        val stationCardView: CardView = stationCardLayout.findViewById(R.id.station_card)
+        val stationCardView: ConstraintLayout = stationCardLayout.findViewById(R.id.station_card)
         val stationImageView: ImageView = stationCardLayout.findViewById(R.id.station_icon)
         val stationNameView: TextView = stationCardLayout.findViewById(R.id.station_name)
         val stationStarredView: ImageView = stationCardLayout.findViewById(R.id.starred_icon)
-        val menuButtonView: ImageView = stationCardLayout.findViewById(R.id.menu_button)
+//        val menuButtonView: ImageView = stationCardLayout.findViewById(R.id.menu_button)
         val playButtonView: ImageView = stationCardLayout.findViewById(R.id.playback_button)
     }
     /*

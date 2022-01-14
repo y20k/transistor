@@ -3,10 +3,37 @@
 <resources>
 
     <!-- DAY THEME COLORS -->
-    <color name="player_play_pause_icon">@color/transistor_neutral_very_dark</color>
-<!--    <color name="list_card_mark_starred_star">@color/transistor_neutral_very_dark</color>-->
-<!--    <color name="list_card_mark_starred_background">@color/transistor_accent_intense</color>-->
+    <color name="app_window_background">@android:color/system_neutral1_10</color> <!-- android:colorBackground / colorSurface -->
+    <color name="status_bar_background">@color/transistor_neutral_light</color>
+    <color name="dialog_background">@color/transistor_neutral_very_light</color>
+    <color name="app_onboarding_icons">@color/transistor_neutral_darker</color>
 
+    <color name="toolbar_background">@color/transistor_neutral_light</color>
+
+    <color name="text_default">@android:color/system_neutral1_900</color> <!-- colorOnBackground / colorOnSurface-->
+    <color name="text_lightweight">@color/transistor_neutral_dark</color>
+    <color name="text_link">@color/transistor_accent_dimmed</color>
+
+    <!--    <color name="icon_default">@color/transistor_neutral_dark</color>-->
+    <color name="icon_default">@android:color/system_neutral1_900</color> <!-- colorOnBackground / colorOnSurface-->
+    <color name="icon_lightweight">@color/transistor_neutral_medium_light</color>
+
+    <color name="player_play_pause_icon">@color/transistor_neutral_very_dark</color>
+    <color name="player_button_background">@color/transistor_accent_intense</color>
+    <color name="player_button_buffering">@color/transistor_accent_light</color>
+    <color name="player_sheet_background">@android:color/system_neutral2_700</color> <!-- colorSurfaceVariant (Dark Theme) -->
+    <color name="player_sheet_background_border">@color/transistor_neutral_dark</color>
+    <color name="player_sheet_text_main">@android:color/system_neutral1_100</color> <!-- system_neutral1_100 / colorOnSurface (Dark Theme) -->
+    <color name="player_sheet_text_details">@android:color/system_neutral1_100</color> <!-- system_neutral1_100 / colorOnSurface (Dark Theme) -->
+    <color name="player_sheet_icon">@android:color/system_neutral1_100</color> <!-- system_neutral1_100 / colorOnSurface (Dark Theme) -->
+
+    <color name="list_card_background">@android:color/system_neutral2_100</color> <!-- colorSurfaceVariant -->
+    <color name="list_card_cover_background">@color/transistor_neutral_lighter</color>
+    <color name="list_card_delete_background">@color/transistor_red</color>
+    <color name="list_card_mark_starred_background">@color/transistor_neutral_medium_light</color>
+    <color name="list_card_mark_starred_star">@color/transistor_neutral_very_light</color>
+    <!--    <color name="list_card_mark_starred_star">@color/transistor_neutral_very_dark</color>-->
+    <!--    <color name="list_card_mark_starred_background">@color/transistor_accent_intense</color>-->
     <!-- ADAPTIVE BASE COLORS - Android S - https://developer.android.com/reference/android/R.color#system_accent1_0 -->
     <color name="transistor_neutral_dark">@android:color/system_neutral1_600</color>
     <color name="transistor_neutral_darker">@android:color/system_neutral1_800</color>

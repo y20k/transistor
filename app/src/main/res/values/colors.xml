@@ -2,30 +2,31 @@
 
 <resources>
     <!-- DAY THEME COLORS -->
-    <color name="app_window_background">@color/transistor_neutral_lighter</color>
+    <color name="app_window_background">#fffffbfe</color> <!-- android:colorBackground / colorSurface / system_neutral1_10 -->
     <color name="status_bar_background">@color/transistor_neutral_light</color>
     <color name="dialog_background">@color/transistor_neutral_very_light</color>
     <color name="app_onboarding_icons">@color/transistor_neutral_darker</color>
 
     <color name="toolbar_background">@color/transistor_neutral_light</color>
 
-    <color name="text_default">@color/transistor_neutral_darker</color>
+    <color name="text_default">#ff1c1b1f</color> <!-- system_neutral1_900 / colorOnBackground / colorOnSurface-->
     <color name="text_lightweight">@color/transistor_neutral_dark</color>
     <color name="text_link">@color/transistor_accent_dimmed</color>
 
-    <color name="icon_default">@color/transistor_neutral_dark</color>
+<!--    <color name="icon_default">@color/transistor_neutral_dark</color>-->
+    <color name="icon_default">#ff1c1b1f</color> <!-- system_neutral1_900 / colorOnBackground / colorOnSurface-->
     <color name="icon_lightweight">@color/transistor_neutral_medium_light</color>
 
     <color name="player_play_pause_icon">@color/transistor_neutral_very_light</color>
     <color name="player_button_background">@color/transistor_accent_intense</color>
     <color name="player_button_buffering">@color/transistor_accent_light</color>
-    <color name="player_sheet_background">@color/transistor_neutral_darker</color>
+    <color name="player_sheet_background">#ff1c1b1f</color> <!-- system_neutral2_700 / colorSurfaceVariant (Dark Theme) -->
     <color name="player_sheet_background_border">@color/transistor_neutral_dark</color>
-    <color name="player_sheet_text_main">@color/transistor_neutral_white</color>
-    <color name="player_sheet_text_details">@color/transistor_neutral_white</color>
-    <color name="player_sheet_icon">@color/transistor_neutral_white</color>
+    <color name="player_sheet_text_main">#ffe6e1e5</color> <!-- system_neutral1_100 / colorOnSurface (Dark Theme) -->
+    <color name="player_sheet_text_details">#ffe6e1e5</color> <!-- system_neutral1_100 / colorOnSurface (Dark Theme) -->
+    <color name="player_sheet_icon">#ffe6e1e5</color> <!-- system_neutral1_100 / colorOnSurface (Dark Theme) -->
 
-    <color name="list_card_background">@color/transistor_neutral_very_light</color>
+    <color name="list_card_background">#ffe7e0ec</color> <!-- colorSurfaceVariant - system_neutral2_100 -->
     <color name="list_card_cover_background">@color/transistor_neutral_lighter</color>
     <color name="list_card_delete_background">@color/transistor_red</color>
     <color name="list_card_mark_starred_background">@color/transistor_neutral_medium_light</color>

@@ -17,26 +17,23 @@
     <!-- main player views -->
     <!-- ... down here, because lower views are in a layout are above the higher views -->
 
-    <View
-        android:id="@+id/player_background"
-        android:layout_width="0dp"
-        android:layout_height="80dp"
-        android:background="@drawable/shape_player_background"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<!--    <View-->
+<!--        android:id="@+id/player_background"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="80dp"-->
+<!--        android:background="@drawable/shape_player_background"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="1.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/station_icon"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:background="@drawable/shape_cover_small"
         android:contentDescription="@string/descr_player_station_image"
-        app:layout_constraintBottom_toBottomOf="@+id/player_background"
+        app:shapeAppearanceOverlay="@style/RoundedCornerLeftTop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_default_station_image_24dp" />
@@ -46,11 +43,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:ellipsize="end"
         android:singleLine="true"
         android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
         android:textColor="@color/player_sheet_text_main"
         app:layout_constraintBottom_toTopOf="@+id/player_station_metadata"
         app:layout_constraintEnd_toStartOf="@+id/player_play_button"
@@ -64,10 +62,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
         android:ellipsize="end"
         android:singleLine="true"
         android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+        android:textAppearance="@style/TextAppearance.Material3.BodySmall"
         android:textColor="@color/player_sheet_text_main"
         app:layout_constraintBottom_toBottomOf="@+id/station_icon"
         app:layout_constraintEnd_toStartOf="@+id/player_play_button"
@@ -85,9 +84,9 @@
         android:contentDescription="@string/descr_player_playback_button"
         android:focusable="true"
         android:scaleType="center"
-        app:layout_constraintBottom_toBottomOf="@+id/player_background"
+        app:layout_constraintBottom_toBottomOf="@+id/station_icon"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/player_background"
+        app:layout_constraintTop_toTopOf="@+id/station_icon"
         app:srcCompat="@drawable/ic_player_play_symbol_36dp" />
 
     <ProgressBar
@@ -95,13 +94,13 @@
         style="?android:attr/progressBarStyle"
         android:layout_width="72dp"
         android:layout_height="72dp"
-        android:layout_marginTop="4dp"
         android:layout_marginEnd="3dp"
         android:indeterminateTint="@color/player_button_buffering"
         android:indeterminateTintMode="src_in"
-        android:visibility="invisible"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/station_icon"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/player_background" />
+        app:layout_constraintTop_toTopOf="@+id/station_icon" />
 
     <ImageView
         android:id="@+id/sheet_streaming_link_icon"
@@ -110,7 +109,7 @@
         android:layout_marginTop="24dp"
         android:padding="8dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/player_background"
+        app:layout_constraintTop_toBottomOf="@+id/station_icon"
         app:srcCompat="@drawable/ic_music_note_24dp" />
 
     <com.google.android.material.textview.MaterialTextView
@@ -119,7 +118,7 @@
         android:layout_height="wrap_content"
         android:text="@string/player_sheet_h2_stream_url"
         android:textAllCaps="true"
-        android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
+        android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
         android:textColor="@color/player_sheet_text_main"
         app:layout_constraintBottom_toTopOf="@+id/sheet_streaming_link"
         app:layout_constraintEnd_toEndOf="@+id/sheet_streaming_link"
@@ -132,7 +131,7 @@
         android:layout_marginEnd="16dp"
         android:ellipsize="end"
         android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+        android:textAppearance="@style/TextAppearance.Material3.BodySmall"
         android:textColor="@color/player_sheet_text_main"
         app:layout_constraintBottom_toBottomOf="@+id/sheet_streaming_link_icon"
         app:layout_constraintEnd_toEndOf="parent"
@@ -156,7 +155,7 @@
         android:layout_height="wrap_content"
         android:text="@string/player_sheet_h2_station_metadata"
         android:textAllCaps="true"
-        android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
+        android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
         android:textColor="@color/player_sheet_text_main"
         app:layout_constraintBottom_toTopOf="@+id/sheet_metadata_history"
         app:layout_constraintEnd_toEndOf="@+id/sheet_metadata_history"
@@ -171,7 +170,7 @@
         android:focusableInTouchMode="true"
         android:marqueeRepeatLimit="marquee_forever"
         android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+        android:textAppearance="@style/TextAppearance.Material3.BodySmall"
         android:textColor="@color/player_sheet_text_main"
         app:layout_constraintBottom_toBottomOf="@+id/sheet_previous_metadata_button"
         app:layout_constraintEnd_toStartOf="@+id/sheet_next_metadata_button"

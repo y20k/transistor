@@ -4,60 +4,38 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <androidx.cardview.widget.CardView
+
+    <Button
         android:id="@+id/card_add_new_station"
+        style="?attr/materialButtonOutlinedStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="24dp"
-        app:cardBackgroundColor="@color/list_card_background"
-        app:cardCornerRadius="4dp"
-        app:cardElevation="2dp"
+        android:text="@string/station_list_button_add_new_station"
+        app:icon="@drawable/ic_add_24"
+        app:iconGravity="textStart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/card_settings"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/text_add_new_station"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="@string/station_list_button_add_new_station"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
-            android:textColor="@color/text_default" />
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
+    <Button
         android:id="@+id/card_settings"
+        style="?attr/materialButtonOutlinedStyle"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="24dp"
-        app:cardBackgroundColor="@color/list_card_background"
-        app:cardCornerRadius="4dp"
+        android:text="Settings"
+        app:icon="@drawable/ic_settings_24dp"
+        app:iconGravity="textStart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageButton
-            android:id="@+id/settings_button"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:baselineAlignBottom="false"
-            android:contentDescription="@string/descr_card_settings_button"
-            android:padding="8dp"
-            android:src="@drawable/ic_settings_24dp" />
-
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

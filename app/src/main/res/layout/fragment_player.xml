@@ -9,7 +9,6 @@
     <android.widget.ProgressBar
         android:id="@+id/download_progress_indicator"
         android:indeterminate="true"
-        android:background="@color/app_window_background"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:visibility="gone"

@@ -21,4 +21,21 @@
         <item name="colorSurface">@color/dialog_background</item>
     </style>
 
+
+    <style name="RoundedCornerLeftTopLeftBottom" parent="">
+        <item name="cornerSizeTopLeft">16dp</item>
+        <item name="cornerFamilyTopRight">rounded</item>
+        <item name="cornerSizeBottomLeft">16dp</item>
+        <item name="cornerFamilyBottomLeft">rounded</item>
+    </style>
+    <style name="RoundedCornerLeftTop" parent="">
+        <item name="cornerSizeTopLeft">16dp</item>
+        <item name="cornerFamilyTopRight">rounded</item>
+    </style>
+    <style name="CutCornerLeftTop" parent="">
+        <item name="cornerSize">0dp</item>
+        <item name="cornerFamilyTopLeft">cut</item>
+        <item name="cornerSizeTopLeft">16dp</item>
+    </style>
+
 </resources>
