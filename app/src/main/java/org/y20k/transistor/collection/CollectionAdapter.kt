@@ -26,6 +26,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.Group
 import androidx.core.net.toUri
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -36,6 +37,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.textfield.TextInputEditText
 import org.y20k.transistor.Keys
 import org.y20k.transistor.R
 import org.y20k.transistor.core.Collection
@@ -177,8 +179,34 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
             val v = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
             v.vibrate(50)
             // v.vibrate(VibrationEffect.createOneShot(50, android.os.VibrationEffect.DEFAULT_AMPLITUDE)); // todo check if there is an androidx vibrator
-            RenameStationDialog(this).show(context, station.name, station.uuid, position)
+            //RenameStationDialog(this).show(context, station.name, station.uuid, position)
+            toggleEditViews(stationViewHolder)
+
             return@setOnLongClickListener true
+        }
+        stationViewHolder.stationNameEditView.hint = station.name
+        stationViewHolder.stationNameEditView.setOnLongClickListener {
+            val v = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+            v.vibrate(50)
+            // v.vibrate(VibrationEffect.createOneShot(50, android.os.VibrationEffect.DEFAULT_AMPLITUDE)); // todo check if there is an androidx vibrator
+            //RenameStationDialog(this).show(context, station.name, station.uuid, position)
+            toggleEditViews(stationViewHolder)
+            return@setOnLongClickListener true
+        }
+        stationViewHolder.stationUrlEditView.hint = station.getStreamUri()
+    }
+
+
+    private fun toggleEditViews(stationViewHolder: StationViewHolder) {
+        when (stationViewHolder.stationNameView.isVisible) {
+            true -> {
+                stationViewHolder.stationNameView.isVisible = false
+                stationViewHolder.editViews.isVisible = true
+            }
+            false -> {
+                stationViewHolder.stationNameView.isVisible = true
+                stationViewHolder.editViews.isGone = true
+            }
         }
     }
 
@@ -440,9 +468,12 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
         val stationCardView: ConstraintLayout = stationCardLayout.findViewById(R.id.station_card)
         val stationImageView: ImageView = stationCardLayout.findViewById(R.id.station_icon)
         val stationNameView: TextView = stationCardLayout.findViewById(R.id.station_name)
+        val stationNameEditView: TextInputEditText = stationCardLayout.findViewById(R.id.edit_station_name)
+        val stationUrlEditView: TextInputEditText = stationCardLayout.findViewById(R.id.edit_stream_url)
         val stationStarredView: ImageView = stationCardLayout.findViewById(R.id.starred_icon)
 //        val menuButtonView: ImageView = stationCardLayout.findViewById(R.id.menu_button)
         val playButtonView: ImageView = stationCardLayout.findViewById(R.id.playback_button)
+        val editViews: Group = stationCardLayout.findViewById(R.id.edit_views)
     }
     /*
      * End of inner class

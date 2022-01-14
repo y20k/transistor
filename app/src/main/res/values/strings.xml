@@ -9,6 +9,7 @@
     <!-- Dialogs -->
     <string name="dialog_edit_choose_station_image">Choose</string>
     <string name="dialog_edit_place_on_home_screen">Place on Home screen</string>
+    <string name="dialog_edit_save_changes">Save Changes</string>
     <string name="dialog_edit_title">Edit Station</string>
     <string name="dialog_edit_update_station">Update station</string>
     <string name="dialog_error_message_default">An error occurred</string>
@@ -63,6 +64,7 @@
     <string name="toastmessage_updating_station_images">Updating station images.</string>
     <!-- Station List -->
     <string name="station_list_button_add_new_station">Add new station</string>
+    <string name="station_list_button_settings">Settings</string>
     <!-- Notification -->
     <string name="notification_now_playing_channel_name">Playback Controls</string>
     <string name="notification_now_playing_channel_description">Playback controls, station name and image.</string>

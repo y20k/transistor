@@ -30,7 +30,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="24dp"
-        android:text="Settings"
+        android:text="@string/station_list_button_settings"
         app:icon="@drawable/ic_settings_24dp"
         app:iconGravity="textStart"
         app:layout_constraintBottom_toBottomOf="parent"

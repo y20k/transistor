@@ -19,7 +19,7 @@
     <color name="player_play_pause_icon">@color/transistor_neutral_very_light</color>
     <color name="player_button_background">@color/transistor_accent_intense</color>
     <color name="player_button_buffering">@color/transistor_accent_light</color>
-    <color name="player_sheet_background">#ff1c1b1f</color> <!-- system_neutral2_700 / colorSurfaceVariant (Dark Theme) -->
+    <color name="player_sheet_background">#ff49454f</color> <!-- system_neutral2_700 / colorSurfaceVariant (Dark Theme) -->
     <color name="player_sheet_background_border">@color/transistor_neutral_darker</color>
     <color name="player_sheet_text_main">#ffe6e1e5</color> <!-- system_neutral1_100 / colorOnSurface (Dark Theme) -->
     <color name="player_sheet_text_details">#ffe6e1e5</color> <!-- system_neutral1_100 / colorOnSurface (Dark Theme) -->
