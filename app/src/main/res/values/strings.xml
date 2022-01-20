@@ -10,6 +10,8 @@
     <string name="dialog_edit_choose_station_image">Choose</string>
     <string name="dialog_edit_place_on_home_screen">Place on Home screen</string>
     <string name="dialog_edit_save_changes">Save Changes</string>
+    <string name="dialog_edit_station_name">Station name</string>
+    <string name="dialog_edit_stream_uri">Stream address</string>
     <string name="dialog_edit_title">Edit Station</string>
     <string name="dialog_edit_update_station">Update station</string>
     <string name="dialog_error_message_default">An error occurred</string>

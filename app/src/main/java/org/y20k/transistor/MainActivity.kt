@@ -96,6 +96,4 @@ class MainActivity: AppCompatActivity() {
      * End of declaration
      */
 
-
-
 }

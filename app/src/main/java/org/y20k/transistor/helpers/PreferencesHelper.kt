@@ -99,6 +99,20 @@ object PreferencesHelper {
     }
 
 
+    /* Load stream uri of the station in the station list which is currently expanded */
+    fun loadStationListStreamUriLocation(): String {
+        return sharedPreferences.getString(Keys.PREF_STATION_LIST_EXPANDED_STREAM_URI, String()) ?: String()
+    }
+
+
+    /* Save stream uri of the station in the station list which is currently expanded  */
+    fun saveStationListStreamUriLocation(stationStreamUri: String = String()) {
+        sharedPreferences.edit {
+            putString(Keys.PREF_STATION_LIST_EXPANDED_STREAM_URI, stationStreamUri)
+        }
+    }
+
+
     /* Loads last update from shared preferences */
     fun loadLastUpdateCollection(): Date {
         val lastSaveString: String = sharedPreferences.getString(Keys.PREF_LAST_UPDATE_COLLECTION, "") ?: String()

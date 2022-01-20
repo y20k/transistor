@@ -22,9 +22,19 @@
     </style>
 
 
-    <style name="RoundedCornerLeftTopLeftBottom" parent="">
+    <style name="RoundedCorners" parent="">
         <item name="cornerSizeTopLeft">16dp</item>
+        <item name="cornerFamilyTopLeft">rounded</item>
+        <item name="cornerSizeTopRight">16dp</item>
         <item name="cornerFamilyTopRight">rounded</item>
+        <item name="cornerSizeBottomLeft">16dp</item>
+        <item name="cornerFamilyBottomLeft">rounded</item>
+        <item name="cornerSizeBottomRight">16dp</item>
+        <item name="cornerFamilyBottomRight">rounded</item>
+    </style>
+    <style name="RoundedCornerLeft" parent="">
+        <item name="cornerSizeTopLeft">16dp</item>
+        <item name="cornerFamilyTopLeft">rounded</item>
         <item name="cornerSizeBottomLeft">16dp</item>
         <item name="cornerFamilyBottomLeft">rounded</item>
     </style>

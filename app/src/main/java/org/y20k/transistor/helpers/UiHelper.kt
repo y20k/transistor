@@ -80,6 +80,23 @@ object UiHelper {
     }
 
 
+    /* Get the height of the system's top status bar */
+    fun getStatusBarHeight(context: Context): Int {
+        var result: Int = 0
+        val resourceId: Int = context.resources.getIdentifier("status_bar_height", "dimen", "android")
+        if (resourceId > 0) {
+            result = context.resources.getDimensionPixelSize(resourceId)
+        }
+        return result
+    }
+
+
+    /* Get scaling factor from display density */
+    fun getDensityScalingFactor(context: Context): Float {
+        return context.resources.displayMetrics.density
+    }
+
+
     /*
      * Inner class: Callback that detects a swipe to left
      * Credit: https://github.com/kitek/android-rv-swipe-delete/blob/master/app/src/main/java/pl/kitek/rvswipetodelete/SwipeToDeleteCallback.kt

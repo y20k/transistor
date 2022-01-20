@@ -151,6 +151,7 @@ class PlayerFragment: Fragment(), CoroutineScope,
         return rootView
     }
 
+
     /* Overrides onResume from Fragment */
     override fun onStart() {
         super.onStart()
