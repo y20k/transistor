@@ -1,0 +1,16 @@
+Transistor is een radioapp met een minimalistische aanpak, dat ie niet per se de smaak van iedereen. Het heeft geen radiostationontdekfeature. Transistor biedt alleen een zeer eenvoudige zoekoptie en het kan audiostreamlinks importeren, als je in een webbrowser erop tikt.
+
+
+VEELGESTELDE VRAGEN
+
+HOE KAN IK EEN RADIOSTATION TOEVOEGEN
+Er zijn drie manieren om een radiostation aan Transistor toe te voegen: Gebruik zoek, voeg een afspeellijstbestandadres (M3U, PLS) toe of voeg een raw-streamadres toe. Dat laatste ondersteunt niet de updatefeature.
+
+HOE WERKT DE UPDATEFEATURE?
+De updatefeature probeert van de huidige stream het adres van de het station op te halen maar ook de laatste versie van de naam en afbeelding van het station. Deze feature werkt niet voor stations die via een raw-streamadres zijn toegevoegd, of voor stations die zijn geïmporteerd van Transistor v3.
+
+WAAR KOMEN DE RADIOSTATIONZOEKRESULTATEN VANDAAN?
+Transistor doorzoekt de online database van radio-browser.info . Je kan de community van radio-browser.info helpen door ontbrekende stations toe te voegen (http://www.radio-browser.info/gui/#!/add) aan hun database.
+
+WELKE AUDIOFORMATEN ZIJN ONDERSTEUND?
+Transistor kan streams afspelen die gecodeerd zijn in MP3, AAC en Ogg/Opus. Er is ook experimentele ondersteuning voor HLS-streams.
