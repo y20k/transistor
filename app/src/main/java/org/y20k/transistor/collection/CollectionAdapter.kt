@@ -15,7 +15,6 @@
 package org.y20k.transistor.collection
 
 import android.content.Context
-import android.os.Vibrator
 import android.support.v4.media.session.PlaybackStateCompat
 import android.view.LayoutInflater
 import android.view.View
@@ -24,7 +23,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.PopupMenu
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Group
 import androidx.core.net.toUri
@@ -60,9 +58,12 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
     private lateinit var collectionViewModel: CollectionViewModel
     // private lateinit var collectionAdapterListener: CollectionAdapterListener
     private var collection: Collection = Collection()
+    private val editStationsEnabled: Boolean = PreferencesHelper.loadEditStationsEnabled()
+    private val editStationStreamsEnabled: Boolean = PreferencesHelper.loadEditStationStreamsEnabled()
     private var expandedStationStreamUri: String = PreferencesHelper.loadStationListStreamUriLocation()
     private var expandedStationPosition: Int = -1
 
+    // todo listen for preference changes
 
 
     /* Listener Interface */
@@ -140,6 +141,7 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
                     position -> {
                         stationViewHolder.stationNameView.isVisible = false
                         stationViewHolder.editViews.isVisible = true
+                        // todo hide stationViewHolder.stationUriEditView.isGone if option is set accordingly
                     }
                     else -> {
                         stationViewHolder.stationNameView.isVisible = true
@@ -191,14 +193,6 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
     /* Sets the station name view */
     private fun setStationName(stationViewHolder: StationViewHolder, station: Station, position: Int) {
         stationViewHolder.stationNameView.text = station.name
-        stationViewHolder.stationNameView.setOnLongClickListener {
-            val v = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-            v.vibrate(50)
-            // v.vibrate(VibrationEffect.createOneShot(50, android.os.VibrationEffect.DEFAULT_AMPLITUDE)); // todo check if there is an androidx vibrator
-            //RenameStationDialog(this).show(context, station.name, station.uuid, position)
-            toggleEditViews(position, station.getStreamUri())
-            return@setOnLongClickListener true
-        }
     }
 
 
@@ -219,11 +213,9 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
             ShortcutHelper.placeShortcut(context, station)
             toggleEditViews(position, station.getStreamUri())
         }
-        stationViewHolder.stationImageView.setOnClickListener {
-            // todo overlay edit icon over station image
-            if (expandedStationPosition == position) {
-                collectionAdapterListener.onChangeImageButtonTapped(station.uuid)
-            }
+        stationViewHolder.stationImageChangeView.setOnClickListener {
+            collectionAdapterListener.onChangeImageButtonTapped(station.uuid)
+            toggleEditViews(position, station.getStreamUri())
         }
     }
 
@@ -288,72 +280,57 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
         stationViewHolder.playButtonView.setOnClickListener {
             collectionAdapterListener.onPlayButtonTapped(station.uuid, playbackState)
         }
-        stationViewHolder.playButtonView.setOnLongClickListener {
-            val v = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-            v.vibrate(50)
-            // v.vibrate(VibrationEffect.createOneShot(50, android.os.VibrationEffect.DEFAULT_AMPLITUDE)); // todo check if there is an androidx vibrator
-            Toast.makeText(context, R.string.toastmessage_updating_station, Toast.LENGTH_SHORT).show()
-            val updateHelper: UpdateHelper = UpdateHelper(context, this, collection)
-            updateHelper.updateStation(station)
-            return@setOnLongClickListener true
-        }
-        stationViewHolder.stationStarredView.setOnLongClickListener {
-            val v = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-            v.vibrate(50)
-            // v.vibrate(VibrationEffect.createOneShot(50, android.os.VibrationEffect.DEFAULT_AMPLITUDE)); // todo check if there is an androidx vibrator
-            // create shortcut
-            ShortcutHelper.placeShortcut(context, station)
-            return@setOnLongClickListener true
-        }
-
         stationViewHolder.stationCardView.setOnLongClickListener {
-            // EditStationDialog(this).show(context, station, position) // Todo
-            showStationPopupMenu(it, station.uuid, position)
-            return@setOnLongClickListener true
-        }
-    }
-
-
-    /* Displays station popup menu */
-    private fun showStationPopupMenu(view: View, stationUuid: String, position: Int) {
-        val popup = PopupMenu(context, view)
-        popup.inflate(R.menu.station_popup_menu)
-        popup.setOnMenuItemClickListener { item ->
-            when (item.itemId) {
-                R.id.menu_icon -> {
-                    // let fragment get system picker for images
-                    collectionAdapterListener.onChangeImageButtonTapped(stationUuid)
-                    true
-                }
-                R.id.menu_rename -> {
-                    // show rename dialog
-                    val name: String = CollectionHelper.getStationName(collection, stationUuid)
-                    RenameStationDialog(this).show(context, name, stationUuid, position)
-                    true
-                }
-//                R.id.menu_delete -> {
-//                    // show delete dialog
-//                    // DialogDelete.show(activity, station)
-//                    true
-//                }
-                R.id.menu_update -> {
-                    // update this station
-                    Toast.makeText(context, R.string.toastmessage_updating_station, Toast.LENGTH_SHORT).show()
-                    val updateHelper: UpdateHelper = UpdateHelper(context, this, collection)
-                    updateHelper.updateStation(CollectionHelper.getStation(collection, stationUuid))
-                    true
-                }
-                R.id.menu_shortcut -> {
-                    // create shortcut
-                    val station: Station = CollectionHelper.getStation(collection, stationUuid)
-                    ShortcutHelper.placeShortcut(context, station)
-                    true
-                }
-                else -> false
+            if (editStationsEnabled) {
+                toggleEditViews(position, station.getStreamUri())
+                return@setOnLongClickListener true
+            } else {
+                return@setOnLongClickListener false
             }
         }
-        popup.show()
     }
+
+
+//    /* Displays station popup menu */
+//    private fun showStationPopupMenu(view: View, stationUuid: String, position: Int) {
+//        val popup = PopupMenu(context, view)
+//        popup.inflate(R.menu.station_popup_menu)
+//        popup.setOnMenuItemClickListener { item ->
+//            when (item.itemId) {
+//                R.id.menu_icon -> {
+//                    // let fragment get system picker for images
+//                    collectionAdapterListener.onChangeImageButtonTapped(stationUuid)
+//                    true
+//                }
+//                R.id.menu_rename -> {
+//                    // show rename dialog
+//                    val name: String = CollectionHelper.getStationName(collection, stationUuid)
+//                    RenameStationDialog(this).show(context, name, stationUuid, position)
+//                    true
+//                }
+////                R.id.menu_delete -> {
+////                    // show delete dialog
+////                    // DialogDelete.show(activity, station)
+////                    true
+////                }
+//                R.id.menu_update -> {
+//                    // update this station
+//                    Toast.makeText(context, R.string.toastmessage_updating_station, Toast.LENGTH_SHORT).show()
+//                    val updateHelper: UpdateHelper = UpdateHelper(context, this, collection)
+//                    updateHelper.updateStation(CollectionHelper.getStation(collection, stationUuid))
+//                    true
+//                }
+//                R.id.menu_shortcut -> {
+//                    // create shortcut
+//                    val station: Station = CollectionHelper.getStation(collection, stationUuid)
+//                    ShortcutHelper.placeShortcut(context, station)
+//                    true
+//                }
+//                else -> false
+//            }
+//        }
+//        popup.show()
+//    }
 
 
     /* Overrides onBindViewHolder */
@@ -515,6 +492,7 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
 //        val menuButtonView: ImageView = stationCardLayout.findViewById(R.id.menu_button)
         val playButtonView: ImageView = stationCardLayout.findViewById(R.id.playback_button)
         val editViews: Group = stationCardLayout.findViewById(R.id.edit_views)
+        val stationImageChangeView: ImageView = stationCardLayout.findViewById(R.id.change_image_view)
         val stationNameEditView: TextInputEditText = stationCardLayout.findViewById(R.id.edit_station_name)
         val stationUriEditView: TextInputEditText = stationCardLayout.findViewById(R.id.edit_stream_uri)
         val placeOnHomeScreenButton: MaterialButton = stationCardLayout.findViewById(R.id.place_on_home_screen_button)

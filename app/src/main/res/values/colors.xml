@@ -55,6 +55,7 @@
 <!--    <color name="transistor_accent_dimmed">#FF625b71</color> &lt;!&ndash; colorSecondary - Light Theme &ndash;&gt;-->
 
     <color name="transistor_neutral_black">#FF121212</color> <!-- Material Design recommended dark theme surface color -->
+    <color name="transistor_neutral_85percent">#D9121212</color>
     <color name="transistor_neutral_white">#FFFFFFFF</color>
     <color name="transistor_transparent">#00ffffff</color>
 

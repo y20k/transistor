@@ -109,6 +109,38 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
         }
 
 
+        // set up "Edit Stream Address" preference
+        val preferenceEnableEditingStreamUri: SwitchPreferenceCompat = SwitchPreferenceCompat(activity as Context)
+        preferenceEnableEditingStreamUri.title = getString(R.string.pref_edit_station_stream_title)
+        preferenceEnableEditingStreamUri.setIcon(R.drawable.ic_music_note_24dp)
+        preferenceEnableEditingStreamUri.key = Keys.PREF_EDIT_STATION_STREAMS
+        preferenceEnableEditingStreamUri.summaryOn = getString(R.string.pref_edit_station_stream_summary_enabled)
+        preferenceEnableEditingStreamUri.summaryOff = getString(R.string.pref_edit_station_stream_summary_disabled)
+        preferenceEnableEditingStreamUri.setDefaultValue(false)
+
+
+        // set up "Edit Stations" preference
+        val preferenceEnableEditingGeneral: SwitchPreferenceCompat = SwitchPreferenceCompat(activity as Context)
+        preferenceEnableEditingGeneral.title = getString(R.string.pref_edit_station_title)
+        preferenceEnableEditingGeneral.setIcon(R.drawable.ic_edit_24dp)
+        preferenceEnableEditingGeneral.key = Keys.PREF_EDIT_STATIONS
+        preferenceEnableEditingGeneral.summaryOn = getString(R.string.pref_edit_station_summary_enabled)
+        preferenceEnableEditingGeneral.summaryOff = getString(R.string.pref_edit_station_summary_disabled)
+        preferenceEnableEditingGeneral.setDefaultValue(true)
+        preferenceEnableEditingGeneral.setOnPreferenceChangeListener { preference, newValue ->
+            when (newValue) {
+                true -> {
+                    preferenceEnableEditingStreamUri.isEnabled = true
+                }
+                false -> {
+                    preferenceEnableEditingStreamUri.isEnabled = false
+                    preferenceEnableEditingStreamUri.isChecked = false
+                }
+            }
+            return@setOnPreferenceChangeListener true
+        }
+
+
         // set up "App Version" preference
         val preferenceAppVersion: Preference = Preference(context)
         preferenceAppVersion.title = getString(R.string.pref_app_version_title)
@@ -162,6 +194,11 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
         preferenceCategoryMaintenance.contains(preferenceUpdateCollection)
         preferenceCategoryMaintenance.contains(preferenceM3uExport)
 
+        val preferenceCategoryAdvanced: PreferenceCategory = PreferenceCategory(activity as Context)
+        preferenceCategoryAdvanced.title = getString(R.string.pref_advanced_title)
+        preferenceCategoryAdvanced.contains(preferenceEnableEditingGeneral)
+        preferenceCategoryAdvanced.contains(preferenceEnableEditingStreamUri)
+
         val preferenceCategoryAbout: PreferenceCategory = PreferenceCategory(context)
         preferenceCategoryAbout.title = getString(R.string.pref_about_title)
         preferenceCategoryAbout.contains(preferenceAppVersion)
@@ -175,6 +212,9 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
         screen.addPreference(preferenceUpdateStationImages)
         screen.addPreference(preferenceUpdateCollection)
         screen.addPreference(preferenceM3uExport)
+        screen.addPreference(preferenceCategoryAdvanced)
+        screen.addPreference(preferenceEnableEditingGeneral)
+        screen.addPreference(preferenceEnableEditingStreamUri)
         screen.addPreference(preferenceCategoryAbout)
         screen.addPreference(preferenceAppVersion)
         screen.addPreference(preferenceReportIssue)

@@ -254,6 +254,20 @@ object PreferencesHelper {
         return sharedPreferences.getString(Keys.PREF_THEME_SELECTION, Keys.STATE_THEME_FOLLOW_SYSTEM) ?: Keys.STATE_THEME_FOLLOW_SYSTEM
     }
 
+
+    /* Loads value of the option: Edit Stations */
+    fun loadEditStationsEnabled(): Boolean {
+        return sharedPreferences.getBoolean(Keys.PREF_EDIT_STATIONS, false)
+    }
+
+
+    /* Loads value of the option: Edit Station Streams */
+    fun loadEditStationStreamsEnabled(): Boolean {
+        return sharedPreferences.getBoolean(Keys.PREF_EDIT_STATION_STREAMS, false)
+    }
+
+
+
     /* Return whether to download over mobile */
     fun downloadOverMobile(): Boolean {
         return sharedPreferences.getBoolean(Keys.PREF_DOWNLOAD_OVER_MOBILE, Keys.DEFAULT_DOWNLOAD_OVER_MOBILE)

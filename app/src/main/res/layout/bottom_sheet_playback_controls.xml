@@ -110,7 +110,7 @@
         android:padding="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/station_icon"
-        app:srcCompat="@drawable/ic_music_note_24dp" />
+        app:srcCompat="@drawable/ic_player_sheet_music_note_24dp" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/sheet_streaming_link_headline"

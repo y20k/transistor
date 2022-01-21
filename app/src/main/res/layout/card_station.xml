@@ -32,6 +32,21 @@
         app:shapeAppearanceOverlay="@style/RoundedCorners"
         app:srcCompat="@drawable/ic_default_station_image_24dp" />
 
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/change_image_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/transistor_neutral_85percent"
+        android:contentDescription="@string/descr_card_station_image_change"
+        android:cropToPadding="false"
+        app:contentPadding="18dp"
+        app:layout_constraintBottom_toBottomOf="@+id/station_icon"
+        app:layout_constraintEnd_toEndOf="@+id/station_icon"
+        app:layout_constraintStart_toStartOf="@+id/station_icon"
+        app:layout_constraintTop_toTopOf="@+id/station_icon"
+        app:shapeAppearanceOverlay="@style/RoundedCorners"
+        app:srcCompat="@drawable/ic_image_white_36dp" />
+
     <ImageView
         android:id="@+id/starred_icon"
         android:layout_width="wrap_content"
@@ -145,8 +160,8 @@
         android:id="@+id/edit_views"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:visibility="gone"
-        app:constraint_referenced_ids="edit_station_name,edit_stream_uri,place_on_home_screen_button,save_button,cancel_button" />
+        android:visibility="visible"
+        app:constraint_referenced_ids="change_image_view,edit_station_name,edit_stream_uri,place_on_home_screen_button,save_button,cancel_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
