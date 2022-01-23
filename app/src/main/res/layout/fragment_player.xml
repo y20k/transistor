@@ -30,10 +30,13 @@
             android:visibility="visible" />
 
         <!-- ONBOARDING -->
-        <include layout="@layout/element_onboarding" />
+        <include
+            layout="@layout/element_onboarding"
+            android:visibility="gone" />
 
         <!-- PLAYER SHEET -->
-        <include layout="@layout/bottom_sheet_playback_controls" />
+        <include
+            layout="@layout/bottom_sheet_playback_controls" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

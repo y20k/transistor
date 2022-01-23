@@ -160,7 +160,7 @@
         android:id="@+id/edit_views"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:visibility="visible"
+        android:visibility="gone"
         app:constraint_referenced_ids="change_image_view,edit_station_name,edit_stream_uri,place_on_home_screen_button,save_button,cancel_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

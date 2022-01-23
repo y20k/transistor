@@ -3,7 +3,7 @@
     <!-- App Name -->
     <string name="app_name">Transistor</string>
     <!-- please do not translate app_name - transcription into different alphabet types is fine though -->
-    <string name="app_version_name" translatable="false">\"Andy Warhol\"</string>
+    <string name="app_version_name" translatable="false">\"Modern Love\"</string>
     <!-- Fragment -->
     <string name="fragment_settings_title">Settings</string>
     <!-- Dialogs -->

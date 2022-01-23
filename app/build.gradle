@@ -11,8 +11,8 @@ android {
         applicationId 'org.y20k.transistor'
         minSdkVersion 25
         targetSdkVersion 31
-        versionCode 89
-        versionName '4.0.18'
+        versionCode 90
+        versionName '4.1.0'
         resConfigs "en", "ar", "ca", "cs", "de", "el", "eo", "es", "eu", "fr", "fy", "he", "hr", "id", "in", "it", "ja", "kab", "nb-rNO", "nl", "pa", "pl", "pt", "pt-rBR", "ru", "sk", "sl", "sr", "th", "tr", "uk", "zh-rCN"
     }
 
