@@ -15,6 +15,7 @@
 package org.y20k.transistor.collection
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.support.v4.media.session.PlaybackStateCompat
 import android.view.LayoutInflater
 import android.view.View
@@ -58,8 +59,8 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
     private lateinit var collectionViewModel: CollectionViewModel
     // private lateinit var collectionAdapterListener: CollectionAdapterListener
     private var collection: Collection = Collection()
-    private val editStationsEnabled: Boolean = PreferencesHelper.loadEditStationsEnabled()
-    private val editStationStreamsEnabled: Boolean = PreferencesHelper.loadEditStationStreamsEnabled()
+    private var editStationsEnabled: Boolean = PreferencesHelper.loadEditStationsEnabled()
+    private var editStationStreamsEnabled: Boolean = PreferencesHelper.loadEditStationStreamsEnabled()
     private var expandedStationStreamUri: String = PreferencesHelper.loadStationListStreamUriLocation()
     private var expandedStationPosition: Int = -1
 
@@ -77,13 +78,20 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
     /* Overrides onAttachedToRecyclerView */
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
-
         // create view model and observe changes in collection view model
         collectionViewModel = ViewModelProvider(context as AppCompatActivity).get(CollectionViewModel::class.java)
         observeCollectionViewModel(context as LifecycleOwner)
-
+        // start listening for changes in shared preferences
+        PreferencesHelper.registerPreferenceChangeListener(sharedPreferenceChangeListener)
     }
 
+
+    /* Overrides onDetachedFromRecyclerView */
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView)
+        // stop listening for changes in shared preferences
+        PreferencesHelper.unregisterPreferenceChangeListener(sharedPreferenceChangeListener)
+    }
 
     /* Overrides onCreateViewHolder */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -141,16 +149,19 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
                     position -> {
                         stationViewHolder.stationNameView.isVisible = false
                         stationViewHolder.editViews.isVisible = true
+                        stationViewHolder.stationUriEditView.isGone = !editStationStreamsEnabled
                         // todo hide stationViewHolder.stationUriEditView.isGone if option is set accordingly
                     }
                     else -> {
                         stationViewHolder.stationNameView.isVisible = true
                         stationViewHolder.editViews.isGone = true
+                        stationViewHolder.stationUriEditView.isGone = true
                     }
                 }
             }
         }
     }
+
 
     /* Overrides onStationUpdated from UpdateHelperListener */
     override fun onStationUpdated(collection: Collection, positionPriorUpdate: Int, positionAfterUpdate: Int) {
@@ -202,6 +213,7 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
         stationViewHolder.stationUriEditView.setText(station.getStreamUri(), TextView.BufferType.EDITABLE)
         // todo implement sanity check for station uri
         stationViewHolder.cancelButton.setOnClickListener {
+            // todo hide keyboard & clear focus on edit texts
             toggleEditViews(position, station.getStreamUri())
         }
         stationViewHolder.saveButton.setOnClickListener {
@@ -470,6 +482,20 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
 
 
     /*
+     * Defines the listener for changes in shared preferences
+     */
+    private val sharedPreferenceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
+        when (key) {
+            Keys.PREF_EDIT_STATIONS -> editStationsEnabled = PreferencesHelper.loadEditStationsEnabled()
+            Keys.PREF_EDIT_STATION_STREAMS -> editStationStreamsEnabled = PreferencesHelper.loadEditStationStreamsEnabled()
+        }
+    }
+    /*
+     * End of declaration
+     */
+
+
+    /*
      * Inner class: ViewHolder for the Add New Station action
      */
     private inner class AddNewViewHolder (listItemAddNewLayout: View) : RecyclerView.ViewHolder(listItemAddNewLayout) {
@@ -491,7 +517,7 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
         val stationStarredView: ImageView = stationCardLayout.findViewById(R.id.starred_icon)
 //        val menuButtonView: ImageView = stationCardLayout.findViewById(R.id.menu_button)
         val playButtonView: ImageView = stationCardLayout.findViewById(R.id.playback_button)
-        val editViews: Group = stationCardLayout.findViewById(R.id.edit_views)
+        val editViews: Group = stationCardLayout.findViewById(R.id.default_edit_views)
         val stationImageChangeView: ImageView = stationCardLayout.findViewById(R.id.change_image_view)
         val stationNameEditView: TextInputEditText = stationCardLayout.findViewById(R.id.edit_station_name)
         val stationUriEditView: TextInputEditText = stationCardLayout.findViewById(R.id.edit_stream_uri)

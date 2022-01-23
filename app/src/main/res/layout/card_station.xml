@@ -115,13 +115,12 @@
         android:id="@+id/edit_stream_uri"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="8dp"
         android:hint="@string/dialog_edit_stream_uri"
         android:singleLine="true"
+        android:visibility="gone"
         android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
-        app:layout_constraintEnd_toStartOf="@+id/playback_button"
-        app:layout_constraintStart_toEndOf="@+id/starred_icon"
+        app:layout_constraintEnd_toEndOf="@+id/edit_station_name"
+        app:layout_constraintStart_toStartOf="@+id/edit_station_name"
         app:layout_constraintTop_toBottomOf="@id/edit_station_name" />
 
     <Button
@@ -131,8 +130,8 @@
         android:layout_height="wrap_content"
         app:icon="@drawable/ic_add_to_home_screen_24dp"
         android:text="@string/descr_dialog_edit_place_on_home_screen_icon"
-        app:layout_constraintEnd_toEndOf="@+id/edit_stream_uri"
-        app:layout_constraintStart_toStartOf="@+id/edit_stream_uri"
+        app:layout_constraintEnd_toEndOf="@+id/edit_station_name"
+        app:layout_constraintStart_toStartOf="@+id/edit_station_name"
         app:layout_constraintTop_toBottomOf="@+id/edit_stream_uri" />
 
     <Button
@@ -157,11 +156,11 @@
         app:layout_constraintTop_toTopOf="@+id/save_button" />
 
     <androidx.constraintlayout.widget.Group
-        android:id="@+id/edit_views"
+        android:id="@+id/default_edit_views"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:visibility="gone"
-        app:constraint_referenced_ids="change_image_view,edit_station_name,edit_stream_uri,place_on_home_screen_button,save_button,cancel_button" />
+        android:visibility="visible"
+        app:constraint_referenced_ids="change_image_view,edit_station_name,place_on_home_screen_button,save_button,cancel_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
