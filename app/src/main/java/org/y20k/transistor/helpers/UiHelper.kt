@@ -22,6 +22,7 @@ import android.graphics.PorterDuffXfermode
 import android.graphics.drawable.ColorDrawable
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -94,6 +95,13 @@ object UiHelper {
     /* Get scaling factor from display density */
     fun getDensityScalingFactor(context: Context): Float {
         return context.resources.displayMetrics.density
+    }
+
+
+    /* Hide keyboard */
+    fun hideSoftKeyboard(context: Context, view: View) {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
 

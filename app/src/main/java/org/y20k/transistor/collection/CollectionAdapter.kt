@@ -17,12 +17,13 @@ package org.y20k.transistor.collection
 import android.content.Context
 import android.content.SharedPreferences
 import android.support.v4.media.session.PlaybackStateCompat
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Group
@@ -41,15 +42,13 @@ import org.y20k.transistor.Keys
 import org.y20k.transistor.R
 import org.y20k.transistor.core.Collection
 import org.y20k.transistor.core.Station
-import org.y20k.transistor.dialogs.EditStationDialog
-import org.y20k.transistor.dialogs.RenameStationDialog
 import org.y20k.transistor.helpers.*
 
 
 /*
  * CollectionAdapter class
  */
-class CollectionAdapter(private val context: Context, private val collectionAdapterListener: CollectionAdapterListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), UpdateHelper.UpdateHelperListener, RenameStationDialog.RenameStationListener, EditStationDialog.EditStationListener {
+class CollectionAdapter(private val context: Context, private val collectionAdapterListener: CollectionAdapterListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), UpdateHelper.UpdateHelperListener {
 
     /* Define log tag */
     private val TAG: String = LogHelper.makeLogTag(CollectionAdapter::class.java)
@@ -63,8 +62,6 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
     private var editStationStreamsEnabled: Boolean = PreferencesHelper.loadEditStationStreamsEnabled()
     private var expandedStationStreamUri: String = PreferencesHelper.loadStationListStreamUriLocation()
     private var expandedStationPosition: Int = -1
-
-    // todo listen for preference changes
 
 
     /* Listener Interface */
@@ -150,7 +147,6 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
                         stationViewHolder.stationNameView.isVisible = false
                         stationViewHolder.editViews.isVisible = true
                         stationViewHolder.stationUriEditView.isGone = !editStationStreamsEnabled
-                        // todo hide stationViewHolder.stationUriEditView.isGone if option is set accordingly
                     }
                     else -> {
                         stationViewHolder.stationNameView.isVisible = true
@@ -175,32 +171,6 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
     }
 
 
-    /* Overrides onRenameStationDialog from RenameStationListener */
-    override fun onRenameStationDialog(textInput: String, stationUuid: String, position: Int) {
-        // rename station (and sort collection)
-        collection = CollectionHelper.renameStation(context, collection, stationUuid, textInput)
-        val newPosition: Int = CollectionHelper.getStationPosition(collection, stationUuid)
-        if (position != newPosition && newPosition != -1) {
-            notifyItemMoved(position, newPosition)
-            notifyItemChanged(position)
-        }
-        notifyItemChanged(newPosition)
-    }
-
-
-    /* Overrides onEditStationDialog from EditStationListener */
-    override fun onEditStationDialog(textInput: String, stationUuid: String, position: Int) {
-        // rename station (and sort collection)
-        collection = CollectionHelper.renameStation(context, collection, stationUuid, textInput)
-        val newPosition: Int = CollectionHelper.getStationPosition(collection, stationUuid)
-        if (position != newPosition && newPosition != -1) {
-            notifyItemMoved(position, newPosition)
-            notifyItemChanged(position)
-        }
-        notifyItemChanged(newPosition)
-    }
-
-
     /* Sets the station name view */
     private fun setStationName(stationViewHolder: StationViewHolder, station: Station, position: Int) {
         stationViewHolder.stationNameView.text = station.name
@@ -211,23 +181,40 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
     private fun setEditViews(stationViewHolder: StationViewHolder, station: Station, position: Int) {
         stationViewHolder.stationNameEditView.setText(station.name, TextView.BufferType.EDITABLE)
         stationViewHolder.stationUriEditView.setText(station.getStreamUri(), TextView.BufferType.EDITABLE)
-        // todo implement sanity check for station uri
+        stationViewHolder.stationUriEditView.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                if (s.toString() != station.getStreamUri()) {
+                    // disable save button
+                    stationViewHolder.saveButton.isEnabled = false
+                    // check for valid station uri
+                    // todo implememnt
+                } else {
+                    // enable save button
+                    stationViewHolder.saveButton.isEnabled = true
+                }
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {  }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {  }
+        })
         stationViewHolder.cancelButton.setOnClickListener {
-            // todo hide keyboard & clear focus on edit texts
             toggleEditViews(position, station.getStreamUri())
+            UiHelper.hideSoftKeyboard(context, stationViewHolder.stationNameEditView)
         }
         stationViewHolder.saveButton.setOnClickListener {
-            // todo implement save
-            Toast.makeText(context, "Saving Changes.", Toast.LENGTH_SHORT).show()
+            // todo implement sanity check for station uri
+            saveStation(station, position, stationViewHolder.stationNameEditView.text.toString(), stationViewHolder.stationUriEditView.text.toString())
             toggleEditViews(position, station.getStreamUri())
+            UiHelper.hideSoftKeyboard(context, stationViewHolder.stationNameEditView)
         }
         stationViewHolder.placeOnHomeScreenButton.setOnClickListener {
             ShortcutHelper.placeShortcut(context, station)
             toggleEditViews(position, station.getStreamUri())
+            UiHelper.hideSoftKeyboard(context, stationViewHolder.stationNameEditView)
         }
         stationViewHolder.stationImageChangeView.setOnClickListener {
             collectionAdapterListener.onChangeImageButtonTapped(station.uuid)
             toggleEditViews(position, station.getStreamUri())
+            UiHelper.hideSoftKeyboard(context, stationViewHolder.stationNameEditView)
         }
     }
 
@@ -343,6 +330,26 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
 //        }
 //        popup.show()
 //    }
+
+
+    /* Save edited station */
+    private fun saveStation(station: Station, position: Int, stationName:String, streamUri: String) {
+        if (stationName.isNotEmpty()) {
+            station.name = stationName
+            station.nameManuallySet = true
+        }
+        if (streamUri.isNotEmpty()) {
+            station.streamUris[0] = streamUri
+        }
+        // change station name and stream uri (and sort collection)
+        collection = CollectionHelper.changeStationNameAndStreamUri(context, collection, station.uuid, station.name, station.getStreamUri())
+        val newPosition: Int = CollectionHelper.getStationPosition(collection, station.uuid)
+        if (position != newPosition && newPosition != -1) {
+            notifyItemMoved(position, newPosition)
+            notifyItemChanged(position)
+        }
+        notifyItemChanged(newPosition)
+    }
 
 
     /* Overrides onBindViewHolder */
