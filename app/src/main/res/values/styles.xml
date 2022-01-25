@@ -21,7 +21,6 @@
         <item name="colorSurface">@color/dialog_background</item>
     </style>
 
-
     <style name="RoundedCorners" parent="">
         <item name="cornerSizeTopLeft">16dp</item>
         <item name="cornerFamilyTopLeft">rounded</item>

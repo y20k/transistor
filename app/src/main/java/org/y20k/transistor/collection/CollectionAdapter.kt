@@ -38,11 +38,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
+import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.Main
 import org.y20k.transistor.Keys
 import org.y20k.transistor.R
 import org.y20k.transistor.core.Collection
 import org.y20k.transistor.core.Station
 import org.y20k.transistor.helpers.*
+import java.util.*
 
 
 /*
@@ -143,13 +146,19 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
 
                 // show / hide edit views
                 when (expandedStationPosition) {
+                    // show edit views
                     position -> {
                         stationViewHolder.stationNameView.isVisible = false
+                        stationViewHolder.playButtonView.isGone = true
+                        stationViewHolder.stationStarredView.isGone = true
                         stationViewHolder.editViews.isVisible = true
                         stationViewHolder.stationUriEditView.isGone = !editStationStreamsEnabled
                     }
+                    // hide edit views
                     else -> {
                         stationViewHolder.stationNameView.isVisible = true
+                        stationViewHolder.playButtonView.isVisible = true
+                        stationViewHolder.stationStarredView.isVisible = station.starred
                         stationViewHolder.editViews.isGone = true
                         stationViewHolder.stationUriEditView.isGone = true
                     }
@@ -183,15 +192,7 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
         stationViewHolder.stationUriEditView.setText(station.getStreamUri(), TextView.BufferType.EDITABLE)
         stationViewHolder.stationUriEditView.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                if (s.toString() != station.getStreamUri()) {
-                    // disable save button
-                    stationViewHolder.saveButton.isEnabled = false
-                    // check for valid station uri
-                    // todo implememnt
-                } else {
-                    // enable save button
-                    stationViewHolder.saveButton.isEnabled = true
-                }
+                handleStationUriInput(stationViewHolder, s, station.getStreamUri())
             }
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {  }
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {  }
@@ -201,7 +202,6 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
             UiHelper.hideSoftKeyboard(context, stationViewHolder.stationNameEditView)
         }
         stationViewHolder.saveButton.setOnClickListener {
-            // todo implement sanity check for station uri
             saveStation(station, position, stationViewHolder.stationNameEditView.text.toString(), stationViewHolder.stationUriEditView.text.toString())
             toggleEditViews(position, station.getStreamUri())
             UiHelper.hideSoftKeyboard(context, stationViewHolder.stationNameEditView)
@@ -290,48 +290,6 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
     }
 
 
-//    /* Displays station popup menu */
-//    private fun showStationPopupMenu(view: View, stationUuid: String, position: Int) {
-//        val popup = PopupMenu(context, view)
-//        popup.inflate(R.menu.station_popup_menu)
-//        popup.setOnMenuItemClickListener { item ->
-//            when (item.itemId) {
-//                R.id.menu_icon -> {
-//                    // let fragment get system picker for images
-//                    collectionAdapterListener.onChangeImageButtonTapped(stationUuid)
-//                    true
-//                }
-//                R.id.menu_rename -> {
-//                    // show rename dialog
-//                    val name: String = CollectionHelper.getStationName(collection, stationUuid)
-//                    RenameStationDialog(this).show(context, name, stationUuid, position)
-//                    true
-//                }
-////                R.id.menu_delete -> {
-////                    // show delete dialog
-////                    // DialogDelete.show(activity, station)
-////                    true
-////                }
-//                R.id.menu_update -> {
-//                    // update this station
-//                    Toast.makeText(context, R.string.toastmessage_updating_station, Toast.LENGTH_SHORT).show()
-//                    val updateHelper: UpdateHelper = UpdateHelper(context, this, collection)
-//                    updateHelper.updateStation(CollectionHelper.getStation(collection, stationUuid))
-//                    true
-//                }
-//                R.id.menu_shortcut -> {
-//                    // create shortcut
-//                    val station: Station = CollectionHelper.getStation(collection, stationUuid)
-//                    ShortcutHelper.placeShortcut(context, station)
-//                    true
-//                }
-//                else -> false
-//            }
-//        }
-//        popup.show()
-//    }
-
-
     /* Save edited station */
     private fun saveStation(station: Station, position: Int, stationName:String, streamUri: String) {
         if (stationName.isNotEmpty()) {
@@ -349,6 +307,38 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
             notifyItemChanged(position)
         }
         notifyItemChanged(newPosition)
+    }
+
+
+    /* Checks if stream uri input is valid */
+    private fun handleStationUriInput(stationViewHolder: StationViewHolder, s: Editable?, streamUri: String) {
+        val input: String = s.toString()
+        if (input == streamUri) {
+            // enable save button
+            stationViewHolder.saveButton.isEnabled = true
+        } else {
+            // 1. disable save button
+            stationViewHolder.saveButton.isEnabled = false
+            // 2. check for valid station uri - and re-enable button
+            if (input.startsWith("http")) {
+                // detect content type on background thread
+                CoroutineScope(Dispatchers.IO).launch {
+                    val deferred: Deferred<NetworkHelper.ContentType> = async(Dispatchers.Default) { NetworkHelper.detectContentTypeSuspended(input) }
+                    // wait for result
+                    val contentType: String = deferred.await().type.lowercase(Locale.getDefault())
+                    // CASE: stream address detected
+                    if (Keys.MIME_TYPES_MPEG.contains(contentType) or
+                            Keys.MIME_TYPES_OGG.contains(contentType) or
+                            Keys.MIME_TYPES_AAC.contains(contentType) or
+                            Keys.MIME_TYPES_HLS.contains(contentType)) {
+                        // re-enable save button
+                        withContext(Main) {
+                            stationViewHolder.saveButton.isEnabled = true
+                        }
+                    }
+                }
+            }
+        }
     }
 
 

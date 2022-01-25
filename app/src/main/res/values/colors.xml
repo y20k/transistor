@@ -26,7 +26,8 @@
     <color name="player_sheet_text_details">#ffe6e1e5</color> <!-- system_neutral1_100 / colorOnSurface (Dark Theme) -->
     <color name="player_sheet_icon">#ffe6e1e5</color> <!-- system_neutral1_100 / colorOnSurface (Dark Theme) -->
 
-    <color name="list_card_background">#ffe7e0ec</color> <!-- colorSurfaceVariant - system_neutral2_100 -->
+    <color name="list_card_background">#fffffbfe</color> <!-- android:colorBackground / colorSurface / system_neutral1_10 -->
+<!--    <color name="list_card_background">#ffe7e0ec</color> &lt;!&ndash; colorSurfaceVariant - system_neutral2_100 &ndash;&gt;-->
     <color name="list_card_cover_background">@color/transistor_neutral_lighter</color>
     <color name="list_card_delete_background">@color/transistor_red</color>
     <color name="list_card_mark_starred_background">@color/transistor_neutral_medium_light</color>
