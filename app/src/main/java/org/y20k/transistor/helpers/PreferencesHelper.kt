@@ -257,7 +257,10 @@ object PreferencesHelper {
 
     /* Loads value of the option: Edit Stations */
     fun loadEditStationsEnabled(): Boolean {
-        return sharedPreferences.getBoolean(Keys.PREF_EDIT_STATIONS, false)
+        // default == true for existing users of Transistor todo: remove in 2023
+        LogHelper.e(TAG, loadCollectionSize())
+        return sharedPreferences.getBoolean(Keys.PREF_EDIT_STATIONS, sharedPreferences.getInt(Keys.PREF_COLLECTION_SIZE, -1) != -1)
+        // return sharedPreferences.getBoolean(Keys.PREF_EDIT_STATIONS, false)
     }
 
 

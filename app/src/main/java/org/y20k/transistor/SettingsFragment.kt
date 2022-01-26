@@ -116,7 +116,7 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
         preferenceEnableEditingStreamUri.key = Keys.PREF_EDIT_STATION_STREAMS
         preferenceEnableEditingStreamUri.summaryOn = getString(R.string.pref_edit_station_stream_summary_enabled)
         preferenceEnableEditingStreamUri.summaryOff = getString(R.string.pref_edit_station_stream_summary_disabled)
-        preferenceEnableEditingStreamUri.setDefaultValue(false)
+        preferenceEnableEditingStreamUri.setDefaultValue(PreferencesHelper.loadEditStationStreamsEnabled())
 
 
         // set up "Edit Stations" preference
@@ -126,7 +126,7 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
         preferenceEnableEditingGeneral.key = Keys.PREF_EDIT_STATIONS
         preferenceEnableEditingGeneral.summaryOn = getString(R.string.pref_edit_station_summary_enabled)
         preferenceEnableEditingGeneral.summaryOff = getString(R.string.pref_edit_station_summary_disabled)
-        preferenceEnableEditingGeneral.setDefaultValue(true)
+        preferenceEnableEditingGeneral.setDefaultValue(PreferencesHelper.loadEditStationsEnabled())
         preferenceEnableEditingGeneral.setOnPreferenceChangeListener { preference, newValue ->
             when (newValue) {
                 true -> {
