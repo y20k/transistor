@@ -62,7 +62,7 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
     // private lateinit var collectionAdapterListener: CollectionAdapterListener
     private var collection: Collection = Collection()
     private var editStationsEnabled: Boolean = PreferencesHelper.loadEditStationsEnabled()
-    private var editStationStreamsEnabled: Boolean = PreferencesHelper.loadEditStationStreamsEnabled()
+    private var editStationStreamsEnabled: Boolean = PreferencesHelper.loadEditStreamUrisEnabled()
     private var expandedStationStreamUri: String = PreferencesHelper.loadStationListStreamUriLocation()
     private var expandedStationPosition: Int = -1
 
@@ -484,7 +484,7 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
     private val sharedPreferenceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
         when (key) {
             Keys.PREF_EDIT_STATIONS -> editStationsEnabled = PreferencesHelper.loadEditStationsEnabled()
-            Keys.PREF_EDIT_STATION_STREAMS -> editStationStreamsEnabled = PreferencesHelper.loadEditStationStreamsEnabled()
+            Keys.PREF_EDIT_STREAMS_URIS -> editStationStreamsEnabled = PreferencesHelper.loadEditStreamUrisEnabled()
         }
     }
     /*

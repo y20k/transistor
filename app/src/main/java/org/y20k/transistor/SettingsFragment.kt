@@ -97,26 +97,26 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
         }
 
 
-        // set up "Update Stations" preference
-        val preferenceUpdateCollection: Preference = Preference(activity as Context)
-        preferenceUpdateCollection.title = getString(R.string.pref_update_collection_title)
-        preferenceUpdateCollection.setIcon(R.drawable.ic_refresh_24dp)
-        preferenceUpdateCollection.summary = getString(R.string.pref_update_collection_summary)
-        preferenceUpdateCollection.setOnPreferenceClickListener {
-            // show dialog
-            YesNoDialog(this).show(context = activity as Context, type = Keys.DIALOG_UPDATE_COLLECTION, message = R.string.dialog_yes_no_message_update_collection, yesButton = R.string.dialog_yes_no_positive_button_update_collection)
-            return@setOnPreferenceClickListener true
-        }
+//        // set up "Update Stations" preference
+//        val preferenceUpdateCollection: Preference = Preference(activity as Context)
+//        preferenceUpdateCollection.title = getString(R.string.pref_update_collection_title)
+//        preferenceUpdateCollection.setIcon(R.drawable.ic_refresh_24dp)
+//        preferenceUpdateCollection.summary = getString(R.string.pref_update_collection_summary)
+//        preferenceUpdateCollection.setOnPreferenceClickListener {
+//            // show dialog
+//            YesNoDialog(this).show(context = activity as Context, type = Keys.DIALOG_UPDATE_COLLECTION, message = R.string.dialog_yes_no_message_update_collection, yesButton = R.string.dialog_yes_no_positive_button_update_collection)
+//            return@setOnPreferenceClickListener true
+//        }
 
 
         // set up "Edit Stream Address" preference
         val preferenceEnableEditingStreamUri: SwitchPreferenceCompat = SwitchPreferenceCompat(activity as Context)
         preferenceEnableEditingStreamUri.title = getString(R.string.pref_edit_station_stream_title)
         preferenceEnableEditingStreamUri.setIcon(R.drawable.ic_music_note_24dp)
-        preferenceEnableEditingStreamUri.key = Keys.PREF_EDIT_STATION_STREAMS
+        preferenceEnableEditingStreamUri.key = Keys.PREF_EDIT_STREAMS_URIS
         preferenceEnableEditingStreamUri.summaryOn = getString(R.string.pref_edit_station_stream_summary_enabled)
         preferenceEnableEditingStreamUri.summaryOff = getString(R.string.pref_edit_station_stream_summary_disabled)
-        preferenceEnableEditingStreamUri.setDefaultValue(PreferencesHelper.loadEditStationStreamsEnabled())
+        preferenceEnableEditingStreamUri.setDefaultValue(PreferencesHelper.loadEditStreamUrisEnabled())
 
 
         // set up "Edit Stations" preference
@@ -191,7 +191,7 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
         val preferenceCategoryMaintenance: PreferenceCategory = PreferenceCategory(activity as Context)
         preferenceCategoryMaintenance.title = getString(R.string.pref_maintenance_title)
         preferenceCategoryMaintenance.contains(preferenceUpdateStationImages)
-        preferenceCategoryMaintenance.contains(preferenceUpdateCollection)
+//        preferenceCategoryMaintenance.contains(preferenceUpdateCollection)
         preferenceCategoryMaintenance.contains(preferenceM3uExport)
 
         val preferenceCategoryAdvanced: PreferenceCategory = PreferenceCategory(activity as Context)
@@ -210,7 +210,7 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
         screen.addPreference(preferenceThemeSelection)
         screen.addPreference(preferenceCategoryMaintenance)
         screen.addPreference(preferenceUpdateStationImages)
-        screen.addPreference(preferenceUpdateCollection)
+//        screen.addPreference(preferenceUpdateCollection)
         screen.addPreference(preferenceM3uExport)
         screen.addPreference(preferenceCategoryAdvanced)
         screen.addPreference(preferenceEnableEditingGeneral)

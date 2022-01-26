@@ -257,16 +257,21 @@ object PreferencesHelper {
 
     /* Loads value of the option: Edit Stations */
     fun loadEditStationsEnabled(): Boolean {
-        // default == true for existing users of Transistor todo: remove in 2023
-        LogHelper.e(TAG, loadCollectionSize())
-        return sharedPreferences.getBoolean(Keys.PREF_EDIT_STATIONS, sharedPreferences.getInt(Keys.PREF_COLLECTION_SIZE, -1) != -1)
-        // return sharedPreferences.getBoolean(Keys.PREF_EDIT_STATIONS, false)
+        return sharedPreferences.getBoolean(Keys.PREF_EDIT_STATIONS, false)
+    }
+
+
+    /* Saves value of the option: Edit Stations (only needed for migration) */
+    fun saveEditStationsEnabled(enabled: Boolean = false) {
+        sharedPreferences.edit {
+            putBoolean(Keys.PREF_EDIT_STATIONS, enabled)
+        }
     }
 
 
     /* Loads value of the option: Edit Station Streams */
-    fun loadEditStationStreamsEnabled(): Boolean {
-        return sharedPreferences.getBoolean(Keys.PREF_EDIT_STATION_STREAMS, false)
+    fun loadEditStreamUrisEnabled(): Boolean {
+        return sharedPreferences.getBoolean(Keys.PREF_EDIT_STREAMS_URIS, false)
     }
 
 
