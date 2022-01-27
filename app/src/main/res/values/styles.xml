@@ -5,7 +5,7 @@
     <style name="AppTheme" parent="Theme.Material3.DayNight.NoActionBar">
 
         <!-- colorPrimary is used in dialog buttons for example -->
-        <item name="colorPrimary">@color/transistor_neutral_darker</item>
+        <item name="colorPrimary">@color/default_neutral_darker</item>
 
         <!-- Do not use primary colored elevation overlays to present a visual hierarchy - TOO COLORFUL  -->
         <item name="elevationOverlayEnabled">false</item>

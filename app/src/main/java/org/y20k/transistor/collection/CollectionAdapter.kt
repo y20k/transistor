@@ -312,28 +312,30 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
 
     /* Checks if stream uri input is valid */
     private fun handleStationUriInput(stationViewHolder: StationViewHolder, s: Editable?, streamUri: String) {
-        val input: String = s.toString()
-        if (input == streamUri) {
-            // enable save button
-            stationViewHolder.saveButton.isEnabled = true
-        } else {
-            // 1. disable save button
-            stationViewHolder.saveButton.isEnabled = false
-            // 2. check for valid station uri - and re-enable button
-            if (input.startsWith("http")) {
-                // detect content type on background thread
-                CoroutineScope(Dispatchers.IO).launch {
-                    val deferred: Deferred<NetworkHelper.ContentType> = async(Dispatchers.Default) { NetworkHelper.detectContentTypeSuspended(input) }
-                    // wait for result
-                    val contentType: String = deferred.await().type.lowercase(Locale.getDefault())
-                    // CASE: stream address detected
-                    if (Keys.MIME_TYPES_MPEG.contains(contentType) or
-                            Keys.MIME_TYPES_OGG.contains(contentType) or
-                            Keys.MIME_TYPES_AAC.contains(contentType) or
-                            Keys.MIME_TYPES_HLS.contains(contentType)) {
-                        // re-enable save button
-                        withContext(Main) {
-                            stationViewHolder.saveButton.isEnabled = true
+        if (editStationStreamsEnabled) {
+            val input: String = s.toString()
+            if (input == streamUri) {
+                // enable save button
+                stationViewHolder.saveButton.isEnabled = true
+            } else {
+                // 1. disable save button
+                stationViewHolder.saveButton.isEnabled = false
+                // 2. check for valid station uri - and re-enable button
+                if (input.startsWith("http")) {
+                    // detect content type on background thread
+                    CoroutineScope(Dispatchers.IO).launch {
+                        val deferred: Deferred<NetworkHelper.ContentType> = async(Dispatchers.Default) { NetworkHelper.detectContentTypeSuspended(input) }
+                        // wait for result
+                        val contentType: String = deferred.await().type.lowercase(Locale.getDefault())
+                        // CASE: stream address detected
+                        if (Keys.MIME_TYPES_MPEG.contains(contentType) or
+                                Keys.MIME_TYPES_OGG.contains(contentType) or
+                                Keys.MIME_TYPES_AAC.contains(contentType) or
+                                Keys.MIME_TYPES_HLS.contains(contentType)) {
+                            // re-enable save button
+                            withContext(Main) {
+                                stationViewHolder.saveButton.isEnabled = true
+                            }
                         }
                     }
                 }

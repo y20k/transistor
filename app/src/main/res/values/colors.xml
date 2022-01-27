@@ -2,66 +2,52 @@
 
 <resources>
     <!-- DAY THEME COLORS -->
-    <color name="app_window_background">#fffffbfe</color> <!-- android:colorBackground / colorSurface / system_neutral1_10 -->
-    <color name="status_bar_background">@color/transistor_neutral_light</color>
-    <color name="dialog_background">@color/transistor_neutral_very_light</color>
-    <color name="app_onboarding_icons">@color/transistor_neutral_darker</color>
 
-    <color name="toolbar_background">@color/transistor_neutral_light</color>
+    <!-- app colors -->
+    <color name="app_window_background">#fffffbfe</color> <!-- android:colorBackground / colorSurface -->
+    <color name="status_bar_background">#ffe7e0ec</color> <!-- colorSurfaceVariant -->
+    <color name="dialog_background">#fffffbfe</color> <!-- android:colorBackground / colorSurface -->
+<!--    <color name="dialog_background">#ffe7e0ec</color> &lt;!&ndash; colorSurfaceVariant &ndash;&gt;-->
+    <color name="app_onboarding_icons">#ff1c1b1f</color> <!-- colorOnBackground / colorOnSurface-->
+    <color name="toolbar_background">#ffe7e0ec</color> <!-- colorSurfaceVariant -->
 
-    <color name="text_default">#ff1c1b1f</color> <!-- system_neutral1_900 / colorOnBackground / colorOnSurface-->
-    <color name="text_lightweight">@color/transistor_neutral_dark</color>
-    <color name="text_link">@color/transistor_accent_dimmed</color>
+    <!-- text & icons -->
+    <color name="text_default">#ff1c1b1f</color> <!-- colorOnBackground / colorOnSurface-->
+    <color name="text_lightweight">#ff49454f</color> <!-- colorOnSurfaceVariant -->
+    <color name="text_link">#ffd0bcff</color> <!-- colorPrimaryInverse -->
+    <color name="text_link_separator">#ffd0bcff</color> <!-- colorPrimaryInverse -->
+    <color name="icon_default">#ff1c1b1f</color> <!-- colorOnBackground / colorOnSurface-->
+    <color name="icon_lightweight">#ff49454f</color> <!-- colorOnSurfaceVariant -->
+    <color name="icon_lightweight_background">#ffe7e0ec</color> <!-- colorSurfaceVariant -->
 
-<!--    <color name="icon_default">@color/transistor_neutral_dark</color>-->
-    <color name="icon_default">#ff1c1b1f</color> <!-- system_neutral1_900 / colorOnBackground / colorOnSurface-->
-    <color name="icon_lightweight">@color/transistor_neutral_medium_light</color>
+    <!-- list -->
+    <color name="list_card_background">#fffffbfe</color> <!-- android:colorBackground / colorSurface -->
+    <color name="list_card_cover_background">#ffe7e0ec</color> <!-- colorSurfaceVariant -->
+    <color name="list_card_delete_background">#ffb3261e</color> <!-- colorError -->
+    <color name="list_card_delete_icon">#ffffffff</color> <!-- colorOnError (white) -->
+    <color name="list_card_mark_starred_background">#ff6750a4</color> <!-- colorPrimary -->
+    <color name="list_card_mark_starred_star">#ffffffff</color> <!-- colorOnPrimary -->
+    <color name="search_result_background">#fffffbfe</color> <!-- android:colorBackground / colorSurface -->
+    <color name="search_result_background_selected">#ffe7e0ec</color> <!-- colorSurfaceVariant -->
 
-    <color name="player_play_pause_icon">@color/transistor_neutral_very_light</color>
-    <color name="player_button_background">@color/transistor_accent_intense</color>
-    <color name="player_button_buffering">@color/transistor_accent_light</color>
-    <color name="player_sheet_background">#ff1c1b1f</color> <!-- system_neutral2_700 / colorSurfaceVariant (Dark Theme) -->
-    <color name="player_sheet_background_border">@color/transistor_neutral_dark</color>
-    <color name="player_sheet_text_main">#ffe6e1e5</color> <!-- system_neutral1_100 / colorOnSurface (Dark Theme) -->
-    <color name="player_sheet_text_details">#ffe6e1e5</color> <!-- system_neutral1_100 / colorOnSurface (Dark Theme) -->
-    <color name="player_sheet_icon">#ffe6e1e5</color> <!-- system_neutral1_100 / colorOnSurface (Dark Theme) -->
-
-    <color name="list_card_background">#fffffbfe</color> <!-- android:colorBackground / colorSurface / system_neutral1_10 -->
-<!--    <color name="list_card_background">#ffe7e0ec</color> &lt;!&ndash; colorSurfaceVariant - system_neutral2_100 &ndash;&gt;-->
-    <color name="list_card_cover_background">@color/transistor_neutral_lighter</color>
-    <color name="list_card_delete_background">@color/transistor_red</color>
-    <color name="list_card_mark_starred_background">@color/transistor_neutral_medium_light</color>
-    <color name="list_card_mark_starred_star">@color/transistor_neutral_very_light</color>
-<!--    <color name="list_card_mark_starred_star">@color/transistor_neutral_very_dark</color>-->
-<!--    <color name="list_card_mark_starred_background">@color/transistor_accent_intense</color>-->
+    <!-- player sheet -->
+    <color name="player_play_pause_icon">#ffffffff</color> <!-- colorOnPrimary-->
+    <color name="player_button_background">#ff6750a4</color> <!-- colorPrimary -->
+    <color name="player_button_buffering">#ffd0bcff</color> <!-- colorPrimaryInverse -->
+    <color name="player_sheet_background">#ff313033</color> <!-- colorSurfaceInverse -->
+    <color name="player_sheet_text_main">#fff4eff4</color> <!-- colorOnSurfaceInverse -->
+    <color name="player_sheet_text_details">#fff4eff4</color> <!-- colorOnSurfaceInverse -->
+    <color name="player_sheet_icon">#fff4eff4</color> <!-- colorOnSurfaceInverse -->
 
 
-    <color name="search_result_background">@color/transistor_neutral_very_light</color>
-    <color name="search_result_background_selected">@color/transistor_neutral_lighter</color>
+    <!-- default colors -->
+    <color name="default_neutral_white">#ffffffff</color> <!-- system_accent1_0 -->
+    <color name="default_neutral_lighter">#ffe6e1e5</color> <!-- system_neutral1_100 -->
+    <color name="default_neutral_medium_light">#ff7d7d7d</color> <!-- system_neutral1_300  todo check -->
+    <color name="default_neutral_dark">#ff595959</color> <!-- system_neutral1_600 todo check-->
+    <color name="default_neutral_darker">#ff1c1b1f</color> <!-- system_neutral1_900-->
 
-    <!-- BASES COLORS -->
-    <color name="transistor_neutral_dark">#FF595959</color> <!-- derived from recommended dark theme surface color -->
-    <color name="transistor_neutral_medium_light">#FF7D7D7D</color>
-    <color name="transistor_neutral_very_light">#FFFAFAFA</color>
-    <color name="transistor_neutral_lighter">#FFF2F2F2</color>
-    <color name="transistor_neutral_light">#FFDADADA</color>
-    <color name="transistor_neutral_darker">#FF414141</color>
-    <color name="transistor_neutral_very_dark">#FF2D2D2D</color>
-
-    <color name="transistor_accent_intense">#FFDC3D33</color>
-    <color name="transistor_accent_light">#FFE17E77</color>
-    <color name="transistor_accent_dimmed">#FFAD261E</color>
-<!--    <color name="transistor_accent_intense">#FFEADDFF</color> &lt;!&ndash; colorPrimary - Light Theme &ndash;&gt;-->
-<!--    <color name="transistor_accent_light">#FFF4EEFF</color>-->
-<!--    <color name="transistor_accent_dimmed">#FF625b71</color> &lt;!&ndash; colorSecondary - Light Theme &ndash;&gt;-->
-
-    <color name="transistor_neutral_black">#FF121212</color> <!-- Material Design recommended dark theme surface color -->
-    <color name="transistor_neutral_85percent">#D9121212</color>
-    <color name="transistor_neutral_white">#FFFFFFFF</color>
-    <color name="transistor_transparent">#00ffffff</color>
-
-    <color name="transistor_red">#FFDC3D33</color><!-- Slightly muted variant of -> Material Design 2: Red 600 -->
-<!--    <color name="transistor_red_light">#FFE15950</color>-->
-<!--    <color name="transistor_red_dark">#FFCA2D23</color>-->
+    <color name="default_neutral_85percent">#d9313033</color> <!-- 85% system_neutral1_800 -->
+    <color name="default_transparent">#00ffffff</color>
 
 </resources>

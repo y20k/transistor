@@ -36,7 +36,7 @@
         android:id="@+id/change_image_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/transistor_neutral_85percent"
+        android:background="@color/default_neutral_85percent"
         android:contentDescription="@string/descr_card_station_image_change"
         android:cropToPadding="false"
         app:contentPadding="18dp"
@@ -98,13 +98,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:backgroundTint="@color/transistor_transparent"
+        android:backgroundTint="@color/default_transparent"
         android:clickable="true"
         android:contentDescription="@string/descr_card_small_play_button"
         android:focusable="true"
         android:paddingStart="8dp"
         android:paddingTop="8dp"
-        android:paddingEnd="16dp"
+        android:paddingEnd="12dp"
         android:paddingBottom="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/station_name"
         app:layout_constraintEnd_toEndOf="parent"
@@ -174,7 +174,7 @@
         android:id="@+id/default_edit_views"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:visibility="visible"
+        android:visibility="gone"
         app:constraint_referenced_ids="change_image_view,edit_station_name,place_on_home_screen_button,save_button,cancel_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
