@@ -15,18 +15,18 @@
 package org.y20k.transistor.collection
 
 import android.content.Context
-import android.os.Vibrator
+import android.content.SharedPreferences
 import android.support.v4.media.session.PlaybackStateCompat
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.PopupMenu
-import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.Group
 import androidx.core.net.toUri
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -36,19 +36,22 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.textfield.TextInputEditText
+import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.Main
 import org.y20k.transistor.Keys
 import org.y20k.transistor.R
 import org.y20k.transistor.core.Collection
 import org.y20k.transistor.core.Station
-import org.y20k.transistor.dialogs.EditStationDialog
-import org.y20k.transistor.dialogs.RenameStationDialog
 import org.y20k.transistor.helpers.*
+import java.util.*
 
 
 /*
  * CollectionAdapter class
  */
-class CollectionAdapter(private val context: Context, private val collectionAdapterListener: CollectionAdapterListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), UpdateHelper.UpdateHelperListener, RenameStationDialog.RenameStationListener, EditStationDialog.EditStationListener {
+class CollectionAdapter(private val context: Context, private val collectionAdapterListener: CollectionAdapterListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), UpdateHelper.UpdateHelperListener {
 
     /* Define log tag */
     private val TAG: String = LogHelper.makeLogTag(CollectionAdapter::class.java)
@@ -58,6 +61,10 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
     private lateinit var collectionViewModel: CollectionViewModel
     // private lateinit var collectionAdapterListener: CollectionAdapterListener
     private var collection: Collection = Collection()
+    private var editStationsEnabled: Boolean = PreferencesHelper.loadEditStationsEnabled()
+    private var editStationStreamsEnabled: Boolean = PreferencesHelper.loadEditStreamUrisEnabled()
+    private var expandedStationStreamUri: String = PreferencesHelper.loadStationListStreamUriLocation()
+    private var expandedStationPosition: Int = -1
 
 
     /* Listener Interface */
@@ -71,13 +78,20 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
     /* Overrides onAttachedToRecyclerView */
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
-
         // create view model and observe changes in collection view model
         collectionViewModel = ViewModelProvider(context as AppCompatActivity).get(CollectionViewModel::class.java)
         observeCollectionViewModel(context as LifecycleOwner)
-
+        // start listening for changes in shared preferences
+        PreferencesHelper.registerPreferenceChangeListener(sharedPreferenceChangeListener)
     }
 
+
+    /* Overrides onDetachedFromRecyclerView */
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView)
+        // stop listening for changes in shared preferences
+        PreferencesHelper.unregisterPreferenceChangeListener(sharedPreferenceChangeListener)
+    }
 
     /* Overrides onCreateViewHolder */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -128,9 +142,31 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
                 setStationName(stationViewHolder, station, position)
                 setStationImage(stationViewHolder, station, position)
                 setStationButtons(stationViewHolder, station, position)
+                setEditViews(stationViewHolder, station, position)
+
+                // show / hide edit views
+                when (expandedStationPosition) {
+                    // show edit views
+                    position -> {
+                        stationViewHolder.stationNameView.isVisible = false
+                        stationViewHolder.playButtonView.isGone = true
+                        stationViewHolder.stationStarredView.isGone = true
+                        stationViewHolder.editViews.isVisible = true
+                        stationViewHolder.stationUriEditView.isGone = !editStationStreamsEnabled
+                    }
+                    // hide edit views
+                    else -> {
+                        stationViewHolder.stationNameView.isVisible = true
+                        stationViewHolder.playButtonView.isVisible = true
+                        stationViewHolder.stationStarredView.isVisible = station.starred
+                        stationViewHolder.editViews.isGone = true
+                        stationViewHolder.stationUriEditView.isGone = true
+                    }
+                }
             }
         }
     }
+
 
     /* Overrides onStationUpdated from UpdateHelperListener */
     override fun onStationUpdated(collection: Collection, positionPriorUpdate: Int, positionAfterUpdate: Int) {
@@ -144,41 +180,66 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
     }
 
 
-    /* Overrides onRenameStationDialog from RenameStationListener */
-    override fun onRenameStationDialog(textInput: String, stationUuid: String, position: Int) {
-        // rename station (and sort collection)
-        collection = CollectionHelper.renameStation(context, collection, stationUuid, textInput)
-        val newPosition: Int = CollectionHelper.getStationPosition(collection, stationUuid)
-        if (position != newPosition && newPosition != -1) {
-            notifyItemMoved(position, newPosition)
-            notifyItemChanged(position)
-        }
-        notifyItemChanged(newPosition)
-    }
-
-
-    /* Overrides onEditStationDialog from EditStationListener */
-    override fun onEditStationDialog(textInput: String, stationUuid: String, position: Int) {
-        // rename station (and sort collection)
-        collection = CollectionHelper.renameStation(context, collection, stationUuid, textInput)
-        val newPosition: Int = CollectionHelper.getStationPosition(collection, stationUuid)
-        if (position != newPosition && newPosition != -1) {
-            notifyItemMoved(position, newPosition)
-            notifyItemChanged(position)
-        }
-        notifyItemChanged(newPosition)
-    }
-
-
     /* Sets the station name view */
     private fun setStationName(stationViewHolder: StationViewHolder, station: Station, position: Int) {
         stationViewHolder.stationNameView.text = station.name
-        stationViewHolder.stationNameView.setOnLongClickListener {
-            val v = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-            v.vibrate(50)
-            // v.vibrate(VibrationEffect.createOneShot(50, android.os.VibrationEffect.DEFAULT_AMPLITUDE)); // todo check if there is an androidx vibrator
-            RenameStationDialog(this).show(context, station.name, station.uuid, position)
-            return@setOnLongClickListener true
+    }
+
+
+    /* Sets the edit views */
+    private fun setEditViews(stationViewHolder: StationViewHolder, station: Station, position: Int) {
+        stationViewHolder.stationNameEditView.setText(station.name, TextView.BufferType.EDITABLE)
+        stationViewHolder.stationUriEditView.setText(station.getStreamUri(), TextView.BufferType.EDITABLE)
+        stationViewHolder.stationUriEditView.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                handleStationUriInput(stationViewHolder, s, station.getStreamUri())
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {  }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {  }
+        })
+        stationViewHolder.cancelButton.setOnClickListener {
+            toggleEditViews(position, station.getStreamUri())
+            UiHelper.hideSoftKeyboard(context, stationViewHolder.stationNameEditView)
+        }
+        stationViewHolder.saveButton.setOnClickListener {
+            saveStation(station, position, stationViewHolder.stationNameEditView.text.toString(), stationViewHolder.stationUriEditView.text.toString())
+            toggleEditViews(position, station.getStreamUri())
+            UiHelper.hideSoftKeyboard(context, stationViewHolder.stationNameEditView)
+        }
+        stationViewHolder.placeOnHomeScreenButton.setOnClickListener {
+            ShortcutHelper.placeShortcut(context, station)
+            toggleEditViews(position, station.getStreamUri())
+            UiHelper.hideSoftKeyboard(context, stationViewHolder.stationNameEditView)
+        }
+        stationViewHolder.stationImageChangeView.setOnClickListener {
+            collectionAdapterListener.onChangeImageButtonTapped(station.uuid)
+            toggleEditViews(position, station.getStreamUri())
+            UiHelper.hideSoftKeyboard(context, stationViewHolder.stationNameEditView)
+        }
+    }
+
+
+    /* Shows / hides the edit view for a station */
+    private fun toggleEditViews(position: Int, stationStreamUri: String) {
+        when (expandedStationStreamUri) {
+            // CASE: this station's edit view is already expanded
+            stationStreamUri -> {
+                // reset currently expanded info
+                saveStationListExpandedState()
+                // update station view
+                notifyItemChanged(position)
+            }
+            // CASE: this station's edit view is not yet expanded
+            else -> {
+                // remember previously expanded position
+                val previousExpandedStationPosition: Int = expandedStationPosition
+                // if station was expanded - collapse it
+                if (previousExpandedStationPosition > -1 && previousExpandedStationPosition < collection.stations.size) notifyItemChanged(previousExpandedStationPosition)
+                // store current station as the expanded one
+                saveStationListExpandedState(position, stationStreamUri)
+                // update station view
+                notifyItemChanged(expandedStationPosition)
+            }
         }
     }
 
@@ -205,13 +266,6 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
         }
         stationViewHolder.stationImageView.setImageBitmap(ImageHelper.getStationImage(context, station.smallImage))
         stationViewHolder.stationImageView.contentDescription = "${context.getString(R.string.descr_player_station_image)}: ${station.name}"
-        stationViewHolder.stationImageView.setOnLongClickListener {
-            val v = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-            v.vibrate(50)
-            // v.vibrate(VibrationEffect.createOneShot(50, android.os.VibrationEffect.DEFAULT_AMPLITUDE)); // todo check if there is an androidx vibrator
-            collectionAdapterListener.onChangeImageButtonTapped(station.uuid)
-            return@setOnLongClickListener true
-        }
     }
 
 
@@ -225,70 +279,68 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
         stationViewHolder.playButtonView.setOnClickListener {
             collectionAdapterListener.onPlayButtonTapped(station.uuid, playbackState)
         }
-        stationViewHolder.playButtonView.setOnLongClickListener {
-            val v = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-            v.vibrate(50)
-            // v.vibrate(VibrationEffect.createOneShot(50, android.os.VibrationEffect.DEFAULT_AMPLITUDE)); // todo check if there is an androidx vibrator
-            Toast.makeText(context, R.string.toastmessage_updating_station, Toast.LENGTH_SHORT).show()
-            val updateHelper: UpdateHelper = UpdateHelper(context, this, collection)
-            updateHelper.updateStation(station)
-            return@setOnLongClickListener true
-        }
-        stationViewHolder.stationStarredView.setOnLongClickListener {
-            val v = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-            v.vibrate(50)
-            // v.vibrate(VibrationEffect.createOneShot(50, android.os.VibrationEffect.DEFAULT_AMPLITUDE)); // todo check if there is an androidx vibrator
-            // create shortcut
-            ShortcutHelper.placeShortcut(context, station)
-            return@setOnLongClickListener true
-        }
-
-        stationViewHolder.menuButtonView.setOnClickListener {
-            // EditStationDialog(this).show(context, station, position) // Todo
-            showStationPopupMenu(it, station.uuid, position)
+        stationViewHolder.stationCardView.setOnLongClickListener {
+            if (editStationsEnabled) {
+                toggleEditViews(position, station.getStreamUri())
+                return@setOnLongClickListener true
+            } else {
+                return@setOnLongClickListener false
+            }
         }
     }
 
 
-    /* Displays station popup menu */
-    private fun showStationPopupMenu(view: View, stationUuid: String, position: Int) {
-        val popup = PopupMenu(context, view)
-        popup.inflate(R.menu.station_popup_menu)
-        popup.setOnMenuItemClickListener { item ->
-            when (item.itemId) {
-                R.id.menu_icon -> {
-                    // let fragment get system picker for images
-                    collectionAdapterListener.onChangeImageButtonTapped(stationUuid)
-                    true
+    /* Save edited station */
+    private fun saveStation(station: Station, position: Int, stationName:String, streamUri: String) {
+        if (stationName.isNotEmpty()) {
+            station.name = stationName
+            station.nameManuallySet = true
+        }
+        if (streamUri.isNotEmpty()) {
+            station.streamUris[0] = streamUri
+        }
+        // change station name and stream uri (and sort collection)
+        collection = CollectionHelper.changeStationNameAndStreamUri(context, collection, station.uuid, station.name, station.getStreamUri())
+        val newPosition: Int = CollectionHelper.getStationPosition(collection, station.uuid)
+        if (position != newPosition && newPosition != -1) {
+            notifyItemMoved(position, newPosition)
+            notifyItemChanged(position)
+        }
+        notifyItemChanged(newPosition)
+    }
+
+
+    /* Checks if stream uri input is valid */
+    private fun handleStationUriInput(stationViewHolder: StationViewHolder, s: Editable?, streamUri: String) {
+        if (editStationStreamsEnabled) {
+            val input: String = s.toString()
+            if (input == streamUri) {
+                // enable save button
+                stationViewHolder.saveButton.isEnabled = true
+            } else {
+                // 1. disable save button
+                stationViewHolder.saveButton.isEnabled = false
+                // 2. check for valid station uri - and re-enable button
+                if (input.startsWith("http")) {
+                    // detect content type on background thread
+                    CoroutineScope(Dispatchers.IO).launch {
+                        val deferred: Deferred<NetworkHelper.ContentType> = async(Dispatchers.Default) { NetworkHelper.detectContentTypeSuspended(input) }
+                        // wait for result
+                        val contentType: String = deferred.await().type.lowercase(Locale.getDefault())
+                        // CASE: stream address detected
+                        if (Keys.MIME_TYPES_MPEG.contains(contentType) or
+                                Keys.MIME_TYPES_OGG.contains(contentType) or
+                                Keys.MIME_TYPES_AAC.contains(contentType) or
+                                Keys.MIME_TYPES_HLS.contains(contentType)) {
+                            // re-enable save button
+                            withContext(Main) {
+                                stationViewHolder.saveButton.isEnabled = true
+                            }
+                        }
+                    }
                 }
-                R.id.menu_rename -> {
-                    // show rename dialog
-                    val name: String = CollectionHelper.getStationName(collection, stationUuid)
-                    RenameStationDialog(this).show(context, name, stationUuid, position)
-                    true
-                }
-//                R.id.menu_delete -> {
-//                    // show delete dialog
-//                    // DialogDelete.show(activity, station)
-//                    true
-//                }
-                R.id.menu_update -> {
-                    // update this station
-                    Toast.makeText(context, R.string.toastmessage_updating_station, Toast.LENGTH_SHORT).show()
-                    val updateHelper: UpdateHelper = UpdateHelper(context, this, collection)
-                    updateHelper.updateStation(CollectionHelper.getStation(collection, stationUuid))
-                    true
-                }
-                R.id.menu_shortcut -> {
-                    // create shortcut
-                    val station: Station = CollectionHelper.getStation(collection, stationUuid)
-                    ShortcutHelper.placeShortcut(context, station)
-                    true
-                }
-                else -> false
             }
         }
-        popup.show()
     }
 
 
@@ -412,6 +464,14 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
     }
 
 
+    /* Updates and saves state of expanded station edit view in list */
+    private fun saveStationListExpandedState(position: Int = -1, stationStreamUri: String = String()) {
+        expandedStationStreamUri = stationStreamUri
+        expandedStationPosition = position
+        PreferencesHelper.saveStationListStreamUriLocation(expandedStationStreamUri)
+    }
+
+
     /* Observe view model of station collection*/
     private fun observeCollectionViewModel(owner: LifecycleOwner) {
         collectionViewModel.collectionLiveData.observe(owner, Observer<Collection> { newCollection ->
@@ -421,11 +481,25 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
 
 
     /*
+     * Defines the listener for changes in shared preferences
+     */
+    private val sharedPreferenceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
+        when (key) {
+            Keys.PREF_EDIT_STATIONS -> editStationsEnabled = PreferencesHelper.loadEditStationsEnabled()
+            Keys.PREF_EDIT_STREAMS_URIS -> editStationStreamsEnabled = PreferencesHelper.loadEditStreamUrisEnabled()
+        }
+    }
+    /*
+     * End of declaration
+     */
+
+
+    /*
      * Inner class: ViewHolder for the Add New Station action
      */
     private inner class AddNewViewHolder (listItemAddNewLayout: View) : RecyclerView.ViewHolder(listItemAddNewLayout) {
-        val addNewStationView: CardView = listItemAddNewLayout.findViewById(R.id.card_add_new_station)
-        val settingsButtonView: ImageButton = listItemAddNewLayout.findViewById(R.id.settings_button)
+        val addNewStationView: MaterialButton = listItemAddNewLayout.findViewById(R.id.card_add_new_station)
+        val settingsButtonView: MaterialButton = listItemAddNewLayout.findViewById(R.id.card_settings)
     }
     /*
      * End of inner class
@@ -436,12 +510,19 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
      * Inner class: ViewHolder for a station
      */
     private inner class StationViewHolder (stationCardLayout: View): RecyclerView.ViewHolder(stationCardLayout) {
-        val stationCardView: CardView = stationCardLayout.findViewById(R.id.station_card)
+        val stationCardView: ConstraintLayout = stationCardLayout.findViewById(R.id.station_card)
         val stationImageView: ImageView = stationCardLayout.findViewById(R.id.station_icon)
         val stationNameView: TextView = stationCardLayout.findViewById(R.id.station_name)
         val stationStarredView: ImageView = stationCardLayout.findViewById(R.id.starred_icon)
-        val menuButtonView: ImageView = stationCardLayout.findViewById(R.id.menu_button)
+//        val menuButtonView: ImageView = stationCardLayout.findViewById(R.id.menu_button)
         val playButtonView: ImageView = stationCardLayout.findViewById(R.id.playback_button)
+        val editViews: Group = stationCardLayout.findViewById(R.id.default_edit_views)
+        val stationImageChangeView: ImageView = stationCardLayout.findViewById(R.id.change_image_view)
+        val stationNameEditView: TextInputEditText = stationCardLayout.findViewById(R.id.edit_station_name)
+        val stationUriEditView: TextInputEditText = stationCardLayout.findViewById(R.id.edit_stream_uri)
+        val placeOnHomeScreenButton: MaterialButton = stationCardLayout.findViewById(R.id.place_on_home_screen_button)
+        val cancelButton: MaterialButton = stationCardLayout.findViewById(R.id.cancel_button)
+        val saveButton: MaterialButton = stationCardLayout.findViewById(R.id.save_button)
     }
     /*
      * End of inner class

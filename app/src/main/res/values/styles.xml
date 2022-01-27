@@ -5,7 +5,7 @@
     <style name="AppTheme" parent="Theme.Material3.DayNight.NoActionBar">
 
         <!-- colorPrimary is used in dialog buttons for example -->
-        <item name="colorPrimary">@color/transistor_neutral_darker</item>
+        <item name="colorPrimary">@color/default_neutral_darker</item>
 
         <!-- Do not use primary colored elevation overlays to present a visual hierarchy - TOO COLORFUL  -->
         <item name="elevationOverlayEnabled">false</item>
@@ -19,6 +19,32 @@
     <!-- Override background color and button color in AlertDialog -->
     <style name="AlertDialogTheme" parent="ThemeOverlay.Material3.Dialog.Alert">
         <item name="colorSurface">@color/dialog_background</item>
+    </style>
+
+    <style name="RoundedCorners" parent="">
+        <item name="cornerSizeTopLeft">16dp</item>
+        <item name="cornerFamilyTopLeft">rounded</item>
+        <item name="cornerSizeTopRight">16dp</item>
+        <item name="cornerFamilyTopRight">rounded</item>
+        <item name="cornerSizeBottomLeft">16dp</item>
+        <item name="cornerFamilyBottomLeft">rounded</item>
+        <item name="cornerSizeBottomRight">16dp</item>
+        <item name="cornerFamilyBottomRight">rounded</item>
+    </style>
+    <style name="RoundedCornerLeft" parent="">
+        <item name="cornerSizeTopLeft">16dp</item>
+        <item name="cornerFamilyTopLeft">rounded</item>
+        <item name="cornerSizeBottomLeft">16dp</item>
+        <item name="cornerFamilyBottomLeft">rounded</item>
+    </style>
+    <style name="RoundedCornerLeftTop" parent="">
+        <item name="cornerSizeTopLeft">16dp</item>
+        <item name="cornerFamilyTopRight">rounded</item>
+    </style>
+    <style name="CutCornerLeftTop" parent="">
+        <item name="cornerSize">0dp</item>
+        <item name="cornerFamilyTopLeft">cut</item>
+        <item name="cornerSizeTopLeft">16dp</item>
     </style>
 
 </resources>

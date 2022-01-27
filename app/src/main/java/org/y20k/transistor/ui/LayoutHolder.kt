@@ -263,7 +263,7 @@ data class LayoutHolder(var rootView: View) {
 
     /* Toggles visibility of the onboarding screen */
     fun toggleOnboarding(context: Context, collectionSize: Int): Boolean {
-        if (collectionSize == 0) {
+        if (collectionSize == 0 && PreferencesHelper.loadCollectionSize() <= 0) {
             onboardingLayout.isVisible = true
             hidePlayer(context)
             return true

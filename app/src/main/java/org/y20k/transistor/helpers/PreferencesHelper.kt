@@ -99,6 +99,20 @@ object PreferencesHelper {
     }
 
 
+    /* Load stream uri of the station in the station list which is currently expanded */
+    fun loadStationListStreamUriLocation(): String {
+        return sharedPreferences.getString(Keys.PREF_STATION_LIST_EXPANDED_STREAM_URI, String()) ?: String()
+    }
+
+
+    /* Save stream uri of the station in the station list which is currently expanded  */
+    fun saveStationListStreamUriLocation(stationStreamUri: String = String()) {
+        sharedPreferences.edit {
+            putString(Keys.PREF_STATION_LIST_EXPANDED_STREAM_URI, stationStreamUri)
+        }
+    }
+
+
     /* Loads last update from shared preferences */
     fun loadLastUpdateCollection(): Date {
         val lastSaveString: String = sharedPreferences.getString(Keys.PREF_LAST_UPDATE_COLLECTION, "") ?: String()
@@ -239,6 +253,28 @@ object PreferencesHelper {
     fun loadThemeSelection(): String {
         return sharedPreferences.getString(Keys.PREF_THEME_SELECTION, Keys.STATE_THEME_FOLLOW_SYSTEM) ?: Keys.STATE_THEME_FOLLOW_SYSTEM
     }
+
+
+    /* Loads value of the option: Edit Stations */
+    fun loadEditStationsEnabled(): Boolean {
+        return sharedPreferences.getBoolean(Keys.PREF_EDIT_STATIONS, false)
+    }
+
+
+    /* Saves value of the option: Edit Stations (only needed for migration) */
+    fun saveEditStationsEnabled(enabled: Boolean = false) {
+        sharedPreferences.edit {
+            putBoolean(Keys.PREF_EDIT_STATIONS, enabled)
+        }
+    }
+
+
+    /* Loads value of the option: Edit Station Streams */
+    fun loadEditStreamUrisEnabled(): Boolean {
+        return sharedPreferences.getBoolean(Keys.PREF_EDIT_STREAMS_URIS, false)
+    }
+
+
 
     /* Return whether to download over mobile */
     fun downloadOverMobile(): Boolean {

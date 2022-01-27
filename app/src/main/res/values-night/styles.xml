@@ -5,9 +5,11 @@
     <style name="AppTheme" parent="Theme.Material3.DayNight.NoActionBar">
 
         <!-- colorPrimary is used in dialog buttons for example -->
-        <item name="colorPrimary">@color/transistor_neutral_lighter</item>
+        <item name="colorPrimary">@color/default_neutral_lighter</item>
+
         <!-- Do not use primary colored elevation overlays to present a visual hierarchy - TOO COLORFUL  -->
         <item name="elevationOverlayEnabled">false</item>
+
         <!-- Don't show light status bar -->
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:statusBarColor">@color/status_bar_background</item>
