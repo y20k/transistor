@@ -4,13 +4,10 @@ Transistor is a radio app with a minimalistic approach, that may not be to every
 FREQUENT QUESTIONS
 
 HOW CAN I ADD A RADIO STATION
-There are three ways to add a radio station to Transistor: Use Search, add playlist file address (M3U, PLS), enter a raw stream address. The last way will not support the update feature.
-
-HOW DOES THE UPDATE FEATURE WORK?
-The update feature will try to fetch the current stream address of a station as well as the updated name and station image. The feature will not work for stations added via a raw stream address, or for stations imported from Transistor v3.
+There are three ways to add a radio station to Transistor: Use Search, add playlist file address (M3U, PLS), enter a raw stream address.
 
 WHERE DO THE RADIO STATION SEARCH RESULTS COME FROM?
 Transistor searches the radio-browser.info online database. You can help out the radio-browser.info community by adding the missing station (http://www.radio-browser.info/gui/#!/add) to their database.
 
-WHICH AUDIO FORMATS ARE SUPPORTED?
-Transistor can play back streams encoded in MP3, AAC and Ogg/Opus. It also has experimental support for HLS streams.
+HOW CAN I CURATE THE RADIO STATION LIST?
+Use the swipe gesture to delete a radio station from the list. Further editing options can be enabled in Settings. If enabled, tap and hold a radio station to edit its name, image or streaming link.
