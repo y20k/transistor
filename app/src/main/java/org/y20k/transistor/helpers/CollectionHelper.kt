@@ -99,23 +99,6 @@ object CollectionHelper {
     }
 
 
-    /* Changes name and stream uri of a radio station */
-    fun changeStationNameAndStreamUri(context: Context, collection: Collection, stationUuid: String, newStationName: String, newStationUri: String): Collection {
-        var updatedCollection: Collection = collection
-        updatedCollection.stations.forEach {
-            if (it.uuid == stationUuid) {
-                it.name = newStationName
-                it.streamUris[0] = newStationUri
-                it.nameManuallySet = true
-            }
-            // sort and save collection
-            updatedCollection = sortCollection(updatedCollection)
-            saveCollection(context, updatedCollection, true)
-        }
-        return updatedCollection
-    }
-
-
     /* Updates radio station in collection */
     fun updateStation(context: Context, collection: Collection, station: Station): Collection {
         var updatedCollection: Collection = collection

@@ -370,7 +370,7 @@ class PlayerFragment: Fragment(), CoroutineScope,
         val swipeToMarkStarredHandler = object : UiHelper.SwipeToMarkStarredCallback(activity as Context) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 // mark card starred
-                val adapterPosition: Int = viewHolder.adapterPosition
+                val adapterPosition: Int = viewHolder.bindingAdapterPosition
                 collectionAdapter.toggleStarredStation(activity as Context, adapterPosition)
             }
         }

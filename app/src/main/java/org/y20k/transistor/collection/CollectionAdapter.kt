@@ -63,7 +63,7 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
     private var collection: Collection = Collection()
     private var editStationsEnabled: Boolean = PreferencesHelper.loadEditStationsEnabled()
     private var editStationStreamsEnabled: Boolean = PreferencesHelper.loadEditStreamUrisEnabled()
-    private var expandedStationStreamUri: String = PreferencesHelper.loadStationListStreamUriLocation()
+    private var expandedStationUuid: String = PreferencesHelper.loadStationListStreamUuid()
     private var expandedStationPosition: Int = -1
 
 
@@ -141,8 +141,8 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
                 setStarredIcon(stationViewHolder, station)
                 setStationName(stationViewHolder, station, position)
                 setStationImage(stationViewHolder, station, position)
-                setStationButtons(stationViewHolder, station, position)
-                setEditViews(stationViewHolder, station, position)
+                setStationButtons(stationViewHolder, station)
+                setEditViews(stationViewHolder, station)
 
                 // show / hide edit views
                 when (expandedStationPosition) {
@@ -187,7 +187,7 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
 
 
     /* Sets the edit views */
-    private fun setEditViews(stationViewHolder: StationViewHolder, station: Station, position: Int) {
+    private fun setEditViews(stationViewHolder: StationViewHolder, station: Station) {
         stationViewHolder.stationNameEditView.setText(station.name, TextView.BufferType.EDITABLE)
         stationViewHolder.stationUriEditView.setText(station.getStreamUri(), TextView.BufferType.EDITABLE)
         stationViewHolder.stationUriEditView.addTextChangedListener(object : TextWatcher {
@@ -198,33 +198,38 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {  }
         })
         stationViewHolder.cancelButton.setOnClickListener {
-            toggleEditViews(position, station.getStreamUri())
+            val position: Int = stationViewHolder.bindingAdapterPosition
+            toggleEditViews(position, station.uuid)
             UiHelper.hideSoftKeyboard(context, stationViewHolder.stationNameEditView)
         }
         stationViewHolder.saveButton.setOnClickListener {
+            val position: Int = stationViewHolder.bindingAdapterPosition
+            toggleEditViews(position, station.uuid)
             saveStation(station, position, stationViewHolder.stationNameEditView.text.toString(), stationViewHolder.stationUriEditView.text.toString())
-            toggleEditViews(position, station.getStreamUri())
             UiHelper.hideSoftKeyboard(context, stationViewHolder.stationNameEditView)
         }
         stationViewHolder.placeOnHomeScreenButton.setOnClickListener {
+            val position: Int = stationViewHolder.bindingAdapterPosition
             ShortcutHelper.placeShortcut(context, station)
-            toggleEditViews(position, station.getStreamUri())
+            toggleEditViews(position, station.uuid)
             UiHelper.hideSoftKeyboard(context, stationViewHolder.stationNameEditView)
         }
         stationViewHolder.stationImageChangeView.setOnClickListener {
+            val position: Int = stationViewHolder.bindingAdapterPosition
             collectionAdapterListener.onChangeImageButtonTapped(station.uuid)
-            toggleEditViews(position, station.getStreamUri())
+            stationViewHolder.absoluteAdapterPosition
+            toggleEditViews(position, station.uuid)
             UiHelper.hideSoftKeyboard(context, stationViewHolder.stationNameEditView)
         }
     }
 
 
     /* Shows / hides the edit view for a station */
-    private fun toggleEditViews(position: Int, stationStreamUri: String) {
-        when (expandedStationStreamUri) {
+    private fun toggleEditViews(position: Int, stationUuid: String) {
+        when (stationUuid) {
             // CASE: this station's edit view is already expanded
-            stationStreamUri -> {
-                // reset currently expanded info
+            expandedStationUuid -> {
+                // reset currently expanded info (both uuid and position)
                 saveStationListExpandedState()
                 // update station view
                 notifyItemChanged(position)
@@ -236,7 +241,7 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
                 // if station was expanded - collapse it
                 if (previousExpandedStationPosition > -1 && previousExpandedStationPosition < collection.stations.size) notifyItemChanged(previousExpandedStationPosition)
                 // store current station as the expanded one
-                saveStationListExpandedState(position, stationStreamUri)
+                saveStationListExpandedState(position, stationUuid)
                 // update station view
                 notifyItemChanged(expandedStationPosition)
             }
@@ -270,7 +275,7 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
 
 
     /* Sets up a station's play and edit buttons */
-    private fun setStationButtons(stationViewHolder: StationViewHolder, station: Station, position: Int) {
+    private fun setStationButtons(stationViewHolder: StationViewHolder, station: Station) {
         val playbackState: Int = station.playbackState
         when (playbackState) {
             PlaybackStateCompat.STATE_PLAYING -> stationViewHolder.playButtonView.setImageResource(R.drawable.ic_stop_circle_outline_36dp)
@@ -281,32 +286,13 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
         }
         stationViewHolder.stationCardView.setOnLongClickListener {
             if (editStationsEnabled) {
-                toggleEditViews(position, station.getStreamUri())
+                val position: Int = stationViewHolder.bindingAdapterPosition
+                toggleEditViews(position, station.uuid)
                 return@setOnLongClickListener true
             } else {
                 return@setOnLongClickListener false
             }
         }
-    }
-
-
-    /* Save edited station */
-    private fun saveStation(station: Station, position: Int, stationName:String, streamUri: String) {
-        if (stationName.isNotEmpty()) {
-            station.name = stationName
-            station.nameManuallySet = true
-        }
-        if (streamUri.isNotEmpty()) {
-            station.streamUris[0] = streamUri
-        }
-        // change station name and stream uri (and sort collection)
-        collection = CollectionHelper.changeStationNameAndStreamUri(context, collection, station.uuid, station.name, station.getStreamUri())
-        val newPosition: Int = CollectionHelper.getStationPosition(collection, station.uuid)
-        if (position != newPosition && newPosition != -1) {
-            notifyItemMoved(position, newPosition)
-            notifyItemChanged(position)
-        }
-        notifyItemChanged(newPosition)
     }
 
 
@@ -414,15 +400,42 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
 
     /* Toggles starred status of a station */
     fun toggleStarredStation(context: Context, position: Int) {
-        // update view
+        // update view (reset "swipe" state of station card)
         notifyItemChanged(position)
         // mark starred
         val stationUuid: String = collection.stations[position].uuid
         collection.stations[position].apply { starred = !starred }
         // sort collection
         collection = CollectionHelper.sortCollection(collection)
-        // update list view
+        // update list
         notifyItemMoved(position, CollectionHelper.getStationPosition(collection, stationUuid))
+        // save collection and broadcast changes
+        CollectionHelper.saveCollection(context, collection)
+    }
+
+
+    /* Saves edited station */
+    private fun saveStation(station: Station, position: Int, stationName:String, streamUri: String) {
+        // update station name and stream uri
+        collection.stations.forEach {
+            if (it.uuid == station.uuid) {
+                if (stationName.isNotEmpty()) {
+                    it.name = stationName
+                    it.nameManuallySet = true
+                }
+                if (streamUri.isNotEmpty()) {
+                    it.streamUris[0] = streamUri
+                }
+            }
+        }
+        // sort and save collection
+        collection = CollectionHelper.sortCollection(collection)
+        // update list
+        val newPosition: Int = CollectionHelper.getStationPosition(collection, station.uuid)
+        if (position != newPosition && newPosition != -1) {
+            notifyItemMoved(position, newPosition)
+            notifyItemChanged(position)
+        }
         // save collection and broadcast changes
         CollectionHelper.saveCollection(context, collection)
     }
@@ -466,9 +479,9 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
 
     /* Updates and saves state of expanded station edit view in list */
     private fun saveStationListExpandedState(position: Int = -1, stationStreamUri: String = String()) {
-        expandedStationStreamUri = stationStreamUri
+        expandedStationUuid = stationStreamUri
         expandedStationPosition = position
-        PreferencesHelper.saveStationListStreamUriLocation(expandedStationStreamUri)
+        PreferencesHelper.saveStationListStreamUuid(expandedStationUuid)
     }
 
 

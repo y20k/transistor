@@ -31,6 +31,7 @@ import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaDescriptionCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
+import android.view.KeyEvent
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -137,7 +138,8 @@ class PlayerService(): MediaBrowserServiceCompat() {
         // ExoPlayer manages MediaSession
         mediaSessionConnector = MediaSessionConnector(mediaSession)
         mediaSessionConnector.setPlaybackPreparer(preparer)
-        mediaSessionConnector.setControlDispatcher(dispatcher)
+        mediaSessionConnector.setMediaButtonEventHandler(buttonEventHandler)
+        //mediaSessionConnector.setControlDispatcher(dispatcher)
         //mediaSessionConnector.setMediaMetadataProvider(metadataProvider)
         mediaSessionConnector.setQueueNavigator(object : TimelineQueueNavigator(mediaSession) {
             override fun getMediaDescription(player: Player, windowIndex: Int): MediaDescriptionCompat {
@@ -296,13 +298,12 @@ class PlayerService(): MediaBrowserServiceCompat() {
         // save collection state and player state
         collection = CollectionHelper.savePlaybackState(this, collection, station, playbackState)
         updatePlayerState(station, playbackState)
-        // display notification (notification is hidden via CMD_DISMISS_NOTIFICATION)
-        if (player.isPlaying) {
-            notificationHelper.showNotificationForPlayer(player)
-        } else {
-            // reset metadata
+        // reset metadata
+        if (!player.isPlaying) {
             updateMetadata(null)
         }
+        // display notification
+        notificationHelper.showNotificationForPlayer(player)
     }
 
 
@@ -348,7 +349,7 @@ class PlayerService(): MediaBrowserServiceCompat() {
         }
 
         // stop playback if necessary
-        if (player.isPlaying) { player.pause() }
+        if (player.isPlaying) { player.stop() }
 
         // build media item.
         val mediaItem: MediaItem = MediaItem.fromUri(station.getStreamUri())
@@ -554,6 +555,10 @@ class PlayerService(): MediaBrowserServiceCompat() {
         override fun onPlayWhenReadyChanged(playWhenReady: Boolean, reason: Int) {
             super.onPlayWhenReadyChanged(playWhenReady, reason)
             if (!playWhenReady) {
+                // detect dismiss action
+                if (player.mediaItemCount == 0) {
+                    stopSelf()
+                }
                 when (reason) {
                     Player.PLAY_WHEN_READY_CHANGE_REASON_END_OF_MEDIA_ITEM -> {
                         // playback reached end: try to resume
@@ -643,30 +648,68 @@ class PlayerService(): MediaBrowserServiceCompat() {
 //    /*
 //     * End of declaration
 //     */
+//
+//    /*
+//     * DefaultControlDispatcher: intercepts commands from MediaSessionConnector
+//     */
+//    private val dispatcher = object : DefaultControlDispatcher() {
+//        // emulate headphone buttons
+//        // start/pause: adb shell input keyevent 85
+//        // next: adb shell input keyevent 87
+//        // prev: adb shell input keyevent 88
+//        override fun dispatchSetPlayWhenReady(player: Player, playWhenReady: Boolean): Boolean {
+//            // changes the default behavior of !playWhenReady from player.pause() to player.stop()
+//            when (playWhenReady) {
+//                true -> player.play()
+//                false -> player.stop()
+//            }
+//            return true
+//        }
+//        override fun dispatchNext(player: Player): Boolean {
+//            skipToNextStation()
+//            return true
+//        }
+//        override fun dispatchPrevious(player: Player): Boolean {
+//            skipToPreviousStation()
+//            return true
+//        }
+//    }
+//    /*
+//     * End of declaration
+//     */
+
 
     /*
-     * DefaultControlDispatcher: intercepts commands from MediaSessionConnector
+     * MediaButtonEventHandler: overrides headphone next/previous button behavior
      */
-    private val dispatcher = object : DefaultControlDispatcher() {
+    private val buttonEventHandler = object : MediaSessionConnector.MediaButtonEventHandler {
         // emulate headphone buttons
         // start/pause: adb shell input keyevent 85
         // next: adb shell input keyevent 87
         // prev: adb shell input keyevent 88
-        override fun dispatchSetPlayWhenReady(player: Player, playWhenReady: Boolean): Boolean {
-            // changes the default behavior of !playWhenReady from player.pause() to player.stop()
-            when (playWhenReady) {
-                true -> player.play()
-                false -> player.stop()
+        override fun onMediaButtonEvent(player: Player, controlDispatcher: ControlDispatcher, mediaButtonEvent: Intent): Boolean {
+            val event: KeyEvent? = mediaButtonEvent.getParcelableExtra(Intent.EXTRA_KEY_EVENT)
+            when (event?.keyCode) {
+                KeyEvent.KEYCODE_MEDIA_NEXT -> {
+                    if (event.action == KeyEvent.ACTION_UP && player.isPlaying) {
+                        skipToNextStation()                    }
+                    return true
+                }
+                KeyEvent.KEYCODE_MEDIA_PREVIOUS -> {
+                    if (event.action == KeyEvent.ACTION_UP && player.isPlaying) {
+                        skipToPreviousStation()
+                    }
+                    return true
+                }
+                KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE -> {
+                    if (event.action == KeyEvent.ACTION_UP) {
+                        if (player.isPlaying) player.stop()
+                        else player.play()
+                    }
+                    return true
+                }
+                else -> return false
             }
-            return true
-        }
-        override fun dispatchNext(player: Player): Boolean {
-            skipToNextStation()
-            return true
-        }
-        override fun dispatchPrevious(player: Player): Boolean {
-            skipToPreviousStation()
-            return true
         }
     }
     /*
@@ -795,7 +838,7 @@ class PlayerService(): MediaBrowserServiceCompat() {
                 }
                 Keys.CMD_DISMISS_NOTIFICATION -> {
                     // pause playback and hide notification
-                    player.pause()
+                    LogHelper.e(TAG, "DONG") // todo remove
                     notificationHelper.hideNotification()
                     return true
                 }

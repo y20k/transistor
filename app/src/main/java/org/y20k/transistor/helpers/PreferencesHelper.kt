@@ -99,16 +99,16 @@ object PreferencesHelper {
     }
 
 
-    /* Load stream uri of the station in the station list which is currently expanded */
-    fun loadStationListStreamUriLocation(): String {
-        return sharedPreferences.getString(Keys.PREF_STATION_LIST_EXPANDED_STREAM_URI, String()) ?: String()
+    /* Load uuid of the station in the station list which is currently expanded */
+    fun loadStationListStreamUuid(): String {
+        return sharedPreferences.getString(Keys.PREF_STATION_LIST_EXPANDED_UUID, String()) ?: String()
     }
 
 
-    /* Save stream uri of the station in the station list which is currently expanded  */
-    fun saveStationListStreamUriLocation(stationStreamUri: String = String()) {
+    /* Save uuid of the station in the station list which is currently expanded  */
+    fun saveStationListStreamUuid(stationUuid: String = String()) {
         sharedPreferences.edit {
-            putString(Keys.PREF_STATION_LIST_EXPANDED_STREAM_URI, stationStreamUri)
+            putString(Keys.PREF_STATION_LIST_EXPANDED_UUID, stationUuid)
         }
     }
 
