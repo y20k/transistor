@@ -43,14 +43,14 @@ import com.google.android.exoplayer2.audio.AudioAttributes
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
 import com.google.android.exoplayer2.ext.mediasession.TimelineQueueNavigator
 import com.google.android.exoplayer2.metadata.Metadata
-import com.google.android.exoplayer2.metadata.MetadataOutput
 import com.google.android.exoplayer2.metadata.icy.IcyHeaders
 import com.google.android.exoplayer2.metadata.icy.IcyInfo
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
-import com.google.android.exoplayer2.upstream.*
+import com.google.android.exoplayer2.upstream.DataSource
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import com.google.android.exoplayer2.util.Util
 import kotlinx.coroutines.*
 import org.y20k.transistor.Keys
@@ -79,6 +79,7 @@ class PlayerService(): MediaBrowserServiceCompat() {
     private var collectionProvider: CollectionProvider = CollectionProvider()
     private var station: Station = Station()
     private var isForegroundService: Boolean = false
+    private lateinit var forwardingPlayer: ForwardingPlayer
     private lateinit var playerState: PlayerState
     private lateinit var metadataHistory: MutableList<String>
     private lateinit var backgroundJob: Job
@@ -98,13 +99,12 @@ class PlayerService(): MediaBrowserServiceCompat() {
             .setUsage(C.USAGE_MEDIA)
             .build()
 
-    private val player: SimpleExoPlayer by lazy {
-        SimpleExoPlayer.Builder(this).build().apply {
+    private val player: ExoPlayer by lazy {
+        ExoPlayer.Builder(this).build().apply {
             setAudioAttributes(attributes, true)
             setHandleAudioBecomingNoisy(true)
-            setRepeatMode(Player.REPEAT_MODE_ALL)
+            repeatMode = Player.REPEAT_MODE_ALL
             addListener(playerListener)
-            addMetadataOutput(metadataOutput)
             addAnalyticsListener(analyticsListener)
         }
     }
@@ -132,6 +132,29 @@ class PlayerService(): MediaBrowserServiceCompat() {
         // fetch the metadata history
         metadataHistory = PreferencesHelper.loadMetadataHistory()
 
+        // custom player used in notification and mediasession connection // todo move into its own function
+        forwardingPlayer = object : ForwardingPlayer(player) {
+            override fun stop() {
+                player.stop()
+                notificationHelper.hideNotification()
+            }
+            override fun pause() {
+                player.stop()
+            }
+            override fun seekToNext() {
+                skipToNextStation()
+            }
+            override fun seekToPrevious() {
+                skipToPreviousStation()
+            }
+            override fun seekBack() {
+                skipToPreviousStation()
+            }
+            override fun seekForward() {
+                skipToNextStation()
+            }
+        }
+
         // create a new MediaSession
         createMediaSession()
 
@@ -150,7 +173,7 @@ class PlayerService(): MediaBrowserServiceCompat() {
 
         // initialize notification helper
         notificationHelper = NotificationHelper(this, mediaSession.sessionToken, notificationListener)
-        notificationHelper.showNotificationForPlayer(player)
+        notificationHelper.showNotificationForPlayer(forwardingPlayer)
 
         // create and register collection changed receiver
         collectionChangedReceiver = createCollectionChangedReceiver()
@@ -208,7 +231,6 @@ class PlayerService(): MediaBrowserServiceCompat() {
         // release player
         player.removeAnalyticsListener(analyticsListener)
         player.removeListener(playerListener)
-        player.removeMetadataOutput(metadataOutput)
         player.release()
     }
 
@@ -303,7 +325,7 @@ class PlayerService(): MediaBrowserServiceCompat() {
             updateMetadata(null)
         }
         // display notification
-        notificationHelper.showNotificationForPlayer(player)
+        notificationHelper.showNotificationForPlayer(forwardingPlayer)
     }
 
 
@@ -355,7 +377,11 @@ class PlayerService(): MediaBrowserServiceCompat() {
         val mediaItem: MediaItem = MediaItem.fromUri(station.getStreamUri())
 
         // create DataSource.Factory - produces DataSource instances through which media data is loaded
-        val dataSourceFactory: DataSource.Factory = createDataSourceFactory(this, Util.getUserAgent(this, userAgent), null)
+        val dataSourceFactory: DataSource.Factory = DefaultHttpDataSource.Factory().apply {
+            setUserAgent(userAgent)
+            // follow http redirects
+            setAllowCrossProtocolRedirects(true)
+        }
 
         // create MediaSource
         val mediaSource: MediaSource
@@ -373,33 +399,14 @@ class PlayerService(): MediaBrowserServiceCompat() {
         // player.setMediaItem() - unable to use here, because different media items may need different MediaSourceFactories to work properly
         player.prepare()
 
-        // update media session connector
-        mediaSessionConnector.setPlayer(player)
+        // update media session connector using custom player
+        mediaSessionConnector.setPlayer(forwardingPlayer)
 
         // reset metadata to station name
         updateMetadata(station.name)
 
         // set playWhenReady state
         player.playWhenReady = playWhenReady
-    }
-
-
-    /* Creates a DataSourceFactor that supports http redirects */
-    private fun createDataSourceFactory(context: Context, userAgent: String, listener: TransferListener?): DefaultDataSourceFactory {
-        // Credit: https://stackoverflow.com/questions/41517440/exoplayer2-how-can-i-make-a-http-301-redirect-work
-        // Default parameters, except allowCrossProtocolRedirects is true
-        val httpDataSourceFactory = DefaultHttpDataSourceFactory(
-                userAgent,
-                listener,
-                DefaultHttpDataSource.DEFAULT_CONNECT_TIMEOUT_MILLIS,
-                DefaultHttpDataSource.DEFAULT_READ_TIMEOUT_MILLIS,
-                true /* allowCrossProtocolRedirects */
-        )
-        return DefaultDataSourceFactory(
-                context,
-                listener,
-                httpDataSourceFactory
-        )
     }
 
 
@@ -542,6 +549,7 @@ class PlayerService(): MediaBrowserServiceCompat() {
      * EventListener: Listener for ExoPlayer Events
      */
     private val playerListener = object : Player.Listener {
+
         override fun onIsPlayingChanged(isPlaying: Boolean){
             if (isPlaying) {
                 // active playback
@@ -577,7 +585,28 @@ class PlayerService(): MediaBrowserServiceCompat() {
                 handlePlaybackChange(PlaybackStateCompat.STATE_BUFFERING)
             }
         }
+
+        override fun onMetadata(metadata: Metadata) {
+            super.onMetadata(metadata)
+            for (i in 0 until metadata.length()) {
+                val entry = metadata[i]
+                // extract IceCast metadata
+                if (entry is IcyInfo) {
+                    val icyInfo: IcyInfo = entry as IcyInfo
+                    updateMetadata(icyInfo.title)
+                } else if (entry is IcyHeaders) {
+                    val icyHeaders = entry as IcyHeaders
+                    LogHelper.i(TAG, "icyHeaders:" + icyHeaders.name + " - " + icyHeaders.genre)
+                } else {
+                    LogHelper.w(TAG, "Unsupported metadata received (type = ${entry.javaClass.simpleName})")
+                    updateMetadata(null)
+                }
+                // TODO implement HLS metadata extraction (Id3Frame / PrivFrame)
+                // https://exoplayer.dev/doc/reference/com/google/android/exoplayer2/metadata/Metadata.Entry.html
+            }
+        }
     }
+
     /*
      * End of declaration
      */
@@ -610,76 +639,6 @@ class PlayerService(): MediaBrowserServiceCompat() {
 
 
     /*
-     * MetadataOutput: handles metadata associated with current playback time
-     */
-    private val metadataOutput = object : MetadataOutput {
-        override fun onMetadata(metadata: Metadata) {
-            for (i in 0 until metadata.length()) {
-                val entry = metadata[i]
-                // extract IceCast metadata
-                if (entry is IcyInfo) {
-                    val icyInfo: IcyInfo = entry as IcyInfo
-                    updateMetadata(icyInfo.title)
-                } else if (entry is IcyHeaders) {
-                    val icyHeaders = entry as IcyHeaders
-                    LogHelper.i(TAG, "icyHeaders:" + icyHeaders.name + " - " + icyHeaders.genre)
-                } else {
-                    LogHelper.w(TAG, "Unsupported metadata received (type = ${entry.javaClass.simpleName})")
-                    updateMetadata(null)
-                }
-                // TODO implement HLS metadata extraction (Id3Frame / PrivFrame)
-                // https://exoplayer.dev/doc/reference/com/google/android/exoplayer2/metadata/Metadata.Entry.html
-            }
-        }
-    }
-    /*
-     * End of declaration
-     */
-
-
-//    /*
-//     * MediaMetadataProvider: creates metadata for currently playing station
-//     */
-//    private val metadataProvider = object : MediaSessionConnector.MediaMetadataProvider {
-//        override fun getMetadata(player: Player): MediaMetadataCompat {
-//            return CollectionHelper.buildStationMediaMetadata(this@PlayerService, station, getCurrentMetadata())
-//        }
-//    }
-//    /*
-//     * End of declaration
-//     */
-//
-//    /*
-//     * DefaultControlDispatcher: intercepts commands from MediaSessionConnector
-//     */
-//    private val dispatcher = object : DefaultControlDispatcher() {
-//        // emulate headphone buttons
-//        // start/pause: adb shell input keyevent 85
-//        // next: adb shell input keyevent 87
-//        // prev: adb shell input keyevent 88
-//        override fun dispatchSetPlayWhenReady(player: Player, playWhenReady: Boolean): Boolean {
-//            // changes the default behavior of !playWhenReady from player.pause() to player.stop()
-//            when (playWhenReady) {
-//                true -> player.play()
-//                false -> player.stop()
-//            }
-//            return true
-//        }
-//        override fun dispatchNext(player: Player): Boolean {
-//            skipToNextStation()
-//            return true
-//        }
-//        override fun dispatchPrevious(player: Player): Boolean {
-//            skipToPreviousStation()
-//            return true
-//        }
-//    }
-//    /*
-//     * End of declaration
-//     */
-
-
-    /*
      * MediaButtonEventHandler: overrides headphone next/previous button behavior
      */
     private val buttonEventHandler = object : MediaSessionConnector.MediaButtonEventHandler {
@@ -687,7 +646,7 @@ class PlayerService(): MediaBrowserServiceCompat() {
         // start/pause: adb shell input keyevent 85
         // next: adb shell input keyevent 87
         // prev: adb shell input keyevent 88
-        override fun onMediaButtonEvent(player: Player, controlDispatcher: ControlDispatcher, mediaButtonEvent: Intent): Boolean {
+        override fun onMediaButtonEvent(player: Player, mediaButtonEvent: Intent): Boolean {
             val event: KeyEvent? = mediaButtonEvent.getParcelableExtra(Intent.EXTRA_KEY_EVENT)
             when (event?.keyCode) {
                 KeyEvent.KEYCODE_MEDIA_NEXT -> {
@@ -790,7 +749,7 @@ class PlayerService(): MediaBrowserServiceCompat() {
             }
         }
 
-        override fun onCommand(player: Player, controlDispatcher: ControlDispatcher, command: String, extras: Bundle?, cb: ResultReceiver?): Boolean {
+        override fun onCommand(player: Player,  command: String, extras: Bundle?, cb: ResultReceiver?): Boolean {
             when (command) {
                 Keys.CMD_RELOAD_PLAYER_STATE -> {
                     playerState = PreferencesHelper.loadPlayerState()
