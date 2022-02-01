@@ -69,10 +69,6 @@ object Keys {
     const val CMD_START_SLEEP_TIMER: String = "START_SLEEP_TIMER"
     const val CMD_CANCEL_SLEEP_TIMER: String = "CANCEL_SLEEP_TIMER"
     const val CMD_PLAY_STREAM: String = "PLAY_STREAM"
-    const val CMD_DISMISS_NOTIFICATION: String = "DISMISS_NOTIFICATION"
-    const val CMD_NEXT_STATION: String = "NEXT_STATION"
-    const val CMD_PREVIOUS_STATION: String = "PREVIOUS_STATION"
-
 
     // preferences
     const val PREF_RADIO_BROWSER_API: String = "RADIO_BROWSER_API"

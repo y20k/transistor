@@ -31,7 +31,6 @@ import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaDescriptionCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
-import android.view.KeyEvent
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -82,7 +81,6 @@ class PlayerService(): MediaBrowserServiceCompat() {
     private lateinit var forwardingPlayer: ForwardingPlayer
     private lateinit var playerState: PlayerState
     private lateinit var metadataHistory: MutableList<String>
-    private lateinit var backgroundJob: Job
     private lateinit var packageValidator: PackageValidator
     protected lateinit var mediaSession: MediaSessionCompat
     protected lateinit var mediaSessionConnector: MediaSessionConnector
@@ -113,10 +111,6 @@ class PlayerService(): MediaBrowserServiceCompat() {
     /* Overrides onCreate from Service */
     override fun onCreate() {
         super.onCreate()
-
-        // initialize background job
-        backgroundJob = Job()
-
         // set user agent
         userAgent = Util.getUserAgent(this, Keys.APPLICATION_NAME)
 
@@ -132,38 +126,15 @@ class PlayerService(): MediaBrowserServiceCompat() {
         // fetch the metadata history
         metadataHistory = PreferencesHelper.loadMetadataHistory()
 
-        // custom player used in notification and mediasession connection // todo move into its own function
-        forwardingPlayer = object : ForwardingPlayer(player) {
-            override fun stop() {
-                player.stop()
-                notificationHelper.hideNotification()
-            }
-            override fun pause() {
-                player.stop()
-            }
-            override fun seekToNext() {
-                skipToNextStation()
-            }
-            override fun seekToPrevious() {
-                skipToPreviousStation()
-            }
-            override fun seekBack() {
-                skipToPreviousStation()
-            }
-            override fun seekForward() {
-                skipToNextStation()
-            }
-        }
-
         // create a new MediaSession
         createMediaSession()
+
+        // create custom ForwardingPlayer used in Notification and playback control
+        forwardingPlayer = createForwardingPlayer()
 
         // ExoPlayer manages MediaSession
         mediaSessionConnector = MediaSessionConnector(mediaSession)
         mediaSessionConnector.setPlaybackPreparer(preparer)
-        mediaSessionConnector.setMediaButtonEventHandler(buttonEventHandler)
-        //mediaSessionConnector.setControlDispatcher(dispatcher)
-        //mediaSessionConnector.setMediaMetadataProvider(metadataProvider)
         mediaSessionConnector.setQueueNavigator(object : TimelineQueueNavigator(mediaSession) {
             override fun getMediaDescription(player: Player, windowIndex: Int): MediaDescriptionCompat {
                 // create media description - used in notification
@@ -173,7 +144,7 @@ class PlayerService(): MediaBrowserServiceCompat() {
 
         // initialize notification helper
         notificationHelper = NotificationHelper(this, mediaSession.sessionToken, notificationListener)
-        notificationHelper.showNotificationForPlayer(forwardingPlayer)
+//        notificationHelper.showNotificationForPlayer(forwardingPlayer)
 
         // create and register collection changed receiver
         collectionChangedReceiver = createCollectionChangedReceiver()
@@ -205,7 +176,7 @@ class PlayerService(): MediaBrowserServiceCompat() {
                 preparePlayer(true)
             }
         }
-        return Service.START_NOT_STICKY
+        return Service.START_STICKY_COMPATIBILITY
     }
 
 
@@ -219,15 +190,15 @@ class PlayerService(): MediaBrowserServiceCompat() {
 
     /* Overrides onDestroy from Service */
     override fun onDestroy() {
-        // save playback state
-        handlePlaybackChange(PlaybackStateCompat.STATE_STOPPED)
+        // set playback state if necessary
+        if (player.isPlaying) {
+            handlePlaybackChange(PlaybackStateCompat.STATE_STOPPED)
+        }
         // release media session
         mediaSession.run {
             isActive = false
             release()
         }
-        // cancel background job
-        backgroundJob.cancel()
         // release player
         player.removeAnalyticsListener(analyticsListener)
         player.removeListener(playerListener)
@@ -320,12 +291,11 @@ class PlayerService(): MediaBrowserServiceCompat() {
         // save collection state and player state
         collection = CollectionHelper.savePlaybackState(this, collection, station, playbackState)
         updatePlayerState(station, playbackState)
-        // reset metadata
-        if (!player.isPlaying) {
+        if (player.isPlaying) {
+            notificationHelper.showNotificationForPlayer(forwardingPlayer)
+        } else {
             updateMetadata(null)
         }
-        // display notification
-        notificationHelper.showNotificationForPlayer(forwardingPlayer)
     }
 
 
@@ -339,6 +309,47 @@ class PlayerService(): MediaBrowserServiceCompat() {
         } else {
             player.stop()
             Toast.makeText(this, this.getString(R.string.toastmessage_error_restart_playback_failed), Toast.LENGTH_LONG).show()
+        }
+    }
+
+
+    /* Creates a forwardingPlayer that overrides default exoplayer behavior */
+    private fun createForwardingPlayer() : ForwardingPlayer {
+        return object : ForwardingPlayer(player) {
+            // emulate headphone buttons
+            // start/pause: adb shell input keyevent 85
+            // next: adb shell input keyevent 87
+            // prev: adb shell input keyevent 88
+            override fun stop(reset: Boolean) {
+                stop()
+            }
+            override fun stop() {
+                player.stop()
+                notificationHelper.hideNotification()
+            }
+            override fun pause() {
+                player.stop() /* pause command translates internally to stop() */
+            }
+            override fun seekForward() {
+                seekToNext()
+            }
+            override fun seekBack() {
+                seekToPrevious()
+            }
+            override fun seekToNext() {
+                // stop current playback, if necessary
+                if (player.isPlaying) player.stop()
+                // get station start playback
+                station = CollectionHelper.getNextStation(collection, station.uuid)
+                preparer.onPrepare(true)
+            }
+            override fun seekToPrevious() {
+                // stop current playback, if necessary
+                if (player.isPlaying) player.stop()
+                // get station start playback
+                station = CollectionHelper.getPreviousStation(collection, station.uuid)
+                preparer.onPrepare(true)
+            }
         }
     }
 
@@ -452,11 +463,11 @@ class PlayerService(): MediaBrowserServiceCompat() {
                     mediaItems.add(item)
                 }
             }
-            Keys.MEDIA_BROWSER_ROOT_RECENT -> {
-                LogHelper.w(TAG, "recent station requested.") // todo remove
-                val recentStation = collectionProvider.getFirstStation() // todo change
-                if (recentStation != null) mediaItems.add(recentStation)
-            }
+//            Keys.MEDIA_BROWSER_ROOT_RECENT -> {
+//                LogHelper.w(TAG, "recent station requested.") // todo remove
+//                val recentStation = collectionProvider.getFirstStation() // todo change
+//                if (recentStation != null) mediaItems.add(recentStation)
+//            }
             Keys.MEDIA_BROWSER_ROOT_EMPTY -> {
                 // do nothing
             }
@@ -522,26 +533,6 @@ class PlayerService(): MediaBrowserServiceCompat() {
             metadataString = metadataHistory.last()
         }
         return metadataString
-    }
-
-
-    /* Load next station and start playback */
-    private fun skipToNextStation() {
-        // stop current playback, if necessary
-        if (player.isPlaying) player.stop()
-        // get station start playback
-        station = CollectionHelper.getNextStation(collection, station.uuid)
-        preparer.onPrepare(true)
-    }
-
-
-    /* Load next station and start playback */
-    private fun skipToPreviousStation() {
-        // stop current playback, if necessary
-        if (player.isPlaying) player.stop()
-        // get station start playback
-        station = CollectionHelper.getPreviousStation(collection, station.uuid)
-        preparer.onPrepare(true)
     }
 
 
@@ -636,45 +627,6 @@ class PlayerService(): MediaBrowserServiceCompat() {
     /*
      * End of declaration
      */
-
-
-    /*
-     * MediaButtonEventHandler: overrides headphone next/previous button behavior
-     */
-    private val buttonEventHandler = object : MediaSessionConnector.MediaButtonEventHandler {
-        // emulate headphone buttons
-        // start/pause: adb shell input keyevent 85
-        // next: adb shell input keyevent 87
-        // prev: adb shell input keyevent 88
-        override fun onMediaButtonEvent(player: Player, mediaButtonEvent: Intent): Boolean {
-            val event: KeyEvent? = mediaButtonEvent.getParcelableExtra(Intent.EXTRA_KEY_EVENT)
-            when (event?.keyCode) {
-                KeyEvent.KEYCODE_MEDIA_NEXT -> {
-                    if (event.action == KeyEvent.ACTION_UP && player.isPlaying) {
-                        skipToNextStation()                    }
-                    return true
-                }
-                KeyEvent.KEYCODE_MEDIA_PREVIOUS -> {
-                    if (event.action == KeyEvent.ACTION_UP && player.isPlaying) {
-                        skipToPreviousStation()
-                    }
-                    return true
-                }
-                KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE -> {
-                    if (event.action == KeyEvent.ACTION_UP) {
-                        if (player.isPlaying) player.stop()
-                        else player.play()
-                    }
-                    return true
-                }
-                else -> return false
-            }
-        }
-    }
-    /*
-     * End of declaration
-     */
-
 
 
     /*
@@ -785,20 +737,6 @@ class PlayerService(): MediaBrowserServiceCompat() {
                     val streamUri: String = extras?.getString(Keys.KEY_STREAM_URI) ?: String()
                     station = CollectionHelper.getStationWithStreamUri(collection, streamUri)
                     preparePlayer(true)
-                    return true
-                }
-                Keys.CMD_PREVIOUS_STATION -> {
-                    skipToPreviousStation()
-                    return true
-                }
-                Keys.CMD_NEXT_STATION -> {
-                    skipToNextStation()
-                    return true
-                }
-                Keys.CMD_DISMISS_NOTIFICATION -> {
-                    // pause playback and hide notification
-                    LogHelper.e(TAG, "DONG") // todo remove
-                    notificationHelper.hideNotification()
                     return true
                 }
                 else -> {
