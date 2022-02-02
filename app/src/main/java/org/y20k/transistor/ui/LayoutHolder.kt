@@ -132,6 +132,14 @@ data class LayoutHolder(var rootView: View) {
                 sheetMetadataHistoryView.text = metadataHistory[metadataHistoryPosition]
             }
         }
+        sheetMetadataHistoryView.setOnLongClickListener {
+            copyMetadataHistoryToClipboard()
+            return@setOnLongClickListener true
+        }
+        sheetMetadataHistoryHeadline.setOnLongClickListener {
+            copyMetadataHistoryToClipboard()
+            return@setOnLongClickListener true
+        }
 
         // set layout for player
         setupBottomSheet()
@@ -183,6 +191,15 @@ data class LayoutHolder(var rootView: View) {
         val cm: ClipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         cm.setPrimaryClip(clip)
         Toast.makeText(context, R.string.toastmessage_copied_to_clipboard, Toast.LENGTH_LONG).show()
+    }
+
+
+    /* Copies collected metadata to clipboard */
+    private fun copyMetadataHistoryToClipboard() {
+        val metadataHistory: MutableList<String> = PreferencesHelper.loadMetadataHistory()
+        val stringBuilder: StringBuilder = StringBuilder()
+        metadataHistory.forEach { stringBuilder.append("${it.trim()}\n")}
+        copyToClipboard(rootView.context, stringBuilder.toString())
     }
 
 

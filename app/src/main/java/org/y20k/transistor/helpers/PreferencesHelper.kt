@@ -219,7 +219,7 @@ object PreferencesHelper {
             val gson = Gson()
             metadataHistory = gson.fromJson(json, metadataHistory::class.java)
         }
-        return  metadataHistory
+        return metadataHistory
     }
 
 
