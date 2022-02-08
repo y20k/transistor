@@ -185,4 +185,16 @@
     <string name="pref_m3u_export_summary">Spremi radio stanice u M3U-datoteku popisa za reprodukciju, koja se može uvesti u druge uređaje za reprodukciju.</string>
     <string name="toastmessage_save_m3u">Spremanje radio stanica kao M3U …</string>
     <string name="toastmessage_install_file_helper">Instaliraj upravljač datoteka.</string>
+    <string name="dialog_edit_stream_uri">Adresa emisije</string>
+    <string name="pref_edit_station_summary_disabled">Uređivanje podataka stanice je deaktivirano.</string>
+    <string name="pref_edit_station_summary_enabled">Uređivanje podataka stanice je deaktivirano. Za uređivanje podataka pritisni stanicu dugo.</string>
+    <string name="pref_edit_station_title">Uredi stanice</string>
+    <string name="pref_edit_station_stream_summary_enabled">Uređivanje poveznica emisija je aktivirano. Obavezno upiši ispravnu adresu emisije.</string>
+    <string name="pref_edit_station_stream_summary_disabled">Uređivanje poveznica emisija je deaktivirano.</string>
+    <string name="pref_edit_station_stream_title">Uredi poveznice emisija</string>
+    <string name="station_list_button_settings">Postavke</string>
+    <string name="dialog_edit_save_changes">Spremi promjene</string>
+    <string name="dialog_edit_station_name">Ime stanice</string>
+    <string name="pref_advanced_title">Napredno</string>
+    <string name="descr_card_station_image_change">Promijeni sliku stanice</string>
 </resources>
