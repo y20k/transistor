@@ -199,4 +199,16 @@
     <string name="pref_m3u_export_summary">Lagre din radiostasjon til en M3U-spilleliste som kan importeres inn i andre avspillere.</string>
     <string name="toastmessage_save_m3u">Lagrer radiostasjoner som M3U …</string>
     <string name="toastmessage_install_file_helper">Installer en filbehandler.</string>
+    <string name="dialog_edit_save_changes">Lagre endringer</string>
+    <string name="dialog_edit_station_name">Stasjonsnavn</string>
+    <string name="dialog_edit_stream_uri">Strømmingsadresse</string>
+    <string name="pref_edit_station_summary_enabled">Redigering av stasjonsinfo påskrudd. Bruk lang-trykk for å gå inn i redigeringsmodus.</string>
+    <string name="pref_edit_station_title">Rediger stasjoner</string>
+    <string name="pref_edit_station_stream_title">Rediger strømmingslenker</string>
+    <string name="pref_edit_station_stream_summary_enabled">Redigering av strømmingslenker er påskrudd. Sørg for å skrive inn en korrekt strømmingsadresse.</string>
+    <string name="pref_advanced_title">Avansert</string>
+    <string name="station_list_button_settings">Innstillinger</string>
+    <string name="pref_edit_station_summary_disabled">Redigering av stasjonsinfo avskrudd.</string>
+    <string name="descr_card_station_image_change">Endre stasjonsbilde</string>
+    <string name="pref_edit_station_stream_summary_disabled">Redigering av strømmingslenker er avskrudd.</string>
 </resources>
