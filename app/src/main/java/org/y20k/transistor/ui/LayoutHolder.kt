@@ -21,10 +21,7 @@ import android.support.v4.media.session.PlaybackStateCompat
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Group
 import androidx.core.view.isGone
@@ -58,7 +55,7 @@ data class LayoutHolder(var rootView: View) {
     private var stationImageView: ImageView
     private var stationNameView: TextView
     private var metadataView: TextView
-    var playButtonView: ImageView
+    var playButtonView: ImageButton
     var bufferingIndicator: ProgressBar
     private var sheetStreamingLinkHeadline: TextView
     private var sheetStreamingLinkView: TextView
