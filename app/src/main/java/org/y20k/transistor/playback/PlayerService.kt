@@ -257,10 +257,10 @@ class PlayerService(): MediaBrowserServiceCompat() {
                     CONTENT_STYLE_BROWSABLE_HINT to CONTENT_STYLE_GRID_ITEM_HINT_VALUE,
                     CONTENT_STYLE_PLAYABLE_HINT to CONTENT_STYLE_LIST_ITEM_HINT_VALUE
             )
-//            // check if rootHints contained EXTRA_RECENT - return BrowserRoot with MEDIA_BROWSER_ROOT_RECENT in that case
-//            val isRecentRequest = rootHints?.getBoolean(EXTRA_RECENT) ?: false
-//            val browserRootPath: String = if (isRecentRequest) Keys.MEDIA_BROWSER_ROOT_RECENT else Keys.MEDIA_BROWSER_ROOT
-            return BrowserRoot(Keys.MEDIA_BROWSER_ROOT, rootExtras)
+            // check if rootHints contained EXTRA_RECENT - return BrowserRoot with MEDIA_BROWSER_ROOT_RECENT in that case
+            val isRecentRequest = rootHints?.getBoolean(BrowserRoot.EXTRA_RECENT) ?: false
+            val browserRootPath: String = if (isRecentRequest) Keys.MEDIA_BROWSER_ROOT_RECENT else Keys.MEDIA_BROWSER_ROOT
+            return BrowserRoot(browserRootPath, rootExtras)
         }
     }
 
@@ -463,11 +463,11 @@ class PlayerService(): MediaBrowserServiceCompat() {
                     mediaItems.add(item)
                 }
             }
-//            Keys.MEDIA_BROWSER_ROOT_RECENT -> {
-//                LogHelper.w(TAG, "recent station requested.") // todo remove
-//                val recentStation = collectionProvider.getFirstStation() // todo change
+            Keys.MEDIA_BROWSER_ROOT_RECENT -> {
+//                // un-comment (and implement ;-) ), if you want the media resumption notification to be shown
+//                val recentStation = collectionProvider.getFirstStation() // todo get last played station
 //                if (recentStation != null) mediaItems.add(recentStation)
-//            }
+            }
             Keys.MEDIA_BROWSER_ROOT_EMPTY -> {
                 // do nothing
             }
