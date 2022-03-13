@@ -8,12 +8,12 @@
     <string name="shortcut_last_station_long_label">Laatste zender afspelen</string>
     <string name="shortcut_last_station_disabled_message">Snelkoppeling om recentste zender te openen is uitgeschakeld.</string>
     <!-- menu entries -->
-    <string name="menu_icon">Icoon wijzigen</string>
+    <string name="menu_icon">Pictogram wijzigen</string>
     <string name="menu_delete">Wissen</string>
     <string name="menu_rename">Hernoemen</string>
-    <string name="menu_shortcut">Op Thuisscherm plaatsen</string>
+    <string name="menu_shortcut">Op startscherm plaatsen</string>
     <!-- descriptions -->
-    <string name="descr_app_icon">App-pictogram als van een oude radio</string>
+    <string name="descr_app_icon">App pictogram als van een oude radio</string>
     <string name="descr_station_options_button">Opties</string>
     <string name="descr_station_name_example">Voorbeeld FM</string>
     <string name="descr_station_metadata_example">Artiest - Titel</string>
@@ -42,7 +42,7 @@
     <string name="dialog_add_station_button">Toevoegen</string>
     <string name="dialog_add_station_input_hint">Streamadres invoegen</string>
     <string name="dialog_add_station_message">Nieuwe zender toevoegen</string>
-    <string name="dialog_add_station_howto">In de app kun je radio-streams toevoegen in MP3, AAC, Ogg/Opus formaat en als stream-bestanden (.PLS en .M3U). Ook kun je zenders toevoegen door stream-bestanden in de browser te openen.</string>
+    <string name="dialog_add_station_howto">In de app kun je radio streams toevoegen in MP3, AAC, Ogg/Opus formaat en als stream bestanden (.PLS en .M3U). Ook kun je zenders toevoegen door stream bestanden in de browser te openen.</string>
     <string name="dialog_delete_station_message">Zender wissen</string>
     <string name="dialog_button_delete">Verwijderen</string>
     <string name="dialog_rename_station_input_hint">Nieuwe naam geven</string>
@@ -97,7 +97,7 @@
     <string name="toastalert_headphones_unplugged">Hoofdtelefoon losgekoppeld. Afspelen gestopt.</string>
     <string name="toastalert_permission_denied">Toegang geweigerd:</string>
     <string name="toastalert_station_not_found">Kan zender niet vinden.</string>
-    <string name="snackbar_request_storage_access">Transistor heeft leesrechten nodig om gegevens van de externe opslag te lezen.</string>
+    <string name="snackbar_request_storage_access">Toegangsrecht tot bestanden en media in de opslag is vereist voor Transistor.</string>
     <string name="snackbar_message_timer_set">Wekker ingesteld op</string>
     <!-- notification -->
     <string name="notification_play">Afspelen</string>
@@ -129,7 +129,7 @@
     <string name="dialog_error_title_no_network">Offline</string>
     <string name="dialog_edit_update_station">Zender bijwerken</string>
     <string name="dialog_edit_title">Zender bewerken</string>
-    <string name="dialog_edit_place_on_home_screen">Plaats op Thuisscherm</string>
+    <string name="dialog_edit_place_on_home_screen">Plaats op Startscherm</string>
     <string name="fragment_settings_title">Instellingen</string>
     <string name="toastmessage_error_missing_storage_permission">Sta \"Opslag lezen\" toe om dit bestand te lezen.</string>
     <string name="toastmessage_error_download_error">Downloadfoutmelding</string>
@@ -157,7 +157,7 @@
     <string name="notification_playing">Speelt af</string>
     <string name="notification_now_playing_channel_description">Melding van naam en logo van zender.</string>
     <string name="notification_now_playing_channel_name">Afspeelbediening</string>
-    <string name="station_list_button_add_new_station">Voeg nieuwe zender toe</string>
+    <string name="station_list_button_add_new_station">Nieuwe zender</string>
     <string name="toastmessage_updating_station_images">Zenderlogo\'s worden bijgewerkt.</string>
     <string name="toastmessage_updating_station">Zender bijwerken…</string>
     <string name="toastmessage_updating_collection">Zender verzameling bijwerken.</string>
@@ -166,7 +166,7 @@
     <string name="pref_update_collection_title">Zenders bijwerken</string>
     <string name="pref_update_collection_summary">Bijgewerkte audiostreams en nieuwe zenderlogo\'s zoeken.</string>
     <string name="pref_theme_selection_title">App-thema</string>
-    <string name="pref_theme_selection_summary">Huidige thema:</string>
+    <string name="pref_theme_selection_summary">Huidige:</string>
     <string name="pref_theme_selection_mode_light">Lichte modus</string>
     <string name="pref_theme_selection_mode_device_default">Zelfde als toestel</string>
     <string name="pref_theme_selection_mode_dark">Donkere modus</string>
@@ -177,17 +177,17 @@
     <string name="pref_maintenance_title">Onderhoud</string>
     <string name="pref_general_title">Algemeen</string>
     <string name="pref_delete_all_title">Downloads wissen</string>
-    <string name="pref_app_version_title">App-versie</string>
+    <string name="pref_app_version_title">Versie</string>
     <string name="pref_app_version_summary">Versie</string>
-    <string name="pref_update_station_images_title">Zenderlogo\'s actualiseren</string>
-    <string name="pref_update_station_images_summary">Alle zenderlogo\'s actualiseren.</string>
+    <string name="pref_update_station_images_title">Zenderlogo\'s</string>
+    <string name="pref_update_station_images_summary">Alle logo\'s actualiseren</string>
     <string name="descr_card_small_download_button">Downloaden</string>
     <string name="descr_card_settings_button">Instellingen</string>
     <string name="descr_card_playback_indicator">Voortgang van het afspelen</string>
     <string name="descr_expanded_player_sleep_timer_cancel_button">Wekker annuleren</string>
     <string name="descr_dialog_edit_update_icon">Bijwerken</string>
     <string name="descr_dialog_edit_station_image">Zenderlogo</string>
-    <string name="descr_dialog_edit_place_on_home_screen_icon">Op Thuisscherm plaatsen</string>
+    <string name="descr_dialog_edit_place_on_home_screen_icon">Widget op startscherm</string>
     <string name="descr_card_station_image">Zenderlogo</string>
     <string name="descr_card_starred_station">Zender met ster</string>
     <string name="descr_card_small_edit_button">Bewerken</string>
@@ -209,6 +209,6 @@
     <string name="pref_edit_station_stream_summary_disabled">Bewerken van streamlinks is uitgeschakeld.</string>
     <string name="pref_edit_station_stream_title">Streamlinks bewerken</string>
     <string name="descr_card_station_image_change">Wijzig zenderlogo</string>
-    <string name="pref_edit_station_summary_enabled">Bewerken van zenderinformatie is ingeschakeld. Gebruik lang aanraken om naar bewerkmodus te gaan.</string>
-    <string name="pref_edit_station_stream_summary_enabled">Bewerken van streamlinks is ingeschakeld. Zorg dat je een correct streamadres invoert.</string>
+    <string name="pref_edit_station_summary_enabled">Bewerken van zenderinformatie is ingeschakeld. Gebruik lang aanraken om te bewerken.</string>
+    <string name="pref_edit_station_stream_summary_enabled">Bewerken van streamlinks is ingeschakeld. Voer een correct streamadres in.</string>
 </resources>
