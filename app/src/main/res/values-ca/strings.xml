@@ -11,17 +11,17 @@
     <string name="menu_icon">Canvia la icona</string>
     <string name="menu_delete">Suprimeix</string>
     <string name="menu_rename">Canvia el nom</string>
-    <string name="menu_shortcut">Col·loca a la pantalla d’inici</string>
+    <string name="menu_shortcut">Col·loca a la pantalla d\'inici</string>
     <!-- descriptions -->
     <string name="descr_app_icon">Icona de l\'aplicació que mostra una ràdio antiga</string>
-    <string name="descr_station_options_button">Opcions</string>
+    <string name="descr_station_options_button">Paràmetres</string>
     <string name="descr_station_name_example">Exemple FM</string>
     <string name="descr_station_metadata_example">Artista - Títol</string>
-    <string name="descr_station_stream_loading">S’està carregant la transmissió…</string>
+    <string name="descr_station_stream_loading">S\'està carregant la transmissió…</string>
     <!--<string name="descr_playback_button_play"></string>-->
     <!--<string name="descr_playback_button_stop"></string>-->
     <string name="descr_playback_indicator">Emissora en reproducció</string>
-    <string name="descr_timer_icon">Temporitzador de suspensió</string>
+    <string name="descr_timer_icon">Temporitzador</string>
     <!--<string name="descr_player_sheet_button_minimize"></string>-->
     <string name="descr_player_sheet_content_copy_icon">Copia</string>
     <string name="descr_player_sheet_p_stream_url">Enllaç de transmissió de l\'emissora de ràdio seleccionada</string>
@@ -42,8 +42,8 @@
     <string name="dialog_add_station_button">Afegeix</string>
     <string name="dialog_add_station_input_hint">Enganxeu un enllaç de transmissió</string>
     <string name="dialog_add_station_message">Afegeix una emissora nova</string>
-    <string name="dialog_add_station_howto">Podeu afegir fluxos d’àudio codificats en MP3, AAC o Ogg/Opus, així com emissions encapsulades en fitxers PLS o M3U. Alternativament, també podeu afegir una emissora nova prement en les adreces dels canals (.pls or .m3u) en el navegador web.</string>
-    <string name="dialog_delete_station_message">Suprimeix l’emissora</string>
+    <string name="dialog_add_station_howto">Podeu afegir fluxos d\'àudio codificats en MP3, AAC o Ogg/Opus, així com emissions encapsulades en fitxers PLS o M3U. Alternativament, també podeu afegir una emissora nova prement en les adreces dels fluxos de xarxa (.pls o .m3u) al navegador web.</string>
+    <string name="dialog_delete_station_message">Suprimeix l\'emissora</string>
     <string name="dialog_button_delete">Suprimeix</string>
     <string name="dialog_rename_station_input_hint">Introdueix un nou nom</string>
     <string name="dialog_rename_station_message">Canvia el nom de l\'emissora</string>
@@ -54,9 +54,9 @@
     <!-- error dialogs -->
     <!--<string name="dialog_error_title_default"></string>-->
     <string name="dialog_error_message_default">S\'ha produït un error</string>
-    <string name="dialog_error_details_button_default">Mostra els detalls</string>
-    <string name="dialog_error_details_default">Detalls no disponibles</string>
-    <string name="dialog_error_details_write">És probable que l’emissora estigui duplicada; si no és el cas, hauríeu de comprovar al vostre emmagatzematge extern.</string>
+    <string name="dialog_error_details_button_default">Mostra les dades</string>
+    <string name="dialog_error_details_default">Dades no disponibles</string>
+    <string name="dialog_error_details_write">És probable que l\'emissora estigui duplicada; si no és el cas, hauríeu de comprovar al vostre emmagatzematge extern.</string>
     <string name="dialog_error_title_fetch_download">Baixa la publicació</string>
     <string name="dialog_error_title_fetch_read">Llegeix la publicació</string>
     <string name="dialog_error_title_fetch_write">Escriu una publicació</string>
@@ -88,7 +88,7 @@
     <string name="toastmessage_stream_may_not_work">Detectat format d\'àudio no suportat. La reproducció del flux de dades no pot funcionar.</string>
     <string name="toastmessage_timer_activated">Temporitzador d\'apagat activat.</string>
     <string name="toastmessage_timer_cancelled">Temporitzador d\'apagat cancel·lat.</string>
-    <string name="toastmessage_timer_duration_increased">Incrementar la duració (+ 15 min).</string>
+    <string name="toastmessage_timer_duration_increased">Durada incrementada.</string>
     <string name="toastalert_unable_to_connect">No es pot connectar. El dispositiu no té connexió a Internet o el flux pot estar obsolet.</string>
     <string name="toastalert_rename_unsuccessful">Incapaç de canviar el nom de l\'emissora. Si us plau, escolliu un nom diferent.</string>
     <string name="toastalert_delete_successful">Emissora ha estat esborrada.</string>
@@ -105,34 +105,34 @@
     <string name="notification_channel_playback_name">Controls de reproducció</string>
     <string name="notification_channel_playback_description">Controls de reproducció, logo de la emissora i informació de reproducció actual.</string>
     <!-- onboarding -->
-    <string name="onboarding_app_description">Ràdio APP</string>
+    <string name="onboarding_app_description">Aplicació de ràdio</string>
     <string name="onboarding_app_get_started">Comença</string>
     <!-- Version 3 of Transistor removes the screens infosheet_howto and infosheet_about.
     The last version containing those strings is v2.3.7
     https://github.com/y20k/transistor/tree/v2.3.7/app/src/main/res -->
     <string name="dialog_error_title_default">Error</string>
     <string name="notification_stop">Atura</string>
-    <string name="player_sheet_h1_details">Detalls</string>
+    <string name="player_sheet_h1_details">Dades</string>
     <string name="player_sheet_h2_stream_url">Enllaç de transmissió</string>
     <string name="player_sheet_h2_station_bitrate">Taxa de bits</string>
-    <string name="toastmessage_long_press_change_icon">Canvia la icona de l’emissora (pulsació llarga detectada)</string>
-    <string name="toastmessage_long_press_change_name">Canvia el nom de l’emissora (pulsació llarga detectada)</string>
+    <string name="toastmessage_long_press_change_icon">Canvia la icona de l\'emissora (pulsació llarga detectada)</string>
+    <string name="toastmessage_long_press_change_name">Canvia el nom de l\'emissora (pulsació llarga detectada)</string>
     <string name="dialog_add_station_choose_stream_message">Seleccioneu una transmissió</string>
     <string name="dialog_add_station_choose_stream_button">Selecciona</string>
-    <string name="dialog_add_station_choose_stream_heading">S’han trobat diverses transmissions</string>
+    <string name="dialog_add_station_choose_stream_heading">S\'han trobat diversos fluxos de xarxa</string>
     <string name="descr_list_add_select_stream_dropdown">Seleccioneu una transmissió</string>
     <string name="toastmessage_theme_night">Canviant al mode nocturn (pulsació llarga detectada)</string>
     <string name="toastmessage_theme_day">Canviant al \'Mode diürn\' (pulsació llarga detectada)</string>
     <string name="toastmessage_theme_follow_system">Canviant al mode \'Segueix el paràmetre del sistema\' (pulsació llarga detectada)</string>
     <string name="descr_playback_button_play">Reprodueix</string>
     <string name="descr_playback_button_stop">Atura</string>
-    <string name="descr_player_sheet_button_minimize">Amaga les dades de l’emissora</string>
+    <string name="descr_player_sheet_button_minimize">Amaga les dades de l\'emissora</string>
     <string name="dialog_find_station_button_add">Afegeix</string>
     <string name="dialog_edit_update_station">Actualitza emissora</string>
     <string name="dialog_find_station_hint">Nom o adreça del flux</string>
     <string name="dialog_edit_place_on_home_screen">Afegeix a pantalla d\'inici</string>
     <string name="toastmessage_updating_station">Actualitzant emissora…</string>
-    <string name="dialog_opml_import_details_default">Sense detalls disponibles</string>
+    <string name="dialog_opml_import_details_default">Sense dades disponibles</string>
     <string name="dialog_yes_no_message_default">Confirmeu que voleu realitzar això\?</string>
     <string name="toastmessage_save_m3u">Desant emissores de ràdio en format M3U…</string>
     <string name="pref_edit_station_summary_enabled">Edició d\'informació d\'emissora desactivada. Feu una pulsació llarga per accedir a mode d\'edició.</string>
@@ -155,8 +155,8 @@
     <string name="dialog_edit_station_name">Nom de l\'emissora</string>
     <string name="dialog_error_message_no_network">Connecta a Internet.</string>
     <string name="dialog_find_station_no_results">Sense resultats.</string>
-    <string name="dialog_generic_details_button">Mostra detalls</string>
-    <string name="dialog_generic_details_default">Sense detalls disponibles</string>
+    <string name="dialog_generic_details_button">Mostra dades</string>
+    <string name="dialog_generic_details_default">Sense dades disponibles</string>
     <string name="dialog_yes_no_message_remove_station">Voleu eliminar aquesta emissora\?</string>
     <string name="dialog_yes_no_negative_button_add_up_next">Afegir a \'Propera\'</string>
     <string name="dialog_yes_no_negative_button_cancel">Cancel·la</string>
@@ -222,7 +222,7 @@
     <string name="toastmessage_updating_station_images">Actualitzant imatges d\'emissores.</string>
     <string name="toastmessage_updating_collection">Actualitzant les col·leccions d\'emissores.</string>
     <string name="dialog_yes_no_message_update_collection">Cercar canvis\?</string>
-    <string name="dialog_opml_import_details_button">Mostra detalls</string>
+    <string name="dialog_opml_import_details_button">Mostra dades</string>
     <string name="dialog_opml_import_button_okay">Importa</string>
     <string name="dialog_find_station_title">Cerca emissora</string>
     <string name="dialog_error_title_no_network">Fora de línia</string>
