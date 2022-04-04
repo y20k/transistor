@@ -9,7 +9,6 @@
     <android.widget.ProgressBar
         android:id="@+id/download_progress_indicator"
         android:indeterminate="true"
-        android:background="@color/app_window_background"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:visibility="gone"
@@ -31,10 +30,13 @@
             android:visibility="visible" />
 
         <!-- ONBOARDING -->
-        <include layout="@layout/element_onboarding" />
+        <include
+            layout="@layout/element_onboarding"
+            android:visibility="gone" />
 
         <!-- PLAYER SHEET -->
-        <include layout="@layout/bottom_sheet_playback_controls" />
+        <include
+            layout="@layout/bottom_sheet_playback_controls" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

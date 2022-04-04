@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- View is "selected" -->
+<!--    <item android:state_selected="true"-->
+<!--        android:drawable="@drawable/ic_circular_button_playback_selected_56dp" />-->
+
+    <item android:state_focused="true"
+        android:drawable="@drawable/shape_player_button_small_selected" />
+
+    <!-- Default state. -->
+    <item android:drawable="@drawable/shape_player_button_small" />
+
+</selector>

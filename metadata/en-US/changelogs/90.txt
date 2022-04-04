@@ -1,0 +1,8 @@
+# v4.1.0 - Modern Love
+
+**2022-03-08**
+
+- design overhaul that makes use of "Material Design 3" elements and colors
+- fix re-appearing playback notification on Android 11
+- Galician language version
+- updated translations

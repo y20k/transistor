@@ -185,4 +185,16 @@
     <string name="pref_m3u_export_summary">Simpan stasiun radio Anda ke berkas daftar putar M3U yang bisa diimpor ke pemutar lain.</string>
     <string name="toastmessage_save_m3u">Menyimpan stasiun radio sebagai M3U…</string>
     <string name="toastmessage_install_file_helper">Silakan pasang pengelola berkas.</string>
+    <string name="dialog_edit_save_changes">Simpan Perubahan</string>
+    <string name="dialog_edit_station_name">Nama stasiun</string>
+    <string name="station_list_button_settings">Pengaturan</string>
+    <string name="pref_advanced_title">Tingkat lanjut</string>
+    <string name="pref_edit_station_summary_disabled">Menyunting informasi stasiun dinonaktifkan.</string>
+    <string name="pref_edit_station_summary_enabled">Menyunting informasi stasiun dinonaktifkan. Tekan lama untuk masuk ke mode sunting.</string>
+    <string name="pref_edit_station_title">Sunting Stasiun</string>
+    <string name="pref_edit_station_stream_summary_disabled">Menyunting tautan streaming dinonaktifkan.</string>
+    <string name="pref_edit_station_stream_title">Sunting Tautan Streaming</string>
+    <string name="descr_card_station_image_change">Ubah gambar stasiun</string>
+    <string name="dialog_edit_stream_uri">Alamat stream</string>
+    <string name="pref_edit_station_stream_summary_enabled">Menyunting tautan streaming diaktifkan. Pastikan Anda memasukkan alamat stream yang benar.</string>
 </resources>

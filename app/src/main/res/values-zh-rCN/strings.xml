@@ -206,4 +206,16 @@
     <string name="notification_stop">停止</string>
     <string name="notification_channel_playback_name">回放控制</string>
     <string name="notification_channel_playback_description">回放控制，电台图标和正在播放的信息。</string>
+    <string name="dialog_edit_stream_uri">在线播放地址</string>
+    <string name="pref_advanced_title">高级</string>
+    <string name="pref_edit_station_title">编辑电台</string>
+    <string name="pref_edit_station_stream_summary_enabled">已启用在线播放链接编辑。请确保输入正确的地址。</string>
+    <string name="pref_edit_station_stream_summary_disabled">已禁止编辑在线播放链接。</string>
+    <string name="pref_edit_station_stream_title">编辑在线播放链接</string>
+    <string name="descr_card_station_image_change">更改电台图片</string>
+    <string name="dialog_edit_save_changes">保存更改</string>
+    <string name="dialog_edit_station_name">电台名</string>
+    <string name="station_list_button_settings">设置</string>
+    <string name="pref_edit_station_summary_enabled">已启用电台信息编辑。长按进入编辑模式。</string>
+    <string name="pref_edit_station_summary_disabled">已禁止编辑电台信息。</string>
 </resources>

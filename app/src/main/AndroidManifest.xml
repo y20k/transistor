@@ -43,7 +43,6 @@
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|screenSize"
-            android:label="@string/app_name"
             android:exported="true">
 
             <!-- react to main intents -->
@@ -119,8 +118,8 @@
         <!-- Player Service -->
         <service
             android:name=".playback.PlayerService"
+            android:enabled="true"
             android:exported="true"
-            android:stopWithTask="false"
             tools:ignore="ExportedService">
             <intent-filter>
                 <action android:name="android.media.browse.MediaBrowserService"/>
@@ -147,6 +146,7 @@
                 <action android:name="android.intent.action.MEDIA_BUTTON" />
             </intent-filter>
         </receiver>
+
 
         <!-- file provider -->
         <provider

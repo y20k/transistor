@@ -199,4 +199,16 @@
     <string name="pref_m3u_export_summary">Enregistrez vos stations de radio dans un fichier de liste de lecture M3U qui peut être importé dans d\'autres lecteurs.</string>
     <string name="toastmessage_save_m3u">Enregistrement des stations de radio au format M3U…</string>
     <string name="toastmessage_install_file_helper">Veuillez installer un gestionnaire de fichiers.</string>
+    <string name="station_list_button_settings">Paramètres</string>
+    <string name="pref_edit_station_summary_enabled">Modification des informations de la station activée. Effectuez un appui long pour entrer en mode édition.</string>
+    <string name="pref_edit_station_stream_summary_enabled">Modification du lien du flux activé. Assurez-vous de saisir une adresse de flux correcte.</string>
+    <string name="pref_edit_station_stream_title">Modifier les liens de flux</string>
+    <string name="dialog_edit_stream_uri">Adresse du flux</string>
+    <string name="dialog_edit_save_changes">Enregistrer les modifications</string>
+    <string name="pref_edit_station_stream_summary_disabled">Modification des lien de flux désactivée.</string>
+    <string name="descr_card_station_image_change">Modifier l\'image de la station</string>
+    <string name="pref_advanced_title">Avancé</string>
+    <string name="pref_edit_station_summary_disabled">Modification des informations des stations désactivée.</string>
+    <string name="dialog_edit_station_name">Nom de la station</string>
+    <string name="pref_edit_station_title">Modifier les stations</string>
 </resources>

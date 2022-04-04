@@ -199,4 +199,16 @@
     <string name="pref_m3u_export_summary">Radyo istasyonlarınızı diğer oynatıcılara aktarılabilen bir M3U oynatma listesi dosyasına kaydedin.</string>
     <string name="toastmessage_save_m3u">Radyo istasyonları M3U olarak kaydediliyor…</string>
     <string name="toastmessage_install_file_helper">Lütfen bir dosya yöneticisi kurun.</string>
+    <string name="pref_edit_station_summary_disabled">İstasyon bilgilerinin düzenlenmesi devre dışı bırakıldı.</string>
+    <string name="pref_edit_station_title">İstasyonları Düzenle</string>
+    <string name="pref_edit_station_summary_enabled">İstasyon bilgilerinin düzenlenmesi etkinleştirildi. Düzenleme moduna girmek için uzun basın.</string>
+    <string name="dialog_edit_save_changes">Değişiklikleri Kaydet</string>
+    <string name="dialog_edit_station_name">İstasyon adı</string>
+    <string name="pref_advanced_title">Gelişmiş</string>
+    <string name="dialog_edit_stream_uri">Yayın adresi</string>
+    <string name="station_list_button_settings">Ayarlar</string>
+    <string name="pref_edit_station_stream_title">Yayın Bağlantılarını Düzenle</string>
+    <string name="pref_edit_station_stream_summary_disabled">Yayın bağlantılarının düzenlenmesi devre dışı bırakıldı.</string>
+    <string name="descr_card_station_image_change">İstasyon görüntüsünü değiştir</string>
+    <string name="pref_edit_station_stream_summary_enabled">Yayın bağlantılarının düzenlenmesi etkinleştirildi. Doğru bir yayın adresi girdiğinizden emin olun.</string>
 </resources>

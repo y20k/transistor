@@ -32,7 +32,7 @@ class PlayerController (private val mediaController: MediaControllerCompat) {
 
 
     /* Main class variables */
-    val transportControls: MediaControllerCompat.TransportControls = mediaController.transportControls
+    private val transportControls: MediaControllerCompat.TransportControls = mediaController.transportControls
 
 
     /* Start playback for given media id */
@@ -43,9 +43,9 @@ class PlayerController (private val mediaController: MediaControllerCompat) {
     }
 
 
-    /* Stop playback */
+    /* Stop playback - translates internally to pause */
     fun stop() {
-        transportControls.stop()
+        transportControls.pause()
     }
 
 

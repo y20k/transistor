@@ -21,10 +21,7 @@ import android.support.v4.media.session.PlaybackStateCompat
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Group
 import androidx.core.view.isGone
@@ -58,7 +55,7 @@ data class LayoutHolder(var rootView: View) {
     private var stationImageView: ImageView
     private var stationNameView: TextView
     private var metadataView: TextView
-    var playButtonView: ImageView
+    var playButtonView: ImageButton
     var bufferingIndicator: ProgressBar
     private var sheetStreamingLinkHeadline: TextView
     private var sheetStreamingLinkView: TextView
@@ -132,6 +129,14 @@ data class LayoutHolder(var rootView: View) {
                 sheetMetadataHistoryView.text = metadataHistory[metadataHistoryPosition]
             }
         }
+        sheetMetadataHistoryView.setOnLongClickListener {
+            copyMetadataHistoryToClipboard()
+            return@setOnLongClickListener true
+        }
+        sheetMetadataHistoryHeadline.setOnLongClickListener {
+            copyMetadataHistoryToClipboard()
+            return@setOnLongClickListener true
+        }
 
         // set layout for player
         setupBottomSheet()
@@ -183,6 +188,15 @@ data class LayoutHolder(var rootView: View) {
         val cm: ClipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         cm.setPrimaryClip(clip)
         Toast.makeText(context, R.string.toastmessage_copied_to_clipboard, Toast.LENGTH_LONG).show()
+    }
+
+
+    /* Copies collected metadata to clipboard */
+    private fun copyMetadataHistoryToClipboard() {
+        val metadataHistory: MutableList<String> = PreferencesHelper.loadMetadataHistory()
+        val stringBuilder: StringBuilder = StringBuilder()
+        metadataHistory.forEach { stringBuilder.append("${it.trim()}\n")}
+        copyToClipboard(rootView.context, stringBuilder.toString())
     }
 
 
@@ -263,7 +277,7 @@ data class LayoutHolder(var rootView: View) {
 
     /* Toggles visibility of the onboarding screen */
     fun toggleOnboarding(context: Context, collectionSize: Int): Boolean {
-        if (collectionSize == 0) {
+        if (collectionSize == 0 && PreferencesHelper.loadCollectionSize() <= 0) {
             onboardingLayout.isVisible = true
             hidePlayer(context)
             return true

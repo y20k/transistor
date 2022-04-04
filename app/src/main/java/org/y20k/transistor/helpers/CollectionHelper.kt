@@ -99,22 +99,6 @@ object CollectionHelper {
     }
 
 
-    /* Changes name of a radio station */
-    fun renameStation(context: Context, collection: Collection, stationUuid: String, newStationName: String): Collection {
-        var updatedCollection: Collection = collection
-        updatedCollection.stations.forEach {
-            if (it.uuid == stationUuid) {
-                it.name = newStationName
-                it.nameManuallySet = true
-            }
-            // sort and save collection
-            updatedCollection = sortCollection(updatedCollection)
-            saveCollection(context, updatedCollection, true)
-        }
-        return updatedCollection
-    }
-
-
     /* Updates radio station in collection */
     fun updateStation(context: Context, collection: Collection, station: Station): Collection {
         var updatedCollection: Collection = collection

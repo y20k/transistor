@@ -1,0 +1,11 @@
+<shape
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <stroke
+        android:width="2dp"
+        android:color="@color/default_neutral_lighter" />
+    <size
+        android:width="56dp"
+        android:height="56dp" />
+    <solid android:color="@color/player_button_background" />
+</shape>

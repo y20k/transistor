@@ -22,6 +22,7 @@ import android.graphics.PorterDuffXfermode
 import android.graphics.drawable.ColorDrawable
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -77,6 +78,30 @@ object UiHelper {
                     .setAnchorView(anchorView)
                     .show()
         }
+    }
+
+
+    /* Get the height of the system's top status bar */
+    fun getStatusBarHeight(context: Context): Int {
+        var result: Int = 0
+        val resourceId: Int = context.resources.getIdentifier("status_bar_height", "dimen", "android")
+        if (resourceId > 0) {
+            result = context.resources.getDimensionPixelSize(resourceId)
+        }
+        return result
+    }
+
+
+    /* Get scaling factor from display density */
+    fun getDensityScalingFactor(context: Context): Float {
+        return context.resources.displayMetrics.density
+    }
+
+
+    /* Hide keyboard */
+    fun hideSoftKeyboard(context: Context, view: View) {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
 

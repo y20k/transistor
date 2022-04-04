@@ -89,7 +89,7 @@ object ImageHelper {
         if (backgroundColor != -1) {
             background.color = backgroundColor
         } else {
-            background.color = ContextCompat.getColor(context, R.color.transistor_neutral_dark)
+            background.color = ContextCompat.getColor(context, R.color.default_neutral_dark)
         }
 
         // create empty bitmap and canvas
@@ -131,7 +131,7 @@ object ImageHelper {
             }
             else -> {
                 // default return
-                return context.resources.getColor(R.color.transistor_neutral_medium_light, null)
+                return context.resources.getColor(R.color.default_neutral_medium_light, null)
             }
         }
     }
