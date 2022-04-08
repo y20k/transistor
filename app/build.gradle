@@ -84,7 +84,7 @@ dependencies {
 
     implementation 'androidx.work:work-runtime-ktx:2.7.1'
 
-    def exoplayerVersion = "2.17.0"
+    def exoplayerVersion = "2.17.1"
     implementation "com.google.android.exoplayer:exoplayer:$exoplayerVersion"
     implementation "com.google.android.exoplayer:extension-mediasession:$exoplayerVersion"
 
