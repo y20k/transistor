@@ -1,0 +1,8 @@
+Transistor er et radioprogram i minimalistisk stil. Det har ingen funksjon for oppdaging av radiostasjoner.
+Kun et enkelt søkealternativ og import av lenker når du trykker dem i en nettleser.
+
+Legg til stasjoner med søk og bruk «Legg til spilleliste-filadresse (M3U, PLS) skriv inn en rå-adresse.
+
+Søketreff kommer fra radio-browser.info. Der kan du hjelpe til ved å legge til manglende stasjoner på http://www.radio-browser.info/gui/#!/add
+
+Dragninger sletter stasjoner fra listen. Flere redigeringsvalg er å finne i innstillingene. Der kan du skru på trykk og hold for å endre navn, bilde, eller lenke.
