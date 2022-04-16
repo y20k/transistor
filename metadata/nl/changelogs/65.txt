@@ -1,0 +1,8 @@
+# v3.1.1 - John, I’m Only Dancing
+
+**2019-01-16**
+
+- ondersteunt de audio-equalizer van het Android-systeem
+- bugfixes
+- bijgewerkte vertalingen
+- verbeterde ondersteuning voor donkere modus

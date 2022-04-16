@@ -1,0 +1,8 @@
+# v4.1.0 - Modern Love
+
+**2022-03-08**
+
+- ontwerpherziening waarbij gebruik wordt gemaakt van "Material Design 3"-elementen en kleuren
+- reparatie van opnieuw verschijnende weergavemelding op Android 11
+- Galicische taalversie
+- bijgewerkte vertalingen

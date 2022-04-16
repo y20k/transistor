@@ -1,0 +1,5 @@
+# v4.0.16 - Andy Warhol
+
+**2021-08-12**
+
+- herstelt de knoppen vorige en volgende in de weergavemelding

@@ -1,0 +1,6 @@
+# v3.2.1 - Life on Mars?
+
+**2019-07-25**
+
+- Tsjechische vertaling
+- de "nu spelen" metadata functie geeft niet-Latijnse karakters beter weer (minder onleesbaar gebrabbel)

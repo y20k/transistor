@@ -1,0 +1,7 @@
+# v4.0.15 - Andy Warhol
+
+**2021-07-28**
+
+- nieuwe taal: Fries
+- bijgewerkte vertalingen
+- Transistor stopt nu onmiddellijk met bufferen, wanneer het afspelen is gestopt

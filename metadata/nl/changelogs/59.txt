@@ -1,0 +1,6 @@
+# v3.0.9 - Oh! You Pretty Things
+
+**2018-08-08**
+
+- metadataweergave kan UTF-8 en Latin1-tekens aan
+- bijgewerkte vertalingen

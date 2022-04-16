@@ -1,0 +1,5 @@
+# v4.0.10 - Andy Warhol
+
+**2021-01-01**
+
+- lost een bug op in de functie Zenders bijwerken, die Transistor in een verminkte toestand kon brengen, waarin slechts één zender beluisterd kan worden (zie ook: https://github.com/y20k/transistor/issues/291)

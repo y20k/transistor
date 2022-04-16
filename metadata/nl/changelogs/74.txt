@@ -1,0 +1,8 @@
+# v4.0.2 - Andy Warhol
+
+**2020-07-08**
+
+- lost een bug op met het importeren van stream URL's (het kan zijn dat je het station moet updaten)
+- brengt metadata-weergave voor Android Auto terug
+
+De v4 update was vrij groot, ontdek meer: https://github.com/y20k/transistor/blob/master/metadata/en-US/changelogs/72.txt

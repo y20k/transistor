@@ -1,1 +1,1 @@
-Transistor is een app voor het luisteren naar radiostations op het internet.
+Transistor is een app voor het beluisteren van radiozenders via het internet.

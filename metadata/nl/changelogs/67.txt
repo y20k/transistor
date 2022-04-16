@@ -1,0 +1,7 @@
+# v3.2.0 - Life on Mars?
+
+**2019-06-26**
+
+- Italiaanse vertaling
+- lijst van radiostations heeft grotere iconen
+- kleur van icoon van app is veranderd in rood

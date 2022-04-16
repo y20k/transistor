@@ -1,0 +1,8 @@
+# v3.1.0 - John, I’m Only Dancing
+
+**2018-11-19**
+
+- nieuw app icoon (thx @munadikieh)
+- verbeterde behandeling van links van radio-browser.info
+- gebruikersinterface met een nieuw kleurenschema
+- bugfixes

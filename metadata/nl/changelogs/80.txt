@@ -1,0 +1,8 @@
+# v4.0.8 - Andy Warhol
+
+**2020-11-25**
+
+- Hebreeuwse taalversie
+- bijgewerkte vertalingen
+- Android Auto zender beeldweergave gerepareerd
+- handmatige zenderlogo selectie op Android 11 gerepareerd
