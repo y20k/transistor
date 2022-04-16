@@ -1,0 +1,6 @@
+# v3.0.9 - Ah! Bu Güzel Şeyler
+
+**8 Ağustos 2018**
+
+- üst veri ekranı UTF-8 ve Latin1 karakterlerini işleyebilir
+- çeviriler güncellendi

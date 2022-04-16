@@ -1,0 +1,1 @@
+Transistor, internetten radyo istasyonlarını dinlemek için bir uygulamadır.

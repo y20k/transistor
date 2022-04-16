@@ -1,0 +1,7 @@
+# v4.0.17 - Andy Warhol
+
+**5 Kasım 2021**
+
+- uygulama teması artık Android 12'de "dinamik renkler" (Material You) kullanıyor
+- küçük hata düzeltmeleri
+- çeviriler güncellendi

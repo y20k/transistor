@@ -1,0 +1,8 @@
+# v4.0.8 - Andy Warhol
+
+**25 Ekim 2020**
+
+- İbranice sürümü
+- çeviriler güncellendi
+- Android Auto istasyon resmi görüntülenmesi düzeltildi
+- Android 11'de elle istasyon resmi seçimi düzeltildi

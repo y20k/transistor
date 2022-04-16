@@ -1,0 +1,7 @@
+# v4.0.11 - Andy Warhol
+
+**25 Şubat 2021**
+
+- Esperanto sürümü
+- çeviriler güncellendi
+- bildirim davranışı değiştirildi

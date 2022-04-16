@@ -1,0 +1,6 @@
+# v4.0.18 - Andy Warhol
+
+**14 Ocak 2022**
+
+- Android 12'de ile gelen "Material Tasarım 3" temasına daha iyi uyması için küçük düzen değişiklikleri
+- çeviriler güncellendi

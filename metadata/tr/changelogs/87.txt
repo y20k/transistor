@@ -1,0 +1,5 @@
+# v4.0.16 - Andy Warhol
+
+**12 Ağustos 2021**
+
+- oynatma bildirimindeki önceki ve sonraki düğmeleri düzeltildi

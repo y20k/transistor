@@ -1,0 +1,10 @@
+# v4.0.1 - Andy Warhol
+
+**5 Temmuz 2020**
+
+- v4.0.0 ile birkaç küçük hata düzeltildi
+-- bildirimdeki üst veriler doğru şekilde güncellenir
+-- HLS desteği iyileştirildi
+-- sıralama büyük/küçük harfe duyarlı değil
+
+v4 güncellemesi oldukça büyüktü, daha fazlasını öğrenin: https://github.com/y20k/transistor/blob/master/metadata/en-US/changelogs/72.txt

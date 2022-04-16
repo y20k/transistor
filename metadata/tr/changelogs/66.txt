@@ -1,0 +1,6 @@
+# v3.1.2 - John, Yalnızca Dans Ediyorum
+
+**23 Ocak 2019**
+
+- hata düzeltmeleri
+- çeviriler güncellendi

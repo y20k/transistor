@@ -1,0 +1,8 @@
+# v4.1.0 - Modern Aşk
+
+**8 Mart 2022**
+
+- "Material Tasarım 3" ögelerini ve renklerini kullanan tasarım değişikliği
+- Android 11'de yeniden görünen oynatma bildirimi düzeltildi
+- Galiçyaca sürümü
+- çeviriler güncellendi

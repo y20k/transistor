@@ -1,0 +1,7 @@
+# v4.0.4 - Andy Warhol
+
+**27 Temmuz 2020**
+
+- kaydırma performansı iyileştirildi
+
+v4 güncellemesi oldukça büyüktü, daha fazlasını öğrenin: https://github.com/y20k/transistor/blob/master/metadata/en-US/changelogs/72.txt

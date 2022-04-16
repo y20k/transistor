@@ -1,0 +1,13 @@
+Transistor, herkesin hoşuna gitmeyebilecek sadelikten yana bir yaklaşıma sahip bir radyo uygulamasıdır. Radyo istasyonu keşfetme özelliği yoktur. Transistör yalnızca çok basit bir arama seçeneği sunar ve bir web tarayıcısında dokunduğunuzda ses yayını bağlantılarını içe aktarır.
+
+
+SIK SORULAN SORULAR
+
+NASIL BİR RADYO İSTASYONU EKLEYEBİLİRİM?
+Transistor'e bir radyo istasyonu eklemenin üç yolu vardır: Aramayı kullanın, oynatma listesi dosyası adresi ekleyin (M3U, PLS), ham bir yayın adresi girin.
+
+RADYO İSTASYONU ARAMA SONUÇLARI NEREDEN GELİYOR?
+Transistor, radio-browser.info çevrim içi veri tabanını arar. Eksik istasyonu veri tabanlarına ekleyerek (http://www.radio-browser.info/gui/#!/add) radio-browser.info topluluğuna yardımcı olabilirsiniz.
+
+RADYO İSTASYONU LİSTESİNİ NASIL DÜZENLEYEBİLİRİM?
+Listeden bir radyo istasyonunu silmek için kaydırma hareketini kullanın. Diğer düzenleme seçenekleri Ayarlar'da etkinleştirilebilir. Etkinleştirilirse, adını, görüntüsünü veya yayın bağlantısını düzenlemek için bir radyo istasyonuna uzun dokunun.

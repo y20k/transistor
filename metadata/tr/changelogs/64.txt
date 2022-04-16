@@ -1,0 +1,8 @@
+# v3.1.0 - John, Yalnızca Dans Ediyorum
+
+**19 Ekim 2018**
+
+- yeni uygulama simgesi (teşekkürler @munadikieh)
+- radio-browser.info adresinden gelen bağlantıların kullanımı iyileştirildi
+- yeni bir renk düzenine sahip kullanıcı arayüzü
+- hata düzeltmeleri

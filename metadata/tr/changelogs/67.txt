@@ -1,0 +1,7 @@
+# v3.2.0 - Mars'ta Yaşam mı?
+
+**26 Haziran 2019**
+
+- İtalyanca çeviri
+- radyo istasyonları listesi daha büyük simgelere sahip
+- ana uygulama simgesi rengi kırmızı olarak değiştirildi

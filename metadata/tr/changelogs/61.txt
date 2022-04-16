@@ -1,0 +1,5 @@
+# v3.0.11 - Ah! Bu Güzel Şeyler
+
+**1 Ekim 2018**
+
+- Android 9'da http tabanlı bağlantılarla ilgili ciddi bir sorunu çözer

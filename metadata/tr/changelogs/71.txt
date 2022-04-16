@@ -1,0 +1,5 @@
+# v3.2.4 - Mars'ta Yaşam mı?
+
+**12 Şubat 2020**
+
+- Endonezce sürümü güncellendi

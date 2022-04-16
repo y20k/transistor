@@ -1,0 +1,8 @@
+# v4.0.5 - Andy Warhol
+
+**29 Temmuz 2020**
+
+- dilin Yunanca olarak ayarlandığı aygıtlarda arama düzeltildi
+- çeviriler güncellendi
+
+v4 güncellemesi oldukça büyüktü, daha fazlasını öğrenin: https://github.com/y20k/transistor/blob/master/metadata/en-US/changelogs/72.txt

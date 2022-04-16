@@ -1,0 +1,6 @@
+# v4.0.13 - Andy Warhol
+
+**16 Mart 2021**
+
+- "şimdi oynatılıyor" ekranı değişiklikleri
+- ara sıra oluşan bir çökme düzeltildi

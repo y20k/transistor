@@ -1,0 +1,8 @@
+# v3.1.1 - John, Yalnızca Dans Ediyorum
+
+**16 Ocak 2019**
+
+- Android sistem ses dengeleyicisi desteği
+- hata düzeltmeleri
+- çeviriler güncellendi
+- koyu mod desteği iyileştirildi

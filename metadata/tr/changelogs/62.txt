@@ -1,0 +1,6 @@
+# v3.0.12 - Ah! Bu Güzel Şeyler
+
+**8 Ekim 2018**
+
+- Japonca sürümü güncellendi
+- küçük değişiklikler

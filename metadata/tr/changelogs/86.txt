@@ -1,0 +1,7 @@
+# v4.0.15 - Andy Warhol
+
+**28 Temmuz 2021**
+
+- yeni dil: Frizce
+- çeviriler güncellendi
+- Transistor, oynatma durdurulduğunda ara belleğe almayı artık hemen durdurur

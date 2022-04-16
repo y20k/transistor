@@ -1,0 +1,6 @@
+# v4.0.6 - Andy Warhol
+
+**3 Eylül 2020**
+
+- yeniden görünen bildirim zombisi düzeltildi
+- çeviriler güncellendi

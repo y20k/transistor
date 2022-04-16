@@ -1,0 +1,6 @@
+# v3.2.1 - Mars'ta Yaşam mı?
+
+**25 Temmuz 2019**
+
+- Çekçe çeviri
+- "şimdi oynatılıyor" üst veri özelliği, latin alfabesi dışındaki karakterleri daha iyi görüntüler (okunamayan anlamsız karakterler azaldı)

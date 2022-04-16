@@ -1,0 +1,6 @@
+# v3.0.10 - Ah! Bu Güzel Şeyler
+
+**27 Eylül 2018**
+
+- Arapça sürümü
+- TalkBack desteği iyileştirildi

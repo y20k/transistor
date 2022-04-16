@@ -1,0 +1,6 @@
+# v4.0.14 - Andy Warhol
+
+**20 Mart 2021**
+
+- bildirimde küçük bir değişiklik
+- ara sıra oluşan başka bir çökme düzeltildi

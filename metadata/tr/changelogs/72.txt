@@ -1,0 +1,12 @@
+# v4.0.0 - Andy Warhol
+
+**3 Temmuz 2020**
+
+- bu büyük bir güncellemedir
+- Transistor Kotlin ile sıfırdan yeniden yazıldı
+- kullanıcıya yönelik birkaç yeni özellik:
+-- radyo istasyonu arama (radio-browser.info aracılığıyla)
+-- bir radyo istasyonunu sık kullanılan olarak işaretleyebilirsiniz
+-- ayrı bir Ayarlar ekranı
+
+Daha fazlasını öğrenin: https://github.com/y20k/transistor/issues/251
