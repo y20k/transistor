@@ -1,0 +1,8 @@
+# v3.1.0 - John, ich tanze nur
+
+**2018-11-19**
+
+- neues App-Icon (danke @munadikieh)
+- verbesserte Handhabung von Links von radio-browser.info
+- Benutzeroberfläche mit neuem Farbschema
+- Fehlerbehebungen

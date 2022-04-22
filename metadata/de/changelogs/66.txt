@@ -1,0 +1,6 @@
+# v3.1.2 - John, ich tanze nur
+
+**2019-01-23**
+
+- Fehlerbehebungen
+- aktualisierte Übersetzungen

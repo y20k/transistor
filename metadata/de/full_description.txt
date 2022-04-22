@@ -1,0 +1,13 @@
+Transistor ist eine Radio-App mit einem minimalistischen Ansatz, der vielleicht nicht jedermanns Geschmack ist. Es gibt keine Funktion zum Entdecken von Radiosendern. Transistor bietet nur eine sehr einfache Suchoption und importiert Audio-Streaming-Links, wenn du sie in einem Webbrowser antippst.
+
+
+HÄUFIGE FRAGEN
+
+WIE KANN ICH EINEN RADIOSENDER HINZUFÜGEN?
+Es gibt drei Möglichkeiten, einen Radiosender zu Transistor hinzuzufügen: Verwende die Suche, füge die Adresse einer Wiedergabeliste hinzu (M3U, PLS) oder gib eine Rohdatenstromadresse ein.
+
+WOHER KOMMEN DIE SUCHERGEBNISSE DER RADIOSENDER?
+Transistor durchsucht die Online-Datenbank von radio-browser.info. Du kannst der radio-browser.info-Gemeinschaft helfen, indem du den fehlenden Sender (http://www.radio-browser.info/gui/#!/add) zu ihrer Datenbank hinzufügen.
+
+WIE KANN ICH DIE LISTE DER RADIOSENDER BEARBEITEN?
+Verwende die Wischgeste, um einen Radiosender aus der Liste zu löschen. Weitere Bearbeitungsoptionen können in den Einstellungen aktiviert werden. Falls aktiviert, tippe auf einen Radiosender und halte ihn gedrückt, um den Namen, das Bild oder den Streaming-Link zu bearbeiten.

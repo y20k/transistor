@@ -1,0 +1,6 @@
+# v3.0.9 - Oh! You Pretty Things
+
+**2018-08-08**
+
+- Metadatenanzeige kann UTF-8 und Latin1-Zeichen verarbeiten
+- aktualisierte Übersetzungen

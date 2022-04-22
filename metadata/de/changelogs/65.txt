@@ -1,0 +1,8 @@
+# v3.1.1 - John, ich tanze nur
+
+**2019-01-16**
+
+- unterstützt den Audio-Equalizer des Android-Systems
+- Fehlerbehebungen
+- aktualisierte Übersetzungen
+- verbesserte Unterstützung des Dark Mode

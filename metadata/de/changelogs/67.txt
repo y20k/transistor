@@ -1,0 +1,7 @@
+# v3.2.0 - Life on Mars?
+
+**2019-06-26**
+
+- italienische Übersetzung
+- Liste der Radiosender hat größere Icons
+- Farbe des Hauptappsymbols auf rot geändert
