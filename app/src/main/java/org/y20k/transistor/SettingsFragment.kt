@@ -109,6 +109,30 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
 //        }
 
 
+        // set up "M3U Export" preference
+        val preferenceM3uExport: Preference = Preference(activity as Context)
+        preferenceM3uExport.title = getString(R.string.pref_m3u_export_title)
+        preferenceM3uExport.setIcon(R.drawable.ic_playlist_24dp)
+        preferenceM3uExport.summary = getString(R.string.pref_m3u_export_summary)
+        preferenceM3uExport.setOnPreferenceClickListener {
+            openSaveM3uDialog()
+            return@setOnPreferenceClickListener true
+        }
+
+
+        // set up "Backup Stations" preference
+        val preferenceBackupStations: Preference = Preference(activity as Context)
+        preferenceBackupStations.title = "Backup Stations" // todo convert to res
+        // preferenceBackupStations.title = getString(R.string.pref_m3u_export_title)
+        preferenceBackupStations.setIcon(R.drawable.ic_save_24dp)
+        preferenceBackupStations.summary = "Save entire collection of radio stations including images to device storage." // todo convert to res
+//        preferenceBackupStations.summary = getString(R.string.pref_m3u_export_summary)
+        preferenceBackupStations.setOnPreferenceClickListener {
+            openBackupStationsDialog()
+            return@setOnPreferenceClickListener true
+        }
+
+
         // set up "Edit Stream Address" preference
         val preferenceEnableEditingStreamUri: SwitchPreferenceCompat = SwitchPreferenceCompat(activity as Context)
         preferenceEnableEditingStreamUri.title = getString(R.string.pref_edit_station_stream_title)
@@ -152,17 +176,6 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
             val cm: ClipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             cm.setPrimaryClip(clip)
             Toast.makeText(activity as Context, R.string.toastmessage_copied_to_clipboard, Toast.LENGTH_LONG).show()
-            return@setOnPreferenceClickListener true
-        }
-
-
-        // set up "M3U Export" preference
-        val preferenceM3uExport: Preference = Preference(activity as Context)
-        preferenceM3uExport.title = getString(R.string.pref_m3u_export_title)
-        preferenceM3uExport.setIcon(R.drawable.ic_save_24dp)
-        preferenceM3uExport.summary = getString(R.string.pref_m3u_export_summary)
-        preferenceM3uExport.setOnPreferenceClickListener {
-            openSaveM3uDialog()
             return@setOnPreferenceClickListener true
         }
 
@@ -212,9 +225,11 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
         screen.addPreference(preferenceUpdateStationImages)
 //        screen.addPreference(preferenceUpdateCollection)
         screen.addPreference(preferenceM3uExport)
+        screen.addPreference(preferenceBackupStations)
         screen.addPreference(preferenceCategoryAdvanced)
         screen.addPreference(preferenceEnableEditingGeneral)
         screen.addPreference(preferenceEnableEditingStreamUri)
+
         screen.addPreference(preferenceCategoryAbout)
         screen.addPreference(preferenceAppVersion)
         screen.addPreference(preferenceReportIssue)
@@ -251,11 +266,17 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
 
     }
 
-    /* Register the ActivityResultLauncher */
-    private val requestSaveM3uLauncher =
-        registerForActivityResult(StartActivityForResult(), this::requestSaveM3uResult)
 
-    /* Pass the activity result */
+    /* Register the ActivityResultLauncher for the save m3u dialog */
+    private val requestSaveM3uLauncher = registerForActivityResult(StartActivityForResult(), this::requestSaveM3uResult)
+
+
+    /* Register the ActivityResultLauncher for the save m3u dialog */
+    private val requestBackupStationsLauncher = registerForActivityResult(StartActivityForResult(), this::requestBackupStationsResult)
+
+
+
+    /* Pass the activity result for the save m3u dialog */
     private fun requestSaveM3uResult(result: ActivityResult) {
         // save M3U file to result file location
         if (result.resultCode == Activity.RESULT_OK && result.data != null) {
@@ -269,6 +290,22 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
                 Toast.makeText(activity as Context, R.string.toastmessage_save_m3u, Toast.LENGTH_LONG).show()
             } else {
                 LogHelper.w(TAG, "M3U export failed.")
+            }
+        }
+    }
+
+
+    /* Pass the activity result for the backup stations dialog */
+    private fun requestBackupStationsResult(result: ActivityResult) {
+        // save station backup file to result file location
+        if (result.resultCode == Activity.RESULT_OK && result.data != null) {
+            val targetUri: Uri? = result.data?.data
+            if (targetUri != null) {
+                BackupHelper.backup(activity as Context, targetUri)
+                Toast.makeText(activity as Context, "Backing up to $targetUri", Toast.LENGTH_LONG).show() // todo extract to res
+                LogHelper.e(TAG, "Backing up to $targetUri")
+            } else {
+                LogHelper.w(TAG, "Station backup failed.")
             }
         }
     }
@@ -312,6 +349,25 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
         // file gets saved in the ActivityResult
         try {
             requestSaveM3uLauncher.launch(intent)
+        } catch (exception: Exception) {
+            LogHelper.e(TAG, "Unable to save M3U.\n$exception")
+            Toast.makeText(activity as Context, R.string.toastmessage_install_file_helper, Toast.LENGTH_LONG).show()
+        }
+    }
+
+
+
+
+    /* Opens up a file picker to select the backup location */
+    private fun openBackupStationsDialog() {
+        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = Keys.MIME_TYPE_ZIP
+            putExtra(Intent.EXTRA_TITLE, Keys.COLLECTION_BACKUP_FILE)
+        }
+        // file gets saved in the ActivityResult
+        try {
+            requestBackupStationsLauncher.launch(intent)
         } catch (exception: Exception) {
             LogHelper.e(TAG, "Unable to save M3U.\n$exception")
             Toast.makeText(activity as Context, R.string.toastmessage_install_file_helper, Toast.LENGTH_LONG).show()

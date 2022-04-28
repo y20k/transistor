@@ -15,7 +15,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="24dp"
         android:text="@string/station_list_button_add_new_station"
-        app:icon="@drawable/ic_add_24"
+        app:icon="@drawable/ic_add_24dp"
         app:iconGravity="textStart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/card_settings"

@@ -147,6 +147,7 @@ object Keys {
     const val MIME_TYPE_M3U = "audio/x-mpegurl"
     const val MIME_TYPE_PLS = "audio/x-scpls"
     const val MIME_TYPE_XML = "text/xml"
+    const val MIME_TYPE_ZIP = "application/zip"
     const val MIME_TYPE_OCTET_STREAM = "application/octet-stream"
     const val MIME_TYPE_UNSUPPORTED = "unsupported"
     val MIME_TYPES_M3U = arrayOf("application/mpegurl", "application/x-mpegurl", "audio/mpegurl", "audio/x-mpegurl")
@@ -168,6 +169,7 @@ object Keys {
     // file names and extensions
     const val COLLECTION_FILE: String = "collection.json"
     const val COLLECTION_M3U_FILE: String = "collection.m3u"
+    const val COLLECTION_BACKUP_FILE: String = "collection-backup.zip"
     const val STATION_IMAGE_FILE: String = "station-image.jpg"
     const val STATION_SMALL_IMAGE_FILE: String = "station-image-small.jpg"
     const val DEBUG_LOG_FILE: String = "log-can-be-deleted.txt"

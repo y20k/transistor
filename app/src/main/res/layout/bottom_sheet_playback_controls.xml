@@ -31,7 +31,6 @@
         android:id="@+id/station_icon"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:background="@drawable/shape_cover_small"
         android:contentDescription="@string/descr_player_station_image"
         app:shapeAppearanceOverlay="@style/RoundedCornerLeftTop"
         app:layout_constraintStart_toStartOf="parent"
