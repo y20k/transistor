@@ -217,4 +217,10 @@
     <string name="dialog_edit_station_name">Назва станції</string>
     <string name="dialog_edit_save_changes">Зберегти зміни</string>
     <string name="dialog_edit_stream_uri">Адреса потоку</string>
+    <string name="pref_backup_summary">Збережіть колекцію радіостанцій, включно зображеннями, у сховище пристрою.</string>
+    <string name="toastmessage_restoring_collection">Відновлення радіостанцій з резервної копії.</string>
+    <string name="pref_backup_title">Резервування станцій</string>
+    <string name="pref_restore_title">Відновити станції</string>
+    <string name="pref_restore_summary">Відновити колекцію радіостанцій з резервної копії. Наявні станції будуть замінені.</string>
+    <string name="toastmessage_collection_backup">Резервування радіостанцій на:</string>
 </resources>
