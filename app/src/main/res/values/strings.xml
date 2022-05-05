@@ -227,4 +227,10 @@
     <string name="notification_stop">Stop</string>
     <string name="notification_channel_playback_name">Playback Controls</string>
     <string name="notification_channel_playback_description">Playback controls, station logo and now playing info.</string>
+    <string name="toastmessage_restoring_collection">Restoring radio stations from backup.</string>
+    <string name="pref_backup_title">Backup Stations</string>
+    <string name="pref_backup_summary">Save collection of radio stations including images to device storage.</string>
+    <string name="pref_restore_title">Restore Stations</string>
+    <string name="pref_restore_summary">Restore collection of radio stations from backup. Existing stations will be replaced.</string>
+    <string name="toastmessage_collection_backup">Backing up radio stations to:</string>
 </resources>

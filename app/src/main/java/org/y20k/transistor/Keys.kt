@@ -57,6 +57,7 @@ object Keys {
     // arguments
     const val ARG_UPDATE_COLLECTION: String = "ArgUpdateCollection"
     const val ARG_UPDATE_IMAGES: String = "ArgUpdateImages"
+    const val ARG_RESTORE_COLLECTION: String = "ArgRestoreCollection"
 
     // keys
     const val KEY_DOWNLOAD_WORK_REQUEST: String = "DOWNLOAD_WORK_REQUEST"
@@ -122,6 +123,7 @@ object Keys {
     const val DIALOG_REMOVE_STATION: Int = 2
     const val DIALOG_DELETE_DOWNLOADS: Int = 3
     const val DIALOG_UPDATE_STATION_IMAGES: Int = 4
+    const val DIALOG_RESTORE_COLLECTION: Int = 5
 
     // dialog results
     const val DIALOG_RESULT_DEFAULT: Int = -1
@@ -158,6 +160,7 @@ object Keys {
     val MIME_TYPES_AAC = arrayOf("audio/aac", "audio/aacp")
     val MIME_TYPES_IMAGE = arrayOf("image/png", "image/jpeg")
     val MIME_TYPES_FAVICON = arrayOf("image/x-icon", "image/vnd.microsoft.icon")
+    val MIME_TYPES_ZIP = arrayOf("application/zip", "application/x-zip-compressed", "multipart/x-zip")
 
     // folder names
     const val FOLDER_COLLECTION: String = "collection"
@@ -169,7 +172,7 @@ object Keys {
     // file names and extensions
     const val COLLECTION_FILE: String = "collection.json"
     const val COLLECTION_M3U_FILE: String = "collection.m3u"
-    const val COLLECTION_BACKUP_FILE: String = "collection-backup.zip"
+    const val COLLECTION_BACKUP_FILE: String = "transistor-backup.zip"
     const val STATION_IMAGE_FILE: String = "station-image.jpg"
     const val STATION_SMALL_IMAGE_FILE: String = "station-image-small.jpg"
     const val DEBUG_LOG_FILE: String = "log-can-be-deleted.txt"

@@ -408,9 +408,8 @@ object CollectionHelper {
     }
 
 
-
-    /* Sends a broadcast containing the collection as parcel */
-    private fun sendCollectionBroadcast(context: Context, modificationDate: Date) {
+    /* Sends a broadcast that the radio station collection has changed */
+    fun sendCollectionBroadcast(context: Context, modificationDate: Date) {
         LogHelper.v(TAG, "Broadcasting that collection has changed.")
         val collectionChangedIntent = Intent()
         collectionChangedIntent.action = Keys.ACTION_COLLECTION_CHANGED

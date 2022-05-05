@@ -121,14 +121,23 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
 
 
         // set up "Backup Stations" preference
-        val preferenceBackupStations: Preference = Preference(activity as Context)
-        preferenceBackupStations.title = "Backup Stations" // todo convert to res
-        // preferenceBackupStations.title = getString(R.string.pref_m3u_export_title)
-        preferenceBackupStations.setIcon(R.drawable.ic_save_24dp)
-        preferenceBackupStations.summary = "Save entire collection of radio stations including images to device storage." // todo convert to res
-//        preferenceBackupStations.summary = getString(R.string.pref_m3u_export_summary)
-        preferenceBackupStations.setOnPreferenceClickListener {
-            openBackupStationsDialog()
+        val preferenceBackupCollection: Preference = Preference(activity as Context)
+        preferenceBackupCollection.title = getString(R.string.pref_backup_title)
+        preferenceBackupCollection.setIcon(R.drawable.ic_save_24dp)
+        preferenceBackupCollection.summary = getString(R.string.pref_backup_summary)
+        preferenceBackupCollection.setOnPreferenceClickListener {
+            openBackupCollectionDialog()
+            return@setOnPreferenceClickListener true
+        }
+
+
+        // set up "Restore Stations" preference
+        val preferenceRestoreCollection: Preference = Preference(activity as Context)
+        preferenceRestoreCollection.title = getString(R.string.pref_restore_title)
+        preferenceRestoreCollection.setIcon(R.drawable.ic_restore_24dp)
+        preferenceRestoreCollection.summary = getString(R.string.pref_restore_summary)
+        preferenceRestoreCollection.setOnPreferenceClickListener {
+            openRestoreCollecionDialog()
             return@setOnPreferenceClickListener true
         }
 
@@ -206,6 +215,8 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
         preferenceCategoryMaintenance.contains(preferenceUpdateStationImages)
 //        preferenceCategoryMaintenance.contains(preferenceUpdateCollection)
         preferenceCategoryMaintenance.contains(preferenceM3uExport)
+        preferenceCategoryMaintenance.contains(preferenceBackupCollection)
+        preferenceCategoryMaintenance.contains(preferenceRestoreCollection)
 
         val preferenceCategoryAdvanced: PreferenceCategory = PreferenceCategory(activity as Context)
         preferenceCategoryAdvanced.title = getString(R.string.pref_advanced_title)
@@ -225,7 +236,8 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
         screen.addPreference(preferenceUpdateStationImages)
 //        screen.addPreference(preferenceUpdateCollection)
         screen.addPreference(preferenceM3uExport)
-        screen.addPreference(preferenceBackupStations)
+        screen.addPreference(preferenceBackupCollection)
+        screen.addPreference(preferenceRestoreCollection)
         screen.addPreference(preferenceCategoryAdvanced)
         screen.addPreference(preferenceEnableEditingGeneral)
         screen.addPreference(preferenceEnableEditingStreamUri)
@@ -245,20 +257,16 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
         when (type) {
 
             Keys.DIALOG_UPDATE_STATION_IMAGES -> {
-                when (dialogResult) {
+                if (dialogResult) {
                     // user tapped: refresh station images
-                    true -> {
-                        updateStationImages()
-                    }
+                    updateStationImages()
                 }
             }
 
             Keys.DIALOG_UPDATE_COLLECTION -> {
-                when (dialogResult) {
+                if (dialogResult) {
                     // user tapped update collection
-                    true -> {
-                        updateCollection()
-                    }
+                    updateCollection()
                 }
             }
 
@@ -271,9 +279,12 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
     private val requestSaveM3uLauncher = registerForActivityResult(StartActivityForResult(), this::requestSaveM3uResult)
 
 
-    /* Register the ActivityResultLauncher for the save m3u dialog */
-    private val requestBackupStationsLauncher = registerForActivityResult(StartActivityForResult(), this::requestBackupStationsResult)
+    /* Register the ActivityResultLauncher for the backup dialog */
+    private val requestBackupCollectionLauncher = registerForActivityResult(StartActivityForResult(), this::requestBackupCollecionResult)
 
+
+    /* Register the ActivityResultLauncher for the restore dialog */
+    private val requestRestoreCollectionLauncher = registerForActivityResult(StartActivityForResult(), this::requestRestoreCollectionResult)
 
 
     /* Pass the activity result for the save m3u dialog */
@@ -295,17 +306,31 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
     }
 
 
-    /* Pass the activity result for the backup stations dialog */
-    private fun requestBackupStationsResult(result: ActivityResult) {
+    /* Pass the activity result for the backup collecion dialog */
+    private fun requestBackupCollecionResult(result: ActivityResult) {
         // save station backup file to result file location
         if (result.resultCode == Activity.RESULT_OK && result.data != null) {
             val targetUri: Uri? = result.data?.data
             if (targetUri != null) {
                 BackupHelper.backup(activity as Context, targetUri)
-                Toast.makeText(activity as Context, "Backing up to $targetUri", Toast.LENGTH_LONG).show() // todo extract to res
-                LogHelper.e(TAG, "Backing up to $targetUri")
             } else {
                 LogHelper.w(TAG, "Station backup failed.")
+            }
+        }
+    }
+
+
+    /* Pass the activity result for the restore collection dialog */
+    private fun requestRestoreCollectionResult(result: ActivityResult) {
+        // save station backup file to result file location
+        if (result.resultCode == Activity.RESULT_OK && result.data != null) {
+            val sourceUri: Uri? = result.data?.data
+            if (sourceUri != null) {
+                // open and import OPML in player fragment
+                val bundle: Bundle = bundleOf(
+                    Keys.ARG_RESTORE_COLLECTION to "$sourceUri"
+                )
+                this.findNavController().navigate(R.id.player_destination, bundle)
             }
         }
     }
@@ -330,7 +355,7 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
             Toast.makeText(activity as Context, R.string.toastmessage_updating_station_images, Toast.LENGTH_LONG).show()
             // update collection in player screen
             val bundle: Bundle = bundleOf(
-                    Keys.ARG_UPDATE_IMAGES to true
+                Keys.ARG_UPDATE_IMAGES to true
             )
             this.findNavController().navigate(R.id.player_destination, bundle)
         } else {
@@ -359,7 +384,7 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
 
 
     /* Opens up a file picker to select the backup location */
-    private fun openBackupStationsDialog() {
+    private fun openBackupCollectionDialog() {
         val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
             addCategory(Intent.CATEGORY_OPENABLE)
             type = Keys.MIME_TYPE_ZIP
@@ -367,10 +392,29 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
         }
         // file gets saved in the ActivityResult
         try {
-            requestBackupStationsLauncher.launch(intent)
+            requestBackupCollectionLauncher.launch(intent)
         } catch (exception: Exception) {
             LogHelper.e(TAG, "Unable to save M3U.\n$exception")
             Toast.makeText(activity as Context, R.string.toastmessage_install_file_helper, Toast.LENGTH_LONG).show()
+        }
+    }
+
+
+
+
+    /* Opens up a file picker to select the file containing the collection to be restored */
+    private fun openRestoreCollecionDialog() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "*/*"
+            putExtra(Intent.EXTRA_MIME_TYPES, Keys.MIME_TYPES_ZIP)
+        }
+        // file gets saved in the ActivityResult
+        try {
+            requestRestoreCollectionLauncher.launch(intent)
+        } catch (exception: Exception) {
+            LogHelper.e(TAG, "Unable to open file picker for ZIP.\n$exception")
+            // Toast.makeText(activity as Context, R.string.toast_message_install_file_helper, Toast.LENGTH_LONG).show()
         }
     }
 

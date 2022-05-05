@@ -44,6 +44,7 @@ import androidx.activity.result.contract.ActivityResultContracts.RequestPermissi
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -345,6 +346,15 @@ class PlayerFragment: Fragment(), CoroutineScope,
                     false -> collectionAdapter.notifyItemChanged(payload)
                 }
             }
+            // handle result from the restore collection dialog
+            Keys.DIALOG_RESTORE_COLLECTION -> {
+                when (dialogResult) {
+                    // user tapped restore
+                    true -> BackupHelper.restore(activity as Context, payloadString.toUri())
+                    // user tapped cancel
+                    false -> { /* do nothing */ }
+                }
+            }
         }
     }
 
@@ -558,8 +568,11 @@ class PlayerFragment: Fragment(), CoroutineScope,
 
     /* Handles arguments handed over by navigation (from SettingsFragment) */
     private fun handleNavigationArguments() {
+        // get arguments
         val updateCollection: Boolean = arguments?.getBoolean(Keys.ARG_UPDATE_COLLECTION, false) ?: false
         val updateStationImages: Boolean = arguments?.getBoolean(Keys.ARG_UPDATE_IMAGES, false) ?: false
+        val restoreCollectionFileString: String? = arguments?.getString(Keys.ARG_RESTORE_COLLECTION)
+
         if (updateCollection) {
             arguments?.putBoolean(Keys.ARG_UPDATE_COLLECTION, false)
             val updateHelper: UpdateHelper = UpdateHelper(activity as Context, collectionAdapter, collection)
@@ -568,6 +581,22 @@ class PlayerFragment: Fragment(), CoroutineScope,
         if (updateStationImages) {
             arguments?.putBoolean(Keys.ARG_UPDATE_IMAGES, false)
             DownloadHelper.updateStationImages(activity as Context)
+        }
+        if (!restoreCollectionFileString.isNullOrEmpty()) {
+            arguments?.putString(Keys.ARG_RESTORE_COLLECTION, null)
+            when (collection.stations.isNotEmpty()) {
+                true -> {
+                    YesNoDialog(this as YesNoDialog.YesNoDialogListener).show(
+                        context = activity as Context,
+                        type = Keys.DIALOG_RESTORE_COLLECTION,
+                        messageString = "Replace current collection radio stations with the radio station from backup?",
+                        payloadString = restoreCollectionFileString
+                    )
+                }
+                false -> {
+                    BackupHelper.restore(activity as Context, restoreCollectionFileString.toUri())
+                }
+            }
         }
     }
 
