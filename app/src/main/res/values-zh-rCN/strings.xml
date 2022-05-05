@@ -218,4 +218,10 @@
     <string name="station_list_button_settings">设置</string>
     <string name="pref_edit_station_summary_enabled">已启用电台信息编辑。长按进入编辑模式。</string>
     <string name="pref_edit_station_summary_disabled">已禁止编辑电台信息。</string>
+    <string name="pref_restore_title">恢复电台</string>
+    <string name="toastmessage_restoring_collection">从备份恢复电台。</string>
+    <string name="pref_restore_summary">从备份中恢复广播电台集。 现有电台将被替换。</string>
+    <string name="toastmessage_collection_backup">备份电台到：</string>
+    <string name="pref_backup_title">备份电台</string>
+    <string name="pref_backup_summary">将包括图像在内的广播电台集保存到设备存储中。</string>
 </resources>
