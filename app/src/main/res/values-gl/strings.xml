@@ -197,4 +197,10 @@
     <string name="dialog_add_station_choose_stream_heading">Atopáronse varios fluxos</string>
     <string name="toastmessage_add_open_file_started">Abrindo ficheiro.</string>
     <string name="toastmessage_shortcut_not_created">Non se creo o atallo. O dispositivo non permite a creación de atallos.</string>
+    <string name="pref_backup_title">Copia de apoio</string>
+    <string name="pref_restore_title">Restablecer emisoras</string>
+    <string name="pref_restore_summary">Restablecer a lista de emisoras desde a copia. As emisoras existentes serán substituídas.</string>
+    <string name="toastmessage_collection_backup">Facer copia das emisoras en:</string>
+    <string name="toastmessage_restoring_collection">Restablecer emisoras de radio desde a copia.</string>
+    <string name="pref_backup_summary">Garda as emisoras de radio na almacenaxe do dispositivo incluíndo as imaxes.</string>
 </resources>
