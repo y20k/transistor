@@ -93,7 +93,7 @@
     <string name="toastalert_rename_unsuccessful">İstasyon yeniden adlandırılamadı. Lütfen farklı bir ad seçin.</string>
     <string name="toastalert_delete_successful">İstasyon kaldırıldı.</string>
     <string name="toastalert_no_external_storage">Harici depolamaya erişilemiyor.</string>
-    <string name="toastalert_no_image_picker">Kullanılabilir görüntü seçici yok. Bir galeri uygulaması yüklemeyi düşünün.</string>
+    <string name="toastalert_no_image_picker">Kullanılabilir görsel seçici yok. Bir galeri uygulaması kurmayı düşünün.</string>
     <string name="toastalert_headphones_unplugged">Kulaklık çıkarıldı. Oynatma durdu.</string>
     <string name="toastalert_permission_denied">İzin reddedildi:</string>
     <string name="toastalert_station_not_found">İstasyon bulunamıyor.</string>
@@ -114,22 +114,22 @@
     <string name="dialog_button_save">Değişiklikleri kaydet</string>
     <string name="onboarding_app_import_running">İstasyonlarınız içe aktarılıyor…</string>
     <string name="descr_player_playback_button">Oynat/duraklat</string>
-    <string name="descr_player_station_image">İstasyon görüntüsü</string>
+    <string name="descr_player_station_image">İstasyon görseli</string>
     <string name="descr_expanded_player_sleep_timer_start_button">Uyku zamanlayıcısını başlat</string>
     <string name="descr_expanded_player_sleep_timer_remaining_time">Uyku zamanlayıcısında kalan süre</string>
     <string name="descr_expanded_player_sleep_timer_cancel_button">Uyku zamanlayıcısını iptal et</string>
     <string name="descr_dialog_edit_update_icon">Güncelle</string>
-    <string name="descr_dialog_edit_station_image">İstasyon görüntüsü</string>
+    <string name="descr_dialog_edit_station_image">İstasyon görseli</string>
     <string name="descr_dialog_edit_place_on_home_screen_icon">Ana ekrana ekle</string>
-    <string name="descr_card_station_image">İstasyon görüntüsü</string>
+    <string name="descr_card_station_image">İstasyon görseli</string>
     <string name="descr_card_starred_station">Favori istasyon</string>
     <string name="descr_card_small_edit_button">Düzenle</string>
     <string name="descr_card_small_play_button">Oynat/durdur</string>
     <string name="descr_card_small_download_button">İndir</string>
     <string name="descr_card_settings_button">Ayarlar</string>
     <string name="descr_card_playback_indicator">Oynatma ilerlemesi</string>
-    <string name="pref_update_station_images_title">İstasyon Görüntülerini Güncelle</string>
-    <string name="pref_update_station_images_summary">Tüm istasyon görüntülerinin en son sürümünü indirin.</string>
+    <string name="pref_update_station_images_title">İstasyon Görsellerini Güncelle</string>
+    <string name="pref_update_station_images_summary">Tüm istasyon görsellerinin en son sürümünü indirin.</string>
     <string name="pref_theme_selection_title">Uygulama Teması</string>
     <string name="pref_theme_selection_summary">Geçerli tema:</string>
     <string name="pref_theme_selection_mode_light">Aydınlık mod</string>
@@ -141,7 +141,7 @@
     <string name="notification_skip_to_next">Sonraki</string>
     <string name="notification_skip_to_previous">Önceki</string>
     <string name="notification_playing">Oynatılıyor</string>
-    <string name="notification_now_playing_channel_description">Oynatma denetimleri, istasyon adı ve görüntüsü.</string>
+    <string name="notification_now_playing_channel_description">Oynatma denetimleri, istasyon adı ve görseli.</string>
     <string name="notification_now_playing_channel_name">Oynatma Denetimleri</string>
     <string name="station_list_button_add_new_station">Yeni istasyon ekle</string>
     <string name="toastmessage_updating_station">İstasyon güncelleniyor…</string>
@@ -165,7 +165,7 @@
     <string name="dialog_yes_no_negative_button_add_up_next">\'Sonraki\'ne ekle</string>
     <string name="dialog_yes_no_negative_button_default">Hayır</string>
     <string name="dialog_yes_no_negative_button_cancel">İptal</string>
-    <string name="dialog_yes_no_message_update_station_images">Tüm istasyon görüntülerinin son sürümü indirilsin mi\?</string>
+    <string name="dialog_yes_no_message_update_station_images">Tüm istasyon görsellerinin son sürümü indirilsin mi\?</string>
     <string name="dialog_yes_no_message_update_collection">Değişiklikler denetlensin mi\?</string>
     <string name="dialog_yes_no_message_remove_station">Bu istasyon kaldırılsın mı\?</string>
     <string name="dialog_yes_no_message_default">Gerçekten bunu yapmak istiyor musunuz\?</string>
@@ -185,7 +185,7 @@
     <string name="dialog_edit_title">İstasyonu Düzenle</string>
     <string name="dialog_edit_choose_station_image">Seç</string>
     <string name="fragment_settings_title">Ayarlar</string>
-    <string name="toastmessage_updating_station_images">İstasyon görüntüleri güncelleniyor.</string>
+    <string name="toastmessage_updating_station_images">İstasyon görselleri güncelleniyor.</string>
     <string name="toastmessage_error_restart_playback_failed">Oynatma yeniden başlatılamadı.</string>
     <string name="toastmessage_collection_update_not_necessary">İstasyon koleksiyonu güncel.</string>
     <string name="pref_report_issue_title">Sorun Bildir</string>
@@ -194,7 +194,7 @@
     <string name="pref_app_version_summary">Sürüm</string>
     <string name="pref_about_title">Hakkında</string>
     <string name="pref_update_collection_title">İstasyonları Güncelle</string>
-    <string name="pref_update_collection_summary">Güncellenmiş ses yayınlarını ve yeni istasyon görüntülerini arayın.</string>
+    <string name="pref_update_collection_summary">Güncellenmiş ses yayınlarını ve yeni istasyon görsellerini arayın.</string>
     <string name="pref_m3u_export_title">M3U Dosyasına Aktar</string>
     <string name="pref_m3u_export_summary">Radyo istasyonlarınızı diğer oynatıcılara aktarılabilen bir M3U oynatma listesi dosyasına kaydedin.</string>
     <string name="toastmessage_save_m3u">Radyo istasyonları M3U olarak kaydediliyor…</string>
@@ -209,6 +209,12 @@
     <string name="station_list_button_settings">Ayarlar</string>
     <string name="pref_edit_station_stream_title">Yayın Bağlantılarını Düzenle</string>
     <string name="pref_edit_station_stream_summary_disabled">Yayın bağlantılarının düzenlenmesi devre dışı bırakıldı.</string>
-    <string name="descr_card_station_image_change">İstasyon görüntüsünü değiştir</string>
+    <string name="descr_card_station_image_change">İstasyon görselini değiştir</string>
     <string name="pref_edit_station_stream_summary_enabled">Yayın bağlantılarının düzenlenmesi etkinleştirildi. Doğru bir yayın adresi girdiğinizden emin olun.</string>
+    <string name="pref_backup_title">İstasyonları Yedekle</string>
+    <string name="pref_restore_title">İstasyonları Geri Yükle</string>
+    <string name="pref_restore_summary">Radyo istasyonlarını yedekten geri yükleyin. Zaten var olan istasyonlar değiştirilecektir.</string>
+    <string name="toastmessage_restoring_collection">Radyo istasyonları yedekten geri yükleniyor.</string>
+    <string name="pref_backup_summary">Görseller de dahil olmak üzere radyo istasyonlarını aygıt depolama alanına kaydedin.</string>
+    <string name="toastmessage_collection_backup">Radyo istasyonları şuraya yedekleniyor:</string>
 </resources>
