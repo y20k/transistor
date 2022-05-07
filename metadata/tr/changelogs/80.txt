@@ -4,5 +4,5 @@
 
 - İbranice sürümü
 - çeviriler güncellendi
-- Android Auto istasyon resmi görüntülenmesi düzeltildi
-- Android 11'de elle istasyon resmi seçimi düzeltildi
+- Android Auto istasyon görselinin görüntülenmesi düzeltildi
+- Android 11'de elle istasyon görseli seçimi düzeltildi

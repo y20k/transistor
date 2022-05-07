@@ -10,4 +10,4 @@ RADYO İSTASYONU ARAMA SONUÇLARI NEREDEN GELİYOR?
 Transistor, radio-browser.info çevrim içi veri tabanını arar. Eksik istasyonu veri tabanlarına ekleyerek (http://www.radio-browser.info/gui/#!/add) radio-browser.info topluluğuna yardımcı olabilirsiniz.
 
 RADYO İSTASYONU LİSTESİNİ NASIL DÜZENLEYEBİLİRİM?
-Listeden bir radyo istasyonunu silmek için kaydırma hareketini kullanın. Diğer düzenleme seçenekleri Ayarlar'da etkinleştirilebilir. Etkinleştirilirse, adını, görüntüsünü veya yayın bağlantısını düzenlemek için bir radyo istasyonuna uzun dokunun.
+Listeden bir radyo istasyonunu silmek için kaydırma hareketini kullanın. Diğer düzenleme seçenekleri Ayarlar'da etkinleştirilebilir. Etkinleştirilirse, adını, görselini veya yayın bağlantısını düzenlemek için bir radyo istasyonuna uzun dokunun.
