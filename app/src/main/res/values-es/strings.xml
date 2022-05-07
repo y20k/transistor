@@ -211,4 +211,10 @@
     <string name="pref_edit_station_stream_summary_enabled">Edición de enlaces de transmisión habilitada. Asegúrese de ingresar una dirección de transmisión correcta.</string>
     <string name="pref_edit_station_stream_title">Editar enlaces de transmisión</string>
     <string name="descr_card_station_image_change">Cambiar la imagen de la estación</string>
+    <string name="pref_backup_summary">Guarda la colección de emisoras de radio, incluidas las imágenes, en el dispositivo de almacenamiento.</string>
+    <string name="toastmessage_restoring_collection">Restableciendo estaciones de radio desde la copia de seguridad.</string>
+    <string name="pref_backup_title">Copia de seguridad de estaciones</string>
+    <string name="pref_restore_title">Restablecer estaciones</string>
+    <string name="pref_restore_summary">Restablecer la colección de emisoras de radio desde la copia de seguridad. Se sustituirán las emisoras existentes.</string>
+    <string name="toastmessage_collection_backup">Copia de seguridad de las emisoras de radio a:</string>
 </resources>
