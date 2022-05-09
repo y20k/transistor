@@ -214,4 +214,10 @@
     <string name="dialog_edit_stream_uri">Адрес потока</string>
     <string name="pref_edit_station_summary_enabled">Редактирование информации о станции включено. Для входа в режим редактирования используйте долгое нажатие.</string>
     <string name="pref_edit_station_title">Редактирование станций</string>
+    <string name="pref_backup_title">Резервирование станций</string>
+    <string name="toastmessage_restoring_collection">Восстановление радиостанций из резервной копии.</string>
+    <string name="pref_restore_title">Восстановление станций</string>
+    <string name="pref_backup_summary">Сохранить коллекцию радиостанций, включая изображения, в памяти устройства.</string>
+    <string name="pref_restore_summary">Восстановить коллекцию радиостанций из резервной копии. Существующие станции будут заменены.</string>
+    <string name="toastmessage_collection_backup">Резервное копирование радиостанций в:</string>
 </resources>
