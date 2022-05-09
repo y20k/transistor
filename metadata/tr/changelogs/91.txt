@@ -1,0 +1,8 @@
+# v4.1.1 - Modern Love
+
+**11 Mayıs 2022**
+
+- görseller dahil tüm radyo istasyonlarını yedekleme (ve geri yükleme) için yeni seçenek
+- bulanık öntanımlı istasyon görseli için düzeltme
+- Endonezce dili düzeltmesi
+- güncellenen çeviriler
