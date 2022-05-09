@@ -25,8 +25,9 @@ import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.y20k.transistor.Keys
@@ -160,7 +161,7 @@ object FileHelper {
         when (async) {
             true -> {
                 // copy file async (= fire & forget - no return value needed)
-                GlobalScope.launch { saveCopyOfFileSuspended(context, tempFileUri, targetFile.toUri()) }
+                CoroutineScope(IO).launch { saveCopyOfFileSuspended(context, tempFileUri, targetFile.toUri()) }
             }
             false -> {
                 // copy file

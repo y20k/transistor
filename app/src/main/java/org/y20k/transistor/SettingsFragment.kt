@@ -31,7 +31,7 @@ import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.preference.*
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import org.y20k.transistor.dialogs.ErrorDialog
 import org.y20k.transistor.dialogs.YesNoDialog
@@ -295,7 +295,7 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
             val targetUri: Uri? = result.data?.data
             if (targetUri != null && sourceUri != null) {
                 // copy file async (= fire & forget - no return value needed)
-                CoroutineScope(Dispatchers.IO).launch {
+                CoroutineScope(IO).launch {
                     FileHelper.saveCopyOfFileSuspended(activity as Context, sourceUri, targetUri)
                 }
                 Toast.makeText(activity as Context, R.string.toastmessage_save_m3u, Toast.LENGTH_LONG).show()

@@ -15,7 +15,8 @@
 package org.y20k.transistor.helpers
 
 import android.content.Context
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import org.y20k.transistor.Keys
 import org.y20k.transistor.core.Collection
@@ -38,7 +39,7 @@ object ImportHelper {
         val oldStations: ArrayList<Station> = arrayListOf()
         val oldCollectionFolder: File? = context.getExternalFilesDir(Keys.TRANSISTOR_LEGACY_FOLDER_COLLECTION)
         if (oldCollectionFolder != null && shouldStartImport(oldCollectionFolder)) {
-            GlobalScope.launch {
+            CoroutineScope(IO).launch {
                 var success: Boolean = false
                 // start import
                 oldCollectionFolder.listFiles()?.forEach { file ->

@@ -39,6 +39,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import org.y20k.transistor.Keys
 import org.y20k.transistor.R
@@ -309,7 +310,7 @@ class CollectionAdapter(private val context: Context, private val collectionAdap
                 // 2. check for valid station uri - and re-enable button
                 if (input.startsWith("http")) {
                     // detect content type on background thread
-                    CoroutineScope(Dispatchers.IO).launch {
+                    CoroutineScope(IO).launch {
                         val deferred: Deferred<NetworkHelper.ContentType> = async(Dispatchers.Default) { NetworkHelper.detectContentTypeSuspended(input) }
                         // wait for result
                         val contentType: String = deferred.await().type.lowercase(Locale.getDefault())

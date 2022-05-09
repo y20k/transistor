@@ -16,6 +16,8 @@ package org.y20k.transistor.helpers
 
 import android.content.Context
 import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 import org.y20k.transistor.Keys
 import org.y20k.transistor.core.Collection
 import org.y20k.transistor.core.Station
@@ -46,7 +48,7 @@ class UpdateHelper(private val context: Context, private val updateHelperListene
     /* Overrides onRadioBrowserSearchResults from RadioBrowserSearchListener */
     override fun onRadioBrowserSearchResults(results: Array<RadioBrowserResult>) {
         if (results.isNotEmpty()){
-            GlobalScope.launch {
+            CoroutineScope(IO).launch {
                 // get station from results
                 val station: Station = results[0].toStation()
                 // detect content type
@@ -62,7 +64,7 @@ class UpdateHelper(private val context: Context, private val updateHelperListene
                 // get new position
                 val positionAfterUpdate: Int = CollectionHelper.getStationPositionFromRadioBrowserStationUuid(collection, station.radioBrowserStationUuid)
                 // hand over results
-                withContext(Dispatchers.Main) {
+                withContext(Main) {
                     updateHelperListener.onStationUpdated(collection, positionPriorUpdate, positionAfterUpdate)
                 }
                 // decrease counter

@@ -52,6 +52,7 @@ import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import com.google.android.exoplayer2.util.Util
 import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.Main
 import org.y20k.transistor.Keys
 import org.y20k.transistor.R
 import org.y20k.transistor.collection.CollectionProvider
@@ -500,7 +501,7 @@ class PlayerService(): MediaBrowserServiceCompat() {
     /* Reads collection of stations from storage using GSON */
     private fun loadCollection(context: Context) {
         LogHelper.v(TAG, "Loading collection of stations from storage")
-        CoroutineScope(Dispatchers.Main).launch {
+        CoroutineScope(Main).launch {
             // load collection on background thread
             val deferred: Deferred<Collection> = async(Dispatchers.Default) { FileHelper.readCollectionSuspended(context) }
             // wait for result and update collection

@@ -28,6 +28,7 @@ import androidx.core.net.toUri
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.IO
 import org.y20k.transistor.Keys
 import org.y20k.transistor.R
 import org.y20k.transistor.core.Collection
@@ -347,16 +348,11 @@ object CollectionHelper {
         // save collection to storage
         when (async) {
             true -> {
-                val backgroundJob = Job()
-                val uiScope = CoroutineScope(Dispatchers.Main + backgroundJob)
-                uiScope.launch {
+                CoroutineScope(IO).launch {
                     // save collection on background thread
-                    val deferred = async(Dispatchers.Default) { FileHelper.saveCollectionSuspended(context, collection, date) }
-                    // wait for result
-                    deferred.await()
+                    FileHelper.saveCollectionSuspended(context, collection, date)
                     // broadcast collection update
                     sendCollectionBroadcast(context, date)
-                    backgroundJob.cancel()
                 }
             }
             false -> {
@@ -376,7 +372,7 @@ object CollectionHelper {
         LogHelper.v(TAG, "Exporting collection of stations as M3U")
         // export collection as M3U - launch = fire & forget (no return value from save collection)
         if (collection.stations.size > 0) {
-            CoroutineScope(Dispatchers.IO).launch { FileHelper.backupCollectionAsM3uSuspended(context, collection) }
+            CoroutineScope(IO).launch { FileHelper.backupCollectionAsM3uSuspended(context, collection) }
         }
     }
 
