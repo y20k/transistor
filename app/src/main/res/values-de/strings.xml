@@ -102,8 +102,8 @@
     <!-- notification -->
     <string name="notification_play">Wiedergabe</string>
     <string name="notification_stop">Stopp</string>
-    <string name="notification_channel_playback_name">Playback-Steuerung</string>
-    <string name="notification_channel_playback_description">Playback-Steuerung, Senderlogo und Infos über Programminformationen.</string>
+    <string name="notification_channel_playback_name">Wiedergabesteuerung</string>
+    <string name="notification_channel_playback_description">Wiedergabesteuerung, Senderlogo und Infos über Programminformationen.</string>
     <!-- onboarding -->
     <string name="onboarding_app_description">Radioapp</string>
     <string name="onboarding_app_get_started">Jetzt starten</string>
@@ -211,4 +211,10 @@
     <string name="descr_card_station_image_change">Senderbild ändern</string>
     <string name="dialog_edit_station_name">Sendername</string>
     <string name="pref_edit_station_stream_summary_enabled">Bearbeitung von Streaming-Links ist aktiviert. Stelle sicher, dass du eine korrekte Stream-Adresse eingibst.</string>
+    <string name="pref_backup_title">Sender sichern</string>
+    <string name="pref_backup_summary">Speichere die Sammlung von Radiosendern einschließlich der Bilder im Gerätespeicher.</string>
+    <string name="toastmessage_restoring_collection">Wiederherstellen von Radiosendern aus dem Backup.</string>
+    <string name="pref_restore_title">Sender wiederherstellen</string>
+    <string name="pref_restore_summary">Wiederherstellen der Sammlung von Radiosendern aus dem Backup. Vorhandene Sender werden ersetzt.</string>
+    <string name="toastmessage_collection_backup">Radiosender sichern auf:</string>
 </resources>
