@@ -197,4 +197,10 @@
     <string name="descr_card_station_image_change">Ubah gambar stasiun</string>
     <string name="dialog_edit_stream_uri">Alamat stream</string>
     <string name="pref_edit_station_stream_summary_enabled">Menyunting tautan streaming diaktifkan. Pastikan Anda memasukkan alamat stream yang benar.</string>
+    <string name="toastmessage_restoring_collection">Memulihkan stasiun radio dari cadangan.</string>
+    <string name="pref_backup_title">Cadangkan Stasiun</string>
+    <string name="pref_backup_summary">Simpan koleksi stasiun radio termasuk gambar ke penyimpanan perangkat.</string>
+    <string name="pref_restore_title">Pulihkan Stasiun</string>
+    <string name="pref_restore_summary">Pulihkan koleksi stasiun radio dari cadangan. Stasiun yang ada akan diganti.</string>
+    <string name="toastmessage_collection_backup">Menyimpan stasiun radio ke:</string>
 </resources>
