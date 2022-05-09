@@ -1,0 +1,7 @@
+# v4.0.15 - Andy Warhol
+
+**2021-07-28**
+
+- neue Sprache: Friesisch
+- aktualisierte Übersetzungen
+- Transistor beendet jetzt sofort die Pufferung, wenn die Wiedergabe gestoppt wurde

@@ -1,0 +1,10 @@
+# v4.0.1 - Andy Warhol
+
+**2020-07-05**
+
+- behebt mehrere kleine Fehler in v4.0.0
+-- Metadaten in Benachrichtigungen werden korrekt aktualisiert
+-- verbesserte HLS-Unterstützung
+-- Sortierung ist unabhängig von Groß- und Kleinschreibung
+
+Das v4-Update war ziemlich umfangreich, erfahre mehr unter: https://github.com/y20k/transistor/blob/master/metadata/en-US/changelogs/72.txt

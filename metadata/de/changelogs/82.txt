@@ -1,0 +1,7 @@
+# v4.0.11 - Andy Warhol
+
+**2021-02-25**
+
+- Esperanto-Sprachversion
+- aktualisierte Übersetzungen
+- Benachrichtigungsverhalten geändert

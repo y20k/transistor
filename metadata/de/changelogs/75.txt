@@ -1,0 +1,9 @@
+# v4.0.3 - Andy Warhol
+
+**2020-07-22**
+
+- Android Auto setzt die Wiedergabe des zuletzt gespielten Senders fort
+- aktualisierte und neue Übersetzungen
+- ein paar kleine Fehlerbehebungen
+
+Das v4-Update war ziemlich umfangreich, erfahre mehr unter: https://github.com/y20k/transistor/blob/master/metadata/en-US/changelogs/72.txt

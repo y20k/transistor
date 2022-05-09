@@ -1,0 +1,8 @@
+# v4.0.2 - Andy Warhol
+
+**2020-07-08**
+
+- behebt einen Fehler beim Importieren von Stream-URLs (möglicherweise muss der Sender aktualisiert werden)
+- bringt die Metadatenanzeige für Android Auto zurück
+
+Das v4-Update war ziemlich umfangreich, erfahre mehr unter: https://github.com/y20k/transistor/blob/master/metadata/en-US/changelogs/72.txt

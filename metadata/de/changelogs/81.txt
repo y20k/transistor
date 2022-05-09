@@ -1,0 +1,5 @@
+# v4.0.10 - Andy Warhol
+
+**2021-01-01**
+
+- behebt einen Fehler in der "Sender aktualisieren"-Funktion, der Transistor in einen verwirrten Zustand versetzen konnte, in dem nur eine einzige Station spielbar war (siehe auch: https://github.com/y20k/transistor/issues/291)

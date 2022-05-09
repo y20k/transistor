@@ -1,0 +1,5 @@
+# v4.0.12 - Andy Warhol
+
+**2021-03-10**
+
+- behebt die fehlerhafte Wiedergabe von der Startbildschirm-Verknüpfung
