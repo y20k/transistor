@@ -1,0 +1,8 @@
+# v4.1.1 - Modern Love
+
+**2022-05-11**
+
+- new option to backup (and restore) all radio stations including images
+- fix for blurry default station image
+- Indonesian language fix
+- updated translations
