@@ -1,0 +1,13 @@
+Transistor è un'applicazione radiofonica dall'approccio minimalista. Potrebbe non piacere a tutti dato che non ha alcuna funzione di scoperta delle stazioni radio. Transistor offre solo un'opzione di ricerca molto semplice e importa i link agli streaming audio, quando li si preme in un browser web.
+
+
+DOMANDE FREQUENTI
+
+COME AGGIUNGO UNA STAZIONE RADIO?
+Ci sono tre modi per aggiungere una stazione radio a Transistor: Usare la ricerca, aggiungere l'indirizzo del file della playlist (M3U, PLS), inserire l'indirizzo di un flusso grezzo.
+
+DA DOVE PROVENGONO I RISULTATI DELLA RICERCA DELLE STAZIONI RADIO?
+Transistor cerca nel database online di radio-browser.info. È possibile aiutare la comunità di radio-browser.info aggiungendo le stazioni mancanti al loro database (https://www.radio-browser.info/gui/#!/add).
+
+COME GESTISCO L'ELENCO DELLE STAZIONI RADIO?
+È possibile eliminare una stazione radio dell'elenco, scorrendola. Ulteriori opzioni di modifica possono essere attivate in Impostazioni. Se la funzione è attiva, è possibile toccare e tenere premuta una stazione radio per modificarne il nome, l'immagine o il link allo streaming.
