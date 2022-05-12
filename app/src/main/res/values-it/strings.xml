@@ -197,4 +197,10 @@
     <string name="pref_edit_station_summary_enabled">Modifica delle informazioni sulla stazione attiva. Utilizzare la pressione prolungata per accedere alla modalità modifica.</string>
     <string name="pref_edit_station_title">Modifica Stazioni</string>
     <string name="pref_edit_station_stream_summary_disabled">Modifica dei link degli streaming disattivata.</string>
+    <string name="toastmessage_restoring_collection">Ripristino delle stazioni radio da backup.</string>
+    <string name="pref_backup_title">Backup stazioni</string>
+    <string name="pref_backup_summary">Salva la raccolta di stazioni radio nella memoria del dispositivo, incluse le immagini.</string>
+    <string name="pref_restore_title">Ripristina stazioni</string>
+    <string name="pref_restore_summary">Ripristina la raccolta di stazioni radio da un precedente backup. Le stazioni esistenti saranno sostituite.</string>
+    <string name="toastmessage_collection_backup">Salvataggio delle stazioni radio in:</string>
 </resources>
