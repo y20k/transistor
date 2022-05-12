@@ -4,13 +4,13 @@ apply plugin: 'kotlin-parcelize'
 
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 32
     // buildToolsVersion is optional because the plugin uses a recommended version by default
 
     defaultConfig {
         applicationId 'org.y20k.transistor'
         minSdkVersion 25
-        targetSdkVersion 31
+        targetSdkVersion 32
         versionCode 91
         versionName '4.1.1'
         resConfigs "en", "ar", "ca", "cs", "de", "el", "eo", "es", "eu", "fr", "fy", "gl", "he", "hr", "id", "in", "it", "ja", "kab", "nb-rNO", "nl", "pa", "pl", "pt", "pt-rBR", "ru", "sk", "sl", "sr", "th", "tr", "uk", "zh-rCN"
@@ -67,7 +67,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
 
-    implementation 'com.google.android.material:material:1.6.0-rc01'
+    implementation 'com.google.android.material:material:1.6.0'
 
     implementation "androidx.activity:activity-ktx:1.4.0"
     implementation "androidx.appcompat:appcompat:1.4.1"

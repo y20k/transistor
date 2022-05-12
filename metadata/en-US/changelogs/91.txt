@@ -1,6 +1,6 @@
 # v4.1.1 - Modern Love
 
-**2022-05-11**
+**2022-05-12**
 
 - new option to backup (and restore) all radio stations including images
 - fix for blurry default station image

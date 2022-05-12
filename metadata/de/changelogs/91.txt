@@ -1,6 +1,6 @@
 # v4.1.1 - Modern Love
 
-**2022-05-11**
+**2022-05-12**
 
 - neue Option zum Sichern (und Wiederherstellen) aller Radiosender inklusive der Logos
 - Fix für verschwommenes Standardsenderlogo
