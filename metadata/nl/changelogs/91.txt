@@ -1,0 +1,8 @@
+# v4.1.1 - Modern Love
+
+**2022-05-12**
+
+- nieuwe optie om back-up te maken (en te herstellen) van alle zenders, inclusief afbeeldingen
+- oplossing voor wazige standaard zenderafbeelding
+- correctie voor Indonesische taal
+- bijgewerkte vertalingen
