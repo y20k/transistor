@@ -211,4 +211,10 @@
     <string name="descr_card_station_image_change">Wijzig zenderlogo</string>
     <string name="pref_edit_station_summary_enabled">Bewerken van zenderinformatie is ingeschakeld. Gebruik lang aanraken om te bewerken.</string>
     <string name="pref_edit_station_stream_summary_enabled">Bewerken van streamlinks is ingeschakeld. Voer een correct streamadres in.</string>
+    <string name="toastmessage_restoring_collection">Radiozenders herstellen vanaf backup.</string>
+    <string name="pref_backup_summary">Bewaar verzameling van radiozenders inclusief afbeeldingen in apparaatopslag.</string>
+    <string name="pref_restore_title">Zenders terugzetten</string>
+    <string name="pref_restore_summary">Herstel de verzameling radiozenders vanaf de back-up. Bestaande zenders worden vervangen.</string>
+    <string name="toastmessage_collection_backup">Back-up maken van radiozenders naar:</string>
+    <string name="pref_backup_title">Back-up van zenders maken</string>
 </resources>
