@@ -211,4 +211,10 @@
     <string name="pref_edit_station_summary_disabled">Redigering av stasjonsinfo avskrudd.</string>
     <string name="descr_card_station_image_change">Endre stasjonsbilde</string>
     <string name="pref_edit_station_stream_summary_disabled">Redigering av strømmingslenker er avskrudd.</string>
+    <string name="toastmessage_restoring_collection">Gjenoppretter radiostasjoner fra sikkerhetskopi.</string>
+    <string name="pref_backup_title">Sikkerhetskopier stasjoner.</string>
+    <string name="pref_backup_summary">Lagre samlinger av radiostasjoner (inkludert bilder) til enhetslagring.</string>
+    <string name="pref_restore_title">Gjenopprett stasjoner</string>
+    <string name="pref_restore_summary">Gjenopprett en samling radiostasjoner fra en sikkerhetskopi. Eksisterende stasjoner vil bli erstattet.</string>
+    <string name="toastmessage_collection_backup">Sikkerhetskopier radiostasjoner til:</string>
 </resources>
