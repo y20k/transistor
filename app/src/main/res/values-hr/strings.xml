@@ -197,4 +197,10 @@
     <string name="dialog_edit_station_name">Ime stanice</string>
     <string name="pref_advanced_title">Napredno</string>
     <string name="descr_card_station_image_change">Promijeni sliku stanice</string>
+    <string name="pref_backup_title">Spremi stanice</string>
+    <string name="pref_restore_title">Obnovi stanice</string>
+    <string name="pref_restore_summary">Obnovi zbirku radio stanica iz sigurnosne kopije. Postojeće stanice će se zamijeniti.</string>
+    <string name="pref_backup_summary">Spremi zbirku radijskih stanica uključujući slike u spremište uređaja.</string>
+    <string name="toastmessage_restoring_collection">Obnavljanje radio stanica iz sigurnosne kopije.</string>
+    <string name="toastmessage_collection_backup">Spremanje sigurnosnih kopija radijskih stanica na:</string>
 </resources>
