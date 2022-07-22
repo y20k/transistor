@@ -185,4 +185,30 @@
     <string name="dialog_yes_no_positive_button_update_covers">Aktualizovat</string>
     <string name="dialog_yes_no_positive_button_update_collection">Aktualizovat</string>
     <string name="dialog_yes_no_message_update_collection">Vyhledat změny\?</string>
+    <string name="app_version_name" translatable="false"></string>
+    <string name="pref_advanced_title"></string>
+    <string name="pref_edit_station_summary_disabled"></string>
+    <string name="pref_edit_station_summary_enabled"></string>
+    <string name="pref_edit_station_stream_summary_enabled"></string>
+    <string name="descr_card_station_image_change"></string>
+    <string name="onboarding_app_rodriguez_quote_1" translatable="false"></string>
+    <string name="sample_text_station_metadata" translatable="false"></string>
+    <string name="sample_text_steam_url" translatable="false"></string>
+    <string name="player_sheet_p_no_data" translatable="false"></string>
+    <string name="toastmessage_restoring_collection"></string>
+    <string name="pref_backup_title"></string>
+    <string name="pref_restore_summary"></string>
+    <string name="toastmessage_collection_backup"></string>
+    <string name="sample_text_sleep_timer_remaining_time" translatable="false"></string>
+    <string name="station_list_button_settings"></string>
+    <string name="dialog_edit_stream_uri"></string>
+    <string name="onboarding_app_rodriguez_quote_2" translatable="false"></string>
+    <string name="dialog_edit_station_name"></string>
+    <string name="dialog_edit_save_changes"></string>
+    <string name="pref_backup_summary"></string>
+    <string name="sample_text_station_name" translatable="false"></string>
+    <string name="pref_restore_title"></string>
+    <string name="pref_edit_station_title"></string>
+    <string name="pref_edit_station_stream_summary_disabled"></string>
+    <string name="pref_edit_station_stream_title"></string>
 </resources>
