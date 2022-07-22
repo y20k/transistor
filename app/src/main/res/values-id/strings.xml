@@ -203,4 +203,12 @@
     <string name="pref_restore_title">Pulihkan Stasiun</string>
     <string name="pref_restore_summary">Pulihkan koleksi stasiun radio dari cadangan. Stasiun yang ada akan diganti.</string>
     <string name="toastmessage_collection_backup">Menyimpan stasiun radio ke:</string>
+    <string name="player_sheet_p_no_data" translatable="false"></string>
+    <string name="sample_text_sleep_timer_remaining_time" translatable="false"></string>
+    <string name="onboarding_app_rodriguez_quote_1" translatable="false"></string>
+    <string name="onboarding_app_rodriguez_quote_2" translatable="false"></string>
+    <string name="sample_text_station_name" translatable="false"></string>
+    <string name="sample_text_station_metadata" translatable="false"></string>
+    <string name="app_version_name" translatable="false"></string>
+    <string name="sample_text_steam_url" translatable="false"></string>
 </resources>
