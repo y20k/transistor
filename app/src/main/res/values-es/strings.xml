@@ -217,4 +217,12 @@
     <string name="pref_restore_title">Restablecer estaciones</string>
     <string name="pref_restore_summary">Restablecer la colección de emisoras de radio desde la copia de seguridad. Se sustituirán las emisoras existentes.</string>
     <string name="toastmessage_collection_backup">Copia de seguridad de las emisoras de radio a:</string>
+    <string name="app_version_name" translatable="false"></string>
+    <string name="onboarding_app_rodriguez_quote_1" translatable="false"></string>
+    <string name="onboarding_app_rodriguez_quote_2" translatable="false"></string>
+    <string name="player_sheet_p_no_data" translatable="false"></string>
+    <string name="sample_text_station_metadata" translatable="false"></string>
+    <string name="sample_text_sleep_timer_remaining_time" translatable="false"></string>
+    <string name="sample_text_steam_url" translatable="false"></string>
+    <string name="sample_text_station_name" translatable="false"></string>
 </resources>
