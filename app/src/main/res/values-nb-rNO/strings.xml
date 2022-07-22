@@ -217,4 +217,12 @@
     <string name="pref_restore_title">Gjenopprett stasjoner</string>
     <string name="pref_restore_summary">Gjenopprett en samling radiostasjoner fra en sikkerhetskopi. Eksisterende stasjoner vil bli erstattet.</string>
     <string name="toastmessage_collection_backup">Sikkerhetskopier radiostasjoner til:</string>
+    <string name="app_version_name" translatable="false"></string>
+    <string name="onboarding_app_rodriguez_quote_1" translatable="false"></string>
+    <string name="onboarding_app_rodriguez_quote_2" translatable="false"></string>
+    <string name="player_sheet_p_no_data" translatable="false"></string>
+    <string name="sample_text_station_metadata" translatable="false"></string>
+    <string name="sample_text_station_name" translatable="false"></string>
+    <string name="sample_text_steam_url" translatable="false"></string>
+    <string name="sample_text_sleep_timer_remaining_time" translatable="false"></string>
 </resources>
