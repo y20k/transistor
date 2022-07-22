@@ -217,4 +217,12 @@
     <string name="toastmessage_restoring_collection">Radyo istasyonları yedekten geri yükleniyor.</string>
     <string name="pref_backup_summary">Görseller de dahil olmak üzere radyo istasyonlarını aygıt depolama alanına kaydedin.</string>
     <string name="toastmessage_collection_backup">Radyo istasyonları şuraya yedekleniyor:</string>
+    <string name="onboarding_app_rodriguez_quote_1" translatable="false"></string>
+    <string name="sample_text_station_metadata" translatable="false"></string>
+    <string name="sample_text_station_name" translatable="false"></string>
+    <string name="sample_text_sleep_timer_remaining_time" translatable="false"></string>
+    <string name="sample_text_steam_url" translatable="false"></string>
+    <string name="app_version_name" translatable="false"></string>
+    <string name="player_sheet_p_no_data" translatable="false"></string>
+    <string name="onboarding_app_rodriguez_quote_2" translatable="false"></string>
 </resources>
