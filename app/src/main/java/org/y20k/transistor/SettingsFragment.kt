@@ -85,6 +85,14 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
             }
         }
 
+        // set up "Handle Audio Focus" preference
+        val preferenceHandleAudioFocus: CheckBoxPreference = CheckBoxPreference(activity as Context)
+        preferenceHandleAudioFocus.title = getString(R.string.pref_handle_audio_focus_title)
+        preferenceHandleAudioFocus.key = Keys.PREF_HANDLE_AUDIO_FOCUS
+        preferenceHandleAudioFocus.summary = getString(R.string.pref_handle_audio_focus_summary)
+        preferenceHandleAudioFocus.setDefaultValue(true)
+        
+
         // set up "Update Station Images" preference
         val preferenceUpdateStationImages: Preference = Preference(activity as Context)
         preferenceUpdateStationImages.title = getString(R.string.pref_update_station_images_title)
@@ -209,6 +217,7 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
         val preferenceCategoryGeneral: PreferenceCategory = PreferenceCategory(activity as Context)
         preferenceCategoryGeneral.title = getString(R.string.pref_general_title)
         preferenceCategoryGeneral.contains(preferenceThemeSelection)
+        preferenceCategoryGeneral.contains(preferenceHandleAudioFocus)
 
         val preferenceCategoryMaintenance: PreferenceCategory = PreferenceCategory(activity as Context)
         preferenceCategoryMaintenance.title = getString(R.string.pref_maintenance_title)
@@ -232,6 +241,7 @@ class SettingsFragment: PreferenceFragmentCompat(), YesNoDialog.YesNoDialogListe
         // setup preference screen
         screen.addPreference(preferenceCategoryGeneral)
         screen.addPreference(preferenceThemeSelection)
+        screen.addPreference(preferenceHandleAudioFocus)
         screen.addPreference(preferenceCategoryMaintenance)
         screen.addPreference(preferenceUpdateStationImages)
 //        screen.addPreference(preferenceUpdateCollection)

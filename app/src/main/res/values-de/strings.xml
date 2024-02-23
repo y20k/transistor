@@ -118,6 +118,8 @@
     <string name="pref_theme_selection_mode_device_default">Identisch zum Gerät</string>
     <string name="pref_theme_selection_mode_dark">Dunkler Modus</string>
     <string name="pref_general_title">Allgemein</string>
+    <string name="pref_handle_audio_focus_title">Audio Focus berücksichtigen</string>
+    <string name="pref_handle_audio_focus_summary">Wiedergabe stoppen wenn andere Anwendung Audio ausgibt oder Telefonanruf gestartet wird</string>
     <string name="pref_delete_all_title">Downloads löschen</string>
     <string name="toastmessage_error_missing_storage_permission">Erteile die Berechtigung „Speicher lesen“, um diese Datei zu öffnen.</string>
     <string name="dialog_yes_no_positive_button_update_covers">Aktualisieren</string>
