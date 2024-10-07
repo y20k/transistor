@@ -87,6 +87,8 @@
     <string name="pref_edit_station_stream_summary_disabled">Editing of streaming links disabled. </string>
     <string name="pref_edit_station_stream_title">Edit Streaming Links</string>
     <string name="pref_general_title">General</string>
+    <string name="pref_handle_audio_focus_title">Handle Audio Focus</string>
+    <string name="pref_handle_audio_focus_summary">Stop playback when other app starts playback or phone call is started</string>
     <string name="pref_maintenance_title">Maintenance</string>
     <string name="pref_m3u_export_summary">Save your radio stations to an M3U playlist file that can be imported into other players.</string>
     <string name="pref_m3u_export_title">Export M3U</string>

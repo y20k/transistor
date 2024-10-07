@@ -4,12 +4,13 @@ apply plugin: 'kotlin-parcelize'
 
 
 android {
-    compileSdkVersion 32
     // buildToolsVersion is optional because the plugin uses a recommended version by default
 
     defaultConfig {
         applicationId 'org.y20k.transistor'
+        namespace "org.y20k.transistor"
         minSdkVersion 25
+        compileSdk 32
         targetSdkVersion 32
         versionCode 91
         versionName '4.1.1'

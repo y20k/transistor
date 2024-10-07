@@ -281,4 +281,8 @@ object PreferencesHelper {
         return sharedPreferences.getBoolean(Keys.PREF_DOWNLOAD_OVER_MOBILE, Keys.DEFAULT_DOWNLOAD_OVER_MOBILE)
     }
 
+    /* Loads handling of audio focus */
+    fun loadHandleAudioFocus(): Boolean {
+        return sharedPreferences.getBoolean(Keys.PREF_HANDLE_AUDIO_FOCUS, true)
+    }
 }
